@@ -1,0 +1,14 @@
+/* This will override the builtin default.css */
+
+/* .wy-nav-content {
+    max-width: 100%;
+} */
+
+/* remove ads */
+#rtd-sidebar {
+    content-visibility: hidden;
+}
+
+.rst-versions.rst-badge.shift-up .rst-current-version .fa-book {
+    line-height: 30px;
+}
