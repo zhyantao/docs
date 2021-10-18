@@ -7,3 +7,4 @@
     :glob:
 
     matrix-calculus-for-deep-learning
+    glossary
