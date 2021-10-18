@@ -8,8 +8,7 @@
 科普视频
 ~~~~~~~~
 
-- `Meta Learning <https://www.youtube.com/watch?v=2z0ofe2lpz4>`_
-- `Yoshua Bengio: Meta-learning (NeurIPS 2019) <https://www.youtube.com/watch?v=NgTP8DV7_zs>`_
+- `Few Shot Learning <https://youtu.be/UkQ2FVpDxHg>`_ by `Shusen Wang <https://www.youtube.com/c/ShusenWang>`_ on YouTube
 
 知乎专栏
 ~~~~~~~~
