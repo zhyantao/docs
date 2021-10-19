@@ -8,7 +8,7 @@ Notebook
     :glob:
     
     docs/reStructuredText
-    docs/few-shot-learning/index
+    docs/meta-learning/index
     docs/matrix-analysis/index
     docs/statistical-methods/index
     docs/machine-learning/index
