@@ -30,20 +30,7 @@
     计算得到的结果用于下一层神经元的输入，但是为什么计算结果还是记作 :math:`\mathbf{w}` 和 :math:`\mathbf{b}` 呢？这里并不是很懂，也就是说，为什么要假设 :math:`f_i(\mathbf{w})=\mathbf{w}` ？
     是因为激活函数选择了 ReLU 的缘故吗？
 
-词汇释义
---------
-    
-- **binary：** 二元的
-- **unary：** 一元的
-- **derivatives：** 导数，或称微分
-- **total derivative：** 全微分（假设变量间互相依赖）
-- **partical derivative：** 偏微分（假设除 x 外都是常量）
-- **with respect to：** 作用于
-- **nested：** 嵌套的
-- **whereas：** 但是
-- **commute：** 交换(律)
-
-.. note:: 
+.. warning:: 
 
     关于全微分和偏微分的理解可能网络上并不一致。参考 :footcite:p:`DBLP:journals/corr/abs-1802-01528` 第 19 页，第 4 段。
 

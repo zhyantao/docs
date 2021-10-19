@@ -11,7 +11,6 @@ Notebook
     docs/meta-learning/index
     docs/matrix-analysis/index
     docs/statistical-methods/index
-    docs/machine-learning/index
     docs/modern-operating-systems/index
     docs/principles-of-database-system/index
     docs/computer-network/index
