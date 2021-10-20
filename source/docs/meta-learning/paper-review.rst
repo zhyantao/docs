@@ -8,7 +8,10 @@
 科普视频
 ~~~~~~~~
 
-- `Few Shot Learning <https://youtu.be/UkQ2FVpDxHg>`_ by `Shusen Wang <https://www.youtube.com/c/ShusenWang>`_ on YouTube
+- Few Shot Learning by `Shusen Wang <https://www.youtube.com/c/ShusenWang>`_ on `YouTube <https://youtu.be/UkQ2FVpDxHg>`_ or `Bilibili <https://www.bilibili.com/medialist/play/ml1245757985/BV1B44y1r75K>`_
+- `Slide1: Introduction <https://kdocs.cn/l/cpTe5jubAGog>`_
+- `Slide2: Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_
+- `Slide3: Pretraining & Fine Tuning <https://kdocs.cn/l/cbBZGuwm26Yr>`_
 
 知乎专栏
 ~~~~~~~~
@@ -63,7 +66,7 @@
 特邀演讲
 ~~~~~~~~
 
-- `Generalizing from Few Examples with Meta-Learning by Hugo Larochelle <https://www.bilibili.com/video/av61821192/>`_ 以及 `Slides <https://www.dropbox.com/s/sm68skkkbxbob0i/metalearning.pdf>`__
+- `Generalizing from Few Examples with Meta-Learning by Hugo Larochelle <https://www.bilibili.com/video/av61821192/>`_ 及 `Slides <https://kdocs.cn/l/cpswKp8xJuZj>`__
 - `Workshop on Meta-Learning (MetaLearn 2021) <https://meta-learn.github.io/>`_
 - `Deep Learning: Bridging Theory and Practice <https://ludwigschmidt.github.io/nips17-dl-workshop-website/>`_
 - `The Peculiar Optimization and Regularization Challenges in Multi-Task Learning and Meta-Learning <https://www.ias.edu/video/workshop/2020/0416-ChelseaFinn>`_ 以及 `Slides <https://ai.stanford.edu/~cbfinn/_files/ias_slides.pdf>`__
@@ -117,7 +120,7 @@ Few-Shot Method
   - **Recurrent meta-learners**
 
     - Matching net - 2016 NIPS
-    - MANN: memory-augmented Neurl Net - 2016 ICML
+    - `MANN: memory-augmented Neurl Net <https://kdocs.cn/l/crnNROG2VCMf>`_ - 2016 ICML
 
   - **Optimizers**
 
@@ -137,7 +140,7 @@ Few-Shot Method
 数据集
 ------
 
-- `Omniglot data set for one-shot learning <https://github.com/brendenlake/omniglot>`_ 及 `数据说明 <https://kdocs.cn/l/cgtqdhdNglDz>`_
+- `Omniglot data set for one-shot learning <https://github.com/brendenlake/omniglot>`_ 及 `Paper <https://kdocs.cn/l/cgtqdhdNglDz>`_
 - `Tools for mini-ImageNet Dataset <https://github.com/yaoyao-liu/mini-imagenet-tools>`_
 - `ImageNet Large Scale Visual Recognition Challenge (ILSVRC) <https://image-net.org/challenges/LSVRC/>`_
 - `FGVC-Aircraft Benchmark <https://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/>`_
