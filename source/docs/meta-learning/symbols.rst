@@ -22,8 +22,7 @@
 
     ":math:`x`", "标量", "``:math:`x```", "小写意大利体， :math:`LaTeX` 默认字体"
     ":math:`\mathbf{x}`", "向量", "``:math:`\mathbf{x}```", "小写粗体，高中时写作 :math:`\vec{x}` "
-    ":math:`\mathbf{X}`", "矩阵", "``:math:`\mathbf{X}```", "大写粗体"
-    ":math:`\mathsf{X}`", "张量", "``:math:`\mathsf{X}```", "大写 Sans serif 字体"
+    ":math:`\mathbf{X}`", "矩阵(或多维)", "``:math:`\mathbf{X}```", "大写粗体"
     ":math:`\mathrm{d}`", "求导数", "``:math:`\mathrm{d}```", "直立的 :math:`\mathrm{d}` "
     ":math:`\partial`", "求偏导", "``:math:`\partial```", "求导符号 :math:`\mathrm{d}` 的变体"
     ":math:`\nabla`", "求梯度", "``:math:`\nabla```", "向量微分算子"
@@ -32,14 +31,22 @@
 
     :math:`f(x;\theta)` 中的分号用来分开自变量和参数。
 
-机器学习
---------
+元学习和小样本学习
+------------------
 
 .. csv-table::
     :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
-    :widths: 15, 20, 30, 40
+    :widths: 15, 40, 40, 15
 
-    ":math:`\mathcal{D}`", "一条样本", "``:math:`\mathcal{D}```", "大写花体"
+    ":math:`M_{meta}`", "元学习模型", "``:math:`M_{meta}```", "大写粗体"
+    ":math:`M_{fine-tune}`", "数学模型（小样本模型）", "``:math:`M_{fine-tune}```", "大写粗体"
+    ":math:`\mathcal{D}_{meta-train}`", "用于训练 :math:`M_{meta}` 的数据集", "``:math:`\mathcal{D}_{meta-train}```", "大写花体"
+    ":math:`\mathcal{D}_{meta-test}`", "用于训练和测试 :math:`M_{fine-tune}` 的数据集", "``:math:`\mathcal{D}_{meta-test}```", "大写花体"
+    ":math:`\mathcal{T}`", ":math:`\mathcal{D}` 的一行，即神经网络输入", "``:math:`\mathcal{T}```", "大写花体"
+    ":math:`C_1 \sim C_{10}`", ":math:`\mathcal{D}_{meta-train}` 中的 10 个类别", "``:math:`C_1 \sim C_{10}```", "大写粗体"
+    ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``:math:`P_1 \sim P_{5}```", "大写粗体"
+    ":math:`\mathcal{L}`", "损失函数", "``:math:`\mathcal{L}```", "大写花体"
+
 
 概率和统计
 ----------

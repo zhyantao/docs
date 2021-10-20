@@ -13,21 +13,14 @@
 - `Slide2: Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_
 - `Slide3: Pretraining & Fine Tuning <https://kdocs.cn/l/cbBZGuwm26Yr>`_
 
-知乎专栏
-~~~~~~~~
-
-- `大数据时代的小样本深度学习问题的综述 <https://zhuanlan.zhihu.com/p/60881968>`_
-- `Model-Agnostic Meta-Learning （MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
-- `MAML算法，model-agnostic metalearnings? <https://www.zhihu.com/question/266497742>`_
-- `求问meta-learning和few-shot learning的关系是什么？ <https://www.zhihu.com/question/291656490>`_
-- `Meta learning中meta learner的优化 <https://zhuanlan.zhihu.com/p/52144418>`_
-- `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
-- `从 CVPR 2019 一览小样本学习研究进展 <https://www.leiphone.com/category/academic/4wc0990rNQf43mss.html>`_ 每年 CVPR 都会有针对小样本学习的一个总结
-- `智能专栏：聚焦通用人工智能 <https://zhuanlan.zhihu.com/intelligentunit>`_
-
 科普博文
 ~~~~~~~~
 
+- `Model-Agnostic Meta-Learning （MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
+- `MAML算法，model-agnostic metalearnings? <https://www.zhihu.com/question/266497742>`_
+- `Meta learning中meta learner的优化 <https://zhuanlan.zhihu.com/p/52144418>`_
+- `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
+- `从 CVPR 2019 一览小样本学习研究进展 <https://www.leiphone.com/category/academic/4wc0990rNQf43mss.html>`_ 每年 CVPR 都会有针对小样本学习的一个总结
 - `Learning to learn - The Berkeley Artificial Intelligence Research <https://bair.berkeley.edu/blog/2017/07/18/learning-to-learn/>`_
 - `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_
 - `Meta-Reinforcement Learning <https://blog.floydhub.com/meta-rl/>`_
