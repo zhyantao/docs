@@ -7,11 +7,24 @@
 
 .. image:: ../../_static/images/meta-learning.png
 
+.. note:: 
+
+    从图中，我们可以看出数据集的称呼发生了一些变化，相比于深度学习。
+
+.. csv-table::
+    :header: "名称", "训练阶段", "预测阶段"
+    :widths: 15, 35, 50
+
+    "传统机器学习", "学习 Train Set 后，学会识别什么是老虎什么是大象", "如果给定的动物属于 Train Set 中的某个物种，它可以识别这是什么物种，但是对于没见过的动物，它并不认识"
+    "小样本学习", "学习 Train Set 后，学会区分不同的事物，学会一些比较异同的规则", "提供 Support Set 后，比较 Query 和 Support Set 中的哪张图片最相似，Query 在 Train Set 中没有见过"
+
 深度学习
-    针对某一个特定的 task，从 0 开始学习，然后应用到该 task。（一个 task 对应上图中的一行）
+    针对某一个特定的 task，从 0 开始学习，然后应用到该 task。
+    （一个 task 对应上图中的一行，这句话的意思就是，深度学习只会学习一行，不会应用到其他行）
 
 元学习
-    任务是学会一种先验知识，学会自主学习，这是一个方法和过程，而小样本学习是一种场景。如何学会自主学习？用 Train Set 做训练的过程就是学习先验知识的过程。
+    目标是学会一种先验知识，学会自主学习。元学习是一种方法或过程，而小样本学习是一种场景。它用 task 做训练，然后应用到新 task。
+    如何学会自主学习？用 Train Set 做训练的过程就是学习先验知识的过程。
 
 小样本学习
     小样本学习是在有先验知识的基础上再进行学习的。
@@ -19,6 +32,19 @@
     比如，如果我们给神经网络一张图片（Query），问它这是什么东西时，它可能没见过，不知道如何这个照片属于哪一类。
     但是如果我们能再多提供一点信息（Support Set），它就能从 Support Set 找出 Query 属于哪个类别。
     小样本学习的模型输入是两张图片，或三张图片。输出是相似度函数。
+
+小样本学习一般的工作流程：
+
+- 首先，从一个大数据集中做训练
+- 然后，将相似度函数应用到预测上
+
+  - 比较 Query 和 Support Set
+  - 找出 Support Set 中最相似的
+
+两个常用的数据集：
+
+- Ominilot
+- Mini-ImageNet
 
 Support Set
     很小的一个数据集，只能在预测时提供一些额外的信息。比如我们想要判断一个未知事物是什么东西的时候，需要与已知事物建立一种联系，这种联系很像查手册。
@@ -36,27 +62,8 @@ n shot
     Every class has n samples.
 
 相似度函数
-    sim(x, x') 理想情况下，如果 x 和 x' 是同一种东西，sim(x, x')=1，否则等于 0。
+    :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1` ，否则等于 :math:`0` 。
 
-.. csv-table::
-    :header: "名称", "训练阶段", "预测阶段"
-    :widths: 15, 35, 50
-
-    "传统机器学习", "学习 Train Set 后，学会识别什么是老虎什么是大象", "如果给定的动物属于 Train Set 中的某个物种，它可以识别这是什么物种，但是对于没见过的动物，它并不认识"
-    "小样本学习", "学习 Train Set 后，学会区分不同的事物，学会一些比较异同的规则", "提供 Support Set 后，比较 Query 和 Support Set 中的哪张图片最相似，Query 在 Train Set 中没有见过"
-
-小样本学习一般的工作流程：
-
-- 首先，从一个大数据集中做训练
-- 然后，将相似度函数应用到预测上
-
-  - 比较 Query 和 Support Set
-  - 找出 Support Set 中最相似的
-
-两个常用的数据集：
-
-- Ominilot
-- Mini-ImageNet
 
 孪生网络
 --------
@@ -89,7 +96,7 @@ Triplet Loss
 预训练和微调
 ------------
 
-这是一个很简单的思路，再大数据集 Train Set 上做 Pretraining，再小数据集 Support Set 上做 Fine Tuning。这种方式虽然简单，但是准确率相对较高。
+这是一个很简单的思路，在大数据集 Train Set 上做 Pretraining，在小数据集 Support Set 上做 Fine Tuning。这种方式虽然简单，但是准确率相对较高。
 
 - Step1: Pretraining
 
@@ -122,6 +129,20 @@ Fine Tuning
     之前没有学习 :math:`\mathbf{W}` 和 :math:`\mathbf{b}`
     直接让 :math:`\mathbf{b} = 0` ， :math:`\mathbf{W} = \mathbf{M}` 。
     其中 :math:`\mathbf{M}` 是每一个类别的均值向量组成的矩阵。
+
+应用场景
+--------
+
+.. raw:: html
+
+    <iframe 
+        width="560" height="315" 
+        src="https://www.youtube.com/embed/1eYqV_vGlJY" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
 
 参考文献
 --------
