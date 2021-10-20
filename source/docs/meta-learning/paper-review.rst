@@ -13,11 +13,6 @@
 知乎专栏
 ~~~~~~~~
 
-- `Meta Learning 单排小教学 <https://zhuanlan.zhihu.com/p/46059552>`_
-- `最前沿：百家争鸣的 Meta Learning / Learning to learn <https://zhuanlan.zhihu.com/p/28639662>`_
-- `荐读 Meta-Learning in Neural Networks: A survey <https://zhuanlan.zhihu.com/p/133159617>`_
-- `Chelsea Finn 博士论文赏析 <https://zhuanlan.zhihu.com/p/46002992>`_
-- `few-shot 就决定是你了 <https://zhuanlan.zhihu.com/p/136413679>`_
 - `大数据时代的小样本深度学习问题的综述 <https://zhuanlan.zhihu.com/p/60881968>`_
 - `Model-Agnostic Meta-Learning （MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
 - `MAML算法，model-agnostic metalearnings? <https://www.zhihu.com/question/266497742>`_
