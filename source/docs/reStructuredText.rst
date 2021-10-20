@@ -457,6 +457,33 @@ reST 支持图像指令，用法如下：
     如果你想要给图片添加描述性文字，请使用 ``figure`` 代替 ``image``,
     接着使用 ``:caption: text`` 作为传入的参数，其它参数用法一致。
 
+视频（Videos）
+--------------
+
+.. code-block:: html
+
+    .. raw:: html
+
+        <iframe 
+            width="560" height="315" 
+            src="https://www.youtube.com/embed/1eYqV_vGlJY" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+
+.. raw:: html
+
+    <iframe 
+        width="560" height="315" 
+        src="https://www.youtube.com/embed/1eYqV_vGlJY" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+
 .. _cross-reference-rst:
 
 交叉引用（Cross-reference）
