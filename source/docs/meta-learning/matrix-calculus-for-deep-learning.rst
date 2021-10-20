@@ -382,3 +382,26 @@ single-variable total-derivative chain rule
 
 
 .. footbibliography::
+
+附：单词表
+-----------
+
+binary
+    二元的
+unary
+    一元的
+derivatives
+    导数，或称微分
+total derivative
+    全微分（假设变量间互相依赖）
+partical derivative
+    偏微分（假设除 x 外都是常量）
+with respect to
+    作用于
+nested
+    嵌套的
+whereas
+    但是
+commute
+    交换(律)
+
