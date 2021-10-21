@@ -25,10 +25,13 @@
 
     现在，因为在神经网络上，神经元之间的连接通常是线性关系，因此，大概率的情况下，不会出现二次方以及对数函数等其他我们在高中阶段就已经学习过的复杂函数。
     因为通常来讲，我们一般的做法是将神经元上的数字乘以与之相连接的边的权重，再加上某个偏置，即可得到输出。因此，对于单个神经元来讲，它就是线性的。
-    正因为这种线性关系的存在，我们在下面的假设中，会通常假设 :math:`\mathbf{f}(\mathbf{w})=\mathbf{w}, \mathbf{g}(\mathbf{x})=\mathbf{x}`
-    隐含意思就是对于神经网络的某一层来讲，影响权值和偏置的函数有两个，分别是 :math:`f_i` 和 :math:`g_i` 。他们分别作用于权重 :math:`f_i(\mathbf{w})` 和神经元 :math:`g_i(\mathbf{x})` 。
-    计算得到的结果用于下一层神经元的输入，但是为什么计算结果还是记作 :math:`\mathbf{w}` 和 :math:`\mathbf{b}` 呢？这里并不是很懂，也就是说，为什么要假设 :math:`f_i(\mathbf{w})=\mathbf{w}` ？
-    是因为激活函数选择了 ReLU 的缘故吗？
+    
+    正因为这种线性关系的存在，我们在下面的假设中，通常假设 :math:`\mathbf{f}(\mathbf{w})=\mathbf{w}` ， :math:`\mathbf{g}(\mathbf{x})=\mathbf{x}`
+    的隐含意思就是对于神经网络的某一层来讲，影响权值和偏置的函数有两个： :math:`f_i` 和 :math:`g_i` 。它们分别作用于权重 :math:`f_i(\mathbf{w})` 和神经元 :math:`g_i(\mathbf{x})` 。
+    计算得到的结果用于下一层神经元的输入。
+    
+    但是为什么计算结果还是记作 :math:`\mathbf{w}` 和 :math:`\mathbf{b}` 呢？也就是说，为什么要假设 :math:`f_i(\mathbf{w})=\mathbf{w}` ？
+    作者说，这是一个简单的例子，帮助我们理解相关原理应该如何被应用。这个例子虽然简单，但其特有的线性性质，帮助我们简化了计算过程和结果。
 
 .. warning:: 
 
@@ -123,7 +126,9 @@
                 \dfrac{\partial}{\partial x_1}f_m(\mathbf{x}) & \dfrac{\partial}{\partial x_2}f_m(\mathbf{x}) & \dots & \dfrac{\partial}{\partial x_n}f_m(\mathbf{x})
             \end{bmatrix}
 
-    注意到，我们在展开 :math:`\dfrac{\partial \mathbf{y}}{\partial \mathbf{x}}` 时，是按照分子竖着展开，分母横着展开的，这种展开方式叫做分子布局（ :math:`\mathit{Numerator\ layout}` ）。其实还有另外相反的一种展开方式，叫做分母布局（ :math:`\mathit{Denominator\ layout}` ）。作者在论文中一直使用的是分子布局。
+    注意到，我们在展开 :math:`\dfrac{\partial \mathbf{y}}{\partial \mathbf{x}}` 时，是按照分子竖着展开，分母横着展开的，
+    这种展开方式叫做分子布局（ :math:`\mathit{Numerator\ layout}` ）。
+    其实还有另外相反的一种展开方式，叫做分母布局（ :math:`\mathit{Denominator\ layout}` ）。作者在论文中一直使用的是分子布局。
 
     这种展开规则 **很重要** ，这是解向量求导问题的一个 **突破点** ，学会了展开规则，向量求导就变得非常简单了，因为你可以通过目标方程目测出结果矩阵的形状，而且，结果矩阵是标量形式的。
 
@@ -324,62 +329,92 @@ Example 3
 链式法则
 --------
 
-到目前为止，我们无法对嵌套表达式直接进行求导，比如 :math:`sum(\mathbf{w}+\mathbf{x})` ，必须先将其转换到标量形式才能继续进行。链式法则的目标在于解决这个问题。
+我们无法对复杂函数应用矩阵求导规则来直接进行求导。比如我们无法对嵌套表达式 :math:`sum(\mathbf{w}+\mathbf{x})` 直接进行求导，必须先将其转换到标量形式才能继续进行。
 
-在求导法则中，有很多所谓的“链式法则”，我们必须仔细地区分。作者将其归纳为三种：
+但是在向量链式法则的支持下，我们就能利用前面的结论了？
 
-- single-variable chain rule 标量函数对标量变量求导
-- single-variable total-derivative chain rule
-- vector chain rule
+单变量链式法则
+~~~~~~~~~~~~~~
 
-Single-variable chain rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+这是标量对标量的求导规则，我们在高中就学过了。函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
+其导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
 
-外层函数的导数与内层函数的导数相乘即可得到结果。
+这是只有一个变量的情况，如果有两个或多个变量时情况就不太一样了。
 
-函数表达式为 :math:`y = f(g(x))` 或者 :math:`(f \circ g)(x)`
+考虑目标方程 :math:`y(x)=x+x^2` ，求导数。
 
-其导数为 :math:`y'=f'(g(x))g'(x)` 或者更推荐记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
+如果用 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}}{\mathrm{d}x}x+\dfrac{\mathrm{d}}{\mathrm{d}x}x^2=1+2x`
+的方式求导，使用的还是标量求导方式，没有用到链式法则。
 
-使用 single-variable chain rule 时，可以遵循下述步骤：
-
-1. 为嵌套表达式引入中间变量
-2. 对中间变量进行求导
-3. 将中间变量求导后的结果相乘
-4. 将中间变量替换为原表达式
-
-Example: :math:`y=f(g(x))=sin(x^2)`
-
-- step 1: :math:`u = x^2, \quad y = sin(u)`
-- step 2: :math:`\dfrac{\mathrm{d}u}{\mathrm{d}x}=2x, \quad \dfrac{\mathrm{d}y}{\mathrm{d}u}=cos(u)`
-- step 3: :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}=cos(u)2x`
-- step 3: :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}=cos(x^2)2x=2xcos(x^2)`
-
-你可以将 :math:`\dfrac{\mathrm{d}u}{\mathrm{d}x}` 认为是当 x 发生变化时，会影响 u 。 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}u}` 认为是当 u 变化时，会影响 y 。
-
-链式法则通常情况下的书写顺序时从输出变量到输入变量 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
-
-如果从输入到输出到视角考虑，上面的式子就要颠倒一下顺序 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}u}{\mathrm{d}u}\dfrac{\mathrm{d}y}{\mathrm{d}u}` 。
-
-当从自变量到因变量只有一条数据通路时，使用 single-variable chain rule 。利用上面的表达式可以理解为只有 x 能够影响 y 的取值（虽然引入了中间变量）。
-
-但是当从自变量到因变量不是只有一条数据通路时，情况就不一样了。考虑 :math:`y(x)=x+x^2` 可以看作 :math:`y(x, u)=x+u, for u=x^2` 。这是就需要使用 single-variable total-derivative chain rule 。
+下面将使用单变量全微分法则进行求导。
 
 .. note:: 
 
-    Automatic differentiation（自动求导，这是 PyTorch 中内置的求导规则）
+    **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x` 外，其他都是常量。因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下。
+
+    .. math::
+
+        \dfrac{\partial f(x, u_1, \dots, u_n)}{\partial x}
+        =\dfrac{\partial f}{\partial x} + \dfrac{\partial f}{\partial u_1}\dfrac{\partial u_1}{\partial x} + \dots + \dfrac{\partial f}{\partial u_n}\dfrac{\partial u_n}{\partial x}
+        =\dfrac{\partial f}{\partial x} + \displaystyle\sum_{i=1}^n \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
+
+    它也可以化简为：
+
+    .. math::
+
+        \dfrac{\partial f(u_1, \dots, u_{n+1})}{\partial x}
+        =\displaystyle\sum_{i=1}^{n+1} \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
+
+    它的向量点积表示形式：
+
+    .. math::
+
+        \displaystyle\sum_{i=1}^{n+1} \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
+        =\dfrac{\partial f}{\partial \mathbf{u}} \cdot \dfrac{\partial \mathbf{u}}{\partial x}
+
+    它的向量乘法表示形式：
+
+    .. math::
+
+        \displaystyle\sum_{i=1}^{n+1} \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
+        =\dfrac{\partial f}{\partial \mathbf{u}} \dfrac{\partial \mathbf{u}}{\partial x}
+
+首先，设置中间变量 :math:`u_1` 和 :math:`u_2` ：
+
+- :math:`u_1(x)=x^2`
+- :math:`u_2(x, u_1)=x+u_1` ，则 :math:`y=f(x)=u_2(x, u_1)`
+
+然后，应用全微分公式求导：
+
+- :math:`\dfrac{\partial f(x, u_1)}{\partial x} = \dfrac{\partial u_2(x, u_1)}{\partial x} = \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} =  1 + 2x`    
+
+.. hint:: 
     
-    - forward differentiation（前向求导）
-    - backward differentiation (back-propagation)（反向求导）
+    这里的 :math:`f` 与 :math:`u_2` 是一个意思，即，
+    
+    .. math::
 
-    从数据流的角度，前向求导就是从自变量影响到因变量取值的求导方向 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}u}{\mathrm{d}x}\dfrac{\mathrm{d}y}{\mathrm{d}u}`
-    ，后向求导就是考虑输出改变时，将会如何影响到输入 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
-    因为反向求导可以一次性确定所有函数变量的变化量，所以它对于计算含有大量参数的函数来讲效率更高。
+        \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} 
+        =\dfrac{\partial f}{\partial x} + \dfrac{\partial f}{\partial u_1}\dfrac{\partial u_1}{\partial x}
 
-single-variable total-derivative chain rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. hint:: 
 
+    虽然引入了两个中间变量，但是不能将其称之为多变量全微分法则，因为只有 :math:`x` 会影响输出。
 
+.. note:: 
+
+    自动求导（Automatic Differentiation）是 PyTorch 中内置的求导规则，它包括两步：
+    
+    - 前向求导（Forward Differentiation） :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}u}{\mathrm{d}x}\dfrac{\mathrm{d}y}{\mathrm{d}u}`
+    - 反向求导（Backward Differentiation，也叫 Back Propagation） :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}`
+
+    从数据流的角度看：
+    
+    - 前向求导就是当自变量（输入）取值发生变化时，会如何影响因变量（输出）
+    - 反向求导就是当因变量（输出）取值发生变化时，会如何影响自变量（输入），反向求导可以一次性确定所有函数变量的变化量，所以它常被用来更新网络参数
+
+参考文献
+--------
 
 .. footbibliography::
 
