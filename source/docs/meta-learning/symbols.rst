@@ -25,26 +25,32 @@
     ":math:`\mathbf{X}`", "矩阵(或多维)", "``:math:`\mathbf{X}```", "大写粗体"
     ":math:`\mathrm{d}`", "求导数", "``:math:`\mathrm{d}```", "直立的 :math:`\mathrm{d}` "
     ":math:`\partial`", "求偏导", "``:math:`\partial```", "求导符号 :math:`\mathrm{d}` 的变体"
-    ":math:`\nabla`", "求梯度", "``:math:`\nabla```", "向量微分算子"
+    ":math:`\nabla_\theta`", "对 :math:`\theta` 求梯度", "``:math:`\nabla_\theta```", "向量微分算子"
 
 .. note::
 
     :math:`f(x;\theta)` 中的分号用来分开自变量和参数。
 
+.. _Meta-FSL-symbols:
+
 元学习和小样本学习
 ------------------
+
+.. image:: ../../_static/images/meta-learning.png
 
 .. csv-table::
     :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
     :widths: 15, 40, 40, 15
 
-    ":math:`M_{meta}`", "元学习模型", "``:math:`M_{meta}```", "大写粗体"
-    ":math:`M_{fine-tune}`", "数学模型（小样本模型）", "``:math:`M_{fine-tune}```", "大写粗体"
+    ":math:`M_{meta}`", "元学习模型", "``:math:`M_{meta}```", "大写"
+    ":math:`M_{fine-tune}`", "数学模型（小样本模型）", "``:math:`M_{fine-tune}```", "大写"
     ":math:`\mathcal{D}_{meta-train}`", "用于训练 :math:`M_{meta}` 的数据集", "``:math:`\mathcal{D}_{meta-train}```", "大写花体"
     ":math:`\mathcal{D}_{meta-test}`", "用于训练和测试 :math:`M_{fine-tune}` 的数据集", "``:math:`\mathcal{D}_{meta-test}```", "大写花体"
-    ":math:`\mathcal{T}`", ":math:`\mathcal{D}` 的一行，即神经网络输入", "``:math:`\mathcal{T}```", "大写花体"
-    ":math:`C_1 \sim C_{10}`", ":math:`\mathcal{D}_{meta-train}` 中的 10 个类别", "``:math:`C_1 \sim C_{10}```", "大写粗体"
-    ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``:math:`P_1 \sim P_{5}```", "大写粗体"
+    ":math:`D_{train}`", "Support Set", "``:math:`D_{train}```", "大写"
+    ":math:`D_{test}`", "Query Set", "``:math:`D_{test}```", "大写"
+    ":math:`\mathcal{T}` aka task", ":math:`\mathcal{D}` 的一行，即神经网络输入", "``:math:`\mathcal{T}```", "大写花体"
+    ":math:`C_1 \sim C_{10}`", ":math:`\mathcal{D}_{meta-train}` 中的 10 个类别", "``:math:`C_1 \sim C_{10}```", "大写"
+    ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``:math:`P_1 \sim P_{5}```", "大写"
     ":math:`\mathcal{L}`", "损失函数", "``:math:`\mathcal{L}```", "大写花体"
 
 
