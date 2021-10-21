@@ -2,14 +2,9 @@
 小样本学习介绍
 ==============
 
-基本概念
---------
-
-.. image:: ../../_static/images/meta-learning.png
-
 .. note:: 
 
-    从图中，我们可以看出数据集的称呼发生了一些变化，相比于深度学习。
+    本节出现比较多的符号，参考 :ref:`符号表 <Meta-FSL-symbols>` 。
 
 .. csv-table::
     :header: "名称", "训练阶段", "预测阶段"
@@ -17,6 +12,9 @@
 
     "传统机器学习", "学习 Train Set 后，学会识别什么是老虎什么是大象", "如果给定的动物属于 Train Set 中的某个物种，它可以识别这是什么物种，但是对于没见过的动物，它并不认识"
     "小样本学习", "学习 Train Set 后，学会区分不同的事物，学会一些比较异同的规则", "提供 Support Set 后，比较 Query 和 Support Set 中的哪张图片最相似，Query 在 Train Set 中没有见过"
+
+基本概念
+--------
 
 深度学习
     针对某一个特定的 task，从 0 开始学习，然后应用到该 task。
@@ -33,21 +31,29 @@
     但是如果我们能再多提供一点信息（Support Set），它就能从 Support Set 找出 Query 属于哪个类别。
     小样本学习的模型输入是两张图片，或三张图片。输出是相似度函数。
 
-小样本学习一般的工作流程：
+.. note:: 
 
-- 首先，从一个大数据集中做训练
-- 然后，将相似度函数应用到预测上
+    考虑图像分类场景，小样本学习一般的工作流程：
 
-  - 比较 Query 和 Support Set
-  - 找出 Support Set 中最相似的
+    假如我有一个10类的数据，每个类别10张图片，共10*10=100张。那 meta-learning 的过程就是，首先设置实验，比如10-way 5-shot。
+    meta-train 的过程拿 imagenet 这种数据集 pre-train，
+    meta-test 就是在我自己的数据（100张图）上面 finetune，
+    最后拿到那套参数 θ，然后推理的时候每次就拿这个 θ 算一下前向进行分类。
 
-两个常用的数据集：
+    - 首先，从一个大数据集中做 pre-train
+    - 然后，在自己的数据集上 fine-tune，最小化损失函数
 
-- Ominilot
-- Mini-ImageNet
+      - 比较 Query 和 Support Set
+      - 找出 Support Set 中最相似的
+
+    两个常用的数据集：
+
+    - Ominilot
+    - Mini-ImageNet
 
 Support Set
-    很小的一个数据集，只能在预测时提供一些额外的信息。比如我们想要判断一个未知事物是什么东西的时候，需要与已知事物建立一种联系，这种联系很像查手册。
+    很小的一个数据集，只能在预测时提供一些额外的信息。
+    比如我们想要判断一个未知事物是什么东西的时候，需要与已知事物建立一种联系，这种联系很像查手册。
 
 Train Set
     很大的一个数据集，可以用于训练一个神经网络。让神经网络学会比较异同（具备自主学习的能力，这是我们能够提供的先验），做预测时，给出 Support Set，让它分类。
@@ -55,15 +61,12 @@ Train Set
 One Shot Learning
     用一张卡片识别出一种动物叫 One Shot Learning。
 
-k way
-    The support set has k classes.
-
-n shot
-    Every class has n samples.
+K-way，N-shot
+    The support set has k classes, every class has n samples.
 
 相似度函数
     :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1` ，否则等于 :math:`0` 。
-
+    通常作为标签。
 
 孪生网络
 --------
@@ -151,3 +154,4 @@ Fine Tuning
 2. `[金山文档] FSL PPT 01 Introduction.pdf <https://kdocs.cn/l/cpTe5jubAGog>`_
 3. `[金山文档] FSL PPT 02 Siamese Network.pdf <https://kdocs.cn/l/cvbUxZGl0zwe>`_
 4. `[金山文档] FSL PPT 03 Pretraining and Fine Tuning.pdf <https://kdocs.cn/l/cbBZGuwm26Yr>`_
+5. `Model-Agnostic Meta-Learning（MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
