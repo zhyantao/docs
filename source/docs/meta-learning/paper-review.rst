@@ -16,7 +16,7 @@
 科普博文
 ~~~~~~~~
 
-- `Model-Agnostic Meta-Learning （MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
+- `Model-Agnostic Meta-Learning（MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
 - `MAML算法，model-agnostic metalearnings? <https://www.zhihu.com/question/266497742>`_
 - `Meta learning中meta learner的优化 <https://zhuanlan.zhihu.com/p/52144418>`_
 - `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
