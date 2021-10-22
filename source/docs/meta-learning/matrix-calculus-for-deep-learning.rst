@@ -329,10 +329,10 @@ Example 3
 标量链式法则
 ------------
 
-上面的标量形式能解决问题，但是，在神经网络中，我们通常需要的是向量的链式求导规则，下面我们将逐步走进向量求导的链式法则。
+在神经网络中，我们通常需要的是向量链式求导规则，下面我们将从标量链式法则引出向量求导的链式法则。
 
-论文中将其称作单变量链式法则，这是标量对标量的求导规则，我们在高中就学过了。函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
-其导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
+论文中将标量链式法则称作单变量链式法则，这是标量对标量的求导规则，我们在高中就学过了。比如函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
+它的导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
 
 这是只有一个变量的情况，如果有两个或多个变量时情况就不太一样了。
 
@@ -345,7 +345,7 @@ Example 3
 
 .. note:: 
 
-    **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x` 外，其他都是常量。因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下。
+    **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x` 外，其他都是常量。因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下：
 
     .. math::
 
@@ -421,9 +421,9 @@ Example 3
 向量链式法则
 ------------
 
-向量链式法则和标量链式法则极其相似。因为是向量求导，所以求导后矩阵的形状遵从 \mathit{Jacobian\ matrix} 的形式。
+向量链式法则和标量链式法则极其相似。因为是向量求导，所以求导结果遵从 :math:`\mathit{Jacobian\ matrix}` 的 shape。
 
-以一个例子作为引入点，探讨链式求导规则，然后试图公式推广至通用。
+以一个例子作为引入点，探讨向量链式求导规则，然后试图将公式推广至通用。
 
 .. math::
 
@@ -470,7 +470,7 @@ Example 3
         \end{bmatrix}
     \end{align}
 
-上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 Jacobian matirx 过程）
+上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 :math:`\mathit{Jacobian\ matrix}` 过程）
 
 .. math::
 
@@ -487,7 +487,7 @@ Example 3
         \end{bmatrix}
     =   \dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}
 
-这说明，最终结果的 \mathit{Jacobian\ matrix} 是另外两个 \mathit{Jacobian\ matrix} 的乘积。我们验证一下直接使用这个结论来进行求导：
+这说明，最终结果的 :math:`\mathit{Jacobian\ matrix}` 是另外两个 :math:`\mathit{Jacobian\ matrix}` 的乘积。我们验证一下直接使用这个结论来进行求导：
 
 .. math::
 
@@ -507,7 +507,7 @@ Example 3
 我们使用向量得出了和标量一样的结果，因此
 :math:`\dfrac{\partial}{\partial x}\mathbf{f}(\mathbf{g}(x))=\dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}`
 是正确的。如果 :math:`x` 不是标量，而是向量的话，直接用 :math:`\mathbf{x}` 来替换公式中的 :math:`x` 就可以了。相应发生变化的也就只有
-:math:`\dfrac{\partial \mathbf{g}}{\partial x}` 这个 \mathit{Jacobian\ matrix} 。相应地可以自行验证。
+:math:`\dfrac{\partial \mathbf{g}}{\partial x}` 这个 :math:`\mathit{Jacobian\ matrix}` 。相应地可以自行验证。
 
 向量链式法则公式的优美之处在于它在我们没有察觉的时候，完美地将全微分法则包容了进来，同时公式又是那么的简洁。
 
