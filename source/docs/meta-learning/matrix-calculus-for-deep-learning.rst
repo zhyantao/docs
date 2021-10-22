@@ -326,22 +326,17 @@ Example 3
     \ &= sum(\mathbf{x}) \\\\
     \nabla y &= \begin{bmatrix} \dfrac{\partial y}{\partial \mathbf{x}} \quad \dfrac{\partial y}{\partial z} \end{bmatrix}
 
-链式法则
---------
+标量链式法则
+------------
 
-我们无法对复杂函数应用矩阵求导规则来直接进行求导。比如我们无法对嵌套表达式 :math:`sum(\mathbf{w}+\mathbf{x})` 直接进行求导，必须先将其转换到标量形式才能继续进行。
+上面的标量形式能解决问题，但是，在神经网络中，我们通常需要的是向量的链式求导规则，下面我们将逐步走进向量求导的链式法则。
 
-但是在向量链式法则的支持下，我们就能利用前面的结论了？
-
-单变量链式法则
-~~~~~~~~~~~~~~
-
-这是标量对标量的求导规则，我们在高中就学过了。函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
+论文中将其称作单变量链式法则，这是标量对标量的求导规则，我们在高中就学过了。函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
 其导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
 
 这是只有一个变量的情况，如果有两个或多个变量时情况就不太一样了。
 
-考虑目标方程 :math:`y(x)=x+x^2` ，求导数。
+以嵌套表达式 :math:`y(x)=x+x^2` 为例，探讨其求导方法。
 
 如果用 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}}{\mathrm{d}x}x+\dfrac{\mathrm{d}}{\mathrm{d}x}x^2=1+2x`
 的方式求导，使用的还是标量求导方式，没有用到链式法则。
@@ -381,12 +376,22 @@ Example 3
 
 首先，设置中间变量 :math:`u_1` 和 :math:`u_2` ：
 
-- :math:`u_1(x)=x^2`
-- :math:`u_2(x, u_1)=x+u_1` ，则 :math:`y=f(x)=u_2(x, u_1)`
+.. math::
+
+    \begin{align}
+    u_1(x)&=x^2 \\
+    u_2(x, u_1)&=x+u_1, \ for \ y=f(x)=u_2(x, u_1)
+    \end{align}
 
 然后，应用全微分公式求导：
 
-- :math:`\dfrac{\partial f(x, u_1)}{\partial x} = \dfrac{\partial u_2(x, u_1)}{\partial x} = \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} =  1 + 2x`    
+.. math::
+
+    \begin{align}
+    \dfrac{\partial f(x, u_1)}{\partial x} &= \dfrac{\partial u_2(x, u_1)}{\partial x}  \\
+    &= \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} \\
+    &=  1 + 2x
+    \end{align}
 
 .. hint:: 
     
@@ -412,6 +417,127 @@ Example 3
     
     - 前向求导就是当自变量（输入）取值发生变化时，会如何影响因变量（输出）
     - 反向求导就是当因变量（输出）取值发生变化时，会如何影响自变量（输入），反向求导可以一次性确定所有函数变量的变化量，所以它常被用来更新网络参数
+
+向量链式法则
+------------
+
+向量链式法则和标量链式法则极其相似。因为是向量求导，所以求导后矩阵的形状遵从 \mathit{Jacobian\ matrix} 的形式。
+
+以一个例子作为引入点，探讨链式求导规则，然后试图公式推广至通用。
+
+.. math::
+
+    \mathbf{y} = \mathbf{f}(x) 
+    = \begin{bmatrix} y_1(x) \\ y_2(x) \end{bmatrix}
+    = \begin{bmatrix} f_1(x) \\ f_2(x) \end{bmatrix}
+    = \begin{bmatrix} ln(x^2) \\ sin(3x) \end{bmatrix}
+
+首先，设置中间变量 :math:`g_1` 和 :math:`g_2` 。
+
+.. math::
+
+    \mathbf{g}(x) = \begin{bmatrix} g_1(x) \\ g_2(x) \end{bmatrix}
+    = \begin{bmatrix} x^2 \\ 3x \end{bmatrix}
+
+相应地：
+
+.. math::
+
+    \begin{bmatrix} f_1(\mathbf{g}) \\ f_2(\mathbf{g}) \end{bmatrix}
+    = \begin{bmatrix} ln(g_1) \\ sin(g_2) \end{bmatrix}
+
+则，
+
+.. math::
+
+    \begin{align}
+    \dfrac{\partial \mathbf{y}}{\partial x}
+    &=  \begin{bmatrix} 
+        \dfrac{\partial f_1(\mathbf{g})}{\partial x} \\\\ 
+        \dfrac{\partial f_2(\mathbf{g})}{\partial x} 
+        \end{bmatrix} \\\\
+    &=  \begin{bmatrix} 
+        \dfrac{\partial f_1}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_1}{\partial g_2} \dfrac{\partial g_2}{\partial x} \\\\
+        \dfrac{\partial f_2}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_2}{\partial g_2} \dfrac{\partial g_2}{\partial x}
+        \end{bmatrix} \\\\
+    &=  \begin{bmatrix} 
+        \dfrac{1}{g_1} 2x + 0 \\\\
+        0 + cos(g_2)3
+        \end{bmatrix} \\\\
+    &=  \begin{bmatrix} 
+        \dfrac{2}{x} \\\\
+        3cos(3x)
+        \end{bmatrix}
+    \end{align}
+
+上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 Jacobian matirx 过程）
+
+.. math::
+
+    \begin{bmatrix} 
+        \dfrac{\partial f_1}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_1}{\partial g_2} \dfrac{\partial g_2}{\partial x} \\\\
+        \dfrac{\partial f_2}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_2}{\partial g_2} \dfrac{\partial g_2}{\partial x}
+    \end{bmatrix}
+    =   \begin{bmatrix} 
+        \dfrac{\partial f_1}{\partial g_1} & \dfrac{\partial f_1}{\partial g_2} \\\\
+        \dfrac{\partial f_2}{\partial g_1} & \dfrac{\partial f_2}{\partial g_2} 
+        \end{bmatrix}
+        \begin{bmatrix} 
+        \dfrac{\partial g_1}{\partial x} \\\\ \dfrac{\partial g_2}{\partial x}
+        \end{bmatrix}
+    =   \dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}
+
+这说明，最终结果的 \mathit{Jacobian\ matrix} 是另外两个 \mathit{Jacobian\ matrix} 的乘积。我们验证一下直接使用这个结论来进行求导：
+
+.. math::
+
+        \dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}
+    =   \begin{bmatrix} 
+        \dfrac{1}{g_1} & 0 \\\\
+        0 & cos(g_2) 
+        \end{bmatrix}
+        \begin{bmatrix} 
+        2x \\\\ 3
+        \end{bmatrix}
+    =   \begin{bmatrix} 
+        \dfrac{2}{x} \\\\
+        3cos(3x)
+        \end{bmatrix}
+
+我们使用向量得出了和标量一样的结果，因此
+:math:`\dfrac{\partial}{\partial x}\mathbf{f}(\mathbf{g}(x))=\dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}`
+是正确的。如果 :math:`x` 不是标量，而是向量的话，直接用 :math:`\mathbf{x}` 来替换公式中的 :math:`x` 就可以了。相应发生变化的也就只有
+:math:`\dfrac{\partial \mathbf{g}}{\partial x}` 这个 \mathit{Jacobian\ matrix} 。相应地可以自行验证。
+
+向量链式法则公式的优美之处在于它在我们没有察觉的时候，完美地将全微分法则包容了进来，同时公式又是那么的简洁。
+
+之所以说包容了全微分公式，是因为 :math:`f_i` 对 :math:`g_i` 求导，会考虑 :math:`f_i` 和 :math:`g_i` 的所有组合，同理，对 :math:`g_i` 和 :math:`x_i` 也是如此。
+
+综上，我们可以总结出更一般的向量链式法则，来应对更为普遍的情况。
+
+.. math::
+
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{g}(\mathbf{x}))
+    =   \begin{bmatrix}
+        \dfrac{\partial f_1}{\partial g_1} & \dots & \dfrac{\partial f_1}{\partial g_k} \\\\
+        \vdots & \ddots & \vdots \\\\
+        \dfrac{\partial f_m}{\partial g_1} & \dots & \dfrac{\partial f_m}{\partial g_k}
+        \end{bmatrix}
+        \begin{bmatrix}
+        \dfrac{\partial g_1}{\partial x_1} & \dots & \dfrac{\partial g_1}{\partial x_n} \\\\
+        \vdots & \ddots & \vdots \\\\
+        \dfrac{\partial g_k}{\partial x_1} & \dots & \dfrac{\partial g_k}{\partial x_n}
+        \end{bmatrix}
+
+其中， :math:`m=|\mathbf{f}|` ， :math:`n=|\mathbf{x}|` ， :math:`k=|\mathbf{g}|` 。
+
+当 :math:`f_i` 仅是 :math:`g_i` 的函数，且 :math:`g_i` 仅是 :math:`x_i` 的函数时，我们还能对上述结果进行化简，即
+
+.. math::
+    
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{g}(\mathbf{x}))=diag(\dfrac{\partial f_i}{\partial g_i}\dfrac{\partial g_i}{\partial x_i})
+
+到目前为止，我们就讲完了有关神经网络求导的全部知识。下面会有一些具体的案例，帮助我们理解。
 
 参考文献
 --------
