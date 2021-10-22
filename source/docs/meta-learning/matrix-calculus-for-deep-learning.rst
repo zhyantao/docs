@@ -470,7 +470,7 @@ Example 3
         \end{bmatrix}
     \end{align}
 
-上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 :math:`\mathit{Jacobian\ matirx}` 过程）
+上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 :math:`\mathit{Jacobian\ matrix}` 过程）
 
 .. math::
 
