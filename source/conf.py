@@ -9,7 +9,7 @@ import os
 
 project = u'Notebook' 
 copyright = u'2021, RYAN'
-author = u'<a href="mailto:yanntao@yeah.net">RYAN</a>'
+author = u'<a href="https://example.com">RYAN</a>'
 version = 'v 1.2.0'
 
 master_doc = 'index'
@@ -155,9 +155,7 @@ extlinks = {
 typehints_fully_qualified = False
 
 # Setting for sphinx_copybutton
-copybutton_prompt_text = (
-    r">>> |\.\.\. |(?:\(.*\) )?\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
-)
+copybutton_prompt_text = r">>> |\.\.\. |(?:\(.*\) )?\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
 
 # Setting for sphinx_panels
