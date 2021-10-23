@@ -262,8 +262,7 @@
 
 可以声明 ``ArrayList.class`` 但是不能声明 ``ArrayList<Integer>.class`` 就是因为擦除。
 
-擦除就是，在使用泛型时，任何具体的类型信息都被擦除了，你唯一知道的就是你在使用一个对象。
-``List<String>`` 与 ``List<Integer>`` 在运行时事实上是相同的类型，即 ``List`` 。
+擦除会移除参数类型信息。 ``List<String>`` 与 ``List<Integer>`` 在运行时事实上是相同的类型，即 ``List`` 。
 
 泛型类型只有在静态类型检查期间才出现，在此之后，程序中的所有泛型类型都将被擦除，替换为它们的非泛型上界。
 例如， ``List<T extends HasF>`` 中的 ``T`` 擦除到了 ``HasF``
