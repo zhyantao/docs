@@ -565,4 +565,10 @@ whereas
     但是
 commute
     交换(律)
+dot product
+    点乘，也叫数量积，内积
+element-wise product
+    分素乘积，也叫哈达玛乘积，英文也有 entrywise product
+piecewise function
+    分段函数
 
