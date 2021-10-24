@@ -37,6 +37,7 @@
 
     关于全微分和偏微分的理解可能网络上并不一致。参考 :footcite:p:`DBLP:journals/corr/abs-1802-01528` 第 19 页，第 4 段。
 
+
 .. _scalar-derivative-rules:
 
 标量求导
@@ -52,6 +53,7 @@
     ":math:`f-g`", ":math:`\dfrac{\mathrm d f}{\mathrm d x}-\dfrac{\mathrm d g}{\mathrm d x}`", ":math:`\dfrac{\mathrm d}{\mathrm d x}(x^2-3x)=2x-3`"
     ":math:`fg`", ":math:`f\dfrac{\mathrm d g}{\mathrm d x}+\dfrac{\mathrm d f}{\mathrm d x}g`", ":math:`\dfrac{\mathrm d}{\mathrm d x}(x^2x)=x^2+x2x=3x^2`"
     ":math:`f\big(g(x)\big)`", ":math:`\dfrac{\mathrm d f(u)}{\mathrm d u}\dfrac{\mathrm d u}{\mathrm d x}, let\ u= g(x)`", ":math:`\dfrac{\mathrm d}{\mathrm d x}\ln{x^2}=\dfrac{1}{x^2}2x=\dfrac{2}{x}`"
+
 
 向量求导
 --------
@@ -70,6 +72,7 @@
     向量 :math:`\mathbf{f}` 表示一组函数 :math:`\mathbf{f} = \begin{bmatrix} \mathit{f_1} \\ \mathit{f_1} \\ \vdots \\ \mathit{f_m} \\ \end{bmatrix}` ，
     当 :math:`\mathbf{f}` 中的某个函数 :math:`\mathit{f_i}` 作用于向量 :math:`\mathbf{x}` 时，其实质是
     :math:`f_i(\mathbf{x}) = 2 \mathit{x_1}^2 + 3 \mathit{x_2} + \dots` 这种形式。
+
 
 矩阵求导
 --------
@@ -180,6 +183,9 @@
             0 & 0 & \dots & 1
             \end{bmatrix} \\\\
         &= I\ (I\ \mathrm{is\ the\ identity\ matrix\ with\ ones\ down\ the\ diagonal})
+
+
+.. _example-1:
 
 Example 1
 ~~~~~~~~~~
@@ -293,6 +299,9 @@ Example 1
 
     当含有常数项时，:math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 变成了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(z)` ，其中 :math:`\mathbf{g}(z)=\vec{1}z` 。
 
+
+.. _example-2:
+
 Example 2
 ~~~~~~~~~~
 
@@ -309,7 +318,8 @@ Example 2
     &= \text{and since } \dfrac{\partial}{\partial x_j}x_i=0 \text{, for} j \neq i \text{)} \\\\
     &= \begin{bmatrix} \dfrac{\partial x_1}{\partial x_1} \quad \dfrac{\partial x_2}{\partial x_2} \quad \dots \quad \dfrac{\partial x_n}{\partial x_n} \end{bmatrix} \\\\
     &= \begin{bmatrix} 1 \quad 1 \quad \dots \quad 1 \end{bmatrix}
-    
+
+
 Example 3
 ~~~~~~~~~~
 
@@ -325,6 +335,7 @@ Example 3
     \ &= \displaystyle\sum_i x_i \\\\
     \ &= sum(\mathbf{x}) \\\\
     \nabla y &= \begin{bmatrix} \dfrac{\partial y}{\partial \mathbf{x}} \quad \dfrac{\partial y}{\partial z} \end{bmatrix}
+
 
 标量链式法则
 ------------
@@ -376,22 +387,17 @@ Example 3
 
 首先，设置中间变量 :math:`u_1` 和 :math:`u_2` ：
 
-.. math::
+:math:`u_1(x) = x^2`
 
-    \begin{align}
-    u_1(x)&=x^2 \\
-    u_2(x, u_1)&=x+u_1, \ for \ y=f(x)=u_2(x, u_1)
-    \end{align}
+:math:`u_2(x, u_1) = x+u_1, \ for \ y=f(x)=u_2(x, u_1)` 
 
 然后，应用全微分公式求导：
 
 .. math::
 
-    \begin{align}
-    \dfrac{\partial f(x, u_1)}{\partial x} &= \dfrac{\partial u_2(x, u_1)}{\partial x}  \\
-    &= \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} \\
-    &=  1 + 2x
-    \end{align}
+    \dfrac{\partial f(x, u_1)}{\partial x} = \dfrac{\partial u_2(x, u_1)}{\partial x}  
+    = \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} 
+    =  1 + 2x
 
 .. hint:: 
     
@@ -418,6 +424,7 @@ Example 3
     - 前向求导就是当自变量（输入）取值发生变化时，会如何影响因变量（输出）
     - 反向求导就是当因变量（输出）取值发生变化时，会如何影响自变量（输入），反向求导可以一次性确定所有函数变量的变化量，所以它常被用来更新网络参数
 
+
 向量链式法则
 ------------
 
@@ -434,41 +441,33 @@ Example 3
 
 首先，设置中间变量 :math:`g_1` 和 :math:`g_2` 。
 
-.. math::
-
-    \mathbf{g}(x) = \begin{bmatrix} g_1(x) \\ g_2(x) \end{bmatrix}
-    = \begin{bmatrix} x^2 \\ 3x \end{bmatrix}
+:math:`\mathbf{g}(x) = \begin{bmatrix} g_1(x) \\ g_2(x) \end{bmatrix} = \begin{bmatrix} x^2 \\ 3x \end{bmatrix}`
 
 相应地：
 
-.. math::
-
-    \begin{bmatrix} f_1(\mathbf{g}) \\ f_2(\mathbf{g}) \end{bmatrix}
-    = \begin{bmatrix} ln(g_1) \\ sin(g_2) \end{bmatrix}
+:math:`\begin{bmatrix} f_1(\mathbf{g}) \\ f_2(\mathbf{g}) \end{bmatrix} = \begin{bmatrix} ln(g_1) \\ sin(g_2) \end{bmatrix}`
 
 则，
 
 .. math::
 
-    \begin{align}
     \dfrac{\partial \mathbf{y}}{\partial x}
-    &=  \begin{bmatrix} 
+    =  \begin{bmatrix} 
         \dfrac{\partial f_1(\mathbf{g})}{\partial x} \\\\ 
         \dfrac{\partial f_2(\mathbf{g})}{\partial x} 
-        \end{bmatrix} \\\\
-    &=  \begin{bmatrix} 
+        \end{bmatrix} 
+    =  \begin{bmatrix} 
         \dfrac{\partial f_1}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_1}{\partial g_2} \dfrac{\partial g_2}{\partial x} \\\\
         \dfrac{\partial f_2}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_2}{\partial g_2} \dfrac{\partial g_2}{\partial x}
-        \end{bmatrix} \\\\
-    &=  \begin{bmatrix} 
+        \end{bmatrix}
+    =  \begin{bmatrix} 
         \dfrac{1}{g_1} 2x + 0 \\\\
         0 + cos(g_2)3
-        \end{bmatrix} \\\\
-    &=  \begin{bmatrix} 
+        \end{bmatrix}
+    =  \begin{bmatrix} 
         \dfrac{2}{x} \\\\
         3cos(3x)
         \end{bmatrix}
-    \end{align}
 
 上面的过程可以求出正确的结果，但是，我们仍然试图简化过程，现在，把标量形式写成向量形式：（逆 :math:`\mathit{Jacobian\ matrix}` 过程）
 
@@ -539,10 +538,170 @@ Example 3
 
 到目前为止，我们就讲完了有关神经网络求导的全部知识。下面会有一些具体的案例，帮助我们理解。
 
+
+对激活函数求导
+--------------
+
+多数人工神经元都符合下图所示的样子，即一个仿射函数，外加一个激活函数。
+
+.. image:: ../../_static/images/artificial-neuron.png
+    :width: 300px
+    :height: 200px
+    :align: center
+
+对于上图，它的数学表达式为 :math:`activation(\mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)` 。
+
+- :ref:`example-1` 求出了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 的导数
+- :ref:`example-2` 求出了 :math:`y=sum\big(\mathbf{f}(\mathbf{x})\big)` 的导数
+
+现在我们想求 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\cdot\mathbf{g}(\mathbf{x})` 的导数，可以使用链式法则。
+
+.. hint:: 
+    
+    :math:`\mathbf{w}\cdot\mathbf{x}=\mathbf{w}^T\mathbf{x} = sum(\mathbf{w}\otimes\mathbf{x})`
+
+首先，设置中间变量：
+
+:math:`\mathbf{u}=\mathbf{w}\otimes\mathbf{x}`
+
+:math:`y=sum(\mathbf{u})`
+
+则 :ref:`example-1` 的结论告诉我们
+:math:`\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\dfrac{\partial}{\partial \mathbf{w}}(\mathbf{w}\otimes\mathbf{x})=diag(\mathbf{x})` ，
+:math:`\dfrac{\partial y}{\partial \mathbf{u}}=\dfrac{\partial}{\partial \mathbf{w}}(sum(\mathbf{u}))=\mathbf{1}^T` 。
+
+应用向量链式法则，
+:math:`\dfrac{\partial y}{\partial \mathbf{w}}=\dfrac{\partial y}{\partial \mathbf{u}}\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\mathbf{1}^T diag(\mathbf{x})=\mathbf{x}^T` 。
+
+验证结果的正确性时，可以将它们先转成标量形式，在进行求导：
+
+:math:`y=\mathbf{w}\cdot\mathbf{x}=\displaystyle\sum_i(w_i x_i)` 
+
+:math:`\dfrac{\partial y}{\partial w_j}=\displaystyle\sum_i\dfrac{\partial}{\partial w_j}(w_i x_i)=\dfrac{\partial}{\partial w_j}(w_j x_j)=x_j` 
+
+因此， :math:`\dfrac{\partial y}{\partial \mathbf{w}}=[x_1, x_2, \dots, x_n]=\mathbf{x}^T` 。
+
+更进一步地，我们求解 :math:`\mathbf{y}=\mathbf{w}\cdot\mathbf{x}+b` 的导数。
+
+:math:`\dfrac{\partial y}{\partial \mathbf{w}}=\dfrac{\partial}{\partial \mathbf{w}}\mathbf{w}\cdot\mathbf{x}+\dfrac{\partial}{\partial \mathbf{w}}b=\mathbf{x}^T+\mathbf{0}^T=\mathbf{x}^T`
+
+:math:`\dfrac{\partial y}{\partial b}=\dfrac{\partial}{\partial b}\mathbf{w}\cdot\mathbf{x}+\dfrac{\partial}{\partial b}b=0+1=1`
+
+对于函数 :math:`max(0, \mathbf{w}\cdot\mathbf{x}+b)` 这个函数来讲，它的导数是一个分段函数
+
+:math:`\dfrac{\partial y}{\partial z}max(0, z)=\begin{cases}0 & \text{if } z < 0, \\ \dfrac{\mathrm{d}z}{\mathrm{d}z}=1 & \text{if } z > 0 .\end{cases}`
+
+当 :math:`max` 函数中有一个或多个向量时，我们需要将向量拆解成多元素的标量形式：
+
+:math:`max(0, \mathbf{x})=\begin{bmatrix} max(0, x_1) \\ \vdots \\ max(0, x_n) \end{bmatrix}`
+
+然后，分别对每个 :math:`max` 应用求导规则：
+
+:math:`\dfrac{\partial}{\partial \mathbf{x}}max(0, \mathbf{x})=\begin{bmatrix} \dfrac{\partial}{\partial x_1}max(0, x_1) \\ \vdots \\ \dfrac{\partial}{\partial x_n}max(0, x_n) \end{bmatrix}`
+
+其中
+:math:`\dfrac{\partial}{\partial x_i}max(0, x_i)=\begin{cases}0 & \text{if } x_i < 0, \\ \dfrac{\mathrm{d}x_i}{\mathrm{d}x_i}=1 & \text{if } x_i > 0 .\end{cases}` 。
+
+然后，应用向量链式法则对 :math:`activation(\mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)` 求导：
+
+令
+
+:math:`z(\mathbf{w}, b, \mathbf{x})=\mathbf{w}\cdot\mathbf{x}+b` 
+
+:math:`activation(z)=max(0, z)`
+
+则
+
+:math:`\dfrac{\partial activation}{\partial \mathbf{x}}=\dfrac{\partial activation}{\partial z}\dfrac{\partial z}{\partial \mathbf{w}}=\begin{cases}0\dfrac{\partial z}{\partial \mathbf{w}}=\mathbf{0}^T & \text{if } z <= 0, \\ 1\dfrac{\partial z}{\partial \mathbf{w}}=\dfrac{\partial z}{\partial \mathbf{w}}=\mathbf{x} & \text{if } z > 0 .\end{cases}`
+
+因此，
+
+:math:`\dfrac{\partial activation}{\partial \mathbf{x}}=\begin{cases} \mathbf{0} & \text{if } \mathbf{w} \cdot \mathbf{x} + b <= 0, \\ \mathbf{x}^T & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0 .\end{cases}`
+
+对于
+
+:math:`\dfrac{\partial activation}{\partial b}=\begin{cases} 0 \dfrac{\partial z}{\partial b} = 0 & \text{if } \mathbf{w} \cdot \mathbf{x} + b <= 0, \\ 1 \dfrac{\partial z}{\partial b} = 1 & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0 .\end{cases}`
+
+
+对损失函数求导
+--------------
+
+损失函数定义为 :math:`C=(\mathbf{w}, b, \mathbf{X}, \mathbf{y})=\dfrac{1}{N}\displaystyle\sum_{i=1}^N(y_i-activation(\mathbf{x}_i))^2=\dfrac{1}{N}\displaystyle\sum_{i=1}^N(y_i-max(0, \mathbf{w}\cdot\mathbf{x}_i+b))^2`
+
+.. hint:: 损失函数 :math:`C` 的记号并没有遵从 :ref:`符号表 <symbol-definition>` 的约定，因为它只是一个函数映射关系，和上面的 activation 一样，特殊对待就好了。
+
+其中，
+:math:`\mathbf{X}=\begin{bmatrix} \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_N \end{bmatrix}` ，
+:math:`N=|\mathbf{X}|` ，
+:math:`y=\begin{bmatrix} target(\mathbf{x}_1), target(\mathbf{x}_2), \dots,target(\mathbf{x}_N) \end{bmatrix} ^ T` 。
+
+求损失函数的导数。
+
+首先，设置中间变量：
+
+:math:`u(\mathbf{w}, b, \mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)`
+
+:math:`v(y, u)=y-u` 
+
+:math:`C(v)=\dfrac{1}{n}\displaystyle\sum_{i=1}^N v^2`  
+
+然后，求 :math:`\dfrac{\partial C(v)}{\partial \mathbf{w}}` ：
+
+.. math::
+
+    \begin{align}
+    \dfrac{\partial C(v)}{\partial \mathbf{w}}
+    &=\dfrac{\partial}{\partial \mathbf{w}} \dfrac{1}{N}\displaystyle\sum_{i=1}^N v^2
+    =\dfrac{1}{N} \displaystyle\sum_{i=1}^N \dfrac{\partial}{\partial \mathbf{w}} v^2 \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \dfrac{\partial v^2}{\partial v} \dfrac{\partial v}{\partial \mathbf{w}}
+    =\dfrac{1}{N} \displaystyle\sum_{i=1}^N 2v \dfrac{\partial v}{\partial \mathbf{w}} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} 2v\mathbf{0}^T=\mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2v\mathbf{x}^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2(y_i - u)\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2(y_i - max(0, \mathbf{w}\cdot\mathbf{x}+b))\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2(y_i - (\mathbf{w}\cdot\mathbf{x}+b))\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ \dfrac{-2}{N} \displaystyle\sum_{i=1}^N (y_i - (\mathbf{w}\cdot\mathbf{x}+b))\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ \dfrac{2}{N} \displaystyle\sum_{i=1}^N (\mathbf{w}\cdot\mathbf{x}+b-y_i)\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases}
+    \end{align}
+
+令 :math:`e_i=\mathbf{w}\cdot\mathbf{x}+b-y_i` ，我们通常称 :math:`e_i` 为误差项，则 :math:`\dfrac{\partial C(v)}{\partial \mathbf{w}} = \dfrac{2}{N} \displaystyle\sum_{i=1}^N e_i\mathbf{x}_i^T` （只考虑了非零的情况）。
+
+更新公式为 :math:`\mathbf{w}_{t+1}=\mathbf{w}_{t}-\eta\dfrac{\partial C}{\partial \mathbf{w}}` 。
+
+最后，求 :math:`\dfrac{\partial C(v)}{\partial b}` ：
+
+.. math::
+
+    \begin{align}
+    \dfrac{\partial C(v)}{\partial b}
+    &=\dfrac{\partial}{\partial b} \dfrac{1}{N}\displaystyle\sum_{i=1}^N v^2
+    =\dfrac{1}{N} \displaystyle\sum_{i=1}^N \dfrac{\partial}{\partial b} v^2 \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \dfrac{\partial v^2}{\partial v} \dfrac{\partial v}{\partial b}
+    =\dfrac{1}{N} \displaystyle\sum_{i=1}^N 2v \dfrac{\partial v}{\partial b} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} 0 & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2v & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} 0 & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2(y_i - max(0, \mathbf{w}\cdot\mathbf{x}+b)) & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\dfrac{1}{N} \displaystyle\sum_{i=1}^N \begin{cases} 0 & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ -2(y_i - (\mathbf{w}\cdot\mathbf{x}+b)) & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\begin{cases} 0 & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ \dfrac{-2}{N} \displaystyle\sum_{i=1}^N (y_i - (\mathbf{w}\cdot\mathbf{x}+b)) & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases} \\\\
+    &=\begin{cases} 0 & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ \dfrac{2}{N} \displaystyle\sum_{i=1}^N (\mathbf{w}\cdot\mathbf{x}+b-y_i) & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases}
+    \end{align}
+
+使用前面的误差项，则 :math:`\dfrac{\partial C(v)}{\partial b} = \dfrac{2}{N} \displaystyle\sum_{i=1}^N e_i` （只考虑了非零的情况）
+
+更新公式为 :math:`b_{t+1}=b_{t}-\eta\dfrac{\partial C}{\partial b}` 。
+
+依赖现有知识，就可以对大多数神经网络进行分析和求导了。
+
+如果需要简化目标方程，可以合并 :math:`\mathbf{w}` 和 :math:`b` 的更新公式，记作 :math:`\hat{\mathbf{w}}=\begin{bmatrix} \mathbf{w}^T, b \end{bmatrix}`
+（注意，这种写法意味着需要调整输入 :math:`\mathbf{x}`  的形状为 :math:`\hat{\mathbf{x}}=\begin{bmatrix} \mathbf{x}^T, 1 \end{bmatrix}` 。
+这时， :math:`\mathbf{w}\cdot\mathbf{x}+b` 就可以写作 :math:`\hat{\mathbf{w}} \cdot \hat{\mathbf{x}}` 了。这种写法，其实和上课庞老师讲的是一样的。
+
+到目前为止，整理完了这篇文章中出现的所有公式， `原文第 8 小节 <https://www.kdocs.cn/p/135966556760>`_ 是对全文公式的总结，这里就不再整理了。
+
+
 参考文献
 --------
 
 .. footbibliography::
+
 
 附：单词表
 -----------
@@ -571,4 +730,5 @@ element-wise product
     分素乘积，也叫哈达玛乘积，英文也有 entrywise product
 piecewise function
     分段函数
-
+affine function
+    仿射函数，指的是一个线性函数加上一个常量偏移，比如 :math:`y=ax+b`
