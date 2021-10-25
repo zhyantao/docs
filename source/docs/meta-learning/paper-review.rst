@@ -18,11 +18,10 @@
 
 - `Model-Agnostic Meta-Learning（MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
 - `MAML算法，model-agnostic metalearnings? <https://www.zhihu.com/question/266497742>`_
-- `Meta learning中meta learner的优化 <https://zhuanlan.zhihu.com/p/52144418>`_
 - `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
 - `从 CVPR 2019 一览小样本学习研究进展 <https://www.leiphone.com/category/academic/4wc0990rNQf43mss.html>`_ 每年 CVPR 都会有针对小样本学习的一个总结
 - `Learning to learn - The Berkeley Artificial Intelligence Research <https://bair.berkeley.edu/blog/2017/07/18/learning-to-learn/>`_
-- `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_
+- `元学习: 学习如何学习【译】 <https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html>`_
 - `Meta-Reinforcement Learning <https://blog.floydhub.com/meta-rl/>`_
 - `How to train your MAML: A step by step approach <https://www.bayeswatch.com/2018/11/30/HTYM/>`_
 - `An Introduction to Meta-Learning <https://medium.com/walmartglobaltech/an-introduction-to-meta-learning-ced7072b80e7>`_

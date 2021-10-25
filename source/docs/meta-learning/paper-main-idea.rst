@@ -9,7 +9,7 @@
 HyperNetwork
 -------------
 
-HyperNetwork 主要用来生成参数。它使用 :math:`\mathcal{D}_{train}` 来训练 HyperNetwork 得到
+HyperNetwork 主要用来生成参数 :footcite:p:`zoph2016neural` 。它使用 :math:`\mathcal{D}_{train}` 来训练 HyperNetwork 得到
 :math:`h(\mathcal{D}_{train};\varphi)` ，这里的 :math:`\varphi` 就是网络的超参数，HyperNetwork 也就是 Meta Network 了。
 我们可以使用 :math:`\varphi` 来进一步训练小样本神经网络 :math:`f(x_{test};\theta)` 得到参数 :math:`\theta` 。
 
@@ -22,6 +22,9 @@ HyperNetwork 主要用来生成参数。它使用 :math:`\mathcal{D}_{train}` �
 -------------------
 
 目的是加快网络的更新速度 :footcite:p:`andrychowicz2016learning` 。
+将经验风险最小化损失的梯度，同样传导到 meta learner 上，更新其参数；通常 inner loop（Learner）更新N步，outer loop（Meta Learner）更新一步。
+
+.. image:: ../../_static/images/meta-learning-framework.gif
 
 利用 Attention 注意力机制方法
 -----------------------------
