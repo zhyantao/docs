@@ -15,7 +15,13 @@
 
     函数 :math:`f(x;\theta)` 中的分号用来分隔自变量和参数。
     
-    概率 :math:`\arg \max\limits_{\theta} p(\theta | \phi^*)` 中的竖线用来分隔自变量和参数。
+    概率 :math:`p(\theta | \phi^*)` 中的竖线用来分隔自变量和参数。
+
+    表达式 :math:`\alpha = \arg \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
+    的意思：当函数取最小值时，将 :math:`\omega` 的值赋给 :math:`\alpha` 。 
+    
+    表达式 :math:`\alpha = \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
+    的意思：当函数取最小值时，将这个最小值赋给 :math:`\alpha` 。
 
 .. _symbol-definition:
 
@@ -59,10 +65,15 @@
 
 .. csv-table::
     :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
-    :widths: 15, 20, 20, 20
+    :widths: 15, 30, 20, 20
 
-    ":math:`X`", "随机变量", "``X``", "大写意大利体"
+    ":math:`X`", "观测变量（也叫随机变量）", "``X``", "大写意大利体"
+    ":math:`x`", "观测值", "``x``", "小写意大利体"
+    ":math:`p(x)`", "观测变量取观测值时的概率", "``p(x)``", "小写意大利体"
+    ":math:`\mathcal{X}`", "观测变量的取值空间", "``\mathcal{X}``", "大写花体"
     ":math:`\mathcal{N}(\cdot)`", "正态分布", "``\mathcal{N}(\cdot)``", "大写花体"
+    ":math:`\mathbb{E}`", "数学期望", "``\mathbb{E}``", "黑板体"
+
 
 矩阵分析
 --------
