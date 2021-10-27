@@ -328,7 +328,7 @@ Example 3
 .. math::
 
     \dfrac{\partial y}{\partial \mathbf{x}}
-    &= \begin{bmatrix} \dfrac{\partial}{\partial x_1}\displaystyle\sum_i x_iz) \quad \dfrac{\partial}{\partial x_2}\displaystyle\sum_i x_iz) \quad \dots \quad \dfrac{\partial}{\partial x_n}\displaystyle\sum_i x_iz) \end{bmatrix} \\\\
+    &= \begin{bmatrix} \dfrac{\partial}{\partial x_1}\displaystyle\sum_i x_iz \quad \dfrac{\partial}{\partial x_2}\displaystyle\sum_i x_iz \quad \dots \quad \dfrac{\partial}{\partial x_n}\displaystyle\sum_i x_iz \end{bmatrix} \\\\
     \ &= \begin{bmatrix} z \quad z \quad \dots \quad z \end{bmatrix} \\\\
     \dfrac{\partial y}{\partial z} 
     &= \dfrac{\partial}{\partial z}\displaystyle\sum_i x_iz \quad \text{(and the shape is 1} \times \text{1)}\\\\
@@ -356,7 +356,9 @@ Example 3
 
 .. note:: 
 
-    **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x` 外，其他都是常量。因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下：
+    **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x`
+    （这里的 :math:`x` 也可以是 :math:`u` ，指的是自变量）外，其他都是常量。这句话的含义可以参考下面的图注。
+    因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下：
 
     .. math::
 
@@ -384,6 +386,26 @@ Example 3
 
         \displaystyle\sum_{i=1}^{n+1} \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
         =\dfrac{\partial f}{\partial \mathbf{u}} \dfrac{\partial \mathbf{u}}{\partial x}
+
+    .. rubric:: 注：函数 :math:`f` 与中间变量之间有这样一条依赖链条
+    
+    .. graphviz::
+
+        digraph foo {
+            u_1 [label=<u<SUB>1</SUB>>];
+            u_2 [label=<u<SUB>2</SUB>>];
+            u_3 [label=<...>];
+            u_n [label=<u<SUB>n</SUB>>];
+            "f" -> "x";
+            "f" -> "u_1";
+            "u_1" -> "x";
+            "f" -> "u_2";
+            "u_2" -> "x";
+            "f" -> "u_3";
+            "u_3" -> "x";
+            "f" -> "u_n";
+            "u_n" -> "x";
+        }
 
 首先，设置中间变量 :math:`u_1` 和 :math:`u_2` ：
 
