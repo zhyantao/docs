@@ -30,15 +30,15 @@
     
     **Learning algorithm A**
 
-    - 输入：training set :math:`\mathcal{D}_{train}=\{(\mathbf{x}_i, \mathbf{y}_i)\}` 
+    - 输入：training set :math:`\mathcal{D}_{train}=\left\{(\mathbf{x}_i, \mathbf{y}_i)\right\}` 
     - 输出：parameters :math:`\theta` 和 model :math:`M` （ **base-learner** 也叫 **learner** ）
-    - 目标：在 test set 上取得好效果 :math:`\mathcal{D}_{test}=\{(\mathbf{x'}_i, \mathbf{y'}_i)\}` 
+    - 目标：在 test set 上取得好效果 :math:`\mathcal{D}_{test}=\left\{(\mathbf{x'}_i, \mathbf{y'}_i)\right\}` 
     
     **Meta-learning algorithm**
 
-    - 输入：meta-training set :math:`\mathscr{D}_{meta-train}=\{(\mathcal{D}_{train}^{(n)}, \mathcal{D}_{test}^{(n)})\}_{n=1}^N` of episodes
+    - 输入：meta-training set :math:`\mathscr{D}_{meta-train}=\left\{(\mathcal{D}_{train}^{(n)}, \mathcal{D}_{test}^{(n)})\right\}_{n=1}^N` of episodes
     - 输出：parameters :math:`\Theta` 和 algorithm :math:`A` （ **meta-learner** ）
-    - 目标：在 meta-test set 上取得好效果 :math:`\mathscr{D}_{meta-test}=\{(\mathcal{D}_{test}^{\prime(n)}, \mathcal{D}_{test}^{\prime(n)})\}_{n=1}^{N'}` 
+    - 目标：在 meta-test set 上取得好效果 :math:`\mathscr{D}_{meta-test}=\left\{(\mathcal{D}_{test}^{\prime(n)}, \mathcal{D}_{test}^{\prime(n)})\right\}_{n=1}^{N'}` 
     
     对于上图来讲，我们可以看到 :math:`\mathcal{D}_{train}` 和 :math:`\mathcal{D}_{test}` 一个带问号，一个不带问号。
     这也诠释了为什么要分成两层循环，左边 :math:`\mathcal{D}_{train}` 中的每一张子图都是带有标签的，即
@@ -112,7 +112,7 @@ Triplet Loss
     将这三张图片都输入到网络中，可以得到三个特征向量 :math:`f(x^+), f(x^a), f(x^-)` 。
     三个向量，两两之间分别计算欧氏距离。
     目标是让正样本的特征向量和锚点的特征向量之间距离越小越好，负样本的特征向量与锚点的特征向量之间的距离越大越好。
-    :math:`Loss(x^a, x^+, x^-)=max\{0, d^+ + \alpha - d^-\}` 其中 :math:`\alpha` 是一个超参。更新网络参数，最小化 Loss。
+    :math:`Loss(x^a, x^+, x^-)=max\left\{0, d^+ + \alpha - d^-\right\}` 其中 :math:`\alpha` 是一个超参。更新网络参数，最小化 Loss。
 
 .. note:: 
 
