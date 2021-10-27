@@ -26,6 +26,26 @@
     目标是学会一种先验知识，学会自主学习。元学习是一种方法或过程，而小样本学习是一种场景。它用 task 做训练，然后应用到新 task。
     如何学会自主学习？用 Train Set 做训练的过程就是学习先验知识的过程。
 
+.. note:: 
+    
+    **Learning algorithm A**
+
+    - 输入：training set :math:`\mathcal{D}_{train}=\{(\mathbf{x}_i, \mathbf{y}_i)\}` 
+    - 输出：parameters :math:`\theta` 和 model :math:`M` （ **base-learner** 也叫 **learner** ）
+    - 目标：在 test set 上取得好效果 :math:`\mathcal{D}_{test}=\{(\mathbf{x'}_i, \mathbf{y'}_i)\}` 
+    
+    **Meta-learning algorithm**
+
+    - 输入：meta-training set :math:`\mathscr{D}_{meta-train}=\{(\mathcal{D}_{train}^{(n)}, \mathcal{D}_{test}^{(n)})\}_{n=1}^N` of episodes
+    - 输出：parameters :math:`\Theta` 和 algorithm :math:`A` （ **meta-learner** ）
+    - 目标：在 meta-test set 上取得好效果 :math:`\mathscr{D}_{meta-test}=\{(\mathcal{D}_{test}^{\prime(n)}, \mathcal{D}_{test}^{\prime(n)})\}_{n=1}^{N'}` 
+    
+    对于上图来讲，我们可以看到 :math:`\mathcal{D}_{train}` 和 :math:`\mathcal{D}_{test}` 一个带问号，一个不带问号。
+    这也诠释了为什么要分成两层循环，左边 :math:`\mathcal{D}_{train}` 中的每一张子图都是带有标签的，即
+    :math:`\mathcal{D}_{train}=(\mathbf{x}_i, \mathbf{y}_i)` ，而右侧图片标签未知，即 :math:`\mathcal{D}_{test}=(\mathbf{x'}_i, ?)` 。 
+    即左侧为元学习，学习优化的参数 :math:`\theta` ，右侧为需要优化的目标（可以是小样本学习），在优化的参数上微调，得以预测，我想，这就是两层循环的意思。
+    并且，如果你不对没有见过的问题或数据集做预测，那不叫元学习！
+
 小样本学习
     小样本学习是在有先验知识的基础上再进行学习的。
     对于小样本学习，你可以问机器这两张图片是不是同一种东西。
