@@ -43,6 +43,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
+    'sphinx.ext.mathjax',
     'sphinx.ext.extlinks',
     'myst_nb',
     'sphinx_togglebutton',
@@ -57,7 +58,6 @@ extensions = [
     'sphinx_panels',
     'sphinx_tabs.tabs',
     'sphinxcontrib.bibtex',
-    'sphinx.ext.mathjax',
 ]
 
 
