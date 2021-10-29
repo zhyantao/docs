@@ -8,6 +8,11 @@
     - `ML-Glossary <https://ml-cheatsheet.readthedocs.io/en/latest/index.html>`_
     - `Glossary of artificial intelligence <https://en.wikipedia.org/wiki/Glossary_of_artificial_intelligence>`_
 
+.. _math-glossary:
+
+基础数学
+--------
+
 点乘（Dot product / Scalar product）
     也叫数量积或向量内积，结果是一个向量在另一个向量上的投影长度，是一个标量。点乘的记号就是一个中心圆点 :math:`\cdot` 。代数定义为
     :math:`\mathbf{a}\cdot\mathbf{b}=\displaystyle\sum_{i=1}^n a_i b_i` 。几何定义为
@@ -39,6 +44,11 @@
     numpy 最基本的数据类型是 ndarray，它是多为数组的一种表示方式，为了提升 B 格，也可以用张量称呼它。
     张量是数学理论中比向量、矩阵更为抽象、更为一般的概念。是为了方便在数学上对多维数据进行描述而提出的。
     张量中的元素不只局限于整数和浮点数，也可以是字符串。
+
+.. _machine-learning-glossary:
+
+机器学习
+--------
 
 样本/特征向量/示例
     一行由属性值构成的组合，通常用 :math:`\mathbf{x}` 表示。
@@ -75,3 +85,36 @@ Batch
     其目标是学习一个从图像到嵌入空间的映射，在该空间中，同一类图像彼此间的距离较近，而不同类的图像距离则较远。
     我们希望这种性质适用于那些没有见过的类。
 
+优化器
+    指的是寻找最优参数的方法，最著名的就是梯度下降法。
+
+深度学习
+    针对某一个特定的 task，从 0 开始学习，然后应用到该 task。
+
+元学习
+    目标是学会一种先验知识，学会自主学习。元学习是一种方法或过程，而小样本学习是一种场景。
+    它用 task 做训练，然后应用到新 task。如何学会自主学习？用 Train Set 做训练的过程就是学习先验知识的过程。
+
+小样本学习
+    小样本学习是在有先验知识的基础上再进行学习的。
+    对于小样本学习，你可以问机器这两张图片是不是同一种东西。
+    比如，如果我们给神经网络一张图片（Query），问它这是什么东西时，它可能没见过，不知道如何这个照片属于哪一类。
+    但是如果我们能再多提供一点信息（Support Set），它就能从 Support Set 找出 Query 属于哪个类别。
+    小样本学习的模型输入是两张图片，或三张图片。输出是相似度函数。
+
+Support Set
+    很小的一个数据集，只能在预测时提供一些额外的信息。
+    比如我们想要判断一个未知事物是什么东西的时候，需要与已知事物建立一种联系，这种联系很像查手册。
+
+Train Set
+    很大的一个数据集，可以用于训练一个神经网络。让神经网络学会比较异同（具备自主学习的能力，这是我们能够提供的先验），做预测时，给出 Support Set，让它分类。
+
+One Shot Learning
+    用一张卡片识别出一种动物叫 One Shot Learning。
+
+K-way，N-shot
+    The support set has k classes, every class has n samples.
+
+相似度函数
+    :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1` ，否则等于 :math:`0` 。
+    通常作为标签。

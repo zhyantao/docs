@@ -24,8 +24,6 @@ HyperNetwork 主要用来生成参数 :footcite:p:`zoph2016neural` 。它使用 
 目的是加快网络的更新速度 :footcite:p:`andrychowicz2016learning` 。
 将经验风险最小化损失的梯度，同样传导到 meta learner 上，更新其参数；通常 inner loop（Learner）更新N步，outer loop（Meta Learner）更新一步。
 
-.. image:: ../../_static/images/meta-learning-framework.gif
-
 利用 Attention 注意力机制方法
 -----------------------------
 
