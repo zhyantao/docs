@@ -52,9 +52,20 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 
 元学习一般有三种基本解决方法：
 
-- 基于度量的方法（学习事物背后的关联）：目标是学习不同样本之间的度量或距离函数，比如 Siamese Network，Matching Network，Relation Network，Prototypical Network。
-- 基于模型的方法（学习如何建模）：目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})` 。比如 MANN，Meta Network。
-- 基于优化的方法（学习如何学习）：目标是加快模型的求解速度。比如 Meta-Learning LSTM，MAML，Repitile。
+- 基于度量的方法（学习事物背后的关联）
+  
+  - 目标是学习不同样本之间的度量或距离函数；
+  - 比如 Siamese Network，Matching Network，Relation Network，Prototypical Network。
+
+- 基于模型的方法（学习如何建模）
+  
+  - 目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})` ；
+  - 比如 MANN，Meta Network。
+
+- 基于优化的方法（学习如何学习）
+  
+  - 目标是加快模型的求解速度；
+  - 比如 Meta-Learning LSTM，MAML，Repitile。
 
 基于度量的方法很好理解，它主要的构件就是嵌入模块和度量模块 [1]_ ：
 
