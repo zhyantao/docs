@@ -6,8 +6,6 @@
     :maxdepth: 1
     :glob:
 
-    glossary
-    symbols
     matrix-calculus-for-deep-learning
     paper-review
     introduction

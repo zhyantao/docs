@@ -2,93 +2,86 @@
 小样本学习介绍
 ==============
 
-.. note:: 
-
-    本节出现比较多的符号，参考 :ref:`符号表 <Meta-FSL-symbols>` 。
-
-.. csv-table::
-    :header: "名称", "训练阶段", "预测阶段"
-    :widths: 15, 35, 50
-
-    "传统机器学习", "学习 Train Set 后，学会识别什么是老虎什么是大象", "如果给定的动物属于 Train Set 中的某个物种，它可以识别这是什么物种，但是对于没见过的动物，它并不认识"
-    "小样本学习", "学习 Train Set 后，学会区分不同的事物，学会一些比较异同的规则", "提供 Support Set 后，比较 Query 和 Support Set 中的哪张图片最相似，Query 在 Train Set 中没有见过"
-
 基本概念
 --------
 
+小样本学习并不是一个单独的学科领域，而是元学习的一个特殊应用场景。它是在样本量比较少的情况下对数据进行预测。
+如果仅有几张图片，拿来训练肯定是不行的，分分钟过拟合。因此，我们需要某种手段来防止这种过拟合的发生，
+现在比较流行的一种思路就是先做预训练，让模型具有某种先验知识，或者说，让模型一定的自主学习能力，然后在此基础上进行微调。
+
+注意这里所说的模型，它通常由两部分组成，一部分用来学习先验知识，另一部分用来微调。
+
+回过头来看机器学习和深度学习。它们通常只有一个模型，而这个模型通常是针对某个特定问题提出的。
+当有新问题出现时，模型的泛化能力就出现了问题。元学习致力于解决这个泛化能力，它可以针对一系列问题进行求解。
+
+深度学习做训练，通常情况下是为了让模型具备识别某个事物的能力，也就是当给神经网络一张图片时，它能够看出来，这是一只狗，还是一只猫。
+元学习，是为了学习比较异同的规则，也就是说，如果我们同时给网络两张图片，它能看出来，这两张图片是不是同一种东西。
+
+连续读了几天论文，我发现，不管看哪个领域的论文，如果能够记住一些 :ref:`约定俗称的符号 <Meta-FSL-symbols>`
+对我们读后面的论文都会有一定的帮助。而且，通常，在刚刚接触新领域时，肯定会碰到一些
+:ref:`新的名词或专业术语 <machine-learning-glossary>`，能够及时地做好记录也是一个很好的习惯。
+
+元学习一般将问题分为三类 :footcite:p:`hospedales2020meta` ：
+
+- 元知识的表征：学习元知识应该如何表示，比如，学习权重、学习超参数、学习损失函数等；
+- 元学习器：学习应该如何学习问题，比如，可以学习如何更快地梯度下降等；
+- 元目标：学习如何更好地在某个特定场景下取得良好效果，比如应用于小样本还是多样本。
+
+.. image:: ../../_static/images/overview-of-meta-learning-landscape.png
+
+元学习一般包括两个学习器，learner 和 meta-learner，每个学习器都有一个超参数，但下图中没写。
+
+- learner 是用来解决手中数据的一个学习器，也叫 base-learner；
+- meta-learner 是预训练得到的一个学习器。
+
+.. image:: ../../_static/images/meta-learning-workflow.png
+
+读一些相关文献，从论文中的伪代码上可以看出来，它一般包括两层循环，外层循环学习得到 meta-learner，内层循环学习得到 learner。
+为了降低难度，我们看图来直观理解一下：
+
+.. image:: ../../_static/images/meta-learning-framework.gif
+
+为了能更进一步理解整体的工作过程，考虑一个例子：
+
 .. image:: ../../_static/images/meta-learning.png
 
-深度学习
-    针对某一个特定的 task，从 0 开始学习，然后应用到该 task。
-    （一个 task 对应上图中的一行，这句话的意思就是，深度学习只会学习一行，不会应用到其他行）
+假如我有一个 :math:`10` 类的数据，每个类别 :math:`10` 张图片，共 :math:`10 \times 10=100` 张。
+那元学习的过程就是，首先设置实验，比如 10-way 5-shot。
+meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在我自己的数据（ :math:`100` 张图）上面 finetune，
+最后拿到那套参数 :math:`\theta` ，然后推理的时候每次就拿这个 :math:`\theta` 算一下前向进行分类。
 
-元学习
-    目标是学会一种先验知识，学会自主学习。元学习是一种方法或过程，而小样本学习是一种场景。它用 task 做训练，然后应用到新 task。
-    如何学会自主学习？用 Train Set 做训练的过程就是学习先验知识的过程。
+元学习一般有三种基本解决方法：
 
-.. note:: 
-    
-    **Learning algorithm A**
+- 基于度量的方法（学习事物背后的关联）：目标是学习不同样本之间的度量或距离函数，比如 Siamese Network，Matching Network，Relation Network，Prototypical Network。
+- 基于模型的方法（学习如何建模）：目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})` 。比如 MANN，Meta Network。
+- 基于优化的方法（学习如何学习）：目标是加快模型的求解速度。比如 Meta-Learning LSTM，MAML，Repitile。
 
-    - 输入：training set :math:`\mathcal{D}_{train}=\left\{(\mathbf{x}_i, \mathbf{y}_i)\right\}` 
-    - 输出：parameters :math:`\theta` 和 model :math:`M` （ **base-learner** 也叫 **learner** ）
-    - 目标：在 test set 上取得好效果 :math:`\mathcal{D}_{test}=\left\{(\mathbf{x'}_i, \mathbf{y'}_i)\right\}` 
-    
-    **Meta-learning algorithm**
+基于度量的方法很好理解，它主要的构件就是嵌入模块和度量模块 [1]_ ：
 
-    - 输入：meta-training set :math:`\mathscr{D}_{meta-train}=\left\{(\mathcal{D}_{train}^{(n)}, \mathcal{D}_{test}^{(n)})\right\}_{n=1}^N` of episodes
-    - 输出：parameters :math:`\Theta` 和 algorithm :math:`A` （ **meta-learner** ）
-    - 目标：在 meta-test set 上取得好效果 :math:`\mathscr{D}_{meta-test}=\left\{(\mathcal{D}_{test}^{\prime(n)}, \mathcal{D}_{test}^{\prime(n)})\right\}_{n=1}^{N'}` 
-    
-    对于上图来讲，我们可以看到 :math:`\mathcal{D}_{train}` 和 :math:`\mathcal{D}_{test}` 一个带问号，一个不带问号。
-    这也诠释了为什么要分成两层循环，左边 :math:`\mathcal{D}_{train}` 中的每一张子图都是带有标签的，即
-    :math:`\mathcal{D}_{train}=(\mathbf{x}_i, \mathbf{y}_i)` ，而右侧图片标签未知，即 :math:`\mathcal{D}_{test}=(\mathbf{x'}_i, ?)` 。 
-    即左侧为元学习，学习优化的参数 :math:`\theta` ，右侧为需要优化的目标（可以是小样本学习），在优化的参数上微调，得以预测，我想，这就是两层循环的意思。
-    并且，如果你不对没有见过的问题或数据集做预测，那不叫元学习！
+- 嵌入模块 :math:`f` 将数据样本映射为特征向量；
+- 度量模块 :math:`g` 比较待测样本于其他样本的特征向量的相似度。
 
-小样本学习
-    小样本学习是在有先验知识的基础上再进行学习的。
-    对于小样本学习，你可以问机器这两张图片是不是同一种东西。
-    比如，如果我们给神经网络一张图片（Query），问它这是什么东西时，它可能没见过，不知道如何这个照片属于哪一类。
-    但是如果我们能再多提供一点信息（Support Set），它就能从 Support Set 找出 Query 属于哪个类别。
-    小样本学习的模型输入是两张图片，或三张图片。输出是相似度函数。
+.. image:: ../../_static/images/metric-based-meta-learning.png
 
-.. note:: 
+注：图片中的颜色，每种颜色都会有一个特征向量。把待测样本归类为相似度最高的样本所属的类别。分类器一般选择 Softmax。
 
-    考虑图像分类场景，小样本学习一般的工作流程：
+基于模型的方法，是学习如何建模。乍一看这个名字，还以为是让算法学习搭建网络结构呢，其实不然。
+网络结构还是人为定义好的，他要学习的是一种建立模型的能力，而不是具体的模型，也就是如何从少量数据中求解 :math:`P_\theta(y|\mathbf{x})` 。
 
-    假如我有一个10类的数据，每个类别10张图片，共10*10=100张。那 meta-learning 的过程就是，首先设置实验，比如10-way 5-shot。
-    meta-train 的过程拿 imagenet 这种数据集 pre-train，
-    meta-test 就是在我自己的数据（100张图）上面 finetune，
-    最后拿到那套参数 θ，然后推理的时候每次就拿这个 θ 算一下前向进行分类。
+神经图灵机的框架 :footcite:p:`DBLP:journals/corr/GravesWD14` 提供了一个通用的模型（见下图），在此基础上衍生出了 MANN 和 Meta Network。
 
-    - 首先，从一个大数据集中做 pre-train
-    - 然后，在自己的数据集上 fine-tune，最小化损失函数
+.. image:: ../../_static/images/neural-tuning-machine.png
 
-      - 比较 Query 和 Support Set
-      - 找出 Support Set 中最相似的
+具体的模型是由记忆产生的，在不同的记忆下，对应不同的函数（Read heads 读取记忆，Write heads 产生记忆）。
+对于新任务，模型把数据集载入记忆，Read heads 根据权重合理地读取记忆，就形成了对这个任务的建模。
 
-    两个常用的数据集：
+基于优化的方法，是我们通常讲的，如何学会学习，也就是说，如何学到一个合适的初始化，让模型更快地拟合。比如 MAML :footcite:p:`finn2017model` （见下图）。
 
-    - Ominilot
-    - Mini-ImageNet
+.. image:: ../../_static/images/model-agnostic-meta-learning.png
 
-Support Set
-    很小的一个数据集，只能在预测时提供一些额外的信息。
-    比如我们想要判断一个未知事物是什么东西的时候，需要与已知事物建立一种联系，这种联系很像查手册。
+注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*` ，这些优化参数的矢量和为 :math:`\theta` 。
 
-Train Set
-    很大的一个数据集，可以用于训练一个神经网络。让神经网络学会比较异同（具备自主学习的能力，这是我们能够提供的先验），做预测时，给出 Support Set，让它分类。
-
-One Shot Learning
-    用一张卡片识别出一种动物叫 One Shot Learning。
-
-K-way，N-shot
-    The support set has k classes, every class has n samples.
-
-相似度函数
-    :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1` ，否则等于 :math:`0` 。
-    通常作为标签。
+以上是我于 20211028 做的一次 PPT 组会分享 `Slide <https://kdocs.cn/l/siwQFFoPvu7I>`_ 。
 
 孪生网络
 --------
@@ -172,8 +165,5 @@ Fine Tuning
 参考文献
 --------
 
-1. `Video of Meta Learning <https://www.youtube.com/watch?v=UkQ2FVpDxHg&list=PLvOO0btloRnuGl5OJM37a8c6auebn-rH2>`_
-2. `[金山文档] FSL PPT 01 Introduction.pdf <https://kdocs.cn/l/cpTe5jubAGog>`_
-3. `[金山文档] FSL PPT 02 Siamese Network.pdf <https://kdocs.cn/l/cvbUxZGl0zwe>`_
-4. `[金山文档] FSL PPT 03 Pretraining and Fine Tuning.pdf <https://kdocs.cn/l/cbBZGuwm26Yr>`_
-5. `Model-Agnostic Meta-Learning（MAML）模型介绍及算法详解 <https://zhuanlan.zhihu.com/p/57864886>`_
+.. [1] 赵凯琳,靳小龙,王元卓.小样本学习研究综述.软件学报,2021,32(2):349-369
+.. footbibliography::
