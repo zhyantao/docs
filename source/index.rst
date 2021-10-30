@@ -18,7 +18,7 @@ Notebook
 .. code-block:: Bash
 
     cd notebook
-    pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com
+    pip install -r requirements.txt
     make html
       
 4、提交 ``notebook`` 仓库的修改到 Github。
