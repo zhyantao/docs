@@ -3,8 +3,7 @@ Java 编程思想笔记
 =================
 
 .. toctree::
-    :maxdepth: 1
-    :glob:
+    :titlesonly:
 
     introduction-to-objects.rst
     everything-is-an-object.rst

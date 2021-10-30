@@ -5,10 +5,10 @@
 reStructuredText 语法入门
 =========================
 
-.. note:: 
+.. hint:: 
 
-    文档基于 `Jupyter Book <https://jupyterbook.org/>`_ 构建，支持 `reST 风格的 Markdown 语法 <./tools-and-usage/MyST-syntax-cheat-sheet.html>`_ 。本文转载自
-    `MegEngine <https://megengine.org.cn/doc/stable/zh/development/contribute-to-docs/restructuredtext.html>`_ ，仅供学习参考。
+    文档也支持 `reST 风格的 Markdown 语法 <./tools-and-usage/MyST-syntax-cheat-sheet.html>`_ 。本文转载自
+    `MegEngine <https://megengine.org.cn/doc/stable/zh/development/contribute-to-docs/restructuredtext.html>`_ （有修改），仅供学习参考。
 
 .. _indentation-rst:
 
