@@ -86,7 +86,7 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 具体的模型是由记忆产生的，在不同的记忆下，对应不同的函数（Read heads 读取记忆，Write heads 产生记忆）。
 对于新任务，模型把数据集载入记忆，Read heads 根据权重合理地读取记忆，就形成了对这个任务的建模。
 
-基于优化的方法，是我们通常讲的，如何学会学习，也就是说，如何学到一个合适的初始化，让模型更快地拟合。比如 MAML :footcite:p:`finn2017model` （见下图）。
+基于优化的方法，是我们通常讲的，如何学会学习，也就是说，如何学到一个合适的初始化，让模型更快地收敛。比如 MAML :footcite:p:`finn2017model` （见下图）。
 
 .. image:: ../../_static/images/model-agnostic-meta-learning.png
 
