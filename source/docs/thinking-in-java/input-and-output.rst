@@ -735,6 +735,8 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
 通道是一个相当基础的东西：可以向它传送用于读写的 ``ByteBuffer`` ，并且可以锁定文件的某些区域用于独占式访问。
 
+.. _create-channel:
+
 创建通道
 ~~~~~~~~
 
@@ -777,10 +779,11 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 - ``getChannel()`` 会产生一个 ``FileChannel`` ；
 - ``warp()`` 将已存在的字节数组“包装”到 ``ByteBuffer`` 中，也可以使用 ``put()`` 方法填充 ``ByteBuffer`` ；
 - 对于只读访问，必须显式地使用静态的 ``allocate()`` 方法来分配 ``ByteBuffer`` ；
-- 一旦调用 ``read()`` 来告知 ``FileChannel`` 向 ``ByteBuffer`` 存储字节，就必须调用缓冲器上的 ``flip()`` 。
+- 一旦调用 ``read()`` 来告知 ``FileChannel`` 向 ``ByteBuffer`` 存储字节，就必须调用缓冲器上的 ``flip()`` ；
+- ``flip()`` 用于准备从缓冲区读取已经写入的数据。
 
 用通道复制文件
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 .. code-block:: java
 
@@ -835,12 +838,552 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
         }
     } ///:~
 
+转换数据
+~~~~~~~~
+
+在小节 :ref:`create-channel` 中，使用 ByteBuffer 来缓存数据，同样地，也可以用 CharBuffer 来缓存数据。
+但是，它并不能正常工作，需要我们做一些转换工作。
+
+.. admonition:: BufferToText.java
+    :class: dropdown
+
+    .. code-block:: java
+        :emphasize-lines: 20, 23
+
+        //: io/BufferToText.java
+        // Converting text to and from ByteBuffers
+        import java.nio.*;
+        import java.nio.channels.*;
+        import java.nio.charset.*;
+        import java.io.*;
+
+        public class BufferToText {
+            private static final int BSIZE = 1024;
+            public static void main(String[] args) throws Exception {
+                FileChannel fc =
+                    new FileOutputStream("data2.txt").getChannel();
+                fc.write(ByteBuffer.wrap("Some text".getBytes()));
+                fc.close();
+                fc = new FileInputStream("data2.txt").getChannel();
+                ByteBuffer buff = ByteBuffer.allocate(BSIZE);
+                fc.read(buff);
+                buff.flip();
+                // Doesn't work:
+                System.out.println(buff.asCharBuffer());
+                // Decode using this system's default Charset:
+                buff.rewind();
+                String encoding = System.getProperty("file.encoding");
+                System.out.println("Decoded using " + encoding + ": "
+                    + Charset.forName(encoding).decode(buff));
+                // Or, we could encode with something that will print:
+                fc = new FileOutputStream("data2.txt").getChannel();
+                fc.write(ByteBuffer.wrap(
+                    "Some text".getBytes("UTF-16BE")));
+                fc.close();
+                // Now try reading again:
+                fc = new FileInputStream("data2.txt").getChannel();
+                buff.clear();
+                fc.read(buff);
+                buff.flip();
+                System.out.println(buff.asCharBuffer());
+                // Use a CharBuffer to write through:
+                fc = new FileOutputStream("data2.txt").getChannel();
+                buff = ByteBuffer.allocate(24); // More than needed
+                buff.asCharBuffer().put("Some text");
+                fc.write(buff);
+                fc.close();
+                // Read and display:
+                fc = new FileInputStream("data2.txt").getChannel();
+                buff.clear();
+                fc.read(buff);
+                buff.flip();
+                System.out.println(buff.asCharBuffer());
+            }
+        } /* Output:
+        ????
+        Decoded using Cp1252: Some text
+        Some text
+        Some text
+        *///:~
+
+缓冲器容纳的是普通的字节，为了把它们转换成字符：
+
+- 要么在输入时对其进行编码
+- 要么在输出时对其解码
+
+可以使用 ``java.nio.charset.Charset`` 类实现这些功能。
+
+获取基本类型
+~~~~~~~~~~~~
+
+尽管 ``ByteBuffer`` 只能保存字节类型的数据，但是它具有从其所容纳的字节中产生出各种不同基本类型值的方法。
+
+向 ``ByteBuffer`` 插入基本类型数据的最简单的方法是：
+
+- 利用 ``asCharBuffer()`` 、 ``asShortBuffer()`` 等获得该缓冲器上的视图；
+- 使用视图的 ``put()`` 方法
+  
+注意到，使用 ``ShortBuffer`` 的 ``put()`` 方法时，需要类型转换。
+
+.. code-block:: java
+
+    //: io/GetData.java
+    // Getting different representations from a ByteBuffer
+    import java.nio.*;
+    import static net.mindview.util.Print.*;
+
+    public class GetData {
+        private static final int BSIZE = 1024;
+        public static void main(String[] args) {
+            ByteBuffer bb = ByteBuffer.allocate(BSIZE);
+            // Allocation automatically zeroes the ByteBuffer:
+            int i = 0;
+            while(i++ < bb.limit())
+                if(bb.get() != 0)
+                    print("nonzero");
+            print("i = " + i);
+            bb.rewind();
+            // Store and read a char array:
+            bb.asCharBuffer().put("Howdy!");
+            char c;
+            while((c = bb.getChar()) != 0)
+                printnb(c + " ");
+            print();
+            bb.rewind();
+            // Store and read a short:
+            bb.asShortBuffer().put((short)471142);
+            print(bb.getShort());
+            bb.rewind();
+            // Store and read an int:
+            bb.asIntBuffer().put(99471142);
+            print(bb.getInt());
+            bb.rewind();
+            // Store and read a long:
+            bb.asLongBuffer().put(99471142);
+            print(bb.getLong());
+            bb.rewind();
+            // Store and read a float:
+            bb.asFloatBuffer().put(99471142);
+            print(bb.getFloat());
+            bb.rewind();
+            // Store and read a double:
+            bb.asDoubleBuffer().put(99471142);
+            print(bb.getDouble());
+            bb.rewind();
+        }
+    } /* Output:
+    i = 1025
+    H o w d y !
+    12390
+    99471142
+    99471142
+    9.9471144E7
+    9.9471142E7
+    *///:~
+
+视图缓冲器
+~~~~~~~~~~
+
+视图缓冲器可以让我们通过某个特定的基本类型的视窗查看其底层的 ``ByteBuffer`` 。
+``ByteBuffer`` 依然是实际存储数据的地方，“支持”着前面的视图，因此，对视图的任何修改，
+都会映射成为对 ``ByteBuffer`` 中数据的修改。
+
+下面的例子，用 ``IntBuffer`` 操纵 ``ByteBuffer`` 中的 ``int`` 型数据。
+
+.. code-block:: java
+
+    //: io/IntBufferDemo.java
+    // Manipulating ints in a ByteBuffer with an IntBuffer
+    import java.nio.*;
+
+    public class IntBufferDemo {
+        private static final int BSIZE = 1024;
+        public static void main(String[] args) {
+            ByteBuffer bb = ByteBuffer.allocate(BSIZE);
+            IntBuffer ib = bb.asIntBuffer();
+            // Store an array of int:
+            ib.put(new int[]{ 11, 42, 47, 99, 143, 811, 1016 });
+            // Absolute location read and write:
+            System.out.println(ib.get(3));
+            ib.put(3, 1811);
+            // Setting a new limit before rewinding the buffer.
+            ib.flip();
+            while(ib.hasRemaining()) {
+                int i = ib.get();
+                System.out.println(i);
+            }
+        }
+    } /* Output:
+    99
+    11
+    42
+    47
+    1811
+    143
+    811
+    1016
+    *///:~
+
+一旦底层的 ``ByteBuffer`` 通过视图缓冲器填满了整数或其他基本类型时，就可以直接写到通道中了。
+
+下面的例子通过在同一个 ``ByteBuffer`` 上建立不同的视图缓冲器，将同一字节序列翻译成了其他基本类型。
+
+.. code-block:: java
+
+    //: io/ViewBuffers.java
+    import java.nio.*;
+    import static net.mindview.util.Print.*;
+
+    public class ViewBuffers {
+        public static void main(String[] args) {
+            ByteBuffer bb = ByteBuffer.wrap(
+                new byte[]{ 0, 0, 0, 0, 0, 0, 0, 'a' });
+            bb.rewind();
+            printnb("Byte Buffer ");
+            while(bb.hasRemaining())
+                printnb(bb.position()+ " -> " + bb.get() + ", ");
+            print();
+            CharBuffer cb =
+                ((ByteBuffer)bb.rewind()).asCharBuffer();
+            printnb("Char Buffer ");
+            while(cb.hasRemaining())
+                printnb(cb.position() + " -> " + cb.get() + ", ");
+            print();
+            FloatBuffer fb =
+                ((ByteBuffer)bb.rewind()).asFloatBuffer();
+            printnb("Float Buffer ");
+            while(fb.hasRemaining())
+                printnb(fb.position()+ " -> " + fb.get() + ", ");
+            print();
+            IntBuffer ib =
+                ((ByteBuffer)bb.rewind()).asIntBuffer();
+            printnb("Int Buffer ");
+            while(ib.hasRemaining())
+                printnb(ib.position()+ " -> " + ib.get() + ", ");
+            print();
+            LongBuffer lb =
+                ((ByteBuffer)bb.rewind()).asLongBuffer();
+            printnb("Long Buffer ");
+            while(lb.hasRemaining())
+                printnb(lb.position()+ " -> " + lb.get() + ", ");
+            print();
+            ShortBuffer sb =
+                ((ByteBuffer)bb.rewind()).asShortBuffer();
+            printnb("Short Buffer ");
+            while(sb.hasRemaining())
+                printnb(sb.position()+ " -> " + sb.get() + ", ");
+            print();
+            DoubleBuffer db =
+                ((ByteBuffer)bb.rewind()).asDoubleBuffer();
+            printnb("Double Buffer ");
+            while(db.hasRemaining())
+                printnb(db.position()+ " -> " + db.get() + ", ");
+        }
+    } /* Output:
+    Byte Buffer 0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0, 4 -> 0, 5 -> 0, 6 -> 0, 7 -> 97,
+    Char Buffer 0 ->    , 1 ->    , 2 ->    , 3 -> a,
+    Float Buffer 0 -> 0.0, 1 -> 1.36E-43,
+    Int Buffer 0 -> 0, 1 -> 97,
+    Long Buffer 0 -> 97,
+    Short Buffer 0 -> 0, 1 -> 0, 2 -> 0, 3 -> 97,
+    Double Buffer 0 -> 4.8E-322,
+    *///:~
+
+注意， ``ByteBuffer`` 通过一个被“包装”过的 8 字节数组产生，然后通过各种不同的基本类型的视图缓冲器显示了出来。
+在下图中可以看到，当从不同类型的缓冲器读取时，数据显示的方式也不同。这与上面的程序相对应。
+
+.. image:: ../../_static/images/view-buffer.png
+
+用缓冲器操纵数据
+~~~~~~~~~~~~~~~~
+
+如果想把一个字节的数据写入到文件：
+
+- 首先用 ``ByteBuffer.wrap()`` 把字节数组包装起来；
+- 然后用 ``getChannel()`` 在 ``FileOutputStream`` 上打开一个通道；
+- 最后，将来自于 ``ByteBuffer`` 的数据写到 ``FileChannel`` 中。
+
+参考下面的流程图：
+
+.. image:: ../../_static/images/data-manipulation-with-buffers.png
+
+内存映射文件
+~~~~~~~~~~~~
+
+内存映射文件允许我们创建和修改那些因为太大而不能放入内存的文件。
+
+.. code-block:: java
+
+    //: io/LargeMappedFiles.java
+    // Creating a very large file using mapping.
+    // {RunByHand}
+    import java.nio.*;
+    import java.nio.channels.*;
+    import java.io.*;
+    import static net.mindview.util.Print.*;
+
+    public class LargeMappedFiles {
+        static int length = 0x8FFFFFF; // 128 MB
+        public static void main(String[] args) throws Exception {
+            MappedByteBuffer out =
+                new RandomAccessFile("test.dat", "rw").getChannel()
+                .map(FileChannel.MapMode.READ_WRITE, 0, length);
+            for(int i = 0; i < length; i++)
+                out.put((byte)'x');
+            print("Finished writing");
+            for(int i = length/2; i < length/2 + 6; i++)
+                printnb((char)out.get(i));
+        }
+    } ///:~
+
+为了既能读又能写，先由 ``RandomAccessFile`` 开始，获得该文件上的通道，然后调用 ``map()`` 产生 ``MappedByteBuffer`` ，这是一种特殊类型的直接缓冲器。
+
+注意，我们必须指定映射文件的初始位置和映射区域长度，这意味着我们可以映射某个大文件的较小部分。
+
+``MappedByteBuffer`` 继承自 ``ByteBuffer`` ，因此它具有 ``ByteBuffer`` 的所有方法，这里我们只用了 ``put()`` 和 ``get()`` 。
+
+实质上，只有一部分文件载入了内存，其他部分被交换了出去，用这种方式，很大的文件（可达 2GB）也可以很容易地修改。
+
+底层操作系统的文件映射工具用来最大化地提高性能。
+
+文件加锁
+~~~~~~~~
+
+文件锁对其他的操作系统进程是可见的，因为 Java 的文件加锁直接映射到了本地操作系统的加锁工具。
+
+.. code-block:: java
+
+    //: io/FileLocking.java
+    import java.nio.channels.*;
+    import java.util.concurrent.*;
+    import java.io.*;
+
+    public class FileLocking {
+        public static void main(String[] args) throws Exception {
+            FileOutputStream fos= new FileOutputStream("file.txt");
+            FileLock fl = fos.getChannel().tryLock();
+            if(fl != null) {
+                System.out.println("Locked File");
+                TimeUnit.MILLISECONDS.sleep(100);
+                fl.release();
+                System.out.println("Released Lock");
+            }
+            fos.close();
+        }
+    } /* Output:
+    Locked File
+    Released Lock
+    *///:~
+
+注意，通过对 ``FileChannel`` 调用 ``tryLock()`` 或 ``lock()`` 就可以获得整个文件的 ``FileLock`` 。
+
+- ``tryLock()`` 是非阻塞式的，如果不能获得，他将直接从方法调用返回；
+- ``lock()`` 是阻塞式的，它会阻塞进程直到获得锁。
+
+锁的类型（共享或独占）可以通过 ``FileLock.isShared()`` 来查询。
+
+.. hint:: 
+
+    ``SocketChannel`` 、 ``DatagramChannel`` 、 ``ServerSocketChannel`` 不需要加锁，因为它们是从单进程实体继承而来，
+    我们通常不在两个进程之间共享网络 socket。
+
+映射文件部分加锁
+~~~~~~~~~~~~~~~~
+
+文件映射通常用于极大的文件，部分加锁后，文件的其他部分仍可用于共享。比如，数据库就是这样，因此多个用户可以同时访问它。
+
+.. code-block:: java
+
+    //: io/LockingMappedFiles.java
+    // Locking portions of a mapped file.
+    // {RunByHand}
+    import java.nio.*;
+    import java.nio.channels.*;
+    import java.io.*;
+
+    public class LockingMappedFiles {
+        static final int LENGTH = 0x8FFFFFF; // 128 MB
+        static FileChannel fc;
+        public static void main(String[] args) throws Exception {
+            fc =
+                new RandomAccessFile("test.dat", "rw").getChannel();
+            MappedByteBuffer out =
+                fc.map(FileChannel.MapMode.READ_WRITE, 0, LENGTH);
+            for(int i = 0; i < LENGTH; i++)
+                out.put((byte)'x');
+            new LockAndModify(out, 0, 0 + LENGTH/3);
+            new LockAndModify(out, LENGTH/2, LENGTH/2 + LENGTH/4);
+        }
+        private static class LockAndModify extends Thread {
+            private ByteBuffer buff;
+            private int start, end;
+            LockAndModify(ByteBuffer mbb, int start, int end) {
+                this.start = start;
+                this.end = end;
+                mbb.limit(end);
+                mbb.position(start);
+                buff = mbb.slice();
+                start();
+            }
+            public void run() {
+                try {
+                    // Exclusive lock with no overlap:
+                    FileLock fl = fc.lock(start, end, false);
+                    System.out.println("Locked: "+ start +" to "+ end);
+                    // Perform modification:
+                    while(buff.position() < buff.limit() - 1)
+                        buff.put((byte)(buff.get() + 1));
+                    fl.release();
+                    System.out.println("Released: "+start+" to "+ end);
+                } catch(IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    } ///:~
 
 
 压缩
 ----
+
+Java I/O 类库中的类支持读写压缩格式的数据流。你可以用它们对其他的 I/O 类进行封装，以提供压缩功能。后面用到时再补充这部分知识。
+
+.. image:: ../../_static/images/compress-with-java.png
+
 对象序列化
 ----------
+
+利用对象的序列化，可以实现轻量级持久性。
+“持久性”意味着一个对象的生存周期并不取决于程序是否正在运行，它可以生存于程序的调用之间。
+通过将一个序列化对象写入磁盘，然后在重新调用程序时恢复该对象，就能够实现持久性的效果。
+
+之所以称之为“轻量级”，是因为不能用某种“persistent”关键字来简单定义一个对象，由操作系统自动维护其他细节。
+我们必须在程序中显式地序列化和反序列化。如果需要一个更加严格的持久化机制，可以考虑使用 Hibernate 之类的工具。
+
+对象序列化的概念加入到语言中是为了支持两种主要特性：
+
+- 远程方法调用
+- 应 Java Beans 需要
+
+Java 的对象序列化将那些实现了 ``Serializable``
+接口的对象转换成一个字节序列，并能够在以后将这个字节序列完全恢复为原来的对象。
+
+这一过程甚至可通过网络进行，这意味着序列化机制能自动弥补不同操作系统之间的差异。
+也就是说，可以在运行 Windwos 系统的计算机上创建一个对象，将其序列化，
+通过网络将它发送给一台运行 Unix 系统的计算机，然后在那里准确地重新组装，
+而不用担心数据在不同机器上的表示会不同，也不必关心字节的顺序或者其他任何细节。
+
+Java 中可以序列化的对象包括：
+
+- 所有基本类型的封装器
+- 所有容器类
+- Class 对象
+
+对象序列化的过程：
+
+- 创建 ``OutputStream`` 对象（因为对象序列化是基于字节的）
+- 将其封装在 ``ObjectOutputStream`` 对象内
+- 调用 ``writeObject()`` 即可将对象序列化，并将其发送给 ``OutputStream``
+
+对象反序列化的过程：
+
+- 创建 ``InputStream`` 对象
+- 将其封装在 ``ObjectInputStream`` 对象内
+- 调用 ``readObject()`` 
+
+例如，下面的例子通过对链接的对象生成一个 worm（蠕虫）对序列化机制进行了测试。
+每个对象都与 worm 中的下一段链接，同时又与属于不同类（Data）的对象引用数组链接。
+
+.. admonition:: Worm.java
+    :class: dropdown
+        
+    .. code-block:: java
+
+        //: io/Worm.java
+        // Demonstrates object serialization.
+        import java.io.*;
+        import java.util.*;
+        import static net.mindview.util.Print.*;
+
+        class Data implements Serializable {
+            private int n;
+            public Data(int n) { this.n = n; }
+            public String toString() { return Integer.toString(n); }
+        }
+
+        public class Worm implements Serializable {
+            private static Random rand = new Random(47);
+            private Data[] d = {
+                new Data(rand.nextInt(10)),
+                new Data(rand.nextInt(10)),
+                new Data(rand.nextInt(10))
+            };
+            private Worm next;
+            private char c;
+            // Value of i == number of segments
+            public Worm(int i, char x) {
+                print("Worm constructor: " + i);
+                c = x;
+                if(--i > 0)
+                    next = new Worm(i, (char)(x + 1));
+            }
+            public Worm() {
+                print("Default constructor");
+            }
+            public String toString() {
+                StringBuilder result = new StringBuilder(":");
+                result.append(c);
+                result.append("(");
+                for(Data dat : d)
+                    result.append(dat);
+                result.append(")");
+                if(next != null)
+                    result.append(next);
+                return result.toString();
+            }
+            public static void main(String[] args)
+            throws ClassNotFoundException, IOException {
+                Worm w = new Worm(6, 'a');
+                print("w = " + w);
+                ObjectOutputStream out = new ObjectOutputStream(
+                    new FileOutputStream("worm.out"));
+                out.writeObject("Worm storage\n");
+                out.writeObject(w);
+                out.close(); // Also flushes output
+                ObjectInputStream in = new ObjectInputStream(
+                    new FileInputStream("worm.out"));
+                String s = (String)in.readObject();
+                Worm w2 = (Worm)in.readObject();
+                print(s + "w2 = " + w2);
+                ByteArrayOutputStream bout =
+                    new ByteArrayOutputStream();
+                ObjectOutputStream out2 = new ObjectOutputStream(bout);
+                out2.writeObject("Worm storage\n");
+                out2.writeObject(w);
+                out2.flush();
+                ObjectInputStream in2 = new ObjectInputStream(
+                    new ByteArrayInputStream(bout.toByteArray()));
+                s = (String)in2.readObject();
+                Worm w3 = (Worm)in2.readObject();
+                print(s + "w3 = " + w3);
+            }
+        } /* Output:
+        Worm constructor: 6
+        Worm constructor: 5
+        Worm constructor: 4
+        Worm constructor: 3
+        Worm constructor: 2
+        Worm constructor: 1
+        w = :a(853):b(119):c(802):d(788):e(199):f(881)
+        Worm storage
+        w2 = :a(853):b(119):c(802):d(788):e(199):f(881)
+        Worm storage
+        w3 = :a(853):b(119):c(802):d(788):e(199):f(881)
+        *///:~
+
+寻找类
+~~~~~~
+
 XML
 ---
 Preferences
