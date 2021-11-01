@@ -165,3 +165,28 @@ plantuml_output_format = 'svg'
 
 # Setting for sphinxcontrib.bibtex
 bibtex_bibfiles = ['refs.bib']
+
+
+# -- Options for LaTeX output ---------------------------------------------
+
+# Comment this sentence when gernerating a HTML page package.
+latex_engine = 'xelatex'
+
+# Grouping the document tree into LaTeX files. List of tuples
+latex_documents = [
+    (master_doc,                # source_start_file
+    'Notebook.tex',             # target_name
+    'Notebook Documentation',   # title
+    'RYAN',                     # author
+    'manual'),                  # documentclass [howto, manual, or own class]
+]
+
+# To generate Chinese PDF, you need to add the following code.
+latex_elements = {
+    'preamble': r'''
+    \usepackage[UTF8]{ctex}
+    \usepackage{graphicx}
+    ''',
+    'extraclassoptions': 'openany, oneside',
+}
+
