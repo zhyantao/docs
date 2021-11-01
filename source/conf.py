@@ -185,8 +185,8 @@ latex_documents = [
 latex_elements = {
     'preamble': r'''
     \usepackage[UTF8]{ctex}
-    \usepackage{graphicx}
+    \usepackage{graphicx} 
+    \usepackage{animate}
     ''',
     'extraclassoptions': 'openany, oneside',
 }
-

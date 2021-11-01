@@ -46,7 +46,7 @@
 ~~~~~~~~
 
 - CS 330: Deep Multi-Task and Meta Learning `主页 <http://cs330.stanford.edu/>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1He411s7K4>`__ 17.75 小时
-- Chelsea Finn: Meta-Learning: from Few-Shot Learning to Rapid  Reinforcement Learning `主页 <https://sites.google.com/view/icml19metalearning>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1o4411A7YE>`__ 2.5 小时
+- Chelsea Finn: Meta-Learning: from Few-Shot Learning to Rapid  Reinforcement Learning `主页 <https://sites.google.com/view/icml19metalearning>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1o4411A7YE>`__
 - Chelsea Finn: Building Unsupervised Versatile Agents with Meta-Learning `YouTube  <https://www.youtube.com/watch?v=i05Fk4ebMY0>`__ 1 小时
 - 李宏毅：Meta Learning `YouTube <http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1pQ4y1K7cw?p=32>`__
 
