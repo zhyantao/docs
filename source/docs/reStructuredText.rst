@@ -454,6 +454,8 @@ reST 支持图像指令，用法如下：
     - 尽可能使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
     - 图片文件名需要有相应的语义信息，不可使用完全随机生成的字符。
 
+.. hint:: shpinx doc 默认无法编译 gif，当你需要包含 gif 时，图片后缀用星号表示，作为通配符。
+
 .. note::
 
     如果你想要给图片添加描述性文字，请使用 ``figure`` 代替 ``image``,
