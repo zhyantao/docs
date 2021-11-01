@@ -39,7 +39,7 @@
 读一些相关文献，从论文中的伪代码上可以看出来，它一般包括两层循环，外层循环学习得到 meta-learner，内层循环学习得到 learner。
 为了降低难度，我们看图来直观理解一下：
 
-.. image:: ../../_static/images/meta-learning-framework.*
+.. image:: ../../_static/images/meta-learning-framework.gif
 
 为了能更进一步理解整体的工作过程，考虑一个例子：
 
