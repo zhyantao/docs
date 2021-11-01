@@ -55,7 +55,6 @@ Notebook
     :titlesonly:
     :hidden:
     
-    docs/meta-learning/matrix-calculus-for-deep-learning
     docs/meta-learning/paper-review
     docs/meta-learning/introduction
     docs/meta-learning/paper-main-idea
@@ -64,10 +63,10 @@ Notebook
 .. toctree::
     :caption: 数学基础
     :titlesonly:
+    :glob:
     :hidden:
 
-    docs/matrix-analysis/index
-    docs/statistical-methods/probability-statistics-cheet-sheet
+    docs/mathematics/*
 
 .. toctree::
     :caption: 计算机基础

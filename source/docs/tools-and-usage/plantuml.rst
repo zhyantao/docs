@@ -2,11 +2,13 @@
 PlantUML 入门
 ==============
 
-.. tip:: 
+.. hint:: 
     
-    本文并未提供更多细节，比如 `画类图在这里找不见合适的图形怎么办 <https://www.uml-diagrams.org/class-reference.html>`_ 、
-    `我们使用 UML 处理业务需求时有哪些模型可以参考 <https://www.uml-diagrams.org/index-examples.html>`_
-    以及 `PlantUML 给我们提供了哪些更多的绘制方法 <https://plantuml.com/zh/>`_ 等都需要我们进一步参考官方的说明。
+    本文并未提供更多细节，更多内容可以参考：
+    
+    - `UML Class Diagrams Reference <https://www.uml-diagrams.org/class-reference.html>`_
+    - `UML Diagrams Examples <https://www.uml-diagrams.org/index-examples.html>`_
+    - `PlantUML 使用手册 <http://pdf.plantuml.net/>`_
 
 类图
 -----
