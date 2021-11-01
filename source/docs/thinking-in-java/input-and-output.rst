@@ -592,6 +592,8 @@ RandomAccessFile 拥有读取基本类型和 UTF-8 字符串的各种具体方�
 将 System.out 转换成 PrintWriter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+跟类型转换很像，在外层用对象的构造器包裹一下。
+
 .. code-block:: java
 
     //: io/ChangeSystemOut.java
@@ -731,6 +733,8 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 - ``Reader`` 和 ``Writer`` 这种字符模式类不能用于产生通道；
 - ``java.nio.channels.Channels`` 可以在通道中产生 ``Reader`` 和 ``Writer`` 。
 
+通道是一个相当基础的东西：可以向它传送用于读写的 ``ByteBuffer`` ，并且可以锁定文件的某些区域用于独占式访问。
+
 创建通道
 ~~~~~~~~
 
@@ -771,9 +775,65 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
     *///:~
 
 - ``getChannel()`` 会产生一个 ``FileChannel`` ；
-- ``warp()`` 将已存在的字节数组“包装”到 ``ByteBuffer`` 中，也可以使用 put() 方法填充 ``ByteBuffer`` ；
+- ``warp()`` 将已存在的字节数组“包装”到 ``ByteBuffer`` 中，也可以使用 ``put()`` 方法填充 ``ByteBuffer`` ；
 - 对于只读访问，必须显式地使用静态的 ``allocate()`` 方法来分配 ``ByteBuffer`` ；
 - 一旦调用 ``read()`` 来告知 ``FileChannel`` 向 ``ByteBuffer`` 存储字节，就必须调用缓冲器上的 ``flip()`` 。
+
+用通道复制文件
+~~~~~~~~~~~~~
+
+.. code-block:: java
+
+    //: io/ChannelCopy.java
+    // Copying a file using channels and buffers
+    // {Args: ChannelCopy.java test.txt}
+    import java.nio.*;
+    import java.nio.channels.*;
+    import java.io.*;
+
+    public class ChannelCopy {
+        private static final int BSIZE = 1024;
+        public static void main(String[] args) throws Exception {
+            if(args.length != 2) {
+                System.out.println("arguments: sourcefile destfile");
+                System.exit(1);
+            }
+            FileChannel
+                in = new FileInputStream(args[0]).getChannel(),
+                out = new FileOutputStream(args[1]).getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(BSIZE);
+            while(in.read(buffer) != -1) {
+                buffer.flip(); // Prepare for writing
+                out.write(buffer);
+                buffer.clear();    // Prepare for reading
+            }
+        }
+    } ///:~
+
+更理想的方式是使用方法 transferTo() 和 transferFrom() 将通道直接相连：
+
+.. code-block:: java
+
+    //: io/TransferTo.java
+    // Using transferTo() between channels
+    // {Args: TransferTo.java TransferTo.txt}
+    import java.nio.channels.*;
+    import java.io.*;
+
+    public class TransferTo {
+        public static void main(String[] args) throws Exception {
+            if(args.length != 2) {
+                System.out.println("arguments: sourcefile destfile");
+                System.exit(1);
+            }
+            FileChannel
+                in = new FileInputStream(args[0]).getChannel(),
+                out = new FileOutputStream(args[1]).getChannel();
+            in.transferTo(0, in.size(), out);
+            // Or:
+            // out.transferFrom(in, 0, in.size());
+        }
+    } ///:~
 
 
 
