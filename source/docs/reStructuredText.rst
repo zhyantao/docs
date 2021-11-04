@@ -453,8 +453,7 @@ reST 支持图像指令，用法如下：
     - 一般情况下请优先使用 `SVG <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Adding_vector_graphics_to_the_Web>`_ 格式的矢量图，使用位图请权衡好图片体积和清晰度。
     - 尽可能使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
     - 图片文件名需要有相应的语义信息，不可使用完全随机生成的字符。
-
-.. hint:: shpinx doc 默认无法编译 gif，当你需要包含 gif 时，图片后缀用星号表示，作为通配符。
+    - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片，编译生成 PDF 时将无法通过编译。解决方法是：图片后缀用星号表示 `Ref <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#images>`_。
 
 .. note::
 
