@@ -2,47 +2,42 @@
 Notebook
 =========
 
-环境部署
----------
+.. panels::
+    :container: timeline
+    :column: col-6 p-0
+    :card:
 
-1、在 Github 上创建仓库（仓库名以 ``notebook`` 为例），创建完成后，克隆 ``notebook`` 到本地。
+    ---
+    :column: +entry left
 
-.. code-block:: Bash
-    
-    git clone https://github.com/<your_github_username>/notebook.git
+    2021年10月~2021年11月
+    ^^^
 
-2、将 `源代码压缩包 <https://github.com/zhyantao/readthedocs-with-github/archive/refs/heads/master.zip>`_ 解压后，把压缩包中的内容全部复制到 ``notebook`` 文件夹中。
+    - **Java 基础** Java 编程思想、Java 视频选讲、Java Guide
+    - **小样本（机器）学习入门** （教程, Survey, Review）扫盲阶段
+    - **小论文** 整理常见的学术观点和应用场景，形成 Introduction 部分的研究现状和 Related Work
 
-3、下载安装 `Graphviz <https://graphviz.org/>`_ 并添加至系统环境变量。安装项目所需依赖。预览效果。
+    ---
+    :column: +entry right
 
-.. code-block:: Bash
+    2021年12月~2022年2月
+    ^^^
 
-    cd notebook
-    pip install -r requirements.txt
-    make html
-      
-4、提交 ``notebook`` 仓库的修改到 Github。
+    - **工具及框架** Git、Linux、Spring Boot、Spring Cloud
+    - **项目** 凤凰架构、连铸智能、Awesome、软件系统设计
+    - **小论文** 学习论文中常用（经典）模型结构及算法流程
+    - **小论文** 总结经典模型结构及常见改进方法，尝试将模型应用于新数据集
 
-.. code-block:: Bash
-  
-  git add . && git commit -m "v1.0.0" && git pull && git push
-    
-5、登录 `Readthedocs <https://readthedocs.org/>`__ 导入刚刚新建的 Github 项目 ``notebook`` ，构建完成后方可阅读文档。
+    ---
+    :column: +entry left
 
+    2022年3月~2022年5月
+    ^^^
 
-创建文章并提交修改
-------------------
-
-1、把需要发表的文档放在 ``notebook/source/docs`` 文件夹中（写作格式可以是 ``Markdown`` 或者 ``reStructuredText`` ）
-
-2、打开命令行，并切换到 ``notebook`` 目录下，输入 ``make html``
-
-3、打开 ``notebook/build/index.html`` 预览效果，确认无误后提交代码到 Github 仓库
-
-4、重新打开 `Readthedocs <https://readthedocs.org/>`__ 文档的网址，查看新发表的博客（有延迟，可能需要等待）。
-
-.. note:: 在 ``notebook/source/docs`` 下的添加新文章后需要在 ``notebook/source/index.rst`` 中添加一条记录。
-
+    - **计算机基础** 操作系统、计算机网络、数据库、数据结构（幕布）
+    - **刷题** 程序员代码面试指南
+    - **小论文** 针对异常检测领域中的特定场景设计模型并验证可行性
+    - **小论文** 对工作内容进行总结，形成 Method 和 Experiments，然后修改和完善，甚至重构，然后总结整理 Conclusion，修改和润色
 
 
 .. toctree::
@@ -78,7 +73,6 @@ Notebook
     docs/computer-network/index
     docs/TCP-IP-illustrated/index
     docs/thinking-in-java/index
-    docs/unix-network-programming/index
     docs/programmer-code-interview-guide/index
 
 .. toctree::
