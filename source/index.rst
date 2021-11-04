@@ -4,11 +4,10 @@ Notebook
 
 .. panels::
     :container: timeline
-    :column: col-6 p-0
     :card:
 
     ---
-    :column: +entry left
+    :column: col-lg-12 p-2
 
     2021年10月~2021年11月
     ^^^
@@ -18,7 +17,7 @@ Notebook
     - **小论文** 整理常见的学术观点和应用场景，形成 Introduction 部分的研究现状和 Related Work
 
     ---
-    :column: +entry right
+    :column: col-lg-12 p-2
 
     2021年12月~2022年2月
     ^^^
@@ -29,7 +28,7 @@ Notebook
     - **小论文** 总结经典模型结构及常见改进方法，尝试将模型应用于新数据集
 
     ---
-    :column: +entry left
+    :column: col-lg-12 p-2
 
     2022年3月~2022年5月
     ^^^
