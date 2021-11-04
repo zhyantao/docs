@@ -14,6 +14,7 @@ Java I/O 系统
     - InputStream 和 OutputStream 的派生类用来处理 **字节流** ；
     - Reader 和 Writer 的派生类用来处理 **字符流** 。
 
+
 InputStream
 ------------
 
@@ -47,6 +48,7 @@ InputStream
 
     @enduml
 
+
 OutputStream
 -------------
 
@@ -77,6 +79,7 @@ OutputStream
     FilterOutputStream <|-- PrintStream
     
     @enduml
+
 
 Reader
 ------
@@ -112,6 +115,7 @@ Reader
 
 .. hint:: InputStreamReader 可以把 InputStream 转化为 Reader
 
+
 Writer
 ------
 
@@ -143,8 +147,10 @@ Writer
 
 .. hint:: OutputStreamWriter 可以把 OutputStream 转化为 Writer
 
+
 文件读写的实用工具
 ------------------
+
 
 目录列表器
 ~~~~~~~~~~
@@ -234,6 +240,7 @@ Writer
         *///:~
 
     .. hint:: 使用匿名内部类的方式不便于阅读，因此需要谨慎使用。
+
 
 目录的检查及创建
 ~~~~~~~~~~~~~~~~
@@ -327,6 +334,7 @@ Writer
         It's a directory
         *///:~
 
+
 缓冲输入文件
 ~~~~~~~~~~~~
 
@@ -359,6 +367,7 @@ Writer
     } /* (Execute to see output) *///:~
 
 注意，第 14 行必须添加换行符，因为 ``readLine()`` 已将它们删掉。
+
 
 读取文件
 ~~~~~~~~
@@ -437,6 +446,7 @@ Writer
 
 注意，第 11 行代码，没有用异常来终止循环，而是用 ``available()`` 来检测可供提取的字符数的。
 
+
 输出到文件
 ~~~~~~~~~~
 
@@ -469,6 +479,7 @@ Writer
     } /* (Execute to see output) *///:~
 
 我们看到要为 out 显式调用 ``close()`` 。如果我们不为所有的输出文件调用 ``close()`` ，就会发现缓冲区内容不会被刷新清空，那么它们也就不完整。
+
 
 读写随机访问文件
 ~~~~~~~~~~~~~~~~
@@ -527,6 +538,7 @@ RandomAccessFile 拥有读取基本类型和 UTF-8 字符串的各种具体方�
 
 注意，第 23 行，因为 double 总是 8 字节长，所以为了用 ``seek()`` 查找第 5 个双精度值，你只需用 5*8 来产生查找位置。
 
+
 读取二进制文件
 ~~~~~~~~~~~~~~
 
@@ -554,8 +566,10 @@ RandomAccessFile 拥有读取基本类型和 UTF-8 字符串的各种具体方�
         }
     } ///:~
 
+
 标准 I/O
 ---------
+
 
 从标准输入中读取
 ~~~~~~~~~~~~~~~~
@@ -589,6 +603,7 @@ RandomAccessFile 拥有读取基本类型和 UTF-8 字符串的各种具体方�
 
 .. note:: 文中多次提到“包装”这个概念，最简单直接的理解就是：把一个类或对象传入外层类的构造器。
 
+
 将 System.out 转换成 PrintWriter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -608,6 +623,7 @@ RandomAccessFile 拥有读取基本类型和 UTF-8 字符串的各种具体方�
     } /* Output:
     Hello, world
     *///:~
+
 
 标准 I/O 重定向
 ~~~~~~~~~~~~~~~
@@ -724,6 +740,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
         public OSExecuteException(String why) { super(why); }
     } ///:~
 
+
 新 I/O
 -------
 
@@ -736,6 +753,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 通道是一个相当基础的东西：可以向它传送用于读写的 ``ByteBuffer`` ，并且可以锁定文件的某些区域用于独占式访问。
 
 .. _create-channel:
+
 
 创建通道
 ~~~~~~~~
@@ -781,6 +799,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 - 对于只读访问，必须显式地使用静态的 ``allocate()`` 方法来分配 ``ByteBuffer`` ；
 - 一旦调用 ``read()`` 来告知 ``FileChannel`` 向 ``ByteBuffer`` 存储字节，就必须调用缓冲器上的 ``flip()`` ；
 - ``flip()`` 用于准备从缓冲区读取已经写入的数据。
+
 
 用通道复制文件
 ~~~~~~~~~~~~~~
@@ -837,6 +856,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
             // out.transferFrom(in, 0, in.size());
         }
     } ///:~
+
 
 转换数据
 ~~~~~~~~
@@ -913,6 +933,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
 可以使用 ``java.nio.charset.Charset`` 类实现这些功能。
 
+
 获取基本类型
 ~~~~~~~~~~~~
 
@@ -980,6 +1001,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
     9.9471144E7
     9.9471142E7
     *///:~
+
 
 视图缓冲器
 ~~~~~~~~~~
@@ -1094,6 +1116,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
 .. image:: ../../_static/images/view-buffer.png
 
+
 用缓冲器操纵数据
 ~~~~~~~~~~~~~~~~
 
@@ -1106,6 +1129,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 参考下面的流程图：
 
 .. image:: ../../_static/images/data-manipulation-with-buffers.png
+
 
 内存映射文件
 ~~~~~~~~~~~~
@@ -1145,6 +1169,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 实质上，只有一部分文件载入了内存，其他部分被交换了出去，用这种方式，很大的文件（可达 2GB）也可以很容易地修改。
 
 底层操作系统的文件映射工具用来最大化地提高性能。
+
 
 文件加锁
 ~~~~~~~~
@@ -1186,6 +1211,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
     ``SocketChannel`` 、 ``DatagramChannel`` 、 ``ServerSocketChannel`` 不需要加锁，因为它们是从单进程实体继承而来，
     我们通常不在两个进程之间共享网络 socket。
+
 
 映射文件部分加锁
 ~~~~~~~~~~~~~~~~
@@ -1291,100 +1317,311 @@ Java 中可以序列化的对象包括：
 - 将其封装在 ``ObjectInputStream`` 对象内
 - 调用 ``readObject()`` 
 
-例如，下面的例子通过对链接的对象生成一个 worm（蠕虫）对序列化机制进行了测试。
-每个对象都与 worm 中的下一段链接，同时又与属于不同类（Data）的对象引用数组链接。
+例如，尝试将一个对象序列化和反序列化。
 
-.. admonition:: Worm.java
+.. code-block:: java
+
+    //: io/Alien.java
+    // A serializable class.
+    import java.io.*;
+    public class Alien implements Serializable {} ///:~
+
+序列化：
+
+.. code-block:: java
+
+    //: io/FreezeAlien.java
+    // Create a serialized output file.
+    import java.io.*;
+
+    public class FreezeAlien {
+        public static void main(String[] args) throws Exception {
+            ObjectOutput out = new ObjectOutputStream(
+                new FileOutputStream("X.file"));
+            Alien quellek = new Alien();
+            out.writeObject(quellek);
+        }
+    } ///:~
+
+反序列化：
+
+.. code-block:: java
+
+    //: io/xfiles/ThawAlien.java
+    // Try to recover a serialized file without the
+    // class of object that's stored in that file.
+    // {RunByHand}
+    import java.io.*;
+
+    public class ThawAlien {
+        public static void main(String[] args) throws Exception {
+            ObjectInputStream in = new ObjectInputStream(
+                new FileInputStream(new File("..", "X.file")));
+            Object mystery = in.readObject();
+            System.out.println(mystery.getClass());
+        }
+    } /* Output:
+    class Alien
+    *///:~
+
+
+序列化的控制
+~~~~~~~~~~~~
+
+有时，我们不想让特定子对象序列化，比如敏感信息（密码）。即使对象中的这些信息时 ``private`` ，
+一经序列化处理，人们就可以通过读取文件或者拦截网络传输来访问它。
+
+将类实现为 ``Externalizable`` 时，没有任何东西可以自动序列化，并且可以在 ``writeExternal()`` 内部只对所需部分显式序列化。
+
+``Externalizable`` 接口继承了 ``Serializable`` 接口，同时添加了两个方法： ``writeExternal()``
+和 ``readExternal()`` 。这两个方法在序列化和反序列化的过程中被自动调用。
+
+演示代码如下所示：
+
+.. admonition:: Blips.java
     :class: dropdown
-        
+
     .. code-block:: java
 
-        //: io/Worm.java
-        // Demonstrates object serialization.
+        //: io/Blips.java
+        // Simple use of Externalizable & a pitfall.
         import java.io.*;
-        import java.util.*;
         import static net.mindview.util.Print.*;
 
-        class Data implements Serializable {
-            private int n;
-            public Data(int n) { this.n = n; }
-            public String toString() { return Integer.toString(n); }
+        class Blip1 implements Externalizable {
+            public Blip1() {
+                print("Blip1 Constructor");
+            }
+            public void writeExternal(ObjectOutput out)
+                    throws IOException {
+                print("Blip1.writeExternal");
+            }
+            public void readExternal(ObjectInput in)
+                throws IOException, ClassNotFoundException {
+                print("Blip1.readExternal");
+            }
         }
 
-        public class Worm implements Serializable {
-            private static Random rand = new Random(47);
-            private Data[] d = {
-                new Data(rand.nextInt(10)),
-                new Data(rand.nextInt(10)),
-                new Data(rand.nextInt(10))
-            };
-            private Worm next;
-            private char c;
-            // Value of i == number of segments
-            public Worm(int i, char x) {
-                print("Worm constructor: " + i);
-                c = x;
-                if(--i > 0)
-                    next = new Worm(i, (char)(x + 1));
+        class Blip2 implements Externalizable {
+            Blip2() {
+                print("Blip2 Constructor");
             }
-            public Worm() {
-                print("Default constructor");
+            public void writeExternal(ObjectOutput out)
+                    throws IOException {
+                print("Blip2.writeExternal");
             }
-            public String toString() {
-                StringBuilder result = new StringBuilder(":");
-                result.append(c);
-                result.append("(");
-                for(Data dat : d)
-                    result.append(dat);
-                result.append(")");
-                if(next != null)
-                    result.append(next);
-                return result.toString();
+            public void readExternal(ObjectInput in)
+                throws IOException, ClassNotFoundException {
+                print("Blip2.readExternal");
             }
+        }
+
+        public class Blips {
             public static void main(String[] args)
-            throws ClassNotFoundException, IOException {
-                Worm w = new Worm(6, 'a');
-                print("w = " + w);
-                ObjectOutputStream out = new ObjectOutputStream(
-                    new FileOutputStream("worm.out"));
-                out.writeObject("Worm storage\n");
-                out.writeObject(w);
-                out.close(); // Also flushes output
+            throws IOException, ClassNotFoundException {
+                print("Constructing objects:");
+                Blip1 b1 = new Blip1();
+                Blip2 b2 = new Blip2();
+                ObjectOutputStream o = new ObjectOutputStream(
+                    new FileOutputStream("Blips.out"));
+                print("Saving objects:");
+                o.writeObject(b1);
+                o.writeObject(b2);
+                o.close();
+                // Now get them back:
                 ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream("worm.out"));
-                String s = (String)in.readObject();
-                Worm w2 = (Worm)in.readObject();
-                print(s + "w2 = " + w2);
-                ByteArrayOutputStream bout =
-                    new ByteArrayOutputStream();
-                ObjectOutputStream out2 = new ObjectOutputStream(bout);
-                out2.writeObject("Worm storage\n");
-                out2.writeObject(w);
-                out2.flush();
-                ObjectInputStream in2 = new ObjectInputStream(
-                    new ByteArrayInputStream(bout.toByteArray()));
-                s = (String)in2.readObject();
-                Worm w3 = (Worm)in2.readObject();
-                print(s + "w3 = " + w3);
+                    new FileInputStream("Blips.out"));
+                print("Recovering b1:");
+                b1 = (Blip1)in.readObject();
+                // OOPS! Throws an exception:
+        //! print("Recovering b2:");
+        //! b2 = (Blip2)in.readObject();
             }
         } /* Output:
-        Worm constructor: 6
-        Worm constructor: 5
-        Worm constructor: 4
-        Worm constructor: 3
-        Worm constructor: 2
-        Worm constructor: 1
-        w = :a(853):b(119):c(802):d(788):e(199):f(881)
-        Worm storage
-        w2 = :a(853):b(119):c(802):d(788):e(199):f(881)
-        Worm storage
-        w3 = :a(853):b(119):c(802):d(788):e(199):f(881)
+        Constructing objects:
+        Blip1 Constructor
+        Blip2 Constructor
+        Saving objects:
+        Blip1.writeExternal
+        Blip2.writeExternal
+        Recovering b1:
+        Blip1 Constructor
+        Blip1.readExternal
         *///:~
 
-寻找类
-~~~~~~
+    .. note:: 
+        
+        Blip1 的构造器有 public 而 Blip2 没有。 b2 会有异常。
+        
+        - 恢复 ``Serializable`` 对象，对象完全以它存储的二进制位为基础来构造，不调用构造器
+        - 恢复 ``Externalizable`` 对象，所有的普通的默认构造器都会被调用，然后调用 ``readExternal()``
+            
+transient（瞬时）关键字
+~~~~~~~~~~~~~~~~~~~~~~~
+
+如果我们操作的是 ``Serializable`` 对象，那么所有的序列化操作都会自动进行。
+为了能够予以控制，可以用 ``transient`` 关键字逐个字段地关闭序列化。
+
+比如，登陆网页时，保存数据但不包括密码。最简单的方式就是实现 ``Serializable`` ，将 ``password`` 字段标为 ``transient`` 。
+
+.. code-block:: java
+    :emphasize-lines: 11
+
+    //: io/Logon.java
+    // Demonstrates the "transient" keyword.
+    import java.util.concurrent.*;
+    import java.io.*;
+    import java.util.*;
+    import static net.mindview.util.Print.*;
+
+    public class Logon implements Serializable {
+        private Date date = new Date();
+        private String username;
+        private transient String password;
+        public Logon(String name, String pwd) {
+            username = name;
+            password = pwd;
+        }
+        public String toString() {
+            return "logon info: \n     username: " + username +
+                "\n     date: " + date + "\n     password: " + password;
+        }
+        public static void main(String[] args) throws Exception {
+            Logon a = new Logon("Hulk", "myLittlePony");
+            print("logon a = " + a);
+            ObjectOutputStream o = new ObjectOutputStream(
+                new FileOutputStream("Logon.out"));
+            o.writeObject(a);
+            o.close();
+            TimeUnit.SECONDS.sleep(1); // Delay
+            // Now get them back:
+            ObjectInputStream in = new ObjectInputStream(
+                new FileInputStream("Logon.out"));
+            print("Recovering object at " + new Date());
+            a = (Logon)in.readObject();
+            print("logon a = " + a);
+        }
+    } /* Output: (Sample)
+    logon a = logon info:
+        username: Hulk
+        date: Sat Nov 19 15:03:26 MST 2005
+        password: myLittlePony
+    Recovering object at Sat Nov 19 15:03:28 MST 2005
+    logon a = logon info:
+        username: Hulk
+        date: Sat Nov 19 15:03:26 MST 2005
+        password: null
+    *///:~
+
 
 XML
 ---
-Preferences
-------------
+
+对象序列化的一个重要限制是它只是 Java 的解决方案：只有 Java 程序才能反序列化这种对象。
+将数据转换成 XML 格式后，这样才能被各种各样的平台和语言使用。
+
+例如，假设有一个 Person 对象，它包含姓和名。
+
+序列化：
+
+.. code-block:: java
+
+    //: xml/Person.java
+    // Use the XOM library to write and read XML
+    // {Requires: nu.xom.Node; You must install
+    // the XOM library from http://www.xom.nu }
+    import nu.xom.*;
+    import java.io.*;
+    import java.util.*;
+
+    public class Person {
+        private String first, last;
+        public Person(String first, String last) {
+            this.first = first;
+            this.last = last;
+        }
+        // Produce an XML Element from this Person object:
+        public Element getXML() {
+            Element person = new Element("person");
+            Element firstName = new Element("first");
+            firstName.appendChild(first);
+            Element lastName = new Element("last");
+            lastName.appendChild(last);
+            person.appendChild(firstName);
+            person.appendChild(lastName);
+            return person;
+        }
+        // Constructor to restore a Person from an XML Element:
+        public Person(Element person) {
+            first= person.getFirstChildElement("first").getValue();
+            last = person.getFirstChildElement("last").getValue();
+        }
+        public String toString() { return first + " " + last; }
+        // Make it human-readable:
+        public static void
+        format(OutputStream os, Document doc) throws Exception {
+            Serializer serializer= new Serializer(os,"ISO-8859-1");
+            serializer.setIndent(4);
+            serializer.setMaxLength(60);
+            serializer.write(doc);
+            serializer.flush();
+        }
+        public static void main(String[] args) throws Exception {
+            List<Person> people = Arrays.asList(
+                new Person("Dr. Bunsen", "Honeydew"),
+                new Person("Gonzo", "The Great"),
+                new Person("Phillip J.", "Fry"));
+            System.out.println(people);
+            Element root = new Element("people");
+            for(Person p : people)
+                root.appendChild(p.getXML());
+            Document doc = new Document(root);
+            format(System.out, doc);
+            format(new BufferedOutputStream(new FileOutputStream(
+                "People.xml")), doc);
+        }
+    } /* Output:
+    [Dr. Bunsen Honeydew, Gonzo The Great, Phillip J. Fry]
+    <?xml version="1.0" encoding="ISO-8859-1"?>
+    <people>
+            <person>
+                    <first>Dr. Bunsen</first>
+                    <last>Honeydew</last>
+            </person>
+            <person>
+                    <first>Gonzo</first>
+                    <last>The Great</last>
+            </person>
+            <person>
+                    <first>Phillip J.</first>
+                    <last>Fry</last>
+            </person>
+    </people>
+    *///:~
+
+反序列化：
+
+.. code-block:: java
+
+    //: xml/People.java
+    // {Requires: nu.xom.Node; You must install
+    // the XOM library from http://www.xom.nu }
+    // {RunFirst: Person}
+    import nu.xom.*;
+    import java.util.*;
+
+    public class People extends ArrayList<Person> {
+        public People(String fileName) throws Exception    {
+            Document doc = new Builder().build(fileName);
+            Elements elements =
+                doc.getRootElement().getChildElements();
+            for(int i = 0; i < elements.size(); i++)
+                add(new Person(elements.get(i)));
+        }
+        public static void main(String[] args) throws Exception {
+            People p = new People("People.xml");
+            System.out.println(p);
+        }
+    } /* Output:
+    [Dr. Bunsen Honeydew, Gonzo The Great, Phillip J. Fry]
+    *///:~
