@@ -55,6 +55,20 @@ Notebook
     docs/meta-learning/questions
 
 .. toctree::
+    :caption: 强化学习
+    :titlesonly:
+    :hidden:
+    
+    docs/reinforcement-learning/introduction
+
+.. toctree::
+    :caption: 连铸项目
+    :titlesonly:
+    :hidden:
+
+    docs/continuous-casting/paper-review
+
+.. toctree::
     :caption: 数学基础
     :titlesonly:
     :glob:
@@ -73,6 +87,7 @@ Notebook
     docs/TCP-IP-illustrated/index
     docs/thinking-in-java/index
     docs/programmer-code-interview-guide/index
+    设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 
 .. toctree::
     :caption: 其他
