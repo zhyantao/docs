@@ -2,6 +2,10 @@
 连铸建模和仿真
 ==============
 
+此建模非彼建模， :footcite:t:`thomas2018review` 建立的是一个数学模型，中重院要求用软件（比如 Unity3D）建立机械模型。
+
+:footcite:t:`thomas2018review`  的论文的 `笔记 <https://kdocs.cn/l/cmtXAOwV5ftt>`__ 。
+
 .. hint:: 
 
     通过学习本文献，你将学会或认识到：
@@ -125,3 +129,7 @@ Microstructure
 Conclusions
 ------------
 
+参考文献
+--------
+
+.. footbibliography::

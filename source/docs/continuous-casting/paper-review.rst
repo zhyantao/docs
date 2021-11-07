@@ -1,10 +1,6 @@
-==================
-三维建模和仿真调研
-==================
-
-此建模非彼建模， :footcite:t:`thomas2018review` 建立的是一个数学模型，中重院要求用软件（比如 Unity3D）建立机械模型。
-
-:footcite:t:`thomas2018review`  的论文的 `笔记 <https://kdocs.cn/l/cmtXAOwV5ftt>`__ 。
+================
+连铸项目背景知识
+================
 
 入门科普
 ---------
@@ -21,8 +17,3 @@
 --------
 
 - `Brian G. Thomas <http://ccc.illinois.edu/publications.html>`_ 及 `课题组成员 <http://ccc.illinois.edu/people.html>`_
-
-参考文献
---------
-
-.. footbibliography::
