@@ -67,6 +67,8 @@ Notebook
     :hidden:
 
     docs/continuous-casting/paper-review
+    docs/continuous-casting/review-on-modeling-and-simulation-of-continuous-casting
+    docs/continuous-casting/3D-visualization-modeling
 
 .. toctree::
     :caption: 数学基础
@@ -88,6 +90,7 @@ Notebook
     docs/thinking-in-java/index
     docs/programmer-code-interview-guide/index
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+    凤凰架构 <https://icyfenix.cn/>
 
 .. toctree::
     :caption: 其他
