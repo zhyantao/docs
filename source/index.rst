@@ -40,35 +40,12 @@ Notebook
 
 
 .. toctree::
+    :caption: 研究方向
+    :titlesonly:
+    :glob:
     :hidden:
     
-    docs/reStructuredText
-
-.. toctree::
-    :caption: 小样本学习和元学习
-    :titlesonly:
-    :hidden:
-    
-    docs/meta-learning/paper-review
-    docs/meta-learning/introduction
-    docs/meta-learning/paper-main-idea
-    docs/meta-learning/questions
-
-.. toctree::
-    :caption: 强化学习
-    :titlesonly:
-    :hidden:
-    
-    docs/reinforcement-learning/introduction
-
-.. toctree::
-    :caption: 连铸项目
-    :titlesonly:
-    :hidden:
-
-    docs/continuous-casting/paper-review
-    docs/continuous-casting/review-on-modeling-and-simulation-of-continuous-casting
-    docs/continuous-casting/3D-visualization-modeling
+    docs/research-domain/*
 
 .. toctree::
     :caption: 数学基础

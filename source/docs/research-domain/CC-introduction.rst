@@ -1,6 +1,6 @@
-==============
-连铸建模和仿真
-==============
+==================
+三维可视化建模札记
+==================
 
 此建模非彼建模， :footcite:t:`thomas2018review` 建立的是一个数学模型，中重院要求用软件（比如 Unity3D）建立机械模型。
 
@@ -100,34 +100,8 @@ meniscus
     **弯月面液位波动不仅造成了诸如漏钢等生产上的问题，还严重影响铸坯质量。
     确切地说，当弯月面波动加剧时，板坯近表面非金属夹杂物增加，导致钢材表面缺陷加重。**
 
-Introducton
-------------
-
-Heat Transfer and Solidification
----------------------------------
-
-Fluid Flow Modeling
---------------------
-
-Initial Solidification at the Meniscus
----------------------------------------
 
 
-Thermal-Mechanical Behavior of the Mold
-----------------------------------------
-
-
-Thermal Mechanical Modeling
-----------------------------
-
-Segregation
------------
-
-Microstructure
----------------
-
-Conclusions
-------------
 
 参考文献
 --------
