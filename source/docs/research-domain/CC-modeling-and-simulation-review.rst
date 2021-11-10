@@ -1,6 +1,53 @@
 ==================
-三维可视化建模札记
+连铸建模和仿真调研
 ==================
+
+.. note:: 
+
+    本文提及到的建模涉及到两个不同的含义：1）构建计算模型，2）构建三维可视化模型。
+
+
+构建计算模型
+------------
+
+入门科普
+~~~~~~~~
+
+- Continuous Casting - `Wikipedia <https://en.wikipedia.org/wiki/Continuous_casting>`__
+- Continuous Casting, 1970's - Film 9080 `YouTube <https://www.youtube.com/watch?v=AZXWAd-KjHQ>`__
+- Continuous Casting Process \| Elements \| Process \| Die Casting \| Types \| Applications \| Pros and Cons `YouTube <https://www.youtube.com/watch?v=JAqhwR7bJTU>`__
+- Continuous Casting Refractory Process \| Vishva Vishal Engineering (Quality Refractory) `YouTube <https://www.youtube.com/watch?v=LlXhF8mRAmo>`__
+- Fluid-flow and Stress Analysis of Steel Continuous Casting - Brian Thomas `YouTube <https://www.youtube.com/watch?v=XGMf7vrGGJk>`__
+- 冶金学 - 东北大学 `哔哩哔哩 <https://www.bilibili.com/video/BV1ob411U7c5?p=66>`__
+- 板坯连铸机(第一部分: 术语) `PDF <https://members.wto.org/crnattachments/2020/TBT/CHN/20_6840_00_x.pdf>`__
+
+
+领域学者
+~~~~~~~~
+
+- `Brian G. Thomas <http://ccc.illinois.edu/publications.html>`_ 及 `课题组成员 <http://ccc.illinois.edu/people.html>`_
+- `冯科 <https://kns.cnki.net/kcms/detail/knetsearch.aspx?dbcode=CDFD&code=000040780083&sfield=au&skey=%e5%86%af%e7%a7%91&uniplatform=NZKPT>`_ - 重庆大学
+- `张伟 <https://charmve.github.io/>`_ - 扬州大学
+
+
+论文和数据集
+~~~~~~~~~~~~
+
+- Review on modeling and simulation of continuous casting. :footcite:p:`thomas2018review`
+- 基于深度学习的表面缺陷检测方法综述 `自动化学报 <http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.c190811?viewType=HTML>`_
+- Surface Defect Detection: Dataset & Papers `Github <https://github.com/Charmve/Surface-Defect-Detection>`__
+- 工业缺陷检测 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/47124>`__
+- 布匹缺陷 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/31076>`__
+- 瓷砖缺陷 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/32615>`__
+- 绝缘子自爆缺陷图像 4 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/33087>`__
+- PCB 缺陷检测 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/49931>`__
+- 手扶电梯梯级 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/44820>`__
+- 汇总 \| 缺陷检测数据集 `微信公众号 <https://mp.weixin.qq.com/s/kw_jRWevs_TMhIqWCDC55A>`__
+
+
+构建三维可视化模型
+------------------
+
 
 三维可视化建模这个任务拆分来看，包括以下几个部分：
 
@@ -102,3 +149,10 @@
 - Irrlicht
 
 .. _渲染: https://en.wikipedia.org/wiki/Visualization_(graphics)
+
+
+
+参考文献
+--------
+
+.. footbibliography::

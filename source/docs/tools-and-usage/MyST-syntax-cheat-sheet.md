@@ -183,9 +183,9 @@ Another alternative is to use Markdown syntax:
     [text](relative_path)
     ```
   - ```md
-    [PDF documentation](../reStructuredText)
+    [PDF documentation](./reStructuredText)
     ```
-  - [PDF documentation](../reStructuredText)
+  - [PDF documentation](./reStructuredText)
 * - ```md
     [text](target "title")
     ```
@@ -604,7 +604,7 @@ Content is not permitted in the image directive.
     ```
 ``````
 
-See {doc}`../reStructuredText` and {doc}`../reStructuredText` for more information.
+See {doc}`reStructuredText` and {doc}`reStructuredText` for more information.
 
 ### Referencing figures
 
@@ -731,7 +731,7 @@ See {doc}`../reStructuredText` and {doc}`../reStructuredText` for more informati
     ```
 ``````
 
-See {doc}`../reStructuredText` for more information.
+See {doc}`reStructuredText` for more information.
 
 ### Referencing math directives
 
@@ -812,19 +812,19 @@ is indicated.
     {doc}`path/to/document`
     ```
   - ```md
-    See {doc}`../reStructuredText`
+    See {doc}`reStructuredText`
     for more information.
     ```
-  - See {doc}`../reStructuredText`
+  - See {doc}`reStructuredText`
     for more information.
 * - ```md
     {doc}`text <path/to/document>`
     ```
   - ```md
-    See {doc}`here <../reStructuredText>`
+    See {doc}`here <reStructuredText>`
     for more information.
     ```
-  - See {doc}`here <../reStructuredText>`
+  - See {doc}`here <reStructuredText>`
     for more information.
 ``````
 
@@ -896,4 +896,4 @@ To include a list of citations mentioned in the document, introduce the `bibliog
 ```
 ``````
 
-See {doc}`../reStructuredText` for more information.
+See {doc}`reStructuredText` for more information.
