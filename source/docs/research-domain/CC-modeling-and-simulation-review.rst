@@ -63,8 +63,8 @@
     矢量图形格式与光栅图形是互补的，光栅图形由大量像素构成，通常的代表是摄影图像。
     矢量图形使用形状和颜色的编码数据构成图像，在渲染方面可以更灵活。
 
-三维计算机图形软件
-------------------
+集成软件套件 (IDE)
+~~~~~~~~~~~~~~~~~~
 
 .. hint:: 
     
@@ -76,77 +76,96 @@
     每一类的精度都有自己的要求，建模方式也不尽相同。
     因此，我们在工具选型时要注意区分。
 
-机械模型
-~~~~~~~~
 
-- SolidWorks：构造实体模型，广泛用于机械模型，强调物理尺度保真度；
+.. panels::
 
-建筑模型
-~~~~~~~~
+    机械模型
+    ^^^
+    
+    - SolidWorks：构造实体模型，广泛用于机械模型，强调物理尺度保真度；
 
-- Autodesk Revit：适合建筑师、景观设计师，结构工程师，给排水工程师、承包商；
+    ---
 
-电子/元件
-~~~~~~~~~
+    建筑模型
+    ^^^
+    
+    - Autodesk Revit：适合建筑师、景观设计师，结构工程师，给排水工程师、承包商；
 
-- Altium Designer
-- SolidWorks Electrical
-- Proteus
-- NI Multisim
+    ---
 
-影视/游戏
-~~~~~~~~~
+    电子/元件
+    ^^^
 
-- [开源] Blender：可提供动画、建模、渲染、材质功能，可与中高端收费套件竞争；
-- [开源] Wings 3D：比 Blender 更简单，但功能更少，适合初学者；
-- Autodesk Maya：许多电影特效均有这个软件制作；
-- Autodesk 3ds Max：电子游戏行业占主导地位的动画程序；
-- Cinema 4D：对艺术家友善的界面，以及低廉的价格；
+    - Altium Designer
+    - SolidWorks Electrical
+    - Proteus
+    - NI Multisim
 
-仿真模型
-~~~~~~~~
+    ---
+    
+    影视/游戏
+    ^^^
 
-- [生物] Protein Structure Prediction
-- [生物] Nucleic Acid Simulations
-- [化学] Quantum Chemistry
-- [化学] Molecular Modeling
-- [化学] Monte Carlo Molecular Modeling
-- [化学] Molecular Design
-- [物理] Finite Element
-- [物理] Cosmological Simulation
+    - [开源] Blender：可提供动画、建模、渲染、材质功能，可与中高端收费套件竞争；
+    - [开源] Wings 3D：比 Blender 更简单，但功能更少，适合初学者；
+    - Autodesk Maya：许多电影特效均有这个软件制作；
+    - Autodesk 3ds Max：电子游戏行业占主导地位的动画程序；
+    - Cinema 4D：对艺术家友善的界面，以及低廉的价格；
 
-虚拟现实
-~~~~~~~~
+    ---
 
-- [开源] Unreal Engine
-- Unity3D
-- `List of game engines <https://en.wikipedia.org/wiki/List_of_game_engines>`_
+    仿真模型
+    ^^^
 
-三维图形应用程序接口（API）
----------------------------
+    - [生物] Protein Structure Prediction
+    - [生物] Nucleic Acid Simulations
+    - [化学] Quantum Chemistry
+    - [化学] Molecular Modeling
+    - [化学] Monte Carlo Molecular Modeling
+    - [化学] Molecular Design
+    - [物理] Finite Element
+    - [物理] Cosmological Simulation
+
+    ---
+
+    虚拟现实
+    ^^^
+
+    - [开源] Unreal Engine
+    - Unity3D
+    - `List of game engines <https://en.wikipedia.org/wiki/List_of_game_engines>`_
+
+应用程序接口 (API)
+~~~~~~~~~~~~~~~~~~
 
 除了使用集成软件（IDE）辅助设计，我们也可以使用应用程序接口（API）处理三维模型。
 这些API对于计算机图形硬件厂商也是极为重要的，因为他们提供给程序员一种使用硬件的抽象方式，而依然能够利用那个显卡的特定硬件的长处。
 
-这些三维计算机图形的API颇为流行：
+.. panels::
 
-- OpenGL和OpenGL着色语言
-- OpenGL ES嵌入式设备的三维API
-- Direct3D（DirectX的子集）
-- RenderMan
-- RenderWare
+    三维计算机图形的底层 API
+    ^^^
 
-也有一些高层的三维场景图API，他们提供在底层绘制API之上的附加功能。处于活跃的发展中的这类程序库包括：
+    - OpenGL和OpenGL着色语言
+    - OpenGL ES嵌入式设备的三维API
+    - Direct3D（DirectX的子集）
+    - RenderMan
+    - RenderWare
 
-- QSDK
-- Quesa
-- Java 3D
-- JSR 184（M3G）
-- NVidia Scene Graph
-- OpenSceneGraph
-- OpenSG
-- OGRE
-- Irrlicht
+    ---
+
+    高层 API 提供底层 API 的附加功能
+    ^^^
+
+    - QSDK
+    - Quesa
+    - Java 3D
+    - JSR 184（M3G）
+    - NVidia Scene Graph
+    - OpenSceneGraph
+    - OpenSG
+    - OGRE
+    - Irrlicht
 
 .. _渲染: https://en.wikipedia.org/wiki/Visualization_(graphics)
 
