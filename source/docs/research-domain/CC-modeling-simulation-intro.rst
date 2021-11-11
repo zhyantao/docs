@@ -4,7 +4,10 @@
 
 .. hint:: 
     
-    参考 :footcite:t:`thomas2018review`  的论文或 `笔记 <https://kdocs.cn/l/cmtXAOwV5ftt>`__ 整理成此文。
+    参考 :footcite:t:`thomas2018review`  的论文或 `笔记 <https://kdocs.cn/l/cmtXAOwV5ftt>`_ 整理成此文。
+
+连铸，即连续铸造，可以是铸钢。英文是 continuous casting，也可以是 strand casting。
+
 
 
 
