@@ -43,6 +43,7 @@
 - PCB 缺陷检测 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/49931>`__
 - 手扶电梯梯级 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/44820>`__
 - 汇总 \| 缺陷检测数据集 `微信公众号 <https://mp.weixin.qq.com/s/kw_jRWevs_TMhIqWCDC55A>`__
+- 旋转机械故障诊断公开数据集整理 `CSDN <https://blog.csdn.net/hustcxl/article/details/89394428>`__
 
 
 构建三维可视化模型

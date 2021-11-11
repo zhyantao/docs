@@ -9,7 +9,7 @@ import os
 
 project = u'Notebook' 
 copyright = u'2021, RYAN'
-author = u'<a href="https://example.com">RYAN</a>'
+author = u'<a href="https://zhyantao.github.io/">RYAN</a>'
 version = 'v 1.2.0'
 
 master_doc = 'index'
