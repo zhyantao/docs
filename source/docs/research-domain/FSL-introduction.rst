@@ -91,8 +91,9 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 .. image:: ../../_static/images/model-agnostic-meta-learning.png
 
 注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*` ，这些优化参数的矢量和为 :math:`\theta` 。
+当面对新场景时，用平均后的参数 :math:`\theta` 来初始化新场景，可以更快地收敛。
 
-以上是我于 20211028 做的一次 PPT 组会分享 `Slide <https://kdocs.cn/l/siwQFFoPvu7I>`_ 。
+以上是我于 20211028 做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/siwQFFoPvu7I>`_ 。
 
 孪生网络
 --------
@@ -112,7 +113,8 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
     为了使 Loss 最小，应用反向传播更新参数。
 
 Triplet Loss
-    首先从某个类中选出一个锚点（anchor），然后再从这个类中选出一个正样本（positive sample)，最后从另一个类中选出一个负样本（negative sample），构成三元组 :math:`(pos, anchor, neg)` 。
+    首先从某个类中选出一个锚点（anchor），然后再从这个类中选出一个正样本（positive sample)，最后从另一个类中选出一个负样本（negative sample），构成三元组
+    :math:`(pos, anchor, neg)` 。
     将这三张图片都输入到网络中，可以得到三个特征向量 :math:`f(x^+), f(x^a), f(x^-)` 。
     三个向量，两两之间分别计算欧氏距离。
     目标是让正样本的特征向量和锚点的特征向量之间距离越小越好，负样本的特征向量与锚点的特征向量之间的距离越大越好。
@@ -151,7 +153,8 @@ Cosine similarity
     衡量两个向量之间的相似度。两个向量的内积等于 :math:`cos\theta=\mathbf{x}^T\mathbf{w}` 。
 
 Softmax Function
-    可以把一个向量映射成一个概率分布，通常用于输出层。首先对向量的每一个元素取指数，然后做归一化。每个概率值表示对每个类别的 Confidence。Softmax 会让最大值变大，让最小值变小，突出差异性。
+    可以把一个向量映射成一个概率分布，通常用于输出层。首先对向量的每一个元素取指数，然后做归一化。每个概率值表示对每个类别的 Confidence。
+    Softmax 会让最大值变大，让最小值变小，突出差异性。
 
 Fine Tuning
     再 Support Set 上学习 :math:`\mathbf{W}` 和 :math:`\mathbf{b}` 就是做 Fine Tuning。
