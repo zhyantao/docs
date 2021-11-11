@@ -79,6 +79,8 @@
 
 
 .. panels::
+    :container: container-lg pb-3
+    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
 
     机械模型
     ^^^
@@ -143,6 +145,8 @@
 这些API对于计算机图形硬件厂商也是极为重要的，因为他们提供给程序员一种使用硬件的抽象方式，而依然能够利用那个显卡的特定硬件的长处。
 
 .. panels::
+    :container: container-lg pb-3
+    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
 
     三维计算机图形的底层 API
     ^^^
