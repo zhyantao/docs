@@ -134,7 +134,7 @@
     虚拟现实
     ^^^
 
-    - [开源] Unreal Engine
+    - Unreal Engine
     - Unity3D
     - `List of game engines <https://en.wikipedia.org/wiki/List_of_game_engines>`_
 
