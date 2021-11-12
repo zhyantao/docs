@@ -86,3 +86,17 @@
     ":math:`\mathbb{R}`", "实数域", "``\mathbb{R}``", "黑板体"
     ":math:`\mathbb{C}`", "复数域", "``\mathbb{C}``", "黑板体"
     ":math:`\mathbb{Q}`", "有理数域", "``\mathbb{Q}``", "黑板体"
+
+.. _set-theory:
+
+集合论
+-------
+
+.. csv-table::
+    :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
+    :widths: 10, 25, 20, 50
+
+    ":math:`\subset`", "真包含（真子集）", "``\subset``", "高中课本记作 :math:`\subsetneqq` ，也有书记作 :math:`\subsetneq`"
+    ":math:`\subseteq`", "包含（子集）", "``\subseteq``", "高中课本记作 :math:`\subset` ，因此有歧义， `注意约定 <https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86>`_"
+    ":math:`\in`", "属于", "``\in``", ":math:`a \in A`"
+    ":math:`\notin`", "不属于", "``\notin``", ":math:`a \notin A`"
