@@ -8,15 +8,19 @@
 科普视频
 ~~~~~~~~
 
-- 元学习与小样本学习 by `王树森 <https://www.youtube.com/c/ShusenWang>`_ on `YouTube <https://youtu.be/UkQ2FVpDxHg>`_ or `哔哩哔哩 <https://www.bilibili.com/medialist/play/ml1245757985/BV1B44y1r75K>`__
-- `幻灯片1: Introduction <https://kdocs.cn/l/cpTe5jubAGog>`_
-- `幻灯片2: Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_
-- `幻灯片3: Pretraining & Fine Tuning <https://kdocs.cn/l/cbBZGuwm26Yr>`_
-- `深度强化学习(1/5)：基本概念 <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`_
-- `深度强化学习(2/5)：价值学习 <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`_
-- `深度强化学习(3/5)：策略学习 <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`_
-- `深度强化学习(4/5)：Actor-Critic Methods <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`_
-- `深度强化学习(5/5)：AlphaGo & Model-Based RL <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`_
+- 元学习与小样本学习 `王树森 <https://space.bilibili.com/1369507485>`__
+  on `哔哩哔哩 <https://www.bilibili.com/medialist/play/ml1245757985/BV1B44y1r75K>`__
+  Slide `Introduction <https://kdocs.cn/l/cpTe5jubAGog>`_/\ 
+  `Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_/\ 
+  `Pretraining & Fine Tuning <https://kdocs.cn/l/cbBZGuwm26Yr>`_
+- 深度强化学习 `王树森 <https://www.youtube.com/c/ShusenWang>`__
+  on `YouTube <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`__
+  Slide `Intro <https://kdocs.cn/l/cnurQ40MrFLJ>`_/\
+  `Value-Based <https://kdocs.cn/l/couQ5BWFzS57>`_/\
+  `Policy-Based <https://kdocs.cn/l/cguX6PpD6QSb>`_/\ 
+  `Actor-Critic Methods <https://kdocs.cn/l/cbNH5Phx6tnZ>`_/\ 
+  `Model-Based <https://kdocs.cn/l/ceckin3M9Eat>`_
+- 王树森课程讲义 `深度强化学习.PDF <https://kdocs.cn/l/cmGWnLP1u5VF>`__
 
 科普博文
 ~~~~~~~~
@@ -26,7 +30,8 @@
 - `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
 - `从 CVPR 2019 一览小样本学习研究进展 <https://www.leiphone.com/category/academic/4wc0990rNQf43mss.html>`_ 每年 CVPR 都会有针对小样本学习的一个总结
 - `Learning to learn - The Berkeley Artificial Intelligence Research <https://bair.berkeley.edu/blog/2017/07/18/learning-to-learn/>`_
-- `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_ 及 `译文 <https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html>`__
+- `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_ 
+  及 `译文 <https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html>`__
 - `元学习（Meta Learning）与迁移学习（Transfer Learning）的区别联系是什么？ <https://www.zhihu.com/question/299020462/answer/1009811572>`_
 - `How to train your MAML: A step by step approach <https://www.bayeswatch.com/2018/11/30/HTYM/>`_
 - `An Introduction to Meta-Learning <https://medium.com/walmartglobaltech/an-introduction-to-meta-learning-ced7072b80e7>`_
@@ -37,7 +42,8 @@
 领域综述
 ~~~~~~~~
 
-- Generalizing from a Few Examples: A Survey on Few-Shot Learning `笔记 <https://kdocs.cn/l/ce6RjgEp9WT9>`_ 及 `文章解读 <https://zhuanlan.zhihu.com/p/129786553>`_
+- Generalizing from a Few Examples: A Survey on Few-Shot Learning `笔记 <https://kdocs.cn/l/ce6RjgEp9WT9>`_ 
+  及 `文章解读 <https://zhuanlan.zhihu.com/p/129786553>`_
 - `Meta-Learning in Neural Networks: A Survey <https://arxiv.org/pdf/2004.05439.pdf>`_
 - `A CLOSER LOOK AT FEW-SHOT CLASSIFICATION <https://arxiv.org/pdf/1904.04232.pdf>`_
 - `A Baseline for Few-Shot Image Classification <https://arxiv.org/pdf/1909.02729.pdf>`_
@@ -46,18 +52,24 @@
 ~~~~~~~~
 
 - CS 330: Deep Multi-Task and Meta Learning `主页 <http://cs330.stanford.edu/>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1He411s7K4>`__ 17.75 小时
-- Chelsea Finn: Meta-Learning: from Few-Shot Learning to Rapid  Reinforcement Learning `主页 <https://sites.google.com/view/icml19metalearning>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1o4411A7YE>`__
+- Chelsea Finn: Meta-Learning: from Few-Shot Learning to Rapid  Reinforcement Learning `主页 <https://sites.google.com/view/icml19metalearning>`__
+  或 `哔哩哔哩 <https://www.bilibili.com/video/BV1o4411A7YE>`__
 - Chelsea Finn: Building Unsupervised Versatile Agents with Meta-Learning `YouTube  <https://www.youtube.com/watch?v=i05Fk4ebMY0>`__ 1 小时
-- 李宏毅：Meta Learning `YouTube <http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html>`__ 或 `哔哩哔哩 <https://www.bilibili.com/video/BV1pQ4y1K7cw?p=32>`__
+- 李宏毅：Meta Learning `YouTube <http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html>`__
+  或 `哔哩哔哩 <https://www.bilibili.com/video/BV1pQ4y1K7cw?p=32>`__
 
 特邀演讲
 ~~~~~~~~
 
-- Generalizing from Few Examples with Meta-Learning by Hugo Larochelle `Video <https://www.bilibili.com/video/av61821192/>`__ 及 `Slides <https://kdocs.cn/l/cpswKp8xJuZj>`__
+- Generalizing from Few Examples with Meta-Learning by Hugo Larochelle `Video <https://www.bilibili.com/video/av61821192/>`__ 
+  及 `Slides <https://kdocs.cn/l/cpswKp8xJuZj>`__
 - Workshop on Meta-Learning (MetaLearn 2021) `Video <https://meta-learn.github.io/>`__
 - Deep Learning: Bridging Theory and Practice `Video <https://ludwigschmidt.github.io/nips17-dl-workshop-website/>`__
-- Challenges in Multi-Task Learning and Meta-Learning `Video <https://www.youtube.com/watch?v=Rq40Bze_hMA>`__ 及 `Slides <https://ai.stanford.edu/~cbfinn/_files/ias_slides.pdf>`__
-- The Big Problem with Meta-Learning and How Bayesians Can Fix It `Video <https://slideslive.com/38922670/invited-talk-the-big-problem-with-metalearning-and-how-bayesians-can-fix-it>`__ 及 `Slides <https://ai.stanford.edu/~cbfinn/_files/neurips19_memorization.pdf>`__
+- Challenges in Multi-Task Learning and Meta-Learning `Video <https://www.youtube.com/watch?v=Rq40Bze_hMA>`__ 
+  及 `Slides <https://ai.stanford.edu/~cbfinn/_files/ias_slides.pdf>`__
+- The Big Problem with Meta-Learning and How Bayesians Can Fix It 
+  `Video <https://slideslive.com/38922670/invited-talk-the-big-problem-with-metalearning-and-how-bayesians-can-fix-it>`__ 
+  及 `Slides <https://ai.stanford.edu/~cbfinn/_files/neurips19_memorization.pdf>`__
 
 小样本学习方法
 --------------
@@ -117,6 +129,7 @@
 - `Caltech-UCSD Birds-200-2011 <http://www.vision.caltech.edu/visipedia/CUB-200-2011.html>`_
 - `google-research/meta-dataset <https://github.com/google-research/meta-dataset>`_
 - `relevant-awesome-datasets-repo - Few shot <https://github.com/Duan-JM/awesome-papers-fewshot#relevant-awesome-datasets-repo>`_
+- 评价强化学习模型效果的工具： `OpenAI Gym <http://gym.openai.com/>`_
 
 领域学者
 --------
