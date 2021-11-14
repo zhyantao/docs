@@ -673,7 +673,8 @@ Sphinx 插件语法
 PlantUML 语法支持
 ~~~~~~~~~~~~~~~~~
 
-文件已通过 `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`_ 插件支持 `PlantUML <https://plantuml.com/zh/>`_ 语法，样例如下：
+文件已通过 `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`_
+插件支持 PlantUML 语法，语法规则参考 :ref:`plantuml` ，样例如下：
 
 .. code-block:: 
 
@@ -696,7 +697,7 @@ Graphviz 语法支持
 
 文档已经通过 `sphinx.ext.graphviz 
 <https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`_ 插件支持
-`Graphviz <https://graphviz.org/>`_ 语法，样例如下：
+Graphviz 语法，语法规则参考 :ref:`graphviz` ，样例如下：
 
 .. code-block:: 
 
@@ -712,10 +713,6 @@ Graphviz 语法支持
     digraph foo {
         "bar" -> "baz";
     }
-
-- 样例参考 `Graphviz (dot) examples <https://renenyffenegger.ch/notes/tools/Graphviz/examples/index>`_ 或 `GraphViz Pocket Reference <https://graphs.grevian.org/example>`_ 。
-- 交互式 `Garphviz 在线编辑器 <https://sketchviz.com/new>`_ 绘制手写风格的图。
-- 参考 `更多资源 <https://graphviz.org/resources/>`_ 。
 
 .. _mermaid-ext:
 
