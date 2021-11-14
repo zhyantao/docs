@@ -1,3 +1,5 @@
+.. _symbols:
+
 ======
 符号表
 ======
@@ -59,6 +61,7 @@
     ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``P_1 \sim P_{5}``", "大写"
     ":math:`\mathcal{L}`", "损失函数", "``\mathcal{L}``", "大写花体"
 
+.. _probability-statistics-symbols:
 
 概率和统计
 ----------
