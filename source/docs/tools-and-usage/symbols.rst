@@ -100,3 +100,29 @@
     ":math:`\subseteq`", "包含（子集）", "``\subseteq``", "高中课本记作 :math:`\subset` ，因此有歧义， `注意约定 <https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86>`_"
     ":math:`\in`", "属于", "``\in``", ":math:`a \in A`"
     ":math:`\notin`", "不属于", "``\notin``", ":math:`a \notin A`"
+
+数据库
+-------
+.. csv-table::
+    :header: "英文","中文","符号",":math:`\LaTeX` 语法"
+    :widths: 15, 15, 10, 30
+
+    "Projection","投影",":math:`\Pi`\ ","``\Pi``"
+    "Selection","选择",":math:`\sigma`\ ","``\sigma``"
+    "Renaming","重命名",":math:`\rho`\ ","``\rho``"
+    "Aggregate Function","聚合函数",":math:`\mathcal{G}`\ ","``\mathcal{G}``"
+    "Union","交",":math:`\cap`\ ","``\cap``"
+    "Intersection","补",":math:`\cup`\ ","``\cup``"
+    "Natural Join","自然连接",":math:`\bowtie`\ ","``\bowtie``"
+    "Inner Join", "内连接", ":math:`\mathop{\bowtie}\limits_{A \theta B}^{}`\ ", "``\mathop{\bowtie}\limits_{A \theta B}^{}``"
+    "LeftOuter Join","左外连接","⟕","...这几个直接复制吧"
+    "RightOuter Join","右外连接","⟖",""
+    "FullOuter Join","全外连接","⟗",""
+    "Cartesian Product","笛卡尔乘积",":math:`\times`\ ","``\times``"
+    "Divide","除",":math:`\div`\ ","``\div``"
+    "Assignment","赋值",":math:`\leftarrow`\ ","``\leftarrow``"
+    "And","条件并列",":math:`\land` or :math:`\vee`\ ","``\land`` or ``\vee``"
+    "Negation","非",":math:`\neg`\ ","``\neg``"
+    "Exist","存在",":math:`\exists`\ ","``\exists``"
+    "For All","对所有",":math:`\forall`\ ","``\forall``"
+    "","比较",":math:`\gt\ge\lt\le\ne`\ ","``\gt\ge\lt\le\ne``"
