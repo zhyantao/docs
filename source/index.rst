@@ -55,6 +55,7 @@ Notebook
 
     docs/mathematics/*
 
+
 .. toctree::
     :caption: 计算机基础
     :titlesonly:
@@ -62,22 +63,15 @@ Notebook
     :hidden:
 
     操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
-    数据库系统（上）模型与语言 <https://www.mubucm.com/doc/1TZV-8_G4Dk>
-    数据库系统（中）管理与技术 <https://www.mubucm.com/doc/6BprZ8u4YSk>
-    数据库系统（下）建模与设计 <https://www.mubucm.com/doc/666LyLPreVk>
-    数据库系统原理习题与解析 <https://kdocs.cn/l/cnw25Tq3UVuU>
-    数据库系统知识点整理 <https://www.mubucm.com/doc/6fdWgkSb_kA>
-    数据库系统原理（考研笔记） <https://kdocs.cn/l/cnWHWWKze7Af>
     计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
     docs/thinking-in-java/index
     程序员代码面试指南 <https://www.mubucm.com/doc/FlaJ_-jbYA>
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
     凤凰架构 <https://kdocs.cn/l/cuTBockBEHTX>
     凤凰架构笔记 <https://www.mubucm.com/doc/9Xk0cG4t4A>
-    数据密集型应用系统设计 <https://www.mubucm.com/doc/4kP4oa6Hm4A>
     软件系统设计 <https://www.mubucm.com/doc/6u-OwkpsIkA>
-    面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
     docs/cs-basics/*
+
 
 .. toctree::
     :caption: 其他
@@ -87,3 +81,4 @@ Notebook
     
     docs/competitions/*
     docs/tools-and-usage/*
+    面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
