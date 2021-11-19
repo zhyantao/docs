@@ -65,11 +65,8 @@ Notebook
     操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
     计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
     docs/thinking-in-java/index
-    程序员代码面试指南 <https://www.mubucm.com/doc/FlaJ_-jbYA>
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
     凤凰架构 <https://kdocs.cn/l/cuTBockBEHTX>
-    凤凰架构笔记 <https://www.mubucm.com/doc/9Xk0cG4t4A>
-    软件系统设计 <https://www.mubucm.com/doc/6u-OwkpsIkA>
     docs/cs-basics/*
 
 
