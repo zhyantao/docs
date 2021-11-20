@@ -48,15 +48,6 @@ Notebook
     docs/research-domain/*
 
 .. toctree::
-    :caption: 数学基础
-    :titlesonly:
-    :glob:
-    :hidden:
-
-    docs/mathematics/*
-
-
-.. toctree::
     :caption: 计算机基础
     :titlesonly:
     :glob:
@@ -68,14 +59,28 @@ Notebook
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
     凤凰架构 <https://kdocs.cn/l/cuTBockBEHTX>
     docs/cs-basics/*
-
+    面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
 
 .. toctree::
-    :caption: 其他
+    :caption: 数学基础
+    :titlesonly:
+    :glob:
+    :hidden:
+
+    docs/mathematics/*
+
+.. toctree::
+    :caption: 工具和使用
     :titlesonly:
     :glob:
     :hidden:
     
-    docs/competitions/*
     docs/tools-and-usage/*
-    面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
+
+.. toctree::
+    :caption: 环境和配置
+    :titlesonly:
+    :glob:
+    :hidden:
+    
+    docs/env-config/*
