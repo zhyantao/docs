@@ -1,6 +1,9 @@
 Git 常用命令
 =============
 
+.. note::
+
+    推荐一个比较好的学习 Git 命令的网站 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`_。
 
 仓库
 ~~~~~
