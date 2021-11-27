@@ -57,7 +57,6 @@ Notebook
     计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
     Java 编程思想笔记 <https://thinking-in-java-notes.readthedocs.io>
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
-    凤凰架构 <https://kdocs.cn/l/cuTBockBEHTX>
     docs/cs-basics/*
     面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
 
