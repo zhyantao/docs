@@ -1,25 +1,32 @@
-=========
-Notebook
-=========
+======
+时间线
+======
+
 
 .. panels::
     :container: timeline
+    :column: col-6 p-0
     :card:
 
     ---
-    :column: col-lg-12 p-2
+    :column: +entry left
 
-    2021年10月~2021年11月
+    2021 年 10 月 ~ 2021 年 11 月
     ^^^
 
     - **Java 基础** Java 编程思想、Java 视频选讲、Java Guide
-    - **小样本（机器）学习入门** （教程, Survey, Review）扫盲阶段
+    - **小样本学习入门** （教程, Survey, Review）扫盲阶段
     - **小论文** 整理常见的学术观点和应用场景，形成 Introduction 部分的研究现状和 Related Work
 
     ---
-    :column: col-lg-12 p-2
+    :column: +right
+    ---
+    :column: +left
 
-    2021年12月~2022年2月
+    ---
+    :column: +entry right
+
+    2021 年 12 月 ~ 2022 年 2 月
     ^^^
 
     - **工具及框架** Git、Linux、Spring Boot、Spring Cloud
@@ -28,9 +35,9 @@ Notebook
     - **小论文** 总结经典模型结构及常见改进方法，尝试将模型应用于新数据集
 
     ---
-    :column: col-lg-12 p-2
+    :column: +entry left
 
-    2022年3月~2022年5月
+    2022 年 3 月 ~ 2022 年 5 月
     ^^^
 
     - **计算机基础** 操作系统、计算机网络、数据库、数据结构（幕布）
@@ -83,3 +90,4 @@ Notebook
     :hidden:
     
     docs/env-config/*
+
