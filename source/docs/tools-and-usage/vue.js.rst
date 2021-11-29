@@ -16,7 +16,7 @@ Vue 主要特性包括：
 学习目标
 ~~~~~~~~
 
-以凤凰架构为例，学习其前端构建方式，达到能够复现的程度就可以了。\ `前端工程 <https://github.com/fenixsoft/fenix-bookstore-frontend>`_\ 的目录结构如下：
+以\ `凤凰架构 <http://icyfenix.cn/>`_\ 为例，学习其\ `前端 <https://bookstore.icyfenix.cn/#/>`_\ 构建方式，达到能够复现的程度就可以了。\ `前端工程源代码 <https://github.com/fenixsoft/fenix-bookstore-frontend>`_\ 的目录结构如下：
 
 .. code-block:: text
 
