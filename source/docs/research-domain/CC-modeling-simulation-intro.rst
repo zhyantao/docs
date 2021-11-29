@@ -65,60 +65,52 @@ Brain G. Thomas :footcite:p:`thomas2018review` 对很多现象应该如何建模
 若您发现了本文的错误，可以选择右上角 ``Github`` 菜单下的 ``Open Issue`` 或 ``Suggest Edit`` 和我一起修改本文，谢谢。
 
 
+资料调研
+--------
+
+入门科普
+~~~~~~~~~
+
+
+入门科普
+~~~~~~~~
+
+- Continuous Casting - `Wikipedia <https://en.wikipedia.org/wiki/Continuous_casting>`__
+- Continuous Casting, 1970's - Film 9080 `YouTube <https://www.youtube.com/watch?v=AZXWAd-KjHQ>`__
+- Continuous Casting Process \| Elements \| Process \| Die Casting \| Types \| Applications \| Pros and Cons `YouTube <https://www.youtube.com/watch?v=JAqhwR7bJTU>`__
+- Continuous Casting Refractory Process \| Vishva Vishal Engineering (Quality Refractory) `YouTube <https://www.youtube.com/watch?v=LlXhF8mRAmo>`__
+- Fluid-flow and Stress Analysis of Steel Continuous Casting - Brian Thomas `YouTube <https://www.youtube.com/watch?v=XGMf7vrGGJk>`__
+- 冶金学 - 东北大学 `哔哩哔哩 <https://www.bilibili.com/video/BV1ob411U7c5?p=66>`__
+- 板坯连铸机(第一部分: 术语) `PDF <https://members.wto.org/crnattachments/2020/TBT/CHN/20_6840_00_x.pdf>`__
+
+
+领域学者
+~~~~~~~~
+
+- `Brian G. Thomas <http://ccc.illinois.edu/publications.html>`_ 及 `课题组成员 <http://ccc.illinois.edu/people.html>`_
+- `冯科 <https://kns.cnki.net/kcms/detail/knetsearch.aspx?dbcode=CDFD&code=000040780083&sfield=au&skey=%e5%86%af%e7%a7%91&uniplatform=NZKPT>`_ - 重庆大学
+- `张伟 <https://charmve.github.io/>`_ - 扬州大学
+
+
+论文和数据集
+~~~~~~~~~~~~
+
+- Review on modeling and simulation of continuous casting. :footcite:p:`thomas2018review`
+- 基于深度学习的表面缺陷检测方法综述 `自动化学报 <http://www.aas.net.cn/cn/article/doi/10.16383/j.aas.c190811?viewType=HTML>`_
+- Surface Defect Detection: Dataset & Papers `Github <https://github.com/Charmve/Surface-Defect-Detection>`__
+- 工业缺陷检测 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/47124>`__
+- 布匹缺陷 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/31076>`__
+- 瓷砖缺陷 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/32615>`__
+- 绝缘子自爆缺陷图像 4 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/33087>`__
+- PCB 缺陷检测 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/49931>`__
+- 手扶电梯梯级 `飞桨 AI Stuido <https://aistudio.baidu.com/aistudio/datasetdetail/44820>`__
+- 汇总 \| 缺陷检测数据集 `微信公众号 <https://mp.weixin.qq.com/s/kw_jRWevs_TMhIqWCDC55A>`__
+- 旋转机械故障诊断公开数据集整理 `CSDN <https://blog.csdn.net/hustcxl/article/details/89394428>`__
+
+
 参考文献
 --------
 
 .. [1] Continuous casting. https://en.wikipedia.org/wiki/Continuous_casting
 .. [2] 蔡开科. 连铸坯表面裂纹的控制[J]. 鞍钢技术, 2004(3):8.
 .. footbibliography::
-
-
-附：单词表
------------
-
-meniscus
-    (液柱的)弯月面。弯液面是非平面的液体表面，可分为凹弯液面（concave meniscus）和凸弯液面（convex meniscus）两种。
-    凹弯液面（concave meniscus）是指液体粒子和容器之间的黏附力比液体粒子之间的凝聚力还要大，因此液体靠近容器壁的部分会沿着壁面往上升。
-    像玻璃杯中的水就会有此情形。
-    以水为基础的流体（像是蜂蜜、牛奶）在玻璃杯或是其他容器中也会有此情形，流体会浸润容器。
-    凸弯液面（convex meniscus）是指液体粒子之间的凝聚力大于和液体粒子和容器之间的黏附力，因此液体靠近容器壁的部分会沿着壁面往上升。
-    像玻璃压力计或玻璃温度计中的汞就有此现象。
-    弯月面液位波动不仅造成了诸如漏钢等生产上的问题，还严重影响铸坯质量。
-    确切地说，当弯月面波动加剧时，板坯近表面非金属夹杂物增加，导致钢材表面缺陷加重。
-
-multiphase turbulent flow
-    多相湍流
-
-nozzle clogging
-    水口堵塞，喷嘴堵塞
-
-electromagentic effects
-    电磁效应
-
-particle entrainment
-    颗粒夹带
-
-thermal-mechanical distortion
-    热机械变形
-
-segregation
-    分离，偏析。合金中各组成元素在结晶时分布不均匀的现象称为偏析。 
-    焊接熔池一次结晶过程中，由于冷却速度快，已凝固的焊缝金属中化学成分来不及扩散，造成分布不均，产生偏析。
-
-coupled phenomena
-    耦合现象
-
-level flcutuation
-    水平振动
-
-slag entrainment
-    矿渣夹带，entrainment (流体)带走(微粒等)
-
-breakout detection warning system
-    故障检测预警系统
-
-spray water flow
-    喷水流量
-
-solidified shell growth
-    坯壳生长过程
