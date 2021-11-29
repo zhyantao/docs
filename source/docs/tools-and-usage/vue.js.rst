@@ -2,6 +2,9 @@
 Vue.js 入门
 ============
 
+基本介绍
+~~~~~~~~
+
 Vue.js 是一个用于创建用户界面的开源 JavaScript 框架，也是一个创建单页应用的 Web 应用框架，能够简化 Web 开发。
 Vue 所关注的核心是 MVC 模式中的视图层，同时，它也能方便地获取数据更新，并通过组件内部特定的方法实现视图与模型的交互。
 
@@ -712,10 +715,29 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 单文件组件
 ----------
 
-到目前为止，我们学完了 Vue 主要的基础内容，后续开发，我们将基于此方法进行。
+到目前为止，我们学完了 Vue 主要的基础内容，后续开发，我们将基于此方法进行，它更适用于大项目。
+
+首先，安装准备环境：
 
 1. 安装 npm：\ ``npm -v``
 2. 由于网络原因 安装 cnpm：\ ``npm install -g cnpm --registry=https://registry.npm.taobao.org``
 3. 安装 vue-cli：\ ``cnpm install -g @vue/cli``
 4. 安装 webpack：\ ``cnpm install -g webpack``
 
+然后，在命令行中使用 ``vue ui`` 创建一个 Vue 项目，包管理器选择 npm 其他保持默认即可。
+
+创建完成后，用 HBuilderX 打开项目。
+可以看到，public 文件夹是项目开发完成后部署的文件。
+``HelloWorld.vue`` 是单文件组件，src 是源代码文件，我们将在这里完成开发工作。步骤如下：
+
+1. src/App.vue 是项目的入口文件，在 script 中 ``import`` 自定义的组件；
+2. 在 script 中使用 ``export default`` 注册组件；
+   
+   - 用 ``name`` 注册组件的名称
+   - 用 ``props`` 注册属性
+   - 用 ``methods`` 注册方法
+   - 用 ``data(){}`` 注册对应的数据
+
+3. 在 template 中使用已经注册的组件，即可完成整个开发流程。
+
+以上，全部更新完毕。
