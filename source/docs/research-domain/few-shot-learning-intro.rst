@@ -93,7 +93,7 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*` ，这些优化参数的矢量和为 :math:`\theta` 。
 当面对新场景时，用平均后的参数 :math:`\theta` 来初始化新场景，可以更快地收敛。
 
-以上是我于 20211028 做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/siwQFFoPvu7I>`_ 。
+以上是我于 2021 年 10 月 28 日做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/cpj5izoyamHE>`_\ 。
 
 解决方案汇总 [2]_
 -----------------
