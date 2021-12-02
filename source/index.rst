@@ -14,9 +14,9 @@
     2021 年 10 月 ~ 2021 年 11 月
     ^^^
 
-    - **Java 基础** Java 编程思想、Java 视频选讲、Java Guide
-    - **小样本学习入门** （教程, Survey, Review）扫盲阶段
-    - **小论文** 整理常见的学术观点和应用场景，形成 Introduction 部分的研究现状和 Related Work
+    - **Java 基础** Java 编程思想、Java Guide
+    - **小样本学习** 教程, Survey, Review、扫盲阶段
+    - **小论文** 整理学术观点和应用场景，形成 Introduction 部分的研究现状和 Related Work
 
     ---
     :column: +right
