@@ -1,0 +1,66 @@
+===================
+用 GPU 训练神经网络
+===================
+
+英特尔（Intel）、超微半导体（AMD）、英伟达（NVIDIA）都是既生产 CPU 也生产 GPU。
+不过，这三家公司也有些区别，比如 Intel 和 AMD 主要做 CPU，而 NVIDIA 主要做 GPU。
+
+GPU 和 CPU 本质上属于同类型的产品，只不过侧重点不一样，CPU 偏向控制，GPU 偏向计算。
+
+我们通常说的显卡不等于 GPU，它是一块集成板卡。显卡由 GPU、显存、电路板、BIOS 固件组成。
+GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时候提到显卡，关注的重点往往是 GPU。
+
+通常说到处理器，指的一般是 Intel 和 AMD 生产的 CPU（中央处理器），CPU 是主板上的一块芯片。
+但是，容易被大家忽略的是 GPU 也是处理器，它是图形处理器。
+关于 CPU 和 GPU 的区别，英特尔中国发表过\ 
+`一篇介绍 <https://www.intel.cn/content/www/cn/zh/products/docs/processors/cpu-vs-gpu.html>`_\ 。
+这篇文章提到，CPU 更适合串行任务的计算，GPU 更适合并行任务。
+
+打开任务管理器后，我们或许会看到这样一张图：
+
+.. image:: ../../_static/images/gpuinfo.png
+    :alt: gpuinfo.png
+
+图中的共享 GPU 内存，是集成显卡的一部分。集成或共享显卡内置在 CPU 所处的同一个芯片上。
+与依赖于专用或独立显卡的 CPU 相比，某些 CPU 可以配备内置式 GPU。集成显卡有时也被称为集成显卡处理器（IGP），与 CPU 共享内存。
+集显专用内存是 BIOS 从系统内存（RAM）划分出来的，因此，共享显存容量可以通过 BIOS 来设置。
+如果将 RAM 的一些存储容量分配给某张显卡时，其他显卡和电脑零件（比如 BIOS 固件）就不能使用了。
+
+独显专用内存是独显自带的内存。
+
+共享 GPU 内存的速度会远低于专用 GPU 内存的速度。
+深度学习算法通常需要用到更大更广泛的加速效果，因此，GPU 是一个更好的选择。
+NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包为算法落地提供便利。
+
+我们必须注意到下载软件时，通常会遇到 ARM 架构和 x86 架构。
+x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM 架构更多地部署在性能不那么高的单片机等硬件上。
+为了满足通用性，x86 架构的处理器通常都采用 CISC 指令集；
+为了满足更加丰富的定制性，ARM 架构通常采用 RISC 指令集。
+
+对于深度学习来讲，到底需要一台什么配置的电脑呢？
+根据我的目前的实验来看，深度学习不建议用个人电脑，服务器往往能提供更大的平台，让算法得以实现。
+
+比如，我在笔记本电脑上首先安装了 PaddlePaddle，如下图所示。
+
+.. image:: ../../_static/images/paddlepaddle_install.png
+    :alt: paddlepaddle_install.png
+
+然后用 PaddlePaddle 跑了 YOLO 模型，发现 batch_size 设置的稍微大一点就会发生程序内存溢出，不得改小这个值。
+因此，如果非要在个人电脑上运行深度学习程序，那么不免在算法准确性和程序运行时间上做出一些妥协，因为根本跑不动。
+
+如果你想用 NVIDIA GPU 训练神经网络，安装\
+`CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_\
+和\ `NVIDIA cuDNN <https://developer.nvidia.com/rdp/cudnn-archive>`_\
+，然后在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
+就可以为你的程序加速了（前提是有 NVIDIA 的 GPU，这通过任务管理器可以查看，见本页第一张图）。
+**但是，令人疑惑的是，我安装了 PaddlePaddle 的 GPU 版本，这句话不管设不设置，效果都一样，都用到了 GPU。**
+英特尔 GPU 应该用什么加速，我没用过，暂时不知道。
+
+如果想查看本机的其他参数，可以使用下面几种方式中的一种：
+
+- 设置 ``>>`` 系统 ``>>`` 关于
+- Win + R ``>>`` msinfo32
+- Win + R ``>>`` dxdiag
+- PowerShell ``>>`` Get-ComputerInfo
+- cmd.exe ``>>`` systeminfo
+- 使用工具软件 `CPU-Z <https://www.cpuid.com/>`_

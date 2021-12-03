@@ -8,8 +8,8 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = u'Notebook' 
-copyright = u'2021, RYAN'
-author = u'<a href="https://zhyantao.github.io/jekyll-cv">RYAN</a>'
+copyright = u'2021, Yantao'
+author = u'Yantao'
 version = 'v 1.2.0'
 
 master_doc = 'index'
@@ -177,7 +177,7 @@ latex_documents = [
     (master_doc,                # source_start_file
     'Notebook.tex',             # target_name
     'Notebook Documentation',   # title
-    'RYAN',                     # author
+    'Yantao',                   # author
     'manual'),                  # documentclass [howto, manual, or own class]
 ]
 
