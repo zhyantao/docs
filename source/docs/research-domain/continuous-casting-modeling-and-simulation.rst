@@ -108,6 +108,15 @@ Brain G. Thomas :footcite:p:`thomas2018review` 对很多现象应该如何建模
 - 旋转机械故障诊断公开数据集整理 `CSDN <https://blog.csdn.net/hustcxl/article/details/89394428>`__
 
 
+仿真软件
+~~~~~~~~
+
+- `Design Environment for FORMing <https://www.deform.com/>`_
+- `华铸软件 <http://www.intecast.com/index.asp>`_
+- `Any Casting <https://www.anycasting.com/en/>`_
+- `ESI Group <https://www.esi-group.com/>`_
+
+
 参考文献
 --------
 
