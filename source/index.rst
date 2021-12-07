@@ -62,10 +62,10 @@
 
     操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
     计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
-    Java 编程思想笔记 <https://thinking-in-java-notes.readthedocs.io>
     设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
     docs/cs-basics/*
-    面试题整理 <https://www.mubucm.com/doc/26whZHliEAA>
+    秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
+    Java 编程思想笔记 <https://thinking-in-java-notes.readthedocs.io>
 
 .. toctree::
     :caption: 数学基础
@@ -91,3 +91,10 @@
     
     docs/env-config/*
 
+.. toctree::
+    :caption: 附录
+    :titlesonly:
+    :glob:
+    :hidden:
+    
+    docs/appendix/*
