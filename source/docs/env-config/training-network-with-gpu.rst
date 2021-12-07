@@ -7,6 +7,8 @@
 
 GPU 和 CPU 本质上属于同类型的产品，只不过侧重点不一样，CPU 偏向控制，GPU 偏向计算。
 
+注意，为笔记本电脑上显示器提供输出的 GPU 不算是本文提及的 GPU。
+
 我们通常说的显卡不等于 GPU，它是一块集成板卡。显卡由 GPU、显存、电路板、BIOS 固件组成。
 GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时候提到显卡，关注的重点往往是 GPU。
 
@@ -48,15 +50,28 @@ x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM �
 然后用 PaddlePaddle 跑了 YOLO 模型，发现 batch_size 设置的稍微大一点就会发生程序内存溢出，不得改小这个值。
 因此，如果非要在个人电脑上运行深度学习程序，那么不免在算法准确性和程序运行时间上做出一些妥协，因为根本跑不动。
 
-如果你想用 NVIDIA GPU 训练神经网络，安装\
-`CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_\
-和\ `NVIDIA cuDNN <https://developer.nvidia.com/rdp/cudnn-archive>`_\
-，然后在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
+用 GPU 训练网络肯定会用到 CUDA，但是，安装 CUDA 环境经常会出现一些问题，我们最好先用 ``nvidia-smi``
+看一下电脑上的 Driver API Version，然后去官网下载一个\ **相同版本**\ 的  
+`CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_ 以及与 CUDA 版本相对应的  
+`cuDNN <https://developer.nvidia.com/rdp/cudnn-archive>`_。
+
+这个软件比较大，你可以不用完整安装，勾选如下选项即可：
+
+.. image:: ../../_static/images/cuda-installation.png
+
+安装完可以通过 ``nvcc --version`` 
+命令查看 CUDA 是否安装成功。在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
 就可以为你的程序加速了（前提是有 NVIDIA 的 GPU，这通过任务管理器可以查看，见本页第一张图）。
 **但是，令人疑惑的是，我安装了 PaddlePaddle 的 GPU 版本，这句话不管设不设置，效果都一样，都用到了 GPU。**
 英特尔 GPU 应该用什么加速，我没用过，暂时不知道。
 
-如果想查看本机的其他参数，可以使用下面几种方式中的一种：
+根据你安装的 CUDA 版本，再去下载安装对应版本的 
+`PaddlePaddle <https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/windows-conda.html>`_ 
+应该就可以了，因为我的版本都是 11.1 所以，我用 pip 安装了 PaddlePaddle 的 11.1 版本。下图是成功后的训练过程：
+
+.. image:: ../../_static/images/training-with-gpu-success.png
+
+另外，如果想查看本机的其他参数，可以使用下面几种方式中的一种：
 
 - 设置 ``>>`` 系统 ``>>`` 关于
 - Win + R ``>>`` msinfo32
