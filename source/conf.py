@@ -36,7 +36,7 @@ html_theme_options = {
     "path_to_docs": "source/",
     "show_navbar_depth": 1,
 }
-html_sourcelink_suffix = '.rst'
+# html_sourcelink_suffix = '.rst'
 
 
 # -- General configuration ------------------------------------------------
