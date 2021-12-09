@@ -22,6 +22,489 @@
     ```
 ``````
 
+## 引用（Quote）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 10
+
+* - Example
+  - Result
+* - ```md
+    > this is a quote
+    ```
+  - > 引用文本
+``````
+
+## 超链接（Links）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 10
+
+* - Example
+  - Result
+* - ```md
+    [Jupyter Book](https://jupyterbook.org)
+    ```
+  - [Jupyter Book](https://jupyterbook.org)
+* - ```md
+    [reStructuredText](./reStructuredText)
+    ```
+  - [reStructuredText](./reStructuredText)
+* - ```md
+    <https://jupyterbook.org>
+    ```
+  - <https://jupyterbook.org>
+``````
+
+## 列表（Lists）
+
+### 有序列表（Ordered list）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    1. First item
+    2. Second item
+        1. First sub-item
+    ```
+  - 1. First item
+    2. Second item
+        1. First sub-item
+* - ```md
+    1. First item
+    2. Second item
+        * First sub-item
+    ```
+  - 1. First item
+    2. Second item
+        * First subitem
+``````
+
+### 无序列表（Unordered list）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    * First item
+    * Second item
+      * First subitem
+    ```
+  - * First item
+    * Second item
+      * First subitem
+* - ```md
+    * First item
+      1. First subitem
+      2. Second subitem
+    ```
+  - * First item
+      1. First subitem
+      2. Second subitem
+``````
+
+## 表格（Tables）
+
+````{margin}
+<br/><br/><br/>
+```{note}
+通过给表格添加标题，能够让表格**自动编号**，如下{numref}`example-table` 和 表 2。
+```
+````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    |    Training   |   Validation   |
+    | :------------ | -------------: |
+    |        0      |        5       |
+    |     13720     |      2744      |
+    ```
+  - |    Training   |   Validation   |
+    | :------------ | -------------: |
+    |        0      |        5       |
+    |     13720     |      2744      |
+* - ````md
+    ```{list-table} My table title
+    :header-rows: 1
+    :name: example-table
+
+    * - Training
+      - Validation
+    * - 0
+      - 5
+    * - 13720
+      - 2744
+    ```
+    ````
+  - ```{list-table} My table title
+    :header-rows: 1
+    :name: example-table
+
+    * - Training
+      - Validation
+    * - 0
+      - 5
+    * - 13720
+      - 2744
+    ```
+* - ````md
+    ```{list-table} This table title
+    :header-rows: 1
+
+    * - Training
+      - Validation
+    * - 0
+      - 5
+    * - 13720
+      - 2744
+    ```
+    ````
+  - ```{list-table} This table title
+    :header-rows: 1
+
+    * - Training
+      - Validation
+    * - 0
+      - 5
+    * - 13720
+      - 2744
+    ```
+``````
+
+## 图片（Figures and images）
+
+``````{margin}
+<br/><br/><br/>
+```{note}
+图片（Image）中**不允许**出现标题（Caption），但图像（Figure）**可以**。
+```
+``````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ````md
+    ```{figure} ../../_static/images/C-3PO_droid.png
+    :height: 150px
+    :name: figure-example
+
+    Here is my figure caption!
+    ```
+    ````
+  - ```{figure} ../../_static/images/C-3PO_droid.png
+    :height: 150px
+    :name: figure-example
+
+    Here is my figure caption!
+    ```
+* - ````md
+    ```{image} ../../_static/images/C-3PO_droid.png
+    :height: 150px
+    :name: image-example
+    ```
+    ````
+  - ```{image} ../../_static/images/C-3PO_droid.png
+    :height: 150px
+    :name: image-example
+    ```
+``````
+
+## 公式（Math）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    This is an example of an
+    inline equation $z=\sqrt{x^2+y^2}$.
+    ```
+  - This is an example of an
+    inline equation $z=\sqrt{x^2+y^2}$.
+* - ```md
+    This is an example of a
+    math block
+
+    $$
+    z=\sqrt{x^2+y^2}
+    $$
+    ```
+  - This is an example of a
+    math block
+
+    $$
+    z=\sqrt{x^2+y^2}
+    $$
+* - ```md
+    This is an example of a
+    math block with a label
+
+    $$
+    z=\sqrt{x^2+y^2}
+    $$ (mylabel)
+    ```
+  - This is an example of a
+    math block with a label
+
+    $$
+    z=\sqrt{x^2+y^2}
+    $$ (mylabel)
+* - ````md
+    This is an example of a
+    math directive with a
+    label
+    ```{math}
+    :label: eq-label
+
+    z=\sqrt{x^2+y^2}
+    ```
+    ````
+  - This is an example of a
+    math directive with a
+    label
+    ```{math}
+    :label: eq-label
+
+    z=\sqrt{x^2+y^2}
+    ```
+``````
+
+## 代码（Code）
+
+### 行内代码（In-line code）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    In-line code blocks: `boolean example = true;`.
+    ```
+  - In-line code blocks: `boolean example = true;`.
+``````
+
+### 代码高亮（Syntax highlighting）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ````md
+    ```python
+    note = "Python syntax highlighting"
+    print(node)
+    ```
+    ````
+  - ```python
+    note = "Python syntax highlighting"
+    print(node)
+    ```
+``````
+
+### HTML 代码（HTML block）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```html
+    <p> This is a paragraph </p>
+    ```
+  - <p> This is a paragraph </p>
+``````
+
+## 注解（Admonitions）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ````md
+    ```{admonition} This is a title
+    An example of an admonition with a title.
+    ```
+    ````
+  - ```{admonition} This is a title
+    An example of an admonition with a title.
+    ```
+* - ````md
+    ```{note} Notes require **no** arguments,
+    so content can start here.
+    ```
+    ````
+  - ```{note} Notes require **no** arguments,
+    so content can start here.
+    ```
+* - ````md
+    ```{warning} This is an example
+    of a warning directive.
+    ```
+    ````
+  - ```{warning} This is an example
+    of a warning directive.
+    ```
+* - ````md
+    ```{tip} This is an example
+    of a tip directive.
+    ```
+    ````
+  - ```{tip} This is an example
+    of a tip directive.
+    ```
+* - ````md
+    ```{caution} This is an example
+    of a caution directive.
+    ```
+    ````
+  - ```{caution} This is an example
+    of a caution directive.
+    ```
+* - ````md
+    ```{attention} This is an example
+    of an attention directive.
+    ```
+    ````
+  - ```{attention} This is an example
+    of an attention directive.
+    ```
+* - ````md
+    ```{danger} This is an example
+    of a danger directive.
+    ```
+    ````
+  - ```{danger} This is an example
+    of a danger directive.
+    ```
+* - ````md
+    ```{error} This is an example
+    of an error directive.
+    ```
+    ````
+  - ```{error} This is an example
+    of an error directive.
+    ```
+* - ````md
+    ```{hint} This is an example
+    of a hint directive.
+    ```
+    ````
+  - ```{hint} This is an example
+    of a hint directive.
+    ```
+* - ````md
+    ```{important} This is an example
+    of an important directive.
+    ```
+    ````
+  - ```{important} This is an example
+    of an important directive.
+    ```
+``````
+
+## 脚注（Footnotes）
+
+``````{margin}
+<br/><br/><br/>
+```{note}
+脚注将在本页的末尾显示。
+```
+``````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 10
+
+* - Example
+  - Result
+* - ```md
+    This is a footnote reference.[^myref]
+    ```
+  - This is a footnote reference.[^myref]
+``````
+
+[^myref]: Example for footnote definition.
+
+## 注释（Comment）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```md
+    a line
+    % a comment
+    another line
+    ```
+  - a line
+    % a comment
+    another line
+``````
+
+## 分隔线（Thematic break）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Note
+* - ```md
+    This is the end of some text.
+
+    ---
+
+    ## New Header
+    ```
+  - 创建水平分隔线
+``````
+
+## 分隔块（Block break）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```md
+    This is an example of
+    +++ {"meta": "data"}
+    a block break
+    ```
+  - This is an example of
+    +++ {"meta": "data"}
+    a block break
+``````
+
 ## 交叉引用（Cross reference）
 
 ### 引用标题（Headers）
@@ -210,511 +693,3 @@
 :filter: docname in docnames
 ```
 ``````
-
-
-## 引用（Quote）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 10
-
-* - Example
-  - Result
-* - ```md
-    > this is a quote
-    ```
-  - > 引用文本
-``````
-
-## 分隔线（Thematic break）
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 15
-
-* - Example
-  - Note
-* - ```md
-    This is the end of some text.
-
-    ---
-
-    ## New Header
-    ```
-  - 创建水平分隔线
-``````
-
-## 行内注释（Line comment）
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 15
-
-* - Example
-  - Result
-* - ```md
-    a line
-    % a comment
-    another line
-    ```
-  - a line
-    % a comment
-    another line
-``````
-
-## 分隔块（Block break）
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 15
-
-* - Example
-  - Result
-* - ```md
-    This is an example of
-    +++ {"meta": "data"}
-    a block break
-    ```
-  - This is an example of
-    +++ {"meta": "data"}
-    a block break
-``````
-
-## HTML 代码块（HTML block）
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 15
-
-* - Example
-  - Result
-* - ```html
-    <p> This is a paragraph </p>
-    ```
-  - <p> This is a paragraph </p>
-``````
-
-## 超链接（Links）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 10
-
-* - Example
-  - Result
-* - ```md
-    [Jupyter Book](https://jupyterbook.org)
-    ```
-  - [Jupyter Book](https://jupyterbook.org)
-* - ```md
-    [PDF documentation](./reStructuredText)
-    ```
-  - [PDF documentation](./reStructuredText)
-* - ```md
-    [Jupyter Book](https://jupyterbook.org "JB Homepage")
-    ```
-  - [Jupyter Book](https://jupyterbook.org "JB Homepage")
-* - ```md
-    <https://jupyterbook.org>
-    ```
-  - <https://jupyterbook.org>
-* - ```md
-    [Jupyter Book][intro_page]
-
-    [intro_page]: https://jupyterbook.org
-    ```
-  - [Jupyter Book][intro_page]
-
-    [intro_page]: https://jupyterbook.org
-``````
-
-## 列表（Lists）
-
-### 有序列表（Ordered list）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ```md
-    1. First item
-    2. Second item
-        1. First sub-item
-    ```
-  - 1. First item
-    2. Second item
-        1. First sub-item
-* - ```md
-    1. First item
-    2. Second item
-        * First sub-item
-    ```
-  - 1. First item
-    2. Second item
-        * First subitem
-``````
-
-### 无序列表（Unordered list）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ```md
-    * First item
-    * Second item
-      * First subitem
-    ```
-  - * First item
-    * Second item
-      * First subitem
-* - ```md
-    * First item
-      1. First subitem
-      2. Second subitem
-    ```
-  - * First item
-      1. First subitem
-      2. Second subitem
-``````
-
-## 表格（Tables）
-
-````{margin}
-<br/><br/><br/>
-```{note}
-通过给表格添加标题，能够让表格自动编号，如下{numref}`example-table` 和 表 2。
-```
-````
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ```md
-    |    Training   |   Validation   |
-    | :------------ | -------------: |
-    |        0      |        5       |
-    |     13720     |      2744      |
-    ```
-  - |    Training   |   Validation   |
-    | :------------ | -------------: |
-    |        0      |        5       |
-    |     13720     |      2744      |
-* - ````md
-    ```{list-table} My table title
-    :header-rows: 1
-    :name: example-table
-
-    * - Training
-      - Validation
-    * - 0
-      - 5
-    * - 13720
-      - 2744
-    ```
-    ````
-  - ```{list-table} My table title
-    :header-rows: 1
-    :name: example-table
-
-    * - Training
-      - Validation
-    * - 0
-      - 5
-    * - 13720
-      - 2744
-    ```
-* - ````md
-    ```{list-table} This table title
-    :header-rows: 1
-
-    * - Training
-      - Validation
-    * - 0
-      - 5
-    * - 13720
-      - 2744
-    ```
-    ````
-  - ```{list-table} This table title
-    :header-rows: 1
-
-    * - Training
-      - Validation
-    * - 0
-      - 5
-    * - 13720
-      - 2744
-    ```
-``````
-
-## 注解（Admonitions）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ````md
-    ```{admonition} This is a title
-    An example of an admonition with a title.
-    ```
-    ````
-  - ```{admonition} This is a title
-    An example of an admonition with a title.
-    ```
-* - ````md
-    ```{note} Notes require **no** arguments,
-    so content can start here.
-    ```
-    ````
-  - ```{note} Notes require **no** arguments,
-    so content can start here.
-    ```
-* - ````md
-    ```{warning} This is an example
-    of a warning directive.
-    ```
-    ````
-  - ```{warning} This is an example
-    of a warning directive.
-    ```
-* - ````md
-    ```{tip} This is an example
-    of a tip directive.
-    ```
-    ````
-  - ```{tip} This is an example
-    of a tip directive.
-    ```
-* - ````md
-    ```{caution} This is an example
-    of a caution directive.
-    ```
-    ````
-  - ```{caution} This is an example
-    of a caution directive.
-    ```
-* - ````md
-    ```{attention} This is an example
-    of an attention directive.
-    ```
-    ````
-  - ```{attention} This is an example
-    of an attention directive.
-    ```
-* - ````md
-    ```{danger} This is an example
-    of a danger directive.
-    ```
-    ````
-  - ```{danger} This is an example
-    of a danger directive.
-    ```
-* - ````md
-    ```{error} This is an example
-    of an error directive.
-    ```
-    ````
-  - ```{error} This is an example
-    of an error directive.
-    ```
-* - ````md
-    ```{hint} This is an example
-    of a hint directive.
-    ```
-    ````
-  - ```{hint} This is an example
-    of a hint directive.
-    ```
-* - ````md
-    ```{important} This is an example
-    of an important directive.
-    ```
-    ````
-  - ```{important} This is an example
-    of an important directive.
-    ```
-``````
-
-## 图片（Figures and images）
-
-``````{margin}
-<br/><br/><br/>
-```{note}
-图片（Image）中不允许出现标题（Caption），但图像（Figure）可以。
-```
-``````
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ````md
-    ```{figure} ../../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: figure-example
-
-    Here is my figure caption!
-    ```
-    ````
-  - ```{figure} ../../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: figure-example
-
-    Here is my figure caption!
-    ```
-* - ````md
-    ```{image} ../../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: image-example
-    ```
-    ````
-  - ```{image} ../../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: image-example
-    ```
-``````
-
-## 数学公式（Math）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ```md
-    This is an example of an
-    inline equation $z=\sqrt{x^2+y^2}$.
-    ```
-  - This is an example of an
-    inline equation $z=\sqrt{x^2+y^2}$.
-* - ```md
-    This is an example of a
-    math block
-
-    $$
-    z=\sqrt{x^2+y^2}
-    $$
-    ```
-  - This is an example of a
-    math block
-
-    $$
-    z=\sqrt{x^2+y^2}
-    $$
-* - ```md
-    This is an example of a
-    math block with a label
-
-    $$
-    z=\sqrt{x^2+y^2}
-    $$ (mylabel)
-    ```
-  - This is an example of a
-    math block with a label
-
-    $$
-    z=\sqrt{x^2+y^2}
-    $$ (mylabel)
-* - ````md
-    This is an example of a
-    math directive with a
-    label
-    ```{math}
-    :label: eq-label
-
-    z=\sqrt{x^2+y^2}
-    ```
-    ````
-  - This is an example of a
-    math directive with a
-    label
-    ```{math}
-    :label: eq-label
-
-    z=\sqrt{x^2+y^2}
-    ```
-``````
-
-## 代码（Code）
-
-### 行内代码（In-line code）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ```md
-    In-line code blocks: `boolean example = true;`.
-    ```
-  - In-line code blocks: `boolean example = true;`.
-``````
-
-### 代码和高亮（Code and syntax highlighting）
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20
-
-* - Example
-  - Result
-* - ````md
-    ```python
-    note = "Python syntax highlighting"
-    print(node)
-    ```
-    ````
-  - ```python
-    note = "Python syntax highlighting"
-    print(node)
-    ```
-``````
-
-## 脚注（Footnotes）
-
-``````{margin}
-<br/><br/><br/>
-```{note}
-Footnotes are displayed at the very bottom of the page.
-```
-``````
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20 10
-
-* - Syntax
-  - Example
-  - Result
-* - ```md
-    [^ref]
-
-    [^ref]: Footnote text
-    ```
-  - ```md
-    This is an example of a footnote.[^footnote1]
-
-    [^footnote1]: The definition for referencing
-     footnotes is generally placed at the bottom
-     of the document.
-    ```
-  - This is a footnote reference.[^myref]
-``````
-
-[^myref]: This **is** the footnote definition.
-
-See [Footnotes](https://myst-parser.readthedocs.io/en/latest/using/syntax.html#syntax-footnotes) for more information.
