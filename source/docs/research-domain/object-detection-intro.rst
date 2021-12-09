@@ -101,5 +101,4 @@ Label Assignment in Object Detection
 .. [4] `边界框（bounding box） — PaddleEdu documentation <https://paddlepedia.readthedocs.io/en/latest/tutorials/computer_vision/object_detection/Bounding_Box_Anchor.html>`_
 .. [5] `Anchor Boxes for Object Detection - MATLAB & Simulink - MathWorks 中国 <https://ww2.mathworks.cn/help/vision/ug/anchor-boxes-for-object-detection.html>`_
 .. [6] `[金山文档] super-cheatsheet-deep-learning.pdf <https://kdocs.cn/l/caIiLHnpo5UV>`_
-.. [7] `[金山文档] 动手学深度学习(第2版) 13.4.锚框 <https://kdocs.cn/l/cky7DCoMy7pI>`_
-
+.. [7] `[金山文档] 动手学深度学习（第 2 版）PyTorch 实现 13.4.锚框 <https://kdocs.cn/l/crOymfQ4SKRt>`_
