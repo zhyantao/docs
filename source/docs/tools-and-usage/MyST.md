@@ -1,14 +1,14 @@
-# MyST syntax cheat sheet
+# MyST 语法入门
 
-## Headers
+(target_header)=
+## 标题（Headers）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 15 15
+:widths: 20 15
 
 * - Syntax
   - Example
-  - Note
 * - ```md
     # Heading level 1
     ## Heading level 2
@@ -20,10 +20,11 @@
   - ```md
     # MyST Cheat Sheet
     ```
-  - Level 1-6 headings, denoted by number of `#`
 ``````
 
-## Target headers
+## 交叉引用（Cross reference）
+
+### 引用标题（Headers）
 
 ``````{list-table}
 :header-rows: 1
@@ -33,109 +34,243 @@
   - Example
   - Note
 * - ```md
-    (target_header)=
+    {ref}`target_header`
     ```
+  - {ref}`target_header`
   - ```md
-    (myst_cheatsheet)=
-    # MyST Cheat Sheet
+    (target_header)=
+    ## 标题（Headers）
     ```
-  - See {ref}`below <ref/target_headers>` how to reference target headers.
+* - ```md
+    {ref}`自定义显示文本 <target_header>`
+    ```
+  - {ref}`自定义显示文本 <target_header>`
+  - ```md
+    (target_header)=
+    ## 标题（Headers）
+    ```
+* - ```md
+    [Markdown 风格的引用](target_header)
+    ```
+  - [Markdown 风格的引用](target_header)
+  - ```md
+    (target_header)=
+    ## 标题（Headers）
+    ```
 ``````
 
-(ref/target_headers)=
-### Referencing target headers
+### 引用表格（Tables）
 
-Targets can be referenced with the [ref inline role](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref) which uses the section title by default:
-
-```md
-{ref}`myst_cheatsheet`
+````{margin}
+<br/><br/><br/>
+```{note}
+为了引用表格，你需要给表格添加 `name` 属性。
 ```
-
-You can specify the text of the target:
-
-```md
-{ref}`MyST syntax lecture <myst_cheatsheet>`
-```
-
-Another alternative is to use Markdown syntax:
-
-```md
-[MyST syntax lecture](myst_cheatsheet)
-```
-
-## Quote
+````
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 20 10
+:widths: 20 20
 
-* - Syntax
-  - Example
-  - Note
+* - Example
+  - Result
 * - ```md
-    > text
+    {numref}`example-table` is an example.
     ```
-  - ```md
+  - {numref}`example-table` is an example.
+* - ```md
+    This {ref}`table <example-table>` is an example.
+    ```
+  - This {ref}`table <example-table>` is an example.
+* - ```md
+    {numref}`Tbl %s <example-table>` is an example.
+    ```
+  - {numref}`Tbl %s <example-table>` is an example.
+``````
+
+### 引用图像（Figures）
+
+````{margin}
+<br/><br/><br/>
+```{note}
+使用 `numref` 引用图像（Figures）将带有标号，使用 `ref` 则不带标号。
+```
+````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    {numref}`figure-example`is a
+    figure example.
+    ```
+  - {numref}`figure-example` is a
+    figure example.
+* - ```md
+    {numref}`Figure %s <figure-example>`
+    is an example.
+    ```
+  - {numref}`Figure %s <figure-example>`
+    is an example.
+* - ```md
+    This {ref}`figure <figure-example>`
+    is an example.
+    ```
+  - This {ref}`figure <figure-example>`
+    is an example.
+``````
+
+### 引用图片（Images）
+
+````{margin}
+<br/><br/><br/>
+```{note}
+图片（Images）无法使用 `numref` 引用，默认都不带标号。
+```
+````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 15
+
+* - Example
+  - Result
+* - ```md
+    This {ref}`image <image-example>`
+    is an example.
+    ```
+  - This {ref}`image <image-example>`
+    is an example.
+``````
+
+### 引用公式（Math directives）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 15
+
+* - Example
+  - Result
+* - ```md
+    Check out equation {eq}`eq-label`.
+    ```
+  - Check out equation {eq}`eq-label`.
+``````
+
+### 引用文件（Documents）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 20
+
+* - Example
+  - Result
+* - ```md
+    See {doc}`reStructuredText`
+    for more information.
+    ```
+  - See {doc}`reStructuredText`
+    for more information.
+* - ```md
+    See {doc}`here <reStructuredText>`
+    for more information.
+    ```
+  - See {doc}`here <reStructuredText>`
+    for more information.
+``````
+
+### 引用参考文献（Citations）
+
+````{margin}
+<br/><br/><br/>
+```{note}
+确保你已经新建了 `refs.bib` 文件，点击{download}`查看文件 <../../refs.bib>`撰写格式。
+```
+````
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ```md
+    Generates a citation {cite}`perez2011python`.
+    ```
+  - Generates a citation {cite}`perez2011python`.
+``````
+
+你可以用下面的 `bibliography` 指令添加参考文献目录。
+
+``````md
+```{bibliography}
+:filter: docname in docnames
+```
+``````
+
+
+## 引用（Quote）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 10
+
+* - Example
+  - Result
+* - ```md
     > this is a quote
     ```
-  - quoted text
+  - > 引用文本
 ``````
 
-## Thematic break
+## 分隔线（Thematic break）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 15 15
+:widths: 15 15
 
-* - Syntax
-  - Example
+* - Example
   - Note
 * - ```md
-    ---
-    ```
-  - ```md
     This is the end of some text.
 
     ---
 
     ## New Header
     ```
-  - Creates a horizontal line in the output
+  - 创建水平分隔线
 ``````
 
-## Line comment
+## 行内注释（Line comment）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 15 15
+:widths: 15 15
 
-* - Syntax
-  - Example
-  - Note
+* - Example
+  - Result
 * - ```md
-    % text
-    ```
-  - ```md
     a line
     % a comment
     another line
     ```
-  - See [Comments](https://myst-parser.readthedocs.io/en/latest/using/syntax.html#syntax-comments) for more information.
+  - a line
+    % a comment
+    another line
 ``````
 
-## Block break
+## 分隔块（Block break）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 15 15
+:widths: 15 15
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```md
-    +++
-    ```
-  - ```md
     This is an example of
     +++ {"meta": "data"}
     a block break
@@ -145,65 +280,45 @@ Another alternative is to use Markdown syntax:
     a block break
 ``````
 
-## HTML block
+## HTML 代码块（HTML block）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 15 15
+:widths: 15 15
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```html
-    <tagName> text <tagName>
-    ```
-  - ```html
     <p> This is a paragraph </p>
     ```
   - <p> This is a paragraph </p>
 ``````
 
-## Links
+## 超链接（Links）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 20 10
+:widths: 20 10
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```md
-    [text](target)
-    ```
-  - ```md
     [Jupyter Book](https://jupyterbook.org)
     ```
   - [Jupyter Book](https://jupyterbook.org)
 * - ```md
-    [text](relative_path)
-    ```
-  - ```md
     [PDF documentation](./reStructuredText)
     ```
   - [PDF documentation](./reStructuredText)
 * - ```md
-    [text](target "title")
-    ```
-  - ```md
     [Jupyter Book](https://jupyterbook.org "JB Homepage")
     ```
   - [Jupyter Book](https://jupyterbook.org "JB Homepage")
 * - ```md
-    <target>
-    ```
-  - ```md
     <https://jupyterbook.org>
     ```
   - <https://jupyterbook.org>
 * - ```md
-    [text][key]
-    ```
-  - ```md
     [Jupyter Book][intro_page]
 
     [intro_page]: https://jupyterbook.org
@@ -213,9 +328,9 @@ Another alternative is to use Markdown syntax:
     [intro_page]: https://jupyterbook.org
 ``````
 
-## Lists
+## 列表（Lists）
 
-### Ordered list
+### 有序列表（Ordered list）
 
 ``````{list-table}
 :header-rows: 1
@@ -241,7 +356,7 @@ Another alternative is to use Markdown syntax:
         * First subitem
 ``````
 
-### Unordered list
+### 无序列表（Unordered list）
 
 ``````{list-table}
 :header-rows: 1
@@ -267,21 +382,22 @@ Another alternative is to use Markdown syntax:
       2. Second subitem
 ``````
 
-## Tables
+## 表格（Tables）
+
+````{margin}
+<br/><br/><br/>
+```{note}
+通过给表格添加标题，能够让表格自动编号，如下{numref}`example-table` 和 表 2。
+```
+````
 
 ``````{list-table}
 :header-rows: 1
-:widths: 20 20 20
+:widths: 20 20
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```md
-    | a    | b    |
-    | :--- | ---: |
-    | c    | d    |
-    ```
-  - ```md
     |    Training   |   Validation   |
     | :------------ | -------------: |
     |        0      |        5       |
@@ -292,19 +408,7 @@ Another alternative is to use Markdown syntax:
     |        0      |        5       |
     |     13720     |      2744      |
 * - ````md
-    ```{list-table}
-    :header-rows: 1
-
-    * - Col1
-      - Col2
-    * - Row1 under Col1
-      - Row1 under Col2
-    * - Row2 under Col1
-      - Row2 under Col2
-    ```
-    ````
-  - ````md
-    ```{list-table}
+    ```{list-table} My table title
     :header-rows: 1
     :name: example-table
 
@@ -328,18 +432,6 @@ Another alternative is to use Markdown syntax:
       - 2744
     ```
 * - ````md
-    ```{list-table} Table title
-    :header-rows: 1
-
-    * - Col1
-      - Col2
-    * - Row1 under Col1
-      - Row1 under Col2
-    * - Row2 under Col1
-      - Row2 under Col2
-    ```
-    ````
-  - ````md
     ```{list-table} This table title
     :header-rows: 1
 
@@ -363,59 +455,15 @@ Another alternative is to use Markdown syntax:
     ```
 ``````
 
-### Referencing tables
-
-```{note}
-In order to [reference a table](figures:referencing) you must add a label to it.
-To add a label to your table simply include a `:name:` parameter followed by the label of your table.
-In order to add a [numbered reference](figures:numref), you
-must also include a table title. See example above.
-```
+## 注解（Admonitions）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 10 20 20
+:widths: 20 20
 
-* - Syntax
-  - Example
-  - Result
-* - ```md
-    {numref}`label`
-    ```
-  - ```md
-    {numref}`example-table` is an example.
-    ```
-  - {numref}`example-table` is an example.
-* - ```md
-    {ref}`text <label>`
-    ```
-  - ```md
-    This {ref}`table <example-table>` is an example.
-    ```
-  - This {ref}`table <example-table>` is an example.
-* - ```md
-    {numref}`text %s <label>`
-    ```
-  - ```md
-    {numref}`Tbl %s <example-table>` is an example.
-    ```
-  - {numref}`Tbl %s <example-table>` is an example.
-``````
-
-## Admonitions
-
-``````{list-table}
-:header-rows: 1
-:widths: 10 20 20
-
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ````md
-    ```{admonition} Title
-    text
-    ```
-  - ````md
     ```{admonition} This is a title
     An example of an admonition with a title.
     ```
@@ -424,17 +472,6 @@ must also include a table title. See example above.
     An example of an admonition with a title.
     ```
 * - ````md
-    ```{note}
-    text
-    ```
-    ````
-    or
-    ````md
-    ```{note} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{note} Notes require **no** arguments,
     so content can start here.
     ```
@@ -443,11 +480,6 @@ must also include a table title. See example above.
     so content can start here.
     ```
 * - ````md
-    ```{warning} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{warning} This is an example
     of a warning directive.
     ```
@@ -456,11 +488,6 @@ must also include a table title. See example above.
     of a warning directive.
     ```
 * - ````md
-    ```{tip} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{tip} This is an example
     of a tip directive.
     ```
@@ -469,11 +496,6 @@ must also include a table title. See example above.
     of a tip directive.
     ```
 * - ````md
-    ```{caution} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{caution} This is an example
     of a caution directive.
     ```
@@ -482,11 +504,6 @@ must also include a table title. See example above.
     of a caution directive.
     ```
 * - ````md
-    ```{attention} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{attention} This is an example
     of an attention directive.
     ```
@@ -495,11 +512,6 @@ must also include a table title. See example above.
     of an attention directive.
     ```
 * - ````md
-    ```{danger} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{danger} This is an example
     of a danger directive.
     ```
@@ -508,11 +520,6 @@ must also include a table title. See example above.
     of a danger directive.
     ```
 * - ````md
-    ```{error} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{error} This is an example
     of an error directive.
     ```
@@ -521,11 +528,6 @@ must also include a table title. See example above.
     of an error directive.
     ```
 * - ````md
-    ```{hint} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{hint} This is an example
     of a hint directive.
     ```
@@ -534,11 +536,6 @@ must also include a table title. See example above.
     of a hint directive.
     ```
 * - ````md
-    ```{important} text
-    some more text...
-    ```
-    ````
-  - ````md
     ```{important} This is an example
     of an important directive.
     ```
@@ -548,32 +545,22 @@ must also include a table title. See example above.
     ```
 ``````
 
-## Figures and images
+## 图片（Figures and images）
 
 ``````{margin}
-<br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/>
-<br/><br/><br/><br/><br/><br/>
+<br/><br/><br/>
 ```{note}
-Content is not permitted in the image directive.
+图片（Image）中不允许出现标题（Caption），但图像（Figure）可以。
 ```
 ``````
 
 ``````{list-table}
 :header-rows: 1
-:widths: 10 20 20
+:widths: 20 20
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ````md
-    ```{figure} ./path/to/figure.jpg
-    :name: label
-
-    caption
-    ```
-    ````
-  - ````md
     ```{figure} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: figure-example
@@ -588,11 +575,6 @@ Content is not permitted in the image directive.
     Here is my figure caption!
     ```
 * - ````md
-    ```{image} ./path/to/figure.jpg
-    :name: label
-    ```
-    ````
-  - ````md
     ```{image} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: image-example
@@ -604,84 +586,21 @@ Content is not permitted in the image directive.
     ```
 ``````
 
-See {doc}`reStructuredText` and {doc}`reStructuredText` for more information.
-
-### Referencing figures
+## 数学公式（Math）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 10 20 20
+:widths: 20 20
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```md
-    {numref}`label`
-    ```
-  - ```md
-    {numref}`figure-example`is a
-    figure example.
-    ```
-  - {numref}`figure-example` is a
-    figure example.
-* - ```md
-    {numref}`text %s <label>`
-    ```
-  - ```md
-    {numref}`Figure %s <figure-example>`
-    is an example.
-    ```
-  - {numref}`Figure %s <figure-example>`
-    is an example.
-* - ```md
-    {ref}`text <label>`
-    ```
-  - ```md
-    This {ref}`figure <figure-example>`
-    is an example.
-    ```
-  - This {ref}`figure <figure-example>`
-    is an example.
-``````
-
-### Referencing images
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 20 15
-
-* - Syntax
-  - Example
-  - Result
-* - ```md
-    {ref}`text <label>`
-    ```
-  - ```md
-    This {ref}`image <image-example>`
-    is an example.
-    ```
-  - This {ref}`image <image-example>`
-    is an example.
-``````
-
-## Math
-
-``````{list-table}
-:header-rows: 1
-:widths: 10 20 20
-
-* - Syntax
-  - Example
-  - Result
-* - Inline
-  - ```md
     This is an example of an
     inline equation $z=\sqrt{x^2+y^2}$.
     ```
   - This is an example of an
     inline equation $z=\sqrt{x^2+y^2}$.
-* - Math blocks
-  - ```md
+* - ```md
     This is an example of a
     math block
 
@@ -695,8 +614,7 @@ See {doc}`reStructuredText` and {doc}`reStructuredText` for more information.
     $$
     z=\sqrt{x^2+y^2}
     $$
-* - Math blocks with labels
-  - ```md
+* - ```md
     This is an example of a
     math block with a label
 
@@ -710,8 +628,7 @@ See {doc}`reStructuredText` and {doc}`reStructuredText` for more information.
     $$
     z=\sqrt{x^2+y^2}
     $$ (mylabel)
-* - Math directives
-  - ````md
+* - ````md
     This is an example of a
     math directive with a
     label
@@ -731,107 +648,46 @@ See {doc}`reStructuredText` and {doc}`reStructuredText` for more information.
     ```
 ``````
 
-See {doc}`reStructuredText` for more information.
+## 代码（Code）
 
-### Referencing math directives
-
-``````{list-table}
-:header-rows: 1
-:widths: 15 20 15
-
-* - Syntax
-  - Example
-  - Result
-* - ```md
-    {eq}`label`
-    ```
-  - ```md
-    Check out equation {eq}`eq-label`.
-    ```
-  - Check out equation {eq}`eq-label`.
-``````
-
-## Code
-
-### In-line code
-
-**Example**:
-
-```md
-Wrap in-line code blocks in backticks: `boolean example = true;`.
-```
-
-**Result**:
-
-Wrap in-line code blocks in backticks: `boolean example = true;`.
-
-### Code and syntax highlighting
-
-**Example**:
-
-````md
-```python
-note = "Python syntax highlighting"
-print(node)
-```
-````
-
-or
-
-````md
-```
-No syntax highlighting if no language
-is indicated.
-```
-````
-
-**Result**:
-
-```python
-note = "Python syntax highlighting"
-print(node)
-```
-
-or
-
-```
-No syntax highlighting if no language
-is indicated.
-```
-
-## Reference documents
+### 行内代码（In-line code）
 
 ``````{list-table}
 :header-rows: 1
-:widths: 10 20 20
+:widths: 20 20
 
-* - Syntax
-  - Example
+* - Example
   - Result
 * - ```md
-    {doc}`path/to/document`
+    In-line code blocks: `boolean example = true;`.
     ```
-  - ```md
-    See {doc}`reStructuredText`
-    for more information.
-    ```
-  - See {doc}`reStructuredText`
-    for more information.
-* - ```md
-    {doc}`text <path/to/document>`
-    ```
-  - ```md
-    See {doc}`here <reStructuredText>`
-    for more information.
-    ```
-  - See {doc}`here <reStructuredText>`
-    for more information.
+  - In-line code blocks: `boolean example = true;`.
 ``````
 
-## Footnotes
+### 代码和高亮（Code and syntax highlighting）
+
+``````{list-table}
+:header-rows: 1
+:widths: 20 20
+
+* - Example
+  - Result
+* - ````md
+    ```python
+    note = "Python syntax highlighting"
+    print(node)
+    ```
+    ````
+  - ```python
+    note = "Python syntax highlighting"
+    print(node)
+    ```
+``````
+
+## 脚注（Footnotes）
 
 ``````{margin}
-<br/><br/><br/><br/>
+<br/><br/><br/>
 ```{note}
 Footnotes are displayed at the very bottom of the page.
 ```
@@ -862,38 +718,3 @@ Footnotes are displayed at the very bottom of the page.
 [^myref]: This **is** the footnote definition.
 
 See [Footnotes](https://myst-parser.readthedocs.io/en/latest/using/syntax.html#syntax-footnotes) for more information.
-
-## Citations
-
-```{note}
-Make sure you have a reference bibtex file. You can create one by running `touch refs.bib`
-or view a {download}`refs.bib <../../refs.bib>` example.
-```
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 20 20
-
-* - Syntax
-  - Example
-  - Result
-* - ```md
-    {cite}`mybibtexcitation`
-    ```
-  - ```md
-    This example generates the following
-    citation {cite}`perez2011python`.
-    ```
-  - This example generates the following
-    citation {cite}`perez2011python`.
-``````
-
-To include a list of citations mentioned in the document, introduce the `bibliography` directive
-
-``````md
-```{bibliography}
-:filter: docname in docnames
-```
-``````
-
-See {doc}`reStructuredText` for more information.

@@ -2,7 +2,12 @@
 
 ## 设置 Anaconda 自动启动
 
-和 Linux 不同的是，Windows Command Line 没有 .bashrc 文件。如果想要设置这个文件，需要修改注册表项 `\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Command Processor` 中的 AutoRun（类型为 REG_EXPAND_SZ）的数据字段设置为 `if exist "D:\ProgramData\Anaconda3\condabin\conda_hook.bat" conda activate` 。数据字段很明显就是一段程序。
+和 Linux 不同的是，Windows 命令行没有 ``.cmdrc`` 文件。如果想设置 conda 自动启动，需要将注册表：
+
+- ``\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Command Processor`` 或者
+- ``\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor`` 
+
+两者中的某一个 ``AutoRun`` 数据字段（如果没有就**新建**可扩充字符串值）的值设置为：``conda activate``
 
 ## 更改 Terminal 风格
 
