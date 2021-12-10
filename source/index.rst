@@ -68,12 +68,12 @@
     Java 编程思想笔记 <https://thinking-in-java-notes.readthedocs.io>
 
 .. toctree::
-    :caption: 数学基础
+    :caption: 预备知识
     :titlesonly:
     :glob:
     :hidden:
 
-    docs/mathematics/*
+    docs/preliminaries/*
 
 .. toctree::
     :caption: 工具和使用

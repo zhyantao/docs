@@ -55,17 +55,17 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 - 基于度量的方法（学习事物背后的关联）
   
   - 目标是学习不同样本之间的度量或距离函数；
-  - 比如 Siamese Network，Matching Network，Relation Network，Prototypical Network。
+  - 比如 Siamese Network\ :footcite:p:`koch2015siamese`\ ，Matching Network\ :footcite:p:`vinyals2016matching`\ ，Relation Network\ :footcite:p:`sung2018learning`\ ，Prototypical Network\ :footcite:p:`snell2017prototypical`\ 。
 
 - 基于模型的方法（学习如何建模）
   
   - 目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})` ；
-  - 比如 MANN，Meta Network。
+  - 比如 MANN\ :footcite:p:`santoro2016meta`\ ，Meta Network\ :footcite:p:`munkhdalai2017meta`\ ，TCML\ :footcite:p:`mishra2017meta`\ 。
 
 - 基于优化的方法（学习如何学习）
   
   - 目标是加快模型的求解速度；
-  - 比如 Meta-Learning LSTM，MAML，Repitile。
+  - 比如 LSTM-based\ :footcite:p:`ravi2017optimization`\ :footcite:p:`andrychowicz2016learning`\ ，MAML\ :footcite:p:`finn2017model`\ ，Repitile，RL-based\ :footcite:p:`zoph2016neural`\ :footcite:p:`wang2016learning`\ :footcite:p:`duan2016rl`\ 。
 
 基于度量的方法很好理解，它主要的构件就是嵌入模块和度量模块 [1]_ ：
 
@@ -95,8 +95,7 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 
 以上是我于 2021 年 10 月 28 日做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/cpj5izoyamHE>`_\ 。
 
-解决方案汇总 [2]_
------------------
+然后，更多更加详细的论文方法汇总在下面了\ [2]_\ ：
 
 - **Data Augmentation / Hallucination Based / Sample Synthesis (learn to augment data)**
 
@@ -294,8 +293,8 @@ Fine Tuning
 
 - `Papers With Code: Few-Shot Learning <https://paperswithcode.com/task/few-shot-learning>`_
 
-数据集 [4]_ [5]_ [6]_
-~~~~~~~~~~~~~~~~~~~~~~
+数据集 
+~~~~~~
 
 - `Omniglot data set for one-shot learning <https://github.com/brendenlake/omniglot>`_ 及 `Paper <https://kdocs.cn/l/cgtqdhdNglDz>`_
 - `Tools for mini-ImageNet Dataset <https://github.com/yaoyao-liu/mini-imagenet-tools>`_
@@ -325,7 +324,4 @@ Fine Tuning
 .. [1] 赵凯琳,靳小龙,王元卓.小样本学习研究综述.软件学报,2021,32(2):349-369
 .. [2] `小样本学习与元学习资料调研：白小鱼 <https://youngfish42.yuque.com/docs/share/5cd14926-6954-4dca-bf39-d17c56fece53>`_
 .. [3] `Meta learning (computer science) <https://en.wikipedia.org/wiki/Meta_learning_(computer_science)>`_
-.. [4] `Awesome Meta Learning <https://github.com/sudharsan13296/Awesome-Meta-Learning>`_
-.. [5] `Meta-Learning-Papers <https://github.com/floodsung/Meta-Learning-Papers>`_
-.. [6] `FSL-Meta: A collection of resources for few-shot learning <https://github.com/tata1661/FSL-Mate>`_
 .. footbibliography::
