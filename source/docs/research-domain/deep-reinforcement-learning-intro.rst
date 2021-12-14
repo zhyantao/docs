@@ -79,3 +79,4 @@
 在预测过程中通过累计奖励 :math:`U_t` 来判断决策是不是一个好决策， :math:`U_t` 越大越好。因为 :math:`R_i` 依赖于 :math:`S_i` 和 :math:`A_i` ，
 :math:`U_t` 依赖于 :math:`R_t, R_{t+1}, \dots`\ ，因此 :math:`U_t` 依赖于 :math:`S_t, A_t, S_{t+1}, A_{t+1}, \dots`\ 。 
 
+更多细节参考 `【金山文档】 深度强化学习, 王树森 <https://kdocs.cn/l/cld4jk5tHgp8>`_

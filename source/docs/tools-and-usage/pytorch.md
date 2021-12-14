@@ -1,7 +1,12 @@
 # PyTorch 入门
 
 这是一段关于使用 PyTorch 编写神经网络代码的**完整片段**，或者可以称它为**标准训练流程**。
-里面有一些细节需要注意，建议阅读我于 2021 年 12 月 9 日写的 PPT。
+里面有一些细节需要注意，建议阅读我于 2021 年 12 月 9 日写的 [PPT](https://kdocs.cn/l/cmkgvoHbj92N)。
+
+- 使用 PaddlePaddle 训练网络
+- 钢铁缺陷检测实例
+- Pandas 和 NumPy（更多工具的使用参考[Python 知识手册 v2018](https://kdocs.cn/l/ccs5HiBn4nq8)）
+- 自动求导的使用方法
 
 ```Python
 import torch
