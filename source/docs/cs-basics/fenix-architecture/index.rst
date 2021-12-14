@@ -2,10 +2,7 @@
 凤凰架构笔记
 ============
 
-全书概览
----------
-
-.. image:: ../../_static/images/icyfenix-overview.*
+.. image:: ../../../_static/images/icyfenix-overview.*
 
 软件架构的发展大致分为以下几个阶段：
 
@@ -42,3 +39,13 @@
 - 服务网格
 
 扮演了重要角色。
+
+
+
+.. toctree::
+    :caption: 预备知识
+    :titlesonly:
+    :glob:
+    :hidden:
+
+    ch01

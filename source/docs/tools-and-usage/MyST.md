@@ -313,12 +313,16 @@
 * - Example
   - Result
 * - ````md
-    ```python
+    ```{code-block} python
+    :emphasize-lines: 2
+
     note = "Python syntax highlighting"
     print(node)
     ```
     ````
-  - ```python
+  - ```{code-block} python
+    :emphasize-lines: 2
+    
     note = "Python syntax highlighting"
     print(node)
     ```
@@ -431,7 +435,8 @@
 ## 脚注（Footnotes）
 
 ``````{margin}
-<br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/><br/>
 ```{note}
 脚注将在本页的末尾显示。
 ```
@@ -444,12 +449,14 @@
 * - Example
   - Result
 * - ```md
-    This is a footnote reference.[^myref]
+    添加引用：This is a footnote reference.[^myref]
     ```
-  - This is a footnote reference.[^myref]
+  - 添加引用：This is a footnote reference.[^myref]
+* - ```md
+    添加注释：[^myref]: Example for footnote definition.
+    ```
+  - [^myref]: Example for footnote definition.
 ``````
-
-[^myref]: Example for footnote definition.
 
 ## 注释（Comment）
 

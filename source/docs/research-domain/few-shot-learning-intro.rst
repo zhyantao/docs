@@ -169,7 +169,8 @@ Triplet Loss
 预训练和微调
 ------------
 
-这是一个很简单的思路，在大数据集 Train Set 上做 Pretraining，在小数据集 Support Set 上做 Fine Tuning。这种方式虽然简单，但是准确率相对较高。
+这是一个很简单的思路，在大数据集 Train Set 上做 Pretraining，在小数据集 Support Set 上做 Fine Tuning。
+这种方式虽然简单，但是准确率相对较高。代码实现参考《迁移学习简明手册\ :footcite:p:`WangTLTutorial2018cn`\ 》上手实践部分。
 
 - Step1: Pretraining
 
