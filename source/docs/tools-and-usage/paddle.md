@@ -15,7 +15,7 @@ PaddlePaddle 是百度的一款深度学习框架。使用 PaddlePaddle 一般�
 ```
 ``````
 
-下面以手写数字识别为例，实现上面三个步骤。
+下面以随机生成的数据为样本，测试流程的完整性。
 
 ## 定义 transforms 和 datasets
 
