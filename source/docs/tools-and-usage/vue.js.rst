@@ -726,20 +726,21 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 3. 安装 vue-cli：\ ``cnpm install -g @vue/cli``
 4. 安装 webpack：\ ``cnpm install -g webpack``
 
-然后，在命令行中使用 ``vue ui`` 创建一个 Vue 项目，包管理器选择 npm 其他保持默认即可。
+然后，在命令行中使用 ``vue ui`` 创建一个 Vue 项目，包管理器选择 ``npm`` 其他保持默认即可。
 
 创建完成后，用 HBuilderX 打开项目。
-可以看到，public 文件夹是项目开发完成后部署的文件。
+可以看到， ``public`` 文件夹是项目开发完成后部署的文件。
 ``HelloWorld.vue`` 是单文件组件，src 是源代码文件，我们将在这里完成开发工作。步骤如下：
 
-1. src/App.vue 是项目的入口文件，在 script 中 ``import`` 自定义的组件；
-2. 在 script 中使用 ``export default`` 注册组件；
+1. ``src/App.vue`` 是项目的入口文件，在 ``script`` 中 ``import`` 自定义的组件；
+2. 在 ``script`` 中使用 ``export default`` 注册组件；
    
-   - 用 ``name`` 注册组件的名称
-   - 用 ``props`` 注册属性
-   - 用 ``methods`` 注册方法
-   - 用 ``data(){}`` 注册对应的数据
+   - 用 ``name:`` 注册组件的名称（给组件起个名字）
+   - 用 ``props`` 注册属性（声明在 ``template`` 中可以使用的全局变量）
+   - 用 ``data() {}`` 注册对应的数据（声明在 ``script`` 中可以使用的全局变量）
+   - 用 ``methods: {}`` 注册方法（函数方法定义）
+   - 用 ``mounted() {}`` 调用方法（函数调用）
 
-3. 在 template 中使用已经注册的组件，即可完成整个开发流程。
+3. 在 ``template`` 中使用已经注册的组件，即可完成整个开发流程。
 
 以上，全部更新完毕。
