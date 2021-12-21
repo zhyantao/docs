@@ -324,7 +324,8 @@ Linux 目录结构
     cat /proc/version
     cat /etc/redhat-release
 
-    /proc/cpuinfo   # 显示 CPU 信息
+    lscpu           # 显示 CPU 简略信息（通常使用）
+    /proc/cpuinfo   # 显示 CPU 详细信息
 
     du              # 查看某个目录的大小（disk used 的缩写）
 
