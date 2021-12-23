@@ -49,14 +49,22 @@ YOLO 的锚框可以看成是 :math:`stride = b_w` 的滑动窗口。
 
 .. image:: ../../_static/images/obj-det-assessment.png
 
-常用的基本思路是：1）生成多个候选框，2）计算每个候选框的 IoU，3）使用非最大抑制方法移除部分候选框。
+常用的基本思路是：1）生成多个候选框，2）计算每个候选框的概率，3）使用非最大抑制方法移除部分候选框。
 
 .. image:: ../../_static/images/obj-det-main-idea.png
 
-注意，非最大抑制方法是一个有歧义的词汇，从网络资源来看，不同的作者有不同的解读。
-一种说法是，将检测同一种目标的所有候选框做对比，只保留最大值，其他全部抛弃 [7]_ 。
-另一种说法是，把检测同一种目标的所有候选框分成几组，其中每一组保留一个最大值，然后用每一组的最大值进一步预测，再使用非最大抑制。
 
+非极大值抑制（Non-Maximum Suppression，NMS）算法流程：
+
+假设现在有 6 个候选框（A、B、C、D、E、F）对小熊进行预测，
+
+1. 首先计算每个候选框的概率，保留概率最大的候选框，比如 F；
+2. 将 F 和其余 5 个候选框计算 IoU，去除结果大于阈值的候选框，比如 A、C、E；
+3. 在剩下的 B、D 中，保留概率较大者，重复步骤 2、3，对比 B 和 D。
+
+就这样一直重复，找到所有被保留下来的矩形框 [7]_ [8]_。多分类对每个类别分别应用 NMS [8]_。
+
+以上是我于 2021 年 11 月 22 日 `PPT <https://kdocs.cn/l/cd1NvZhHxEyh>`_ 中的部分摘录。
 
 技术分类
 --------
@@ -104,3 +112,4 @@ Label Assignment in Object Detection
 .. [5] `Anchor Boxes for Object Detection - MATLAB & Simulink - MathWorks 中国 <https://ww2.mathworks.cn/help/vision/ug/anchor-boxes-for-object-detection.html>`_
 .. [6] `[金山文档] super-cheatsheet-deep-learning.pdf <https://kdocs.cn/l/caIiLHnpo5UV>`_
 .. [7] `[金山文档] 动手学深度学习（第 2 版）PyTorch 实现 13.4.锚框 <https://kdocs.cn/l/crOymfQ4SKRt>`_
+.. [8] https://www.cnblogs.com/makefile/p/nms.html
