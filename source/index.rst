@@ -66,7 +66,6 @@
     docs/cs-basics/*
     docs/cs-basics/fenix-architecture/index
     秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
-    Java 编程思想笔记 <https://thinking-in-java-notes.readthedocs.io>
 
 .. toctree::
     :caption: 预备知识
@@ -82,6 +81,8 @@
     :glob:
     :hidden:
     
+    docs/coding-lang/java/index
+    docs/coding-lang/python/index
     docs/tools-and-usage/*
 
 .. toctree::
