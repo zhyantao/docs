@@ -1,25 +1,22 @@
 # PaddlePaddle 入门
 
-PaddlePaddle 是百度的一款深度学习框架。使用 PaddlePaddle 一般分为几个核心步骤：
+PaddlePaddle 是百度的一款深度学习框架。使用 PaddlePaddle 一般分为三个核心步骤：
 
 1. 定义 transforms 和 datasets；
-2. 定义模型；
-3. 模型评估。
+2. 定义模型（模型组网）；
+3. 模型训练和预测（模型评估）。
 
-``````{margin}
 ```{note}
-运行环境：
+运行环境为 [paddle 2.2.1](https://www.paddlepaddle.org.cn/)。
 
-- `PaddleX==2.1.0`
-- [PaddlePaddle](https://www.paddlepaddle.org.cn/install/quick)
+注意，paddle 是核心代码，方便定制，而 paddlex 是更上层的接口，使用起来更简单但定制性不好。
 ```
-``````
 
 下面以随机生成的数据为样本，测试流程的完整性。
 
 ## 定义 transforms 和 datasets
 
-```python
+```{code-block} python
 import paddle
 from paddle.io import Dataset
 from paddle.vision.transforms import Compose, Resize
@@ -41,6 +38,7 @@ class MyDataset(Dataset):
 
     # 指定 index 时如何获取数据
     def __getitem__(self, index):
+        # 生成 IMAGE_SIZE 大小的随机数据
         data = paddle.uniform(IMAGE_SIZE, dtype='float32')
         # 使用 transforms 方法
         data = self.transform(data.numpy())
@@ -53,21 +51,36 @@ class MyDataset(Dataset):
         return self.num_samples
 ```
 
-```{admonition} 内置 datasets 和 transforms
+````{admonition} 内置 datasets 和 transforms
 :class: dropdown
 
 视觉相关数据集：
 
-`['DatasetFolder', 'ImageFolder', 'MNIST', 'FashionMNIST', 'Flowers', 'Cifar10', 'Cifar100', 'VOC2012']`
+```{code-block} python
+['DatasetFolder', 'ImageFolder', 'MNIST', 'FashionMNIST', 
+'Flowers', 'Cifar10', 'Cifar100', 'VOC2012']
+```
 
 自然语言相关数据集：
 
-`['Conll05st', 'Imdb', 'Imikolov', 'Movielens', 'UCIHousing', 'WMT14', 'WMT16']`
+```{code-block} python
+['Conll05st', 'Imdb', 'Imikolov', 'Movielens', 'UCIHousing', 'WMT14', 'WMT16']
+```
 
 数据处理方法：
 
-`['BaseTransform', 'Compose', 'Resize', 'RandomResizedCrop', 'CenterCrop', 'RandomHorizontalFlip', 'RandomVerticalFlip', 'Transpose', 'Normalize', 'BrightnessTransform', 'SaturationTransform', 'ContrastTransform', 'HueTransform', 'ColorJitter', 'RandomCrop', 'Pad', 'RandomRotation', 'Grayscale', 'ToTensor', 'to_tensor', 'hflip', 'vflip', 'resize', 'pad', 'rotate', 'to_grayscale', 'crop', 'center_crop', 'adjust_brightness', 'adjust_contrast', 'adjust_hue', 'normalize']`
+```{code-block} python
+['BaseTransform', 'Compose', 'Resize', 
+'RandomResizedCrop', 'CenterCrop', 'RandomCrop',
+'RandomHorizontalFlip', 'RandomVerticalFlip', 'RandomRotation',
+'Transpose', 'Normalize', 
+'BrightnessTransform', 'SaturationTransform', 'ContrastTransform', 
+'HueTransform', 'ColorJitter', 'Pad', 'Grayscale', 
+'ToTensor', 'to_tensor', 'hflip', 'vflip', 'resize', 
+'pad', 'rotate', 'to_grayscale', 'crop', 'center_crop', 
+'adjust_brightness', 'adjust_contrast', 'adjust_hue', 'normalize']
 ```
+````
 
 ## 定义模型（模型组网）
 
@@ -119,7 +132,12 @@ class MyModel(paddle.nn.Layer):
 
 飞桨框架内置模型：
 
-`['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 'VGG', 'vgg11', 'vgg13', 'vgg16', 'vgg19', 'MobileNetV1', 'mobilenet_v1', 'MobileNetV2', 'mobilenet_v2', 'LeNet']`
+```{code-block} python
+['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 
+'VGG', 'vgg11', 'vgg13', 'vgg16', 'vgg19', 
+'MobileNetV1', 'mobilenet_v1', 'MobileNetV2', 'mobilenet_v2', 
+'LeNet']
+```
 
 使用方法：
 

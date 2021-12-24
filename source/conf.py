@@ -15,7 +15,11 @@ version = 'v 1.2.0'
 master_doc = 'index'
 language = 'zh_CN'
 source_encoding = 'utf-8-sig'
-source_suffix = ['.rst','.md']
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.ipynb': 'myst-nb',
+    '.myst': 'myst-nb',
+}
 
 
 # -- Options for HTML output -------------------------------------------------
