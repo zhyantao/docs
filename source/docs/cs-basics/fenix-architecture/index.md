@@ -1,8 +1,9 @@
-============
-凤凰架构笔记
-============
+# 凤凰架构笔记
 
-.. image:: ../../../_static/images/icyfenix-overview.*
+```{figure} ../../../_static/images/icyfenix-overview.*
+
+编辑原图：<https://kdocs.cn/l/cadS3e8BGKby>
+```
 
 软件架构的发展大致分为以下几个阶段：
 
@@ -26,9 +27,9 @@
 - 还是由应用系统自行解决？
 - 还是在基础设施层面将这些问题隔离掉？
 
-.. note:: 
-    
-    技术规范指的是编写程序时应该遵循的一种标准。
+```{note}
+技术规范指的是编写程序时应该遵循的一种标准。
+```
 
 不可变基础设施意在隐藏分布式架构的复杂性，让分布式架构成为一种可普遍推广的普适架构风格。其中
 
@@ -40,14 +41,18 @@
 
 扮演了重要角色。
 
+```{toctree}
+:caption: 预备知识
+:titlesonly:
+:glob:
+:hidden:
 
+ch01
+ch02
+ch03
+```
 
-.. toctree::
-    :caption: 预备知识
-    :titlesonly:
-    :glob:
-    :hidden:
+更多整理内容：
 
-    ch01
-    ch02
-    ch03
+- 技术组件图：<https://kdocs.cn/l/cuEBl7OQauKG>
+- 重要知识点：<https://kdocs.cn/l/crkgW7Ky98f5>
