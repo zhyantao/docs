@@ -30,6 +30,7 @@ html_favicon = '_static/images/logo-square.svg'
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static'] # Contain custom static files (such as style sheets) here
 html_css_files = ['css/custom.css',] # These paths are either relative to html_static_path or or fully qualified paths (eg. https://...)
+html_js_files = ['js/custom.js']
 html_theme_options = {
     "search_bar_text": "输入搜索文本...",
     "repository_url": "https://github.com/zhyantao/readthedocs-with-github",
