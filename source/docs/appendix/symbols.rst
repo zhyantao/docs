@@ -9,8 +9,9 @@
     更多 :math:`LaTeX` 符号参考：
     
     - `一份不太简短的 LaTeX 2ε 介绍 <https://www.kdocs.cn/p/136412211457>`_ 4.9 小节
-    - `List of mathematical symbols by subject - Wikipedia <https://en.wikipedia.org/wiki/List_of_mathematical_symbols_by_subject>`_ 
-    
+    - `常用数学符号和公式排版 <https://www.latexlive.com/help#d11>`_ 
+    - `在线 LaTeX 公式编辑器 <https://www.latexlive.com>`_ （可导出为图片）
+
     数学是符号的艺术，能够认识和理解符号背后的含义，才能步入数学的殿堂。
 
 .. hint::
