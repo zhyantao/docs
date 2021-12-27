@@ -174,7 +174,7 @@ bibtex_bibfiles = ['refs.bib']
 
 # -- Options for LaTeX output ---------------------------------------------
 
-# Comment this sentence when gernerating a HTML page package.
+# Support Chinese compiling
 latex_engine = 'xelatex'
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -189,9 +189,9 @@ latex_documents = [
 # To generate Chinese PDF, you need to add the following code.
 latex_elements = {
     'preamble': r'''
-    \usepackage[UTF8]{ctex}
+    \usepackage[UTF8]{ctex}     # support Chinese writing
     \usepackage{graphicx} 
     \usepackage{animate}
     ''',
-    'extraclassoptions': 'openany, oneside',
+    'extraclassoptions': 'openany, oneside',    # remove blank pages
 }
