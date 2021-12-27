@@ -189,7 +189,7 @@ latex_documents = [
 # To generate Chinese PDF, you need to add the following code.
 latex_elements = {
     'preamble': r'''
-    \usepackage[UTF8]{ctex}     # support Chinese writing
+    \usepackage[UTF8]{ctex}     % support Chinese writing
     \usepackage{graphicx} 
     \usepackage{animate}
     ''',
