@@ -55,7 +55,7 @@ docs/research-domain/*
 ```
 
 ```{toctree}
-:caption: 计算机基础
+:caption: 知识和体系
 :titlesonly:
 :glob:
 :hidden:
@@ -63,17 +63,8 @@ docs/research-domain/*
 操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
 计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
 设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
-docs/cs-basics/*
 秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
-```
-
-```{toctree}
-:caption: 预备知识
-:titlesonly:
-:glob:
-:hidden:
-
-docs/preliminaries/*
+docs/knowledge-system/*
 ```
 
 ```{toctree}
@@ -82,8 +73,8 @@ docs/preliminaries/*
 :glob:
 :hidden:
 
-docs/coding-lang/java/index
-docs/coding-lang/python/index
+docs/coding-language/java/index
+docs/coding-language/python/index
 docs/tools-and-usage/*
 ```
 
@@ -93,7 +84,7 @@ docs/tools-and-usage/*
 :glob:
 :hidden:
 
-docs/env-config/*
+docs/env-configuration/*
 ```
 
 ```{toctree}
