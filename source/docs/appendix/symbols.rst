@@ -8,6 +8,7 @@
 
     更多 :math:`LaTeX` 符号参考：
     
+    - :ref:`LaTeX 入门 <latex-basic>`
     - `一份不太简短的 LaTeX 2ε 介绍 <https://www.kdocs.cn/p/136412211457>`_ 4.9 小节
     - `常用数学符号和公式排版 <https://www.latexlive.com/help#d11>`_ 
     - `在线 LaTeX 公式编辑器 <https://www.latexlive.com>`_ （可导出为图片）
