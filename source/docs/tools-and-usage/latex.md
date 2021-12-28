@@ -1,11 +1,12 @@
+(latex-basic)=
 # $\LaTeX$ 入门
 
 学习使用 $\LaTeX$ 书写文档，应该做到如下两点：
 
-- 熟练掌握 $\LaTeX$ 语法，也就是本文要写的东西，之后你将可以在别人精心制作的模板上稍作修改；
-- 了解常用的符号，本文不会记录这些，反复多用几次就记住了，不常用的符号记不住上网查一下就行。
+- 本文将对常用的 $\LaTeX$ 语法做简单介绍，之后就可以学习[别人精心制作的模板](https://cn.overleaf.com/latex/templates)了；
+- 本文不会记录常用的符号，反复多用几次就记住了，不常用的符号记不住[上网查一下](https://www.latexlive.com/help#d11)就行了。
 
-如果已经熟练下面操作，查看[小抄表](https://kdocs.cn/l/ceOwwHjUhGVQ)也许会有帮助。
+如果已经熟练掌握基本语法，但是有些细节记不住，[查看小抄表](https://kdocs.cn/l/ceOwwHjUhGVQ)也许会有帮助。
 
 ## 环境配置
 
@@ -43,23 +44,18 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 
 命令后面的空格默认会被忽略，因此用 `{}` 插入了一个空格，也可以用**反斜杠加空格字符**来表明有空格存在。
 
-## 文档元素
+## 文档结构
+
+### article 文档
 
 ```{code-block} tex
 % \documentclass[<opt1, opt2, ...>]{article | book}
 \documentclass[11pt, landscape]{article}
 
-    % 导言区
-    % \usepackage[<opt1, opt2, ...>]{<pkg1, pkg2, ...>}
-
-    \author{name}
-    \title{title}
-    \date{date}
+% 导言区
+% \usepackage[<opt1, opt2, ...>]{<pkg1, pkg2, ...>}
 
 \begin{document}
-    
-    \maketitle          % 生成作者、标题、日期
-    \tableofcontents    % 生成目录
     
     % 正文内容
     % \chapter{Chapter title}           % 章（只有 book 才有 chapter）
@@ -76,7 +72,45 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 
 使用宏包和文档类前，需要事先安装到你的计算机上，否则会报错。
 
-## 多文件编程
+### book 文档
+
+```{code-block} tex
+\documentclass{book}
+
+% 导言区，加载宏包和各项设置，包括参考文献、索引等
+\usepackage{makeidx}        % 调用 makeidx 宏包，用来处理索引
+\makeindex                  % 开启索引的收集
+\bibliographystyle{plain}   % 指定参考文献样式为 plain
+
+\author{name}               % 声明书籍信息
+\title{title}
+\date{date}
+
+\begin{document}
+
+    \frontmatter            % 前言部分
+    \maketitle              % 生成标题页
+    \include{preface}       % 前言章节 preface.tex
+
+    \tableofcontents        % 生成目录
+
+    \mainmatter             % 正文部分
+    \include{chapter1}      % 第一章 chapter1.tex
+    \include{chapter2}      % 第二章 chapter2.tex
+    ...
+    \appendix               % 附录
+    \include{appendixA}     % 附录 A appendixA.tex
+    ...
+
+    \backmatter             % 后记部分
+    \include{prologue}      % 后记 prologue.tex
+    \bibliography{books}    % 利用 BibTeX 工具从数据库文件 books.bib 生成参考文献
+    \printindex             % 利用 makeindex 工具生成索引
+
+\end{document}
+```
+
+**一些重要的文件和它们的作用：**
 
 - `.sty` 宏包文件。宏包的名称与文件名一致。
 - `.cls` 文档类文件。文档类名称与文件名一致。
@@ -88,58 +122,56 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 - `\include` 会另起一页
 - `\input` 在当前位置插入
 
-## 字号、字体、对齐
+## 字号
 
-```{list-table}
-:header-rows: 1
+```{code-block} tex
+\tiny 
+\scriptsize 
+\footnotesize 
+\small 
+\normalsize
+\large 
+\Large 
+\LARGE 
+\huge 
+\Huge
+```
 
-* - 字号
-  - 字体
-  - 对齐方式
-* - ```{code-block} tex
-    \tiny 
-    \scriptsize 
-    \footnotesize 
-    \small 
-    \normalsize
-    \large 
-    \Large 
-    \LARGE 
-    \huge 
-    \Huge
-    ```
-  - ```{code-block} tex
-    \textit{text}
-    \textbf{text}
-    \textsc{text}
-    \textnormal{text}
-    ```
-  - ```{code-block} tex
-    \begin{center} 
-    \begin{flushleft} 
-    \begin{flushright}
-    ```
+## 字体
+
+```{code-block} tex
+\textit{text}
+\textbf{text}
+\textsc{text}
+\textnormal{text}
+```
+
+## 对齐方式
+
+```{code-block} tex
+\begin{center} 
+\begin{flushleft} 
+\begin{flushright}
 ```
 
 ## 列表
 
-```{list-table}
-:header-rows: 1
+### 无序列表
 
-* - 无序列表
-  - 有序列表
-* - ```{code-block} tex
-    \begin{itemize} 
-        \item First item 
-        \item[-] Item with dash 
-    \end{itemize}
-    ```
-  - ```{code-block} tex
-    \begin{enumerate} 
-        \item First item 
-        \item[-] Item with dash 
-    \end{enumerate}
-    ```
+```{code-block} tex
+\begin{itemize} 
+    \item First item 
+    \item[-] Item with dash 
+\end{itemize}
+```
+
+### 有序列表
+
+```{code-block} tex
+\begin{enumerate} 
+    \item First item 
+    \item[-] Item with dash 
+\end{enumerate}
 ```
 
 ## 表格
@@ -155,7 +187,7 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 \end{table}
 ```
 
-可借助 <https://tablesgenerator.com> 快速制作表格 [^latex-cheatsheet]。
+使用 [Table Generator](https://tablesgenerator.com) 你将可以更快速地制作表格 [^latex-cheatsheet]。
 
 [^latex-cheatsheet]: [LaTeX_Cheat_Sheet_September_2020.pdf](https://cosimameyer.rbind.io/files/LaTeX_Cheat_Sheet_September_2020.pdf)
 
@@ -210,7 +242,7 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 |\makebox[10em][s]{Test some words.}|
 ```
 
-### 带框的水平盒子
+### 水平盒子
 
 ```{code-block} tex
 三字经：\parbox[t]{3em}%
@@ -237,7 +269,7 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 \newcommand{\tnss}{The not so Short Introduction to \LaTeXe}
 ```
 
-引用方式：`\tnss`。比如，也可以重新定义标题页样式，如下：
+引用方式：`\tnss`。比如，也可以**重新定义**标题页样式，如下：
 
 ```{code-block} tex
 \renewcommand{\maketitle}{\begin{titlepage}
@@ -256,7 +288,7 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 \bibliographystyle{your_citation_style}
 ```
 
-<https://ctan.org/topic/bibtex-sty> 提供了很多参考文献样式，需要时可以借用。
+[CTAN: BibTeX Style](https://ctan.org/topic/bibtex-sty) 提供了很多常见的参考文献样式，需要时可以借用。
 
 然后，在正文中引用参考文献。natlib 提供了几种引用命令，语法和示例结果如下：
 
@@ -270,37 +302,3 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 ```
 
 当然，你也可以添加脚注 `\footnote{text}`
-
-## book 文档示例
-
-```{code-block} tex
-\documentclass{book}
-
-% 导言区，加载宏包和各项设置，包括参考文献、索引等
-\usepackage{makeidx}        % 调用 makeidx 宏包，用来处理索引
-\makeindex                  % 开启索引的收集
-\bibliographystyle{plain}   % 指定参考文献样式为 plain
-
-\begin{document}
-
-    \frontmatter            % 前言部分
-    \maketitle              % 标题页
-    \include{preface}       % 前言章节 preface.tex
-
-    \tableofcontents        % 生成目录
-
-    \mainmatter             % 正文部分
-    \include{chapter1}      % 第一章 chapter1.tex
-    \include{chapter2}      % 第二章 chapter2.tex
-    ...
-    \appendix               % 附录
-    \include{appendixA}     % 附录 A appendixA.tex
-    ...
-
-    \backmatter             % 后记部分
-    \include{prologue}      % 后记 prologue.tex
-    \bibliography{books}    % 利用 BibTeX 工具从数据库文件 books.bib 生成参考文献
-    \printindex             % 利用 makeindex 工具生成索引
-
-\end{document}
-```
