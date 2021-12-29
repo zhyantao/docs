@@ -33,7 +33,7 @@ html_css_files = ['css/custom.css',] # These paths are either relative to html_s
 html_js_files = ['js/custom.js']
 html_theme_options = {
     "search_bar_text": "输入搜索文本...",
-    "repository_url": "https://github.com/zhyantao/readthedocs-with-github",
+    "repository_url": "https://github.com/zhyantao/zhyantao.github.io",
     "repository_branch": "master",
     "use_repository_button": True,
     "use_issues_button": True,
@@ -126,10 +126,10 @@ intersphinx_cache_limit = 5
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`
 extlinks = {
-    "src": ("https://github.com/zhyantao/readthedocs-with-github/blob/master/%s", ""),
-    "docs": ("https://github.com/zhyantao/readthedocs-with-github/blob/master/%s", ""),
-    "issue": ("https://github.com/zhyantao/readthedocs-with-github/issues/%s", "Issue #"),
-    "pull": ("https://github.com/zhyantao/readthedocs-with-github/pull/%s", "Pull Requset #"),
+    "src": ("https://github.com/zhyantao/zhyantao.github.io/blob/master/%s", ""),
+    "docs": ("https://github.com/zhyantao/zhyantao.github.io/blob/master/%s", ""),
+    "issue": ("https://github.com/zhyantao/zhyantao.github.io/issues/%s", "Issue #"),
+    "pull": ("https://github.com/zhyantao/zhyantao.github.io/pull/%s", "Pull Requset #"),
     "duref": ("http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s", "",),
 }
 
