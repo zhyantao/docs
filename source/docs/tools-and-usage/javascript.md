@@ -1,4 +1,4 @@
-# JavaScript 入门
+# JavaScript
 
 ```{figure} ../../_static/images/javascript-tutorial.*
 

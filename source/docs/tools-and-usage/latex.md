@@ -1,5 +1,5 @@
 (latex-basic)=
-# $\LaTeX$ 入门
+# $\LaTeX$
 
 学习使用 $\LaTeX$ 书写文档，应该做到如下两点：
 
