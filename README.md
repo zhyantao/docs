@@ -1,4 +1,4 @@
-# 使用 Github 和 Readthedocs 部署文档
+# Read-the-Docs with Github
 
 [![Documentation Status](https://readthedocs.org/projects/zhyantao/badge/?version=latest)](https://zhyantao.readthedocs.io/zh_CN/latest/?badge=latest)
 
@@ -29,7 +29,7 @@
 5. 登录 [Readthedocs](https://readthedocs.org/) 导入刚刚新建的 Github 项目 `notebook` ，构建完成后方可阅读文档。
 
 
-## 编辑文档并提交修改
+## 撰写文档
 
 1. 把需要发表的文档放在 `notebook/source/docs` 文件夹中（写作格式可以是 `Markdown` 或者 `reStructuredText` ）
 
