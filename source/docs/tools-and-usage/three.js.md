@@ -1,4 +1,4 @@
-# Three.js 入门
+# Three.js
 
 由于 WebGL 较为底层，作为开发工具来讲，往往难以满足效率。
 因此诞生了 Babylon.js、Three.js、Layabox.js、Scene.js、Thing.js 等上层框架。

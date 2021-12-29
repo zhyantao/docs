@@ -1,4 +1,4 @@
-# MyST 语法入门
+# MyST-NB
 
 (target_header)=
 ## 标题（Headers）

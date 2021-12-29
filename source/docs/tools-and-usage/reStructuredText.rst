@@ -1,9 +1,9 @@
 .. highlight:: rst
 .. _restructuredtext:
 
-=========================
-reStructuredText 语法入门
-=========================
+=================
+reStructuredText
+=================
 
 .. hint:: 
 

@@ -1,4 +1,4 @@
-# PaddlePaddle 入门
+# PaddlePaddle
 
 PaddlePaddle 是百度的一款深度学习框架。使用 PaddlePaddle 一般分为三个核心步骤：
 

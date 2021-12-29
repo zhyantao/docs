@@ -1,4 +1,4 @@
-# Python 入门
+# Python
 
 Python 入门语法参考。
 
