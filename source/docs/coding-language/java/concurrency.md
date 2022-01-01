@@ -4,13 +4,11 @@
 
 ### 你必须知道的几个概念
 
-- 同步（Synchronous）和异步（Asynchronous）[^java_multithread]
+- 同步（Synchronous）和异步（Asynchronous）[^java-multithread]
 - 并发（Concurrency）和并行（Parallelism）
 - 临界区：一种公共资源或共享数据，可被多个线程使用
 - 阻塞（Blocking）和非阻塞（Non-Blocking）
 - 死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）
-
-[^java_multithread]: 葛一鸣, 郭超. 实战Java高并发程序设计\[M\]. 电子工业出版社, 2015.
 
 ### 并发级别
 
@@ -682,3 +680,7 @@ public class JoinThread {
 #### 数据共享通道：BlockingQueue
 
 #### 随机数据结构：跳表（SkipList）
+
+## 参考文献
+
+[^java-multithread]: 葛一鸣, 郭超. 实战Java高并发程序设计[M]. 电子工业出版社, 2015.

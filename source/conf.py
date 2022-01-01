@@ -171,6 +171,8 @@ plantuml_output_format = 'svg'
 # Setting for sphinxcontrib.bibtex
 bibtex_bibfiles = ['refs.bib']
 
+myst_footnote_transition = False
+
 
 # -- Options for LaTeX output ---------------------------------------------
 
