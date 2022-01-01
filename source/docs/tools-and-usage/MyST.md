@@ -672,7 +672,7 @@
     for more information.
 ``````
 
-### 引用参考文献（Citations）
+## 参考文献（Citations）
 
 ````{margin}
 <br/><br/><br/>
