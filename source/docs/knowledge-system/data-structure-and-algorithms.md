@@ -14,8 +14,6 @@
 - int poll();
 - int peek();
 
-[^zuocy]: 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2019. URL: <https://kdocs.cn/l/cn65qULuDrFX>
-
 ### 递归调用模板
 
 ```{code-block} java
@@ -75,3 +73,7 @@ public class Recursion {
 }
 // 3 2 1 0 -1 -1 0 1 2
 ```
+
+## 参考文献
+
+[^zuocy]: 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2019. URL: <https://kdocs.cn/l/cn65qULuDrFX>
