@@ -7,8 +7,6 @@
 3. 对每一个核心组件进行详细深入的分析；
 4. 扩展设计，确认和处理瓶颈以及一些限制。
 
-[^ref-system-design]: https://github.com/donnemartin/system-design-primer
-
 ## 明确使用场景和约束
 
 在这个阶段，尝试回答以下问题：
@@ -250,8 +248,6 @@ Kubernetes **局限性**在于难以对处于应用系统和基础设施边缘�
 一个 Pod 由一个或多个容器组成 [^ref-pods]）中注入的一个通信代理服务器，相当于那个挎斗。
 在应用毫无感知的情况下，接管应用所有的对外通信（包含数据平面通信和控制平面通信）。
 通过边车代理模式，实现了精细化管理。
-
-[^ref-pods]: https://zhuanlan.zhihu.com/p/32618563
 
 2014 年亚马逊发布了 Lambda **无服务计算平台**。它只涉及后端设施和函数两个概念：
 
@@ -704,3 +700,8 @@ SAGA 系统本身也有可能会崩溃，所以它必须设计与数据库类似
 譬如执行至哪一步或者补偿至哪一步了。
 
 SAGA 事务实现起来也不太容易，通常也不会直接靠裸编码来实现，一般也是在事务中间件的基础上完成，Seata 同样支持 SAGA 事务模式。
+
+## 参考文献
+
+[^ref-system-design]: https://github.com/donnemartin/system-design-primer
+[^ref-pods]: https://zhuanlan.zhihu.com/p/32618563
