@@ -609,23 +609,427 @@ public class JoinThread {
 
 ### volatile 和 Java 内存模型（JMM）
 
+一般来讲，用 `volatile` 能保证数据的原子性，但是 `volatile` 无法保证 `(Integer)i++` 的原子性，
+因为它的内部实现是，`(Integer)i` 每增加 1，`i` 都会指向一个新的 `Integer` 对象。
+
+```{code-block} java
+public class MultiThreadLong {
+    static volatile int i = 0;
+
+    public static class PlusTask implements Runnable {
+        @Override
+        public void run() {
+            for (int k = 0; k < 10000; k++) {
+                i++;
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread[] threads = new Thread[10];
+
+        for (int i = 0; i < 10; i++) {
+            threads[i] = new Thread(new PlusTask());
+            threads[i].start();
+        }
+
+        for (int i = 0; i < 10; i++) {
+            threads[i].join();
+        }
+
+        System.out.println("结果异常，这个数字总是小于 100000：" + i);
+    }
+
+}
+```
+
+`volatile` 保证数据的可见性和有序性。
+
+```{code-block} java
+
+public class Visibility {
+    // private static boolean ready = false;
+    // private static int number = 12;
+    // 声明为 volatile 才能让两个线程看到一致的结果，否则看不到
+    private static volatile boolean ready = false;
+    private static volatile int number = 12;
+
+    private static class ReaderThread extends Thread {
+        @Override
+        public void run() {
+            while(!ready); // 准备好再执行下一句
+            System.out.println(number);
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        new ReaderThread().start();
+        Thread.sleep(1000);
+        number = 42; // main 线程修改数字，ReaderThread 线程能看到
+        ready = true;
+        Thread.sleep(1000);
+    }
+}
+```
+
 ### 分门别类的管理：线程组
+
+```{code-block} java
+public class ThreadGroupName implements Runnable {
+    @Override
+    public void run() {
+        String groupAndName = Thread.currentThread().getThreadGroup().getName() 
+                                + "-" + Thread.currentThread().getName();
+        while(true) {
+            System.out.println("线程组和线程名：" + groupAndName);
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        ThreadGroup tg = new ThreadGroup("PrintGroup");
+        Thread t1 = new Thread(tg, new ThreadGroupName(), "T1"); // 将线程和线程组建立联系
+        Thread t2 = new Thread(tg, new ThreadGroupName(), "T2");
+        t1.start();
+        t2.start();
+        System.out.println(tg.activeCount()); // 看看这个 tg 线程组中有多少个活跃线程（估计值）
+        tg.list();
+    }
+}
+```
 
 ### 驻守后台：守护线程（Daemon）
 
+守护线程是最后结束的线程，注意，它会在程序结束后自动退出。
+但是有些线程无限循环，则不会退出，它们不属于守护线程。
+
+```{code-block} java
+public class DeamonDemo {
+    public static class DaemonT extends Thread {
+        public void run() {
+            while(true) {
+                System.out.println("I am alive");
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new DaemonT();
+
+        t.setDaemon(true); // 设置为守护进程，驻守后台
+        t.start();
+
+        Thread.sleep(2000); // 所有线程结束了，守护进程自然退出
+    }
+}
+```
+
 ### 先干重要的事：线程优先级
 
+```{code-block} java
+/**
+ * 疑问：这两个 count 内存地址是一样的吗？
+ */
+
+public class PriorityDemo {
+    public static class HighPriority extends Thread {
+        static int count = 0;
+
+        public void run() {
+            while(true) {
+                synchronized(PriorityDemo.class) {
+                    count++;
+
+                    if (count > 10000000) {
+                        System.out.println("HighPriority is complete");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static class LowPriority extends Thread {
+        static int count = 0;
+
+        @Override
+        public void run() {
+            while(true) {
+                synchronized(PriorityDemo.class) {
+                    count++;
+
+                    if (count > 10000000) {
+                        System.out.println("LowPriority is complete");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread high = new HighPriority();
+        Thread low = new LowPriority();
+
+        high.setPriority(Thread.MAX_PRIORITY);
+        low.setPriority(Thread.MIN_PRIORITY);
+
+        // 大多数情况下，high 比 low 先执行完
+        low.start();
+        high.start();
+    }
+}
+```
+
 ### 线程安全的概念与 synchronized
+
+线程不安全的例子。
+
+```{code-block} java
+public class AccountingVol implements Runnable {
+    static AccountingVol instance = new AccountingVol();
+    static volatile int i = 0;
+
+    public static void increase() {
+        i++;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10000000; i++) {
+            increase();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(instance);
+        Thread t2 = new Thread(instance);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("结果小于 20000000 就是线程不安全：" + i);
+    }
+}
+```
+
+线程安全的做法：用 `synchronized` 加锁：
+
+- 给对象加锁：临界区是当前对象
+- 给实例加锁：临界区是当前实例
+- 给静态方法加锁：临界区是当前类
+
+示例一：给实例加锁。
+
+```{code-block} java
+public class AccountingVol2 implements Runnable {
+    static AccountingVol2 instance = new AccountingVol2();
+    static int i = 0;
+
+    @Override
+    public void run() {
+        for (int j = 0; j < 10000000; j++) {
+            synchronized(instance) { // 给实例加锁
+                i++;
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(instance);
+        Thread t2 = new Thread(instance);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("用同步的方法保证线程安全，结果是 20000000：" + i);
+    }
+}
+```
+
+实例二：给静态方法加锁。
+
+```{code-block} java
+public class AccountingVol3 implements Runnable {
+    static AccountingVol3 instance = new AccountingVol3();
+    static volatile int i = 0;
+
+    public static synchronized void increase() { // 给静态方法加锁
+        i++;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10000000; i++) {
+            increase();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(instance);
+        Thread t2 = new Thread(instance);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("用同步的方法保证线程安全，结果是 20000000：" + i);
+    }
+}
+```
 
 ### 程序中的幽灵：隐蔽的错误
 
 #### 无提示的错误案例
 
+计算结果溢出，也不报错，但是结果错了，出现这个问题将很难调试。
+
+```{code-block} java
+public class Overflow {
+    public static void main(String[] args) {
+        int v1 = 1073741827;
+        int v2 = 1431655768;
+
+        System.out.println("v1=" + v1);
+        System.out.println("v2=" + v2);
+
+        int ave = (v1 + v2) / 2;
+
+        System.out.println("ave=" + ave);
+    }
+}
+```
+
 #### 并发下的 ArrayList
+
+`ArrayList` 线程不安全的例子：容器扩容。
+
+```{code-block} java
+import java.util.ArrayList;
+
+public class ArrayListMultiThread {
+    // ArrayList 并不是线程安全的，尝试用 Vector 替代也行
+    static ArrayList<Integer> a1 = new ArrayList<Integer>(10);
+
+    public static class AddThread implements Runnable {
+        @Override
+        public void run() {
+            for (int i = 0; i < 1000000; i++) {
+                // 两个线程在扩容的时候，内部一致性被破坏，抛出了异常
+                a1.add(i);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(new AddThread());
+        Thread t2 = new Thread(new AddThread());
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println(a1.size()); // 结果并不是 2000000 条数据正常返回，而是抛出了异常
+    }
+}
+```
 
 #### 并发下诡异的 HashMap
 
+`HashMap` 线程不安全的例子：容器扩容。
+
+```{code-block} java
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapMultiThread {
+    static Map<String, String> map = new HashMap<String, String>();
+
+    public static class AddThread implements Runnable {
+        int start = 0;
+
+        public AddThread(int start) {
+            this.start = start;
+        }
+
+        @Override
+        public void run() {
+            for (int i = start; i < 100000; i+=2) {
+                // 两个线程在赋值的时候，出现了数据的覆盖，实际数据量少了
+                map.put(Integer.toString(i), Integer.toBinaryString(i));
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(new HashMapMultiThread.AddThread(0));
+        Thread t2 = new Thread(new HashMapMultiThread.AddThread(1));
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println(map.size()); // 结果异常，并不是 200000 条数据全部插入成功了
+    }
+}
+```
+
 #### 初学者常见问题：错误的加锁
+
+`Integer` 对象线程不安全的例子：自增运算符。
+
+```{code-block} java
+public class BadLockOnInteger implements Runnable {
+    public static Integer i = 0; // 原因是给 Integer 对象赋新值总会新建一个对象
+                                 // 而新建的对象是没有锁的
+    static BadLockOnInteger instance = new BadLockOnInteger();
+
+    @Override
+    public void run() {
+        for (int j = 0; j < 10000000; j++) {
+            // synchronized(instance) { // 正确的做法
+            synchronized(i) { // 错误地加锁，这里的 i 是一个对象不是变量
+                i++;          // i 的引用不停地在变化，总是指向新的 Interger 对象
+            }
+        }
+    }
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(instance);
+        Thread t2 = new Thread(instance);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("实际结果并不是 20000000，因为加错锁了：" + i);
+    }
+}
+```
 
 ## JDK 并发包
 
