@@ -1037,17 +1037,563 @@ public class BadLockOnInteger implements Runnable {
 
 #### synchronized 的功能扩展：重入锁
 
+```{code-block} java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ReenterLock implements Runnable {
+    // 创建重入锁对象
+    public static ReentrantLock lock = new ReentrantLock();
+    public static int i = 0;
+
+    @Override
+    public void run() {
+        for (int j=0; j<10000000; j++) {
+            lock.lock(); // 相比 synchronized，重入锁要手动加锁
+            lock.lock(); // 重入锁就是一个线程在自己持有锁的时候，允许重复加锁
+            try {
+                i++;
+            } finally {
+                lock.unlock(); // 手动解锁，忘记后就阻塞了
+                lock.unlock(); // 重复加锁后，当然解锁也要解两次
+            }
+        }
+    }
+    
+    public static void main(String[] args) throws InterruptedException {
+        ReenterLock rl = new ReenterLock();
+        Thread t1 = new Thread(rl);
+        Thread t2 = new Thread(rl);
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println(i);
+    }
+}
+```
+
+中断重入锁
+
+```{code-block} java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class IntLock implements Runnable {
+    public static ReentrantLock lock1 = new ReentrantLock();
+    public static ReentrantLock lock2 = new ReentrantLock();
+
+    int lock;
+
+    // 控制加锁顺序，方便构造死锁
+    public IntLock(int lock) {
+        this.lock = lock;
+    }
+
+    @Override
+    public void run() {
+        try {
+            if (lock == 1) {
+                // 重入锁允许在等待锁的时候被中断（取消执行）
+                lock1.lockInterruptibly();
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    
+                }
+
+                // 需要等待线程 2 释放 lock2（死锁）
+                // 重入锁说的是同一个线程允许重复加锁，不同线程对锁资源还是竞争关系
+                lock2.lockInterruptibly();
+            } else {
+                lock2.lockInterruptibly();
+
+                try {
+                    Thread.sleep(500);;
+                } catch (InterruptedException e) {
+                    
+                }
+
+                // 需要等待线程 1 释放 lock1（死锁）
+                lock1.lockInterruptibly();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            if (lock1.isHeldByCurrentThread()) {
+                lock1.unlock();
+            }
+            if (lock2.isHeldByCurrentThread()) {
+                lock2.unlock();
+            }
+            System.out.println(Thread.currentThread().getId() + ":线程退出");
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        IntLock r1 = new IntLock(1);
+        IntLock r2 = new IntLock(2);
+
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
+
+        t1.start();
+        t2.start();
+
+        Thread.sleep(1000);
+
+        // t2.interrupt(); // 终止一个线程，结束死锁
+    }
+}
+```
+
+给重入锁设置倒计时。
+
+```{code-block} java
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class TimeLock implements Runnable {
+    public static ReentrantLock lock = new ReentrantLock();
+
+    @Override
+    public void run() {
+        try {
+            // 给锁设置一个等待最大时长 5 秒
+            // 如果不设置参数，默认不等待，直接退出竞争
+            if (lock.tryLock(5, TimeUnit.SECONDS)) {
+                Thread.sleep(6000); // 睡眠 6 秒，肯定有一个线程申请失败
+            } else {
+                System.out.println("申请锁失败");
+            }
+        } catch (InterruptedException e) {
+            
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        } 
+    }
+
+    public static void main(String[] args) {
+        TimeLock tl = new TimeLock();
+
+        Thread t1 = new Thread(tl);
+        Thread t2 = new Thread(tl);
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+公平锁。
+
+```{code-block} java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class FairLock implements Runnable {
+    public static ReentrantLock fairlock = new ReentrantLock();
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                fairlock.lock();
+                System.out.println(Thread.currentThread().getName() + "获得锁");
+            } finally {
+                fairlock.unlock();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        FairLock fl = new FairLock();
+
+        Thread t1 = new Thread(fl, "Thread_t1");
+        Thread t2 = new Thread(fl, "Thread_t2");
+
+        t1.start();
+        t2.start();        
+    }
+}
+```
+
 #### 重入锁的好搭档：Condition 条件
+
+`synchronized` 和 `Thread.wait()`、`Thread.notify()` 搭配。
+
+`ReentrantLock` 和 `condition.await()`、`condition.signal()` 搭配。
+
+```{code-block} java
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ReenterLockCondition implements Runnable {
+    public static ReentrantLock lock = new ReentrantLock();
+    public static Condition condition = lock.newCondition();
+
+    @Override
+    public void run() {
+        try {
+            lock.lock();
+            condition.await(); // 等待唤醒，释放锁
+            System.out.println("线程被唤醒了，继续执行");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ReenterLockCondition tl = new ReenterLockCondition();
+
+        Thread t1 = new Thread(tl);
+
+        t1.start();
+
+        Thread.sleep(2000);
+
+        lock.lock(); // 先获得锁，才能执行 awati/signal 方法
+        condition.signal(); // 唤醒 t1
+        lock.unlock();
+    }
+}
+```
 
 #### 允许多个线程同时访问：信号量（Semaphore）
 
+信号量允许多个线程访问一个资源。`synchronized` 和 `ReentrantLock` 只允许一个线程访问资源。
+
+```{code-block} java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+
+public class SemaphoreDemo implements Runnable {
+    // 信号量可以让【多个线程】同时访问临界资源
+    // synchronize 和 ReentrantLock 只能让一个线程访问临界资源
+    final Semaphore semp = new Semaphore(5); // 创建 5 个许可
+
+    @Override
+    public void run() {
+        try {
+            semp.acquire(); // 申请一个许可
+            Thread.sleep(2000);
+            System.out.println(Thread.currentThread().getId() + ":done");
+            semp.release(); // 释放一个许可
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        // 创建一个包含 20 个线程的线程池
+        ExecutorService exec = Executors.newFixedThreadPool(20);
+        final SemaphoreDemo demo = new SemaphoreDemo();
+
+        for (int i = 0; i < 20; i++) {
+            exec.submit(demo); // 提交 20 个任务到线程池
+        }
+    }
+}
+```
+
 #### ReadWriteLock 读写锁
+
+```{code-block} java
+import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+public class ReadWriteLockDemo {
+    // 读写分离锁，让读线程之间非阻塞，极大提高读取效率
+    private static Lock lock = new ReentrantLock();
+    private static ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+    private static Lock readLock = readWriteLock.readLock();
+    private static Lock writeLock = readWriteLock.writeLock();
+
+    private int value;
+
+    // 处理读事件
+    public Object handleRead(Lock lock) throws InterruptedException {
+        try {
+            lock.lock();
+            Thread.sleep(1000);
+            return value;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    // 处理写事件
+    public void handleWrite (Lock lock, int index) throws InterruptedException {
+        try {
+            lock.lock();
+            Thread.sleep(1000);
+            value = index;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) {
+        final ReadWriteLockDemo demo = new ReadWriteLockDemo();
+
+        Runnable readRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    demo.handleRead(readLock); // 使用读锁
+                    // demo.handleRead(lock); // 使用重入锁
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Runnable writeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    demo.handleWrite(writeLock, new Random().nextInt()); // 使用写锁
+                    // demo.handleWrite(lock, new Random().nextInt()); // 使用重入锁
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        for (int i = 0; i < 18; i++) {
+            new Thread(readRunnable).start();
+        }
+
+        for (int i = 18; i < 20; i++) {
+            new Thread(writeRunnable).start();
+        }
+    }
+}
+```
 
 #### 倒计时器：CountDownLatch
 
+```{code-block} java
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.Random;
+
+public class CountDownLatchDemo implements Runnable {
+    static final CountDownLatch end = new CountDownLatch(10); // 计数器
+    static final CountDownLatchDemo demo = new CountDownLatchDemo();
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(new Random().nextInt(10) * 1000);
+            System.out.println("支线线程执行完成");
+            end.countDown(); // 计数器 -1
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService exec = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 10; i++) {
+            exec.submit(demo);
+        }
+
+        end.await(); // 等待计数器减为零
+        System.out.println("主线线程执行完成");
+        exec.shutdown();
+    }
+}
+```
+
 #### 循环栅栏：CyclicBarrier
 
+```{code-block} java
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+// 模拟场景：司令让一组士兵执行任务
+// 1. 士兵集合
+// 2. 士兵执行任务
+// 3. 司令宣布任务执行完成
+public class CyclicBarrierDemo {
+    public static class Solider implements Runnable {
+        private String solider;
+        private final CyclicBarrier cyclic; // 循环栅栏
+
+        // 构造器方法
+        public Solider(CyclicBarrier cyclic, String soliderName) {
+            this.cyclic = cyclic;
+            this.solider = soliderName;
+        }
+
+        // 每个士兵都会执行 run 方法
+        @Override
+        public void run() {
+            try {
+                cyclic.await(); // 如果有 10 个线程在等待，计数器减为 0 就执行 barrireAction
+                doWork();
+                cyclic.await(); // 再一次等待，凑齐 10 个线程
+                doWork();
+                cyclic.await(); // 再一次等待，凑齐 10 个线程
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void doWork() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(solider + " 任务完成");
+        }
+    }
+
+    
+    public static class BarrierRun implements Runnable {
+        boolean flag;
+        int N;
+        static int i = 1;
+
+        // 默认构造器
+        public BarrierRun(boolean flag, int N) {
+            this.flag = flag;
+            this.N = N;
+        }
+
+        @Override
+        public void run() {
+            if (flag) {
+                System.out.println("司令：任务完成");
+            } else {
+                System.out.println("司令：集合完毕");
+                flag = true;
+            }
+            System.out.println("BarrierRun 执行了 " + (i++) + " 次");
+        }
+    }
+    
+    public static void main(String arg[]) throws InterruptedException {
+        final int N = 10;
+        Thread[] allSolider = new Thread[N];
+        boolean flag = false;
+
+        /**
+         * 循环栅栏的工作流程：
+         * 当到达栅栏的线程数量达到设定值后，执行 barrierAction，也就是这里的 BarrierRun。
+         * 
+         * 如何判定数量是否达到了呢？
+         * 因为每个线程都会在栅栏处等待，cyclic.await() 可以借此计数。
+         * 
+         * 如何理解循环？
+         * 可以多次调用 await() 函数，每次调用都会重新凑齐设定数目的线程，然后翻越屏障。
+         * 执行 barrierAction
+         */
+        CyclicBarrier cyclic = new CyclicBarrier(N, new BarrierRun(flag, N));
+
+        System.out.println("集合队伍！");
+
+        for (int i = 0; i < N; i++) {
+            System.out.println("士兵 " + i + " 报道！");
+            allSolider[i] = new Thread(new Solider(cyclic, "士兵 " + i));
+            allSolider[i].start();
+        }
+    }
+}
+```
+
 #### 线程阻塞工具类：LockSupport
+
+```{code-block} java
+import java.util.concurrent.locks.LockSupport;
+
+// 对比 suspend 实现，这个不会发生无限等待问题
+public class LockSupportDemo {
+    public static Object u = new Object();
+    static ChangeObjectThread t1 = new ChangeObjectThread("t1");
+    static ChangeObjectThread t2 = new ChangeObjectThread("t2");
+
+    public static class ChangeObjectThread extends Thread {
+        public ChangeObjectThread(String name) {
+            super.setName(name);
+        }
+
+        @Override
+        public void run() {
+            synchronized (u) {
+                System.out.println("线程 " + getName() + " 开始");
+                LockSupport.park(); // 如果能够申请到许可，继续执行，申请不到就阻塞当前进程
+                System.out.println("线程 " + getName() + " 结束");
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        t1.start();
+        Thread.sleep(100);
+        t2.start(); // 申请许可没有成功，等待 t1 释放许可，但是不阻塞
+        LockSupport.unpark(t1); // t1 释放一个许可（类比信号量，但不完全是信号量，因为只有一个许可）
+        LockSupport.unpark(t2); // t1 已经释放了许可，t2 的许可无效。
+        t1.join();
+        t2.join();
+    }
+}
+```
+
+给 `LockSupport.park()` 方法设置中断。
+
+```{code-block} java
+import java.util.concurrent.locks.LockSupport;
+
+public class LockSupportIntDemo {
+    public static Object u = new Object();
+    static ChangeObjectThread t1 = new ChangeObjectThread("t1");
+    static ChangeObjectThread t2 = new ChangeObjectThread("t2");
+
+    public static class ChangeObjectThread extends Thread {
+        public ChangeObjectThread(String name) {
+            super.setName(name);
+        }
+
+        @Override
+        public void run() {
+            synchronized (u) {
+                System.out.println("线程 " + getName() + " 开始");
+                LockSupport.park(); // park() 方法支持中断
+
+                if (Thread.interrupted()) {
+                    System.out.println("线程 " + getName() + " 被中断了");
+                }
+
+                System.out.println("线程 " + getName() + " 结束");
+            }
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            t1.start();
+            Thread.sleep(100);
+            t2.start();
+            t1.interrupt(); // 中断 t1
+            LockSupport.unpark(t2);
+        }
+    }
+}
+```
 
 ### 线程复用：线程池
 
