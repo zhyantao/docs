@@ -20,19 +20,26 @@ Vue 主要特性包括：
 安装与部署
 ----------
 
+如果只是在一个页面中使用 Vue.js，那么普通的 JS 导入就可以直接使用了。
 在项目中安装 Vue.js 只需要下载 `vue.js <https://vuejs.org/js/vue.js>`_ 然后，用代码引入就可以了。
 
 .. code-block:: html
 
     <script src="vue.js" type="text/javascript" charset="utf-8"></script>
 
+当然，如果项目更加复杂，一般通过单文件组件（后面会讲）的方式在构建应用，通常首先需要安装 npm、vue-cli、webpack 三个工具。
+然后在命令行中键入 ``vue ui`` 创建一个项目。
+
 
 创建第一个 Vue 应用
 -------------------
 
-在 JS 中用 ``new`` 即可创建一个 Vue 应用。把 DOM 元素的 ``id`` 赋值给 ``el`` 就可以把 Vue 应用与 DOM 元素绑定，数据绑定最常用方式就是使用双大括号。
+在 JS 中用 ``new Vue()`` 即可创建一个 Vue 应用，它接收参数为 JSON 格式的对象。
+众所周知，JSON 格式的对象是由很多键值对组成的，它的键一般都是字符串，而值的变化就比较多，可以是字符串，列表，也可以是函数。
 
-在 HTML 模板语法中，双大括号通常表示 ``{{变量}}``\ ，这里满足插值语法。在 Vue 应用中可以使用 ``data`` 选项修改变量值。
+这个 JSON 格式的对象负责完成 Vue.js 与 DOM 元素的数据绑定，采用 **声明式渲染** 的方式完成页面渲染。
+
+JSON 对象中，除了 ``el`` 的值是一个字符串外，其他键（如 ``data`` 、 ``methods`` ）的值都是一个对象。
 
 代码清单 1：
 
@@ -46,14 +53,14 @@ Vue 主要特性包括：
     <script src="vue.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
-        <div id="app">
-            {{ message }} {{name}}
+        <div id="app">                  <!-- 一般通过 id 索引模块 -->
+            {{ message }} {{name}}      <!-- HTML 声明式模板语法，文本插值，双大括号 -->
         </div>
         
         <script type="text/javascript">
         var app = new Vue({
-            el: '#app',
-            data: {
+            el: '#app',                 // el：用于和对应的 DOM 元素一一对应（绑定）
+            data: {                     // data：为相应 DOM 元素下的变量赋值
                 message: 'Hello Vue!',
                 name: 'vue'
             }
@@ -90,17 +97,21 @@ Vue 主要特性包括：
     </div>
 
     <script type="text/javascript">
-    var data = { a : 1 };
-    var vm = new Vue({
-        el   : "#app",
-        data : data
-    });
 
-    vm.$watch('a', function(newVal, oldVal){ // 观察 a 的变化，如果 a 发生了变化，就执行function
-        console.log(newVal, oldVal);
-    })
+        var test = { a : 1 }; // 声明变量
+        var vm = new Vue({
+            el   : "#app",
+            data : test // data 是 Vue 实例的属性
+            // data : { a : 3 } // data : test 的等价形式
+        });
 
-    vm.$data.a = "test...."
+        // 观察 a 的变化，如果 a 发生了变化，就执行function
+        vm.$watch('a', function(to, from) {
+            console.log(to, from);
+        })
+
+        // vm.$data.a = "test...." // 访问 vue 实例 $data 属性下的 a 变量
+        vm.a = "123"    // vm.$data.a 的等价形式，$data 可以省略不写
 
     </script>
 
@@ -112,6 +123,16 @@ Vue 主要特性包括：
 ---------
 
 Vue 实例的生命周期如下图，要理解这个图现在还有些困难，随着学习的深入，后面可以回过头来回顾。
+
+在 Vue 的生命周期中，他会做很多事情，图中的绿色部分时 Vue 的内部实现，红色部分使我们需要关注的。
+
+红色部分表示钩子函数，也是我们在开发中 **可以重写** 的部分，在 Vue 运行到相应阶段的时候，会自动回调。
+
+实际开发中，一般的工作流程是：
+
+- 根组件在 ``created`` 阶段请求网络数据；
+- 将数据保存在 Vue 实例的 ``data`` 部分；
+- 通过父子组件之间的通信，子组件将数据展示在 DOM 上。
 
 .. image:: ../../_static/images/vue-lifecycle.*
 
@@ -131,41 +152,52 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
         {{msg}}
     </div>
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            msg : "hi vue",
-        },
-        // 在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用。
-        beforeCreate:function(){
-            console.log('beforeCreate');
-        },
-        // 在实例创建完成后被立即调用。
-        // 在这一步，实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调。
-        // 然而，挂载阶段还没开始，$el 属性目前不可见。
-        created	:function(){
-            console.log('created');
-        },
-        // 在挂载开始之前被调用：相关的渲染函数首次被调用
-        beforeMount : function(){
-            console.log('beforeMount');
-        },
-        // el 被新创建的 vm.$el 替换, 挂载成功	
-        mounted : function(){
-            console.log('mounted');       
-        },
-        // 数据更新时调用
-        beforeUpdate : function(){
-            console.log('beforeUpdate');        
-        },
-        // 组件 DOM 已经更新, 组件更新完毕 
-        updated : function(){
-            console.log('updated');
-        }
-    });
-    setTimeout(function(){
-        vm.msg = "change ......";
-    }, 3000);
+
+        var vm = new Vue({
+
+            el : "#app",
+
+            data : {
+                msg : "hi vue",
+            },
+
+            // 在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用。
+            beforeCreate : function(){
+                console.log('beforeCreate');
+            },
+
+            // 在实例创建完成后被立即调用。
+            // 在这一步，实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调。
+            // 然而，挂载阶段还没开始，$el 属性目前不可见。
+            created : function(){
+                console.log('created');
+            },
+
+            // 在挂载开始之前被调用：相关的渲染函数首次被调用
+            beforeMount : function(){
+                console.log('beforeMount');
+            },
+
+            // el 被新创建的 vm.$el 替换, 挂载成功
+            mounted : function(){
+                console.log('mounted');
+            },
+
+            // 数据更新时调用
+            beforeUpdate : function(){
+                console.log('beforeUpdate');
+            },
+
+            // 组件 DOM 已经更新, 组件更新完毕
+            updated : function(){
+                console.log('updated');
+            }
+        });
+
+        setTimeout(function(){
+            vm.msg = "change ......";
+        }, 3000);
+
     </script>
     </body>
     </html>
@@ -176,7 +208,8 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
 
 双大括号可以实现文本插值，如果是 HTML 代码的话，那么无法进行解析，
 这时候可以借助 Vue 提供的 ``v-html`` 命令，将插值解析成 HTML 代码。
-注意，第 13 行用到 Class 与 Style 绑定的语法，对于本节来说有些超纲，很快后面就会学到。
+
+``v-bind:class="表达式"`` ，暂时可以忽略，后面会讲。
 
 代码清单 4：
 
@@ -193,30 +226,41 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
     <body>
     <div id="app">
         {{msg}}
-        <p>Using mustaches: {{ rawHtml }}</p>
-        <p v-html="rawHtml"></p>
+        <p>Using mustaches: {{ rawHtml }}</p>   <!-- 用 HTML 模板语法声明的变量 -->
+        <p v-html="rawHtml"></p>                <!-- 用指令声明的变量（凡是带有 v- 开头的都是 Vue 指令） -->
         <div v-bind:class="color">test...</div>
         <p>{{ number + 1 }}</p>
         <p>{{ ok ? 'YES' : 'NO' }}</p>
         <p>{{ message.split('').reverse().join('') }}</p>
     </div>
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            msg : "hi vue",
-            rawHtml : '<span style="color:red">This should be red</span>',
-            color:'blue',
-            number : 10,
-            ok : 1,
-            message : "vue"
-        }
-    });
-    vm.msg = "hi....";
+
+        var vm = new Vue({
+
+            el : "#app",
+            
+            data : {
+                msg : "hi vue",
+                rawHtml : '<span style="color:red">This should be red</span>',
+                color : 'blue',
+                number : 10,
+                ok : 1,
+                message : "vue"
+            }
+        });
+        vm.msg = "hi....";
+
     </script>
+
     <style type="text/css">
-    .red{color:red;}
-    .blue{color:blue; font-size:100px;}
+        .red {
+            color: red;
+        }
+        
+        .blue {
+            color: blue; 
+            font-size: 100px;
+        }
     </style>
     </body>
     </html>
@@ -225,11 +269,23 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
 模板语法-指令
 -------------
 
-Vue 实例中提供了若干指令，比如 ``v-if="seen"``\ 。
-注意，这里的 ``seen`` 虽然用双引号括起来，但是它是一个变量，可以在 ``data`` 选项中对其赋值，实现动态地控制网页行为。
-在 ``data`` 选项中对变量赋值的时候，这里的值才是一个常量。
-在 HTML 代码中用 ``@`` 符号来声明一个事件，在 Vue 中使用 ``methods`` 选项对相应的事件行为做出操作。
-注意，下面的代码中 click me 虽然是普通文本，但是，网页也在统计点击行为。
+如下代码清单 5 所示，展示了一些比较常用的指令：
+
+- ``v-if="表达式"``
+- ``v-on:事件名="表达式"``
+- ``v-bind:属性名="表达式"``
+
+``v-if`` 中的表达式结果为真的时候，Vue 会渲染当前的 DOM 元素，如果为假，该元素将不会出现在网页上。
+``v-if`` 和 ``v-show`` 的不同之处就在于 ``v-show`` 不管表达式是真还是假，都会出现在网页上，只不过为假的时候， ``display=none`` 。
+
+``v-on`` 中的事件名可以是鼠标单击、双击、键盘按下、抬起等浏览器自动监听的时间，也可以是自定义事件，
+比如我们在父子组件通信的时候，子组件向父组件通过 ``$emit("事件名", 变量名)`` 发送的事件。
+``v-on`` 中的表达式可以是一个函数名，事件发生时触发这个函数，也可以是普通的表达式语句表示做出什么动作。
+
+``v-bind`` 是用的比较多的一个指令了，因此也有语法糖的写法形式，就是省略 ``v-bind`` ，直接用冒号代替。
+当属性名为普通的属性（如 ``href`` 、 ``src`` ）时，我们可以在 Vue 实例的 ``data`` 选项中 **给表达式中的变量** 赋初值。
+当属性名是 ``class`` 或 ``style`` 时，我们就可以动态地改变样式了，见下一节 ``class`` 与 ``style`` 绑定。
+
 
 代码清单 5：
 
@@ -246,28 +302,34 @@ Vue 实例中提供了若干指令，比如 ``v-if="seen"``\ 。
     <div id="app">
         <p v-if="seen">现在你看到我了</p>
         <a v-bind:href="url">可以更换的动态URL</a>
-        <div @click="click1">
-            <div @click.stop="click2">
+        <div v-on:click="click1">   <!-- 因为下面的 click.stop 这里的 click1 不会触发了 -->
+            <div v-on:click.stop="click2">
+            <!-- <div @click.stop="click2"> 和上面一行效果一样 -->
                 click me
             </div>
         </div>
     </div>
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            seen : true,
-            url : "https://cn.vuejs.org/v2/guide/syntax.html"
-        },
-        methods:{
-            click1 : function () {
-                console.log('click1......');
+
+        var vm = new Vue({
+
+            el : "#app",
+
+            data : {
+                seen : true,
+                url : "https://cn.vuejs.org/v2/guide/syntax.html"
             },
-            click2 : function () {
-                console.log('click2......');
+
+            methods:{
+                click1 : function () {
+                    console.log('click1......');
+                },
+                click2 : function () {
+                    console.log('click2......');
+                }
             }
-        }
-    });
+        });
+
     </script>
     </body>
     </html>
@@ -276,9 +338,8 @@ Vue 实例中提供了若干指令，比如 ``v-if="seen"``\ 。
 class 与 style 绑定
 -------------------
 
-class 和内联样式是 HTML 元素的常用属性，通过 ``v-bind`` 可以将两者进行绑定。
-class 和内联样式的属性值（结果）可以是字符串、数组、对象，只需要能够计算出结果即可。
-因此，有了这个绑定，我们后面可以通过 class 来动态地修改 HTML 元素的样式了。
+``class`` 和 ``内联样式`` 是 HTML 元素的常用属性，通过 ``v-bind`` 可以将两者进行绑定。
+有了这个绑定，我们后面可以通过 ``class`` 来动态地修改 HTML 元素的样式了。
 
 代码清单 6：
 
@@ -293,34 +354,37 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
     </head>
     <body>
     <div id="app">
-        <div 
-        class="test" 
-        v-bind:class="[ isActive ? 'active' : '', isGreen ? 'green' : '']" 
-        style="width:200px; height:200px; text-align:center; line-height:200px;">
-            hi vue
+        <div class="test" 
+            v-bind:class="[ isActive ? 'active' : '', isGreen ? 'green' : '']" 
+            style="width:200px; height:200px; text-align:center; line-height:200px;">
+                hi vue
         </div>
         
-        <div 
-        :style="{color:color, fontSize:size, background: isRed ? '#FF0000' : ''}">
+        <div :style="{color:color, fontSize:size, background: isRed ? '#FF0000' : ''}">
             hi vue
         </div>
     </div>
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            isActive : true,
-            isGreen : true,
-            color : "#FFFFFF",
-            size : '50px',
-            isRed : true
-        }
-    });
+
+        var vm = new Vue({
+        
+            el : "#app",
+
+            data : {
+                isActive : true,
+                isGreen : true,
+                color : "#FFFFFF",
+                size : '50px',
+                isRed : true
+            }
+        });
+    
     </script>
+
     <style>
-    .test{font-size:30px;}
-    .green{color:#00FF00;}
-    .active{background:#FF0000;}
+        .test{font-size:30px;}
+        .green{color:#00FF00;}
+        .active{background:#FF0000;}
     </style>
     </body>
     </html>
@@ -344,29 +408,33 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
     </head>
     <body>
     <div id="app">
-        <div v-if="type === 'A'">
-        A
+        <div v-if="type === 'A'"> <!-- if 和  else-if 语法，选择某一个 div 进行渲染 -->
+            A
         </div>
         <div v-else-if="type === 'B'">
-        B
+            B
         </div>
         <div v-else-if="type === 'C'">
-        C
+            C
         </div>
         <div v-else>
-        Not A/B/C
+            Not A/B/C
         </div>
         <h1 v-show="ok">Hello!</h1>
     </div>
+
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            type : "B",
-            ok : true
-        }
-    });
+
+        var vm = new Vue({
+            el : "#app",
+            data : {
+                type : "B",
+                ok : true
+            }
+        });
+        
     </script>
+
     <style type="text/css">
 
     </style>
@@ -377,9 +445,10 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 列表渲染
 --------
 
-列表渲染指的是有序列表或无序列表的渲染。通常用 ``v-for`` 来操作列表中的每个元素。
+列表渲染指的是有序列表或无序列表的渲染。通常用 ``v-for`` 来操作列表中的每个元素。语法为 ``v-for="表达式"`` 。
 
-``v-for`` 这个语法很奇怪，比如 ``"item, index in items"`` 同样都是用双引号括起来的，但是只有 ``in`` 是关键字，其他都是变量，可以在 ``data`` 选项中修改。
+说到表达式，必然后变量和关键字，那么一般常用的表达式是 ``v-for="item,index in items"`` 。
+这其中只有 ``in`` 是关键字，其他都是变量，可以在 ``data`` 选项中赋初值，在 ``methods`` 中定义函数进行修改（一般与 ``@click`` 搭配，有事件触发函数）。
 
 需要注意的是，如果 ``items`` 是数组，第一个元素 ``item`` 表示数组的值，第二个返回值 ``index`` 表示数组的索引；
 如果 ``items`` 是对象，第一个元素 ``item`` 表示对象的值，第二个返回值 ``index`` 表示对象的键。
@@ -399,30 +468,31 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
     <div id="app">
         <ul>
             <li v-for="item, index in items" :key="index">
-            {{index}}{{ item.message }}
+                {{ item }} : {{ index }} : {{ item.message }}
             </li>
         </ul>
         <ul>
             <li v-for="value, key in object">
-                {{key}} : {{ value }}
+                {{ key }} : {{ value }}
             </li>
         </ul>
     </div>
+
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            items : [
-                { message: 'Foo' },
-                { message: 'Bar' }
-            ],
-            object: {
-                title: 'How to do lists in Vue',
-                author: 'Jane Doe',
-                publishedAt: '2016-04-10'
+        var vm = new Vue({
+            el : "#app",
+            data : {
+                items : [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ],
+                object: {
+                    title: 'How to do lists in Vue',
+                    author: 'Jane Doe',
+                    publishedAt: '2016-04-10'
+                }
             }
-        }
-    });
+        });
     </script>
     </body>
     </html>
@@ -431,9 +501,11 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 事件绑定
 --------
 
-``v-on`` 指令可以用来监听 DOM 事件，并在触发时运行一些 JavaScript 代码。
+``v-on`` 用来监听 DOM 事件，比如鼠标点击（ ``@click`` ），键盘抬起（ ``@keyup`` ），Enter 键抬起（ ``@keyup.enter`` ）。
 
-通过在 Vue 实例中提供相应的属性或方法即可完成绑定。
+语法 ``v-on:click="表达式"`` 。这里的表达式，既可以是一个函数名，也可以是一个逻辑表达式。
+
+实际开发中，因为 ``v-on`` 比较常用，语法糖的写法是用 ``@`` 符号代替 ``v-on:`` 。
 
 代码清单 9：
 
@@ -454,19 +526,19 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
         </div>
     </div>
     <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            counter: 0,
-            name : "vue"
-        },
-        methods:{
-            greet : function (str, e) {
-                alert(str);
-                console.log(e);
+        var vm = new Vue({
+            el : "#app",
+            data : {
+                counter: 0,
+                name : "vue"
+            },
+            methods:{
+                greet : function (str, e) {
+                    alert(str);
+                    console.log(e);
+                }
             }
-        }
-    });
+        });
     </script>
     <style type="text/css">
 
@@ -478,10 +550,14 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 表单输入绑定
 ------------
 
-你可以用 ``v-model`` 指令在表单 ``<input>`` 、 ``<textarea>`` 及 ``<select>`` 元素上创建\ **双向数据绑定**\ 。
-它会根据控件类型自动选取正确的方法来更新元素。
-尽管有些神奇，但 ``v-model`` 本质上不过是语法糖。
-它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。
+我们之前都是通过在后台修改数据，来让前端页面的内容得到修改，这时如果反过来，在前端页面修改值，
+并不会修改后台中的 ``data`` 中变量的值，这是因为只有单向绑定。
+
+而用 ``v-model`` 指令在表单 ``<input>`` 、 ``<textarea>`` 及 ``<select>`` 元素上创建\ **双向数据绑定**\ 。
+使得前端页面的修改可以在后台收到改动，后台的改动也会在前端页面中展示出来。
+
+尽管有些神奇，但 ``v-model`` 本质上不过是语法糖，它整合了 ``:value`` 和 ``@input`` 两个事件，是一个缩写版本。
+但是双向绑定只在表单中实现了，如果想要自己在其他元素中实现双向绑定，则需要自己实现上面两个完整的事件。
 
 代码清单 10：
 
@@ -502,22 +578,25 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
             <textarea v-model="message2" placeholder="add multiple lines"></textarea>
             <p style="white-space: pre-line;">{{ message2 }}</p>
             <br />
-            
+
             <div style="margin-top:20px;">
                 <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
                 <label for="jack">Jack</label>
+
                 <input type="checkbox" id="john" value="John" v-model="checkedNames">
                 <label for="john">John</label>
+
                 <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
                 <label for="mike">Mike</label>
                 <br>
                 <span>Checked names: {{ checkedNames }}</span>
             </div>
-            
+
             <div style="margin-top:20px;">
                 <input type="radio" id="one" value="One" v-model="picked">
                 <label for="one">One</label>
                 <br>
+
                 <input type="radio" id="two" value="Two" v-model="picked">
                 <label for="two">Two</label>
                 <br>
@@ -525,45 +604,61 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
             </div>
             <button type="button" @click="submit">提交</button>
         </div>
-        
-    </div>
-    <script type="text/javascript">
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            message : "test",
-            message2 :"hi",
-            checkedNames : ['Jack', 'John'],
-            picked : "Two"
-        },
-        methods: {
-            submit : function () {
-                console.log(this.message);
-                
-            }
-        }
-    });
-    </script>
-    <style type="text/css">
 
+    </div>
+
+    <script type="text/javascript">
+
+        var vm = new Vue({
+            
+            el : "#app",
+
+            data : {
+                message : "test",
+                message2 : "hi",
+                checkedNames : ['Jack', 'John'],
+                picked : "Two"
+            },
+            
+            methods: {
+                submit : function () {
+                    console.log(this.message);
+                }
+            }
+        });
+
+    </script>
+
+    <style type="text/css">
     </style>
     </body>
     </html>
 
 
-组件基础
---------
+父子组件通信
+------------
 
-组件是可复用的 Vue 实例，可以通过 ``Vue.component('component_name', attrs)`` 创建一个组件。
+组件是可复用的 Vue 实例，可以通过 ``Vue.component('组件名', JSON 对象)`` 创建组件。 ``JSON 对象`` 的一般格式为：
 
-- 用 ``props`` 来声明自定义组件的一组变量；
-- 与 ``new`` 出来的 Vue 实例不同的是， ``data`` 必须是一个函数，来给变量赋初值；
-- 在 ``template`` 中使用变量；
-- 在 ``methods`` 中定义自定义组件的事件的响应。
+.. code-block:: html
 
-在 Vue 实例的 ``methods`` 中定义 HTML 元素中的事件的响应。
+    {
+        template: `<div>某些 HTML 代码</div>`,
+        ...
+    }
 
-``this.$emit('func_name', 'other_parameters')`` 将触发函数 ``func_name``\ ，该函数将 ``other_parameters`` 作为参数。
+需要明白的是，组件之间有父子关系，父组件和子组件之间的通信因此成为了很关键的一环。
+
+父组件向子组件通信：在子组件中用 ``props=['子组件变量名']`` **接收消息**\ 。
+在父组件模板中的通过属性 ``v-bind:子组件变量名="父组件变量名"`` **中转消息**\ 。
+在父组件中通过 ``data`` 初始化父组件变量的值来 **发送消息**\ ，
+又因为 ``data`` 中的变量值可以通过 ``methods`` 或 ``computed`` 方法进行修改，从而实现对网页内容的实时渲染。
+
+子组件向父组件通信：在子组件的某个方法中用 ``$emit('子组件事件名', 子组件变量名)`` **发送消息**\ 。
+在父组件模板中用 ``@子组件事件名='父组件事件名'`` 监听子组件的事件，触发父组件事件。
+**消息本体** 就是 ``子组件变量名`` 这个参数保存了数据，因此实现消息的传递。
+这样当父组件拿到变量后，可以保存到自己的 ``data`` 部分，就可以 **实现持久化** 了。
+
 
 代码清单 11：
 
@@ -577,39 +672,67 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
     <script src="vue.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
+
+    <!-- HTML 代码中的变量只能在 根组件 中注册，不能在 子组件 中注册 -->
     <div id="app">
-        <button-counter title="title1 : " @clicknow="clicknow">
-            <h2>hi...h2</h2>
-        </button-counter>
-        <button-counter title="title2 : "></button-counter>
+        <buttoncounter :ctitle="ptitle" @cclick="pclick"> <!-- 子组件向父组件发送事件 -->
+            <h2>上面这个按钮接收由子组件发送过来的 cclick 事件，触发父组件的 pclick 事件</h2>
+        </buttoncounter>
+        <buttoncounter :ctitle="ptitle"></buttoncounter>
     </div>
+
     <script type="text/javascript">
-    Vue.component('button-counter', {
-        props: ['title'],
-        data: function () {
-            return {
-            count: 0
-            }
-        },
-        template: '<div><h1>hi...</h1><button v-on:click="clickfun">{{title}} You clicked me {{ count }} times.</button><slot></slot></div>',
-        methods:{
-            clickfun : function () {
-                this.count ++;
-                this.$emit('clicknow', this.count);
+
+        // 实现子组件
+        const buttoncounter = {
+
+            // 在子组件中写 props 列表/对象，获取父组件相关变量的值
+            props: ['ctitle'],
+
+            // 定义子组件的模板，在模板中使用变量
+            template:
+                `<div>
+                    <button v-on:click="clickfunc">
+                        {{ctitle}} 子组件在统计你点击了 {{ count }} 次.
+                    </button>
+                    <slot></slot>
+                </div>`,
+
+            // 子组件中的变量注册
+            // data() 必须为函数，因为每个组件都希望有自己的变量且互不干扰
+            data() {
+                return {
+                    count: 0
+                }
+            },
+
+            // 定义子组件的方法
+            methods:{
+                clickfunc() { // ES6 的写法
+                    this.count ++; // 你会发现子组件的 count 在增长
+                    this.$emit('cclick', this.count); // 发出一个 cclick 事件，参数为 this.count
+                }
             }
         }
-    })
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            
-        },
-        methods:{
-            clicknow : function (e) {
-                console.log(e);
+
+        // Vue 实例（根组件、父组件）
+        var vm = new Vue({
+            el : "#app",
+            data : {
+                ptitle: '父组件赋予的标题：'
+            },
+            methods:{
+                pclick(e) { // ES6 写法
+                    console.log(e);
+                }
+            },
+
+            // 局部组件注册，形成父子关系
+            components: {
+                buttoncounter // ES6 简写形式，全写是 buttoncounter: buttoncounter
             }
-        }
-    });
+        });
+
     </script>
     <style type="text/css">
 
@@ -617,61 +740,16 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
     </body>
     </html>
 
+如果父组件想直接访问子组件的方法或属性可以用 ``$children[i].func()`` 或 ``$refs.name`` 。
 
-组件注册
---------
+如果子组件想访问父组件的方法或属性用 ``$parent.func()`` 或 ``$root.func()`` 。
 
-有了上一节的基础，这一节的学习变得异常简单，组件注册只需要在 ``new`` 出来的 Vue 实例中的 ``components`` 选项中提供组件的属性和方法就可以了。
-
-代码清单 12：
-
-.. code-block:: html
-
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset="utf-8">
-    <title></title>
-    <script src="vue.js" type="text/javascript" charset="utf-8"></script>
-    </head>
-    <body>
-    <div id="app">
-        <button-counter></button-counter>
-        <test></test>
-    </div>
-    <script type="text/javascript">
-    Vue.component('button-counter', {
-        props: ['title'],
-        data: function () { return {} },
-        template: '<div><h1>hi...</h1></div>',
-        methods:{}
-    })
-    var vm = new Vue({
-        el : "#app",
-        data : {
-            
-        },
-        components:{
-                test : {
-                    props: ['title'],
-                    data: function () { return {} },
-                    template: '<div><h3>h3...</h3></div>',
-                    methods:{}
-            }
-        }
-    });
-    </script>
-    <style type="text/css">
-
-    </style>
-    </body>
-    </html>
-
+实际开发中，用 ``$children`` 和 ``$root`` 都比较少，因为 ``$children`` 在增加或删除子组件时会发生索引错误。
 
 单文件组件
 ----------
 
-到目前为止，我们学完了 Vue 主要的基础内容，后续开发，我们将基于此方法进行，它更适用于大项目。
+到目前为止，我们学完了 Vue 主要的基础内容。基于组件的开发方式更适用于大项目。
 
 首先，安装准备环境：
 
@@ -682,18 +760,17 @@ class 和内联样式的属性值（结果）可以是字符串、数组、对�
 
 然后，在命令行中使用 ``vue ui`` 创建一个 Vue 项目，包管理器选择 ``npm`` 其他保持默认即可。
 
-创建完成后，用 HBuilderX 打开项目。
-可以看到， ``public`` 文件夹是项目开发完成后部署的文件。
-``HelloWorld.vue`` 是单文件组件，src 是源代码文件，我们将在这里完成开发工作。步骤如下：
+创建完成后，关闭浏览器，用 IDE 打开项目。可以看到， ``public`` 是项目开发完成后部署的文件。
+``src`` 是源代码文件，我们将在这里完成开发工作。
 
 1. ``src/App.vue`` 是项目的入口文件，在 ``script`` 中 ``import`` 自定义的组件；
 2. 在 ``script`` 中使用 ``export default`` 注册组件；
    
-   - 用 ``name:`` 注册组件的名称（给组件起个名字）
-   - 用 ``props`` 注册属性（声明在 ``template`` 中可以使用的全局变量）
-   - 用 ``data() {}`` 注册对应的数据（声明在 ``script`` 中可以使用的全局变量）
-   - 用 ``methods: {}`` 注册方法（函数方法定义）
-   - 用 ``mounted() {}`` 调用方法（函数调用）
+   - 用 ``name:`` 给组件起个名字；
+   - 用 ``props`` 在子组件中声明需要向父组件请求的数据；
+   - 用 ``data() {}`` 给 ``template`` 中的变量赋予初值
+   - 用 ``methods: {}`` 定义函数方法实现
+   - 用 ``mounted() {}`` 自动调用函数（因为有些函数不需要监听鼠标或键盘事件）
 
 3. 在 ``template`` 中使用已经注册的组件，即可完成整个开发流程。
 
