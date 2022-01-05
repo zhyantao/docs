@@ -274,7 +274,7 @@ Linux 目录结构
        --overwrite          # 解压时覆盖重名文件
        --skip-old-files     # 解压时不覆盖重名文件
     
-    upzip                   # 解压 .zip 类型的文件
+    unzip                   # 解压 .zip 类型的文件
     zip                     # 压缩 .zip 类型的文件
 
     gunzip                  # 解压 .gz 类型的文件

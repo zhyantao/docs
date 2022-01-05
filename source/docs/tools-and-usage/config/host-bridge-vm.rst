@@ -17,7 +17,52 @@ DNS 地址关系到 **能不能上网** 的问题，常用的 DNS 服务器有 `
 然后说完了设置的值是什么，那么从哪里找到这些配置文件呢？
 
 - Windows： ``控制面板`` > ``网络和 Internet`` > ``网络连接`` > ``VMnet8 属性`` > ``IPv4 属性``
-- 虚拟机： ``/etc/sysconfig/network-scripts/ifcfg-*`` > ``BOOTPROTO=static`` & ``ONBOOT=yes`` & ``IPADDR=?`` & ``GATEWAY=?``
+- 虚拟机： 
+  
+  - VMware： ``Edit`` > ``Virtual Network Editor`` > ``选中 VMnet8`` > ``Change Settings`` > ``Subnet IP: 192.168.?.0`` > ``NAT Settings`` > ``GATEWAY IP: 192.168.?.1``
+  - Linux： ``/etc/sysconfig/network-scripts/ifcfg-*`` > ``BOOTPROTO=static`` & ``ONBOOT=yes`` & ``IPADDR=192.168.?.xxx`` & ``GATEWAY=192.168.?.1``
+
+注意：我设置完之后，在 Windows 中双击 VMnet8 查看状态的时候显示 “无网络访问权限”，但是实际上能上网，不知道为什么。
+
+最后测试，宿主机和虚拟机互相 ``ping`` 一下，然后再都 ``ping www.baidu.com`` 。如果 ``ping`` 不通，检查一下防火墙。
+
+.. admonition:: 防火墙设置
+    :class: dropdown
+
+    Windows
+
+    .. code-block:: bash
+
+        1. 控制面板
+        2. 系统和安全
+        3. Windows Defender 防火墙
+        4. 允许应用或功能通过 Windows Defender 防火墙
+        5. 文件和打印机共享（专用打上对勾）
+
+    CentOS、Fedora
+    
+    .. code-block:: bash
+
+        systemctl stop firewalld.service
+        yum install openssh-server
+        service sshd start
+
+    Debian
+    
+    .. code-block:: bash
+
+        iptables -F
+        apt install openssh-server
+        service sshd start
+
+    Ubuntu
+
+    .. code-block:: bash
+
+        ufw disable
+        apt install openssh-server
+        service sshd start
+
 
 --------
 
