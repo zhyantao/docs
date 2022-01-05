@@ -1,4 +1,4 @@
-# Windows Command Line
+# Windows 命令行
 
 ## 设置 Anaconda 自动启动
 

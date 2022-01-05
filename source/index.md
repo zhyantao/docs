@@ -79,15 +79,7 @@ docs/tools-and-usage/frontend/index
 docs/tools-and-usage/3party/index
 docs/tools-and-usage/markdown/index
 docs/tools-and-usage/shell/index
-```
-
-```{toctree}
-:caption: 环境和配置
-:titlesonly:
-:glob:
-:hidden:
-
-docs/env-configuration/*
+docs/tools-and-usage/config/index
 ```
 
 ```{toctree}
