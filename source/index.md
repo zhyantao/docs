@@ -73,9 +73,12 @@ docs/knowledge-system/*
 :glob:
 :hidden:
 
-docs/coding-language/java/index
-docs/coding-language/python/index
-docs/tools-and-usage/*
+docs/tools-and-usage/java/index
+docs/tools-and-usage/python/index
+docs/tools-and-usage/frontend/index
+docs/tools-and-usage/3party/index
+docs/tools-and-usage/markdown/index
+docs/tools-and-usage/shell/index
 ```
 
 ```{toctree}

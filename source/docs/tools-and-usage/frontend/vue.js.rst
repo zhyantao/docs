@@ -134,7 +134,7 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
 - 将数据保存在 Vue 实例的 ``data`` 部分；
 - 通过父子组件之间的通信，子组件将数据展示在 DOM 上。
 
-.. image:: ../../_static/images/vue-lifecycle.*
+.. image:: ../../../_static/images/vue-lifecycle.*
 
 代码清单 3：
 
@@ -774,4 +774,17 @@ class 与 style 绑定
 
 3. 在 ``template`` 中使用已经注册的组件，即可完成整个开发流程。
 
-以上，全部更新完毕。
+以上，基础知识全部更新完毕。
+
+进阶阅读
+--------
+
+实际项目开发中，我们可能需要 **频繁使用** 一些更加高级的功能，比如：
+
+- 用 `插槽 <https://v3.cn.vuejs.org/guide/component-slots.html>`_ 占位，后面根据内容自定义补充到这个位置；
+- 使用 `Vue Router <https://next.router.vuejs.org/>`_ 实现前端路由；
+- 使用 `Vuex <https://next.vuex.vuejs.org/zh/>`_ 让多个组件可以共享某些信息，比如用户的登录状态等等；
+- 使用 `Axios <https://github.com/axios/axios>`_ 处理并发的网络请求，借助
+  `Promise 对象 <https://wangdoc.com/javascript/async/promise.html>`_ 良好的封装实现异步通信。
+
+未来有更多的知识等待探索。比如，如何更加优雅地组织代码，如何尽量减少第三方库混在业务逻辑中。
