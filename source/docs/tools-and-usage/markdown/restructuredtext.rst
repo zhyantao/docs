@@ -438,7 +438,7 @@ reST 支持图像指令，用法如下：
 
 当在 Sphinx 中使用时，给定的文件名（在此处为 ``gnu.png`` ）必须相对于源文件。
 
-.. image:: ../../_static/images/lenna.jpg
+.. image:: ../../../_static/images/lenna.jpg
     :height: 200px
     :width: 200px
     :alt: Lenna, 512 times 512, Grayscale
