@@ -406,7 +406,7 @@ they reference, but in separate series,
 模型构建
 ~~~~~~~~
 
-.. image:: ../../_static/images/NeuralNetworkZoo19High.png
+.. image:: ../../../_static/images/NeuralNetworkZoo19High.png
 
 Neural Network Cheat Sheet [1]_
 

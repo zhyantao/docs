@@ -13,7 +13,7 @@ JMatPro 主要用来做相图计算。包括平衡相图和非平衡相图。在
 
 针对连铸项目，因为中重院只购买了通用钢模块，所以我们仅考虑 General Steel 页面的相关功能。
 
-.. image:: ../../_static/images/JMatPro_CerzEekEK8.png
+.. image:: ../../../_static/images/JMatPro_CerzEekEK8.png
 
 软件计算结束后，基本上每个功能都可以用一张图来显示，这张图可以导出为 txt 文件，也可以到处为 png 格式。
 
@@ -47,5 +47,5 @@ JMatPro 主要用来做相图计算。包括平衡相图和非平衡相图。在
 
 在配置环境时，若缺少加密狗，则无法继续完成后续工作，参考\ `JMatPro API 安装与开发环境配置指南 <https://kdocs.cn/l/cd3ZKiq03jt1>`_\ 。错误提示如下图所示：
 
-.. image:: ../../_static/images/jmatpro_err_1.png
+.. image:: ../../../_static/images/jmatpro_err_1.png
 
