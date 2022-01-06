@@ -86,6 +86,6 @@ DNS 地址关系到 **能不能上网** 的问题，常用的 DNS 服务器有 `
 - **Microsoft Wi-Fi Direct Virtual Adapter**：主要用于创建无线热点。这项虚拟化技术把一个物理无线适配器转换为两个虚拟无线适配器。然后，你通过连接一个虚拟无线适配器到常规无线网络，并使用另一个虚拟适配器连接到另一个网络（例如 WiFi 热点），并让其他人像连接到普通 AP 一样无线连接到你的 Windows 机器。 `Ref <https://superuser.com/questions/1580417/what-is-microsoft-wi-fi-direct-virtual-adapter-used-for>`__
 - **VMware Virtual Ethernet Adapter for VMnet1**\ ：这是 Host-Only 网络模式，用于建立一个与世隔绝的网络环境。其中 VMnet1 是一个虚拟的交换机，交换机的一个端口连接到你的 Host 上，另外一个端口连接到虚拟的 DHCP 服务器上（实际上是 VMware 的一个组件），剩下的端口连到虚拟机上。虚拟网卡 VMnet1 作为虚拟机的网关接口，为虚拟机提供服务。在虚拟机启动之后，如果你用 ipconfig 命令，你会看到默认网关指向了 VMnet1 网卡的地址。（实际上它并不能提供路由，这是 VMware 设计使然，它是干除了提供路由之外的一些事情——实际上是我也不知道它干了什么事情），这里没有提供路由主要表现在没有提供 NAT 服务，使得虚拟机不可以访问 Host-Only 模式所指定的网段之外的地址。 `Ref <https://blog.csdn.net/u012110719/article/details/42318717>`__
 - **VMware Virtual Ethernet Adapter for VMnet8**\ ：这是 NAT 方式，是最简单的组网方式。VMnet8 是一张虚拟网卡。物理机使用 VMnet8 和虚拟机通信时，网卡和虚拟机的网关需要保持一致。虚拟网卡一个接口连接到虚拟的 NAT 服务器上（这也是一个VMware组件），一个接口连接到虚拟 DHCP 服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务。 `Ref <http://www.unixlinux.online/unixlinux/linuxgl/linuxjq/201703/77641.html>`__
-- **VMware Virtual Ethernet Adapter for VMnet0**\ ：实际上就是一个虚拟的网桥。这个网桥有很若干个端口，一个端口用于连接你的Host，一个端口用于连接你的虚拟机，他们的位置是对等的，谁也不是谁的网关。
+- **VMware Virtual Ethernet Adapter for VMnet0**\ ：实际上就是一个虚拟的网桥。这个网桥有很若干个端口，一个端口用于连接你的Host，一个端口用于连接你的虚拟机，他们的位置是对等的，谁也不是谁的网关。 `Ref <https://wxler.github.io/2021/02/02/221724>`__
 - **Bluetooth Device (Personal Area Network)**\ ：蓝牙网络连接
 
