@@ -37,6 +37,7 @@
     :widths: 15, 20, 20, 40
 
     ":math:`x`", "标量", "``x``", "小写意大利体， :math:`LaTeX` 默认字体"
+    ":math:`\tilde{x}`", "变量的取值", "``\tilde{x}``", "字母上有波浪号，表示 :math:`x` 取的特定值"
     ":math:`\mathbf{x}`", "向量", "``\mathbf{x}``", "小写粗体，高中时写作 :math:`\vec{x}` "
     ":math:`\mathbf{X}`", "矩阵(或多维)", "``\mathbf{X}``", "大写粗体"
     ":math:`\mathrm{d}`", "求导数", "``\mathrm{d}``", "直立的 :math:`\mathrm{d}` "
