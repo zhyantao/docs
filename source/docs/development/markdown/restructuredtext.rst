@@ -7,8 +7,8 @@ reStructuredText
 
 .. hint:: 
 
-    文档也支持 `reST 风格的 Markdown 语法 <./tools-and-usage/MyST-syntax-cheat-sheet.html>`_ 。本文转载自
-    `MegEngine <https://megengine.org.cn/doc/stable/zh/development/contribute-to-docs/restructuredtext.html>`_ （有修改），仅供学习参考。
+    文档也支持 `reST 风格的 Markdown 语法 <./myst-nb.html>`_ 。本文转载自
+    `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_ （有修改），仅供学习参考。
 
 .. _indentation-rst:
 
