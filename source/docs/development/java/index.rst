@@ -12,23 +12,22 @@ Java 基础知识
 
     objects.rst
     operators.rst
-    controlling.rst
+    control.rst
     initialization.rst
-    access-control.rst
-    reusing-classes.rst
+    access.rst
+    reusing.rst
     polymorphism.rst
     interfaces.rst
-    inner-classes.rst
+    innerclasses.rst
     containers.rst
     exceptions.rst
     string.rst
-    reflection.rst
+    typeinfo.rst
     generics.rst
     arrays.rst
-    io-stream.rst
-    enumeration.rst
-    annotains.rst
+    io.rst
+    enumerated.rst
+    annotations.rst
     concurrency.rst
-
 
 .. footbibliography:: 

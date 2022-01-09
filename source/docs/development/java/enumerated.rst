@@ -2,6 +2,56 @@
 枚举
 ====
 
+基本使用
+---------
+
+.. code-block:: java
+
+    //: initialization/Spiciness.java
+
+    public enum Spiciness {
+        NOT, MILD, MEDIUM, HOT, FLAMING
+    } ///:~
+
+按照惯例，枚举类型的成员通常用大写字母，多个单词之间用下划线隔开。
+
+.. code-block:: java
+    :emphasize-lines: 4,9,21
+    :linenos:
+
+    //: initialization/Burrito.java
+
+    public class Burrito {
+        Spiciness degree;
+        public Burrito(Spiciness degree) { this.degree = degree;}
+        public void describe() {
+            System.out.print("This burrito is ");
+            switch(degree) {
+                case NOT:    System.out.println("not spicy at all.");
+                            break;
+                case MILD:
+                case MEDIUM: System.out.println("a little hot.");
+                            break;
+                case HOT:
+                case FLAMING:
+                default:     System.out.println("maybe too hot.");
+            }
+        }	
+        public static void main(String[] args) {
+            Burrito
+                plain = new Burrito(Spiciness.NOT),
+                greenChile = new Burrito(Spiciness.MEDIUM),
+                jalapeno = new Burrito(Spiciness.HOT);
+            plain.describe();
+            greenChile.describe();
+            jalapeno.describe();
+        }
+    } /* Output:
+    This burrito is not spicy at all.
+    This burrito is a little hot.
+    This burrito is maybe too hot.
+    *///:~
+
 ``enum`` 和 ``class`` 一样，只是一个关键字。
 像 ``class`` 被 ``Class`` 类维护一样， ``enum`` 被 ``Enum`` 类维护。
 
@@ -49,71 +99,63 @@
 ``String`` 枚举模式的缺点，并提供了许多额外的好处。
 那就是枚举类型。接下来的章节将介绍枚举类型的定义、特征、应用场景和优缺点。
 
-定义枚举
----------
+枚举类的常用方法
+----------------
 
-枚举类型是指由一组固定的常量组成合法的类型。Java 中由关键字 ``enum`` 来定义一个枚举类型。
+``Enum`` 类提供了一些有用的函数，我们可以加以利用，在 ``enum`` 实例上调用以下方法：
 
-.. code-block:: java
-
-    public enum Season {
-        SPRING, SUMMER, AUTUMN, WINTER;
-    }
-
-应用场景
----------
-
-每当需要一组固定的常量的时候，如一周的天数、一年 四季等。或者是在我们编译前就知道其包含的所有值的集合。
-
-基本使用
----------
-
-常量
-~~~~~
+- ``values()`` 返回 ``enum`` 实例对应的数组。实际上 ``Enum`` 类并没有这个函数，是编译器为我们添加的。
+- ``ordinal()`` 返回元素的下标；
+- ``equals()`` 、  ``==`` 他们作用完全相同， ``equals`` 方法默认实现就是通过 ``==`` 来比较的；
+- ``compareTo()`` 方法比较的是 ``Enum`` 的 ``ordinal`` 顺序大小；
+- ``name()`` 返回 ``enum`` 实例声明时的名字，效果与 ``toString()`` 方法相同；
+- ``getDeclaringClass()`` 返回 ``enum`` 实例所属的 ``enum`` 类。
 
 .. code-block:: java
+    
+    //: enumerated/EnumClass.java
+    // Capabilities of the Enum class
+    import static net.mindview.util.Print.*;
 
-    public enum Color {
-        RED, GREEN, BLANK, YELLOW;
-    }
+    enum Shrubbery { GROUND, CRAWLING, HANGING }
 
-switch
-~~~~~~~
-
-.. code-block:: java
-
-    enum Signal {
-        GREEN, YELLOW, RED;
-    }
-
-    public class TrafficLight {
-        Signal color = Signal.RED;
-        public void change() {
-            switch(color) {
-            case RED:
-                color = Signal.GREEN;
-                break;
-            case YELLOW:
-                color = Signal.RED;
-                break;
-            case GREEN:
-                color = Signal.YELLOW;
-                break;
+    public class EnumClass {
+        public static void main(String[] args) {
+            for(Shrubbery s : Shrubbery.values()) {
+                print(s + " ordinal: " + s.ordinal());
+                printnb(s.compareTo(Shrubbery.CRAWLING) + " ");
+                printnb(s.equals(Shrubbery.CRAWLING) + " ");
+                print(s == Shrubbery.CRAWLING);
+                print(s.getDeclaringClass());
+                print(s.name());
+                print("----------------------");
+            }
+            // Produce an enum value from a string name:
+            for(String s : "HANGING CRAWLING GROUND".split(" ")) {
+                Shrubbery shrub = Enum.valueOf(Shrubbery.class, s);
+                print(shrub);
             }
         }
-    }
-
-向枚举中添加新方法
-~~~~~~~~~~~~~~~~~~
-
-覆盖枚举的方法
-~~~~~~~~~~~~~~
-
-实现接口
-~~~~~~~~
-
-使用接口组织枚举
-~~~~~~~~~~~~~~~~~
+    } /* Output:
+    GROUND ordinal: 0
+    -1 false false
+    class Shrubbery
+    GROUND
+    ----------------------
+    CRAWLING ordinal: 1
+    0 true true
+    class Shrubbery
+    CRAWLING
+    ----------------------
+    HANGING ordinal: 2
+    1 false false
+    class Shrubbery
+    HANGING
+    ----------------------
+    HANGING
+    CRAWLING
+    GROUND
+    *///:~
 
 枚举和单例
 ----------
@@ -205,35 +247,3 @@ switch
 所以，即使单例中构造函数是私有的，也会被反射给破坏掉。由于反序列化后的对象是重新 ``new`` 出来的，所以这就破坏了单例。
 
 但是，枚举的反序列化并不是通过反射实现的。所以，就不会发生由于反序列化导致的单例破坏问题。
-
-枚举类型的比较
---------------
-
-Java 枚举值比较用 ``==`` 和 ``equals`` 方法没啥区别，两个随便用都是一样的效果。
-
-因为枚举 ``Enum`` 类的 ``equals`` 方法默认实现就是通过 ``==`` 来比较的；
-类似的 ``Enum`` 的 ``compareTo`` 方法比较的是 ``Enum`` 的 ``ordinal`` 顺序大小；
-类似的还有 ``Enum`` 的 ``name`` 方法和 ``toString`` 方法一样都返回的是 ``Enum`` 的 ``name`` 值。
-
-基本 enum 特性
----------------
-向 enum 中添加新方法
----------------------
-switch 语句中的 enum
----------------------
-values() 的神秘之处
---------------------
-实现，而非继承
---------------
-随机选取
----------
-使用接口组织枚举
-----------------
-使用 EnumSet 替代标志
----------------------
-使用 EnumMap
--------------
-常量相关的方法
---------------
-多路分发
---------
