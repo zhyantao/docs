@@ -2,9 +2,17 @@
 容器
 ====
 
+通常，程序总是根据运行时才知道的某些条件去创建新对象。
+编程时，你可以将任意数量的对象放置到容器中，并且不需要担心容器应该设置为多大。
+
+容器经常和泛型搭配使用。
+使用泛型时，容器知道它保存的是什么类型，在调用容器中对象中的方法时，会替你执行转型。
+另外，你可以将某个类型的子类保存到容器中。
+
 .. _container-taxonomy:
 
-通常，程序总是根据运行时才知道的某些条件去创建新对象。编程时，你可以将任意数量的对象放置到容器中，并且不需要担心容器应该设置为多大。
+集合类和字典
+------------
 
 .. uml::
 
@@ -14,20 +22,12 @@
     interface List
     interface Set
     interface Queue
-    interface Iterator
-    interface ListIterator
-    interface Map
-    class HashMap
-    class TreeMap
-    class LinkedHashMap
+    class Vector
     class ArrayList
     class LinkedList
     class HashSet
     class PriorityQueue
-    class TreeMap
     class LinkedHashSet
-
-    Iterator <|-- ListIterator
 
     Collection <|-- List
     Collection <|-- Set
@@ -35,6 +35,7 @@
 
     List <|.. ArrayList
     List <|.. LinkedList
+    List <|.. Vector
     
     Set <|.. HashSet
     Set <|.. TreeSet
@@ -43,51 +44,116 @@
     Queue <|.. LinkedList
     Queue <|.. PriorityQueue
 
+    @enduml
+
+.. uml::
+
+    @startuml
+
+    interface Iterator
+    interface ListIterator
+    interface Map
+    class HashMap
+    class TreeMap
+    class LinkedHashMap
+
+    Iterator <|-- ListIterator
+
     Map <|.. HashMap
     Map <|.. TreeMap
     HashMap <|-- LinkedHashMap
+
+    package java.util <<Folder>> {
+        class Collections
+        class Arrays
+    }
 
     @enduml
 
 上面的分类并不完整，查看完整图片需要看后面 :ref:`full-container-taxonomy`
 
-泛型和类型安全的容器
---------------------
+Collection（根接口）
+~~~~~~~~~~~~~~~~~~~~
 
-使用泛型时，容器知道它保存的是什么类型，在调用容器中对象中的方法时，会替你执行转型。另外，你可以将某个类型的子类保存到容器中。
+``Colleciton`` 是描述所有序列容器的共性的根接口，实现 ``Colleciton`` 就要提供 ``iterator()`` 方法。
+所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于 
+``foreach`` 语法。
 
-基本概念
---------
+Map（根接口）
+~~~~~~~~~~~~~~
 
-Collection
-    一个独立元素的序列，这些元素都服从一条或多条规则。 ``Colleciton`` 是描述所有序列容器的共性的根接口，实现 ``Colleciton`` 就要提供 ``iterator()`` 方法。
-    所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于 ``foreach`` 语法。
+``Map`` 是一组成对的 “键值对” 对象，允许用一个对象查找另一个对象，也叫 “映射表”、“关联数组” 或 “字典”。
 
-Map
-    - 一组成对的“键值对”对象，允许用一个对象查找另一个对象，也叫“映射表”、“关联数组”或“字典”。
-    - ``HashMap`` ，使用了最快的查找技术，没有明显的顺序。
-    - ``TreeMap`` ，按照比较结果升序保存键。
-    - ``LinkedHashMap`` ，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
+- ``HashMap`` ，使用了最快的查找技术，没有明显的顺序。
+- ``TreeMap`` ，按照比较结果升序保存键。
+- ``LinkedHashMap`` ，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
 
-List
-    - ``ArrayList`` ，按照插入顺序保存元素。
-    - ``LinkedList`` ，按照插入顺序保存元素。
+``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现， 
+``TreeSet`` 基于 ``TreeMap`` 实现。
 
-Set
-    - ``HashSet`` ，使用了最快的查找技术。
-    - ``TreeSet`` ，按照比较结果升序保存对象。
-    - ``LinkedHashSet`` ，按照插入顺序保存对象。
+List 和 Set
+~~~~~~~~~~~~~
 
-添加一组元素
+``List`` 和 ``Set`` 都继承了 ``Colleciton`` 接口。都是用来存储一组同一类型的元素的。
+
+不同的是， ``List`` 中的元素有序、可重复，而 ``Set`` 中的元素无序、不可重复。
+
+``Set`` 中最常被使用的是测试归属性（询问某个对象是否在 ``Set`` 中），使用 ``contains()`` 
+方法就可以。因此 ``HashSet`` 是最常用的实现方式。
+
+``Set`` 具有与 ``Collection`` 完全一样的接口，因此没有任何额外的功能，实际上 ``Set`` 就是 
+``Collection`` ，只是行为不同（这是继承与多态思想的典型应用）。
+
+``TreeSet`` 将元素存储在红黑树数据结构中，而 ``HashSet`` 使用的是散列函数。
+
+ArrayList、LinkedList 和 Vector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``List`` 主要有 ``ArrayList`` 、 ``LinkedList`` 与 ``Vector`` 几种实现。
+它们的使用方式也很相似，主要区别在于因为实现方式的不同，所以对不同的操作具有不同的效率。
+
+``ArrayList`` 是一个可改变大小的数组。当更多的元素加入到 ``ArrayList`` 中时，其大小将会动态地增长。
+内部的元素可以直接通过 get 与 set 方法进行访问，因为 ``ArrayList`` 本质上就是 一个数组。
+
+``LinkedList`` 是一个双链表，在添加和删除元素时具有比 ``ArrayList`` 更好的性能。
+但在 ``get`` 与 ``set`` 方面弱于 ``ArrayList`` 。
+当然，这些对比都是指数据量很大或者操作很频繁的情况下的对比，如果数据和运算量很小，那么对比将失去意义。
+
+``Vector`` 和 ``ArrayList`` 类似，但属于强同步类。
+如果你的程序本身是线程安全的（没有在多个线程之间共享同一个集合/对象）那么使用 ``ArrayList`` 
+是更好的选择。
+
+``Vector`` 和 ``ArrayList`` 在更多元素添加进来时会请求更大的空间。
+``Vector`` 每次请求其大小的双倍空间，而 ``ArrayList`` 每次对 ``size`` 增长 50%。
+
+而 ``LinkedList`` 还实现了 ``Queue`` 接口，该接口比 ``List`` 提供了更多的方法，包括 ``offer()`` ， 
+``peek()`` ， ``poll()`` 等。
+
+注意：默认情况下 ``ArrayList`` 的初始容量非常小，所以如果可以预估数据量的话，
+分配一个较大的初始值属于最佳实践。这样可以减少调整大小的开销。
+
+HashSet 和 TreeSet
+~~~~~~~~~~~~~~~~~~~
+
+``TreeSet`` 是二叉树实现的， ``TreeSet`` 中的数据是自动排好序的，不允许放入 ``null`` 值。
+
+``HashSet`` 是哈希表实现的， ``HashSet`` 中的数据是无序的，可以放入 ``null`` ，但只能放入一个 ``null`` ，
+两者中的值都不能重复，就如数据库中唯一约束。
+
+在 ``HashSet`` 中，基本的操作都是由 ``HashMap`` 底层实现的，因为 ``HashSet`` 底层是用 ``HashMap`` 存储数据的。
+当向 ``HashSet`` 中添加元素的时候，首先计算元素的 ``hashcode`` 值，
+然后通过扰动计算和按位与的方式计算出这个元素的存储位置，如果这个位置位空，就将元素添加进去；
+如果不为空，则用 ``equals`` 方法比较元素是否相等，相等就不添加，否则找一个空位添加。
+
+``TreeSet`` 的底层是 ``TreeMap`` 的 ``keySet()`` ，而 ``TreeMap`` 是基于红黑树实现的，红黑树是一种平衡二叉查找树，
+它能保证任何一个节点的左右子树的高度差不会超过较矮的那棵的一倍。
+
+``TreeMap`` 是按 ``key`` 排序的，元素在插入 ``TreeSet`` 时 ``compareTo()`` 方法要被调用，所以 
+``TreeSet`` 中的元素要实现 ``Comparable`` 接口。 ``TreeSet`` 作为一种 ``Set`` ，它不允许出 现重复元素。
+``TreeSet`` 是用 ``compareTo()`` 来判断重复元素的。
+
+容器的初始化
 ------------
-
-``Collection`` 的构造器可以接受另一个 ``Collection`` ，用它来将自身初始化。
-
-``Colleciton.addAll()`` 比 ``Collections.allAll()`` 运行更快。
-
-``Colleciton.allAll()`` 只能接受另一个 ``Collection`` 对象作为参数。不如 ``Collections.addAll()`` 和 ``Arrays.asList()`` 灵活。
-
-``Map`` 只能用另一个 ``Map`` 初始化。
 
 .. code-block:: java
 
@@ -97,26 +163,46 @@ Set
 
     public class AddingGroups {
         public static void main(String[] args) {
-            Collection<Integer> collection =
-                new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
+            Collection<Integer> collection = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
             Integer[] moreInts = { 6, 7, 8, 9, 10 };
             collection.addAll(Arrays.asList(moreInts));
-            // Runs significantly faster, but you can't
-            // construct a Collection this way:
+            
+            // Runs significantly faster, but you can't construct a Collection this way:
             Collections.addAll(collection, 11, 12, 13, 14, 15);
             Collections.addAll(collection, moreInts);
+            
             // Produces a list "backed by" an array:
             List<Integer> list = Arrays.asList(16, 17, 18, 19, 20);
             list.set(1, 99); // OK -- modify an element
-            // list.add(21); // Runtime error because the
-                             // underlying array cannot be resized.
+            // list.add(21); // Runtime error because the underlying array cannot be resized.
         }
     } ///:~
+
+``java.util.Collection`` 是一个集合接口（\ :ref:`见上图 <container-taxonomy>`\ ）。它提供了对集合对象进行基本操作的通用接口方法。
+``Collection`` 接口在 Java 类库中有很多具体的实现。
+``Collection`` 接口的意义是为各种具体的集合提供了最大化的统一操作方式。
+
+``java.util.Collections`` 是一个包装类。它包含有各种有关集合操作的静态多态方法。
+此类 **不能实例化** ，就像一 **个工具类** ，服务于 Java 的 Collection 框架。
+
+``java.lang.Array`` 是 Java 中 **最基本的一个存储结构** 。提供了动态创建和访问 Java **数组** 的方法。
+其中的元素的类型必须相同。效率高，但容量固定且无法动态改变。 
+它无法判断其中实际存有多少元素， ``length`` 只是告诉我们 array 的容量。
+
+``java.util.Arrays`` 静态类专门用来操作 array，提供搜索、排序、复制等静态方法。
+
+- ``equals()`` ：比较两个 array 是否相等。array 拥有相同元素个数，且所有对应元素两两相等。 
+- ``sort()`` ：用来对 array 进行排序。 
+- ``binarySearch()`` ：在排好序的 array 中寻找元素。
+- ``asList()`` ：传入一个参数 array，将其转化为 ``List``
+
+``Colleciton.addAll()`` 比 ``Collections.allAll()`` 运行更快，但不如 ``Collections.addAll()`` 
+和 ``Arrays.asList()`` 灵活。 ``Colleciton.allAll()`` 只能接受另一个 ``Collection`` 对象作为参数。
 
 容器的打印
 ----------
 
-你必须使用 ``Arrays.toString()`` 来产生数组的可打印表示，但是打印容器无需任何帮助。容器会默认打印出容器中的内容。
+打印容器可以使用数组工具类 ``Arrays.toString()`` 方法，它默认打印出容器中的内容。
 
 .. code-block:: java
 
@@ -161,22 +247,16 @@ Set
     {rat=Fuzzy, cat=Rags, dog=Spot}
     *///:~
 
-List
------
+容器的遍历
+----------
 
-这里填充常用的函数和返回值。注意它们的参数和返回值。
+遍历容器，我们通常用迭代器，它是一个对象。
 
-迭代器
--------
+要使用迭代器，首先用 ``容器名.iterator()`` 方法生成一个迭代器对象。迭代器对象有几个方法：
 
-迭代器是一个对象，它的工作是遍历并选择序列中的对象，而客户端程序员不必知道或关心该序列底层的结构。
-
-使用方法：
-
-1. ``iterator()`` 要求容器返回一个 ``Iterator`` 。 ``Iterator`` 将准备好返回序列的第一个元素。
-2. 使用 ``next()`` 获得序列中的下一个元素。
-3. 使用 ``hasNext()`` 检查序列中是否还有元素。
-4. 使用 ``remove()`` 将迭代器新近返回的元素删除。
+- ``hasNext()`` 判断是否有下一个元素；
+- ``next()`` 获取下一个元素；
+- ``remove()`` 删除当前指向的元素。
 
 .. code-block:: java
 
@@ -211,305 +291,16 @@ List
     [Pug, Manx, Cymric, Rat, EgyptianMau, Hamster]
     *///:~
 
-ListIterator
-~~~~~~~~~~~~~
-
 ``ListIterator`` 是一个更加强大的 ``Iterator`` 的子类型，它只能用于各种 ``List`` 类的访问。
 
-``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()`` 方法替换它访问过的最后一个元素， ``listIterator(n)`` 方法可以返回索引为 n 的元素。
+``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()`` 
+方法替换它指向的元素， ``listIterator(n)`` 方法可以返回索引为 n 的元素。
 
-LinkedList
------------
-
-使用方法参考 `Java API Specification <https://docs.oracle.com/en/java/javase/11/docs/api/index.html>`_
-
-``LinkedList`` 可以用于栈、队列或双端队列。
-
-Stack
-------
-
-使用方法参考 `Java API Specification <https://docs.oracle.com/en/java/javase/11/docs/api/index.html>`_
-
-可以直接将 ``LinkedList`` 用作栈，如下所示。但是如果你只需要栈的行为，这里使用继承就不合适了，因为这样会产生具有 ``LinkedList`` 的其他所有方法的类。
-
-.. code-block:: java
-
-    //: net/mindview/util/Stack.java
-    // Making a stack from a LinkedList.
-    package net.mindview.util;
-    import java.util.LinkedList;
-
-    public class Stack<T> {
-        private LinkedList<T> storage = new LinkedList<T>();
-        public void push(T v) { storage.addFirst(v); }
-        public T peek() { return storage.getFirst(); }
-        public T pop() { return storage.removeFirst(); }
-        public boolean empty() { return storage.isEmpty(); }
-        public String toString() { return storage.toString(); }
-    } ///:~
-
-.. note:: 
-
-    泛型 ``<T>`` 告诉编译器这将是一个参数化类型，而其中的类型参数，即在类被使用时将会被实际类型替换。
-
-Set
-----
-
-``Set`` 中最常被使用的是测试归属性（询问某个对象是否在 ``Set`` 中），使用 ``contains()`` 方法就可以。因此 ``HashSet`` 是最常用的实现方式。
-
-``Set`` 具有与 ``Collection`` 完全一样的接口，因此没有任何额外的功能，实际上 ``Set`` 就是 ``Collection`` ，只是行为不同（这是继承与多态思想的典型应用）。
-
-``TreeSet`` 将元素存储在红黑树数据结构中，而 ``HashSet`` 使用的是散列函数。
-
-Map
-----
-
-使用方法参考 `Java API Specification <https://docs.oracle.com/en/java/javase/11/docs/api/index.html>`_
-
-这是一种映射关系的实现，可以将一种对象映射为另一种对象。比如一个人可以拥有多个宠物，如下代码实现：
-
-.. code-block:: java
-    :emphasize-lines: 8, 9
-
-    //: holding/MapOfList.java
-    package holding;
-    import typeinfo.pets.*;
-    import java.util.*;
-    import static net.mindview.util.Print.*;
-
-    public class MapOfList {
-        public static Map<Person, List<? extends Pet>>
-            petPeople = new HashMap<Person, List<? extends Pet>>();
-        static {
-            petPeople.put(new Person("Dawn"),
-                Arrays.asList(new Cymric("Molly"),new Mutt("Spot")));
-            petPeople.put(new Person("Kate"),
-                Arrays.asList(new Cat("Shackleton"),
-                    new Cat("Elsie May"), new Dog("Margrett")));
-            petPeople.put(new Person("Marilyn"),
-                Arrays.asList(
-                    new Pug("Louie aka Louis Snorkelstein Dupree"),
-                    new Cat("Stanford aka Stinky el Negro"),
-                    new Cat("Pinkola")));	
-            petPeople.put(new Person("Luke"),
-                Arrays.asList(new Rat("Fuzzy"), new Rat("Fizzy")));
-            petPeople.put(new Person("Isaac"),
-                Arrays.asList(new Rat("Freckly")));
-        }
-        public static void main(String[] args) {
-            print("People: " + petPeople.keySet());
-            print("Pets: " + petPeople.values());
-            for(Person person : petPeople.keySet()) {
-                print(person + " has:");
-                for(Pet pet : petPeople.get(person))
-                    print("        " + pet);
-            }
-        }
-    } /* Output:	
-    People: [Person Luke, Person Marilyn, Person Isaac, Person Dawn, Person Kate]
-    Pets: [[Rat Fuzzy, Rat Fizzy], [Pug Louie aka Louis Snorkelstein Dupree, Cat Stanford aka Stinky el Negro, Cat Pinkola], [Rat Freckly], [Cymric Molly, Mutt Spot], [Cat Shackleton, Cat Elsie May, Dog Margrett]]
-    Person Luke has:
-            Rat Fuzzy
-            Rat Fizzy
-    Person Marilyn has:
-            Pug Louie aka Louis Snorkelstein Dupree
-            Cat Stanford aka Stinky el Negro
-            Cat Pinkola
-    Person Isaac has:
-            Rat Freckly
-    Person Dawn has:
-            Cymric Molly
-            Mutt Spot
-    Person Kate has:
-            Cat Shackleton
-            Cat Elsie May
-            Dog Margrett
-    *///:~
-
-
-Queue
-------
-
-使用方法参考 `Java API Specification <https://docs.oracle.com/en/java/javase/11/docs/api/index.html>`_
-
-队列常被当作一种可靠的将对象从程序的某个区域传输到另一个区域的途径。队列在并发编程中特别重要。
-
-PriorityQueue
-~~~~~~~~~~~~~~
-
-使用方法参考 `Java API Specification <https://docs.oracle.com/en/java/javase/11/docs/api/index.html>`_
-
-优先级队列声明下一个弹出元素是最需要的元素（具有最高的优先级）。当你在 ``PriorityQueue`` 上调用 ``offer()``
-方法来插入一个对象时，这个对象会在队列中被排序。默认的排序将使用对象在队列中的自然顺序，但是你可以提供自己的
-``Comparator`` 来修改这个顺序。
-
-.. code-block:: java
-
-    //: holding/PriorityQueueDemo.java
-    import java.util.*;
-
-    public class PriorityQueueDemo {
-        public static void main(String[] args) {
-            PriorityQueue<Integer> priorityQueue = new PriorityQueue<Integer>();
-            Random rand = new Random(47);
-            for(int i = 0; i < 10; i++)
-                priorityQueue.offer(rand.nextInt(i + 10));
-            QueueDemo.printQ(priorityQueue);
-            List<Integer> ints = Arrays.asList(25, 22, 20, 18, 14, 9, 3, 1, 1, 2, 3, 9, 14, 18, 21, 23, 25);
-            priorityQueue = new PriorityQueue<Integer>(ints);
-            QueueDemo.printQ(priorityQueue);
-            
-            priorityQueue = new PriorityQueue<Integer>(ints.size(), Collections.reverseOrder());
-            priorityQueue.addAll(ints);
-            QueueDemo.printQ(priorityQueue);
-
-            String fact = "EDUCATION SHOULD ESCHEW OBFUSCATION";
-            List<String> strings = Arrays.asList(fact.split(""));
-            PriorityQueue<String> stringPQ = new PriorityQueue<String>(strings);
-            QueueDemo.printQ(stringPQ);
-            
-            stringPQ = new PriorityQueue<String>(strings.size(), Collections.reverseOrder());
-            stringPQ.addAll(strings);
-            QueueDemo.printQ(stringPQ);
-
-            Set<Character> charSet = new HashSet<Character>();
-            for(char c : fact.toCharArray())
-                charSet.add(c); // Autoboxing
-            PriorityQueue<Character> characterPQ = new PriorityQueue<Character>(charSet);
-            QueueDemo.printQ(characterPQ);
-        }
-    } /* Output:
-    0 1 1 1 1 1 3 5 8 14
-    1 1 2 3 3 9 9 14 14 18 18 20 21 22 23 25 25
-    25 25 23 22 21 20 18 18 14 14 9 9 3 3 2 1 1
-                A A B C C C D D E E E F H H I I L N N O O O O S S S T T U U U W
-    W U U U T T S S S O O O O N N L I I H H F E E E D D C C C B A A
-        A B C D E F H I L N O S T U W
-    *///:~
-
-.. note:: 
-
-    上述例子中， ``Iteger`` 、 ``String`` 和 ``Character`` 可以与 ``PriorityQueue`` 一起工作，因为这些类已经内建了自然排序。所以没有提供 ``Comparator`` 。
-
-foreach 与迭代器
-~~~~~~~~~~~~~~~~
-
-不存在从数组到 ``Iterator`` 的自动转换，你必须手动执行这种转换。
-
-.. code-block:: java
-
-    //: holding/ArrayIsNotIterable.java
-    import java.util.*;
-
-    public class ArrayIsNotIterable {
-        static <T> void test(Iterable<T> ib) {
-            for(T t : ib)
-                System.out.print(t + " ");
-        }
-        public static void main(String[] args) {
-            test(Arrays.asList(1, 2, 3));
-            String[] strings = { "A", "B", "C" };
-            // An array works in foreach, but it's not Iterable:
-            //! test(strings);
-            // You must explicitly convert it to an Iterable:
-            test(Arrays.asList(strings));
-        }
-    } /* Output:
-    1 2 3 A B C
-    *///:~
-
-适配器方法惯用法
-~~~~~~~~~~~~~~~~
-
-如果现有一个 ``Iterable`` 类，你想要添加一种或多种在 ``foreach`` 语句中使用这个类的方法，应该怎么做呢？例如，假设你希望可以选择以向前或向后的方向迭代一个单词列表。如果直接继承这个类，并覆盖 ``iterator()`` 方法，你只能替换现有的方法，而不能实现选择。
-
-一种解决方案是适配器方法，当你有一个接口并需要另一个接口时，编写适配器就可以解决问题。
-
-.. code-block:: java
-
-    //: holding/AdapterMethodIdiom.java
-    // The "Adapter Method" idiom allows you to use foreach
-    // with additional kinds of Iterables.
-    import java.util.*;
-
-    class ReversibleArrayList<T> extends ArrayList<T> {
-        public ReversibleArrayList(Collection<T> c) { super(c); }
-        public Iterable<T> reversed() {
-            return new Iterable<T>() {
-                public Iterator<T> iterator() {
-                    return new Iterator<T>() {
-                        int current = size() - 1;
-                        public boolean hasNext() { return current > -1; }
-                        public T next() { return get(current--); }
-                        public void remove() { // Not implemented
-                            throw new UnsupportedOperationException();
-                        }
-                    };
-                }
-            };
-        }
-    }	
-
-    public class AdapterMethodIdiom {
-        public static void main(String[] args) {
-            ReversibleArrayList<String> ral =
-                new ReversibleArrayList<String>(
-                    Arrays.asList("To be or not to be".split(" ")));
-            // Grabs the ordinary iterator via iterator():
-            for(String s : ral)
-                System.out.print(s + " ");
-            System.out.println();
-            // Hand it the Iterable of your choice
-            for(String s : ral.reversed())
-                System.out.print(s + " ");
-        }
-    } /* Output:
-    To be or not to be
-    be to not or be To
-    *///:~
+.. _full-container-taxonomy:
 
 容器深入研究
 ------------
 
-前面介绍过容器的基本概念和基本功能，这对于使用容器来讲已经足够了。
-
-后面章节依赖于高级特性，比如泛型，因此放在了后面。暂时用不到可以先不看。
-
-.. warning:: 
-    
-    这一章的内容很长，如果单独拿出来读，时间充裕还可以，否则要考虑时间成本，因此我暂时略过了。
-    打算后面用到相关语法的时候再看。
-
-.. _full-container-taxonomy:
-
-完整的容器分类方法
-------------------
-
-下面这张图是 :ref:`第 11 章那个图 <container-taxonomy>` 的扩充版本。
+下面这张图是 :ref:`前面那个图 <container-taxonomy>` 的扩充版本。
 
 .. image:: ../../../_static/images/java-full-container-taxonomy.png
-
-填充容器
---------
-Collection 的功能方法
----------------------
-可选操作
---------
-List 的功能方法
-----------------
-Set 和存储顺序
---------------
-队列
-----
-理解 Map
----------
-散列与散列码
-------------
-选择接口的不同实现
-------------------
-实用方法
---------
-持有引用
---------
-Java 1.0/1.1 的容器
---------------------
