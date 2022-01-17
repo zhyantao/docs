@@ -53,6 +53,7 @@ docs/development/frontend/index
 docs/development/framework/index
 docs/development/markdown/index
 docs/development/shell/index
+docs/development/asm/index
 docs/development/config/index
 ```
 
