@@ -84,6 +84,7 @@ extensions = [
     'sphinx_panels',
     'sphinx_tabs.tabs',
     'sphinxcontrib.bibtex',
+    'sphinx_search.extension',
 ]
 
 
