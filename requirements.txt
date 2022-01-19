@@ -13,3 +13,4 @@ sphinxcontrib-mermaid==0.7.1
 sphinxcontrib-plantuml==0.22
 sphinxcontrib-bibtex==2.4.1
 docutils==0.16
+readthedocs-sphinx-search=0.1.1
