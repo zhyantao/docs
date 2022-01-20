@@ -784,7 +784,7 @@ class 与 style 绑定
 - 用 `插槽 <https://v3.cn.vuejs.org/guide/component-slots.html>`_ 占位，后面根据内容自定义补充到这个位置；
 - 使用 `Vue Router <https://next.router.vuejs.org/>`_ 实现前端路由；
 - 使用 `Vuex <https://next.vuex.vuejs.org/zh/>`_ 让多个组件可以共享某些信息，比如用户的登录状态等等；
-- 使用 `Axios <https://github.com/axios/axios>`_ 处理并发的网络请求，借助
+- 使用 `Axios <https://axios-http.cn>`_ 处理并发的网络请求，借助
   `Promise 对象 <https://wangdoc.com/javascript/async/promise.html>`_ 良好的封装实现异步通信。
 
 未来有更多的知识等待探索。比如，如何更加优雅地组织代码，如何尽量减少第三方库混在业务逻辑中。
