@@ -31,6 +31,15 @@
 ```
 
 ```{toctree}
+:caption: 机器学习基础
+:titlesonly:
+:glob:
+:hidden:
+
+docs/ml-mechanism/*
+```
+
+```{toctree}
 :caption: 计算机基础
 :titlesonly:
 :glob:
@@ -41,15 +50,6 @@ docs/computer-science/*
 计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
 设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
 秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
-```
-
-```{toctree}
-:caption: 机器学习基础
-:titlesonly:
-:glob:
-:hidden:
-
-docs/ml-mechanism/*
 ```
 
 ```{toctree}
