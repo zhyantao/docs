@@ -134,7 +134,7 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
 - 将数据保存在 Vue 实例的 ``data`` 部分；
 - 通过父子组件之间的通信，子组件将数据展示在 DOM 上。
 
-.. image:: ../../../_static/images/vue-lifecycle.*
+.. image:: ../../_static/images/vue-lifecycle.*
 
 代码清单 3：
 
@@ -788,3 +788,7 @@ class 与 style 绑定
   `Promise 对象 <https://wangdoc.com/javascript/async/promise.html>`_ 良好的封装实现异步通信。
 
 未来有更多的知识等待探索。比如，如何更加优雅地组织代码，如何尽量减少第三方库混在业务逻辑中。
+
+当你检查是否已经掌握了上面的知识，可以通过阅读我的 
+`代码仓库笔记 <https://gitee.com/zhyantao/learn-programing-languages/tree/master/vue.js>`_ 
+检查一下，或者也可以当做复习用。

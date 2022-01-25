@@ -20,7 +20,7 @@ GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时�
 
 打开任务管理器后，我们或许会看到这样一张图：
 
-.. image:: ../../../_static/images/gpuinfo.png
+.. image:: ../../_static/images/gpuinfo.png
     :alt: gpuinfo.png
 
 图中的共享 GPU 内存，是集成显卡的一部分。集成或共享显卡内置在 CPU 所处的同一个芯片上。
@@ -44,7 +44,7 @@ x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM �
 
 比如，我在笔记本电脑上首先安装了 PaddlePaddle，如下图所示。
 
-.. image:: ../../../_static/images/paddlepaddle_install.png
+.. image:: ../../_static/images/paddlepaddle_install.png
     :alt: paddlepaddle_install.png
 
 然后用 PaddlePaddle 跑了 YOLO 模型，发现 batch_size 设置的稍微大一点就会发生程序内存溢出，不得改小这个值。
@@ -57,7 +57,7 @@ x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM �
 
 这个软件比较大，你可以不用完整安装，勾选如下选项即可：
 
-.. image:: ../../../_static/images/cuda-installation.png
+.. image:: ../../_static/images/cuda-installation.png
 
 安装完可以通过 ``nvcc --version`` 
 命令查看 CUDA 是否安装成功。在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
@@ -69,7 +69,7 @@ x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM �
 `PaddlePaddle <https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/install/conda/windows-conda.html>`_ 
 应该就可以了，因为我的版本都是 11.1 所以，我用 pip 安装了 PaddlePaddle 的 11.1 版本。下图是成功后的训练过程：
 
-.. image:: ../../../_static/images/training-with-gpu-success.png
+.. image:: ../../_static/images/training-with-gpu-success.png
 
 另外，如果想查看本机的其他参数，可以使用下面几种方式中的一种：
 

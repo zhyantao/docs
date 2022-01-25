@@ -13,7 +13,7 @@ JMatPro 主要用来做相图计算。包括平衡相图和非平衡相图。在
 针对连铸项目，因为中重院只购买了通用钢模块和不锈钢模块，所以我们仅考虑 General Steel 和
 Stainless Steel 的相关功能。
 
-```{image} ../../../_static/images/JMatPro_CerzEekEK8.png
+```{image} ../../_static/images/JMatPro_CerzEekEK8.png
 :name: jmatpro_main_page
 ```
 
@@ -53,7 +53,7 @@ Stainless Steel 的相关功能。
 在配置环境时，若缺少加密狗，则无法继续完成后续工作，
 参考[JMatPro API 安装与开发环境配置指南](https://kdocs.cn/l/cd3ZKiq03jt1)。错误提示如下图所示：
 
-```{image} ../../../_static/images/jmatpro_err_1.png
+```{image} ../../_static/images/jmatpro_err_1.png
 ```
 
 ## Thermodynamic Properties
@@ -83,7 +83,7 @@ JMatPro 7.0 通用钢模块共包含 7 个板块：
 
 首先我们输入参数：
 
-```{figure} ../../../_static/images/jmatpro_step_temperature_params.png
+```{figure} ../../_static/images/jmatpro_step_temperature_params.png
 Step Temperature 输入参数
 ```
 
@@ -129,7 +129,7 @@ Step Temperature 输入参数
 
 ### Step Concentration
 
-```{figure} ../../../_static/images/jmatpro_step_concentration_params.png
+```{figure} ../../_static/images/jmatpro_step_concentration_params.png
 Step Concentration 输入参数
 ```
 
@@ -137,7 +137,7 @@ Step Concentration 输入参数
 
 ### Profile Calculation
 
-```{figure} ../../../_static/images/jmatpro_profile_calculation_params.png
+```{figure} ../../_static/images/jmatpro_profile_calculation_params.png
 Profile Calculation 输入参数
 ```
 
@@ -145,7 +145,7 @@ Profile Calculation 输入参数
 
 ### Single Calculation
 
-```{figure} ../../../_static/images/jmatpro_single_calculation_params.png
+```{figure} ../../_static/images/jmatpro_single_calculation_params.png
 Single Calculation 输入参数
 ```
 
@@ -157,7 +157,7 @@ Single Calculation 输入参数
 
 输入：
 
-```{figure} ../../../_static/images/jmatpro_solification_calculation_params.png
+```{figure} ../../_static/images/jmatpro_solification_calculation_params.png
 Solidification Calculation 输入参数
 ```
 
@@ -311,7 +311,7 @@ TIME(s)-Cooling_1.0(C/s)                            已经经过的时间随温�
 
 输入：
 
-```{figure} ../../../_static/images/jmatpro_extended_general_params.png
+```{figure} ../../_static/images/jmatpro_extended_general_params.png
 Extended General 输入参数
 ```
 
@@ -417,7 +417,7 @@ Specific heat (J/(g K))-TOTAL
 
 其实感觉功能是重复了。输入界面长下面的样子：
 
-```{figure} ../../../_static/images/jmatpro_dynamic_params.png
+```{figure} ../../_static/images/jmatpro_dynamic_params.png
 Dynamic 输入参数
 ```
 
@@ -425,7 +425,7 @@ Dynamic 输入参数
 
 层错能随温度变化曲线，这个输出很简单，只有一列有效数据，就是层错能。
 
-```{figure} ../../../_static/images/jmatpro_stacking_fault_energy_params.png
+```{figure} ../../_static/images/jmatpro_stacking_fault_energy_params.png
 Stacking Fault Energy 输入参数
 ```
 
@@ -433,7 +433,7 @@ Stacking Fault Energy 输入参数
 
 磁导率随温度变化曲线，这个输出很简单，只有一列有效数据，就是磁导率。
 
-```{figure} ../../../_static/images/jmatpro_magnetic_permeability_params.png
+```{figure} ../../_static/images/jmatpro_magnetic_permeability_params.png
 Stacking Fault Energy 输入参数
 ```
 
@@ -445,7 +445,7 @@ Stacking Fault Energy 输入参数
 
 这里的各相指的是铁素体、珠光体、贝氏体、马氏体、奥氏体。
 
-```{figure} ../../../_static/images/jmatpro_jominy_hardenability_params.png
+```{figure} ../../_static/images/jmatpro_jominy_hardenability_params.png
 Jominy Hardenability 输入参数
 ```
 
@@ -453,7 +453,7 @@ Jominy Hardenability 输入参数
 
 高温强度随温度变化曲线，这个输出很简单，只有一列有效数据，就是高温强度。
 
-```{figure} ../../../_static/images/jmatpro_high_temperature_strength_params.png
+```{figure} ../../_static/images/jmatpro_high_temperature_strength_params.png
 High Temperature Strength 输入参数
 ```
 
@@ -461,7 +461,7 @@ High Temperature Strength 输入参数
 
 不同温度下，流动应力随应变的变化曲线。
 
-```{figure} ../../../_static/images/jmatpro_Flow_Stress_Analysis_params.png
+```{figure} ../../_static/images/jmatpro_Flow_Stress_Analysis_params.png
 Flow Stress Analysis 输入参数
 ```
 
@@ -469,7 +469,7 @@ Flow Stress Analysis 输入参数
 
 Total Strain - Number of cycles 曲线，应变随？变化曲线
 
-```{figure} ../../../_static/images/jmatpro_fatigue_related_params.png
+```{figure} ../../_static/images/jmatpro_fatigue_related_params.png
 Fatigue Related 输入参数
 ```
 
@@ -477,7 +477,7 @@ Fatigue Related 输入参数
 
 该计算模块分别计算了屈服应力随温度变化曲线、拉应力随温度变化曲线、硬度随温度变化曲线。
 
-```{figure} ../../../_static/images/jmatpro_tempering_of_mertensite_structure_params.png
+```{figure} ../../_static/images/jmatpro_tempering_of_mertensite_structure_params.png
 Tempered Martensite 输入参数
 ```
 
@@ -487,7 +487,7 @@ Tempered Martensite 输入参数
 
 各相的温度随时间的变化曲线。
 
-```{figure} ../../../_static/images/jmatpro_ttt_cct_params.png
+```{figure} ../../_static/images/jmatpro_ttt_cct_params.png
 TTT/CCT Diagram 输入参数
 ```
 
@@ -497,7 +497,7 @@ TTT/CCT Diagram 输入参数
 
 输入：
 
-```{figure} ../../../_static/images/jmatpro_quench_properties_params.png
+```{figure} ../../_static/images/jmatpro_quench_properties_params.png
 Quench Properties 输入参数
 ```
 
@@ -509,7 +509,7 @@ Quench Properties 输入参数
 
 输入：
 
-```{figure} ../../../_static/images/jmatpro_welding_cycles_params.png
+```{figure} ../../_static/images/jmatpro_welding_cycles_params.png
 Welding Cycle 输入参数
 ```
 
@@ -545,7 +545,7 @@ Welding Cycle 输入参数
 
 输入参数：
 
-```{figure} ../../../_static/images/jmatpro_transformation_plasticity_params.png
+```{figure} ../../_static/images/jmatpro_transformation_plasticity_params.png
 Transformation Plasticity 输入参数
 ```
 
@@ -559,7 +559,7 @@ Transformation Plasticity 输入参数
 
 输入：
 
-```{figure} ../../../_static/images/jmatpro_advanced_ttt_params.png
+```{figure} ../../_static/images/jmatpro_advanced_ttt_params.png
 Transformation Plasticity 输入参数
 ```
 

@@ -10,7 +10,7 @@ Git
 工作流程
 ~~~~~~~~
 
-.. image:: ../../../_static/images/bg2015120901.png
+.. image:: ../../_static/images/bg2015120901.png
 
 - Workspace：工作区
 - Index / Stage：暂存区
