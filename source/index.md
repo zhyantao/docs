@@ -31,30 +31,81 @@
 ```
 
 ```{toctree}
-:caption: 知识和体系
+:caption: 计算机基础
 :titlesonly:
 :glob:
 :hidden:
 
-docs/computer-science/index
-docs/machine-learning/index
-docs/continuous-casting/index
+docs/computer-science/*
+操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
+计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
+设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
 ```
 
 ```{toctree}
-:caption: 工具和使用
+:caption: 机器学习基础
 :titlesonly:
 :glob:
 :hidden:
 
-docs/development/java/index
-docs/development/python/index
-docs/development/frontend/index
-docs/development/framework/index
-docs/development/markdown/index
-docs/development/shell/index
-docs/development/asm/index
-docs/development/config/index
+docs/ml-mechanism/*
+```
+
+```{toctree}
+:caption: 编程语言基础
+:titlesonly:
+:glob:
+:hidden:
+
+docs/programming-lang/java/index
+docs/programming-lang/python/index
+docs/programming-lang/assembly/index
+```
+
+```{toctree}
+:caption: 前端开发基础
+:titlesonly:
+:glob:
+:hidden:
+
+docs/frontend-developing/*
+```
+
+```{toctree}
+:caption: 机器学习框架
+:titlesonly:
+:glob:
+:hidden:
+
+docs/ml-framework/*
+```
+
+```{toctree}
+:caption: 命令行工具
+:titlesonly:
+:glob:
+:hidden:
+
+docs/shell-script-syntax/*
+```
+
+```{toctree}
+:caption: 标记语言
+:titlesonly:
+:glob:
+:hidden:
+
+docs/markdown-syntax/*
+```
+
+```{toctree}
+:caption: 环境部署
+:titlesonly:
+:glob:
+:hidden:
+
+docs/environment-config/*
 ```
 
 ```{toctree}

@@ -6,7 +6,7 @@ Element UI
 如果想借助 Element 更快地开发出网站页面，可以参考\ `项目模板 <https://github.com/ElementUI/element-starter>`_\ ，快速的搭建脚手架。
 后续开发工作就像\ **搭积木**\ ，借助 Element 丰富的\ `组件库 <https://element.eleme.cn/#/zh-CN/component/layout>`_\ ，可以快速地完成原型设计。
 
-.. image:: ../../../_static/images/cc-monitoring-system.*
+.. image:: ../../_static/images/cc-monitoring-system.*
 
 .. warning:: 
 

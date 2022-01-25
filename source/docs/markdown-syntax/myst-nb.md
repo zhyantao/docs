@@ -201,26 +201,26 @@
 * - Example
   - Result
 * - ````md
-    ```{figure} ../../../_static/images/C-3PO_droid.png
+    ```{figure} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: figure-example
 
     Here is my figure caption!
     ```
     ````
-  - ```{figure} ../../../_static/images/C-3PO_droid.png
+  - ```{figure} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: figure-example
 
     Here is my figure caption!
     ```
 * - ````md
-    ```{image} ../../../_static/images/C-3PO_droid.png
+    ```{image} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: image-example
     ```
     ````
-  - ```{image} ../../../_static/images/C-3PO_droid.png
+  - ```{image} ../../_static/images/C-3PO_droid.png
     :height: 150px
     :name: image-example
     ```
@@ -677,7 +677,7 @@
 ````{margin}
 <br/><br/><br/>
 ```{note}
-确保你已经新建了 `refs.bib` 文件，点击{download}`查看文件 <../../../refs.bib>`撰写格式。
+确保你已经新建了 `refs.bib` 文件，点击{download}`查看文件 <../../refs.bib>`撰写格式。
 ```
 ````
 
