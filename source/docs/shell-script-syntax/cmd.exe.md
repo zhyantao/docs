@@ -5,7 +5,7 @@
 和 Linux 不同的是，Windows 命令行没有 ``.cmdrc`` 文件。如果想设置 conda 自动启动，需要将注册表：
 
 - ``\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Command Processor`` 或者
-- ``\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor`` 
+- ``\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor``
 
 两者中的某一个 ``AutoRun`` 数据字段（如果没有就**新建**可扩充字符串值）的值设置为：``conda activate``
 
