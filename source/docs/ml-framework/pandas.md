@@ -26,7 +26,7 @@ print(data)
 
 ## 处理缺失值
 
-Pandas 中“NaN”表示缺失项，一般用插值法或删除法处理。
+Pandas 中 "NaN" 表示缺失项，一般用插值法或删除法处理。
 
 ```{code-block} python
 inputs, outputs = data.iloc[:, 0:2], data.iloc[:, 2] # iloc 切片将数据分成两部分
@@ -34,7 +34,7 @@ inputs = inputs.fillna(inputs.mean())
 print(inputs)
 ```
 
-以下代码应用了插值法，对于连续值中的“NaN”项可用均值替换，对于离散值中的“NaN”项，Pandas 将自动创建一个 NaN 列，并将其值置为 1。
+以下代码应用了插值法，对于连续值中的 "NaN" 项可用均值替换，对于离散值中的 "NaN" 项，Pandas 将自动创建一个 NaN 列，并将其值置为 1。
 
 ```{code-block} python
 inputs = pd.get_dummies(inputs, dummy_na=True)

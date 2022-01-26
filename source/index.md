@@ -64,6 +64,15 @@ docs/programming-lang/assembly/index
 ```
 
 ```{toctree}
+:caption: 后端开发基础
+:titlesonly:
+:glob:
+:hidden:
+
+docs/backend-developing/*
+```
+
+```{toctree}
 :caption: 前端开发基础
 :titlesonly:
 :glob:
