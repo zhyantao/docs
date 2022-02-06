@@ -18,11 +18,11 @@
 关系数据库是一种用于存储相互关联的数据点并提供数据点访问的数据库。
 它采用关系模型，直接、直观地在表中展示数据。
 在关系数据库中，表中的每一行都代表一条记录，每条记录都具有一个唯一的ID（又被称为键），而表中的列则用于存储数据的属性。
-每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联 [^ref001]。
+每条记录的每一个属性通常都有一个值。籍此，用户可以轻松在数据点之间建立关联 [^cite_ref-1]。
 
 NoSQL 数据库（意即"不仅仅是SQL"）并非表格格式，其存储数据的方式与关系表不同。
 NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键值、宽列和图形。
-它们提供了灵活的模式，可以随大量数据和高用户负载而轻松扩展 [^ref002]。
+它们提供了灵活的模式，可以随大量数据和高用户负载而轻松扩展 [^cite_ref-2]。
 如果对非关系型数据库进行细分，按照存储的数据的格式来看，又可以分为面向对象数据库和 XML 数据库。
 
 关系型数据库的代表有：MySQL、Oracle、SQL Server、SQL Lite。
@@ -138,7 +138,7 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
 
 ## 数据库设计
 
-数据库设计是指根据数据库模型确定数据的组织方式 [^ref003]。{numref}`db-design` 展示了数据库设计的详细步骤：
+数据库设计是指根据数据库模型确定数据的组织方式 [^cite_ref-3]。{numref}`db-design` 展示了数据库设计的详细步骤：
 
 ```{figure} ../../_static/images/db-design.*
 :name: db-design
@@ -155,17 +155,17 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
 
 ## 后续阅读
 
-[^ref004] [^ref005] [^ref006] [^ref007] [^ref008] [^ref009] [^ref010] 
+[^cite_ref-4] [^cite_ref-5] [^cite_ref-6] [^cite_ref-7] [^cite_ref-8] [^cite_ref-9] [^cite_ref-10]
 
 ## 参考文献
 
-[^ref001]: 关系数据库是什么 | Oracle 中国 <https://www.oracle.com/cn/database/what-is-a-relational-database/>
-[^ref002]: NoSQL 是什么？ NoSQL 数据库详解 - MongoDB <https://www.mongodb.com/zh-cn/nosql-explained>
-[^ref003]: Database design basics. (n.d.). Database design basics. Retrieved May 1, 2010, from <https://support.office.com/en-US/article/Database-design-basics-EB2159CF-1E30-401A-8084-BD4F9C9CA1F5>
-[^ref004]: 数据库系统（上）模型与语言 <https://www.mubucm.com/doc/1TZV-8_G4Dk>
-[^ref005]: 数据库系统（中）建模与设计 <https://www.mubucm.com/doc/666LyLPreVk>
-[^ref006]: 数据库系统（下）管理与技术 <https://www.mubucm.com/doc/6BprZ8u4YSk>
-[^ref007]: 数据库系统原理习题与解析 <https://kdocs.cn/l/cnw25Tq3UVuU>
-[^ref008]: 数据库系统知识点整理 <https://www.mubucm.com/doc/6fdWgkSb_kA>
-[^ref009]: 数据库系统原理（考研笔记） <https://kdocs.cn/l/cnWHWWKze7Af>
-[^ref010]: 数据密集型应用系统设计 <https://www.mubucm.com/doc/4kP4oa6Hm4A>
+[^cite_ref-1]: 关系数据库是什么 | Oracle 中国 <https://www.oracle.com/cn/database/what-is-a-relational-database/>
+[^cite_ref-2]: NoSQL 是什么？ NoSQL 数据库详解 - MongoDB <https://www.mongodb.com/zh-cn/nosql-explained>
+[^cite_ref-3]: Database design basics. (n.d.). Database design basics. Retrieved May 1, 2010, from <https://support.office.com/en-US/article/Database-design-basics-EB2159CF-1E30-401A-8084-BD4F9C9CA1F5>
+[^cite_ref-4]: 数据库系统（上）模型与语言 <https://www.mubucm.com/doc/1TZV-8_G4Dk>
+[^cite_ref-5]: 数据库系统（中）建模与设计 <https://www.mubucm.com/doc/666LyLPreVk>
+[^cite_ref-6]: 数据库系统（下）管理与技术 <https://www.mubucm.com/doc/6BprZ8u4YSk>
+[^cite_ref-7]: 数据库系统原理习题与解析 <https://kdocs.cn/l/cnw25Tq3UVuU>
+[^cite_ref-8]: 数据库系统知识点整理 <https://www.mubucm.com/doc/6fdWgkSb_kA>
+[^cite_ref-9]: 数据库系统原理（考研笔记） <https://kdocs.cn/l/cnWHWWKze7Af>
+[^cite_ref-10]: 数据密集型应用系统设计 <https://www.mubucm.com/doc/4kP4oa6Hm4A>

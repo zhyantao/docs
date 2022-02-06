@@ -5,7 +5,7 @@
 我们经常性地混淆数据库和数据库管理系统的概念，那么 MySQL 是一个数据库呢？还是一个数据库管理系统？
 
 数据库是一个静态的资源，表示数据的集合，而 MySQL
-本身并不代表数据，它是用于操作数据的软件，因此将它定位为数据库管理系统 [^ref001] 更为合适。
+本身并不代表数据，它是用于操作数据的软件，因此将它定位为数据库管理系统 [^cite_ref-1] 更为合适。
 
 数据库、操作数据库的软件和终端应用三者一起，我们通常称之为数据库系统。
 
@@ -17,7 +17,7 @@
 
 ## MySQL 的工作流程
 
-{numref}`mysql-arch` 展示了当在客户端发出一条指令后，MySQL 将会做出的一系列的响应 [^ref002]。
+{numref}`mysql-arch` 展示了当在客户端发出一条指令后，MySQL 将会做出的一系列的响应 [^cite_ref-2]。
 
 ```{figure} ../../_static/images/mysql-architecture.png
 :name: mysql-arch
@@ -39,11 +39,11 @@
 日志通常不只有一种，比如可以分为 Redo log、binlog、Undo log，在什么场合使用什么类型的 log
 以及如何使用其中的某几种 log 来实现目标也是我们应该熟知的。
 
-关于这部分知识的补充，我们应该进一步阅读和学习，具体可以参考 [^ref003] [^ref004]。
+关于这部分知识的补充，我们应该进一步阅读和学习，具体可以参考 [^cite_ref-3] [^cite_ref-4]。
 
 ## 参考文献
 
-[^ref001]: Database <https://en.wikipedia.org/wiki/Database>
-[^ref002]: 基础架构：一条SQL查询语句是如何执行的？丁奇 <https://time.geekbang.org/column/article/68319>
-[^ref003]: MySQL 实战 45 讲，丁奇 <https://time.geekbang.org/column/intro/139>
-[^ref004]: 凤凰架构，周志华 <https://icyfenix.cn/>
+[^cite_ref-1]: Database <https://en.wikipedia.org/wiki/Database>
+[^cite_ref-2]: 基础架构：一条SQL查询语句是如何执行的？丁奇 <https://time.geekbang.org/column/article/68319>
+[^cite_ref-3]: MySQL 实战 45 讲，丁奇 <https://time.geekbang.org/column/intro/139>
+[^cite_ref-4]: 凤凰架构，周志华 <https://icyfenix.cn/>
