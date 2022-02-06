@@ -12,7 +12,7 @@
 
 因为我们无法获得总体信息，所以我们一般先根据经验提出**假设**，然后**检验**假设是否成立，这个过程叫假设检验。
 
-假设检验的基本步骤 [^ref001]：
+假设检验的基本步骤 [^cite_ref-1]：
 
 1. 提出原假设与备择假设
 2. 从所研究总体中出抽取一个随机样本
@@ -65,9 +65,9 @@ P.S. 原假设一般是假设某个数据是否服从均为为 $x$ 方差为 $y$
 
 检验统计量是**根据样本数据计算**的**随机变量**，它用在假设检验中。
 可以使用检验统计量来确定是否要否定原假设。检验统计量将您的数据与原假设下的预期结果进行比较。
-检验统计量可用于计算 p 值 [^ref002]。
+检验统计量可用于计算 p 值 [^cite_ref-2]。
 
-根据原假设中假定的概率模型，不同的假设检验使用不同的检验统计量。常见的检验及其检验统计量包括 [^ref002]：
+根据原假设中假定的概率模型，不同的假设检验使用不同的检验统计量。常见的检验及其检验统计量包括 [^cite_ref-2]：
 
 ```{list-table}
 :header-rows: 1
@@ -189,5 +189,5 @@ P(\text{检验统计量} \geq Z_{\alpha/2}) \leq \alpha
 
 ## 参考文献
 
-[^ref001]: [统计学假设检验中 p 值的含义具体是什么？](https://www.zhihu.com/question/23149768/answer/2239802323)
-[^ref002]: [检验统计量是什么？](https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-test-statistic/)
+[^cite_ref-1]: [统计学假设检验中 p 值的含义具体是什么？](https://www.zhihu.com/question/23149768/answer/2239802323)
+[^cite_ref-2]: [检验统计量是什么？](https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-test-statistic/)
