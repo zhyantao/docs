@@ -158,7 +158,7 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
 
 [^cite_ref-4] [^cite_ref-5] [^cite_ref-6] [^cite_ref-7] [^cite_ref-8] [^cite_ref-9] [^cite_ref-10]
 
-## 参考文献
+---
 
 [^cite_ref-1]: 关系数据库是什么 | Oracle 中国 <https://www.oracle.com/cn/database/what-is-a-relational-database/>
 [^cite_ref-2]: NoSQL 是什么？ NoSQL 数据库详解 - MongoDB <https://www.mongodb.com/zh-cn/nosql-explained>

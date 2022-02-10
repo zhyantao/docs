@@ -1,3 +1,5 @@
+.. _training-with-gpu:
+
 ===================
 用 GPU 训练神经网络
 ===================
@@ -27,7 +29,6 @@ GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时�
 打开任务管理器后，我们或许会看到这样一张图：
 
 .. image:: ../../_static/images/gpuinfo.png
-    :alt: gpuinfo.png
 
 图中的共享 GPU 内存，是集成显卡的一部分。集成或共享显卡内置在 CPU 所处的同一个芯片上。
 与依赖于专用或独立显卡的 CPU 相比，某些 CPU 可以配备内置式 GPU。
@@ -47,7 +48,6 @@ NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包
 比如，我在笔记本电脑上首先安装了 PaddlePaddle，如下图所示。
 
 .. image:: ../../_static/images/paddlepaddle_install.png
-    :alt: paddlepaddle_install.png
 
 然后用 PaddlePaddle 跑了 YOLO 模型，发现 batch_size 设置的稍微大一点就会发生程序内存溢出，不得改小这个值。
 因此，如果非要在个人电脑上运行深度学习程序，那么不免在算法准确性和程序运行时间上做出一些妥协，因为根本跑不动。

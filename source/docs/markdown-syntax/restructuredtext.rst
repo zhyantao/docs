@@ -436,7 +436,14 @@ reST 支持图像指令，用法如下：
         :align: "top", "middle", "bottom", "left", "center", or "right"
         :target: text (URI or reference name)
 
-当在 Sphinx 中使用时，给定的文件名（在此处为 ``gnu.png`` ）必须相对于源文件。
+    .. figure:: ../../_static/images/lenna.jpg
+        :height: 200px
+        :width: 200px
+        :alt: Lenna, 512 times 512, Grayscale
+        :align: center
+        :target: http://www.lenna.org/
+        
+        lenna.jpg
 
 .. image:: ../../_static/images/lenna.jpg
     :height: 200px
@@ -445,20 +452,21 @@ reST 支持图像指令，用法如下：
     :align: center
     :target: http://www.lenna.org/
 
+.. figure:: ../../_static/images/lenna.jpg
+    :height: 200px
+    :width: 200px
+    :alt: Lenna, 512 times 512, Grayscale
+    :align: center
+    :target: http://www.lenna.org/
+    
+    lenna.jpg
+
 .. warning::
 
-    - 文档中所使用的图片请统一放置在 ``source/_static/images`` 目录内。
-      **绝对不允许** 直接将图片放在和文本文件相同的文件夹内，这样虽然方便了写作时进行引用，
-      但却给整个文档的维护引入了技术债务，将形成潜在的风险。
-    - 一般情况下请优先使用 `SVG <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Adding_vector_graphics_to_the_Web>`_ 格式的矢量图，使用位图请权衡好图片体积和清晰度。
-    - 尽可能使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
-    - 图片文件名需要有相应的语义信息，不可使用完全随机生成的字符。
-    - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片，编译生成 PDF 时将无法通过编译。解决方法是：图片后缀用星号表示 `Ref <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#images>`__。
-
-.. note::
-
-    如果你想要给图片添加描述性文字，请使用 ``figure`` 代替 ``image``,
-    接着使用 ``:caption: text`` 作为传入的参数，其它参数用法一致。
+    - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片将无法通过 XLaTeX 编译。解决方法是图片后缀名使用通配符 ``*``\ 。
+    - ``figure`` 和 ``image`` 的区别在于， ``figure`` 可以添加图片标题，而 ``image`` 不能。
+    - 文档中所使用的图片统一放在 ``source/_static/images`` 目录内。
+    - 优先使用 ``svg`` 格式的矢量图或使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
 
 视频（Videos）
 --------------

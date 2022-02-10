@@ -6,7 +6,10 @@
     
     集群中每台机器的 Hostname 不要重复，否则 Kubernetes 从不同机器收集状态信息时会产生干扰，被认为是同一台机器。
 
-    安装 Kubernetes 最小需要 2 核处理器、2 GB 内存，且为 x86 架构（暂不支持 ARM 架构）。对于物理机器来说，今时今日要找一台不满足以上条件的机器很困难，但对于云主机来说，尤其是囊中羞涩、只购买了云计算厂商中最低配置的同学，就要注意一下是否达到了最低要求，不清楚的话请在/proc/cpuinf、/proc/meminfo中确认一下。
+    安装 Kubernetes 最小需要 2 核处理器、2 GB 内存，且为 x86 架构（\ :ref:`暂不支持 ARM 架构 <training-with-gpu>`\ ）。
+    对于物理机器来说，今时今日要找一台不满足以上条件的机器很困难。
+    但对于云主机来说，尤其是囊中羞涩、只购买了云计算厂商中最低配置的同学，就要注意一下是否达到了最低要求。
+    不清楚的话请在 ``/proc/cpuinf``\ 、\ ``/proc/meminfo`` 中确认一下 [1]_ [2]_。
 
 
 删除 Docker 的旧版本
@@ -223,7 +226,7 @@
         --kubernetes-version v1.22.1 \
         --apiserver-advertise-address <NET_INTERFACE_IP>
 
-.. note:: 注意保持版本号的一致性，修改NET_INTERFACE_IP为本机的IP地址
+.. note:: 注意保持版本号的一致性，修改 ``NET_INTERFACE_IP`` 为本机的 ``IP`` 地址 [3]_。
 
 
 切换至需要配置的用户后，为当前用户生成 kubeconfig
@@ -280,9 +283,8 @@
     kubectl get nodes
 
 
-参考文献
----------
+.. rubric:: 参考资料
 
-1. `凤凰架构 <https://icyfenix.cn/>`_
-2. `Installing kubeadm <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>`_
-3. `Creating a cluster with kubeadm <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/>`_
+.. [1] 凤凰架构 https://icyfenix.cn/
+.. [2] Installing kubeadm [`webpage <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>`__]
+.. [3] Creating a cluster with kubeadm [`webpage <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/>`__]

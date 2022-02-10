@@ -9,7 +9,7 @@
 - int pop();
 - int peek();
 
-队列的方法：[^zuocy]
+队列的方法：[^cite_ref-1]
 
 - void add(int number);
 - int poll();
@@ -75,6 +75,6 @@ public class Recursion {
 // 3 2 1 0 -1 -1 0 1 2
 ```
 
-## 参考文献
+---
 
-[^zuocy]: 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2019. URL: <https://kdocs.cn/l/cn65qULuDrFX>
+[^cite_ref-1]: 左程云. 程序员代码面试指南[M]. 电子工业出版社, 2019. URL: <https://kdocs.cn/l/cn65qULuDrFX>
