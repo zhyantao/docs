@@ -8,7 +8,7 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = u'Notebook' 
-copyright = u'2021, Yantao'
+copyright = u'2022, Yantao'
 author = u'Yantao'
 version = 'v 1.2.0'
 
