@@ -1,3 +1,4 @@
+(software_design_pattern)=
 # 软件系统设计
 
 软件系统设计四步走[^ref-system-design]：
