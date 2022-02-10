@@ -2,20 +2,10 @@
 腾讯觅影赛道四
 ==============
 
-虽然代码无法下载到本地，但是，使用 Jupyter notebook 可以直接在云端查看图片是什么样子的。
-
-相关链接
+提前阅读
 --------
 
-- `【记得及时终止和删除】智能钛机器学习平台 <https://console.cloud.tencent.com/tione/notebook/instance>`_
-- `查看比赛数据 <https://console.cloud.tencent.com/taop/project-data>`_
-- `常见问题之 Notebook 功能相关 <https://cloud.tencent.com/developer/article/1876374>`_
-- `大赛介绍与赛事教程汇总 <https://cloud.tencent.com/developer/special/AIMIS2021-TIONE>`_
-- `如何使用 Notebook 功能完成赛事训练 <https://cloud.tencent.com/developer/article/1876370>`_
-- `赛道四题目介绍和数据说明 <https://contest.taop.qq.com/channelDetail?id=108>`_
-- `腾讯觅影大赛首页 <https://contest.taop.qq.com>`_
-- `如何使用数据 <https://www.kaggle.com/>`_
-- `从哪里找参考模型 <https://paperswithcode.com/search?q_meta=&q_type=&q=3D+Unet>`_
+[1]_、[2]_、[3]_、[4]_、[5]_、[6]_、[7]_、[8]_、[9]_
 
 任务分析
 --------
@@ -54,11 +44,6 @@
 2. 将压缩包复制到 ``/home/tione/notebook/taop-2021-result/04_predicts/<unix_timestamp>/04_predicts.zip`` [13]_ 。
 3. 在 `大赛官网个人信息页 <https://contest.taop.qq.com/personalInfo>`_ 中，标注回传 04_predicts.zip，比对预测结果，调整模型参数。
 4. 用同样的方式对 04_results.csv 进行打包 [12]_ ，在 `大赛官网个人信息页 <https://contest.taop.qq.com/personalInfo>`_ 中，提交作品 04_results.zip，进行排名更新。
-
-.. rubric:: 注
-
-.. [12] 文件打包直接在 04_predicts.csv 文件所在目录下执行 ``zip -q -r 04_predicts.zip *`` 即可，请勿加入当前目录信息。
-.. [13] ``<unix_timestamp>`` 为选手自行生成的时间戳。
 
 .. note:: 
     
@@ -234,7 +219,7 @@ they reference, but in separate series,
 开始写代码
 -----------
 
-.. note:: 本文中可能会遇到一些常用的数据处理函数，可以在 [2]_ 中查找。
+.. note:: 本文中可能会遇到一些常用的数据处理函数，可以在 [11]_ 中查找。
 
 依赖库
 ~~~~~~~
@@ -408,7 +393,7 @@ they reference, but in separate series,
 
 .. image:: ../../_static/images/NeuralNetworkZoo19High.png
 
-Neural Network Cheat Sheet [1]_
+Neural Network Cheat Sheet [10]_
 
 .. code-block:: python
 
@@ -427,46 +412,30 @@ Neural Network Cheat Sheet [1]_
 相关比赛
 --------
 
-赛道四按照分类可以是 3D 医学图像分割。 :footcite:t:`ma2021cutting` 总结了 2020 年医学图像分割挑战赛中的顶级方法，包括各种任务和数据集。
+赛道四按照分类可以是 3D 医学图像分割。
+:footcite:t:`ma2021cutting` 总结了 2020 年医学图像分割挑战赛中的顶级方法，包括各种任务和数据集。
 
-以下挑战赛可以分为单模态 3D 图像分割和多模态 3D 图像分割。了解 `什么是多模态机器学习？ <https://cloud.tencent.com/developer/article/1436508>`_ 。其中前 5 个挑战赛为单模态，后 5 个为多模态。
+以下挑战赛可以分为单模态 3D 图像分割和多模态 3D 图像分割。了解
+`什么是多模态机器学习？ <https://cloud.tencent.com/developer/article/1436508>`_\ 。
+其中前 5 个挑战赛为单模态，后 5 个为多模态。
 
-CADA 挑战赛
-~~~~~~~~~~~
+CADA 挑战赛、ASOCA 挑战赛、VerSeg 挑战赛、M&Ms 挑战赛、EMIDEC 挑战赛、ADAM 挑战赛、HECKTOR
+挑战赛、MyoPS 挑战赛、ABCs 挑战赛、BraTS 挑战赛。
 
-ASOCA 挑战赛
-~~~~~~~~~~~~
+.. rubric:: 参考资料
 
-VerSeg 挑战赛
-~~~~~~~~~~~~~
-
-M&Ms 挑战赛
-~~~~~~~~~~~~
-
-EMIDEC 挑战赛
-~~~~~~~~~~~~~
-
-ADAM 挑战赛
-~~~~~~~~~~~
-
-HECKTOR 挑战赛
-~~~~~~~~~~~~~~
-
-MyoPS 挑战赛
-~~~~~~~~~~~~
-
-ABCs 挑战赛
-~~~~~~~~~~~
-
-BraTS 挑战赛
-~~~~~~~~~~~~
-
-
-注解和参考文献
----------------
-
-
-.. [1] https://www.asimovinstitute.org/neural-network-zoo
-.. [2] https://www.datacamp.com/community/data-science-cheatsheets
+.. [1] `【记得及时终止和删除】智能钛机器学习平台 <https://console.cloud.tencent.com/tione/notebook/instance>`_
+.. [2] `查看比赛数据 <https://console.cloud.tencent.com/taop/project-data>`_
+.. [3] `如何使用数据 <https://www.kaggle.com/>`_
+.. [4] `从哪里找参考模型 <https://paperswithcode.com/search?q_meta=&q_type=&q=3D+Unet>`_
+.. [5] `常见问题之 Notebook 功能相关 <https://cloud.tencent.com/developer/article/1876374>`_
+.. [6] `大赛介绍与赛事教程汇总 <https://cloud.tencent.com/developer/special/AIMIS2021-TIONE>`_
+.. [7] `如何使用 Notebook 功能完成赛事训练 <https://cloud.tencent.com/developer/article/1876370>`_
+.. [8] `赛道四题目介绍和数据说明 <https://contest.taop.qq.com/channelDetail?id=108>`_
+.. [9] `腾讯觅影大赛首页 <https://contest.taop.qq.com>`_
+.. [10] https://www.asimovinstitute.org/neural-network-zoo
+.. [11] https://www.datacamp.com/community/data-science-cheatsheets
+.. [12] 文件打包直接在 04_predicts.csv 文件所在目录下执行 ``zip -q -r 04_predicts.zip *`` 即可，请勿加入当前目录信息。
+.. [13] ``<unix_timestamp>`` 为选手自行生成的时间戳。
 
 .. footbibliography::

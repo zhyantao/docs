@@ -30,8 +30,7 @@ Makefile
 还有其他的语法比如 ``.PHONY`` 可以参考下面的参考文献中的 **跟我一起写Makefile**
 
 
-参考文献
---------
+.. rubric:: 参考资料
 
 1. 韦东山. 嵌入式Linux应用开发完全手册[M]. 人民邮电出版社, 2008.
 2. 跟我一起写Makefile. https://seisman.github.io/how-to-write-makefile/index.html

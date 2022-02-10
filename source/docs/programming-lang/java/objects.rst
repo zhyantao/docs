@@ -2,8 +2,13 @@
 面向对象
 ========
 
-抽象过程
----------
+什么是面向对象编程
+------------------
+
+面向对象编程可以看作一种在程序中包含各种 **独立** 而又 **互相调用** 的对象的思想 [cite_ref-1]_。
+这种特点非常副歌
+
+面向对象编程（OOP）
 
 1. 万物皆为对象。（可以存储数据、可以执行操作）
 2. 程序是对象的集合，它们通过发送消息来告知彼此所要做的。（方法调用）
@@ -426,3 +431,7 @@ Web 是一个巨型客户/服务器系统
 
 - methodName
 - ClassName
+
+.. rubric:: 参考资料
+
+.. [cite_ref-1] Object-oriented programming https://en.wikipedia.org/wiki/Object-oriented_programming

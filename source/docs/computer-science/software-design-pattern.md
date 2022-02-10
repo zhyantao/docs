@@ -702,7 +702,7 @@ SAGA 系统本身也有可能会崩溃，所以它必须设计与数据库类似
 
 SAGA 事务实现起来也不太容易，通常也不会直接靠裸编码来实现，一般也是在事务中间件的基础上完成，Seata 同样支持 SAGA 事务模式。
 
-## 参考文献
+---
 
-[^ref-system-design]: https://github.com/donnemartin/system-design-primer
-[^ref-pods]: https://zhuanlan.zhihu.com/p/32618563
+[^ref-system-design]: <https://github.com/donnemartin/system-design-primer>
+[^ref-pods]: <https://zhuanlan.zhihu.com/p/32618563>

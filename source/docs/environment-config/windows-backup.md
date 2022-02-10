@@ -33,7 +33,7 @@ FAT（File Allocation Table，文件分配表）是一种由微软发明并拥�
 系统使用的文件系统 [^cite_ref-3]。FAT32 表示文件分配表采用 32 位二进制数记录磁盘文件，单个文件最大寻址范围是
 $2^{32} = 4 GB$。
 
-## 参考文献
+---
 
 [^cite_ref-1]: Windows 预先安装环境 <https://en.wikipedia.org/wiki/Windows_Preinstallation_Environment>
 [^cite_ref-2]: File Allocation Table <https://en.wikipedia.org/wiki/File_Allocation_Table>

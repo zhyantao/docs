@@ -725,8 +725,7 @@ Example 3
 - `深度学习中 Batch Normalization 为什么效果好？ <https://www.zhihu.com/question/38102762/answer/85238569>`_
 - `ML 入门：归一化、标准化和正则化 <https://zhuanlan.zhihu.com/p/29957294>`_
 
-参考文献
---------
+.. rubric:: 参考资料
 
 .. footbibliography::
 

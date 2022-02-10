@@ -486,7 +486,7 @@ ORG 0x00     ;程序汇编地址从00H开始
 
 （2）这样可以减少重复劳动,提高编程效率。
 
-## 参考文献
+---
 
 1. <http://technology.niagarac.on.ca/staff/mboldin/18F_Instruction_Set/>
 2. <http://ww1.microchip.com/downloads/en/DeviceDoc/39582C.pdf>

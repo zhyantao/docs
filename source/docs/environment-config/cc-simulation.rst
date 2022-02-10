@@ -117,8 +117,7 @@ Brain G. Thomas :footcite:p:`thomas2018review` 对很多现象应该如何建模
 - `ESI Group <https://www.esi-group.com/>`_
 
 
-参考文献
---------
+.. rubric:: 参考资料
 
 .. [1] Continuous casting. https://en.wikipedia.org/wiki/Continuous_casting
 .. [2] 蔡开科. 连铸坯表面裂纹的控制[J]. 鞍钢技术, 2004(3):8.

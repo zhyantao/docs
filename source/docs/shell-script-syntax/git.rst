@@ -1,16 +1,12 @@
 Git
 ===
 
-文章转载自《\ `阮一峰的网络日志 - 常用 Git 命令清单 <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`_\ 》
-
-.. note::
-
-    更直观地体验 Git 命令：\ `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`_。
-
 工作流程
 ~~~~~~~~
 
-.. image:: ../../_static/images/bg2015120901.png
+.. figure:: ../../_static/images/bg2015120901.png
+    
+    图源阮一峰的博客 [1]_
 
 - Workspace：工作区
 - Index / Stage：暂存区
@@ -22,6 +18,8 @@ Git
     - ``[commit]`` ：提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 来代替；
     - ``[remote]`` ：远程仓库，可通过 ``git remote`` 查询，一般是 ``origin`` ；
     - ``[branch]`` ：分支，可通过 ``git branch`` 查询。
+
+在 Learn Git Branching 上，可以更轻松直观地体验 Git 完整流程 [2]_。
 
 仓库
 ~~~~~
@@ -346,3 +344,8 @@ Git
 
     # 生成一个可供发布的压缩包
     $ git archive
+
+.. rubric:: 参考资料
+
+.. [1] 阮一峰的网络日志 - 常用 Git 命令清单 [`webpage <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__]
+.. [2] Learn Git Branching [`webpage <https://oschina.gitee.io/learn-git-branching/>`__]

@@ -308,6 +308,6 @@ qemu/linux-user/syscall.c:5912: undefined reference to `stime'
 
 将 `linux-user/syscall.c` 中 `get_errno(stime(&host_time));` 改为 `get_errno(clock_settime(CLOCK_REALTIME, &host_time));`
 
-## 参考文献
+---
 
 [^cite_ref-1]: <https://pdos.csail.mit.edu/6.828/2018/schedule.html>

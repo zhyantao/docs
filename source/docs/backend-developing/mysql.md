@@ -41,7 +41,7 @@
 
 关于这部分知识的补充，我们应该进一步阅读和学习，具体可以参考 [^cite_ref-3] [^cite_ref-4]。
 
-## 参考文献
+---
 
 [^cite_ref-1]: Database <https://en.wikipedia.org/wiki/Database>
 [^cite_ref-2]: 基础架构：一条SQL查询语句是如何执行的？丁奇 <https://time.geekbang.org/column/article/68319>
