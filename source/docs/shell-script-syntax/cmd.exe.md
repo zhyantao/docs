@@ -13,7 +13,7 @@
 
 Microsoft 新开发的 [Terminal](https://github.com/microsoft/terminal) 可以更好地支持本地开发工作，因此，现在换到这个 Terminal 上部署环境。
 
-1. 首先，遵循 [oh-my-posh 的安装步骤](https://ohmyposh.dev/docs/pwsh)，完成基本安装。
+1. 首先，遵循 [oh-my-posh 的安装步骤](https://ohmyposh.dev/docs/windows)，完成基本安装。
 2. 现在可能有些字符无法正常显示，我们需要安装一些字体，推荐 [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)。
 3. 然后，修改配置 Windows Termial 的配置文件 [Settings.json](https://docs.microsoft.com/en-us/windows/terminal/customize-settings/profile-general)（这个 Settings.json 可以从 Windows Terminal 软件界面的下拉三角中找见），**补充**如下信息
 
