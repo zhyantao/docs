@@ -380,6 +380,6 @@ Web Worker
 
 ---
 
-1. JavaScript 基础教程 <https://wangdoc.com/javascript/basic/introduction.html>
+1. JavaScript 基础教程 <https://wangdoc.com/javascript/>
 2. 现代 JavaScript 教程 <https://zh.javascript.info/>
 3. JavaScript 思维导图 <https://kdocs.cn/l/cqVRohCmQWBZ>
