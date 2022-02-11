@@ -57,7 +57,7 @@ Java 中所有的类都继承自 ``Object``\ ，我们将这种现象命名为 *
 --------------
 
 想要理解多态和后期绑定，我们首先需要理解什么是绑定。根据维基百科的解释，绑定是 **调用** 的另一种叫法 [6]_。
-调用可以理解为某个对象 **调用** 某个方法，也可以理解给某个方法的形参 **赋值**。
+调用可以理解为某个对象 **调用** 某个方法，也可以理解给某个方法的形参 **赋值** [9]_。
 
 按照绑定发生的时机来划分，可以分为前期绑定和后期绑定。
 后期绑定是指调用发生的时机是运行期，前期绑定是指调用发生的时机在编译期。
@@ -216,3 +216,4 @@ Hello, World!
 .. [6] Late binding https://en.wikipedia.org/wiki/Late_binding
 .. [7] Virtual method table https://en.wikipedia.org/wiki/Virtual_method_table
 .. [8] jar 包和 war 包的介绍与区别 https://developer.aliyun.com/article/634962
+.. [9] Create a Resource Controller https://spring.io/guides/gs/rest-service/#_create_a_resource_controller
