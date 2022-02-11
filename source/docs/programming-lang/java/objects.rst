@@ -185,6 +185,11 @@ Web 是一个巨型 **客户端-服务器** 系统。
 客户端编程（也叫 **前端开发**\ ）是指使用浏览器支持的语言（如 JavaScript）编写运行在客户端上的软件。
 服务端编程（也叫 **后端开发**\ ）是指使用服务器支持的语言（如 Java、C++）编写运行在服务端上的软件。
 
+当我们编写完程序，最后一步就是将代码 **封装** 起来，做成压缩包。这个压缩包通常是 ``.jar`` 或 ``.war`` 格式。
+``.jar`` 包是 Java 应用程序打的包，包含类和一些相关资源，可供其他人调用。
+``.war`` 包是 Java Web 打的包，包含一个网站的所有内容（\ ``.class`` 文件、依赖包、配置文件、\ ``.html`` 文件等）。
+因此，可以将一个 ``.war`` 包理解为一个 Web 项目 [8]_。
+
 
 Hello, World!
 -------------
@@ -210,3 +215,4 @@ Hello, World!
 .. [5] Object-oriented programming https://en.wikipedia.org/wiki/Object-oriented_programming
 .. [6] Late binding https://en.wikipedia.org/wiki/Late_binding
 .. [7] Virtual method table https://en.wikipedia.org/wiki/Virtual_method_table
+.. [8] jar 包和 war 包的介绍与区别 https://developer.aliyun.com/article/634962
