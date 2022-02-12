@@ -7,7 +7,9 @@
 - ``\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Command Processor`` 或者
 - ``\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor``
 
-两者中的某一个 ``AutoRun`` 数据字段（如果没有就**新建**可扩充字符串值）的值设置为：``conda activate``
+两者中的某一个 ``AutoRun`` 数据字段（如果没有就**新建**可扩充字符串值）的值设置为：``conda activate``。
+
+或者，你也可以参考 [Windows 终端中的动态配置文件](https://docs.microsoft.com/zh-cn/windows/terminal/dynamic-profiles)。
 
 ## 更改 Terminal 风格
 
