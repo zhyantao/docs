@@ -92,8 +92,7 @@ Java 基础知识
     :hidden:
 
     objects.rst
-    operators.rst
-    control.rst
+    metadata.rst
     initialization.rst
     access.rst
     reusing.rst

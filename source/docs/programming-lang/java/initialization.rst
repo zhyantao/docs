@@ -2,70 +2,81 @@
 初始化对象
 ==========
 
-构造器重载和方法重载
---------------------
+.. _load-class:
+
+初始化及类的加载
+-----------------
+
+每个类的编译代码都存在于它自己的独立的 ``.class`` 文件中，该文件只有在需要使用程序代码时才会被加载。
+
+一般来说，"类的代码在初次使用时才加载"。这通常发生于创建类的第一个对象时，但是当访问 ``static`` 域 
+**或** ``static`` 方法时，也会发生加载。
+
+先阅读一下代码，有一个直观的感受：
 
 .. code-block:: java
-    :emphasize-lines: 8,12,17,20
-    :linenos:
 
-    //: initialization/Overloading.java
-    // Demonstration of both constructor
-    // and ordinary method overloading.
+    //: reusing/Beetle.java
+    // The full process of initialization.
     import static net.mindview.util.Print.*;
 
-    class Tree {
-        int height;
-        Tree() {
-            print("Planting a seedling");
-            height = 0;
+    class Insect {
+        private int i = 9;
+        protected int j;
+        Insect() {
+            print("i = " + i + ", j = " + j);                                   // 4
+            j = 39;
         }
-        Tree(int initialHeight) {
-            height = initialHeight;
-            print("Creating new Tree that is " +
-                height + " feet tall");
-        }	
-        void info() {
-            print("Tree is " + height + " feet tall");
-        }
-        void info(String s) {
-            print(s + ": Tree is " + height + " feet tall");
+        private static int x1 = printInit("static Insect.x1 initialized");      // 1
+        static int printInit(String s) {
+            print(s);                                                           // 1, 2, 5
+            return 47;
         }
     }
 
-    public class Overloading {
+    public class Beetle extends Insect {
+        private int k = printInit("Beetle.k initialized");                      // 5
+        public Beetle() {
+            print("k = " + k);                                                  // 6
+            print("j = " + j);                                                  // 7
+        }
+        private static int x2 = printInit("static Beetle.x2 initialized");      // 2
         public static void main(String[] args) {
-            for(int i = 0; i < 5; i++) {
-                Tree t = new Tree(i);
-                t.info();
-                t.info("overloaded method");
-            }
-            // Overloaded constructor:
-            new Tree();
-        }	
+            print("Beetle constructor");                                        // 3
+            Beetle b = new Beetle();
+        }
     } /* Output:
-    Creating new Tree that is 0 feet tall
-    Tree is 0 feet tall
-    overloaded method: Tree is 0 feet tall
-    Creating new Tree that is 1 feet tall
-    Tree is 1 feet tall
-    overloaded method: Tree is 1 feet tall
-    Creating new Tree that is 2 feet tall
-    Tree is 2 feet tall
-    overloaded method: Tree is 2 feet tall
-    Creating new Tree that is 3 feet tall
-    Tree is 3 feet tall
-    overloaded method: Tree is 3 feet tall
-    Creating new Tree that is 4 feet tall
-    Tree is 4 feet tall
-    overloaded method: Tree is 4 feet tall
-    Planting a seedling
+    static Insect.x1 initialized
+    static Beetle.x2 initialized
+    Beetle constructor
+    i = 9, j = 0
+    Beetle.k initialized
+    k = 47
+    j = 39
     *///:~
+
+下面介绍一下一般的类的实例化流程：
+
+1. 基类构造总是先于导出类。按照继承关系，首先对基类进行加载，向上回溯，直到触及 ``Object``。
+2. 按照从基类到导出类的顺序，对所有的 ``static`` 属性赋予人为设定的值（初始化顺序很重要，因为导出类 
+   ``static`` 可能依赖于基类的 ``static``，注意，\ ``main`` 方法也是 ``static`` 的，因此 ``main`` 
+   也会在这一步执行）。
+3. 通过将内存设为二进制 0，一举完成对代码中出现的所有非 ``static`` 数据 :ref:`设置默认值 <java-datatpyes>`。
+4. 按照从基类到导出类的顺序，首先对所有的\ **非** ``static`` 属性赋予人为设定的值，然后执行构造器函数。
+5. 执行完构造器，对象的初始化就算完成了。
+
+.. note::
+
+    注意，不管是 ``static`` 函数还是普通函数，都不会包含在实例化过程中，只有调用的时候才会执行。
+
 
 this 关键字
 ------------
 
-使用 this 关键字传递自身引用。
+``this`` 关键字指代当前对象的引用，因此，我们经常使用 ``this`` 关键字传递自身引用。
+使用 ``this`` 调用方法，表示调用当前对象的方法或属性\
+（因为可能类的属性和方法内部的属性可能同名，这时候可以用 ``this`` 关键字来区分）。\
+``return this`` 表示返回当前对象的引用。
 
 .. code-block:: java
     :emphasize-lines: 18
@@ -98,15 +109,10 @@ this 关键字
     } /* Output:
     Yummy
     *///:~
-    
 
-.. note:: 
+上面代码高亮处表示 ``Apple`` 类用于生成剥皮后的苹果。
 
-    1. this 关键字指代当前对象的引用，使用 this 调用方法，表示调用当前对象的方法或属性。（因为可能类的属性和方法内部的属性可能同名，这时候可以用 this 关键字来区分）
-    2. return this 表示返回当前对象的引用。
-    3. 上面代码第 18 行，由 Apple 类生成的苹果对象将自身传递给了外部操作 Peeler.peel()。Peeler 剥完皮后又把苹果返回了。
-    
-在构造器中调用构造器。
+使用 ``this`` 关键字，可以在构造器中调用构造器，因为生命周期，不能在非构造器函数中调用构造器。
 
 .. code-block:: java
     :emphasize-lines: 17,19,23
@@ -157,67 +163,58 @@ this 关键字
     1. 使用 ``this(String[] args)`` 调用构造器时，只能调用一个。
     2. 构造器调用必须位于方法的最开始。
 
-.. tip:: 
-
-    与 ``this(String[] args)`` 类似，使用 ``super(String[] args)`` 调用父类对象的某个构造器。
+与 ``this(String[] args)`` 类似，使用 ``super(String[] args)`` 调用父类对象的某个构造器。
 
 static 关键字
 --------------
 
-1. static 方法内部不能调用非静态方法。
-2. static 方法没有 this 方法。
-3. static 方法其实时 Java 中的全局方法。
-4. 想为某特定域只分配一份存储空间，而不去考虑究竟要创建多少对象，甚至根本就不创建对象。
-5. 希望某个方法不与包含它的类的任何对象关联在一起。即通过类名调用方法。
+``static`` 关键字的适用场景：
 
-final关键字
------------
+1. 想为某特定域只分配一份存储空间，而不去考虑究竟要创建多少对象，甚至根本就不创建对象。
+2. 希望某个方法不与包含它的类的任何对象关联在一起，即通过类名调用方法。
 
-final 是指“这是无法改变的”。
+.. note::
 
-final 数据
-~~~~~~~~~~
+    1. ``static`` 方法内部不能调用非静态方法，是因为生命周期。
+    2. ``static`` 方法没有 ``this`` 方法，也是因为生命周期，\ ``static`` 方法先于对象创建。
+    3. ``static`` 方法其实是 Java 中的全局方法。
 
-声明 final 数据时，通常针对：
 
-1. 一个永不改变的 **编译时常量** 。
-2. 一个在运行时被初始化的值，而你不希望它被改变。
+final 关键字
+------------
 
+``final`` 可以用于修饰属性、方法和类，发生的效果是一致的，表示 "这是无法改变的"，细微之处略有差别。
+
+被 ``final`` 声明的属性无法被修改。因此常用 ``final`` 用来修饰编译时常量。
 编译时常量可以在编译期直接带入计算式参与计算，减轻了运行时的负担。
+对于基本数据类型，\ ``final`` 使数值恒定不变。
+对于引用类型，\ ``final`` 使引用恒定不变，即一旦引用被初始化，无法再指向其他对象。
+参数列表中使用 ``final`` 时，表示无法更改参数引用的指向。
+按照惯例，既是 ``static`` 又是 ``final`` 的域（即编译器常量）用 **大写字母** 
+表示，使用下划线分隔各个单词。
 
-- 对于基本数据类型，final 使数值恒定不变。
-- 对于引用类型，final 使引用恒定不变，即一旦引用被初始化，无法再指向其他对象。
-- 参数列表中使用 final 时，表示无法更改参数引用的指向。
-
-.. note:: 
+.. note::
     
-    - 一个既是 static 又是 final 的域只占据一段不能改变的存储空间
-    - 定义为 public 强调可以用于包之外
-    - 定义为 static 强调只有一份
-    - 定义为 final 强调是一个常量
+    - 一个既是 ``static`` 又是 ``final`` 的域只占据一段不能改变的存储空间。
+    - 定义为 ``public`` 强调可以用于包之外。
+    - 定义为 ``static`` 强调只有一份。
+    - 定义为 ``final`` 强调是一个常量。
 
-.. tip:: 
-    
-    按照惯例，既是 static 又是 final 的域（即编译器常量）用大写表示，使用下划线分隔各个单词。
+被 ``final`` 声明的方法无法重写。
+所有的 ``private`` 方法都 **隐式地** 指定为 ``final``\ ，因为无法改变。
+一个方法一旦被 ``final`` 声明，将不会发生动态绑定行为。
 
-final 方法
-~~~~~~~~~~~
+被 ``final`` 声明的类无法被继承。
 
-- 使用 final 方法可以锁定方法，使继承类无法重写该方法。
-- 类中所有的 **private 方法** 都隐式地指定为 final，因为无法改变。
-- “关闭”动态绑定。 :ref:`参考 <dynamic-binding>`
-
-final 类
-~~~~~~~~
-
-将某个类声明为 final 表示该类将无法被继承。
 
 finalize() 方法
 ----------------
 
-1. 不是 new 出来的对象，垃圾回收器不会回收。
-2. 不是 new 出来的对象，会获得一块特殊的内存，需要使用 finalize() 方法来释放。
-3. 当某个对象处于某种状态时（例如文件处于打开状态），如果直接使用 finalize() 清理该对象占用的内存空间，可能会发生异常。因此 finalize() 可以用来发现异常。如下代码所示：
+不是 ``new`` 出来的对象，会获得一块特殊的内存，垃圾回收器不会回收，需要使用 ``finalize()`` 方法来释放。
+
+当某个对象处于某种状态时（例如文件处于打开状态），如果直接使用 ``finalize()`` 
+清理该对象占用的内存空间，可能会发生异常。因此 ``finalize()`` 可以用来发现异常。
+如下代码所示：
 
 .. code-block:: java
     :emphasize-lines: 13,29
@@ -229,178 +226,30 @@ finalize() 方法
 
     class Book {
         boolean checkedOut = false;
-        Book(boolean checkOut) {  // true为图书出库
+        Book(boolean checkOut) {            // 设置 "图书已出库" 标志位
             checkedOut = checkOut;
         }
-        void checkIn() {  // 图书出库后，需要做状态检查和设置
+        void checkIn() {                    // 将 "图书入库"
             checkedOut = false;
         }
         protected void finalize() {
-            if(checkedOut)  // 图书出库后，如果没有做检查和设置，会抛出异常
+            if(checkedOut)                  // 检查 "图书是否已出库"
                 System.out.println("Error: checked out");
-            // Normally, you'll also do this:
+            // 正常情况下，清理完导出类后，也应该对基类进行清理：
             // super.finalize(); // Call the base-class version
         }
     }
 
     public class TerminationCondition {
         public static void main(String[] args) {
-            Book novel = new Book(true);  // 图书出库
+            Book novel = new Book(true);    // 设置 "图书已出库"，清理库存
             // Proper cleanup:
-            novel.checkIn();
+            novel.checkIn();                // 设置 "图书入库"
             // Drop the reference, forget to clean up:
-            new Book(true);
+            new Book(true);                 // 设置 "图书出库"
             // Force garbage collection & finalization:
-            System.gc();
+            System.gc();                    // 调用 finalize() 后发现没有库存，报错
         }
     } /* Output:
     Error: checked out
     *///:~
-
-
-构造器的初始化
---------------
-
-1. 静态变量会先于非静态变量初始化。
-2. 即使没有显式地使用 static 关键字，构造器实际上也是静态方法。
-3. 不论类中的属性成员分布于方法成员之前还是之后，属性成员都会先于类中的任何方法成员，进行初始化。如下代码所示：
-
-.. code-block:: java
-    :emphasize-lines: 12,18,20
-    :linenos:
-
-    //: initialization/OrderOfInitialization.java
-    // Demonstrates initialization order.
-    import static net.mindview.util.Print.*;
-
-    // When the constructor is called to create a
-    // Window object, you'll see a message:
-    class Window {
-        Window(int marker) { print("Window(" + marker + ")"); }
-    }
-
-    class House {
-        Window w1 = new Window(1); // Before constructor
-        House() {
-            // Show that we're in the constructor:
-            print("House()");
-            w3 = new Window(33); // Reinitialize w3
-        }
-        Window w2 = new Window(2); // After constructor
-        void f() { print("f()"); }
-        Window w3 = new Window(3); // At end
-    }
-
-    public class OrderOfInitialization {
-        public static void main(String[] args) {
-            House h = new House();
-            h.f(); // Shows that construction is done
-        }
-    } /* Output:
-    Window(1)
-    Window(2)
-    Window(3)
-    House()
-    Window(33)
-    f()
-    *///:~
-
-.. _init-arrays:
-
-数组初始化
------------
-
-.. code-block:: java
-    :emphasize-lines: 6-8
-    :linenos:
-
-    //: initialization/ArraysOfPrimitives.java
-    import static net.mindview.util.Print.*;
-
-    public class ArraysOfPrimitives {
-    public static void main(String[] args) {
-        int[] a1 = { 1, 2, 3, 4, 5 };
-        int[] a2;
-        a2 = a1;
-        for(int i = 0; i < a2.length; i++)
-            a2[i] = a2[i] + 1;
-        for(int i = 0; i < a1.length; i++)
-            print("a1[" + i + "] = " + a1[i]);
-    }
-    } /* Output:
-    a1[0] = 2
-    a1[1] = 3
-    a1[2] = 4
-    a1[3] = 5
-    a1[4] = 6
-    *///:~
-
-
-.. note:: 如果你创建的是非基本类型的数组，那么你就创建了一个引用数组。如下所示：
-
-.. code-block:: java
-    :emphasize-lines: 9
-    :linenos:
-
-    //: initialization/ArrayClassObj.java
-    // Creating an array of nonprimitive objects.
-    import java.util.*;
-    import static net.mindview.util.Print.*;
-
-    public class ArrayClassObj {
-        public static void main(String[] args) {
-            Random rand = new Random(47);
-            Integer[] a = new Integer[rand.nextInt(20)];
-            print("length of a = " + a.length);
-            for(int i = 0; i < a.length; i++)
-                a[i] = rand.nextInt(500); // Autoboxing
-            print(Arrays.toString(a));
-        }
-    } /* Output: (Sample)
-    length of a = 18
-    [55, 193, 361, 461, 429, 368, 200, 22, 207, 288, 128, 51, 89, 309, 278, 498, 361, 20]
-    *///:~
-
-.. _variable-argument-list:
-
-可变参数列表
--------------
-
-.. code-block:: java
-    :emphasize-lines: 5,6,19
-    :linenos:
-
-    //: initialization/NewVarArgs.java
-    // Using array syntax to create variable argument lists.
-
-    public class NewVarArgs {
-        // static void printArray(Object[] args) {  // 老语法
-        static void printArray(Object... args) {    // 新语法
-            for(Object obj : args)
-                System.out.print(obj + " ");
-            System.out.println();
-        }
-        public static void main(String[] args) {
-            // Can take individual elements:
-            printArray(new Integer(47), new Float(3.14), new Double(11.11));
-            printArray(47, 3.14F, 11.11);
-            printArray("one", "two", "three");
-            printArray(new A(), new A(), new A());
-            // Or an array:
-            printArray((Object[])new Integer[]{ 1, 2, 3, 4 });
-            printArray(); // Empty list is OK
-        }
-    } /* Output: (75% match)
-    47 3.14 11.11
-    47 3.14 11.11
-    one two three
-    A@1bab50a A@c3c749 A@150bd4d
-    1 2 3 4
-    *///:~
-
-.. note:: 
-    
-    1. 可变参数列表其实是一个数组。这就是为什么可以用 foreach 来进行迭代的原因。
-    2. 可变参数列表支持自动包装机制。
-    3. 可变参数列表使重载变得更复杂了。比如现在有方法 f(Character... args), f(Integer... args)。当调用 f() 时，编译器不知道该调用两者中的哪一个了。这时可以通过加一个非可变参数来解决：f(float i, Character... args)。
-
