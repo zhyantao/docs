@@ -9,7 +9,8 @@
 
 创建内部类和创建普通类一样，使用内部类和使用普通类也一样。
 
-如果想在外部类的静态方法中创建某个内部类的对象，必须显式地指明这个对象的类型 ``OuterClassName.InnerClassName`` ，比如下面代码的 ``main()`` 方法所示。
+如果想在外部类的静态方法中创建某个内部类的对象，必须显式地指明这个对象的类型 
+``OuterClassName.InnerClassName`` ，比如下面代码的 ``main()`` 方法所示。
 
 .. code-block:: java
     :emphasize-lines: 32, 33
@@ -364,7 +365,7 @@
 接口内部的类
 ~~~~~~~~~~~~
 
-正常情况下，不能在接口内部放置任何代码，但是嵌套类可以作为接口的一部分。接口中的任何类都自动地时
+正常情况下，不能在接口内部放置任何代码，但是嵌套类可以作为接口的一部分。接口中的任何类都自动地是
 ``public`` 和 ``static`` 的。因为嵌套类是 ``static`` 的，只是将嵌套类置于接口的命名空间内，这并不违反接口的规则。
 你甚至可以在内部类中实现其外围类的接口。
 
@@ -373,13 +374,13 @@
     //: innerclasses/ClassInInterface.java
     // {main: ClassInInterface$Test}
 
-    public interface ClassInInterface {
+    public interface ClassInInterface {                 // 接口类
         void howdy();
-        class Test implements ClassInInterface {
+        class Test implements ClassInInterface {        // 接口内的实现类
             public void howdy() {
                 System.out.println("Howdy!");
             }
-            public static void main(String[] args) {
+            public static void main(String[] args) {    // main() 测试
                 new Test().howdy();
             }
         }
@@ -387,7 +388,9 @@
     Howdy!
     *///:~
 
-:ref:`之前也说过 <inheritance-syntax>` ，在每个类中都写要一个 ``main()`` 方法，用来测试这个类。这样做有一个缺点，那就是必须带着哪些已编译过的额外代码。如果这对你是个麻烦，那就可以使用嵌套类来放置测试代码。
+:ref:`之前也说过 <inheritance-syntax>`，在每个类中都写要一个 ``main()`` 
+方法，用来测试这个类。这样做有一个缺点，那就是必须带着哪些已编译过的额外代码。
+如果这对你是个麻烦，那就可以使用嵌套类来放置测试代码。
 
 .. code-block:: java
 
@@ -395,10 +398,12 @@
     // Putting test code in a nested class.
     // {main: TestBed$Tester}
 
-    public class TestBed {
-        public void f() { System.out.println("f()"); }
-        public static class Tester {
-            public static void main(String[] args) {
+    public class TestBed {                              // 外部类
+        public void f() { 
+            System.out.println("f()"); 
+        }
+        public static class Tester {                    // 嵌套类
+            public static void main(String[] args) {    // main() 测试
                 TestBed t = new TestBed();
                 t.f();
             }

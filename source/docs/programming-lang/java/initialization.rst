@@ -253,3 +253,15 @@ finalize() 方法
     } /* Output:
     Error: checked out
     *///:~
+
+那么如何保证 ``finalize()`` 代码一定会被执行呢？Java 中没有 C++ 中析构函数的概念。
+如果你想清理某些东西，需要显式地编写 ``finally`` 子句，将清理动作放在 ``finally`` 
+子句中，以防止异常的出现。
+
+.. code-block:: java
+
+    try {
+        // 保护区代码
+    } finally {
+        // 不管保护区发生什么，这段代码一定会执行
+    }
