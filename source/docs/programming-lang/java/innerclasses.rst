@@ -106,6 +106,13 @@
 这种引用关系的传递由编译器完成，程序员一般不用操心。
 
 
+内部类标识符
+------------
+
+内部类经过编译后会生成 ``OuterClassName$InnerClassName.class`` 文件，多级嵌套，就用多个 ``$`` 
+符号分隔开。如果是匿名内部类，编译器会简单地生成一个数字作为标识，比如 ``OuterClassName$1.class``。
+
+
 内部类与隐藏实现
 ----------------
 
@@ -154,10 +161,14 @@
         String readLabel();
     } ///:~
 
+.. code-block:: java
+
     //: innerclasses/Contents.java
     public interface Contents {
         int value();
     } ///:~
+
+.. code-block:: java
 
     //: innerclasses/TestParcel.java
 
@@ -213,7 +224,9 @@
 
     public class Parcel10 {
         public Destination destination(final String dest, final float price) {
+            int v = 10;
             return new Destination() {
+                v = 11;
                 private int cost;
                 // Instance initialization for each object:
                 {
@@ -234,8 +247,6 @@
     *///:~
 
 匿名内部类既可以扩展类，也可以实现接口，但是不能两者兼备。而且，如果是实现接口，也只能实现一个接口。
-
-如果定义一个匿名内部类，并且希望它使用一个在其外部定义的对象，那么编译器会要求其参数引用是 ``final`` 的。
 
 之前实现过一次工厂模式（\ :ref:`factory-mode-v1`）。不同的是，现在 ``Implementation1`` 和
 ``Implementation2`` 的构造器都可以是 ``private`` 的，并且没有任何必要去创建作为工厂的具名类
@@ -297,6 +308,14 @@
     Implementation2 method1
     Implementation2 method2
     *///:~
+
+局部内部类
+----------
+
+在方法体内创建内部类叫局部内部类。局部内部类不能有访问说明符。
+
+使用局部内部类而不使用匿名内部类理由：\ 
+我们需要一个可以命名的构造器，或者需要重载内部类的构造器，而匿名内部类只能用于实例初始化。
 
 
 .. _nested-class:
@@ -402,147 +421,147 @@
 为什么需要内部类
 ----------------
 
-1）多重继承的实现，既可以使用接口，也可以使用内部类。（如何理解？）
+引入内部类一个很重要的原因是我们想要使用 "闭包" 和 "回调" 的特性。
 
-
-闭包与回调
-~~~~~~~~~~
-
-闭包（closure）是一个可调用的对象，它记录了一些信息，这些信息来自于创建它的作用域。
-通过定义，可以看出内部类是一个闭包，因为它不仅包含外部类对象的信息，还自动地拥有一个指向外部类对象的引用。
-
-回调（callback）通过指针实现对另一个对象的引用，进而可以操作对象中的函数。
-通过回调，对象能够携带一些信息，这些信息允许它在稍后的某个时刻调用初始对象。
-内部类比指针更灵活，更安全。
-回调的价值在于它的灵活性，可以在运行时动态地决定需要调用什么方法。
-
-下面的代码中，内部类 Closure 实现了 Incrementable，以提供一个返回 Callee2 的 
-"钩子"（hook）——而且是一个安全的钩子。
-无论谁获得此 Incrementable 引用，都只能调用 increment()，除此之外没有其他功能（不想指针那样，允许你做很多事情）。
+参考下方类图，考虑这样一种场景，若我们既想要 ``Callee2`` 重写父类的 ``increment()`` 又实现接口的 
+``increment()``，但是根据 Java 的语法规则可知，我们不能在同一个类中编写两个同名且同参的函数，\ 
+那么这个问题怎么解决呢？现在的答案是，只能通过内部类这种手段来实现。
 
 .. uml::
 
     @startuml
 
-    Incrementable <|.. Callee1
+    MyIncrement <|-- Callee2
+    Incrementable <|.. Callee2
+
+    interface Incrementable {
+        +increment(): void
+    }
+    class MyIncrement {
+        +increment(): void
+    }
+    class Callee2 {
+        +increment(): void
+    }
+
+    @enduml
+
+.. rubric:: 引入闭包，解决重名问题
+
+.. uml::
+
+    @startuml
+
     MyIncrement <|-- Callee2
     Callee2 +-- Closure
     Incrementable <|.. Closure
 
     interface Incrementable {
-        void increment()
-    }
-    class Callee1 {
-        void increment()
+        +increment(): void
     }
     class MyIncrement {
-        void increment()
-        void f(MyIncrement mi)
+        +increment(): void
     }
     class Callee2 {
-        void increment()
-        Incrementable getCallbackReference()
+        +increment(): void
     }
-    class Caller {
-        -Incrementable callbackReference
-        Caller(Incrementable cbh) { callbackReference = cbh; }
-        void go() { callbackReference.increment(); }
-    }
-
     class Closure {
-        void increment()
+        +increment(): void
     }
 
     @enduml
 
-.. code-block:: java
+.. admonition:: Callbacks.java
+    :class: dropdown
 
-    //: innerclasses/Callbacks.java
-    // Using inner classes for callbacks
-    package innerclasses;
-    import static net.mindview.util.Print.*;
+    .. code-block:: java
 
-    interface Incrementable {
-        void increment();
-    }
+        //: innerclasses/Callbacks.java
+        // Using inner classes for callbacks
+        package innerclasses;
+        import static net.mindview.util.Print.*;
 
-    // Very simple to just implement the interface:
-    class Callee1 implements Incrementable {
-        private int i = 0;
-        public void increment() {
-            i++;
-            print(i);
+        interface Incrementable {
+            void increment();
         }
-    }	
 
-    class MyIncrement {
-        public void increment() { print("Other operation"); }
-        static void f(MyIncrement mi) { mi.increment(); }
-    }	
-
-    // If your class must implement increment() in
-    // some other way, you must use an inner class:
-    class Callee2 extends MyIncrement {
-        private int i = 0;
-        public void increment() {
-            super.increment();
-            i++;
-            print(i);
-        }
-        private class Closure implements Incrementable {
-            public void increment() {
-                // Specify outer-class method, otherwise
-                // you'd get an infinite recursion:
-                Callee2.this.increment();
+        class MyIncrement {
+            public void increment() { 
+                print("Other operation"); 
+            }
+            static void f(MyIncrement mi) { 
+                mi.increment(); 
             }
         }
-        Incrementable getCallbackReference() {
-            return new Closure();
+
+        // 如果你既想重写父类中的 increment() 又想实现接口中的 increment()
+        // 那么内部类将是你唯一的选择
+        class Callee2 extends MyIncrement {
+            private int i = 0;
+            public void increment() {
+                super.increment();
+                i++;
+                print(i);
+            }
+            private class Closure implements Incrementable {
+                public void increment() {
+                    // 指定调用外部类的 increment()，否则将会陷入死循环
+                    Callee2.this.increment();
+                }
+            }
+            Incrementable getCallbackReference() {
+                return new Closure();
+            }
         }
-    }	
 
-    class Caller {
-        private Incrementable callbackReference;
-        Caller(Incrementable cbh) { callbackReference = cbh; }
-        void go() { callbackReference.increment(); }
-    }
+        class Caller {
+            private Incrementable cbr;    // Incrementable 引用（回调引用）
+            Caller(Incrementable cbh) { 
+                cbr = cbh; 
+            }
+            void go() { 
+                cbr.increment(); 
+            }
+        }
 
-    public class Callbacks {
-        public static void main(String[] args) {
-            Callee1 c1 = new Callee1();
-            Callee2 c2 = new Callee2();
-            MyIncrement.f(c2);
-            Caller caller1 = new Caller(c1);
-            Caller caller2 = new Caller(c2.getCallbackReference());
-            caller1.go();
-            caller1.go();
-            caller2.go();
-            caller2.go();
-        }	
-    } /* Output:
-    Other operation
-    1
-    1
-    2
-    Other operation
-    2
-    Other operation
-    3
-    *///:~
+        public class Callbacks {
+            public static void main(String[] args) {
+                Callee2 c2 = new Callee2();
+                MyIncrement.f(c2);      // 第 1 种调用 increment() 的方式
+                Caller caller2 = new Caller(c2.getCallbackReference());
+                caller2.go();           // 第 2 种调用 increment() 的方式，利用回调，安全、灵活
+                caller2.go();
+            }	
+        } /* Output:
+        Other operation
+        1
+        Other operation
+        2
+        Other operation
+        3
+        *///:~
 
-内部类与控制框架
-~~~~~~~~~~~~~~~~
+    需要注意的是，根据前面的知识，我们知道，\ 内部类 ``Closure`` 
+    能同时访问父类和接口的 ``increment()``，若不加以声明，你知道访问的是哪一个吗？
+    事实上，按照 "就近原则"，它会有限调用自己，并因此陷入无限循环。
 
-应用程序框架（application framework）就是被设计用来解决某类特定问题的一个类或一组类。要运用某个应用程序框架，通常是继承一个类或多个类，并覆盖某些方法。
+根据 MDN 的解释，闭包是由函数及其相关的引用环境组合而成的实体（即：闭包 = 函数 + 引用环境） [2]_。
+而内部类具备的特性正好能够吻合闭包的定义，因为它持有外围类的引用。
 
-Java Swing 库就是一个控制框架，它解决了 GUI 的问题，并大量使用了内部类。
+因此，引入闭包的概念后，通过内部类就可以提供一种代码隐藏和代码组织的机制，\ 
+并且这些被组织的代码段还可以自由地访问到包含该内部类的外围上下文环境。
 
-控制框架的精髓在于：使变化的事物和不变的事物相互分离。
+回到代码，内部类 ``Closure`` 实现了 ``Incrementable``，以提供一个返回 ``Callee2`` 的 
+"钩子"（hook）—— 而且是一个安全的钩子，无论谁获得此 ``Incrementable`` 引用，都只能调用 
+``increment()``，除此之外没有其他功能（不想指针那样，允许你做很多事情）。
+回调的价值在于它的灵活性，可以在运行时动态地决定需要调用什么方法。
+
 
 内部类的继承
 ------------
 
-因为内部类的构造器必须连接到指向其外部类对象的引用，因此，在继承类中，必须在构造器中显式地指明初始化语句。
+因为内部类 **必须** 首先持有其外部类的引用，因此，在继承内部类时，\ **必须** 
+在构造器中显式地指明初始化语句。
 
 .. code-block:: java
     :emphasize-lines: 11
@@ -566,19 +585,7 @@ Java Swing 库就是一个控制框架，它解决了 GUI 的问题，并大量�
     } ///:~
 
 
-局部内部类
-----------
-
-在方法体内创建内部类叫局部内部类。局部内部类不能有访问说明符。
-
-使用局部内部类而不使用匿名内部类理由：我们需要一个可以命名的构造器，或者需要重载内部类的构造器，而匿名内部类只能用于实例初始化。
-
-内部类标识符
-------------
-
-内部类经过编译后会生成 ``OuterClassName$InnerClassName.class`` 文件，多级嵌套，就用多个 ``$`` 
-符号分隔开。如果是匿名内部类，编译器会简单地生成一个数字作为标识，比如 ``OuterClassName$1.class``。
-
 .. rubric:: 参考资料
 
 .. [1] 内部类的加载时机 https://blog.csdn.net/brouth/article/details/51656603
+.. [2] 闭包 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures
