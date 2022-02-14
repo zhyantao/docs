@@ -38,7 +38,7 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 \documentclass{ctexart}
 
 \begin{document}
-    “你好，世界！” 来自 \LaTeX{} 的问候。
+    "你好，世界！" 来自 \LaTeX{} 的问候。
 \end{document}
 ```
 

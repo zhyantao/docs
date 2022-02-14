@@ -16,7 +16,7 @@ Git
 .. note::
 
     - ``[commit]`` ：提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 来代替；
-    - ``[remote]`` ：远程仓库，可通过 ``git remote`` 查询，一般是 ``origin`` ；
+    - ``[remote]`` ：远程仓库，可通过 ``git remote`` 查询，一般是 ``origin``；
     - ``[branch]`` ：分支，可通过 ``git branch`` 查询。
 
 在 Learn Git Branching 上，可以更轻松直观地体验 Git 完整流程 [2]_。

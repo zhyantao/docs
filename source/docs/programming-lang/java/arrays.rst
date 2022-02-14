@@ -158,9 +158,9 @@ C/C++ 无法返回整个数组，只能返回指向数组的指针，但这使�
 实用方法
 --------
 
-复制数组： ``System.arraycopy()`` 。
+复制数组： ``System.arraycopy()``。
 
-数组的比较： ``Arrays.equals()`` 。
+数组的比较： ``Arrays.equals()``。
 
 数组元素的比较，有两种方式：
 
@@ -172,7 +172,7 @@ C/C++ 无法返回整个数组，只能返回指向数组的指针，但这使�
 - 基本类型 ``Arrays.sort()`` 可以排序。
 - 自定义类型需要实现 ``java.lang.Comparable`` 接口。
 
-在已排序的数组中查找： ``Arrays.binarySearch()`` 。
+在已排序的数组中查找： ``Arrays.binarySearch()``。
 
 
 数组与泛型

@@ -82,11 +82,11 @@ Collection（根接口）
 Map（根接口）
 ~~~~~~~~~~~~~~
 
-``Map`` 是一组成对的 “键值对” 对象，允许用一个对象查找另一个对象，也叫 “映射表”、“关联数组” 或 “字典”。
+``Map`` 是一组成对的 "键值对" 对象，允许用一个对象查找另一个对象，也叫 "映射表"、"关联数组" 或 "字典"。
 
-- ``HashMap`` ，使用了最快的查找技术，没有明显的顺序。
-- ``TreeMap`` ，按照比较结果升序保存键。
-- ``LinkedHashMap`` ，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
+- ``HashMap``，使用了最快的查找技术，没有明显的顺序。
+- ``TreeMap``，按照比较结果升序保存键。
+- ``LinkedHashMap``，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
 
 ``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现， 
 ``TreeSet`` 基于 ``TreeMap`` 实现。
@@ -102,7 +102,7 @@ List 和 Set
 方法就可以。因此 ``HashSet`` 是最常用的实现方式。
 
 ``Set`` 具有与 ``Collection`` 完全一样的接口，因此没有任何额外的功能，实际上 ``Set`` 就是 
-``Collection`` ，只是行为不同（这是继承与多态思想的典型应用）。
+``Collection``，只是行为不同（这是继承与多态思想的典型应用）。
 
 ``TreeSet`` 将元素存储在红黑树数据结构中，而 ``HashSet`` 使用的是散列函数。
 
@@ -116,7 +116,7 @@ ArrayList、LinkedList 和 Vector
 内部的元素可以直接通过 get 与 set 方法进行访问，因为 ``ArrayList`` 本质上就是 一个数组。
 
 ``LinkedList`` 是一个双链表，在添加和删除元素时具有比 ``ArrayList`` 更好的性能。
-但在 ``get`` 与 ``set`` 方面弱于 ``ArrayList`` 。
+但在 ``get`` 与 ``set`` 方面弱于 ``ArrayList``。
 当然，这些对比都是指数据量很大或者操作很频繁的情况下的对比，如果数据和运算量很小，那么对比将失去意义。
 
 ``Vector`` 和 ``ArrayList`` 类似，但属于强同步类。
@@ -126,8 +126,8 @@ ArrayList、LinkedList 和 Vector
 ``Vector`` 和 ``ArrayList`` 在更多元素添加进来时会请求更大的空间。
 ``Vector`` 每次请求其大小的双倍空间，而 ``ArrayList`` 每次对 ``size`` 增长 50%。
 
-而 ``LinkedList`` 还实现了 ``Queue`` 接口，该接口比 ``List`` 提供了更多的方法，包括 ``offer()`` ， 
-``peek()`` ， ``poll()`` 等。
+而 ``LinkedList`` 还实现了 ``Queue`` 接口，该接口比 ``List`` 提供了更多的方法，包括 ``offer()``， 
+``peek()``， ``poll()`` 等。
 
 注意：默认情况下 ``ArrayList`` 的初始容量非常小，所以如果可以预估数据量的话，
 分配一个较大的初始值属于最佳实践。这样可以减少调整大小的开销。
@@ -137,7 +137,7 @@ HashSet 和 TreeSet
 
 ``TreeSet`` 是二叉树实现的， ``TreeSet`` 中的数据是自动排好序的，不允许放入 ``null`` 值。
 
-``HashSet`` 是哈希表实现的， ``HashSet`` 中的数据是无序的，可以放入 ``null`` ，但只能放入一个 ``null`` ，
+``HashSet`` 是哈希表实现的， ``HashSet`` 中的数据是无序的，可以放入 ``null``，但只能放入一个 ``null``，
 两者中的值都不能重复，就如数据库中唯一约束。
 
 在 ``HashSet`` 中，基本的操作都是由 ``HashMap`` 底层实现的，因为 ``HashSet`` 底层是用 ``HashMap`` 存储数据的。
@@ -145,11 +145,11 @@ HashSet 和 TreeSet
 然后通过扰动计算和按位与的方式计算出这个元素的存储位置，如果这个位置位空，就将元素添加进去；
 如果不为空，则用 ``equals`` 方法比较元素是否相等，相等就不添加，否则找一个空位添加。
 
-``TreeSet`` 的底层是 ``TreeMap`` 的 ``keySet()`` ，而 ``TreeMap`` 是基于红黑树实现的，红黑树是一种平衡二叉查找树，
+``TreeSet`` 的底层是 ``TreeMap`` 的 ``keySet()``，而 ``TreeMap`` 是基于红黑树实现的，红黑树是一种平衡二叉查找树，
 它能保证任何一个节点的左右子树的高度差不会超过较矮的那棵的一倍。
 
 ``TreeMap`` 是按 ``key`` 排序的，元素在插入 ``TreeSet`` 时 ``compareTo()`` 方法要被调用，所以 
-``TreeSet`` 中的元素要实现 ``Comparable`` 接口。 ``TreeSet`` 作为一种 ``Set`` ，它不允许出 现重复元素。
+``TreeSet`` 中的元素要实现 ``Comparable`` 接口。 ``TreeSet`` 作为一种 ``Set``，它不允许出 现重复元素。
 ``TreeSet`` 是用 ``compareTo()`` 来判断重复元素的。
 
 容器的初始化
@@ -183,9 +183,9 @@ HashSet 和 TreeSet
 ``Collection`` 接口的意义是为各种具体的集合提供了最大化的统一操作方式。
 
 ``java.util.Collections`` 是一个包装类。它包含有各种有关集合操作的静态多态方法。
-此类 **不能实例化** ，就像一 **个工具类** ，服务于 Java 的 Collection 框架。
+此类 **不能实例化**，就像一 **个工具类**，服务于 Java 的 Collection 框架。
 
-``java.lang.Array`` 是 Java 中 **最基本的一个存储结构** 。提供了动态创建和访问 Java **数组** 的方法。
+``java.lang.Array`` 是 Java 中 **最基本的一个存储结构**。提供了动态创建和访问 Java **数组** 的方法。
 其中的元素的类型必须相同。效率高，但容量固定且无法动态改变。 
 它无法判断其中实际存有多少元素， ``length`` 只是告诉我们 array 的容量。
 

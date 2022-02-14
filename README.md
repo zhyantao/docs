@@ -26,7 +26,7 @@
     git add . && git commit -m "v1.0.0" && git pull && git push
     ```
     
-5. 登录 [Readthedocs](https://readthedocs.org/) 导入刚刚新建的 Github 项目 `notebook` ，构建完成后方可阅读文档。
+5. 登录 [Readthedocs](https://readthedocs.org/) 导入刚刚新建的 Github 项目 `notebook`，构建完成后方可阅读文档。
 
 
 ## 撰写文档

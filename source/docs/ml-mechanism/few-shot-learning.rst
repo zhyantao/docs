@@ -48,24 +48,24 @@
 假如我有一个 :math:`10` 类的数据，每个类别 :math:`10` 张图片，共 :math:`10 \times 10=100` 张。
 那元学习的过程就是，首先设置实验，比如 10-way 5-shot。
 meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在我自己的数据（ :math:`100` 张图）上面 finetune，
-最后拿到那套参数 :math:`\theta` ，然后推理的时候每次就拿这个 :math:`\theta` 算一下前向进行分类。
+最后拿到那套参数 :math:`\theta`，然后推理的时候每次就拿这个 :math:`\theta` 算一下前向进行分类。
 
 元学习一般有三种基本解决方法：
 
 - 基于度量的方法（学习事物背后的关联）
   
   - 目标是学习不同样本之间的度量或距离函数；
-  - 比如 Siamese Network\ :footcite:p:`koch2015siamese`\ ，Matching Network\ :footcite:p:`vinyals2016matching`\ ，Relation Network\ :footcite:p:`sung2018learning`\ ，Prototypical Network\ :footcite:p:`snell2017prototypical`\ 。
+  - 比如 Siamese Network\ :footcite:p:`koch2015siamese`\，Matching Network\ :footcite:p:`vinyals2016matching`\，Relation Network\ :footcite:p:`sung2018learning`\，Prototypical Network\ :footcite:p:`snell2017prototypical`\。
 
 - 基于模型的方法（学习如何建模）
   
-  - 目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})` ；
-  - 比如 MANN\ :footcite:p:`santoro2016meta`\ ，Meta Network\ :footcite:p:`munkhdalai2017meta`\ ，TCML\ :footcite:p:`mishra2017meta`\ 。
+  - 目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})`；
+  - 比如 MANN\ :footcite:p:`santoro2016meta`\，Meta Network\ :footcite:p:`munkhdalai2017meta`\，TCML\ :footcite:p:`mishra2017meta`\。
 
 - 基于优化的方法（学习如何学习）
   
   - 目标是加快模型的求解速度；
-  - 比如 LSTM-based\ :footcite:p:`ravi2017optimization`\ :footcite:p:`andrychowicz2016learning`\ ，MAML\ :footcite:p:`finn2017model`\ ，Repitile，RL-based\ :footcite:p:`zoph2016neural`\ :footcite:p:`wang2016learning`\ :footcite:p:`duan2016rl`\ 。
+  - 比如 LSTM-based\ :footcite:p:`ravi2017optimization`\ :footcite:p:`andrychowicz2016learning`\，MAML\ :footcite:p:`finn2017model`\，Repitile，RL-based\ :footcite:p:`zoph2016neural`\ :footcite:p:`wang2016learning`\ :footcite:p:`duan2016rl`\。
 
 基于度量的方法很好理解，它主要的构件就是嵌入模块和度量模块 [1]_ ：
 
@@ -77,7 +77,7 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 注：图片中的颜色，每种颜色都会有一个特征向量。把待测样本归类为相似度最高的样本所属的类别。分类器一般选择 Softmax。
 
 基于模型的方法，是学习如何建模。乍一看这个名字，还以为是让算法学习搭建网络结构呢，其实不然。
-网络结构还是人为定义好的，他要学习的是一种建立模型的能力，而不是具体的模型，也就是如何从少量数据中求解 :math:`P_\theta(y|\mathbf{x})` 。
+网络结构还是人为定义好的，他要学习的是一种建立模型的能力，而不是具体的模型，也就是如何从少量数据中求解 :math:`P_\theta(y|\mathbf{x})`。
 
 神经图灵机的框架 :footcite:p:`DBLP:journals/corr/GravesWD14` 提供了一个通用的模型（见下图），在此基础上衍生出了 MANN 和 Meta Network。
 
@@ -90,10 +90,10 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 
 .. image:: ../../_static/images/model-agnostic-meta-learning.png
 
-注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*` ，这些优化参数的矢量和为 :math:`\theta` 。
+注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*`，这些优化参数的矢量和为 :math:`\theta`。
 当面对新场景时，用平均后的参数 :math:`\theta` 来初始化新场景，可以更快地收敛。
 
-以上是我于 2021 年 10 月 28 日做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/cpj5izoyamHE>`_\ 。
+以上是我于 2021 年 10 月 28 日做的一次 PPT 组会分享，详见 `Slide <https://kdocs.cn/l/cpj5izoyamHE>`_\。
 
 然后，更多更加详细的论文方法汇总在下面了\ [2]_\ ：
 
@@ -141,8 +141,8 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 ------------
 
 构造正负样本（Train Data）
-    正样本是从某个类别中选出两张图片，组成一个元组， :math:`(class1, class1, 1)` 。
-    负样本是从不同的类别中各选出一张图片，也组成一个三元组， :math:`(class1, class2, 0)` 。
+    正样本是从某个类别中选出两张图片，组成一个元组， :math:`(class1, class1, 1)`。
+    负样本是从不同的类别中各选出一张图片，也组成一个三元组， :math:`(class1, class2, 0)`。
 
 构造模型
     对图片提取特征，生成一个特征向量。
@@ -150,14 +150,14 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
     然后，对做差后的特征向量应用全连接神经网络，映射为一个标量，通过 Sigmoid 函数后得到它们之间的相似度。
 
 更新参数
-    Ground Truth 为 One hot 向量，这是 :math:`y` 。
+    Ground Truth 为 One hot 向量，这是 :math:`y`。
     对模型得到的预测值，:math:`\hat{y}` 与标准值 :math:`y` 做 Cross Entropy，记作 Loss。
     为了使 Loss 最小，应用反向传播更新参数。
 
 Triplet Loss
     首先从某个类中选出一个锚点（anchor），然后再从这个类中选出一个正样本（positive sample)，最后从另一个类中选出一个负样本（negative sample），构成三元组
-    :math:`(pos, anchor, neg)` 。
-    将这三张图片都输入到网络中，可以得到三个特征向量 :math:`f(x^+), f(x^a), f(x^-)` 。
+    :math:`(pos, anchor, neg)`。
+    将这三张图片都输入到网络中，可以得到三个特征向量 :math:`f(x^+), f(x^a), f(x^-)`。
     三个向量，两两之间分别计算欧氏距离。
     目标是让正样本的特征向量和锚点的特征向量之间距离越小越好，负样本的特征向量与锚点的特征向量之间的距离越大越好。
     :math:`Loss(x^a, x^+, x^-)=max\left\{0, d^+ + \alpha - d^-\right\}` 其中 :math:`\alpha` 是一个超参。更新网络参数，最小化 Loss。
@@ -193,7 +193,7 @@ Triplet Loss
   - Compare the feature of query with :math:`\mu_1, \mu_2, \dots, \mu_k`
 
 Cosine similarity
-    衡量两个向量之间的相似度。两个向量的内积等于 :math:`cos\theta=\mathbf{x}^T\mathbf{w}` 。
+    衡量两个向量之间的相似度。两个向量的内积等于 :math:`cos\theta=\mathbf{x}^T\mathbf{w}`。
 
 Softmax Function
     可以把一个向量映射成一个概率分布，通常用于输出层。首先对向量的每一个元素取指数，然后做归一化。每个概率值表示对每个类别的 Confidence。
@@ -202,7 +202,7 @@ Softmax Function
 Fine Tuning
     再 Support Set 上学习 :math:`\mathbf{W}` 和 :math:`\mathbf{b}` 就是做 Fine Tuning。
     之前没有学习 :math:`\mathbf{W}` 和 :math:`\mathbf{b}`
-    直接让 :math:`\mathbf{b} = 0` ， :math:`\mathbf{W} = \mathbf{M}` 。
+    直接让 :math:`\mathbf{b} = 0`， :math:`\mathbf{W} = \mathbf{M}`。
     其中 :math:`\mathbf{M}` 是每一个类别的均值向量组成的矩阵。
 
 应用场景

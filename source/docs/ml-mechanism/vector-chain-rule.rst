@@ -20,13 +20,13 @@
 
     凡是书写数学相关的内容，都应当遵守 :ref:`符号定义 <symbol-definition>` 规则，这样方便后续阅读和理解，至少对于一个人来讲是如此。
 
-    以前，我们知道含有变量的函数的求导方法 :math:`(x^2)'=2x` ，现在对如果将 :math:`x` 表示为数字 5 ，那么他的导数是什么？很明显，我们以前的先验知识告诉我们，答案是 10 。
+    以前，我们知道含有变量的函数的求导方法 :math:`(x^2)'=2x`，现在对如果将 :math:`x` 表示为数字 5，那么他的导数是什么？很明显，我们以前的先验知识告诉我们，答案是 10。
 
     现在，因为在神经网络上，神经元之间的连接通常是线性关系，因此，大概率的情况下，不会出现二次方以及对数函数等其他我们在高中阶段就已经学习过的复杂函数。
     因为通常来讲，我们一般的做法是将神经元上的数字乘以与之相连接的边的权重，再加上某个偏置，即可得到输出。因此，对于单个神经元来讲，它就是线性的。
     
-    正因为这种线性关系的存在，我们在下面的假设中，通常假设 :math:`\mathbf{f}(\mathbf{w})=\mathbf{w}` ， :math:`\mathbf{g}(\mathbf{x})=\mathbf{x}`
-    的隐含意思就是对于神经网络的某一层来讲，影响权值和偏置的函数有两个： :math:`f_i` 和 :math:`g_i` 。它们分别作用于权重 :math:`f_i(\mathbf{w})` 和神经元 :math:`g_i(\mathbf{x})` 。
+    正因为这种线性关系的存在，我们在下面的假设中，通常假设 :math:`\mathbf{f}(\mathbf{w})=\mathbf{w}`， :math:`\mathbf{g}(\mathbf{x})=\mathbf{x}`
+    的隐含意思就是对于神经网络的某一层来讲，影响权值和偏置的函数有两个： :math:`f_i` 和 :math:`g_i`。它们分别作用于权重 :math:`f_i(\mathbf{w})` 和神经元 :math:`g_i(\mathbf{x})`。
     计算得到的结果用于下一层神经元的输入。
     
     但是为什么计算结果还是记作 :math:`\mathbf{w}` 和 :math:`\mathbf{b}` 呢？也就是说，为什么要假设 :math:`f_i(\mathbf{w})=\mathbf{w}` ？
@@ -57,7 +57,7 @@
 向量求导
 --------
 
-设 :math:`f(x, y) = 3 x^2 y` ，即 :math:`\mathbf{x} = \begin{bmatrix} x \\ y \end{bmatrix}` ， :math:`f(\mathbf{x})=3x^2y` 。
+设 :math:`f(x, y) = 3 x^2 y`，即 :math:`\mathbf{x} = \begin{bmatrix} x \\ y \end{bmatrix}`， :math:`f(\mathbf{x})=3x^2y`。
 
 :math:`\nabla f(x, y) =\begin{bmatrix}\dfrac{\partial f(x,y)}{\partial x}, \dfrac{\partial f(x,y)}{\partial y}\end{bmatrix}=\begin{bmatrix}6yx, 3x^2\end{bmatrix}`
 
@@ -67,8 +67,8 @@
     
 .. tip:: 
 
-    设向量 :math:`\mathbf{x}` 表示一组变量 :math:`\mathbf{x} = \begin{bmatrix} \mathit{x_1} \\ \mathit{x_1} \\ \vdots \\ \mathit{x_n} \\ \end{bmatrix}` ，
-    向量 :math:`\mathbf{f}` 表示一组函数 :math:`\mathbf{f} = \begin{bmatrix} \mathit{f_1} \\ \mathit{f_1} \\ \vdots \\ \mathit{f_m} \\ \end{bmatrix}` ，
+    设向量 :math:`\mathbf{x}` 表示一组变量 :math:`\mathbf{x} = \begin{bmatrix} \mathit{x_1} \\ \mathit{x_1} \\ \vdots \\ \mathit{x_n} \\ \end{bmatrix}`，
+    向量 :math:`\mathbf{f}` 表示一组函数 :math:`\mathbf{f} = \begin{bmatrix} \mathit{f_1} \\ \mathit{f_1} \\ \vdots \\ \mathit{f_m} \\ \end{bmatrix}`，
     当 :math:`\mathbf{f}` 中的某个函数 :math:`\mathit{f_i}` 作用于向量 :math:`\mathbf{x}` 时，其实质是
     :math:`f_i(\mathbf{x}) = 2 \mathit{x_1}^2 + 3 \mathit{x_2} + \dots` 这种形式。
 
@@ -76,7 +76,7 @@
 矩阵求导
 --------
 
-设 :math:`\begin{bmatrix}f(x,y)=3x^2y \\ g(x,y)=2x+y^8 \end{bmatrix}` ，则 :math:`\mathit{Jacobian\ matrix}` 为：
+设 :math:`\begin{bmatrix}f(x,y)=3x^2y \\ g(x,y)=2x+y^8 \end{bmatrix}`，则 :math:`\mathit{Jacobian\ matrix}` 为：
 
 .. math::
 
@@ -97,13 +97,13 @@
 
 .. note:: 
 
-    :math:`\mathit{Jacobian\ matrix}` 的一般形式： :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})` 。
+    :math:`\mathit{Jacobian\ matrix}` 的一般形式： :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})`。
 
-    其中， :math:`\mathbf{x}=\begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}` ，
-    :math:`\mathbf{y}=\begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_m \end{bmatrix}` ，
+    其中， :math:`\mathbf{x}=\begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}`，
+    :math:`\mathbf{y}=\begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_m \end{bmatrix}`，
     :math:`\mathbf{f}(\mathbf{x})=\begin{bmatrix} f_1(\mathbf{x}) \\ f_2(\mathbf{x}) \\ \vdots \\ f_m(\mathbf{x}) \end{bmatrix}`
     ，将 :math:`f_i(\mathbf{x})` 展开后，可以得到标量形式 :math:`f_i(\mathbf{x}) = 2 \mathit{x_1}^2 + 3 \mathit{x_2} + \dots`
-    。需要注意的是： :math:`|\mathbf{x}|=n` 但是 :math:`|\mathbf{y}|=|\mathbf{f}|=m` 。
+    。需要注意的是： :math:`|\mathbf{x}|=n` 但是 :math:`|\mathbf{y}|=|\mathbf{f}|=m`。
     
     .. math::
 
@@ -132,13 +132,13 @@
     这种展开方式叫做分子布局（ :math:`\mathit{Numerator\ layout}` ）。
     其实还有另外相反的一种展开方式，叫做分母布局（ :math:`\mathit{Denominator\ layout}` ）。作者在论文中一直使用的是分子布局。
 
-    这种展开规则 **很重要** ，这是解向量求导问题的一个 **突破点** ，学会了展开规则，向量求导就变得非常简单了，因为你可以通过目标方程目测出结果矩阵的形状，而且，结果矩阵是标量形式的。
+    这种展开规则 **很重要**，这是解向量求导问题的一个 **突破点**，学会了展开规则，向量求导就变得非常简单了，因为你可以通过目标方程目测出结果矩阵的形状，而且，结果矩阵是标量形式的。
 
 .. tip:: 
 
-    恒等函数（ :math:`\mathit{Identity\ function}` ） :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})=\mathbf{x}` ，即 :math:`y_i = f_i(\mathbf{x})=x_i` ，在文中多次出现，是作为一个简单的 demo 来诠释概念是应该如何理解和应用的。
+    恒等函数（ :math:`\mathit{Identity\ function}` ） :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})=\mathbf{x}`，即 :math:`y_i = f_i(\mathbf{x})=x_i`，在文中多次出现，是作为一个简单的 demo 来诠释概念是应该如何理解和应用的。
 
-    这里需要注意的是在恒等函数中 :math:`|\mathbf{x}|=|\mathbf{y}|=|\mathbf{f}|=n` 。
+    这里需要注意的是在恒等函数中 :math:`|\mathbf{x}|=|\mathbf{y}|=|\mathbf{f}|=n`。
 
     .. math::
 
@@ -189,7 +189,7 @@
 Example 1
 ~~~~~~~~~~
 
-已知 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` ， :math:`|\mathbf{y}|=|\mathbf{w}|=|\mathbf{x}|=m=n` 。求 :math:`\nabla \mathbf{y}` 。
+已知 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})`， :math:`|\mathbf{y}|=|\mathbf{w}|=|\mathbf{x}|=m=n`。求 :math:`\nabla \mathbf{y}`。
 
 .. math::
 
@@ -206,7 +206,7 @@ Example 1
 .. note:: 
 
     :math:`\bigcirc` 是向量的二元操作符（代表加减乘除： :math:`\oplus\ \ominus\ \otimes\ \oslash` ）。向量的四则运算与标量四则运算略有不同，它们是元素级别的操作，比如
-    :math:`\begin{bmatrix} 1 \\ 2 \end{bmatrix} + \begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} 4 \\ 6 \end{bmatrix}` 。
+    :math:`\begin{bmatrix} 1 \\ 2 \end{bmatrix} + \begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} 4 \\ 6 \end{bmatrix}`。
 
 求 :math:`\nabla \mathbf{y}` 的过程即求解 :math:`\mathit{Jacobian\ matrix}` 的过程，如下：
 
@@ -296,7 +296,7 @@ Example 1
 
 .. note:: 
 
-    当含有常数项时，:math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 变成了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(z)` ，其中 :math:`\mathbf{g}(z)=\vec{1}z` 。
+    当含有常数项时，:math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 变成了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(z)`，其中 :math:`\mathbf{g}(z)=\vec{1}z`。
 
 
 .. _example-2:
@@ -304,7 +304,7 @@ Example 1
 Example 2
 ~~~~~~~~~~
 
-已知 :math:`y=sum\big(\mathbf{f}(\mathbf{x})\big)=\displaystyle\sum_{i=1}^n f_i(\mathbf{x})` 求 :math:`\nabla y` 。
+已知 :math:`y=sum\big(\mathbf{f}(\mathbf{x})\big)=\displaystyle\sum_{i=1}^n f_i(\mathbf{x})` 求 :math:`\nabla y`。
 
 .. math::
 
@@ -322,7 +322,7 @@ Example 2
 Example 3
 ~~~~~~~~~~
 
-已知 :math:`y=sum\big(\mathbf{f}(\mathbf{x}z)\big)` 求 :math:`\nabla y` 。
+已知 :math:`y=sum\big(\mathbf{f}(\mathbf{x}z)\big)` 求 :math:`\nabla y`。
 
 .. math::
 
@@ -341,8 +341,8 @@ Example 3
 
 在神经网络中，我们通常需要的是向量链式求导规则，下面我们将从标量链式法则引出向量求导的链式法则。
 
-论文中将标量链式法则称作单变量链式法则，这是标量对标量的求导规则，我们在高中就学过了。比如函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)` 。
-它的导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}` 。
+论文中将标量链式法则称作单变量链式法则，这是标量对标量的求导规则，我们在高中就学过了。比如函数表达式为 :math:`y = f(g(x))` 或 :math:`(f \circ g)(x)`。
+它的导数为 :math:`y'=f'(g(x))g'(x)` 或记作 :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}`。
 
 这是只有一个变量的情况，如果有两个或多个变量时情况就不太一样了。
 
@@ -356,7 +356,7 @@ Example 3
 .. note:: 
 
     **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x`
-    （这里的 :math:`x` 也可以是 :math:`u` ，指的是自变量）外，其他都是常量。这句话的含义可以参考下面的图注。
+    （这里的 :math:`x` 也可以是 :math:`u`，指的是自变量）外，其他都是常量。这句话的含义可以参考下面的图注。
     因此做全微分时，务必记住其他变量也可能是 :math:`x` 的函数，全微分公式如下：
 
     .. math::
@@ -460,7 +460,7 @@ Example 3
     = \begin{bmatrix} f_1(x) \\ f_2(x) \end{bmatrix}
     = \begin{bmatrix} ln(x^2) \\ sin(3x) \end{bmatrix}
 
-首先，设置中间变量 :math:`g_1` 和 :math:`g_2` 。
+首先，设置中间变量 :math:`g_1` 和 :math:`g_2`。
 
 :math:`\mathbf{g}(x) = \begin{bmatrix} g_1(x) \\ g_2(x) \end{bmatrix} = \begin{bmatrix} x^2 \\ 3x \end{bmatrix}`
 
@@ -527,7 +527,7 @@ Example 3
 我们使用向量得出了和标量一样的结果，因此
 :math:`\dfrac{\partial}{\partial x}\mathbf{f}(\mathbf{g}(x))=\dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}`
 是正确的。如果 :math:`x` 不是标量，而是向量的话，直接用 :math:`\mathbf{x}` 来替换公式中的 :math:`x` 就可以了。相应发生变化的也就只有
-:math:`\dfrac{\partial \mathbf{g}}{\partial x}` 这个 :math:`\mathit{Jacobian\ matrix}` 。相应地可以自行验证。
+:math:`\dfrac{\partial \mathbf{g}}{\partial x}` 这个 :math:`\mathit{Jacobian\ matrix}`。相应地可以自行验证。
 
 向量链式法则公式的优美之处在于它在我们没有察觉的时候，完美地将全微分法则包容了进来，同时公式又是那么的简洁。
 
@@ -549,7 +549,7 @@ Example 3
         \dfrac{\partial g_k}{\partial x_1} & \dots & \dfrac{\partial g_k}{\partial x_n}
         \end{bmatrix}
 
-其中， :math:`m=|\mathbf{f}|` ， :math:`n=|\mathbf{x}|` ， :math:`k=|\mathbf{g}|` 。
+其中， :math:`m=|\mathbf{f}|`， :math:`n=|\mathbf{x}|`， :math:`k=|\mathbf{g}|`。
 
 当 :math:`f_i` 仅是 :math:`g_i` 的函数，且 :math:`g_i` 仅是 :math:`x_i` 的函数时，我们还能对上述结果进行化简，即
 
@@ -570,7 +570,7 @@ Example 3
     :height: 200px
     :align: center
 
-对于上图，它的数学表达式为 :math:`activation(\mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)` 。
+对于上图，它的数学表达式为 :math:`activation(\mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)`。
 
 - :ref:`example-1` 求出了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 的导数
 - :ref:`example-2` 求出了 :math:`y=sum\big(\mathbf{f}(\mathbf{x})\big)` 的导数
@@ -588,11 +588,11 @@ Example 3
 :math:`y=sum(\mathbf{u})`
 
 则 :ref:`example-1` 的结论告诉我们
-:math:`\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\dfrac{\partial}{\partial \mathbf{w}}(\mathbf{w}\otimes\mathbf{x})=diag(\mathbf{x})` ，
-:math:`\dfrac{\partial y}{\partial \mathbf{u}}=\dfrac{\partial}{\partial \mathbf{w}}(sum(\mathbf{u}))=\mathbf{1}^T` 。
+:math:`\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\dfrac{\partial}{\partial \mathbf{w}}(\mathbf{w}\otimes\mathbf{x})=diag(\mathbf{x})`，
+:math:`\dfrac{\partial y}{\partial \mathbf{u}}=\dfrac{\partial}{\partial \mathbf{w}}(sum(\mathbf{u}))=\mathbf{1}^T`。
 
 应用向量链式法则，
-:math:`\dfrac{\partial y}{\partial \mathbf{w}}=\dfrac{\partial y}{\partial \mathbf{u}}\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\mathbf{1}^T diag(\mathbf{x})=\mathbf{x}^T` 。
+:math:`\dfrac{\partial y}{\partial \mathbf{w}}=\dfrac{\partial y}{\partial \mathbf{u}}\dfrac{\partial \mathbf{u}}{\partial \mathbf{w}}=\mathbf{1}^T diag(\mathbf{x})=\mathbf{x}^T`。
 
 验证结果的正确性时，可以将它们先转成标量形式，在进行求导：
 
@@ -600,7 +600,7 @@ Example 3
 
 :math:`\dfrac{\partial y}{\partial w_j}=\displaystyle\sum_i\dfrac{\partial}{\partial w_j}(w_i x_i)=\dfrac{\partial}{\partial w_j}(w_j x_j)=x_j` 
 
-因此， :math:`\dfrac{\partial y}{\partial \mathbf{w}}=[x_1, x_2, \dots, x_n]=\mathbf{x}^T` 。
+因此， :math:`\dfrac{\partial y}{\partial \mathbf{w}}=[x_1, x_2, \dots, x_n]=\mathbf{x}^T`。
 
 更进一步地，我们求解 :math:`\mathbf{y}=\mathbf{w}\cdot\mathbf{x}+b` 的导数。
 
@@ -621,7 +621,7 @@ Example 3
 :math:`\dfrac{\partial}{\partial \mathbf{x}}max(0, \mathbf{x})=\begin{bmatrix} \dfrac{\partial}{\partial x_1}max(0, x_1) \\ \vdots \\ \dfrac{\partial}{\partial x_n}max(0, x_n) \end{bmatrix}`
 
 其中
-:math:`\dfrac{\partial}{\partial x_i}max(0, x_i)=\begin{cases}0 & \text{if } x_i < 0, \\ \dfrac{\mathrm{d}x_i}{\mathrm{d}x_i}=1 & \text{if } x_i > 0 .\end{cases}` 。
+:math:`\dfrac{\partial}{\partial x_i}max(0, x_i)=\begin{cases}0 & \text{if } x_i < 0, \\ \dfrac{\mathrm{d}x_i}{\mathrm{d}x_i}=1 & \text{if } x_i > 0 .\end{cases}`。
 
 然后，应用向量链式法则对 :math:`activation(\mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)` 求导：
 
@@ -652,9 +652,9 @@ Example 3
 .. hint:: 损失函数 :math:`C` 的记号并没有遵从 :ref:`符号表 <symbol-definition>` 的约定，因为它只是一个函数映射关系，和上面的 activation 一样，特殊对待就好了。
 
 其中，
-:math:`\mathbf{X}=\begin{bmatrix} \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_N \end{bmatrix}` ，
-:math:`N=|\mathbf{X}|` ，
-:math:`y=\begin{bmatrix} target(\mathbf{x}_1), target(\mathbf{x}_2), \dots,target(\mathbf{x}_N) \end{bmatrix} ^ T` 。
+:math:`\mathbf{X}=\begin{bmatrix} \mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_N \end{bmatrix}`，
+:math:`N=|\mathbf{X}|`，
+:math:`y=\begin{bmatrix} target(\mathbf{x}_1), target(\mathbf{x}_2), \dots,target(\mathbf{x}_N) \end{bmatrix} ^ T`。
 
 求损失函数的导数。
 
@@ -684,9 +684,9 @@ Example 3
     &=\begin{cases} \mathbf{0}^T & \mathbf{w}\cdot\mathbf{x}+b <= 0 \\ \dfrac{2}{N} \displaystyle\sum_{i=1}^N (\mathbf{w}\cdot\mathbf{x}+b-y_i)\mathbf{x}_i^T & \mathbf{w}\cdot\mathbf{x}+b > 0 \end{cases}
     \end{align}
 
-令 :math:`e_i=\mathbf{w}\cdot\mathbf{x}+b-y_i` ，我们通常称 :math:`e_i` 为误差项，则 :math:`\dfrac{\partial C(v)}{\partial \mathbf{w}} = \dfrac{2}{N} \displaystyle\sum_{i=1}^N e_i\mathbf{x}_i^T` （只考虑了非零的情况）。
+令 :math:`e_i=\mathbf{w}\cdot\mathbf{x}+b-y_i`，我们通常称 :math:`e_i` 为误差项，则 :math:`\dfrac{\partial C(v)}{\partial \mathbf{w}} = \dfrac{2}{N} \displaystyle\sum_{i=1}^N e_i\mathbf{x}_i^T` （只考虑了非零的情况）。
 
-更新公式为 :math:`\mathbf{w}_{t+1}=\mathbf{w}_{t}-\eta\dfrac{\partial C}{\partial \mathbf{w}}` 。
+更新公式为 :math:`\mathbf{w}_{t+1}=\mathbf{w}_{t}-\eta\dfrac{\partial C}{\partial \mathbf{w}}`。
 
 最后，求 :math:`\dfrac{\partial C(v)}{\partial b}` ：
 
@@ -707,17 +707,17 @@ Example 3
 
 使用前面的误差项，则 :math:`\dfrac{\partial C(v)}{\partial b} = \dfrac{2}{N} \displaystyle\sum_{i=1}^N e_i` （只考虑了非零的情况）
 
-更新公式为 :math:`b_{t+1}=b_{t}-\eta\dfrac{\partial C}{\partial b}` 。
+更新公式为 :math:`b_{t+1}=b_{t}-\eta\dfrac{\partial C}{\partial b}`。
 
 依赖现有知识，就可以对大多数神经网络进行分析和求导了。
 
 如果需要简化目标方程，可以合并 :math:`\mathbf{w}` 和 :math:`b` 的更新公式，记作 :math:`\hat{\mathbf{w}}=\begin{bmatrix} \mathbf{w}^T, b \end{bmatrix}`
-（注意，这种写法意味着需要调整输入 :math:`\mathbf{x}`  的形状为 :math:`\hat{\mathbf{x}}=\begin{bmatrix} \mathbf{x}^T, 1 \end{bmatrix}` 。
+（注意，这种写法意味着需要调整输入 :math:`\mathbf{x}`  的形状为 :math:`\hat{\mathbf{x}}=\begin{bmatrix} \mathbf{x}^T, 1 \end{bmatrix}`。
 这时， :math:`\mathbf{w}\cdot\mathbf{x}+b` 就可以写作 :math:`\hat{\mathbf{w}} \cdot \hat{\mathbf{x}}` 了。这种写法，其实和上课庞老师讲的是一样的。
 
 到目前为止，整理完了这篇文章中出现的所有公式， `原文第 8 小节 <https://www.kdocs.cn/p/135966556760>`_ 是对全文公式的总结，这里就不再整理了。
 
-关于矩阵对矩阵的求导，参考 `知乎文章：道理我都懂，但是神经网络反向传播时的梯度到底怎么求？ <https://zhuanlan.zhihu.com/p/25202034>`_ 。
+关于矩阵对矩阵的求导，参考 `知乎文章：道理我都懂，但是神经网络反向传播时的梯度到底怎么求？ <https://zhuanlan.zhihu.com/p/25202034>`_。
 
 另外，有一些我认为写的不错的分享，也列在这里：
 

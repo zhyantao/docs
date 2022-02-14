@@ -7,7 +7,7 @@ reStructuredText
 
 .. hint:: 
 
-    文档也支持 :ref:`reST 风格的 Markdown 语法 <target_header>` 。本文转载自
+    文档也支持 :ref:`reST 风格的 Markdown 语法 <target_header>`。本文转载自
     `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_ （有修改），仅供学习参考。
 
 .. _indentation-rst:
@@ -274,7 +274,7 @@ reStructuredText
 网格表
 ~~~~~~
 
-对于网格表（:duref:`参考 <grid-tables>`），必须手动“画”出单元格：
+对于网格表（:duref:`参考 <grid-tables>`），必须手动 "画" 出单元格：
 
 .. code-block::
 
@@ -412,10 +412,10 @@ List 表可以根据两级无序列表来生成表格：
 .. warning::
 
     - 在链接文本和 ``<`` 符号之间必须至少有一个空格。
-    - 同 :ref:`inlnie-markup-rst` ，
+    - 同 :ref:`inlnie-markup-rst`，
       标记符和被包裹的文本之间不能有空格，
       而标记符和外部文本之间至少需要有一个空格。
-    - 如果在同一个页面中两个 **链接文本** 相同，编译器会报 **警告** ，
+    - 如果在同一个页面中两个 **链接文本** 相同，编译器会报 **警告**，
       此时，可以在末尾用两个下划线 ``__`` 来解决
 
 
@@ -463,7 +463,7 @@ reST 支持图像指令，用法如下：
 
 .. warning::
 
-    - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片将无法通过 XLaTeX 编译。解决方法是图片后缀名使用通配符 ``*``\ 。
+    - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片将无法通过 XLaTeX 编译。解决方法是图片后缀名使用通配符 ``*``\。
     - ``figure`` 和 ``image`` 的区别在于， ``figure`` 可以添加图片标题，而 ``image`` 不能。
     - 文档中所使用的图片统一放在 ``source/_static/images`` 目录内。
     - 优先使用 ``svg`` 格式的矢量图或使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
@@ -526,7 +526,7 @@ reST 支持图像指令，用法如下：
 
     跳转到 :ref:`test-ref-label`
 
-跳转到 :ref:`test-ref-label` 。这种方法将自动获取章节标题作为链接文本，且对图片和表格也一样有效。
+跳转到 :ref:`test-ref-label`。这种方法将自动获取章节标题作为链接文本，且对图片和表格也一样有效。
 
 **2、** 如果标签没有放在标题之前，则需要使用 ``:ref:`Link title <label-name>``` 来指定名称。
 
@@ -682,7 +682,7 @@ PlantUML 语法支持
 ~~~~~~~~~~~~~~~~~
 
 文件已通过 `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`_
-插件支持 PlantUML 语法，语法规则参考 :ref:`plantuml` ，样例如下：
+插件支持 PlantUML 语法，语法规则参考 :ref:`plantuml`，样例如下：
 
 .. code-block:: 
 
@@ -705,7 +705,7 @@ Graphviz 语法支持
 
 文档已经通过 `sphinx.ext.graphviz 
 <https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`_ 插件支持
-Graphviz 语法，语法规则参考 :ref:`graphviz` ，样例如下：
+Graphviz 语法，语法规则参考 :ref:`graphviz`，样例如下：
 
 .. code-block:: 
 
@@ -891,15 +891,15 @@ GitHub URL 缩写
 基于 `sphinxcontrib-bibtex <https://sphinxcontrib-bibtex.readthedocs.io/en/latest/index.html>`_
 插件书写参考文献。使用时首先将参考文献的引用写在 ``refs.bib`` 中，然后在正文中添加引用。
 
-引用出现的位置分为行内引用 ``cite`` 和脚注引用 ``footcite`` ，引用格式也分为引用时给出作者署名
-``t`` 和引用时不给出作者署名，只在文中注明递增[序号] ``p`` 。因此其组合一共有四种：
+引用出现的位置分为行内引用 ``cite`` 和脚注引用 ``footcite``，引用格式也分为引用时给出作者署名
+``t`` 和引用时不给出作者署名，只在文中注明递增[序号] ``p``。因此其组合一共有四种：
 
 1. ``:cite:t:``
 2. ``:cite:p:``
 3. ``:footcite:t:``
 4. ``:footcite:p:``
 
-对应地，插入参考文献可以使用 ``.. bibliography::`` 或 ``.. footbibliography::`` 。
+对应地，插入参考文献可以使用 ``.. bibliography::`` 或 ``.. footbibliography::``。
 
 将引用写入 refs.bib 
 ~~~~~~~~~~~~~~~~~~~~
@@ -930,7 +930,7 @@ Non-standard analysis is fun :cite:p:`1987:nelson`.
 
 .. warning::
 
-    整个文档只能有一处写 ``.. bibliography::`` ，否则编译的时候会报重复引用的警告。如果只想在单个 ``rst`` 文件中写明参考文献，可以使用 ``footcite`` 来避免这种警告。
+    整个文档只能有一处写 ``.. bibliography::``，否则编译的时候会报重复引用的警告。如果只想在单个 ``rst`` 文件中写明参考文献，可以使用 ``footcite`` 来避免这种警告。
 
 脚注引用
 ~~~~~~~~
