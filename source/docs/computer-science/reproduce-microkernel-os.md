@@ -17,8 +17,8 @@
 第 1 讲：操作系统简介
 ^^^
 
-- 了解 Unix [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
-- [实验 1](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/)：C、汇编、工具、启动
+- 了解 UNIX 系统 [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
+- 实验 1：准备工作环境 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/)]
 
 ---
 :column: +right
