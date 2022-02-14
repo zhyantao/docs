@@ -38,20 +38,20 @@ Conda
 --------------------------
 
 - 在当前 Channels 中查找 Package： ``conda search PKGNAME=3.1 "PKGNAME [version='>=3.1.0,<3.2']"``
-- 使用 Anaconda 在当前 Channels 中查找 Package ： ``anaconda search FUZZYNAME``
-- 从一个指定的 Channel 安装 Package ： ``conda install conda-forge::PKGNAME``
+- 使用 Anaconda 在当前 Channels 中查找 Package ：\ ``anaconda search FUZZYNAME``
+- 从一个指定的 Channel 安装 Package ：\ ``conda install conda-forge::PKGNAME``
 - 安装指定版本的 Package （3.1.4） :  ``conda install PKGNAME==3.1.4``
 - 安装指定版本中的某一个版本（OR）： ``conda install "PKGNAME[version='3.1.2|3.1.4']"``
 - 安装指定区间的所有版本（AND）： ``conda install "PKGNAME>2.5,<3.2"``
-- 创建一个 Channel ： ``conda config --add channels CHANNELNAME``
+- 创建一个 Channel ：\ ``conda config --add channels CHANNELNAME``
 
 其他有用的提示
 --------------
 
 - 查看 Package 版本的细节： ``conda search PKGNAME --info``
 - 删除无用缓存文件（包含无用 Packages）： ``conda clean --all``
-- 从一个工作环境中删除一个 Package ： ``conda uninstall PKGNAME --name ENVNAME``
-- 更新一个工作环境中的所有 Packages ： ``conda update --all --name ENVNAME``
+- 从一个工作环境中删除一个 Package ：\ ``conda uninstall PKGNAME --name ENVNAME``
+- 更新一个工作环境中的所有 Packages ：\ ``conda update --all --name ENVNAME``
 - 使用脚本文件运行命令： ``conda install --yes PKG1 PKG2``
 - 测试 Conda 配置和服务： ``conda config --show 、conda config --show-sources``
 

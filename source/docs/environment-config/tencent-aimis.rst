@@ -13,7 +13,7 @@
 考虑这样一个手工标注或操作场景：在肿瘤患者接收放射治疗之前， **放疗医生** 需要做什么？
 
 - 在 CT 影像上 **手工勾画** 出肿瘤及肿瘤周边的正常组织（如肺、心脏等），这对应 8 个 Segmentation 的 nii.gz 文件
-- 对不同的区域给出相应的 **处方剂量** ，处方剂量包括：
+- 对不同的区域给出相应的 **处方剂量**，处方剂量包括：
     
   - 肿瘤区域（以下称为靶区或 PTV）至少需要辐射的剂量，使靶区能得到有效的控制
   - 靶区周边的正常组织的最大辐照剂量，以减少正常组织的放射性副反应
@@ -22,7 +22,7 @@
 
 一个完整的放疗计划包括：1）CT 影像，2）勾画图（靶区和正常结构），3）放疗剂量图，4）计划信息文件
 
-现在的任务是利用现有的临床数据，建立放疗计划的 **三维剂量预测模型** 。模型可以根据患者的 **CT 影像图、勾画图** 来预测其放疗计划的 **三维剂量图** 。
+现在的任务是利用现有的临床数据，建立放疗计划的 **三维剂量预测模型**。模型可以根据患者的 **CT 影像图、勾画图** 来预测其放疗计划的 **三维剂量图**。
 
 物理师可以根据模型所预测的三维剂量图预先得知靶区和正常组织的剂量情况，在计划设计之前做到心中有数，对计划优化时有针对性地进行优化条件设置，
 减少计划设计的试错次数，另外预测剂量对计划完成后的计划审查也有重要意义。
@@ -41,9 +41,9 @@
 ~~~~~~~~~~~~~~~~~~
 
 1. 将病理结果汇总清单 04_predicts.csv 及对应的预测 dose 文件 {id_patient}_RTdose.nii.gz 打包 [12]_ 为 04_predicts.zip。
-2. 将压缩包复制到 ``/home/tione/notebook/taop-2021-result/04_predicts/<unix_timestamp>/04_predicts.zip`` [13]_ 。
+2. 将压缩包复制到 ``/home/tione/notebook/taop-2021-result/04_predicts/<unix_timestamp>/04_predicts.zip`` [13]_。
 3. 在 `大赛官网个人信息页 <https://contest.taop.qq.com/personalInfo>`_ 中，标注回传 04_predicts.zip，比对预测结果，调整模型参数。
-4. 用同样的方式对 04_results.csv 进行打包 [12]_ ，在 `大赛官网个人信息页 <https://contest.taop.qq.com/personalInfo>`_ 中，提交作品 04_results.zip，进行排名更新。
+4. 用同样的方式对 04_results.csv 进行打包 [12]_，在 `大赛官网个人信息页 <https://contest.taop.qq.com/personalInfo>`_ 中，提交作品 04_results.zip，进行排名更新。
 
 .. note:: 
     
@@ -87,8 +87,8 @@
 .. note:: 
     
     - 勾画图均为 mask 图，即图像只有 0 和 1 两个像素值。
-    - 算法类的比赛不知道数据集如何使用时可以在 `Kaggle <https://www.kaggle.com/>`_ 上搜一下文件的后缀名，比如 ``.dcm`` 、 ``.nii.gz`` 。
-    - 由任务分析可知，我们需要即根据 ``{id_patient}_CT/*`` 和 ``{id_patient}_Body`` 、 ``{id_patient}_Heart`` 、 ``{id_patient}_ITV`` 、 ``{id_patient}_L_Lung`` 、 ``{id_patient}_PTV`` 、 ``{id_patient}_R_Lung`` 、 ``{id_patient}_Spinal-Cord`` 、 ``{id_patient}_Total_Lung`` 来预测 ``{id_patient}_RTdose`` 。
+    - 算法类的比赛不知道数据集如何使用时可以在 `Kaggle <https://www.kaggle.com/>`_ 上搜一下文件的后缀名，比如 ``.dcm`` 、 ``.nii.gz``。
+    - 由任务分析可知，我们需要即根据 ``{id_patient}_CT/*`` 和 ``{id_patient}_Body`` 、 ``{id_patient}_Heart`` 、 ``{id_patient}_ITV`` 、 ``{id_patient}_L_Lung`` 、 ``{id_patient}_PTV`` 、 ``{id_patient}_R_Lung`` 、 ``{id_patient}_Spinal-Cord`` 、 ``{id_patient}_Total_Lung`` 来预测 ``{id_patient}_RTdose``。
 
 分析目录出现的文件
 ~~~~~~~~~~~~~~~~~~
@@ -111,7 +111,7 @@ dose_origin_spacing_size_01.csv 配准文件，用于将文件调整为标准格
 - id_task: 任务名称，本赛道为 3D_Dose。
 - id_area: 标注区域 id，顺序编号。
 - label_type: 标签类型，本赛道所提供数据包含 dose、Segmentation、CT 三类。
-- mask_path: 放射剂量图 dose 文件和勾画图 mask 文件所在的 **相对路径** 。在 04_predicts.csv 中需要预测的字段。
+- mask_path: 放射剂量图 dose 文件和勾画图 mask 文件所在的 **相对路径**。在 04_predicts.csv 中需要预测的字段。
 - file_path 不等于 mask_path 是因为这个字段不只存放 mask 文件的位置，还有其他勾画图的路径。
 - mask_origin 是 Mask 起始的世界坐标，可能对应预测的需要放疗的位置。
 - dose_origin 是 Dose 起始的世界坐标，可能对应实际放疗的位置。
@@ -304,7 +304,7 @@ they reference, but in separate series,
     # 需不需要考虑亮度问题？是不是正例偏亮，负例偏暗？
 
     # 将 RTdose 作为输出，需要将形状统一化（需要统一化吗？）模型一般都是固定尺寸的，需不需要resize
-    # （难点）RTdose 的形状 != CT 图 ，而且，同为 RTdose ，他们的形状也不一样。如何根据这种情况设计网络结构？
+    # （难点）RTdose 的形状 != CT 图，而且，同为 RTdose，他们的形状也不一样。如何根据这种情况设计网络结构？
 
     # 把 RTdose 将作为输出 y，将输入和输出打包成元组 (X, y)
 
@@ -416,7 +416,7 @@ Neural Network Cheat Sheet [10]_
 :footcite:t:`ma2021cutting` 总结了 2020 年医学图像分割挑战赛中的顶级方法，包括各种任务和数据集。
 
 以下挑战赛可以分为单模态 3D 图像分割和多模态 3D 图像分割。了解
-`什么是多模态机器学习？ <https://cloud.tencent.com/developer/article/1436508>`_\ 。
+`什么是多模态机器学习？ <https://cloud.tencent.com/developer/article/1436508>`_\。
 其中前 5 个挑战赛为单模态，后 5 个为多模态。
 
 CADA 挑战赛、ASOCA 挑战赛、VerSeg 挑战赛、M&Ms 挑战赛、EMIDEC 挑战赛、ADAM 挑战赛、HECKTOR

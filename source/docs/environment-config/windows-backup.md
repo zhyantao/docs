@@ -10,7 +10,7 @@ Windows PE 或 WinPE，全称 Windows 预先安装环境，是 Microsoft Windows
 它取代了格式较旧的 MS-DOS 启动磁片/启动光盘 [^cite_ref-1]。
 
 注意，如果我们使用 Windows 自带的升级工具来重装系统，Windows 可能会自动将我们之前的系统保存到
-`C:\Windows.old` 。如果直接在文件夹上右击删除，往往没有足够的权限，比较推荐的做法是使用磁盘清理工具。
+`C:\Windows.old`。如果直接在文件夹上右击删除，往往没有足够的权限，比较推荐的做法是使用磁盘清理工具。
 
 ## 如何备份
 

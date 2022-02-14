@@ -26,7 +26,7 @@
 
 需要注意的是，边界框和锚框的区别：锚框是一组预定义的大小确定的边界框。
 目标检测算法通常会在输入图像中采样大量的区域，然后判断这些区域中是否包含我们感兴趣的目标，
-并调整区域边缘从而更准确低预测目标的真实边界框（ground-truth bounding box） [4]_ 。
+并调整区域边缘从而更准确低预测目标的真实边界框（ground-truth bounding box） [4]_。
 需要注意的是，以像素为中心分别生成多个大小不等的锚框，指的是通常意义上的滑动窗口。
 滑动窗口的运算量极大，包含大量的重复计算，因此出现了像 YOLO 这样的改进算法。
 
@@ -34,15 +34,15 @@
   :align: center
 
 不同的算法会采用不用的采样方法。以 YOLO 为例（上图所示 [5]_ ），它首先将图像划分为网格结构，每个网格都是一个锚框。
-所有锚框以平铺的方式占满图像，对每个网格应用 CNN 预测 :math:`y` ，进而调整区域边缘。
+所有锚框以平铺的方式占满图像，对每个网格应用 CNN 预测 :math:`y`，进而调整区域边缘。
 YOLO 的锚框可以看成是 :math:`stride = b_w` 的滑动窗口。
 
 如果一幅图像中包含多个目标，可以同时设定多个大小不等的锚框，分别平铺整个图像。而预测步骤与前述无异。
 
 需要注意的是，目标检测通常也是监督学习方法，我们需要设定标签，通常情况下有两种设置方式：
 
-1. 左上角坐标 :math:`(x_1, y_1)` ，右下角坐标 :math:`(x_2, y_2)` ，合起来 :math:`(x_1, y_1, x_2, y_2)` 。
-2. 中心点坐标 :math:`(b_x, b_y)` ，锚框高度 :math:`b_h` ，锚框宽度 :math:`b_w` ，合起来 :math:`(b_x, b_y, b_h, b_w)` 。
+1. 左上角坐标 :math:`(x_1, y_1)`，右下角坐标 :math:`(x_2, y_2)`，合起来 :math:`(x_1, y_1, x_2, y_2)`。
+2. 中心点坐标 :math:`(b_x, b_y)`，锚框高度 :math:`b_h`，锚框宽度 :math:`b_w`，合起来 :math:`(b_x, b_y, b_h, b_w)`。
 
 两种方式任选一种，然后整个网络的标签可以用如法方式表示：
 
@@ -85,7 +85,7 @@ YOLO 的锚框可以看成是 :math:`stride = b_w` 的滑动窗口。
   AP = \frac{1}{11} \sum_{r \in \{0, 0.1,0.2,...,1\}} p_{interp} (r) 
 
 
-其中，:math:`p_{interp}(r) = \max\limits_{\tilde{r};\tilde{r} \ge r} p(\tilde{r})` ，
+其中，:math:`p_{interp}(r) = \max\limits_{\tilde{r};\tilde{r} \ge r} p(\tilde{r})`，
 :math:`p(\tilde{r})` 是召回值为 :math:`\tilde{r}` 时的精度。
 关于波浪线符号的含义写在\ :ref:`另一篇文章 <symbol-definition>`\ 了。
 
@@ -96,13 +96,13 @@ mAP 计算的是 :math:`IoU\_threshold = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 
 
 查全率指的是，对于 ground-truth 中标出来的检测框，预测结果能否全覆盖？要理解这句话，要明白，
 我们通常只会标注正样本，也通常只会预测正样本。如果有一块区域没预测或没标注，默认就是负样本。
-而且，这里的全覆盖指的是\ **数量上的全覆盖**\ ，而不是面积上的全覆盖，如果你预测的框和真实框只重合了一个角，
+而且，这里的全覆盖指的是\ **数量上的全覆盖**\，而不是面积上的全覆盖，如果你预测的框和真实框只重合了一个角，
 也叫覆盖。只不过他们的覆盖面积不大，在计算 IoU 时，跟 IoU_threshod 比较一下，如果覆盖面积太小，这个就不计数了。
 
 查准率指的是，在你预测出来的所有检测框中，有多少预测对了，也就是说，有多少 IoU 超过了 IoU_threshod 的检测框被计数了。
 
 进一步地，我们从维基百科中搜索一下\ 
-`混淆矩阵 <https://en.wikipedia.org/wiki/Confusion_matrix>`_\ ，会有下面这张图：
+`混淆矩阵 <https://en.wikipedia.org/wiki/Confusion_matrix>`_\，会有下面这张图：
 
 .. image:: ../../_static/images/confusion-matrix.png
   :align: center
@@ -177,7 +177,7 @@ Anchor-free
 Label Assignment in Object Detection
     label assignment 就是要对目标检测中的 anchor box 或者 anchor point 打上 label，
     是positive、negative 还是 ignore。这里面有两个挑战，一个挑战是 negative 非常多，容易导致样本不均衡问题；
-    另一个挑战是判定标准只能经验性地设置，然后通过实验结果来验证，基本是一个 trial and error 的过程 [1]_ 。
+    另一个挑战是判定标准只能经验性地设置，然后通过实验结果来验证，基本是一个 trial and error 的过程 [1]_。
     另外，参考 [2]_ [3]_
     
 

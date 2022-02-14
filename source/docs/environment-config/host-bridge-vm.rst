@@ -38,8 +38,8 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
 在 Windows 上我们可以检查虚拟网卡的信息，默认应该是动态分配的。
 但是大多时候，我们不希望我们的虚拟机 IP 地址经常改动，为了相互匹配，所以对宿主机一般也是静态分配。
 
-确保宿主机和虚拟机的 **网关（GATEWAY）地址保持一致** ，随便给宿主机和虚拟机分配一个 **不重复的 IP 地址** 就可以了。
-网关地址一般都是 ``192.168.?.1`` 这里的 ? 可以随便设，子网掩码都设置为 ``255.255.255.0`` 。
+确保宿主机和虚拟机的 **网关（GATEWAY）地址保持一致**，随便给宿主机和虚拟机分配一个 **不重复的 IP 地址** 就可以了。
+网关地址一般都是 ``192.168.?.1`` 这里的 ? 可以随便设，子网掩码都设置为 ``255.255.255.0``。
 DNS 地址关系到 **能不能上网** 的问题，常用的 DNS 服务器有 ``114.114.114.114`` （中国电信）、 ``8.8.8.8`` （谷歌）。
 
 然后说完了设置的值是什么，那么从哪里找到这些配置文件呢？
@@ -52,9 +52,9 @@ DNS 地址关系到 **能不能上网** 的问题，常用的 DNS 服务器有 `
   - Linux： ``/etc/sysconfig/network-scripts/ifcfg-*`` > ``BOOTPROTO=static`` & ``ONBOOT=yes`` 
     & ``IPADDR=192.168.?.xxx`` & ``GATEWAY=192.168.?.1``
 
-注意：我设置完之后，在 Windows 中双击 VMnet8 查看状态的时候显示 “无网络访问权限”，但是实际上能上网，不知道为什么。
+注意：我设置完之后，在 Windows 中双击 VMnet8 查看状态的时候显示 "无网络访问权限"，但是实际上能上网，不知道为什么。
 
-最后测试，宿主机和虚拟机互相 ``ping`` 一下，然后再都 ``ping www.baidu.com`` 。如果 ``ping`` 不通，检查一下防火墙。
+最后测试，宿主机和虚拟机互相 ``ping`` 一下，然后再都 ``ping www.baidu.com``。如果 ``ping`` 不通，检查一下防火墙。
 
 .. admonition:: 防火墙设置
     :class: dropdown
@@ -102,9 +102,9 @@ DNS 地址关系到 **能不能上网** 的问题，常用的 DNS 服务器有 `
 
 - （必须） `修改 IP 地址 <https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-10-cosmic-cuttlefish-linux>`__
 - （必须）删除 ``MAC`` 地址，因为重启后会自动生成。也可以 `手动分配 <https://www.howtogeek.com/192173/how-and-why-to-change-your-mac-address-on-windows-linux-and-mac/>`__
-- （必须）删除 ``UUID`` ，重启后也会自动生成。也可以 `手动分配 <https://www.howtogeek.com/192173/how-and-why-to-change-your-mac-address-on-windows-linux-and-mac/>`__
-- （非必须） `修改 hostname <https://phoenixnap.com/kb/ubuntu-20-04-change-hostname>`__ ，希望能用肉眼区分 
-- （非必须）修改 ``/etc/hosts``，添加地址映射： ``<ip-address> hostname`` ，希望 ``ping hostname`` 是能成功
+- （必须）删除 ``UUID``，重启后也会自动生成。也可以 `手动分配 <https://www.howtogeek.com/192173/how-and-why-to-change-your-mac-address-on-windows-linux-and-mac/>`__
+- （非必须） `修改 hostname <https://phoenixnap.com/kb/ubuntu-20-04-change-hostname>`__，希望能用肉眼区分 
+- （非必须）修改 ``/etc/hosts``，添加地址映射： ``<ip-address> hostname``，希望 ``ping hostname`` 是能成功
 
 名词解释
 --------

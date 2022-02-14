@@ -205,13 +205,13 @@ Key 又叫属性，Value 可以是任意数据类型。
 
 ## 面向对象编程
 
-JavaScript 语言的对象体系，不是基于 “类” 的，而是基于构造函数（constructor）和原型链（prototype）。
+JavaScript 语言的对象体系，不是基于 "类" 的，而是基于构造函数（constructor）和原型链（prototype）。
 
 ### 基本使用
 
 ES5 声明类的模板：`const V = function() {this.a = 100;}` 跟普通函数的写法无异。ES6 有了 `class` 关键字。
 
-使用 “类” 的模板创建对象：`const v = new V();`
+使用 "类" 的模板创建对象：`const v = new V();`
 
 `this` 指向当前对象。
 

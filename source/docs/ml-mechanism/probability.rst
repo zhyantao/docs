@@ -11,7 +11,7 @@
 
 :math:`E(X^2)=E^2(X)+D(X)` 和 :math:`E(\overline{X}^2)=E^2(\overline{X})+D(\overline{X})` 这两个公式对所有公式都满足吗？
 
-在 `数理统计公式大全 <https://kdocs.cn/l/cq4IXMIWKAG0>`_ 中，多次出现符号 :math:`\lambda` ，其实 :math:`\lambda=\dfrac{1}{\bar{X}}`
+在 `数理统计公式大全 <https://kdocs.cn/l/cq4IXMIWKAG0>`_ 中，多次出现符号 :math:`\lambda`，其实 :math:`\lambda=\dfrac{1}{\bar{X}}`
 
 概念区分
 
@@ -19,10 +19,10 @@
 - 概率密度：
 - 概率分布：
 - 概率：
-- 概率密度函数图像的纵坐标代表的是概率，总面积求和等于 1 。
+- 概率密度函数图像的纵坐标代表的是概率，总面积求和等于 1。
 
 如何查表（认识符号的含义）角标为概率值。角标有三种叫法，1）信任系数 2）置信度 3）置信水平。置信水平是指某个范围包含参数
-:math:`\theta` 真值的可信程度。 :math:`P(\underline{\theta} \leq \theta \leq \overline{\theta}) \geq 1 - \alpha` 。
+:math:`\theta` 真值的可信程度。 :math:`P(\underline{\theta} \leq \theta \leq \overline{\theta}) \geq 1 - \alpha`。
 置信区间并不唯一，因此区间长度也不唯一。
 
 i.i.d. 独立同分布

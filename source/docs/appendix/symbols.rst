@@ -22,10 +22,10 @@
     概率 :math:`p(\theta | \phi^*)` 中的竖线用来分隔自变量和参数。
 
     表达式 :math:`\alpha = \arg \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
-    的意思：当函数取最小值时，将 :math:`\omega` 的值赋给 :math:`\alpha` 。 
+    的意思：当函数取最小值时，将 :math:`\omega` 的值赋给 :math:`\alpha`。 
     
     表达式 :math:`\alpha = \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
-    的意思：当函数取最小值时，将这个最小值赋给 :math:`\alpha` 。
+    的意思：当函数取最小值时，将这个最小值赋给 :math:`\alpha`。
 
 .. _symbol-definition:
 
@@ -102,8 +102,8 @@
     :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
     :widths: 10, 25, 20, 50
 
-    ":math:`\subset`", "真包含（真子集）", "``\subset``", "高中课本记作 :math:`\subsetneqq` ，也有书记作 :math:`\subsetneq`"
-    ":math:`\subseteq`", "包含（子集）", "``\subseteq``", "高中课本记作 :math:`\subset` ，因此有歧义， `注意约定 <https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86>`_"
+    ":math:`\subset`", "真包含（真子集）", "``\subset``", "高中课本记作 :math:`\subsetneqq`，也有书记作 :math:`\subsetneq`"
+    ":math:`\subseteq`", "包含（子集）", "``\subseteq``", "高中课本记作 :math:`\subset`，因此有歧义， `注意约定 <https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86>`_"
     ":math:`\in`", "属于", "``\in``", ":math:`a \in A`"
     ":math:`\notin`", "不属于", "``\notin``", ":math:`a \notin A`"
 

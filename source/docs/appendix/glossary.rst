@@ -14,28 +14,28 @@
 --------
 
 点乘（Dot product / Scalar product）
-    也叫数量积或向量内积，结果是一个向量在另一个向量上的投影长度，是一个标量。点乘的记号就是一个中心圆点 :math:`\cdot` 。代数定义为
-    :math:`\mathbf{a}\cdot\mathbf{b}=\displaystyle\sum_{i=1}^n a_i b_i` 。几何定义为
+    也叫数量积或向量内积，结果是一个向量在另一个向量上的投影长度，是一个标量。点乘的记号就是一个中心圆点 :math:`\cdot`。代数定义为
+    :math:`\mathbf{a}\cdot\mathbf{b}=\displaystyle\sum_{i=1}^n a_i b_i`。几何定义为
     :math:`\mathbf{a}\cdot\mathbf{b}=|\mathbf{a}||\mathbf{b}|cos\theta` （该定义只对二维和三维有效）。
     点乘反映了两个向量的相似度，两个向量的相似度越高，它们的点乘越大。
     当权重为非负数且和为 1 时，点乘表示加权平均。将两个向量规范化得到单位长度后，点乘表示它们的夹角余弦。
 
 叉乘（Cross product）
     也叫向量积或向量外积，结果是一个和已有两个向量都垂直的向量。集合定义为
-    :math:`\mathbf{a}\times\mathbf{b}=|\mathbf{a}||\mathbf{b}|sin\theta` 。
-    :math:`\mathbf{a}\times\mathbf{b}` 有时也写作 :math:`\mathbf{a}\land\mathbf{b}` 。
+    :math:`\mathbf{a}\times\mathbf{b}=|\mathbf{a}||\mathbf{b}|sin\theta`。
+    :math:`\mathbf{a}\times\mathbf{b}` 有时也写作 :math:`\mathbf{a}\land\mathbf{b}`。
     外积的方向由右手定则决定，外积的模长等于两个向量为边的平行四边形的面积。
 
 一般矩阵乘积（Matrix multiplication）
-    记作 :math:`\mathbf{A}\mathbf{B}` 有时也记作 :math:`\mathbf{A}\cdot\mathbf{B}` 。
+    记作 :math:`\mathbf{A}\mathbf{B}` 有时也记作 :math:`\mathbf{A}\cdot\mathbf{B}`。
     需要注意的是，向量之间的运算中间必须有运算符号，缺省运算符号时默认是矩阵乘法或标量乘法。
-    代数定义为 :math:`(\mathbf{A}\mathbf{B})_{ij}=\displaystyle\sum_{r=1}^n a_{ir} b_{rj}` 。
+    代数定义为 :math:`(\mathbf{A}\mathbf{B})_{ij}=\displaystyle\sum_{r=1}^n a_{ir} b_{rj}`。
     一般的矩阵乘积可以认为是行向量和列向量的内积，这是工科线性代数教材中使用的运算规则。
 
 哈达玛乘积（Hadamard product）
     又叫分素乘积（element-wise，entrywise product）。其输入为两个相同形状的矩阵，
     输出是具有同样形状的、各个位置的元素等于两个输入矩阵相同位置元素的乘积的矩阵。
-    数学定义为 :math:`(\mathbf{A}\circ\mathbf{B})_{ij}=a_{ij} b_{ij}` 。
+    数学定义为 :math:`(\mathbf{A}\circ\mathbf{B})_{ij}=a_{ij} b_{ij}`。
 
 张成
     由几个线性不相关的向量作为基，所有能够由这几个基向量表示的空间向量是总和。
@@ -136,7 +136,7 @@ K-way，N-shot
     The support set has k classes, every class has n samples.
 
 相似度函数
-    :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1` ，否则等于 :math:`0` 。
+    :math:`sim(x, x')` 理想情况下，如果 :math:`x` 和 :math:`x'` 是同一种东西，:math:`sim(x, x')=1`，否则等于 :math:`0`。
     通常作为标签。
 
 

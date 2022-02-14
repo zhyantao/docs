@@ -23,7 +23,7 @@ GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时�
 通常说到处理器，指的一般是 Intel 和 AMD 生产的 CPU（中央处理器），CPU 是主板上的一块芯片。
 但是，容易被大家忽略的是 GPU 也是处理器，它是图形处理器。
 关于 CPU 和 GPU 的区别，可以阅读
-`这篇文章 <https://www.intel.cn/content/www/cn/zh/products/docs/processors/cpu-vs-gpu.html>`_\ 。
+`这篇文章 <https://www.intel.cn/content/www/cn/zh/products/docs/processors/cpu-vs-gpu.html>`_\。
 总结一句话，仅有 GPU 无法完成工作，需要 CPU 的支持，而 CPU 更适合串行任务，GPU 则更适合并行任务。
 
 打开任务管理器后，我们或许会看到这样一张图：

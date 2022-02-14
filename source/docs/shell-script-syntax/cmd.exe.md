@@ -32,5 +32,5 @@ Microsoft 新开发的 [Terminal](https://github.com/microsoft/terminal) 可以�
 ```
 
 ```{note}
-上面的改动可能会让你的 vscode Terminal 出现乱码。解决方式是打开 vscode 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json`` ，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",`` 。
+上面的改动可能会让你的 vscode Terminal 出现乱码。解决方式是打开 vscode 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
 ```
