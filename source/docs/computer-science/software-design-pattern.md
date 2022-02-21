@@ -1,7 +1,11 @@
 (software_design_pattern)=
 # 软件系统设计
 
-软件系统设计四步走[^ref-system-design]：
+程序设计并不等同与软件设计，程序写完了不等于软件就写完了 [^cite_ref-1]。
+
+一个好的软件应该是可扩展、健壮、高可用、安全、模块化的 [^cite_ref-2]。
+
+软件系统设计四步走 [^cite_ref-3]：
 
 1. 明确使用场景和约束；
 2. 使用所有重要的组件描绘出一个高层级的设计；
@@ -246,7 +250,7 @@ Kubernetes **局限性**在于难以对处于应用系统和基础设施边缘�
 因此，针对**更加精细化的管理**，出现了**服务网格的边车代理模式**。
 
 虚拟化场景中的边车指的是由系统自动在服务容器（通常指 Kubernetes 中的 Pod。
-一个 Pod 由一个或多个容器组成 [^ref-pods]）中注入的一个通信代理服务器，相当于那个挎斗。
+一个 Pod 由一个或多个容器组成 [^cite_ref-4]）中注入的一个通信代理服务器，相当于那个挎斗。
 在应用毫无感知的情况下，接管应用所有的对外通信（包含数据平面通信和控制平面通信）。
 通过边车代理模式，实现了精细化管理。
 
@@ -705,5 +709,7 @@ SAGA 事务实现起来也不太容易，通常也不会直接靠裸编码来实
 
 ---
 
-[^ref-system-design]: <https://github.com/donnemartin/system-design-primer>
-[^ref-pods]: <https://zhuanlan.zhihu.com/p/32618563>
+[^cite_ref-1]: 王建兴：程序设计不等同于软件开发 <http://www.ithome.com.tw/voice/89695>
+[^cite_ref-2]: Software design <https://en.wikipedia.org/wiki/Software_design>
+[^cite_ref-3]: <https://github.com/donnemartin/system-design-primer>
+[^cite_ref-4]: <https://zhuanlan.zhihu.com/p/32618563>
