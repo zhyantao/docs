@@ -282,125 +282,194 @@
 
 ```
 
-## 实验 1：准备工作环境
+## 实验 1
 
-实验分为三部分。第一部分聚焦于熟悉 x86 汇编语言，QEMU 仿真器，以及 PC 上电启动过程。
+在本次实验中，你将学习下面几个知识点：
+
+- 熟悉 x86 汇编语言；
+- 熟悉计算机的启动过程；
+- 熟悉 QEMU/GDB 的调试方法。
+
+实验分为三部分。第一部分聚焦于熟悉 x86 汇编语言，QEMU 仿真器，以及计算机上电启动过程。
 第二部分测试启动器，在 lab/boot 目录下。第三部分深入初始化模板，叫做 JOS，在 kernel 目录下。
 
-### 安装软件
+### 准备工作环境
 
-在后续的实验中，你将频繁使用的工具是 git 版本控制系统，无需深入了解，简单知道如何使用即可。
-笔记中给了两个链接供参考，但是也不需要详细阅读。
+MIT6.828 提到使用 Athena machine 将更加方便，但是不是这个学校的学生可能接触不到这个机器。
+因此后续工作将在自己的虚拟机上完成，用到环境如下：
 
-课程需要用的 git 仓库是 https://pdos.csail.mit.edu/6.828/2018/jos.git/，
-笔记中频繁提到 Athena 机器，可能这是 mit 自己的超算平台提供的操作系统。
-如果你拿不到这个 Athena，在自己的 Ubuntu 虚拟机上照常可以使用。
-依次执行官网给出的几条命令行。
+- [Ubuntu 20.04](https://releases.ubuntu.com/20.04/) 以及 VMWare Workstation
+- Git 2.25.1
+- Python 2.7.18
+- 编译器 GCC 9.3.0 以及 gcc-multilib
+- 仿真器 [6.828 patched QEMU](https://github.com/mit-pdos/6.828-qemu)
 
-每做完一次作业，使用 git diff 可以查看你做了哪些修改，使用 git diff origin/lab1 
-可以展示你相对于初始仓库做了哪些更改。因为 origin/lab1 是我们从服务器上下载的最初代码的样子的一个分支。
-
-我们在 Athena 上安装了合适的 compliers 和 simulators，如果你用自己的虚拟机，可能需要自己编译。
-如果要使用这些编译器和仿真器，你每次登录 Athena 都要运行 add -f 6.828。
-
-如果你没有 Athena ，亦需要自己安装 qemu 和 gcc 遵循 
-https://pdos.csail.mit.edu/6.828/2018/tools.html 的步骤。
-如果你正在使用 Linux 和 BSD ，安装 gcc 可以使用包管理工具，如 apt yum。
-qemu 要安装 6.828 已经适配过的，并自己编译，不要从 qemu 官网下载。
-
-总结一下，这部分提到的是关于环境安装：
-
-- 安装 git 并克隆代码到本地 https://pdos.csail.mit.edu/6.828/2018/jos.git/
-- 安装编译器：gcc
-- 安装仿真器：qemu，需要遵循 https://pdos.csail.mit.edu/6.828/2018/tools.html 的提示
-
-编译仿真器 QEMU 的时间较长。而且跟着步骤走，可能编译源代码的时候会出现点问题。这里稍作整理。
+需要注意的是，在 Ubuntu 这个系统中，默认应该是有 Python 2.7.18 的，可以通过 `python2 --version`
+检查一下。如果没有，我们可能需要用 `sudo apt install python2`
+来安装一下，如果有，我们直接给它建立软连接或硬连接就可以了。
 
 ```{code-block} text
-undefined reference to `major'
-undefined reference to `minor'
+sudo ln /usr/bin/python2 /usr/bin/python
 ```
 
-在相应文件中添加头文件 `#include <sys/sysmacros.h>` 就可以了。
-[参考链接](https://pdos.csail.mit.edu/6.828/2018/tools.html)
+我们并不是完全地从 0 开始写代码，而是在已有内核上添加一些新功能，故我们先将内核代码克隆到虚拟机上：
 
 ```{code-block} text
-error: static declaration of ‘gettid’ follows non-static declaration
+mkdir ~/6.828
+cd ~/6.828
+git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
+cd lab
 ```
 
-参考
-[Patch](https://patchwork.kernel.org/project/qemu-devel/patch/20190320161842.13908-3-berrange@redhat.com/)
-修改一下源文件。
+有一些简单的 Git 命令你需要掌握，比如查看做了哪些修改，如何提交代码等，这些知识可以参考
+{ref}`另一篇文章 <git-syntax>`。
+
+然后我们需要安装硬件仿真器 QEMU，但是 6.282 并不推荐我们使用 <qemu.org> 提供的 QEMU。故改用
+6.828 打过补丁的 QEMU，但是，若直接使用 6.828 patched QEMU，在 `make` 时，会出现一些报错。
+后面我通过查阅资料，修复了这些报错，并把改好的代码放在了
+[我的仓库](https://github.com/zhyantao/6.828-qemu) 中，所以你可以直接使用我改好的代码来进行编译：
 
 ```{code-block} text
-qemu/linux-user/syscall.c:5912: undefined reference to `stime'
+cd ~/6.828
+git clone https://github.com/zhyantao/6.828-qemu.git qemu
 ```
 
-将 `linux-user/syscall.c` 中 `get_errno(stime(&host_time));` 改为 `get_errno(clock_settime(CLOCK_REALTIME, &host_time));`
+在编译 QEMU 源代码之前，我们需要安装一些依赖。
+如果我们的镜像源不合适，可能找不到这些需要的依赖包，因此现在统一使用
+[阿里云的镜像源](https://developer.aliyun.com/mirror/)：
 
-提交作业 Hand-In Procedure 的过程：这部分不用看
+```{code-block} text
+sudo apt install -y libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
+```
 
-### 启动 PC
+安装完依赖后，就可以在 QEMU 源代码的基础上进行编译和安装了。
 
-本节将教会你：
+```{code-block} text
+./configure --disable-kvm --disable-werror \
+  [--prefix=PFX] [--target-list="i386-softmmu x86_64-softmmu"]
+make
+sudo make install
+```
 
-- x86 汇编语言，
-- PC 的启动过程，
-- 熟悉 QEMU 和 QEMU/GDB 调试过程
+上面中括号部分是可选项，若不指定 `--prefix`，则默认安装到 `/usr/local` 下，`--target-list` 将会对
+QEMU 进行瘦身，编译安装指定的架构，若你不熟悉自己的 CPU 架构，可以缺省这个参数 [^cite_ref-2]。
 
-本节不需要写代码。
+(asm_syntax)=
+### 汇编语法
 
-PC Assembly Language 这本书共 188 页，它将教会你汇编知识，但是内容很多。
-而且，这本书中用到的 assembler 跟我们课程用到的 assembler 不一样。
-这本书用的 assembler 是 NASM（Intel 语法）
-我们用的 assembler 是 GNU（AT&T 语法）
-虽然语义相同，但是汇编源文件相差巨大。
-这两种语法的相互转化可以参考 http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html
+汇编语法并不是本门课的重点，因此你需要自学汇编语言，只不过 6.828 给我们推荐了一些资料。
 
-练习1：根据参考文献 https://pdos.csail.mit.edu/6.828/2018/reference.html 自学汇编语言，
-不用现在阅读，当你需要读或者写 x86 汇编语言的时候知道在哪里查就可以了。
-但是我们建议你阅读 http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html
+《PC Assembly Language》这本书很全，这也意味着如果你时间不够，可以略读，或用到时再查阅。
+而且，这本书用到的 Assembler 和我们在 6.828 中用到的 Assembler 并不一致。
+这本书用的是 Netwide Assembler (NASM)，支持 Intel 语法，而我们在 6.828 中学习的是
+GNU Assembler，支持的是 AT&T 语法。
+关于这两种语法的相互转换，参考
+[这篇文章](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html)，6.828
+建议我们无论如何都需要阅读一下。
 
-如果你要学习 x86 汇编语言，有两个主要的参考手册
+除了上面这本书，还有两个参考手册供我们查阅，一个是
+[简洁版](https://pdos.csail.mit.edu/6.828/2018/readings/i386/toc.htm) 的，另一个是
+[详细版](http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html)
+的。6.828 说简洁版对于我们这门课已经够用了。
 
-- 简洁版的 https://pdos.csail.mit.edu/6.828/2018/readings/i386/toc.htm
-- 详细版的 http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html
+如果你想了解更多关于指令集的知识，除了 Intel 提供的指令集手册，AMD 官网也提供了
+[相似的手册](https://developer.amd.com/resources/developer-guides-manuals/)。
 
-简洁版的已经覆盖了我们课程需要的所有知识，详细版的供有兴趣的同学阅读。
-除了 Intel 提供的指令集外，
-AMD 也为我们提供了参考手册 https://developer.amd.com/resources/developer-guides-manuals/
-你可以保存这些参考手册，如果后面用到处理器特性或指令集时，方便查阅。
+### 运行 kernel 代码
 
-### x86 仿真
+不知道你注意到 QEMU 这个软件没有，它在实验中充当的是一个虚拟电脑的角色。
+这台虚拟电脑和我们在现实中用到的电脑在功能上没有什么两样，只不过这台虚拟电脑以代码的形式存在。
 
-我们不是在一个真实的物理机上开发一个操作系统，而是用一个软件模拟了一个真实物理机。
-你在仿真器上编写的代码也会在真实物理机上生效，使用仿真器简化了调试过程，
-比如，你能在 x86 仿真器中设置断点，而这在真实物理机上是很难办到的。
+如果我们在真实物理机上启动操作系统，这并不是一个难事，但是如果想要调试这个操作系统，问题就来了。
+如何在程序启动的过程中设置断点？
+这好像是在电脑上电后我们无法控制的事情，那么如果这台电脑以软件的形式存在，那么设置断点就很好办了。
 
-我们用到的仿真器是 QEMU。但是 QEMU 内置的监视器仅提供了有限的调试功能。
-我们用 GDB 进行调试，把 QEMU 可以看做调试的目标。
+所以，QEMU 因此诞生，它的职责就是充当台式机或笔记本电脑，允许我们把写好的操作系统运行在其中。
 
-开始使用这个仿真器之前，我们在 lab 文件夹下键入 make 来构建 boot loader 和 kernel，我们后面需要依赖的东西。
-编译完成后，我们会得到内核映像 kernel.img ，为了能够运行内核，我们需要一个硬盘来存放这些程序代码，
-现在启动 QEMU 这个虚拟硬盘，它将为我们保存 boot loader（obj/boot/boot）和 kernel（obj/kernel）。
-启动 qemu 很简单，如果你使用 ssh 连接的 虚拟机，推荐使用 make qemu-nox
-，如果你是在虚拟机上直接运行的 可以使用 make qemu
+那么 QEMU 是如何起作用的呢？
+其实，我们写的代码，经过 QEMU 的一层封装之后，它还是实际在使用真实物理机。
+因此，本质上我们写的软件和硬件发生关系的链条是：
 
-make qemu 的效果就跟按下电脑开机键一样，从磁盘加载引导文件，然后启动操作系统内核。
+```{code-block} text
+我们写的操作系统 --- QEMU --- Ubuntu --- VMware --- Windows --- 真实物理机
+```
 
-启动后的黑窗口界面只提供了两个命令：help 和 kerninfo
-并且，它可以接收串口
+可以看出来，这是一个多层嵌套的关系。
+我们写的操作系统被各种软件层层包围，最后才能触及真实物理机上的硬件设备。
 
-如果只谈论效果，看到的东西很简单，但是理解原理，还是需要的。
-这个内核监视器（shell）是直接运行在仿真器的原始硬件上的。
-这意味着如果你把 obj/kern/kernel.img 这个文件拷贝到磁盘的引导区中去，
-然后把那个磁盘插到真实物理机上，通电，开机，将会看到和 QEMU 仿真器展示给你的相同的内容。
+那么，如何使用 QEMU 这个硬件仿真器呢？
+使用仿真器之前，确保你已经使用命令 `make` 编译过内核，并得到了内核映像 `kernel.img`。
+正确的输出应该是下面这个样子：
 
-### PC 的物理地址空间
+```{code-block} text
+user02@node1:~/6.828/lab$ make
++ as kern/entry.S
++ cc kern/entrypgdir.c
++ cc kern/init.c
++ cc kern/console.c
++ cc kern/monitor.c
++ cc kern/printf.c
++ cc kern/kdebug.c
++ cc lib/printfmt.c
++ cc lib/readline.c
++ cc lib/string.c
++ ld obj/kern/kernel
+ld: warning: section `.bss' type changed to PROGBITS
++ as boot/boot.S
++ cc -Os boot/main.c
++ ld boot/boot
+boot block is 412 bytes (max 510)
++ mk obj/kern/kernel.img
+user02@node1:~/6.828/lab$ 
+```
 
-我们现在更深入地了解一下 PC 机是如何一步步启动的？
+那么我们现在已经有了 "内核" 源代码，怎么将内核源码存放到磁盘（disk）中并加载运行呢？
+这个工作已经被 QEMU 做了，它帮我们存储并解析了 bootloader (`obj/boot/boot`) 和 kernel
+(`obj/kernel`)，但是，如何它是如何存储和解析的，这些细节现在暂时还不清楚，下一节将会解答。
+但是现在能知道的是，使用 `make qemu` 或 `make qemu-nox` (在使用 SSH 时推荐用后一种)
+这两个命令中的任何一个，都可以帮我们启动内核。
+因此，`make qemu` 的效果就跟按下电脑开机键一样，从磁盘加载引导文件，然后启动操作系统内核。
+启动成功后的效果如下所示：
 
-PC 的物理地址空间大概是下面这种布局：
+```{code-block} text
+user02@node1:~/6.828/lab$ make qemu-nox
+sed "s/localhost:1234/localhost:26000/" < .gdbinit.tmpl > .gdbinit
+***
+*** Use Ctrl-a x to exit qemu
+***
+qemu-system-i386 -nographic -drive file=obj/kern/kernel.img,index=0,media=disk,\
+    format=raw -serial mon:stdio -gdb tcp::26000 -D qemu.log 
+6828 decimal is XXX octal!
+entering test_backtrace 5
+entering test_backtrace 4
+entering test_backtrace 3
+entering test_backtrace 2
+entering test_backtrace 1
+entering test_backtrace 0
+leaving test_backtrace 0
+leaving test_backtrace 1
+leaving test_backtrace 2
+leaving test_backtrace 3
+leaving test_backtrace 4
+leaving test_backtrace 5
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+K>
+```
+
+内核启动成功后，我们看到的是一个 JOS kernel monitor，这个监视器会监听串口输入（键盘输入）。
+这个内核监视器是直接运行在仿真器的原始硬件上的。如果你把 `obj/kern/kernel.img`
+拷贝到磁盘的引导区中，插到真实物理机上，通电，开机，将会看到和 QEMU 仿真器输出一样的内容。
+
+现在这个内核只有 `help` 和 `kerninfo` 两个命令，后面随着学习的深入，我们会为它扩展新功能。
+
+现在，我们应该能大概理解 QEMU 的作用了：**为我们编写操作系统提供一个运行环境**。
+
+### 内存和寻址
+
+如果想要在一个金属裸机上直接运行内核源码，那么势必需要知道 **内核源码的入口地址** 在哪里。
+如果我们不加约束，每个人都自定义一个入口地址，那么我写的操作系统可能在你的机器上就找不到入口地址。
+因此，为了通用性，我们会按照约定，将内核源代码放在磁盘中一个固定的位置，也就是下面展示的低 1MB 空间中。
 
 ```{code-block} text
 +------------------+  <- 0xFFFFFFFF (4GB)
@@ -434,244 +503,342 @@ PC 的物理地址空间大概是下面这种布局：
 +------------------+  <- 0x00000000
 ```
 
-从下往上，地址编号逐渐变大。
+从上面的内存地址编码上就可以看出来，每个地址都是 32 位的，因此这是一个 32 位机。
+我们还可以发现，这个机器可以寻址 4GB 的物理内存，也就是说，如果我们给这个机器挂载一个 8GB
+的磁盘，那么它将无法充分使用这个外加磁盘。
+RAM 之下就是我们常说的内存，所有需要上 CPU 运行的程序，都会先加载到 RAM 中。
+图中的 Low Memory 通常被用于存储中断向量表、BIOS 控制信息、应用程序内部信息 [^cite_ref-3]。
 
-诞生的第一个 PC 是基于 16 位的 Intel 8088 处理器，只能寻址 1MB 的物理内存。
-早期 PC 的物理地址空间从 0x00000000 开始，到 0x000FFFFF 结束，而不是上图所示的 0xFFFFFFFF。
+从 `0x000A0000` 到 `0x000FFFFF` 的 384KB 是为硬件预留的区域，在本例中被用作了图像缓冲（VGA Display）。
+当然最重要的用途还是用于存储 BIOS，它占用了 64KB 的大小。
+在早期计算机中，BIOS 是存储在只读存储器中（ROM）的，但是现在的计算机把 BIOS 存储在了 flash 中了。
+BIOS 的作用是提供系统初始化功能，比如激活显卡、检查已用内存。
+初始化完成后，BIOS 从磁盘、软盘或 USB 等设备上加载操作系统，并把 CPU 的控制权转移给操作系统。
 
-上图中的 640K 叫做低内存，是早期计算机唯一一个可以随机存取的区域。
-事实上，更早期的 PC 只能配置 16KB、32KB、或 64KB 的 RAM。
+在早期的计算机中，寻址能力其实是很弱的，比如 16 位的 Intel 8088 处理器只能寻址 1MB
+的物理内存，从 `0x00000000` 开始，到 `0x000FFFFF` 结束，而不是上图所示的 `0xFFFFFFFF`。
+事实上，更早期的计算机只能配置 16KB、32KB、或 64KB 的 RAM。
+这种转变是在英特尔发布 80286 和 80386 处理器后，突破了 1MB 的内存限制，开始支持 16MB 和 4GB
+的物理地址空间。
 
-从 0x000A0000 到 0x000FFFFF 的 384KB 是为硬件预留的区域，用于视频显示缓冲区，非易失存储等。
-当然最重要的用途还是基本输入输出系统（BIOS），它占用了 64KB 的大小，从 0x000F0000 到 0x000FFFFF。
-在早期 PC 中，BIOS 是存储在只读存储器中（ROM）的，但是现在的 PC 把 BIOS 存储在了 flash 中了。
-BIOS 的作用是提供系统初始化功能，比如激活显卡，检查已用内存。初始化完成后，BIOS 从磁盘或 USB 
-等设备上的合适位置加载操作系统，并把控制权转移给操作系统。
+但为了能够向后兼容，现在的计算机仍然保留了低 1MB 物理地址空间的原始布局，给 16-bit devices
+预留空间，这是第一个 hole。并把 RAM 之下的部分分成三个区域，分别叫做 Low Memory，Conventional
+Memory 和 Extended Memory。
+现在的 x86 处理器支持扩展内存，所以 4GB RAM 并不是上限，在这种情况下，BIOS 又必须给 32
+位设备映射预留空间，也就是上图所示的 32-bit memory mapped devices，这是第二个 hole。
 
-在英特尔的 80286 和 80386 处理器发布后，打破了 1MB 屏障，开始支持 16MB 和 4GB 的物理地址空间。
-PC 架构仍然保留了低 1MB 物理地址空间的原始布局，为了能够向后兼容。
-现代 PC 从 0x000A0000 到 0x00100000 的物理内存上有一个 hole，把 RAM 分成了 low、conventional 
-memory、extended memory 三部分。
-另外，处于 RAM 之上的部分，现在通常被 BIOS 预留了，用于 32 位 PCI 设备。
+因为设计的限制，JOS 仅使用前 256MB 的物理地址空间，所以在后面的实验中，我们将会假设所有的计算机仅有
+32 位物理地址空间。
 
-最近 x86 处理器可以支持扩展内存，所以 4GB 的物理 RAM 并不是上限，所以，RAM 可以扩展到 0xFFFFFFFF 以上。
-在这种情况下，BIOS 必须在系统 RAM 的高 32 位可寻址区域留下第二个 hole，预留空间给 32 位设备映射。
+### 内核的启动流程
 
-因为设计的限制，JOS 仅使用前 256MB 的物理地址空间，所以，截止到目前，我们将会假设所有的 PC 仅有 32 
-位物理地址空间。但是处理复杂物理地址空间和其他方面的硬件组织仍然是一个十分有挑战性的 OS 开发工作。
+知道了内核源码的入口地址，那么接下来就需要尝试，如何启动内核程序了。
+在这部分，我们将使用 QEMU 的调试工具来研究如何启动一个 [IA-32](https://zh.wikipedia.org/wiki/IA-32)
+(Intel Architecture, 32-bit) 兼容的电脑。
 
-### ROM BIOS
+打开两个 Terminal，并 `cd` 到 `lab` 目录下，在其中一个 Terminal 中键入 `make qemu-gdb`，或者
+`make qemu-nox-gdb`，在另一个 Terminal 中键入 `make gdb`。
 
-在这部分，你将使用 QEMU 的调试工具来研究如何启动一个 IA-32 兼容的电脑。
+命令 `make qemu-gdb` 会启动 QEMU，并让它在卡在第一条内核代码之前，方便我们一步步地调试内核源码。
 
-打开两个命令行终端，并 cd 到 lab 目录下，在其中一个终端中键入 make qemu-gdb，或者 make qemu-nox-gdb。在另一个终端中键入 make gdb。
-make qemu-gdb 启动了 QEMU，但是 QEMU 在处理器执行第一条指令前就终止了，
-它在等待 GDB 的调试连接。
-
-在输出中，我们看到了类似下面的输出：
+命令 `make gdb` 可以让我们在前面的卡住的地方继续向下执行，并把执行的命令在这里显示出来。
+比如，如果我们按照上面的步骤操作，应该会得到下面类似的输出：
 
 ```{code-block} text
-athena% make gdb
-GNU gdb (GDB) 6.8-debian
-Copyright (C) 2008 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "i486-linux-gnu".
 + target remote localhost:26000
+
 The target architecture is assumed to be i8086
-[f000:fff0] 0xffff0:  ljmp  $0xf000,$0xe05b
+[f000:fff0]    0xffff0: ljmp   $0xf000,$0xe05b
 0x0000fff0 in ?? ()
 + symbol-file obj/kern/kernel
 (gdb) 
 ```
 
-之所以有上面的的输出，是因为在源代码中提供了 .gdbinit 文件。
-它启动 GDB 来调试之前在启动期间的 16 位代码并且让这个调试器监听 QEMU。
+之所以有上面的的输出，是因为我们在源代码 `.gdbinit` 定义了某些监听规则。
+从效果上观察，`make qemu-gdb` 可以让是 QEMU 的卡在启动过程，`make gdb` 让 QEMU
+继续执行，并把执行细节（执行的汇编语句）显示出来。
 
-下面这行代码
+有了这种工具，我们就可以一步一步地调试，然后看在计算机的启动过程中，到底发生了什么。
 
-[f000:fff0] 0xffff0:  ljmp  $0xf000,$0xe05b
+```{code-block} text
+[f000:fff0]    0xffff0: ljmp   $0xf000,$0xe05b
+```
 
-是 GDB 对第一条指令的的反汇编。从输出可以推断出一些东西：
+上面那行代码是 GDB 对内核启动后，第一条指令的的反汇编。从输出可以推断出一些信息：
 
-- IBM PC 从物理地址空间 0x000ffff0 开始执行，它在 64KB 区域的顶部，这部分区域是 ROM BIOS 的预留区域。
-- PC 启动后的能够找到的程序入口地址是 CS=0xf000 IP=0xfff0
-- 第一条被执行的指令是 jmp 指令，它跳转到段地址 CS=0xf000 IP=0xe05b
+- 计算机启动后的能够找到的 **内核的入口地址** 是 `[CS:IP]=[0xf000:0xfff0]`；
+- 逻辑地址 `[0xf000:0xfff0]` 转化为物理地址是 `0x000ffff0`；
+- `0x000ffff0` 处于 BIOS ROM 预留区域，并且该物理地址位于预留区域顶部之下的 16 字节；
+- 第一条被执行的指令是 `ljmp`，它跳转到段地址 `[0xf000:0xe05b]`。
 
-为什么 QEMU 会这样启动？这是因为 Intel 是这样设计 8088 处理器的，然后 IBM 在自己的机器中用了英特尔的处理器。
-因为 BIOS 在 PC 中是硬连线的，它会占用地址空间 0x000f0000 - 0x000fffff，这种设计确保了 BIOS 在电脑上电后能够始终最先得到机器的控制权，这种设计是非常重要的，因为在最开始上电后，机器的 RAM 中没有其他的程序可以执行。
-QEMU 仿真器提出了它自己的 BIOS，它把 BIOS 放在了处理器的虚拟物理地址空间的这个位置。
-在处理器复位时，仿真处理器将会进入实模式，并把 CS 和 IP 分别设置为 0xf000 和 0xfff0，所以最开始执行的段地址是 CS:IP=0x000ffff0。
-那么 0xf000:0xfff0 是如何转换为物理地址的呢？
+因为 BIOS 在计算机中是硬连线的，把内核的入口地址写在固定的位置，可以确保 BIOS
+在电脑上电后能够始终最先得到 CPU 的控制权，当 BIOS
+执行完一些必要的初始化工作后，再将 CPU 的控制权转移给操作系统。
+**这种设计是非常重要的，因为在计算机上电后的瞬间，机器的 RAM 中除了 BIOS 没有其他的程序可以执行。**
 
-为了回答这个问题，我们需要了解一点实模式寻址的原理。在实模式（实模式（real mode），也称为实地址模式（real address mode），是所有x86兼容CPU下的一种操作模式）下，地址转换机构按照一个公式来进行转换：
-pyhsical address = 16 * segment + offset
-因此，就实现了从 CS:IP 到真实物理地址的转换。
+在处理器复位时，仿真器将会进入实模式，并把 CS 和 IP 分别设置为 `0xf000` 和
+`0xfff0`，确保每次都能找到内核的入口地址。
 
-0xffff0 这个位置处于 BIOS 结束位置之下的 16 字节。
-因此 BIOS 上来首先要做的是 jmp 向后跳转到 BIOS 开始的位置；
-在这 16 字节的空间中能完成多少事情？
+```{admonition} 练习 2
+使用 GDB 的 `si` 命令继续追踪 BIOS，观察汇编指令，总结一下 BIOS 完成了什么功能。
+如果你想理解更多计算机内存和 I/O 的工作细节，可以参考
+[[webpage](http://web.archive.org/web/20040404164813/members.iweb.net.au/~pstorr/pcbook/book2/book2.htm)]。
+但是现在你并不需要明白所有的细节，针对 BIOS 是如何启动的，有一个大致的思路就可以了。
+```
 
-练习 2：使用 GDB 的 si 命令跟踪 ROM BIOS，然后尝试猜一下它在做什么。
-如果你有足够的兴趣，可以进一步阅读 http://web.archive.org/web/20040404164813/members.iweb.net.au/~pstorr/pcbook/book2/book2.htm
-，但是不需要探究明白所有的细节，针对 BIOS 是如何启动的，有一个大致的思路就可以了。
-如果你只是用 si 来单步调试，那么可能永远不会结束，这是一个循环。
-汇编语言是一个难点，读汇编语句，每一个语句都很好阅读，但是串起来，捋顺逻辑并不是一个容易事。
+完整的启动流程如下：
 
-当 BIOS 启动后，它会建立一个中断描述表，并且初始化各种设备，比如 VGA 显示器，这就是为什么在 QEMU 上会有 Starting SeaBIOS 这条输出的原因了。
+- 系统上电，处理器复位（重置 `CS:IP`），找到当 BIOS 入口地址，执行第一条语句；
+- BIOS 负责建立中断描述表、初始化 PCI 总线、初始化各种设备（比如 VGA、SeaBIOS）；
+- BIOS 搜索装有操作系统内核的设备（如磁盘、软盘、CD-ROM、USB 等）；
+- BIOS 从设备中将 bootloader 加载到内存，并让它上 CPU 执行（转移 CPU 控制权）；
+- 开机引导程序（bootloader）负责启动操作系统内核，开机成功。
 
-在初始化完成 PCI 总线和所有 BIOS 认为重要的设备后，BIOS 就开始搜索一个可以启动的设备，比如硬盘、CD-ROM 等。最终，它找到一个启动盘，然后 BIOS 从硬盘中读取 boot loader，并将控制权转移给 boot loader。
+### 调试 bootloader
 
-### Boot Loader
+开机引导程序（bootloader）是嵌入式系统在加电后执行的第一段代码，主要的工作流程如下 [^cite_ref-4]：
 
-软盘和硬盘都分成 512 字节大小的区域，叫做扇区（sectors）。
-扇区是磁盘的最小的转换粒度：每次读或写操作都必须是一个或多个扇区大小和边界对齐的。如果一个磁盘是可启动的，那么第一个扇区被称作是启动扇区，因为这是 boot loader 所在的区域。当 BIOS 找到 启动盘后，它载入 512 字节的启动扇区到内存空间（物理地址是 0x7c00 - 0x7dff）中，然后用 jmp 指令来设置 CS:IP 为 0000:7c00，将控制转移给 boot loader。就像被BIOS载入的物理地址一样，这些地址是相当随意的-但它们是为PC所固定和标准化的。
+1. 完成 CPU 和相关硬件的初始化之；
+2. 将操作系统映像或固化的嵌入式应用程序装载到内存中；
+3. 跳转到操作系统所在的空间，启动操作系统运行。
 
-从 CD-ROM 启动 PC 是后面发展起来的，这种启动方式更复杂，且更强大。
-CD-ROM 使用 2048 字节的扇区，而不是 512 字节，因此现代 BIOS 不得不重新设计 启动过程，将 BIOS 设计为能够加载更大的启动镜像到内存，然后将控制权转移给 boot loader，更详细的内容阅读 https://pdos.csail.mit.edu/6.828/2018/readings/boot-cdrom.pdf
+磁盘按照 512 字节的大小划分扇区（sectors），它是磁盘 I/O 的最小粒度。
+每次 **读/写** 操作都必须是一个或多个扇区，且符合边界对齐规则。
+如果在第一个扇区装有 bootloader，那么这个扇区可以被称为启动扇区，对应的磁盘叫做启动盘。
 
-对于 6.828 这门课程而言，我们仍然使用传统的硬启动机制，这意味着我们的 boot loader 必须调整为 512 字节。
-boot loader 包括一个汇编源文件 boot/boot.S 和一个 C 源文件 boot/main.c。
+当 BIOS 找到启动盘后，它首先将启动扇区载入内存 `0x7c00-0x7dff` 中，
+然后用 `jmp` 指令将 `CS:IP` 设置为 `0000:7c00`，将 CPU 的控制权转移给 bootloader。
+需要注意的是启动扇区载入内存后的物理地址并不是一成不变的，只要遵守约定，能够让 BIOS
+跳转到那里就可以了。
+
+现代计算机可以通过多种方式启动内核，比如 CD-ROM，这种启动方式更复杂、更强大。
+CD-ROM 的扇区大小是 2048 字节，因扇区大小不同于磁盘，实现细节也略有不同，如果有兴趣可以参考
+[[webpage](https://pdos.csail.mit.edu/6.828/2018/readings/boot-cdrom.pdf)]。
+
+对于 6.828 这门课程而言，我们使用的是传统的磁盘启动方式，也就是说 bootloader 必须调整为 512 字节。
+
+bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot/main.c`。
 仔细阅读源文件，并确保你能看懂源文件中的代码，理解启动过程发生了什么事情。
-boot loader 必须完成下面两个功能：
-1. boot loader 将处理器从实模式转换为 32 位保护模式，因为只有在保护模式
-下，软件才能访问超过 1MB 的所有内存空间。保护模式的具体内容可以参考 https://pdos.csail.mit.edu/6.828/2018/readings/pcasm-book.pdf 的 1.2.7 节和 1.2.8 节，遇到一些指令 ，可以参考 Intel 架构的参考手册，在前面好像也是列举过。
-在这里，你只需要理解在保护模式下，段地址（segment:offset）翻译为物理地址的过程是与实模式下的翻译过程是不相同的，并且翻译完成后 offset 是32 位 而不是 16 位。
-2. boot loader 从硬盘中读取内核是通过 x86 的特殊的 I/O 指令直接访问 IDE 磁盘设备寄存器。如果你想更好地理解这些特殊的 I/O 指令是什么意思，可以参考 https://pdos.csail.mit.edu/6.828/2018/reference.html 中的 IDE Hard drive controller 部分。你不需要在本课程中学习过多关于如何针对特定设备进行编程（驱动开发），编写驱动器程序是操作系统开发非常重要的一环，但是从概念和架构视角看，它也是最无趣的。
 
-在你理解了 boot loader 的源代码后，看一下汇编文件 obj/boot/boot.asm。
-这个文件是编译完 boot loader 后，我们的 GNUmakefile 创建的反汇编文件。
-这个反汇编文件让我们能够更简单地看懂在物理内存上，到底存放了怎样的 boot loader 源代码，并且，能够让我们使用 GDB 调试 boot loader 时，更容易地跟踪代码。
-同样地，obj/kern/kernel.asm 是 JOS kernel 的反汇编，也是能够帮助我们简化调试过程。
+如果你读完了这两个代码，会发现 bootloader 主要完成下面两个功能：
 
-你可以使用 b 指令在 GDB中添加断点。比如 b \*0x7c00 在 地址 0x7c00 设置了一个断点。在断点上，你可以使用 c 和 si 指令让它继续执行：指令 c 是继续执行直到碰到下一个断点， si N 是在继续执行 N 条指令。
+1）bootloader 将处理器从实模式转换为 32 位保护模式。因为只有在保护模式下，软件才能访问超过 1MB
+的所有内存空间。现在，你只需要理解在保护模式下逻辑地址 `[CS:IP]`
+翻译为物理地址的过程是与实模式下的翻译过程是不相同的，并且翻译完成后 IP 是 32 位 而不是 16 位。
+关于保护模式的具体细节参考 [[webpage](https://pdos.csail.mit.edu/6.828/2018/readings/pcasm-book.pdf)]
+的 1.2.7 节和 1.2.8 节。如果遇到不会的指令，可以复习 {ref}`asm_syntax` 中提到的超链接。
 
-为了检查内存中的指令（不是下一条需要执行的指令，下一条指令 GDB 会自动打印），你可以使用命令 x/i。这个命令的语法是 x/Ni ADDR，N 表示需要反汇编的连续的几条指令，ADDR 表示需要开始反汇编的内存地址。
+2）bootloader 通过 x86 提供的特殊的 I/O 指令直接访问 IDE 磁盘设备寄存器从磁盘中读取内核。
+如果你想更好地理解这些特殊的 I/O 指令是什么意思，可以参考
+[[webpage](https://pdos.csail.mit.edu/6.828/2018/reference.html)] 中提到的 IDE Hard drive controller 部分。
+但是，你并不需要在本课程中学习过多关于如何针对特定设备进行编程（驱动开发）的知识，因为这不是这门课的重点。
 
-练习 3：看一眼实验工具指导 https://pdos.csail.mit.edu/6.828/2018/labguide.html 尤其是 GDB 命令这部分。即使你熟悉 GDB，这部分包含了可能对 OS 工作机制有帮助的进阶的 GDB 命令
+在你理解了 bootloader 的源代码后，阅读一下汇编文件 `obj/boot/boot.asm`，它是编译完 bootloader
+后，GNUMakefile 创建的反汇编文件。
+这个反汇编文件让我们能够更简单地看懂在物理内存上，到底存放了怎样的 bootloader 源代码。
+并且，也能够让我们在使用 GDB 调试 bootloader 时，更轻松地追踪代码。
+同样地，`obj/kern/kernel.asm` 是 JOS kernel 的反汇编文件，也是为了帮助我们简化调试过程。
 
-在 0x7c00 设置断点，这是 boot 扇区被加载的位置。继续执行直到碰到断点。
-完整跟踪调试 boot/boot.S，利用源代码和反汇编文件 obj/boot/boot.asm 来保持跟踪你在何位置。
-然后利用命令 x/i 来反汇编 boot loader 中的指令序列，然后对比原始的 boot loader 源代码和反汇编后的代码 obj/boot/boot.asm。
+你可以用指令 `b` 在 GDB 中添加断点。比如 `b *0x7c00` 在地址 `0x7c00` 设置了一个断点。
+执行到断点处，你可以使用 `c` 和 `si` 让它继续执行：指令 `c` 是继续执行直到碰到下一个断点，`si N`
+是在继续执行 `N` 条指令。
 
-在 boot/main.c 中调试进入 bootmain()，然后进入 readsect()。
-识别出在 readsect() 函数中的声明语句对应的确切的汇编指令。
-跟踪 readsect() 函数中的剩余语句，然后返回 bootmain() 函数，
-识别 for 循环从磁盘读取剩余内核扇区的开始和结束位置。
-找出在循环执行完之后代码将会执行什么代码，并在这里设置一个断点，
-继续从断点向下执行。
-然后跟踪 boot loader 的剩余部分。
+命令 `x/i` 是一个反汇编指令，也可以用来查看内存中的值，从输出上看内存中可能存的是指令也可能是数据。
+`x/Ni ADDR` 可以用来查看从地址 `ADDR` 算起，之后 `N` 个内存单元中的值。
+
+```{admonition} 练习 3
+根据 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labguide.html)] 学习 GDB
+调试技巧，并完成下面几个小任务。
+
+- 在 `0x7c00` 设置断点（这是启动扇区被加载的位置），继续执行直到碰到下一个断点；
+- 完整追踪调试 `boot/boot.S`，参考 `obj/boot/boot.asm` 来明确程序现在运行到哪里了；
+- 利用命令 `x/i` 反汇编 bootloader，然后分别与源代码和反汇编代码 `obj/boot/boot.asm` 作对比；
+- 单步调试 `boot/main.c` 并进入子函数 `bootmain()` 然后进入子函数 `readsect()`；
+- 找到 `readsect()` 函数声明语句对应的汇编指令；
+- 调试 `readsect()` 函数中的剩余语句，然后返回 `bootmain()` 函数；
+- 找到 `for` 循环从磁盘读取剩余内核扇区的开始和结束位置；
+- 找出循环结束后将会执行什么代码，并在循环执行结束的位置设置一个断点；
+- 从断点继续向下执行，追踪 bootloader 的剩余部分。
+```
 
 做完练习 3 后，你应该尝试回答下述问题：
-- 处理器从什么位置开始执行 32 位的代码？具体是什么触发了从 16 位到 32 位的转换？
-- boot loader 的最后一条指令是什么？内核被加载的第一条指令是什么？
-- 内核中的第一条指令在哪里？
-- boot loader 如何确定需要读多少个扇区来保证能够从磁盘中读取出一个完整的内核？它从哪里找到这些信息？
 
-### 加载内核
+- 处理器从什么位置开始执行 32 位的代码？什么代码触发了从 16 位到 32 位的转换？
+- bootloader 的最后一条指令是什么？内核被加载的第一条指令在哪里，是什么？
+- bootloader 如何确定需要读多少个扇区，保证从磁盘中读取出一个完整内核？它从哪里找到这些信息？
 
-我们现在更深一步地探索 C 语言部分的 boot loader，在 boot/main.c。
-开始做这件事事前，最好先熟悉一下 C 语言编程基础。
+### 如何定位 kernel
 
-练习 4：阅读《C 语言编程》的指针部分。
-阅读 5.1 到 5.5。然后下载 pointers.c 这个文件的源代码，并运行它，
-确保你能理解所有打印输出的值来自哪里。
-尤其是要确保你能理解第 1 行和第 6 行的指针地址来自哪里，第 2 行和第 4 行的输出值是如何跳到那里的，为什么第 5 行的打印输出值看起来是损坏的？
+在继续向下学习之前，我们需要确保你对 C 语言的指针有一定的了解。
 
-如果你不是十分精通 C 语言，就不要跳过这个练习。如果你不是真正的理解 C 语言指针，在后面的实验中将会遭受难以言表的痛苦。
+```{admonition} 练习 4
+阅读《[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)》5.1 到 5.5 小节，然后下载
+[pointers.c](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/pointers.c) 源代码，并运行。
+确保你能理解源代码输出。尤其是要确保你能理解第 1 行和第 6 行的指针地址来自哪里，第 2 行和第 4
+行的输出值是如何跳到那里的，为什么第 5 行的输出值看起来是错误的？
+```
 
-为了搞明白 boot/main.c 你需要知道什么是 ELF 二进制。
-当你编译和链接一个 C 程序，比如 JOS kernel，编译器将会把 C 源代码转换为 对象文件（.o），这个对象文件包含了以二进制格式表示的汇编指令，而这个二进制格式是硬件所能理解的。
-linker 然后将所有编译过的 object 文件组合成一个二进制镜像，比如 obj/kern/kernel，这个案例中，这个二进制镜像是 ELF 格式的，它表示 可执行与可链接格式。
+我们现在更深一步地探索 C 语言部分的 bootloader，源代码是 `boot/main.c`。
 
-关于 ELF 格式的完整介绍可以参考 https://pdos.csail.mit.edu/6.828/2018/readings/elf.pdf 但是在这门课中你并不需要深入了解这个格式的细节。
-这个格式最复杂的部分是用来支持共享库的动态链接的，但是我们在这门课中并没有用到。维基百科 http://en.wikipedia.org/wiki/Executable_and_Linkable_Format 也有简短介绍。
+为了搞明白 `boot/main.c` 你需要知道什么是 ELF 二进制。
+当你编译和链接一个 C 程序，比如 JOS kernel，编译器将会把 C 源代码转换为对象文件（`.o`）。
+这个对象文件包含了硬件所能理解的二进制格式表示的汇编指令。
+然后 linker 将所有编译过的 `.o` 文件合成一个二进制镜像，比如 `obj/kern/kernel`。
+`obj/kern/kernel` 是 ELF 格式的，它表示可执行与可链接格式。
+关于 ELF 格式，可以参考维基百科的
+[简单介绍](http://en.wikipedia.org/wiki/Executable_and_Linkable_Format)，也可以参考另一个
+[更详细的介绍](https://pdos.csail.mit.edu/6.828/2018/readings/elf.pdf)。
+但是你并不需要深入了解这个格式的细节，因为在课程中不会涉及它最复杂的部分：共享库的动态链接。
 
-为了能够顺利完成 6.828 你可以将 ELF 可执行文件看做一个带有加载信息的文件头，
-文件头后面跟着若干的程序片段，每个程序片段都是一些连续的代码块或希望被加载进内存的数据。boot loader 不会修改代码或数据，它只是把它们加载进内存然后开始执行它们。
+为了能够顺利完成 6.828 你可以将 ELF 可执行文件看做一个带有加载信息的 header，
+这个 header 后面是 program sections，每个 program section 都是一些连续的代码块或希望被加载进内存的数据。
+bootloader 不会修改这些代码或数据，它只是把它们加载进内存然后开始执行它们。
 
-ELF 二进制以一个固定长度的 ELF header 开始，后面是可变长度的 program header，它列出了所有需要被加载的程序片段。
-在 ELF header 的 C 语言定义在 inc/elf.h 中。
-我们感兴趣的区域有下面几个：
+ELF 二进制文件以一个固定长度的 ELF header 开始，后面是可变长度的 program header。
+在 ELF header 的 C 语言头文件 `inc/elf.h` 中 program header
+把所有需要被加载的 program section 都列了出来。但是我们感兴趣的字段只有下面几个：
 
-- .text 程序的可执行指令
-- .rodata 只读数据，比如由 C 编译器产生的 ASCII 字符串常量
-- .data 数据部分，保存了程序的初始化数据，比如全局变量
+- `.text` 是程序的可执行指令；
+- `.rodata` 是只读数据，比如由 C 编译器产生的 ASCII 字符串常量；
+- `.data` 是数据部分，保存了程序的初始化数据，比如全局变量；
 
-当 linker 根据程序代码计算出内存布局后，它会位为未初始化的全局变量预留空间，
-比如 int x。观察内存，在 section 部分，.bss 紧跟着 .data。
-C 语言要求未初始化的全局变量以 0 值代替。因此我们不需要在 ELF 二进制文件中保存 .bss 的内容，因此 .bss 只是保存了 .bss section 的位置和大小。
-故 boot loader 或者源代码本身必须需要自行给 .bss section 赋予 0 值。
+当 linker 根据程序代码计算出需要的内存空间后，它会给未初始化的全局变量预留空间，比如 `int x`。
+在内存的 section 部分 `.bss` 后紧跟着 `.data`。
 
-如何了解在内核中所有的 section 的名字、大小、链接地址？
-只需要键入下面的命令即可：
+因为 C 语言要求未初始化的全局变量以 0 值代替，所以我们不需要在 ELF 二进制文件中保存 `.bss` 的内容。
+这是因为 `.bss` 可以通过只保存 `.bss` section 的位置和大小，然后让 bootloader 或者源码本身给
+`.bss` section 赋予 0 值即可。
 
+我们如何得到内核中所有的 section 的名字、大小、link address 呢？只需要键入下面的命令即可：
+
+```{code-block} text
 objdump -h obj/kern/kernel
-（如果你是自己编译的工具链，可能需要使用 i386-jos-elf-objdump）
+```
 
 你将会看到更多 section 被列了出来，但是其他部分对我们理解原理而言不是那么重要。
-其余输出的大部分都是在提示我们调试信息，这些调试信息一般包含在程序的可执行文件中，并不会被 program loader 加载进内存。
 
-注意 .text section 的 VMA（或 link address）或 LMA（load address）。
-load address 表示哪个 section 需要被加载进内存。
-link address 表示哪个 section 需要被执行。
-linker 把二进制文件中的 link address 用多种方式进行了编码，比如何时需要全局变量的地址，如果它从未链接的地址执行，则二进制通常不会起作用。
-在现代的机器中，通常使用的是相对地址来链接，因为它更容易扩展，但是却有性能损耗并更加复杂，我们在本课程中不用这种方式，而是使用绝对地址来链接。
+```{code-block} text
+user02@node1:~/6.828/lab$ objdump -h obj/kern/kernel
 
-一般来说，链接和加载地址是相同的，比如看一下 boot loader 的 .text 部分
+obj/kern/kernel:     file format elf32-i386
 
-objdump -h obj/boot/boot.out
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00001acd  f0100000  00100000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata       000006bc  f0101ae0  00101ae0  00002ae0  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .stab         00004291  f010219c  0010219c  0000319c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .stabstr      0000197f  f010642d  0010642d  0000742d  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .data         00009300  f0108000  00108000  00009000  2**12
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .got          00000008  f0111300  00111300  00012300  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .got.plt      0000000c  f0111308  00111308  00012308  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  7 .data.rel.local 00001000  f0112000  00112000  00013000  2**12
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .data.rel.ro.local 00000044  f0113000  00113000  00014000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          00000648  f0113060  00113060  00014060  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+ 10 .comment      00000029  00000000  00000000  000146a8  2**0
+                  CONTENTS, READONLY
+```
 
-boot loader 用 ELF program header 来确定如何加载 section，program header 明确了 ELF 对象的那一部分需要加载进内存和每一个需要使用的目标地址。
-你可以观察一下 progarm header 通过键入
+注意看 `.text` section 中的 VMA（link address）和 LMA（load address）。
+load address 表示哪个 section 需要被加载进内存，link address 表示哪个 section 需要被执行。
 
+linker 支持以相对路径或绝对路径的方式来查找相应的 link address。
+如果我们给出了错误的 link address，那么二进制则无法起作用。
+在现代的机器中，通常使用相对地址来表示 link address，优点是容易扩展，缺点是复杂性能差。
+我们在本课程中不用相对路径，而是使用更简单的绝对地址来表示 link address。
+
+一般来说，link address 和 load address 地址是相同的，比如看一下 bootloader 的 `.text` 部分
+
+```{code-block} text
+user02@node1:~/6.828/lab$ objdump -h obj/boot/boot.out
+
+obj/boot/boot.out:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000019c  00007c00  00007c00  00000074  2**2
+                  CONTENTS, ALLOC, LOAD, CODE
+  1 .eh_frame     0000009c  00007d9c  00007d9c  00000210  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .stab         00000870  00000000  00000000  000002ac  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000940  00000000  00000000  00000b1c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      00000029  00000000  00000000  0000145c  2**0
+                  CONTENTS, READONLY
+```
+
+bootloader 用 ELF program header 来确定如何加载 section。
+因为在 program header 中明确了 ELF 对象的哪一部分需要加载进内存和每一个需要使用的目标地址。
+你可以通过下面的命令观察一下 progarm header：
+
+```{code-block} text
 objdump -x obj/kern/kernel
+```
 
-ELF 对象中需要别加载进内存中的部分被标记为了 LOAD。
-其余信息是 虚拟地址 vaddr，或物理地址 paddr，加载区域的大小 memsz 和 filesz
+稍微解释一下上面这条命令的输出：ELF 对象把需要加载进内存的部分标记为了 LOAD。
+vaddr 表示虚拟地址，paddr 表示物理地址，memsz 表示加载区域的大小，filesz 表示文件大小。
 
-回到 boot/main.c，ph->p_ca 字段是每一个 program header 保存的段目标物理地址。在这种情况下，它实际上是一个物理地址，尽管 ELF 规范对该字段的实际含义模糊不清。
+在 `boot/main.c` 中 `ph->p_ca` 保存的是每一个 program header 的目标段（segment）的物理地址。
+尽管 ELF 规范对该字段的实际含义模糊不清，它实际上是一个物理地址。
 
-BIOS 载入启动扇区到内存，从 0x7c00 开始，所以这是 启动扇区的加载地址。
-这也是启动扇区开始执行的位置，也是 link address。
-我们可以通过给 boot/Makefrag 中的 linker 传递参数 -Ttext 0x7c00 来设置 link address，所以 linker 可以在生成的代码中产生正确的内存地址。
+BIOS 从 `0x7c00` 将启动扇区载入到内存，这是 bootloader 的 load address，也是 link address。
+也可以将 `0x7c00` 称为 bootloader 的入口地址。
+我们可以通过给 `boot/Makefrag` 中的 linker 传递参数 `-Ttext 0x7c00` 来设置 link address，让
+linker 可以在生成的代码中产生正确的内存地址。
 
-练习 5：重新跟踪 boot loader 的初始的几条指令，然后确定程序时从哪里开始 break 的，或者说，如果你拿到了 boot loader 错误的 linker address 从哪里开始报错。然后尝试在 boot/Makefrag 中更改错误的 link address，运行 make clean，重新编译实验代码 make，然后重新跟踪 boot loader 观察发生了什么。
+```{admonition} 练习 5
+重新追踪 bootloader 的初始的几条指令，然后确定程序时从哪里开始 break 的，或者说，如果你拿到了
+bootloader 错误的 linker address 从哪里开始报错。然后尝试在 `boot/Makefrag` 中更改错误的 
+link address，运行 `make clean`，重新编译实验代码 `make`，然后重新追踪 bootloader 观察发生了什么。
+```
 
-回顾内核的 load 和 link address。
-不像 boot loader，这两个地址并不相同：kernel 告诉 boot loader 从低地址（1MB）把 kernel 加载进内存，但是它又起到从一个高地址开始执行。
+对比 kernel 和 bootloader 的 load address / link address。
+在 bootloader 中这两个地址是相同的，但是 kernel 中这两个地址不同。
+这种现象是因为 bootloader 会把 kernel 加载到低地址（1MB）让 kernel 从高地址开始执行。
 我们将会在下一节深入探讨如何在这种思路下，实现内核代码。
 
-除了 section 信息，在 ELF header 中还有一个 field 对我们来讲是重要的，
-它叫做 e_entry。这个字段保存了 entry point 的 link address：程序的 text section 中的内存地址，这是程序开始执行的地方，你可以通过下面的命令查看：
+除了 section 信息，在 ELF header 中还有一个字段对我们来讲是重要的，它是 `e_entry`。
+这个字段保存了 entry point 的 link address：程序的 `.text` section
+中的内存地址，这是程序开始执行的地方，你可以通过下面的命令查看：
 
+```{code-block} text
 objdump -f obj/kern/kernel
+```
 
-你现在应该能够在 boot/main.c 理解最小的 ELF loader 了。
-它从磁盘中读取内核的每个 section，跟进 load address 把他们加载到内存中。
-然后跳转到 kernel 的 entry point。
+通过分析 `boot/main.c` 你现在应该能理解如何加载并执行 ELF 文件了。
+根据 load address 把每个 section 从磁盘中读取到内存中，然后跳转到 kernel 的
+entry point，按照从高地址往下的顺序依次执行指令。
 
-练习 6：我们可以通过 GDB 的命令 x 来测试内存。
-https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html
-给我们提供了关于 GDB 的详细的信息，但是现在，只需要知道 x/Nx ADDR
-能打印内存的从 ADDR 开始的 N 个字就可以了。
-需要注意的是，字的大小并不是一个统一标准，在 GNU 汇编中，一个 word 是 2 个字节。
+```{admonition} 练习 6
+参考 [[webpage](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html)]，使用命令
+`x/Nx ADDR` 来测试内存，它会打印内存从 `ADDR` 开始的 `N` 个字。
+需要注意的是，字的大小并不是一个统一标准，在 GNU 汇编中，一个字是 2 个字节，16 bit。
 
-退出 QEMU/GDB 然后重新启动，从 0x00100000 开始，测试 8 个字的内存，这是 BIOS 进入 boot loader 的位置，然后重复操作，定位到 从 boot loader 进入到 kernel 的位置。为什么他们是不同的？在第二个断点处有什么？
-（你不需要使用 QEMU 来回答这个问题，只需要思考一下就可以了）
+退出 qemu-gdb 然后重新启动，从 `0x00100000` 开始，跳过 8 个字的内存（16 个字节），定位到
+bootloader 的入口地址，然后重复操作，定位到从 bootloader 进入到 kernel 的位置。
+为什么他们是不同的？在第二个断点处有什么？（你不需要使用 QEMU 来回答这个问题，只需要思考一下就可以了）
+```
 
 ### 内核
 
 我们现在将会更多地了解一些关于 minimal JOS kernel 的具体细节。
 （在这部分你将会写一点代码）。
-就像 boot loader 一样， kernel 以一些汇编代码开始，设置一些东西，然后 C 语言代码可以正常地执行。
+就像 bootloader 一样， kernel 以一些汇编代码开始，设置一些东西，然后 C 语言代码可以正常地执行。
 
 使用虚拟内存来解决位置依赖性
 
-当你观察上面讲到的 boot loader 的 linK 和 load address 时，它们两个可以完美地匹配，但是 kernel 的 link 和 load address 这两个地址并不相同。
-链接内核比链接 boot loader 更加复杂，所以 link 和 load address 处于 kern/kernel.ld 的最顶端。
+当你观察上面讲到的 bootloader 的 linK 和 load address 时，它们两个可以完美地匹配，但是 kernel 的 link 和 load address 这两个地址并不相同。
+链接内核比链接 bootloader 更加复杂，所以 link 和 load address 处于 kern/kernel.ld 的最顶端。
 
 操作系统内核经常在非常高的 virtual address 进行连接和运行，比如 0xf0100000，这为了把处理器的低虚拟地址空间留给用户程序使用。
 这种分配方式的理由将在下一个实验中变得更加清晰。
@@ -679,11 +846,11 @@ https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html
 许多机器并没有物理地址 0xf0100000，所以我们不能指望把内核放在那个位置。
 因此，我们使用处理器的内存管理硬件把 0xf0100000 映射到物理地址 0x00100000 上。
 0xf0100000 是 kernel 源代码希望运行的 link address。
-0x00100000 是 boot loader 把内核加载到物理地址空间的位置。
-通过这种方式，虽然 kernel 的虚拟地址已经高到可以给用户进程留下足够的地址空间，但是它仍然会被加载到 PC RAM 的低地址空间上。
+0x00100000 是 bootloader 把内核加载到物理地址空间的位置。
+通过这种方式，虽然 kernel 的虚拟地址已经高到可以给用户进程留下足够的地址空间，但是它仍然会被加载到计算机RAM 的低地址空间上。
 这种方式要求计算机最少要有几兆字节的物理内存，来保证物理地址 0x00100000 是有效的。
 
-实际上，在下一个实验中，我们将会把整个 PC 物理地址空间底部的 256MB （0x00000000 - 0x0fffffff）的内容映射到虚拟地址 0xf0000000 - 0xffffffff。
+实际上，在下一个实验中，我们将会把整个计算机物理地址空间底部的 256MB （0x00000000 - 0x0fffffff）的内容映射到虚拟地址 0xf0000000 - 0xffffffff。
 你应该可以理解为什么 JOS 可以只用头部的 256MB 的物理内存了。
 
 现在，我们将仅仅映射 4MB 的物理内存，这对于启动和运行系统来说，已经足够了。
@@ -694,16 +861,16 @@ https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html
 一旦 CRO_PG 被设置了，内存引用就变成了虚拟地址，虚拟地址需要经过虚拟内存硬件翻译为物理地址。entry_pgdir 会把虚拟地址 0xf0000000 - 0xf0400000 翻译为物理地址 0x00000000 - 0x00400000，虚拟地址 0x00000000 - 0x00400000 也会被翻译为 0x00000000 - 0x00400000。
 任何不在这个范围的虚拟地址将会导致硬件异常，但是我们目前还没有设置中断处理机制，这将会导致 QEMU 转储机器状态并退出，如果你没有使用 6.828-patched 版本的 QEMU 的话，这将会永无止境地重启。
 
-练习 7：使用 QEMU 和 GDB 来跟踪 JOS kernel，并在 mov1 %eax, %cr0 停止。
+练习 7：使用 QEMU 和 GDB 来追踪 JOS kernel，并在 mov1 %eax, %cr0 停止。
 测试 0x00100000 和 0xf0100000 的内存。
 现在，使用 stepi 来进行单步调试。
 重复测试 0x00100000 和 0xf0100000 的内存。
 确保你能理解发生了什么。
 
 在新映射建立之后，第一条由于映射关系的错误发生失败的指令是什么？
-在 kern/entry.S 中注释掉 mov1 %eax, %cr0，跟踪它，并观察你是否正确。
+在 kern/entry.S 中注释掉 mov1 %eax, %cr0，追踪它，并观察你是否正确。
 
-格式化输出到终端
+格式化输出到 Terminal 
 
 许多人认为 print() 是与生俱来的，而且甚至认为它们就是 C 语言原语的。
 但是在 OS kernel 中，我们将会自己实现所有的 I/O。
@@ -730,7 +897,7 @@ https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html
 
 3. 下面的问题你可能需要参考 lecture 2 的笔记。这些笔记涵盖了 x86 平台上的 GCC 调用规则。
 
-跟踪下面语句的执行过程：
+追踪下面语句的执行过程：
 
 int x = 1, y = 3, z = 4;
 cprintf("x %d, y %x, z %d\n", x, y, z);
@@ -754,8 +921,8 @@ cprintf("x=%d y=%d", 3);
 
 6. 假设 GCC 更改了调用规则，并因此它按照声明的顺序将参数进行压栈，故最后一个声明的参数是最后一个压栈的。你将如何更改 cprintf 或他的接口，来让它能够接收可变数量的参数？
 
-挑战：加强版的 console 可以在终端中输出不同颜色的字体。
-传统的做法是用 ANSI escape sequence 包裹文本，然后由终端来解释这段包裹代码。
+挑战：加强版的 console 可以在 Terminal 中输出不同颜色的字体。
+传统的做法是用 ANSI escape sequence 包裹文本，然后由 Terminal 来解释这段包裹代码。
 如果你兴趣，可以参考 https://pdos.csail.mit.edu/6.828/2018/reference.html 来根据自己的兴趣做更改，这可能涉及到关于 VGA 显示硬件的编程。首先你应该把 VGA 硬件调整到 graphics 模式，然后让控制台能够在 graphical frame buffer 中绘制彩色文本。
 
 ### 栈
@@ -867,3 +1034,6 @@ ebp 是函数的基地址，eip 是函数的第一条指令所在的地址。
 ---
 
 [^cite_ref-1]: <https://pdos.csail.mit.edu/6.828/2018/schedule.html>
+[^cite_ref-2]: <https://pdos.csail.mit.edu/6.828/2018/tools.html>
+[^cite_ref-3]: <http://web.archive.org/web/20040322145608/http://members.iweb.net.au/~pstorr/pcbook/book2/memory.htm>
+[^cite_ref-4]: 李广军，阎波，林水生．微处理器系统结构与嵌入式系统系统设计：电子工业出版社，2011：338-339
