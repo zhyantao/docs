@@ -285,7 +285,7 @@
 :glob:
 :hidden:
 
-operation-system/*
+operating-system/*
 ```
 
 ---
