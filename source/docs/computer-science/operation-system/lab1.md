@@ -1,288 +1,4 @@
-(microkernel_os)=
-# 微内核操作系统
-
-## 学习路线
-
-学习路线方案的制定参考了 MIT6.828 schedule [^cite_ref-1]，课程讲义为《[xv6 book](https://kdocs.cn/l/caQbBFQ1ener)
-| [中文版](https://th0ar.gitbooks.io/xv6-chinese/content/index.html)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
-
-```{panels}
-:container: timeline
-:column: col-6 p-0
-:card:
-
----
-:column: +entry left
-
-第 1 讲：操作系统简介
-^^^
-
-- 了解 UNIX 系统 [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
-- 实验 1：准备工作环境 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 2 讲：计算机硬件架构和 x86 编程
-^^^
-
-- 阅读《xv6 book》Appendix A 和 B
-- 阅读《xv6 source》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-x86.html) 和 [幻灯片](https://kdocs.cn/l/cnhKtkx53jth)
-- 作业：跑通 xv6 代码 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-boot.html)]
-
----
-:column: +entry left
-
-第 3 讲：学习如何调试由 C 编写的代码
-^^^
-
-- 阅读《[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)》2.9、5.1 - 5.5 和 6.4
-- 阅读 [幻灯片](https://kdocs.cn/l/co2YLTVPzUy6) 和 [示例代码](https://pdos.csail.mit.edu/6.828/2018/lec/pointers.c)
-- 作业：脚本 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-shell.html)]
-- 实验 2：内存管理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab2/)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 4 讲：脚本和操作系统组织
-^^^
-
-- 阅读《xv6 book》chapter 0
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-shell.txt)
-
----
-:column: +entry left
-
-第 5 讲：隔离机制（用户态和内核态）
-^^^
-
-- 阅读《xv6 book》chapter 1
-- 阅读《xv6 source》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-internal.txt)
-- 作业：系统调用 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-syscall.html)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 6 讲：虚拟内存（上）
-^^^
-
-- 阅读《xv6 book》chapter 2
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vm.md) 和 [幻灯片](https://kdocs.cn/l/caJl0eqf1x83)
-- 阅读 [页表翻译机制](https://kdocs.cn/l/cea84466nzDf)
-- 作业：写内存的懒分配 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-zero-fill.html)]
-
----
-:column: +entry left
-
-第 7 讲：虚拟内存（中）
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-usevm.md)、[手稿](https://pdos.csail.mit.edu/6.828/2018/lec/l-josmem.html)
-  和 [幻灯片](https://kdocs.cn/l/cepqhIjZtd3k)
-- 作业：xv6 CPU 时钟 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-alarm.html)]
-- 实验 3：用户态环境 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab3/)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 8 讲：系统调用，中断和异常
-^^^
-
-- 阅读《xv6 book》chapter 3
-- 阅读《xv6 source》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-interrupt.txt) 和 [手稿](https://kdocs.cn/l/cszWbTndffuP)
-- 作业：多线程编程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/lock.html)]
-
----
-:column: +entry left
-
-第 9 讲：多处理器和锁
-^^^
-
-- 阅读《xv6 book》chapter 4
-- 阅读《xv6 source》spinlock.c 和 skim mp.c
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt) 和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
-- 作业：xv6 锁机制的实现 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-lock.html)]
-- 实验 4：抢先式多任务处理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab4/)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 10 讲：上下文切换
-^^^
-
-- 阅读《xv6 book》chapter 5
-- 阅读《xv6 source》proc.c 和 swtch.S
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-threads.txt)
-- 作业：超线程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-uthread.html)]
-
----
-:column: +entry left
-
-第 11 讲：睡眠和唤醒
-^^^
-
-- 阅读《xv6 book》chapter 5
-- 阅读《xv6 source》proc.c 相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-coordination.txt)
-- 作业：同步屏障 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/barrier.html)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 12 讲：文件系统
-^^^
-
-- 阅读《xv6 book》chapter 6
-- 阅读《xv6 source》bio.c、fs.c、sysfile.c 和 file.c
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-fs.txt)
-- 作业：大文件 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-big-files.html)]
-
----
-:column: +entry left
-
-第 13 讲：崩溃后恢复
-^^^
-
-- 阅读《xv6 book》chapter 6
-- 阅读《xv6 source》log.c
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-crash.txt)
-- 作业：崩溃 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-new-log.html)]
-- 实验 5：文件系统，spawn 和 sh [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab5/)]
-- 实验 6：网络 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab6/)]
-- 实验 7：最终项目 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab7/)]
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 14 讲：文件系统性能和快速崩溃恢复
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-journal.txt) 和
-  [论文](https://pdos.csail.mit.edu/6.828/2018/homework/journal-ext2fs.html)
-- 作业：mmap() [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/mmap.html)]
-
----
-:column: +entry left
-
-第 15 讲：虚拟内存（下）
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vm-again.txt)、[幻灯片](https://kdocs.cn/l/cawTd6G1AMsJ)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/appel-li.pdf)
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 16 讲：操作系统组织
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-organization.txt) 和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/engler95exokernel.pdf)
-
----
-:column: +entry left
-
-第 17 讲：内核和高级语言
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-biscuit.txt) 和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/biscuit.pdf)
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 18 讲：可扩展锁
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-scalable-lock.md)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/linux-lock.pdf)
-- 阅读 [幻灯片](https://kdocs.cn/l/cjgbA4CHxigP)
-  和 [示例代码](https://pdos.csail.mit.edu/6.828/2018/lec/scalable-lock-code.c)
-
----
-:column: +entry left
-
-第 19 讲：可扩展内核
-^^^
-
-- 阅读 [幻灯片](https://kdocs.cn/l/cmkxaZO57wbg)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/rcu-decade-later.pdf)
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 20 讲：虚拟机（上）
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vmware.txt)、[幻灯片](https://kdocs.cn/l/cgDpeTi8hufy)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/adams06vmware.pdf)
-
----
-:column: +entry left
-
-第 21 讲：虚拟机（下）
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vmm.md)、[幻灯片](https://kdocs.cn/l/co7NAA7sjY0Z)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/belay-dune.pdf)
-
----
-:column: +right
----
-:column: +left
----
-:column: +entry right
-
-第 22 讲：高性能网络
-^^^
-
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-net.txt)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/osdi14-paper-belay.pdf)
-
-```
-
-## 实验 1
+# 实验一
 
 在本次实验中，你将学习下面几个知识点：
 
@@ -290,10 +6,13 @@
 - 熟悉计算机的启动过程；
 - 熟悉 QEMU/GDB 的调试方法。
 
-实验分为三部分。第一部分聚焦于熟悉 x86 汇编语言，QEMU 仿真器，以及计算机上电启动过程。
-第二部分测试启动器，在 lab/boot 目录下。第三部分深入初始化模板，叫做 JOS，在 kernel 目录下。
+开始实验之前，你应该对本次实验有一个宏观认识。实验一可分为三个部分：
 
-### 准备工作环境
+- 第一部分聚焦于熟悉 x86 汇编语言，QEMU 仿真器，以及计算机上电启动过程。
+- 第二部分着重于跟踪调试 `lab/boot` 目录下的 bootloader。
+- 第三部分深入 kernel 初始化过程，侧重于跟踪调试 `lab/kern` 目录下的 kernel，也就是 JOS。
+
+## 准备工作环境
 
 MIT6.828 提到使用 Athena machine 将更加方便，但是不是这个学校的学生可能接触不到这个机器。
 因此后续工作将在自己的虚拟机上完成，用到环境如下：
@@ -355,7 +74,7 @@ sudo make install
 QEMU 进行瘦身，编译安装指定的架构，若你不熟悉自己的 CPU 架构，可以缺省这个参数 [^cite_ref-2]。
 
 (asm_syntax)=
-### 汇编语法
+## 汇编语法
 
 汇编语法并不是本门课的重点，因此你需要自学汇编语言，只不过 6.828 给我们推荐了一些资料。
 
@@ -375,7 +94,7 @@ GNU Assembler，支持的是 AT&T 语法。
 如果你想了解更多关于指令集的知识，除了 Intel 提供的指令集手册，AMD 官网也提供了
 [相似的手册](https://developer.amd.com/resources/developer-guides-manuals/)。
 
-### 运行 kernel 代码
+## 运行 kernel 代码
 
 不知道你注意到 QEMU 这个软件没有，它在实验中充当的是一个虚拟电脑的角色。
 这台虚拟电脑和我们在现实中用到的电脑在功能上没有什么两样，只不过这台虚拟电脑以代码的形式存在。
@@ -465,7 +184,7 @@ K>
 
 现在，我们应该能大概理解 QEMU 的作用了：**为我们编写操作系统提供一个运行环境**。
 
-### 内存和寻址
+## 内存和寻址
 
 如果想要在一个金属裸机上直接运行内核源码，那么势必需要知道 **内核源码的入口地址** 在哪里。
 如果我们不加约束，每个人都自定义一个入口地址，那么我写的操作系统可能在你的机器上就找不到入口地址。
@@ -530,7 +249,7 @@ Memory 和 Extended Memory。
 因为设计的限制，JOS 仅使用前 256MB 的物理地址空间，所以在后面的实验中，我们将会假设所有的计算机仅有
 32 位物理地址空间。
 
-### 内核的启动流程
+## 内核的启动流程
 
 知道了内核源码的入口地址，那么接下来就需要尝试，如何启动内核程序了。
 在这部分，我们将使用 QEMU 的调试工具来研究如何启动一个 [IA-32](https://zh.wikipedia.org/wiki/IA-32)
@@ -594,7 +313,7 @@ The target architecture is assumed to be i8086
 - BIOS 从设备中将 bootloader 加载到内存，并让它上 CPU 执行（转移 CPU 控制权）；
 - 开机引导程序（bootloader）负责启动操作系统内核，开机成功。
 
-### 调试 bootloader
+## 调试 bootloader
 
 开机引导程序（bootloader）是嵌入式系统在加电后执行的第一段代码，主要的工作流程如下 [^cite_ref-4]：
 
@@ -667,7 +386,7 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 - bootloader 的最后一条指令是什么？内核被加载的第一条指令在哪里，是什么？
 - bootloader 如何确定需要读多少个扇区，保证从磁盘中读取出一个完整内核？它从哪里找到这些信息？
 
-### 如何定位 kernel
+## 如何定位 kernel
 
 在继续向下学习之前，我们需要确保你对 C 语言的指针有一定的了解。
 
@@ -829,7 +548,7 @@ bootloader 的入口地址，然后重复操作，定位到从 bootloader 进入
 为什么他们是不同的？在第二个断点处有什么？（你不需要使用 QEMU 来回答这个问题，只需要思考一下就可以了）
 ```
 
-### 分析 kernel 源码
+## 分析 kernel 源码
 
 我们在这一小节更详细地了解 minimal JOS kernel 的细节：
 
@@ -965,7 +684,7 @@ OS kernel 经常在非常高的 virtual address 进行链接和运行，比如
 中绘制彩色文本。
 ```
 
-### 栈：追踪 kernel
+## 栈：追踪 kernel
 
 在本次实验的最后一个练习中，我们将探索 C 语言是如何在 x86 架构上使用栈的。
 在这个过程中，我们将会编写一个内核监视器函数，让它打印栈的
@@ -1107,7 +826,6 @@ K>
 
 ---
 
-[^cite_ref-1]: <https://pdos.csail.mit.edu/6.828/2018/schedule.html>
 [^cite_ref-2]: <https://pdos.csail.mit.edu/6.828/2018/tools.html>
 [^cite_ref-3]: <http://web.archive.org/web/20040322145608/http://members.iweb.net.au/~pstorr/pcbook/book2/memory.htm>
 [^cite_ref-4]: 李广军，阎波，林水生．微处理器系统结构与嵌入式系统系统设计：电子工业出版社，2011：338-339
