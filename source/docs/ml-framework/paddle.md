@@ -1,16 +1,26 @@
 # PaddlePaddle
 
-PaddlePaddle 是百度的一款深度学习框架。使用 PaddlePaddle 一般分为三个核心步骤：
+PaddlePaddle 是百度的一款深度学习框架。在开始之前，确保你已经在电脑上装好了
+[paddlepaddle](https://www.paddlepaddle.org.cn/)。
+
+````{note}
+paddle 是核心代码，paddlex 是更上层的接口。
+为了便于理解，可以将 paddle 理解为操作系统，而 paddlex 是运行在操作系统上的应用程序。
+除了 paddlex，飞桨 PaddlePaddle 还为我们提供了更多更丰富的上层组件，如下图所示。
+
+```{figure} ../../_static/images/paddle-family.png
+PaddlePaddle 全家桶
+```
+
+使用这些上层组件的前提是，你已经在电脑上装好了 paddlepaddle，因为他们需要使用 paddle 这个底层接口。
+````
+
+本文将记录如何使用 paddle，并不对上层工具做具体介绍。
+使用 paddle 一般分为三个核心步骤：
 
 1. 定义 transforms 和 datasets；
 2. 定义模型（模型组网）；
 3. 模型训练和预测（模型评估）。
-
-```{note}
-运行环境为 [paddle 2.2.1](https://www.paddlepaddle.org.cn/)。
-
-注意，paddle 是核心代码，方便定制，而 paddlex 是更上层的接口，使用起来更简单但定制性不好。
-```
 
 下面以随机生成的数据为样本，测试流程的完整性。
 
