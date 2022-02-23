@@ -142,6 +142,9 @@ Git
     # 建立追踪关系，在现有分支与指定的远程分支之间
     $ git branch --set-upstream [branch] [remote-branch]
 
+    # 重命名分支
+    $ git branch -m [old_name] [new_name]
+
     # 合并指定分支到当前分支（适用场景：主分支 <- 子分支）
     $ git merge [branch]
 
