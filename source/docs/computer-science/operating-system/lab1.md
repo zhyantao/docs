@@ -15,15 +15,14 @@
 ## 准备工作环境
 
 MIT6.828 提到使用 Athena machine 将更加方便，但是不是这个学校的学生可能接触不到这个机器。
-因此后续工作将在自己的虚拟机上完成，用到环境如下：
+因此后续工作将在自己的虚拟机上完成，用到的环境如下：
 
-- [Ubuntu 20.04](https://releases.ubuntu.com/20.04/) 以及 VMWare Workstation
-- Git 2.25.1
-- Python 2.7.18
-- 编译器 GCC 9.3.0 以及 gcc-multilib
-- 仿真器 [6.828 patched QEMU](https://github.com/mit-pdos/6.828-qemu)
+- Ubuntu 16.04 [32-bit PC (i386) desktop image](https://releases.ubuntu.com/16.04/)
+  (不要装  64 位虚拟机) 以及 VMWare
+- GIT 2.25.1 / Python 2.7 / GCC 5.4.0 以及 **gcc-multilib** /
+  [6.828 patched QEMU](https://github.com/mit-pdos/6.828-qemu)
 
-需要注意的是，在 Ubuntu 这个系统中，默认应该是有 Python 2.7.18 的，可以通过 `python2 --version`
+需要注意的是，在 Ubuntu 这个系统中，默认应该是有 Python 2.7 的，可以通过 `python2 --version`
 检查一下。如果没有，我们可能需要用 `sudo apt install python2`
 来安装一下，如果有，我们直接给它建立软连接或硬连接就可以了。
 
@@ -37,16 +36,14 @@ sudo ln /usr/bin/python2 /usr/bin/python
 mkdir ~/6.828
 cd ~/6.828
 git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
-cd lab
 ```
 
 有一些简单的 Git 命令你需要掌握，比如查看做了哪些修改，如何提交代码等，这些知识可以参考
 {ref}`另一篇文章 <git-syntax>`。
 
-然后我们需要安装硬件仿真器 QEMU，但是 6.282 并不推荐我们使用 <qemu.org> 提供的 QEMU。故改用
+然后我们需要安装硬件仿真器 QEMU，但是 6.282 并不推荐我们使用 qemu.org 提供的 QEMU。故改用
 6.828 打过补丁的 QEMU，但是，若直接使用 6.828 patched QEMU，在 `make` 时，会出现一些报错。
-后面我通过查阅资料，修复了这些报错，并把改好的代码放在了
-[我的仓库](https://github.com/zhyantao/6.828-qemu) 中，所以你可以直接使用我改好的代码来进行编译：
+后面我通过查阅资料，修复了这些报错，所以你可以直接使用我改好的代码来进行编译：
 
 ```{code-block} text
 cd ~/6.828
@@ -54,7 +51,7 @@ git clone https://github.com/zhyantao/6.828-qemu.git qemu
 ```
 
 在编译 QEMU 源代码之前，我们需要安装一些依赖。
-如果我们的镜像源不合适，可能找不到这些需要的依赖包，因此现在统一使用
+如果你使用清华的镜像源，可能找不到某些需要的依赖包，因此现在 **统一使用**
 [阿里云的镜像源](https://developer.aliyun.com/mirror/)：
 
 ```{code-block} text
@@ -64,6 +61,7 @@ sudo apt install -y libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-
 安装完依赖后，就可以在 QEMU 源代码的基础上进行编译和安装了。
 
 ```{code-block} text
+cd ~/6.828/qemu
 ./configure --disable-kvm --disable-werror \
   [--prefix=PFX] [--target-list="i386-softmmu x86_64-softmmu"]
 make
@@ -76,20 +74,18 @@ QEMU 进行瘦身，编译安装指定的架构，若你不熟悉自己的 CPU �
 (asm_syntax)=
 ## 汇编语法
 
-汇编语法并不是本门课的重点，因此你需要自学汇编语言，只不过 6.828 给我们推荐了一些资料。
+汇编语法并不是本门课的重点，但是在后续课程中，你要能看懂别人写的汇编，因此你需要自学汇编语言，
+6.828 给我们推荐了一些资料。
 
-《PC Assembly Language》这本书很全，这也意味着如果你时间不够，可以略读，或用到时再查阅。
-而且，这本书用到的 Assembler 和我们在 6.828 中用到的 Assembler 并不一致。
-这本书用的是 Netwide Assembler (NASM)，支持 Intel 语法，而我们在 6.828 中学习的是
-GNU Assembler，支持的是 AT&T 语法。
-关于这两种语法的相互转换，参考
-[这篇文章](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html)，6.828
-建议我们无论如何都需要阅读一下。
+*[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)* [^cite_ref-5]
+用的是支持 Intel 语法的 Netwide Assembler (NASM)，而 6.828 用的是支持的是 AT&T
+语法的 GNU Assembler。这意味着要学会这这两种语法的相互转换，因此 6.828 强烈建议我们阅读
+[这篇文章](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html)。
 
-除了上面这本书，还有两个参考手册供我们查阅，一个是
-[简洁版](https://pdos.csail.mit.edu/6.828/2018/readings/i386/toc.htm) 的，另一个是
-[详细版](http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html)
-的。6.828 说简洁版对于我们这门课已经够用了。
+除了 *PC 汇编语言* 这本书，还有两个参考手册供我们查阅，一个是
+[简洁版的 i386 编程手册](https://pdos.csail.mit.edu/6.828/2018/readings/i386/toc.htm)，另一个是
+[详细版的](http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html)
+的。对于 6.828 这门课而言，简洁版已经够用了。
 
 如果你想了解更多关于指令集的知识，除了 Intel 提供的指令集手册，AMD 官网也提供了
 [相似的手册](https://developer.amd.com/resources/developer-guides-manuals/)。
@@ -391,7 +387,7 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 在继续向下学习之前，我们需要确保你对 C 语言的指针有一定的了解。
 
 ```{admonition} 练习 4
-阅读《[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)》5.1 到 5.5 小节，然后下载
+阅读 *[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)* 5.1 到 5.5 小节，然后下载
 [pointers.c](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/pointers.c) 源代码，并运行。
 确保你能理解源代码输出。尤其是要确保你能理解第 1 行和第 6 行的指针地址来自哪里，第 2 行和第 4
 行的输出值是如何跳到那里的，为什么第 5 行的输出值看起来是错误的？
@@ -754,7 +750,7 @@ return 指令指针通常指向在 `call` 指令之后的指令（为什么呢�
 学习完这个例子后，你应该学会了打印所有的栈帧。
 通过学习 `kern/entry.S` 你可以发现这有一个简单地方式来告诉函数什么时候停止。
 
-阅读《C 语言程序设计》时，有一些重要的知识点，需要你记忆，后面的实验可能会用到：
+阅读 *C 语言程序设计* 时，有一些重要的知识点，需要你记忆，后面的实验可能会用到：
 
 - 若 `int *p = (int *) 100`，则 `(int)p + 1` 和 `(int)(p+1)` 的值分别是 101 和 104。
   当给指针加一个整型数字时，也就是第二种情况所示，这个整型数字被默认乘以了指针指向的对象的大小。
@@ -829,3 +825,4 @@ K>
 [^cite_ref-2]: <https://pdos.csail.mit.edu/6.828/2018/tools.html>
 [^cite_ref-3]: <http://web.archive.org/web/20040322145608/http://members.iweb.net.au/~pstorr/pcbook/book2/memory.htm>
 [^cite_ref-4]: 李广军，阎波，林水生．微处理器系统结构与嵌入式系统系统设计：电子工业出版社，2011：338-339
+[^cite_ref-5]: <http://pacman128.github.io/pcasm/>
