@@ -322,6 +322,9 @@ Git 全局设置
     # 显示所有远程仓库
     $ git remote -v
 
+    # 更新远程仓库链接
+    $ git remote set-url [remote] [url]
+
     # 显示某个远程仓库的信息
     $ git remote show [remote]
 
