@@ -51,7 +51,7 @@ docs/ml-mechanism/*
 docs/computer-science/*
 操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
 计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
-设计模式 <https://www.runoob.com/design-pattern/design-pattern-tutorial.html>
+设计模式 <https://www.liaoxuefeng.com/wiki/1252599548343744/1264742167474528>
 秋招面试题汇总 <https://kdocs.cn/l/ckOjCg12cGSt>
 ```
 

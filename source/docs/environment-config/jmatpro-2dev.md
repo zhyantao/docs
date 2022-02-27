@@ -164,26 +164,26 @@ Solidification Calculation 输入参数
 通过这个计算模块，我们可以得到下面这些文件：
 
 ```{code-block} text
-10CrMoV_Average_expansion_coeff.xls
-10CrMoV_Bulk_modulus.xls
-10CrMoV_Density.xls
-10CrMoV_Electrical_conducitivity.xls
-10CrMoV_Electrical_resistivity.xls
-10CrMoV_Enthalpy.xls
-10CrMoV_Hardness.xls
-10CrMoV_Latent_heat.xls
-10CrMoV_Linear_expression.xls
-10CrMoV_Liquid_viscosity.xls
-10CrMoV_Molar_volume.xls
-10CrMoV_Phase_vol%.xls
-10CrMoV_Poisson's_ratio.xls
-10CrMoV_Shear_modulus.xls
-10CrMoV_Specific_heat.xls
-10CrMoV_Tensile_Stress.xls
-10CrMoV_Thermal_conductivity.xls
-10CrMoV_Total_viscosity.xls
-10CrMoV_Yield_Stress.xls
-10CrMoV_Young's_modulus.xls
+10CrMoV_Average_expansion_coeff.dat
+10CrMoV_Bulk_modulus.dat
+10CrMoV_Density.dat
+10CrMoV_Electrical_conducitivity.dat
+10CrMoV_Electrical_resistivity.dat
+10CrMoV_Enthalpy.dat
+10CrMoV_Hardness.dat
+10CrMoV_Latent_heat.dat
+10CrMoV_Linear_expression.dat
+10CrMoV_Liquid_viscosity.dat
+10CrMoV_Molar_volume.dat
+10CrMoV_Phase_vol%.dat
+10CrMoV_Poisson's_ratio.dat
+10CrMoV_Shear_modulus.dat
+10CrMoV_Specific_heat.dat
+10CrMoV_Tensile_Stress.dat
+10CrMoV_Thermal_conductivity.dat
+10CrMoV_Total_viscosity.dat
+10CrMoV_Yield_Stress.dat
+10CrMoV_Young's_modulus.dat
 ```
 
 但是，当我打开这些文件查看内容的时候，**它们的内容其实都是一样的**。因为我选择的数据全部导出。
@@ -193,8 +193,8 @@ Solidification Calculation 输入参数
 后面，我又尝试了导出包含各个相的全部数据，没错，果然不出意外，它们的内容也是一样的。
 
 ```{code-block} text
-10CrMoV_Density_per_phase.xls
-10CrMoV_Phase_vol%_per_phase.xls
+10CrMoV_Density_per_phase.dat
+10CrMoV_Phase_vol%_per_phase.dat
 ```
 
 需要了解，JMatPro 在 Solidification 这个计算模块，不是只能导出全部数据，你也可以选择部分导出。

@@ -130,28 +130,28 @@ AMD 的主板只支持 AMD 的 CPU，英特尔的主板只支持英特尔的 CPU
   - 内存类型
   - 主板板型
   - 价格
-* - TUF GAMING B560-PLUS
+* - GAMING B560
   - Intel B560
-  - Realtek ALC897 7.1
-  - 4 x DDR4 DIMM
+  - Realtek ALC897
+  - DDR4 DIMM
   - ATX
   - 799 元
 * - 
   - AMD X570
-  - Realtek ALC897 7.1
-  - 4 x DDR4 DIMM
+  - Realtek ALC897
+  - DDR4 DIMM
   - M-ATX
   - 799 元
 * - 
   - AMD TRX40
-  - Realtek ALC897 7.1
-  - 4 x DDR4 DIMM
+  - Realtek ALC897
+  - DDR4 DIMM
   - Mini-ATX
   - 799 元
 * - 
   - Intel Z170
-  - Realtek ALC897 7.1
-  - 4 x DDR4 DIMM
+  - Realtek ALC897
+  - DDR4 DIMM
   - E-ATX
   - 799 元
 ```
