@@ -23,6 +23,41 @@ Git
 
 在 Learn Git Branching 上，可以更轻松直观地体验 Git 完整流程 [2]_。
 
+
+常用命令
+~~~~~~~~
+
+Git 全局设置
+-------------
+
+.. code-block:: bash
+
+    git config --global user.name "nickname"
+    git config --global user.email "user@example.org"
+
+创建 git 仓库
+--------------
+
+.. code-block:: bash
+
+    mkdir repository
+    cd repository
+    git init 
+    git add .
+    git commit -m "Initial commit"
+    git remote add origin git@gitee.com:username/repository.git
+    git push -u origin "master"
+
+已有仓库
+--------
+
+.. code-block:: bash
+
+    cd existing_git_repo
+    git remote add origin git@gitee.com:username/repository.git
+    git push -u origin "master"
+
+
 仓库
 ~~~~~
 
