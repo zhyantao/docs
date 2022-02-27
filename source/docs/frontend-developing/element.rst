@@ -1,6 +1,6 @@
-===========
-Element UI 
-===========
+========
+Element
+========
 
 `Element <https://element.eleme.cn/#/zh-CN>`_\，一套为开发者、设计师和产品经理准备的基于 Vue 2.0/3.0 的桌面端组件库。Element 上手比较容易，但是需要有一点 :ref:`Vue 基础 <vue.js-basic>`\。
 如果想借助 Element 更快地开发出网站页面，可以参考\ `项目模板 <https://github.com/ElementUI/element-starter>`_\，快速的搭建脚手架。

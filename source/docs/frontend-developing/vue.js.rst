@@ -666,7 +666,7 @@ class 与 style 绑定
 
 子组件中的 ``data()`` 必须是函数，而不能是属性，这是因为每个子组件都希望有自己的数据空间，而不被共享。
 
-父组件向子组件通信：在子组件中用 ``props=['子组件变量名']`` **接收消息**\。
+父组件向子组件通信：在子组件中用 ``props: ['子组件变量名']`` **接收消息**\。
 在父组件模板中的通过属性 ``v-bind:子组件变量名="父组件变量名"`` **中转消息**\。
 在父组件中通过 ``data`` 初始化父组件变量的值来 **发送消息**\，
 又因为 ``data`` 中的变量值可以通过 ``methods`` 或 ``computed`` 方法进行修改，从而实现对网页内容的实时渲染。
@@ -801,7 +801,7 @@ class 与 style 绑定
 - 用 `插槽 <https://v3.cn.vuejs.org/guide/component-slots.html>`_ 占位，后面根据内容自定义补充到这个位置；
 - 使用 `Vue Router <https://next.router.vuejs.org/>`_ 实现前端路由；
 - 使用 `Vuex <https://next.vuex.vuejs.org/zh/>`_ 让多个组件可以共享某些信息，比如用户的登录状态等等；
-- 使用 `Axios <https://axios-http.cn>`_ 处理并发的网络请求，借助
+- 使用 `Axios <https://cn.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html>`_ 处理并发的网络请求，借助
   `Promise 对象 <https://wangdoc.com/javascript/async/promise.html>`_ 良好的封装实现异步通信。
 
 未来有更多的知识等待探索。比如，如何更加优雅地组织代码，如何尽量减少第三方库混在业务逻辑中。
