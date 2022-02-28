@@ -467,13 +467,13 @@ class 与 style 绑定
     <body>
     <div id="app">
         <ul>
-            <li v-for="item, index in items" :key="index">
-                {{ item }} : {{ index }} : {{ item.message }}
+            <li v-for="(item, listindex) in items" :key="listindex">
+                {{ item }} : {{ listindex }} : {{ item.message }}
             </li>
         </ul>
         <ul>
-            <li v-for="value, key in object">
-                {{ key }} : {{ value }}
+            <li v-for="(value, key, objindex) in object" :key="objindex">
+                {{ key }} : {{ value }} : {{objindex}}
             </li>
         </ul>
     </div>
