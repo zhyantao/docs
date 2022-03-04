@@ -56,6 +56,11 @@ Stainless Steel 的相关功能。
 ```{image} ../../_static/images/jmatpro_err_1.png
 ```
 
+技术组件及系统架构如下图所示：
+
+```{image} ../../_static/images/jmatpro-tech-cpns-and-arch.*
+```
+
 ## Thermodynamic Properties
 
 基于该软件进行二次开发，现在又没有加密狗，所以无法调通程序，现在仅根据 UI 界面的输出梳理导出数据的格式。
