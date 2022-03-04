@@ -13,7 +13,54 @@
 而 MySQL 可以作为关系型数据库管理系统的代表。
 
 安装 MySQL 可能会遇到一点坑，不推荐用 Installer 安装，它会给你装很多不需要的环境。
-推荐[下载 Zip](https://dev.mysql.com/downloads/mysql/5.7.html)，然后配一下环境变量就可以了。
+推荐 [下载 Zip](https://downloads.mysql.com/archives/community/)，然后配一下环境变量。
+第一次使用会比较麻烦，推荐按照以下几个步骤操作：
+
+1）在解压后的根路径（`mysql-8.0.27-winx64` 文件夹）下新建一个 `my.ini` 文件，然后输入以下几行内容：
+
+```{code-block} ini
+[mysqld]
+# set basedir to your installation path
+basedir=D:\Program Files\mysql-8.0.27-winx64\
+# set datadir to the location of your data directory
+datadir=D:\Program Files\mysql-8.0.27-winx64\data\
+# set port
+port=3306
+# WARNING: comment this after first running
+skip-grant-tables
+```
+
+2）安装 MySQL 服务前应当先删除旧服务，以 **管理员模式** 打开命令行，输入 `mysqld --install`。
+
+3）使用 `mysqld --initialize-insecure --user=mysql` 初始化配置文件。
+
+4）注释掉 `my.ini` 中的最后一行，然后启动 MySQL 服务：`net start mysql`。
+
+5）使用 `mysql -u root -p` 进入管理界面（**不要输入密码**）。
+
+6）修改 root 密码并刷新权限。
+
+```{code-block} mysql
+-- MySQL 5.7 版本修改密码的方式
+update mysql.user
+set authentication_string=password('123456')
+where user='root' and Host='localhost';
+
+-- MySQL 8.0 版本修改密码的方式
+alter user 'root'@'localhost'
+identified by '123456';
+
+-- 刷新权限
+flush privileges;
+```
+
+7）重新启动 MySQL 服务，重新连接 MySQL 数据库。
+
+```{code-block} bash
+net stop mysql
+net start mysql
+mysql -u root -p
+```
 
 ## MySQL 的工作流程
 
