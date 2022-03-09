@@ -2,7 +2,7 @@
 # 微内核操作系统
 
 学习路线方案的制定参考了 MIT6.828 schedule [^cite_ref-1]，课程讲义为《[xv6 book](https://kdocs.cn/l/caQbBFQ1ener)
-| [中文版](https://th0ar.gitbooks.io/xv6-chinese/content/index.html)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
+| [中文版](https://xv6-chinese.readthedocs.io)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
 
 ```{panels}
 :container: timeline
