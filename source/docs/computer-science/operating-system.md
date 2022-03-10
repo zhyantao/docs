@@ -16,7 +16,7 @@
 ^^^
 
 - 了解 UNIX 系统 [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
-- 实验 1：准备工作环境 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/)]
+- 实验 1：准备工作环境 [{ref}`webpage <microkernel_os_lab1>`]
 
 ---
 :column: +right
