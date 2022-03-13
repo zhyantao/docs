@@ -42,7 +42,7 @@ html_theme_options = {
     "show_navbar_depth": 1,
 }
 # html_sourcelink_suffix = '.rst'
-html_last_updated_fmt = '%Y-%m-%d %H:%M:%S %z'
+html_last_updated_fmt = '%Y-%m-%d %H:%M:%S, time zone: %z'
 
 
 # -- General configuration ------------------------------------------------
