@@ -9,7 +9,7 @@ import os
 
 project = u'Notebook' 
 copyright = u'2022, Yantao'
-author = u'Yantao'
+#author = u'Yantao'
 version = 'v 1.2.0'
 
 master_doc = 'index'
@@ -42,6 +42,7 @@ html_theme_options = {
     "show_navbar_depth": 1,
 }
 # html_sourcelink_suffix = '.rst'
+html_last_updated_fmt = '%Y-%m-%d %H:%M:%S'
 
 
 # -- General configuration ------------------------------------------------
