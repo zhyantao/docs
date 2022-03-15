@@ -74,7 +74,6 @@ extensions = [
     'myst_nb',
     'sphinx_togglebutton',
     'sphinx_copybutton',
-    'sphinx.ext.intersphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.mathjax',
@@ -108,21 +107,6 @@ mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
 # Setting for sphinxcontrib-mermaid
 mermaid_version = "latest"  # from CDN unpkg.com
-
-# Setting for sphinx.ext.intersphinx
-# Useful for refenrece other projects, eg. :py:class:`zipfile.ZipFile`
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "pytorch": ("https://pytorch.org/docs/stable/", None),
-    "jb": ("https://jupyterbook.org/", None),
-    "myst": ("https://myst-parser.readthedocs.io/en/latest/", None),
-    "markdown_it": ("https://markdown-it-py.readthedocs.io/en/latest", None),
-    "nbclient": ("https://nbclient.readthedocs.io/en/latest", None),
-    "nbformat": ("https://nbformat.readthedocs.io/en/latest", None),
-    "sphinx": ("https://www.sphinx-doc.org/en/master", None),
-}
-intersphinx_cache_limit = 5
 
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`
