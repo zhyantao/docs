@@ -8,7 +8,7 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = u'Notebook' 
-copyright = u'2022, Yantao'
+copyright = u'2022, yantao.z@qq.com'
 #author = u'Yantao'
 version = 'v 1.2.0'
 
@@ -169,7 +169,7 @@ latex_documents = [
     (master_doc,                # source_start_file
     'Notebook.tex',             # target_name
     'Notebook Documentation',   # title
-    'Yantao',                   # author
+    'yantao.z@qq.com',          # author
     'manual'),                  # documentclass [howto, manual, or own class]
 ]
 
