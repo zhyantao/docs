@@ -16,7 +16,7 @@
 ^^^
 
 - 了解 UNIX 系统 [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
-- 实验 1：准备工作环境 [{ref}`webpage <microkernel_os_lab1>`]
+- 实验 1：理解启动引导流程 [{ref}`webpage <microkernel_os_lab1>`]
 
 ---
 :column: +right
@@ -28,8 +28,8 @@
 第 2 讲：计算机硬件架构和 x86 编程
 ^^^
 
-- 阅读《xv6 book》Appendix A 和 B
-- 阅读《xv6 source》相关代码
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》Appendix A 和 B
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-x86.html) 和 [幻灯片](https://kdocs.cn/l/cnhKtkx53jth)
 - 作业：跑通 xv6 代码 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-boot.html)]
 
@@ -42,7 +42,7 @@
 - 阅读《[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)》2.9、5.1 - 5.5 和 6.4
 - 阅读 [幻灯片](https://kdocs.cn/l/co2YLTVPzUy6) 和 [示例代码](https://pdos.csail.mit.edu/6.828/2018/lec/pointers.c)
 - 作业：脚本 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-shell.html)]
-- 实验 2：内存管理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab2/)]
+- 实验 2：实现内存管理功能 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab2/)]
 
 ---
 :column: +right
@@ -54,7 +54,7 @@
 第 4 讲：脚本和操作系统组织
 ^^^
 
-- 阅读《xv6 book》chapter 0
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 0
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-shell.txt)
 
 ---
@@ -63,8 +63,8 @@
 第 5 讲：隔离机制（用户态和内核态）
 ^^^
 
-- 阅读《xv6 book》chapter 1
-- 阅读《xv6 source》相关代码
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 1
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-internal.txt)
 - 作业：系统调用 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-syscall.html)]
 
@@ -78,7 +78,7 @@
 第 6 讲：虚拟内存（上）
 ^^^
 
-- 阅读《xv6 book》chapter 2
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 2
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vm.md) 和 [幻灯片](https://kdocs.cn/l/caJl0eqf1x83)
 - 阅读 [页表翻译机制](https://kdocs.cn/l/cea84466nzDf)
 - 作业：写内存的懒分配 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-zero-fill.html)]
@@ -104,8 +104,8 @@
 第 8 讲：系统调用，中断和异常
 ^^^
 
-- 阅读《xv6 book》chapter 3
-- 阅读《xv6 source》相关代码
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 3
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-interrupt.txt) 和 [手稿](https://kdocs.cn/l/cszWbTndffuP)
 - 作业：多线程编程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/lock.html)]
 
@@ -115,8 +115,8 @@
 第 9 讲：多处理器和锁
 ^^^
 
-- 阅读《xv6 book》chapter 4
-- 阅读《xv6 source》spinlock.c 和 skim mp.c
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 4
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》spinlock.c 和 skim mp.c
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt) 和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
 - 作业：xv6 锁机制的实现 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-lock.html)]
 - 实验 4：抢先式多任务处理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab4/)]
@@ -131,8 +131,8 @@
 第 10 讲：上下文切换
 ^^^
 
-- 阅读《xv6 book》chapter 5
-- 阅读《xv6 source》proc.c 和 swtch.S
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》proc.c 和 swtch.S
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-threads.txt)
 - 作业：超线程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-uthread.html)]
 
@@ -142,8 +142,8 @@
 第 11 讲：睡眠和唤醒
 ^^^
 
-- 阅读《xv6 book》chapter 5
-- 阅读《xv6 source》proc.c 相关代码
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》proc.c 相关代码
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-coordination.txt)
 - 作业：同步屏障 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/barrier.html)]
 
@@ -157,8 +157,8 @@
 第 12 讲：文件系统
 ^^^
 
-- 阅读《xv6 book》chapter 6
-- 阅读《xv6 source》bio.c、fs.c、sysfile.c 和 file.c
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》bio.c、fs.c、sysfile.c 和 file.c
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-fs.txt)
 - 作业：大文件 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-big-files.html)]
 
@@ -168,8 +168,8 @@
 第 13 讲：崩溃后恢复
 ^^^
 
-- 阅读《xv6 book》chapter 6
-- 阅读《xv6 source》log.c
+- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》log.c
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-crash.txt)
 - 作业：崩溃 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-new-log.html)]
 - 实验 5：文件系统，spawn 和 sh [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab5/)]
