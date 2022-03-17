@@ -97,7 +97,7 @@ String 上的操作
     "``regionMatches()``", "该 ``String`` 的索引偏移量，另一个 ``String`` 及其索引偏移量，要比较的长度。重载版本增加了忽略大小写功能", "返回 ``boolean`` 结果，以表明所比较区域是否相等"
     "``startsWith()``", "可能的起始 ``String``。重载版本在参数中增加了偏移量", "返回 ``boolean`` 结果，以表明该 ``String`` 是否以传入参数开始"
     "``endsWith()``", "该 ``String`` 可能的后缀 ``String`` ", "返回 ``boolean`` 结果，以表明此参数是否是该字符串的后缀"
-    "``indexOf()``，``lastIndexOf()``", "重载版本包括： ``char``， ``char`` 与起始索引， ``String``， ``String`` 与起始索引", "如果该 ``String`` 并不包含此参数，就返回-1；否则返回此参数在 ``String`` 中的起始索引。 ``lastIndexOf()`` 是从后往前搜索"
+    "``indexOf()``\ ，\ ``lastIndexOf()``", "重载版本包括： ``char``， ``char`` 与起始索引， ``String``， ``String`` 与起始索引", "如果该 ``String`` 并不包含此参数，就返回-1；否则返回此参数在 ``String`` 中的起始索引。 ``lastIndexOf()`` 是从后往前搜索"
     "``matches()``", "一个正则表达式", "返回 ``boolean`` 结果，以表明该 ``String`` 和给出的正则表达式是否匹配"
     "``split()``", "一个正则表达式。可选参数为需要拆分的最大数量", "按照正则表达式拆分 ``String``，返回一个结果数组"
     "``join()`` （Java8引入的）", "分隔符，待拼字符序列。用分隔符将字符序列拼接成一个新的 ``String`` ", "用分隔符拼接字符片段，产生一个新的 ``String`` "
@@ -108,7 +108,7 @@ String 上的操作
     "``replaceAll()``", "要替换的正则表达式，用来进行替换的 ``String`` ", "返回替换所有目标字符串后的 ``String`` 对象"
     "``toLowerCase()``，``toUpperCase()``", "", "将字符的大小写改变后，返回一个新的 ``String`` 对象。如果没有任何改变，则返回原始的 ``String`` 对象"
     "``trim()``", "", "将 ``String`` 两端的空白符删除后，返回一个新的 ``String`` 对象。如果没有任何改变，则返回原始的 ``String`` 对象"
-    "``valueOf()``（``static``）", "重载版本：``Object``；``char[]``；``char[]``，偏移量，与字符个数； ``boolean``； ``char``；``int``；``long``；``float``；``double``", "返回一个表示参数内容的 ``String`` "
+    "``valueOf()``\ （\ ``static``）", "重载版本：``Object``；``char[]``；``char[]``，偏移量，与字符个数； ``boolean``； ``char``；``int``；``long``；``float``；``double``", "返回一个表示参数内容的 ``String`` "
     "``intern()``", "", "为每个唯一的字符序列生成一个且仅生成一个 ``String`` 引用"
     "``format()``", "要格式化的字符串，要替换到格式化字符串的参数", "返回格式化结果 ``String``"
 
