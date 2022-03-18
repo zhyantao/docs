@@ -11,12 +11,8 @@
 2022 年 3 月 ~ 2022 年 5 月
 ^^^
 
-- 复习 {ref}`软件系统设计 <software_design_pattern>`、学习 {ref}`O/S 外核实现 <microkernel_os>`
-- 将 [ViT](https://kdocs.cn/l/cgM7U2aIHqFu) / [MoCo](https://kdocs.cn/l/ckKnIisu9leH)
-  / [MAE](https://kdocs.cn/l/cp5dQjaELkdk) / [Swin Transformer](https://kdocs.cn/l/cpnB5ukzuCwQ)，应用于
-  [飞桨论文复现挑战赛](https://aistudio.baidu.com/aistudio/competition/detail/114/0/leaderboard)
-- 刷题 [剑指 Offer](https://www.nowcoder.com/ta/coding-interviews)，复习
-  [计算机基础](http://www.cyc2018.xyz/)，做好笔记
+- [在线编程](https://www.nowcoder.com/ta/coding-interviews)（5 题/天）、[选择判断](https://www.nowcoder.com/exam/intelligent)（50 题/天）
+- {ref}`O/S 外核复现 <microkernel_os>`（3 节/周）
 
 ---
 :column: +right
@@ -28,7 +24,10 @@
 2022 年 6 月 ~ 2022 年 8 月
 ^^^
 
-- 投简历（<font color=#6c757d>修改完善中</font>）、找工作
+- 投简历（<font color=#6c757d>修改完善中</font>）、面试
+- 将 [ViT](https://kdocs.cn/l/cgM7U2aIHqFu) / [MoCo](https://kdocs.cn/l/ckKnIisu9leH)
+  / [MAE](https://kdocs.cn/l/cp5dQjaELkdk) / [Swin Transformer](https://kdocs.cn/l/cpnB5ukzuCwQ)，应用于
+  [飞桨论文复现挑战赛](https://aistudio.baidu.com/aistudio/competition/detail/114/0/leaderboard)
 
 ```
 
