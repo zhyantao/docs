@@ -81,10 +81,10 @@ String 上的操作
 ----------------
 
 .. csv-table::
-    :header: "方法", "参数，重载版本", "作用"
+    :header: "方法", "参数", "作用"
     :widths: 15,40,40
 
-    "构造方法", "默认版本， ``String``， ``StringBuilder``， ``StringBuffer``， ``char`` 数组， ``byte`` 数组", "创建 ``String`` 对象"
+    "构造方法", "``String``，\ ``StringBuilder``，\ ``StringBuffer``，\ ``char`` 数组，\ ``byte`` 数组", "创建 ``String`` 对象"
     "``length()``", "", "``String`` 中字符的个数"
     "``charAt()``", "``int`` 索引", "获取 ``String`` 中索引位置上的 ``char`` "
     "``getChars()``，``getBytes()``", "待复制部分的开始和结束索引，复制的目标数组，目标数组的开始索引", "复制 ``char`` 或 ``byte`` 到一个目标数组中"
@@ -93,22 +93,22 @@ String 上的操作
     "``compareTo()``，``compareToIgnoreCase()``", "与之进行比较的 ``String`` ", "按词典顺序比较 ``String`` 的内容，比较结果为负数、零或正数。注意，大小写不等价"
     "``contains()``", "要搜索的 ``CharSequence`` ", "如果该 ``String`` 对象包含参数的内容，则返回 ``true`` "
     "``contentEquals()``", "与之进行比较的 ``CharSequence`` 或 ``StringBuffer``", "如果该 ``String`` 对象与参数的内容完全一致，则返回 ``true`` "
-    "``isEmpty()``", "", "返回 ``boolean`` 结果，以表明 ``String`` 对象的长度是否为0"
-    "``regionMatches()``", "该 ``String`` 的索引偏移量，另一个 ``String`` 及其索引偏移量，要比较的长度。重载版本增加了忽略大小写功能", "返回 ``boolean`` 结果，以表明所比较区域是否相等"
-    "``startsWith()``", "可能的起始 ``String``。重载版本在参数中增加了偏移量", "返回 ``boolean`` 结果，以表明该 ``String`` 是否以传入参数开始"
+    "``isEmpty()``", "", "返回 ``boolean`` 结果，以表明 ``String`` 对象的长度是否为 ``0``"
+    "``regionMatches()``", "该 ``String`` 的索引偏移量，另一个 ``String`` 及其索引偏移量，要比较的长度", "返回 ``boolean`` 结果，以表明所比较区域是否相等"
+    "``startsWith()``", "子串，``String`` 起始的坐标", "返回 ``boolean`` 结果，以表明该 ``String`` 是否以该子串开始"
     "``endsWith()``", "该 ``String`` 可能的后缀 ``String`` ", "返回 ``boolean`` 结果，以表明此参数是否是该字符串的后缀"
-    "``indexOf()``\ ，\ ``lastIndexOf()``", "重载版本包括： ``char``， ``char`` 与起始索引， ``String``， ``String`` 与起始索引", "如果该 ``String`` 并不包含此参数，就返回-1；否则返回此参数在 ``String`` 中的起始索引。 ``lastIndexOf()`` 是从后往前搜索"
+    "``indexOf()``\ ，\ ``lastIndexOf()``", "``char``，\ ``char`` 与起始索引，\ ``String``，\ ``String`` 与起始索引", "如果该 ``String`` 并不包含此参数，就返回 ``-1``；否则返回此参数在 ``String`` 中的起始索引。 ``lastIndexOf()`` 是从后往前搜索"
     "``matches()``", "一个正则表达式", "返回 ``boolean`` 结果，以表明该 ``String`` 和给出的正则表达式是否匹配"
     "``split()``", "一个正则表达式。可选参数为需要拆分的最大数量", "按照正则表达式拆分 ``String``，返回一个结果数组"
-    "``join()`` （Java8引入的）", "分隔符，待拼字符序列。用分隔符将字符序列拼接成一个新的 ``String`` ", "用分隔符拼接字符片段，产生一个新的 ``String`` "
-    "``substring()`` （即 ``subSequence()`` ）", "重载版本：起始索引；起始索引+终止索引", "返回一个新的 ``String`` 对象，以包含参数指定的子串"
+    "``join()``", "分隔符，待拼字符序列。用分隔符将字符序列拼接成一个新的 ``String`` ", "用分隔符拼接字符片段，产生一个新的 ``String`` "
+    "``substring()``\ ，\ ``subSequence()``", "起始索引；起始索引 + 终止索引", "返回 [起始索引, 终止索引) 的子串"
     "``concat()``", "要连接的 ``String`` ", "返回一个新的 ``String`` 对象，内容为原始 ``String`` 连接上参数 ``String`` "
     "``replace()``", "要替换的字符，用来进行替换的新字符。也可以用一个 ``CharSequence`` 替换另一个 ``CharSequence`` ", "返回替换字符后的新 ``String`` 对象。如果没有替换发生，则返回原始的 ``String`` 对象"
     "``replaceFirst()``", "要替换的正则表达式，用来进行替换的 ``String`` ", "返回替换首个目标字符串后的 ``String`` 对象"
     "``replaceAll()``", "要替换的正则表达式，用来进行替换的 ``String`` ", "返回替换所有目标字符串后的 ``String`` 对象"
     "``toLowerCase()``，``toUpperCase()``", "", "将字符的大小写改变后，返回一个新的 ``String`` 对象。如果没有任何改变，则返回原始的 ``String`` 对象"
     "``trim()``", "", "将 ``String`` 两端的空白符删除后，返回一个新的 ``String`` 对象。如果没有任何改变，则返回原始的 ``String`` 对象"
-    "``valueOf()``\ （\ ``static``）", "重载版本：``Object``；``char[]``；``char[]``，偏移量，与字符个数； ``boolean``； ``char``；``int``；``long``；``float``；``double``", "返回一个表示参数内容的 ``String`` "
+    "（\ ``static``）\ ``valueOf()``", "``Object``；``char[]``；``char[]``，偏移量，与字符个数； ``boolean``； ``char``；``int``；``long``；``float``；``double``", "返回一个表示参数内容的 ``String`` "
     "``intern()``", "", "为每个唯一的字符序列生成一个且仅生成一个 ``String`` 引用"
     "``format()``", "要格式化的字符串，要替换到格式化字符串的参数", "返回格式化结果 ``String``"
 
@@ -393,7 +393,7 @@ Pattern 标记
     "``Pattern.CANON_EQ``","当且仅当两个字符的完全规范分解相匹配时，才认为它们是匹配的。例如，如果我们指定这个标记，表达式 ``\u003F`` 就会匹配字符串 ``?``。默认情况下，匹配不考虑规范的等价性"
     "``Pattern.CASE_INSENSITIVE(?i)``","默认情况下，大小写不敏感的匹配假定只有US-ASCII字符集中的字符才能进行。这个标记允许模式匹配不考虑大小写（大写或小写）。通过指定 ``UNICODE_CASE`` 标记及结合此标记。基于Unicode的大小写不敏感的匹配就可以开启了"
     "``Pattern.COMMENTS(?x)``","在这种模式下，空格符将被忽略掉，并且以 ``#`` 开始直到行末的注释也会被忽略掉。通过嵌入的标记表达式也可以开启Unix的行模式"
-    "``Pattern.DOTALL(?s)``","在dotall模式下，表达式 ``.`` 匹配所有字符，包括行终止符。默认情况下， ``.`` 不会匹配行终止符"
+    "``Pattern.DOTALL(?s)``","在dotall模式下，表达式 ``.`` 匹配所有字符，包括行终止符。默认情况下，\ ``.`` 不会匹配行终止符"
     "``Pattern.MULTILINE(?m)``","在多行模式下，表达式 ``^`` 和 ``$`` 分别匹配一行的开始和结束。 ``^`` 还匹配输入字符串的开始，而 ``$`` 还匹配输入字符串的结尾。默认情况下，这些表达式仅匹配输入的完整字符串的开始和结束"
     "``Pattern.UNICODE_CASE(?u)``","当指定这个标记，并且开启 ``CASE_INSENSITIVE`` 时，大小写不敏感的匹配将按照与Unicode标准相一致的方式进行。默认情况下，大小写不敏感的匹配假定只能在US-ASCII字符集中的字符才能进行"
     "``Pattern.UNIX_LINES(?d)``","在这种模式下，在 ``.`` 、 ``^`` 和 ``$`` 的行为中，只识别行终止符 ``\n``"
@@ -641,12 +641,12 @@ Java SE5 新增了 ``Scanner`` 类，它可以大大减轻扫描输入的工作�
 
 ``Scanner`` 还有相应的 ``hasNext`` 方法，用以判断下一个输入分词是否是所需的类型，如果是则返回 ``true``。
 
-``Scanner`` 没有用 ``try`` 区块捕获 ``IOException``，因为， ``Scanner`` 在输入结束时会自动抛出 ``IOException``，所以 ``Scanner`` 会把 ``IOException`` 吞掉。不过，通过 ``ioException()`` 方法，你可以找到最近发生的异常，因此，你可以在必要时检查它。
+``Scanner`` 没有用 ``try`` 区块捕获 ``IOException``，因为，\ ``Scanner`` 在输入结束时会自动抛出 ``IOException``，所以 ``Scanner`` 会把 ``IOException`` 吞掉。不过，通过 ``ioException()`` 方法，你可以找到最近发生的异常，因此，你可以在必要时检查它。
 
 Scanner 定界符
 ~~~~~~~~~~~~~~~
 
-默认情况下， ``Scanner`` 根据空白字符对输入进行分词，但是你可以用正则表达式指定自己所需的定界符。
+默认情况下，\ ``Scanner`` 根据空白字符对输入进行分词，但是你可以用正则表达式指定自己所需的定界符。
 
 .. code-block:: java
 
