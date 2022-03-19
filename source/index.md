@@ -1,35 +1,35 @@
-# 时间安排
+# 更新动态
 
 ```{panels}
-:container: timeline
-:column: col-6 p-0
-:card:
+:container: container-lg pb-3
+:column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
 
+panel1
 ---
-:column: +entry left
-
-2022 年 3 月 ~ 2022 年 5 月
-^^^
-
-- [在线编程](https://www.nowcoder.com/ta/coding-interviews)（5 题/天）、[选择判断](https://www.nowcoder.com/exam/intelligent)（50 题/天）
-- {ref}`O/S 外核复现 <microkernel_os>`（3 节/周）
-
+panel2
 ---
-:column: +right
+panel3
 ---
-:column: +left
----
-:column: +entry right
-
-2022 年 6 月 ~ 2022 年 8 月
-^^^
-
-- 投简历（<font color=#6c757d>修改完善中</font>）、面试
-- 将 [ViT](https://kdocs.cn/l/cgM7U2aIHqFu) / [MoCo](https://kdocs.cn/l/ckKnIisu9leH)
-  / [MAE](https://kdocs.cn/l/cp5dQjaELkdk) / [Swin Transformer](https://kdocs.cn/l/cpnB5ukzuCwQ)，应用于
-  [飞桨论文复现挑战赛](https://aistudio.baidu.com/aistudio/competition/detail/114/0/leaderboard)
-
+:column: col-lg-12 p-2
+panel4
 ```
+
+````{tabs}
+```{tab} Apples
+
+Apples are green, or sometimes red.
+```
+
+```{tab} Pears
+
+Pears are green.
+```
+
+```{tab} Oranges
+
+Oranges are orange.
+```
+````
 
 ```{toctree}
 :caption: 机器学习基础
