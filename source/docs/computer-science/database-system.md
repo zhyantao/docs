@@ -353,7 +353,7 @@ from `用户账户ID1`, `ID2`;
 ```{figure} ../../_static/images/db-design.*
 :name: db-design
 
-数据库设计流程
+数据库设计流程 [^cite_ref-7]
 ```
 
 一个设计良好的数据库，应该尽可能消除数据冗余，但是又不是完全严格地按照三大范式来约束。
