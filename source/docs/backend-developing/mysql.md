@@ -68,7 +68,7 @@ mysql -u root -p
 
 {numref}`mysql-arch` 展示了当在客户端发出一条指令后，MySQL 将会做出的一系列的响应 [^cite_ref-2]。
 
-```{figure} ../../_static/images/mysql-architecture.png
+```{figure} ../../_static/images/mysql-architecture.*
 :name: mysql-arch
 
 数据库管理系统结构
