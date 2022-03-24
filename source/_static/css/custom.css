@@ -4,6 +4,10 @@
     max-width: 100%;
 } */
 
+.rst-versions.rst-badge {
+    display: none;
+}
+
 .rst-versions.rst-badge.shift-up .rst-current-version .fa-book {
     line-height: 30px;
 }
