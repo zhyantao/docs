@@ -4,9 +4,11 @@
     max-width: 100%;
 } */
 
-.rst-versions.rst-badge {
+/* You can't hide RTD badge by modifing `custom.css`.
+ * So, the `display: none` option doesn't make any sense. */
+/* .rst-versions.rst-badge {
     display: none;
-}
+} */
 
 .rst-versions.rst-badge.shift-up .rst-current-version .fa-book {
     line-height: 30px;
