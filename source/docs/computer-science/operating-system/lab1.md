@@ -392,6 +392,10 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 [pointers.c](https://pdos.csail.mit.edu/6.828/2018/labs/lab1/pointers.c) 源代码，并运行。
 确保你能理解源代码输出。尤其是要确保你能理解第 1 行和第 6 行的指针地址来自哪里，第 2 行和第 4
 行的输出值是如何跳到那里的，为什么第 5 行的输出值看起来是错误的？
+
+除了上面指出的参考书外，我本人更推荐阅读
+*[C 指针详解](https://kdocs.cn/l/ciF7l7TJt4Wl)、[C 语言陷阱和缺陷](https://kdocs.cn/l/cp8WedXw5Mrk)、[高质量 C/C++ 编程](https://kdocs.cn/l/crepwkaIiC96)*
+这三本书，这些辅助资料为我们提供了需要注意的更多细节。
 ```
 
 我们现在更深一步地探索 C 语言部分的 bootloader，源代码是 `boot/main.c`。
