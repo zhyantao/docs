@@ -35,6 +35,12 @@ Git 全局设置
     git config --global user.name "nickname"
     git config --global user.email "user@example.org"
 
+.. note::
+
+    如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
+    因此，本地的提交邮箱应当与远程仓库保持一致。
+    通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
+
 创建 git 仓库
 --------------
 
