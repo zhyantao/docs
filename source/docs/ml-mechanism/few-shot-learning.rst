@@ -238,7 +238,7 @@ Fine Tuning
   `Policy-Based <https://kdocs.cn/l/cguX6PpD6QSb>`_/\ 
   `Actor-Critic Methods <https://kdocs.cn/l/cbNH5Phx6tnZ>`_/\ 
   `Model-Based <https://kdocs.cn/l/ceckin3M9Eat>`_
-- 王树森课程讲义 `深度强化学习.PDF <https://kdocs.cn/l/cmGWnLP1u5VF>`__
+- 王树森课程讲义 `深度强化学习.PDF <https://kdocs.cn/l/cld4jk5tHgp8>`__
 
 科普博文
 ~~~~~~~~
