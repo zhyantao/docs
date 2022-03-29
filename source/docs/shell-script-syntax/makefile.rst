@@ -32,8 +32,9 @@ Makefile
 
 .. rubric:: 参考资料
 
-1. 韦东山. 嵌入式Linux应用开发完全手册[M]. 人民邮电出版社, 2008.
-2. 跟我一起写Makefile. https://seisman.github.io/how-to-write-makefile/index.html
-3. 在Linux下使用CMake构建应用程序. https://www.ibm.com/developerworks/cn/linux/l-cn-cmake/
-4. CMake入门实战. https://www.hahack.com/codes/cmake/
-5. Makefile由浅入深--教程、干货. https://zhuanlan.zhihu.com/p/47390641
+1. 韦东山. 嵌入式 Linux 应用开发完全手册 [M]. 人民邮电出版社, 2008.
+2. 跟我一起写 Makefile. https://seisman.github.io/how-to-write-makefile/index.html
+3. 在 Linux 下使用 CMake 构建应用程序. https://www.ibm.com/developerworks/cn/linux/l-cn-cmake/
+4. CMake 入门实战. https://www.hahack.com/codes/cmake/
+5. Makefile 由浅入深--教程、干货. https://zhuanlan.zhihu.com/p/47390641
+6. Cmake 实战 https://kdocs.cn/l/ch0JlSoQjQdm
