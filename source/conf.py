@@ -43,6 +43,10 @@ html_theme_options = {
 }
 # html_sourcelink_suffix = '.rst'
 html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
+html_domain_indices = False
+html_use_index = True
+html_split_index = False
+html_show_sourcelink = True
 
 
 # -- General configuration ------------------------------------------------
