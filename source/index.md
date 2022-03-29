@@ -61,6 +61,7 @@ docs/computer-science/*
 
 docs/programming-lang/java/index
 docs/programming-lang/python/index
+docs/programming-lang/c/index
 docs/programming-lang/assembly/*
 ```
 
