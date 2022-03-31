@@ -300,6 +300,10 @@ The target architecture is assumed to be i8086
 如果你想理解更多计算机内存和 I/O 的工作细节，可以参考
 [[webpage](http://web.archive.org/web/20040404164813/members.iweb.net.au/~pstorr/pcbook/book2/book2.htm)]。
 但是现在你并不需要明白所有的细节，针对 BIOS 是如何启动的，有一个大致的思路就可以了。
+
+如果你并不熟悉应该如何具体操作，那么关于 GDB 的命令，我建议先阅读一下
+[gdb cheatsheet](https://kdocs.cn/l/cncEx5Kq8rkd)。
+如果你能够使用 Tmux 来分屏显示，那么可能效率会更高，详细的命令参考 [tmux cheatsheet](https://quickref.me/tmux)。
 ```
 
 完整的启动流程如下：
@@ -394,7 +398,9 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 行的输出值是如何跳到那里的，为什么第 5 行的输出值看起来是错误的？
 
 除了上面指出的参考书外，我本人更推荐阅读
-*[C 指针详解](https://kdocs.cn/l/ciF7l7TJt4Wl)、[C 语言陷阱和缺陷](https://kdocs.cn/l/cp8WedXw5Mrk)、[高质量 C/C++ 编程](https://kdocs.cn/l/crepwkaIiC96)*
+*[C 指针详解](https://kdocs.cn/l/ciF7l7TJt4Wl)*、
+*[C 语言陷阱和缺陷](https://kdocs.cn/l/cp8WedXw5Mrk)*、
+*[高质量 C/C++ 编程](https://kdocs.cn/l/crepwkaIiC96)*
 这三本书，这些辅助资料为我们提供了需要注意的更多细节。
 ```
 
