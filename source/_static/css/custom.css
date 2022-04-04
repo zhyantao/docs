@@ -53,3 +53,10 @@ div.timeline div.entry.right::after {
 main.bd-content #main-content div.section ul p, main.bd-content #main-content div.section ol p {
     text-align: left;
 }
+
+code {
+    background-color: rgba(175,184,193,0.2);
+    color: #24292f;
+    padding: .2em .4em;
+    border-radius: 6px;
+}
