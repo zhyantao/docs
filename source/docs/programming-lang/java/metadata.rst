@@ -16,18 +16,18 @@ Java 不支持无符号类型，所有的数值都是有符号的。
 .. csv-table::
     :header: "基本类型", "大小", "最小值", "最大值", "包装器类型", "默认值"
 
-    "boolean", "--", "--", "--", "Boolean", "false"
-    "char", "16-bit", "Unicode :math:`0`", "Unicode :math:`2^{16}-1`", "Character", "'\u0000' (null)"
-    "byte", "8-bit", ":math:`-128`", ":math:`+127`", "Byte", "(byte) 0"
-    "short", "16-bit", ":math:`-2^{15}`", ":math:`+2^{15}-1`", "Short", "(short) 0"
-    "int", "32-bit", ":math:`-2^{31}`", ":math:`+2^{31}-1`", "Integer", "0"
-    "long", "64-bit", ":math:`-2^{63}`", ":math:`+2^{63}-1`", "Long", "0L"
-    "float", "32-bit", "IEEE754", "IEEE754", "Float", "0.0f"
-    "double", "64-bit", "IEEE754", "IEEE754", "Double", "0.0d"
-    "void", "--", "--", "--", "Void", "--"
-    "BigInteger", "--", "--", "--", "--", "--"
-    "BigDecimal", "--", "--", "--", "--", "--"
-    "引用", "--", "--", "--", "--", "null"
+    "``boolean``", "--", "--", "--", "``Boolean``", "``false``"
+    "``char``", "16-bit", "Unicode :math:`0`", "Unicode :math:`2^{16}-1`", "``Character``", "'\u0000'(``null``)"
+    "``byte``", "8-bit", ":math:`-128`", ":math:`+127`", "``Byte``", "(``byte``)0"
+    "``short``", "16-bit", ":math:`-2^{15}`", ":math:`+2^{15}-1`", "``Short``", "(``short``)0"
+    "``int``", "32-bit", ":math:`-2^{31}`", ":math:`+2^{31}-1`", "``Integer``", "0"
+    "``long``", "64-bit", ":math:`-2^{63}`", ":math:`+2^{63}-1`", "``Long``", "0L"
+    "``float``", "32-bit", "IEEE754", "IEEE754", "``Float``", "0.0f"
+    "``double``", "64-bit", "IEEE754", "IEEE754", "``Double``", "0.0d"
+    "``void``", "--", "--", "--", "Void", "--"
+    "``BigInteger``", "--", "--", "--", "--", "--"
+    "``BigDecimal``", "--", "--", "--", "--", "--"
+    "引用", "--", "--", "--", "--", "``null``"
 
 以上就是基本类型的数据了，我们也可以通过使用 **直接常量表示法**，让编译器可以准确地知道要生成什么类型的数据。
 直接常量就是在数值的基础上加上 **前缀** 或 **后缀**。
