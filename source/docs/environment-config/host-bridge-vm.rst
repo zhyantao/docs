@@ -24,7 +24,7 @@ VM 和 HOST 之间的通信
 VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们在宿主机和虚拟机上分别创建两张虚拟网卡。
 在宿主机 Windows 上，这张虚拟网卡叫 VMware Network Adapter VMnet1 或 VMnet8。
 在虚拟机 Linux 上，这张虚拟网卡叫 VMnet1 或 VMnet8，少了前面几个单词。
-打开 VMware 依次选择 ``Edit`` >> ``Virtual Network Editor`` 就可以配置虚拟交换机了。
+打开 VMware 依次选择 ``Edit`` > ``Virtual Network Editor`` 就可以配置虚拟交换机了。
 
 虚拟交换机给我们提供了三种通信模式，VMnet0、VMnet1、VMnet8。
 如果想让双方通信，我们只需要选择其中的一种，比如最常用的 VMnet8（NAT 模式）。
@@ -49,22 +49,41 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
 
 1）Windows（基本都是鼠标操作）：
 
-``控制面板`` >> ``网络和 Internet`` >> ``网络和共享中心`` >> ``更改适配器设置`` >> ``VMnet8 属性``
->> ``IPv4 属性``。
+``控制面板`` > ``网络和 Internet`` > ``网络和共享中心`` > ``更改适配器设置`` > ``VMnet8 属性``
+> ``IPv4 属性``。
 
 2）虚拟机需要修改两个位置，一个是 VMare，另一个就是 Linux 操作系统： 
   
 （a）VMware（基本都是鼠标操作）：
 
-``Edit`` >> ``Virtual Network Editor`` >> ``选中 VMnet8`` >> ``Change Settings`` 
->> ``Subnet IP: 192.168.?.0`` >> ``NAT Settings`` >> ``GATEWAY IP: 192.168.?.1``
->> ``Apply`` >> ``OK``。
+``Edit`` > ``Virtual Network Editor`` > ``选中 VMnet8`` > ``Change Settings`` 
+> ``Subnet IP: 192.168.?.0`` > ``NAT Settings`` > ``GATEWAY IP: 192.168.?.1``
+> ``Apply`` > ``OK``。
 
 （b）Linux（修改完成后重启虚拟机）：
 
 .. code-block:: bash
 
-    # 针对 Ubuntu 20.04
+    # 针对 Ubuntu 20.04，参考 https://ubuntu.com/server/docs/network-configuration
+    # 若 netplan 文件夹下没有 .yaml 文件，则新建文件
+    # 经测试，netplan 文件夹下 .yaml 文件的数量等于这台主机拥有的 IP 地址的数量
+    touch /etc/netplan/99_config.yaml
+    # 编辑配置
+    network:
+      version: 2
+      renderer: networkd
+      ethernets:
+        ens33:
+          addresses:
+            - 192.168.?.xxx/24
+          gateway4: 192.168.?.1
+          nameservers:
+            search: [localdomain, localhost]
+            addresses: [114.114.114.114, 8.8.8.8]
+    # 刷新网络
+    sudo netplan apply
+
+    # 针对 Ubuntu 18.04
     vim /etc/sysconfig/network-scripts/ifcfg-*
     # 在文件中修改如下内容
     BOOTPROTO=static
