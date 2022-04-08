@@ -1,9 +1,9 @@
 sphinx
 myst-nb
+myst-parser
 jupytext
 sphinx-autobuild
 sphinx_book_theme
-sphinx_rtd_theme
 sphinx-tabs
 sphinx-panels
 sphinx-copybutton
@@ -12,4 +12,3 @@ sphinx-autodoc-typehints
 sphinxcontrib-mermaid
 sphinxcontrib-plantuml
 sphinxcontrib-bibtex
-docutils
