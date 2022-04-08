@@ -30,7 +30,7 @@ git add . && git commit -m "v1.0.0" && git pull && git push
 
 ## 撰写文档
 
-1、把需要发表的文档放在 `notebook/source/docs` 文件夹中（写作格式可以是 `Markdown` 或者 `reStructuredText` ）
+1、把需要发表的文档放在 `notebook/docs` 文件夹中（写作格式可以是 `Markdown` 或者 `reStructuredText` ）
 
 2、打开命令行，并切换到 `notebook` 目录下，输入 `make html`
 
@@ -40,4 +40,4 @@ git add . && git commit -m "v1.0.0" && git pull && git push
 
 ## 注意事项
 
-在 `notebook/source/docs` 下的添加新文章后需要在 `notebook/source/index.md` 中添加一条记录。
+在 `notebook/docs` 下的添加新文章后需要在 `notebook/docs/index.md` 中添加一条记录。
