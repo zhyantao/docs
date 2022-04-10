@@ -50,10 +50,11 @@ div.timeline div.entry.right::after {
     left: -.5em;
 }
 
-main.bd-content #main-content div.section ul p, main.bd-content #main-content div.section ol p {
+.card-body {
     text-align: left;
 }
 
+/* code block css */
 code {
     background-color: #e9ecef;
     color: #24292f;
