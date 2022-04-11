@@ -1,35 +1,28 @@
 # 更新动态
 
-```{panels}
-:container: container-lg pb-3
-:column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+``````{tabs}
 
-panel1
----
-panel2
----
-panel3
----
-:column: col-lg-12 p-2
-panel4
-```
-
-````{tabs}
-```{tab} Apples
-
-Apples are green, or sometimes red.
-```
-
-```{tab} Pears
-
-Pears are green.
-```
-
-```{tab} Oranges
-
-Oranges are orange.
+````{margin}
+```{hint}
+👈 部分统计数据
 ```
 ````
+
+````{tab} Github
+
+```{raw} html
+
+<img src="https://activity-graph.herokuapp.com/graph?username=zhyantao&hide_border=true&theme=github-light" />
+
+<!-- <img src="https://github-readme-stats.vercel.app/api?username=zhyantao&show_icons=true&hide_border=true" /> -->
+
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=zhyantao&hide_border=true&layout=compact&langs_count=8" />
+
+```
+
+````
+
+``````
 
 ```{toctree}
 :caption: 机器学习基础
