@@ -869,21 +869,21 @@ $$
   - 不可重复读
   - 幻读
 * - 读未提交
-  - *允许*
-  - *允许*
-  - *允许*
+  - $\checkmark$
+  - $\checkmark$
+  - $\checkmark$
 * - 读已提交
-  - 不允许
-  - *允许*
-  - *允许*
+  - $\times$
+  - $\checkmark$
+  - $\checkmark$
 * - 可重复读
-  - 不允许
-  - 不允许
-  - *允许*
+  - $\times$
+  - $\times$
+  - $\checkmark$
 * - 可串行化
-  - 不允许
-  - 不允许
-  - 不允许
+  - $\times$
+  - $\times$
+  - $\times$
 ```
 
 注：每个等级的协议都可防止丢失修改。
@@ -895,11 +895,15 @@ $$
 
 ## 数据库转储
 
-如果我们在 Windows 上安装了 MySQL 数据库的话，在 ``D:\Program Files\mysql-5.7.37-winx64\data``
-目录下，如果使用 MyISM 引擎，应该是可以找见 ``.frm``\ （表结构），``.MYD``\ （数据文件），\
-``.MYI``\ （索引文件）文件。如果使用 InnoDB 引擎，应该可以找见 ``.frm`` 和 ``ibdata`` 文件夹。
+如果已经在 Windows 上安装了 MySQL 数据库，在安装路径 `D:\Program Files\mysql-5.7.37-winx64`
+的 `data` 文件夹下：
 
-因此，其中一种转储方式就是直接复制这些文件。另一种方式就是使用 ``mysqldump`` 命令。
+- 如果使用 MyISM 引擎，可以找见 `.frm`（表结构）`.MYD`（数据文件）`.MYI`（索引文件）文件。
+- 如果使用 InnoDB 引擎，可以找见 `.frm` 和 `ibdata` 文件夹。
+
+因此，其中一种转储方式就是直接复制这些文件，而另一种方式就是使用 ``mysqldump`` 命令。
+
+
 
 ---
 
