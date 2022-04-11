@@ -2,6 +2,8 @@
 
 (latex-basic)=
 
+## 基本介绍
+
 学习使用 $\LaTeX$ 书写文档，应该做到如下两点：
 
 - 本文将对常用的 $\LaTeX$ 语法做简单介绍，之后就可以学习[别人精心制作的模板](https://cn.overleaf.com/latex/templates)了；

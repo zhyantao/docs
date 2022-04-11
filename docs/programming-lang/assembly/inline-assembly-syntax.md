@@ -2,6 +2,8 @@
 
 (inline_assembly_syntax)=
 
+## 基本介绍
+
 **内联汇编** 是指在高级语言（如 C 语言）中混入汇编语法。本文以
 [Brennan's Guide to Inline Assembly](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html)
 为基础，进行相关整理，方便后续查阅。
