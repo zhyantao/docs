@@ -116,7 +116,7 @@
 ^^^
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 4
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》spinlock.c 和 skim mp.c
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`spinlock.c` 略读 `mp.c`
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt)
   和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
 - 作业：xv6 锁机制的实现 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-lock.html)]
