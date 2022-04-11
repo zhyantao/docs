@@ -1,5 +1,6 @@
-(latex-basic)=
 # LaTeX
+
+(latex-basic)=
 
 学习使用 $\LaTeX$ 书写文档，应该做到如下两点：
 
@@ -503,7 +504,7 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
         \caption{Example table}
         \centering
         \begin{tabular}{llr}
-            \toprule	%\usepackage{booktabs} % 给表格划线时需要用到
+            \toprule %\usepackage{booktabs} % 给表格划线时需要用到
             \multicolumn{2}{c}{Name} \\
             \cmidrule(r){1-2}
             First Name & Last Name & Grade \\

@@ -19,6 +19,8 @@ Windows PE 或 WinPE，全称 Windows 预先安装环境，是 Microsoft Windows
 3. （备份）用 U 盘启动，进入可视化界面，使用 Ghost 封装系统；
 4. （恢复）用 U 盘启动，进入可视化界面，使用 Ghost 恢复系统。
 
+(windows_file_system)=
+
 ## 文件系统
 
 Windows 操作系统支持 NTFS、FAT32、exFAT 三种不同文件系统。

@@ -3,7 +3,7 @@
 
 本文提到的各种类型的源（比如 pip，npm，apt，yum），都可以通过国内一些公司或高校的镜像站中找到。比如常用的镜像站有：
 
-- 阿里巴巴官方镜像站：<https://developer.aliyun.com/mirror/> 
+- 阿里巴巴官方镜像站：<https://developer.aliyun.com/mirror/>
 - 腾讯软件源：<https://mirrors.cloud.tencent.com/>
 - 网易开源镜像站：<http://uni.mirrors.163.com/>
 - 清华大学开源软件镜像站：<https://mirrors.tuna.tsinghua.edu.cn/>
@@ -13,7 +13,6 @@
 ## pip 源
 
 镜像站中的 PyPI 即为 pip 源。pip 是 Python 包管理工具，该工具提供了对 Python 包的查找、下载、安装、卸载的功能。
-
 
 （1）**永久使用国内镜像源**：Windows 用户修改文件 `C:\Users\%USERNAME%\pip\pip.ini`（如果没有则新建），
 Linux 用户修改文件 `~/.config/pip/pip.conf`（如果没有则新建），然后在相关文件中添加如下内容。
@@ -119,7 +118,6 @@ npm --registry http://registry.cnpmjs.org info express
 
 1. 打开配置文件：`~/.npmrc`
 2. 写入配置：`registry=https://registry.npm.taobao.org`
-
 
 ## 制作本地源
 

@@ -1,5 +1,6 @@
-(software_design_pattern)=
 # 软件系统设计
+
+(software_design_pattern)=
 
 程序设计并不等同与软件设计，程序写完了不等于软件就写完了 [^cite_ref-1]。
 
