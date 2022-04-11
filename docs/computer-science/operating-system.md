@@ -1,7 +1,5 @@
 # 微内核操作系统
 
-(microkernel_os)=
-
 学习路线方案的制定参考了 MIT6.828 schedule [^cite_ref-1]，课程讲义为《[xv6 book](https://kdocs.cn/l/caQbBFQ1ener)
 | [中文版](https://xv6-chinese.readthedocs.io)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
 
@@ -107,7 +105,8 @@
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 3
 - 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-interrupt.txt) 和 [手稿](https://kdocs.cn/l/cszWbTndffuP)
+- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-interrupt.txt)
+  和 [手稿](https://kdocs.cn/l/cszWbTndffuP)
 - 作业：多线程编程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/lock.html)]
 
 ---
@@ -118,7 +117,8 @@
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 4
 - 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》spinlock.c 和 skim mp.c
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt) 和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
+- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt)
+  和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
 - 作业：xv6 锁机制的实现 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-lock.html)]
 - 实验 4：抢先式多任务处理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab4/)]
 
@@ -133,7 +133,7 @@
 ^^^
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》proc.c 和 swtch.S
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`proc.c` 和 `swtch.S`
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-threads.txt)
 - 作业：超线程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-uthread.html)]
 
@@ -144,7 +144,7 @@
 ^^^
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》proc.c 相关代码
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`proc.c` 相关代码
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-coordination.txt)
 - 作业：同步屏障 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/barrier.html)]
 
@@ -159,7 +159,7 @@
 ^^^
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》bio.c、fs.c、sysfile.c 和 file.c
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`bio.c`、`fs.c`、`sysfile.c` 和 `file.c`
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-fs.txt)
 - 作业：大文件 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-big-files.html)]
 
@@ -170,7 +170,7 @@
 ^^^
 
 - 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》log.c
+- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`log.c`
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-crash.txt)
 - 作业：崩溃 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-new-log.html)]
 - 实验 5：文件系统，spawn 和 sh [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab5/)]
@@ -210,7 +210,8 @@
 第 16 讲：操作系统组织
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-organization.txt) 和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/engler95exokernel.pdf)
+- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-organization.txt)
+  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/engler95exokernel.pdf)
 
 ---
 :column: +entry left
@@ -218,7 +219,8 @@
 第 17 讲：内核和高级语言
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-biscuit.txt) 和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/biscuit.pdf)
+- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-biscuit.txt)
+  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/biscuit.pdf)
 
 ---
 :column: +right
