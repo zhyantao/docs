@@ -62,6 +62,20 @@ for (let i; i < 10; i++) {
 
 引入模块语法，一个很重要的原因是 ES5 中没有作用域的概念，导致变量很容易被污染。
 
+基本写法：
+
+```{code-block} javascript
+const module1 = new Object({
+    _count : 0,
+    m1 : function (){
+        //...
+    },
+    m2 : function (){
+        //...
+    }
+});
+```
+
 关于区块语法，需要进一步学习和补充，参考 <https://zh.javascript.info/modules-intro>。
 
 ## 数据类型
@@ -224,22 +238,6 @@ ES5 声明类的模板：`const V = function() {this.a = 100;}` 跟普通函数�
 用 `prototype` 属性定义的方法或属性，将被子类共享。
 
 将 `prototype.constructor` 指向自己以声明默认构造函数。
-
-### 模块
-
-基本写法：
-
-```{code-block} javascript
-const module1 = new Object({
-    _count : 0,
-    m1 : function (){
-        //...
-    },
-    m2 : function (){
-        //...
-    }
-});
-```
 
 ### Object 对象的相关方法
 

@@ -1,5 +1,6 @@
-(inline_assembly_syntax)=
 # 内联汇编语法
+
+(inline_assembly_syntax)=
 
 **内联汇编** 是指在高级语言（如 C 语言）中混入汇编语法。本文以
 [Brennan's Guide to Inline Assembly](http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html)
