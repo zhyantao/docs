@@ -40,7 +40,6 @@ ml-mechanism/*
 :hidden:
 
 computer-science/*
-操作系统基础 <https://mubu.com/explore/4qZNU8cByak>
 计算机网络基础 <https://mubu.com/explore/6gwkJSha2ak>
 设计模式 <https://www.liaoxuefeng.com/wiki/1252599548343744/1264742167474528>
 ```
