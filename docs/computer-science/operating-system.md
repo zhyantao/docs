@@ -1,4 +1,4 @@
-# 微内核操作系统
+# 操作系统基础
 
 学习路线方案的制定参考了 MIT6.828 schedule [^cite_ref-1]，课程讲义为《[xv6 book](https://kdocs.cn/l/caQbBFQ1ener)
 | [中文版](https://xv6-chinese.readthedocs.io)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
@@ -189,7 +189,7 @@
 
 - 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-journal.txt) 和
   [论文](https://pdos.csail.mit.edu/6.828/2018/homework/journal-ext2fs.html)
-- 作业：mmap() [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/mmap.html)]
+- 作业：`mmap()` [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/mmap.html)]
 
 ---
 :column: +entry left
