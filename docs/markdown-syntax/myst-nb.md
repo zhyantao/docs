@@ -513,6 +513,50 @@
     a block break
 ``````
 
+## 面包板（Pannels）
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ````md
+    ```{panels}
+    :container: container-lg pb-3
+    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+
+    panel1
+    ---
+    panel2
+    ---
+    panel3
+    ---
+    :column: col-lg-12 p-2
+    panel4
+    ```
+    ````
+  - ```{panels}
+    :container: container-lg pb-3
+    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+
+    panel1
+    ---
+    panel2
+    ---
+    panel3
+    ---
+    :column: col-lg-12 p-2
+    panel4
+    ```
+``````
+
+- `container` 用于支持 Bootstrap 网格系统正常运作。
+- `pb-2` 是 Bootstra 4 支持的简写模式，表示 `{padding-bottom: 0.5rem !important}`。
+- Bootstrap 网格系统最多可在页面上显示 12 列。
+- `col-lg-*`、`col-md-*` 等均用来指定一列的宽度。
+- `lg`、`md`、`sm`、`xs` 等用来响应不同的屏幕大小。
+
 ## 交叉引用（Cross reference）
 
 ### 引用标题（Headers）
