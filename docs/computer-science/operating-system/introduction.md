@@ -244,11 +244,34 @@ $$
 - 优先等待：对请求访问的进程，应保证能在有限时间内进入临界区（保证不会饥饿）
 - 让权等待：当进程不能进入临界区时，应立即释放处理机，防止进程忙等待
 
+实现临界区的基本方法：
+
+一、软件实现
+
+1、单标志法
+
+````{panels}
+:columns: 
+
+```{code-block} c
+int turn = 0;
+// P0 进程
+while (turn != 0); // 进入区
+critical section;  // 临界区
+turn = 1;          // 退出区
+remainder section; // 剩余区
+```
+---
+```{code-block} c
+// P1 进程 
+while (turn != 1); // 进入区
+critical section;  // 临界区
+turn = 0;          // 退出区
+remainder section; // 剩余区
+```
+````
+
 ## 内存管理
-
-### 内存管理的概念
-
-### 内存空间的扩充
 
 ## 文件管理
 
