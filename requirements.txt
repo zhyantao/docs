@@ -1,4 +1,5 @@
 sphinx
+matplotlib
 myst-nb
 myst-parser
 jupytext
