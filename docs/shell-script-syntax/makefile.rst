@@ -15,17 +15,17 @@ Makefile
     # $@ 代表 target
     # $^ 代表 dependencies
     test: $(objs)
-    gcc -o $@ $^
+        gcc -o $@ $^
 
     # 生成中目标文件的中间文件（dependencies）
     # 即 .o 文件的生成规则
     # $< 表示匹配到的第一个依赖文件名
     # % 是通配符，它和字符串中任意个数的字符相匹配
     %.o: %.c
-    gcc -c -o $@ $<
+        gcc -c -o $@ $<
 
     clean:
-    rm -f test *.o
+        rm -f test *.o
  
 还有其他的语法比如 ``.PHONY`` 可以参考下面的参考文献中的 **跟我一起写Makefile**
 
