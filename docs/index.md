@@ -57,57 +57,15 @@ programming-lang/assembly/*
 ```
 
 ```{toctree}
-:caption: 后端开发基础
+:caption: 脚本/标记语言/框架
 :titlesonly:
 :glob:
 :hidden:
 
-backend-developing/*
-```
-
-```{toctree}
-:caption: 前端开发基础
-:titlesonly:
-:glob:
-:hidden:
-
-frontend-developing/*
-```
-
-```{toctree}
-:caption: 机器学习框架
-:titlesonly:
-:glob:
-:hidden:
-
-ml-framework/*
-```
-
-```{toctree}
-:caption: 命令行工具
-:titlesonly:
-:glob:
-:hidden:
-
-shell-script-syntax/*
-```
-
-```{toctree}
-:caption: 标记语言
-:titlesonly:
-:glob:
-:hidden:
-
-markdown-syntax/*
-```
-
-```{toctree}
-:caption: 环境部署
-:titlesonly:
-:glob:
-:hidden:
-
-environment-config/*
+shell-script-syntax/index
+markdown-syntax/index
+ml-framework/index
+frontend-developing/index
 ```
 
 ```{toctree}
@@ -116,5 +74,6 @@ environment-config/*
 :glob:
 :hidden:
 
-appendix/*
+appendix/index
+environment-config/index
 ```

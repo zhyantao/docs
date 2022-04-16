@@ -903,6 +903,14 @@ $$
 
 因此，其中一种转储方式就是直接复制这些文件，而另一种方式就是使用 ``mysqldump`` 命令。
 
+```{toctree}
+:titlesonly:
+:glob:
+:hidden:
+
+database-system/*
+```
+
 ---
 
 [^cite_ref-1]: 关系数据库是什么 | Oracle 中国 <https://www.oracle.com/cn/database/what-is-a-relational-database/>
