@@ -202,19 +202,16 @@ Git 全局设置
     $ git push origin --delete <branch>
     $ git branch -dr <remote/branch>
 
-.. admonition:: Git 分支命名规范
-    :class: dropdown
+.. csv-table::
+    :header: "分支", "命名", "说明"
+    :widths: 15, 15, 40
 
-    .. csv-table::
-        :header: "分支", "命名", "说明"
-        :widths: 15, 15, 40
-
-        "主分支", "master", "主分支是提供给用户使用的正式版本"
-        "开发分支", "dev", "开发分支永远是功能\ **最新最全**\ 的分支"
-        "功能分支", "feature-*", "新功能分支开发完成后\ **需删除**"
-        "发布版本", "release-*", "发布定期要上线的功能"
-        "发布版本修复分支",	"bugfix-release-*", "修复测试 Bug"
-        "紧急修复分支", "bugfix-master-*", "紧急修复线上代码的 Bug"
+    "主分支", "master", "主分支是提供给用户使用的正式版本"
+    "开发分支", "dev", "开发分支永远是功能\ **最新最全**\ 的分支"
+    "功能分支", "feature-*", "新功能分支开发完成后\ **需删除**"
+    "发布版本", "release-*", "发布定期要上线的功能"
+    "发布版本修复分支",	"bugfix-release-*", "修复测试 Bug"
+    "紧急修复分支", "bugfix-master-*", "紧急修复线上代码的 Bug"
 
 
 标签
