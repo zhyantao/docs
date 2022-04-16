@@ -85,7 +85,7 @@ QEMU 进行瘦身，编译安装指定的架构，若你不熟悉自己的 CPU �
 *[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)* [^cite_ref-5]
 用的是支持 Intel 语法的 Netwide Assembler (NASM)，而 6.828 用的是支持的是 AT&T
 语法的 GNU Assembler。这意味着要学会这这两种语法的相互转换，因此 6.828 强烈建议我们阅读
-{ref}`inline_assembly_syntax`。
+[内联汇编语法](inline_assembly_syntax)。
 
 除了 *PC 汇编语言* 这本书，还有两个参考手册供我们查阅，一个是
 [简洁版的 i386 编程手册](https://pdos.csail.mit.edu/6.828/2018/readings/i386/toc.htm)，另一个是
@@ -345,7 +345,7 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 1）bootloader 将处理器从实模式转换为 32 位保护模式。因为只有在保护模式下，软件才能访问超过 1MB
 的所有内存空间。现在，你只需要理解在保护模式下逻辑地址 `[CS:IP]`
 翻译为物理地址的过程是与实模式下的翻译过程是不相同的，并且翻译完成后 IP 是 32 位 而不是 16 位。
-关于保护模式的具体细节参考 [[webpage](https://pdos.csail.mit.edu/6.828/2018/readings/pcasm-book.pdf)]
+关于保护模式的具体细节参考 *[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)*
 的 1.2.7 节和 1.2.8 节。如果遇到不会的指令，可以复习 {ref}`asm_syntax` 中提到的超链接。
 
 2）bootloader 通过 x86 提供的特殊的 I/O 指令直接访问 IDE 磁盘设备寄存器从磁盘中读取内核。
