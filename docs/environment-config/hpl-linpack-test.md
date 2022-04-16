@@ -34,7 +34,7 @@ sudo apt install gfortran gcc
 - 下载：`wget http://www.mpich.org/static/downloads/3.2.1/mpich-3.2.1.tar.gz`
 - 解压安装包：`tar xzf mpich-3.2.1.tar.gz`
 - 切换到主目录：`cd mpich-3.2.1`
-- 设置安装路径：`./configure --disable-cxx`
+- 设置安装路径：`./configure [--disable-cxx]`
 - 编译：`make`
 - 安装：`sudo make install`
 - 查看前面工作是否成功：`which mpicc && which mpiexec`
@@ -83,6 +83,24 @@ sudo apt install gfortran gcc
 
 - 编译：`make arch=Linux_PII_CBLAS`
 - 运行测试：`cd bin/Linux_PII_CBLAS && mpirun -np 4 ./xhpl > HPL-Benchmark.txt`
+
+## 配置 HPCG 环境
+
+- 切换目录：`cd ~/prepare`
+- 下载 HPCG 源代码：`git clone https://github.com/hpcg-benchmark/hpcg.git`
+- `cd` 到 `setup`：`cd hpcg/setup`
+- 修改 `Make.Linux_MPI`：`vim Make.Linux_MPI`：
+
+    ```{code-block} bash
+    MPdir        = /usr/local
+
+    CXX          = /usr/local/bin/mpicxx
+    ```
+
+- 创建 `build` 文件夹：`mkdir build && cd build`
+- 设置安装环境：`../../configure Linux_MPI`
+- 开始安装：`make`
+- 运行测试：`cd bin && mpirun -np 8 ./xhpcg`
 
 ---
 
