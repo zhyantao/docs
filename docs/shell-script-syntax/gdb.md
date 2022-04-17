@@ -25,7 +25,7 @@ Ctrl + b, %
 # 关闭当前分屏
 Ctrl + b, x
 
-# 切换分屏
+# 切换分屏（按住 Ctrl + b 不放，再按方向键，可以调整窗口大小）
 Ctrl + b, 方向键
 ```
 
@@ -116,11 +116,11 @@ layout src
 # 已处于 TUI 模式，展示汇编代码
 layout asm
 
-# 已处于 TUI 模式，复制源代码或汇编代码窗口
+# 已处于 TUI 模式，同时展示源代码和汇编代码
 layout split
 
 # 已处于 TUI 模式，在展示源代码的同时，展示寄存器中的值
-layout regs
+layout reg
 
 # 已处于 TUI 模式，聚焦于下一个子窗口
 focus next
@@ -135,7 +135,7 @@ focus src
 focus asm
 
 # 已处于 TUI 模式，聚焦于寄存器子窗口
-focus regs
+focus reg
 
 # 已处于 TUI 模式，聚焦于命令行子窗口
 focus cmd
@@ -152,7 +152,7 @@ Ctrl + l
 ```{code-block} bash
 # 打印表达式的值
 [p]rint <表达式>
-    表达式中可以包含变量名、内存地址、寄存器名、常量
+    表达式中可以包含变量名、*内存地址、$寄存器名、常量
 
 # 打印表达式的值（16 进制表示）
 [p]rint/x <表达式>
@@ -171,11 +171,12 @@ disassemble <函数名>
 
 如果在调试过程中修改了源代码，在下次运行 GDB 时使用 `run (args)` 可以重新定位到上次离开的地方。
 
-如果你想查看下一条即将被执行的汇编指令，使用命令 `display/I %pc`。
+使用 `Ctrl + z` 可以暂时将 GDB 挂起，然后使用命令 `jobs` 查看后台进程，使用 `fg <编号>` 恢复。
 
-使用 `Ctrl + z` 可以暂时将 GDB 挂起，然后使用命令 `[c]ontinue` 恢复。
+100 个 GDB 小技巧 [^cite_ref-3]。
 
 ---
 
 [^cite_ref-1]: <https://quickref.me/tmux>
 [^cite_ref-2]: <https://www.kdocs.cn/l/cncEx5Kq8rkd>
+[^cite_ref-3]: <https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html>

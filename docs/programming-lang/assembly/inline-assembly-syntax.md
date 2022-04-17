@@ -25,7 +25,7 @@ Intel：`eax`
 
 ### src/dest 的书写顺序
 
-AT&T 语法始终将 src 放在左侧，dest 放在右侧。
+AT&T 语法始终将 `src` 放在左侧，`dest` 放在右侧。
 
 将 `eax` 寄存器中的值赋值给 `ebx`。
 

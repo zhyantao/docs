@@ -79,10 +79,10 @@ QEMU 进行瘦身，编译安装指定的架构，若你不熟悉自己的 CPU �
 
 ## 汇编语法
 
-汇编语法并不是本门课的重点，但是在后续课程中，你要能看懂别人写的汇编，因此你需要自学汇编语言，
-6.828 给我们推荐了一些资料。
+汇编语法并不是本门课的重点，但是在后续课程中，你要能看懂别人写的汇编。
+因此，在你继续往下学习之前，应当先了解一些常用的 [汇编指令](assembly_instructions)。
 
-*[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)* [^cite_ref-5]
+6.828 给我们推荐了一些资料：*[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)* [^cite_ref-5]
 用的是支持 Intel 语法的 Netwide Assembler (NASM)，而 6.828 用的是支持的是 AT&T
 语法的 GNU Assembler。这意味着要学会这这两种语法的相互转换，因此 6.828 强烈建议我们阅读
 [内联汇编语法](inline_assembly_syntax)。
@@ -367,7 +367,8 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 `x/Ni ADDR` 可以用来查看从地址 `ADDR` 算起，之后 `N` 个内存单元中的值。
 
 ```{admonition} 练习 3
-根据 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labguide.html)] 学习 GDB
+参考 [GDB notes](gdb_tips) 及
+[Debugging tips](https://pdos.csail.mit.edu/6.828/2018/labguide.html) 学习 GDB
 调试技巧，并完成下面几个小任务。
 
 - 在 `0x7c00` 设置断点（这是启动扇区被加载的位置），继续执行直到碰到下一个断点；
