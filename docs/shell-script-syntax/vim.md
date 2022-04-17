@@ -34,6 +34,8 @@ yy          # 复制当前行
 
 p           # 在光标所在位置向下开辟一行，粘贴
 P           # 在光标所在位置向上开辟一行，粘贴
+
+set paste   # 防止粘贴时，格式错乱
 ```
 
 ## 剪切、删除
@@ -92,4 +94,14 @@ gg=G        # 整理代码，使其符合标准格式
 ```{code-block} bash
 Ctrl + S    # 冻结窗口
 Ctrl + q    # 解冻窗口
+```
+
+## 记住上次打开的位置
+
+```{code-block} bash
+" Uncomment the following to have bash jump to the last position when       
+" reopening a file                                                         
+if has("autocmd")                                                          
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif                                                        
+endif 
 ```
