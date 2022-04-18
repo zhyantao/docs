@@ -13,6 +13,9 @@
 类似地，还有 `jmp` 和 `ljmp`，其中带 `ljmp` 能够跳转到比 `jmp` 更远的地方，并且，为了存储
 `ljmp` 需要占用的内存空间更大。
 
+在指令之后的部分，`$0x33cc` 表示一个数字 `0x33cc`，不加美元符号表示一个地址，`%ax` 表示 `ax`
+寄存器。（但是为什么端口输入输出也是用 `$` 符号呢？比如 `out %ax,$0x64`）
+
 (assembly_instructions)=
 
 ## 传送指令
@@ -115,9 +118,19 @@
 * - `test $0x1,%al`
   - 测试 `%al` 寄存器的位 0 是否置 1
   - `0x1 & %al`
+* - `repnz ...`
+  - 如果 `ZF=0` 则重复执行串操作 `...`
+  - `while()`
 ```
 
 ## 控制指令
+
+```{margin}
+串操作的含义就是连续的一串相同的操作，通常作用在连续的内存上。
+比如把一串字符串常量送入到某个连续地址处，此时如果采用串操作的话，每传一个字节的数据，
+串操作可以自动的把源操作数和目的操作数的地址加或减 1。
+那么下一个操作就直接作用在下一个空间了 [^cite_ref-4]。
+```
 
 ```{list-table}
 :header-rows: 1
@@ -133,7 +146,7 @@
   - 关中断指令
   - 保证操作的原子性
 * - `cld`
-  - `DF=0`，方向标志位 `DF` 决定了地址指针的生长方向
+  - `DF=0`，方向标志位 `DF` 决定了地址指针的生长方向（串操作）
   - `es:di` 递增或递减
 * - `out %ax,$0x70`
   - 把 `%ax` 的值写入端口 `$0x70` 连接的外部设备 [^cite_ref-1] 中
@@ -159,3 +172,4 @@
 [^cite_ref-1]: <https://bochs.sourceforge.io/techspec/PORTS.LST>
 [^cite_ref-2]: <http://wiki.osdev.org/Interrupt_Descriptor_Table>
 [^cite_ref-3]: <http://adam8157.info/blog/2011/01/interesting-opcode-lea>
+[^cite_ref-4]: <https://www.cnblogs.com/fatsheep9146/p/5115086.html>
