@@ -371,9 +371,9 @@ bootloader 包括一个汇编源文件 `boot/boot.S` 和一个 C 源文件 `boot
 [Debugging tips](https://pdos.csail.mit.edu/6.828/2018/labguide.html) 学习 GDB
 调试技巧，并完成下面几个小任务。
 
-- 在 `0x7c00` 设置断点（这是启动扇区被加载的位置），继续执行直到碰到下一个断点；
-- 完整追踪调试 `boot/boot.S`，参考 `obj/boot/boot.asm` 来明确程序现在运行到哪里了；
-- 利用命令 `x/i` 反汇编 bootloader，然后分别与源代码和反汇编代码 `obj/boot/boot.asm` 作对比；
+- 在 `0x7c00` 设置断点（这是启动扇区被加载的位置），使用命令 `c` 运行到这里；
+- 参考 `obj/boot/boot.asm` 完整追踪调试 `boot/boot.S` 理解操作系统是如何初始化的；
+- 使用反汇编命令 `x/i <内存地址>` 与源代码和反汇编代码 `obj/boot/boot.asm` 对比；
 - 单步调试 `boot/main.c` 并进入子函数 `bootmain()` 然后进入子函数 `readsect()`；
 - 找到 `readsect()` 函数声明语句对应的汇编指令；
 - 调试 `readsect()` 函数中的剩余语句，然后返回 `bootmain()` 函数；
