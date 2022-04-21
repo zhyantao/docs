@@ -93,7 +93,7 @@ Java 在 **运行时** 识别对象和类的信息，主要有两种方式：
         }
 
         public class SweetShop {
-            public static void main(String[] args) {	
+            public static void main(String[] args) {
                 print("inside main");
                 new Candy();
                 print("After creating Candy");
@@ -202,7 +202,7 @@ RTTI 通过查询 ``Class`` 对象获取运行时所需要的信息，但是在�
     import static net.mindview.util.Print.*;
 
     class Base {}
-    class Derived extends Base {}	
+    class Derived extends Base {}
 
     public class FamilyVsExactType {
         static void test(Object x) {
@@ -219,7 +219,7 @@ RTTI 通过查询 ``Class`` 对象获取运行时所需要的信息，但是在�
         public static void main(String[] args) {
             test(new Base());
             test(new Derived());
-        }	
+        }
     } /* Output:
     Testing x of type class typeinfo.Base
     x instanceof Base true
@@ -311,7 +311,7 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
 
 通常，你不需要直接使用反射工具。反射在 Java 中是用来支持其他特性的，例如对象序列化和 JavaBean。
 
-查找类定义的源代码或 JDK 文档是费时的， **类方法提取器帮助我们快速地提取某个类的信息** 
+查找类定义的源代码或 JDK 文档是费时的， **类方法提取器帮助我们快速地提取某个类的信息**
 ，使我们能够编写自动展示完整接口的简单工具。
 
 .. code-block:: java
@@ -412,7 +412,7 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
         public void somethingElse(String arg) {
             print("somethingElse " + arg);
         }
-    }	
+    }
 
     class SimpleProxy implements Interface {
         private Interface proxied; // 指向真实对象
@@ -427,7 +427,7 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
             print("SimpleProxy somethingElse " + arg); // 做了额外的事情
             proxied.somethingElse(arg); // 真实对象要做到事情
         }
-    }	
+    }
 
     class SimpleProxyDemo {
         public static void consumer(Interface iface) {
@@ -470,14 +470,14 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
             this.proxied = proxied;
         }
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            System.out.println("**** proxy: " + proxy.getClass() + 
+            System.out.println("**** proxy: " + proxy.getClass() +
                             ", method: " + method + ", args: " + args);
             if(args != null)
                 for(Object arg : args)
                     System.out.println("    " + arg);
             return method.invoke(proxied, args);
         }
-    }	
+    }
 
     class SimpleDynamicProxy {
         public static void consumer(Interface iface) {
@@ -489,17 +489,17 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
             consumer(real);
             // Insert a proxy and call again:
             Interface proxy = (Interface)Proxy.newProxyInstance(
-                Interface.class.getClassLoader(), 
-                new Class[]{ Interface.class }, 
+                Interface.class.getClassLoader(),
+                new Class[]{ Interface.class },
                 new DynamicProxyHandler(real));
             consumer(proxy);
         }
-    } /* Output: (95% match)	
+    } /* Output: (95% match)
     doSomething
     somethingElse bonobo
     **** proxy: class $Proxy0, method: public abstract void Interface.doSomething(), args: null
     doSomething
-    **** proxy: class $Proxy0, method: public abstract void Interface.somethingElse(java.lang.String), 
+    **** proxy: class $Proxy0, method: public abstract void Interface.somethingElse(java.lang.String),
     args: [Ljava.lang.Object;@42e816
         bonobo
     somethingElse bonobo

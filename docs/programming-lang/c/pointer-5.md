@@ -12,7 +12,7 @@ void main()
     a = 'A';
     x = 125;
     p = 10.25, q = 18.76;
-    
+
     printf("%p\n", &a);
     printf("%p\n", &x);
     printf("%p\n", &p);

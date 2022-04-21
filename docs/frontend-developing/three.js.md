@@ -125,7 +125,7 @@ export default {
                     cube.rotation.y = rot;
 
                 });
-                
+
                 // 显示场景
                 renderder.render(scene, camera);
 

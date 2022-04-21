@@ -36,7 +36,7 @@
                 case FLAMING:
                 default:     System.out.println("maybe too hot.");
             }
-        }	
+        }
         public static void main(String[] args) {
             Burrito
                 plain = new Burrito(Spiciness.NOT),
@@ -67,7 +67,7 @@
 表示秋天，4 表示冬天。
 
 .. code-block:: java
-    
+
     public class Season {
         public static final int SPRING = 1;
         public static final int SUMMER = 2;
@@ -75,7 +75,7 @@
         public static final int WINTER = 4;
     }
 
-这种方法称作 ``int`` 枚举模式。可这种模式有什么问题呢，通常我们写出来的代码都会考虑它的安全性、易用性和可读性。 
+这种方法称作 ``int`` 枚举模式。可这种模式有什么问题呢，通常我们写出来的代码都会考虑它的安全性、易用性和可读性。
 
 **首先我们来考虑一下它的类型安全性**，当然这种模式不是类型安全的。
 
@@ -95,7 +95,7 @@
 
 从类型安全性和程序可读性两方面考虑， ``int`` 和 ``String`` 枚举模式的缺点就显露出来了。
 
-幸运的是，从 Java 1.5 发行版本开始，就提出了另一种可以替代的解决方案，可以避免 ``int`` 和 
+幸运的是，从 Java 1.5 发行版本开始，就提出了另一种可以替代的解决方案，可以避免 ``int`` 和
 ``String`` 枚举模式的缺点，并提供了许多额外的好处。
 那就是枚举类型。接下来的章节将介绍枚举类型的定义、特征、应用场景和优缺点。
 
@@ -112,7 +112,7 @@
 - ``getDeclaringClass()`` 返回 ``enum`` 实例所属的 ``enum`` 类。
 
 .. code-block:: java
-    
+
     //: enumerated/EnumClass.java
     // Capabilities of the Enum class
     import static net.mindview.util.Print.*;
@@ -229,7 +229,7 @@
 
 因为虚拟机在加载枚举的类的时候，会使用 ``ClassLoader`` 的 ``loadClass`` 方法，而这个方法使用同步代码块保证了线程安全。
 
-所以，创建一个 ``enum`` 类型是线程安全的。 
+所以，创建一个 ``enum`` 类型是线程安全的。
 
 也就是说，我们定义的一个枚举，在第一次被真正用到的时候，会被虚拟机加载并初始化，而这个初始化过程是线程安全的。
 
@@ -239,8 +239,8 @@
 
 **然后再考虑一下序列化和反序列化是否会破坏单例。**
 
-在序列化的时候 Java 仅仅是将枚举对象的 ``name`` 属性输出到结果中，反序列化的时候则是通过 ``java.lang.Enum`` 的 
-``valueOf`` 方法来根据名字查找枚举对象。同时，编译器是不允许任何对这种序列化机制的定制的，因此禁用了 
+在序列化的时候 Java 仅仅是将枚举对象的 ``name`` 属性输出到结果中，反序列化的时候则是通过 ``java.lang.Enum`` 的
+``valueOf`` 方法来根据名字查找枚举对象。同时，编译器是不允许任何对这种序列化机制的定制的，因此禁用了
 ``writeObject`` 、 ``readObject`` 、 ``readObjectNoData`` 、 ``writeReplace`` 和 ``readResolve`` 等方法。
 
 普通的 Java 类的反序列化过程中，会通过反射调用类的默认构造函数来初始化对象。

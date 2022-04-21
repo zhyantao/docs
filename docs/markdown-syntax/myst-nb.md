@@ -323,7 +323,7 @@
     ````
   - ```{code-block} python
     :emphasize-lines: 2
-    
+
     note = "Python syntax highlighting"
     print(node)
     ```

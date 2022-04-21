@@ -5,7 +5,7 @@
 reStructuredText
 =================
 
-.. hint:: 
+.. hint::
 
     文档也支持 :ref:`reST 风格的 Markdown 语法 <target_header>`。本文转载自
     `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_ （有修改），仅供学习参考。
@@ -42,7 +42,7 @@ reStructuredText
 
 .. warning::
 
-    - **标记符必须与文本长度一致，否则会导致 Warning （无法通过 CI）。** 
+    - **标记符必须与文本长度一致，否则会导致 Warning （无法通过 CI）。**
     - 你可以采用更深的嵌套级别，但在文档中应当避免出现四级甚至更深的标题。
 
 .. panels::
@@ -334,7 +334,7 @@ CSV 表格可以根据 CSV（逗号分隔值）数据创建表。
         :widths: 15, 10, 30
 
         "Albatross", 2.99, "On a stick!"
-        "Crunchy Frog", 1.49, "If we took the bones out, 
+        "Crunchy Frog", 1.49, "If we took the bones out,
         it wouldn't becrunchy, now would it?"
         "Gannet Ripple", 1.99, "On a stick!"
 
@@ -343,7 +343,7 @@ CSV 表格可以根据 CSV（逗号分隔值）数据创建表。
     :widths: 15, 10, 30
 
     "Albatross", 2.99, "On a stick!"
-    "Crunchy Frog", 1.49, "If we took the bones out, 
+    "Crunchy Frog", 1.49, "If we took the bones out,
     it wouldn't becrunchy, now would it?"
     "Gannet Ripple", 1.99, "On a stick!"
 
@@ -353,7 +353,7 @@ List 表
 List 表可以根据两级无序列表来生成表格：
 
 .. code-block::
-    
+
     .. list-table:: Frozen Delights!
         :widths: 15 10 30
         :header-rows: 1
@@ -442,7 +442,7 @@ reST 支持图像指令，用法如下：
         :alt: Lenna, 512 times 512, Grayscale
         :align: center
         :target: http://www.lenna.org/
-        
+
         lenna.jpg
 
 .. image:: ../_static/images/lenna.jpg
@@ -458,7 +458,7 @@ reST 支持图像指令，用法如下：
     :alt: Lenna, 512 times 512, Grayscale
     :align: center
     :target: http://www.lenna.org/
-    
+
     lenna.jpg
 
 .. warning::
@@ -475,23 +475,23 @@ reST 支持图像指令，用法如下：
 
     .. raw:: html
 
-        <iframe 
-            width="560" height="315" 
-            src="https://www.youtube.com/embed/1eYqV_vGlJY" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        <iframe
+            width="560" height="315"
+            src="https://www.youtube.com/embed/1eYqV_vGlJY"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
         </iframe>
 
 .. raw:: html
 
-    <iframe 
-        width="560" height="315" 
-        src="https://www.youtube.com/embed/1eYqV_vGlJY" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe
+        width="560" height="315"
+        src="https://www.youtube.com/embed/1eYqV_vGlJY"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
     </iframe>
 
@@ -594,12 +594,12 @@ Sphinx 拓展指令
 
     以下语法非原生 ReStructuredText 语法，需要通过 Sphinx 进行支持。
 
-``.. toctree::`` 
+``.. toctree::``
   Table of contents tree. 用于组织文档结构。
 
-``.. note::`` 
+``.. note::``
   用于添加提示性信息，用户忽视这些信息可能出错。
-  
+
 ``.. warning::``
   用于添加警告性信息，用户忽视这些信息一定出错。
 
@@ -614,7 +614,7 @@ Sphinx 拓展指令
 
 ``.. seealso::``
   包括对模块文档或外部文档的引用列表，内容应该是一个 reST 定义列表，比如：
-  
+
   .. code-block::
 
       .. seealso::
@@ -628,7 +628,7 @@ Sphinx 拓展指令
   也可以使用简略写法，如下所示：
 
   .. code-block::
-      
+
       .. seealso:: modules :py:mod:`zipfile`, :py:mod:`tarfile`
 
 ``.. rubric:: title``
@@ -663,7 +663,7 @@ Sphinx 拓展指令
 
 ``.. code-block:: [language]``
   展示代码块，如果未设置 ``language``, highlight_language 将被使用。
-  
+
 .. note::
 
     想要了解完整的指令和配置项，请访问 `Directives
@@ -684,7 +684,7 @@ PlantUML 语法支持
 文件已通过 `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`_
 插件支持 PlantUML 语法，语法规则参考 :ref:`plantuml`，样例如下：
 
-.. code-block:: 
+.. code-block::
 
     .. uml::
 
@@ -703,11 +703,11 @@ PlantUML 语法支持
 Graphviz 语法支持
 ~~~~~~~~~~~~~~~~~
 
-文档已经通过 `sphinx.ext.graphviz 
+文档已经通过 `sphinx.ext.graphviz
 <https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`_ 插件支持
 Graphviz 语法，语法规则参考 :ref:`graphviz`，样例如下：
 
-.. code-block:: 
+.. code-block::
 
     .. graphviz::
 
@@ -727,12 +727,12 @@ Graphviz 语法，语法规则参考 :ref:`graphviz`，样例如下：
 Mermaid 语法支持
 ~~~~~~~~~~~~~~~~
 
-文档已经通过 `sphinxcontrib-mermaid 
+文档已经通过 `sphinxcontrib-mermaid
 <https://sphinxcontrib-mermaid-demo.readthedocs.io/en/latest/>`_ 插件支持
 `Mermaid <https://mermaid-js.github.io/mermaid/>`_ 语法，样例如下：
 
 .. code-block::
-    
+
     .. mermaid::
 
         sequenceDiagram
@@ -766,7 +766,7 @@ Mermaid 语法支持
 Toggle 语法支持
 ~~~~~~~~~~~~~~~
 
-文档已经通过 `sphinx-togglebutton 
+文档已经通过 `sphinx-togglebutton
 <https://sphinx-togglebutton.readthedocs.io/en/latest/>`_ 插件支持常见 Toggle 功能，样例如下：
 
 .. code-block::
@@ -778,7 +778,7 @@ Toggle 语法支持
 
 .. admonition:: Here's my title
     :class: dropdown, warning
-    
+
     My note
 
 以上展示的为基础用法，更多用法请参考文档。
@@ -788,7 +788,7 @@ Toggle 语法支持
 Pannels 语法支持
 ~~~~~~~~~~~~~~~~
 
-文档已经通过 `sphinx-panels 
+文档已经通过 `sphinx-panels
 <https://sphinx-panels.readthedocs.io/en/latest/>`_ 插件支持常见 Pannels 功能，样例如下：
 
 .. code-block::
@@ -830,7 +830,7 @@ Pannels 语法支持
 Tabs 语法支持
 ~~~~~~~~~~~~~
 
-文档已经通过 `sphinx-tabs 
+文档已经通过 `sphinx-tabs
 <https://sphinx-tabs.readthedocs.io/en/latest/>`_ 插件支持常见 Tabs 功能，样例如下：
 
 .. code-block::
@@ -870,8 +870,8 @@ GitHub URL 缩写
 
 为了方面写文档时引用 GitHub 上的源代码，支持如下语法：
 
-.. code-block:: 
-    
+.. code-block::
+
     - :src:`source/docs/`
     - :docs:`source/conf.py`
     - :issue:`1`
@@ -882,7 +882,7 @@ GitHub URL 缩写
 - :issue:`1`
 - :pull:`21`
 
-该功能通过 `sphinx.ext.extlinks 
+该功能通过 `sphinx.ext.extlinks
 <https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html>`_ 插件支持。
 
 参考文献
@@ -901,7 +901,7 @@ GitHub URL 缩写
 
 对应地，插入参考文献可以使用 ``.. bibliography::`` 或 ``.. footbibliography::``。
 
-将引用写入 references.bib 
+将引用写入 references.bib
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: text
@@ -947,6 +947,6 @@ Non-standard analysis is fun\ :footcite:p:`1987:nelson`.
 
 .. footbibliography::
 
-.. note:: 
+.. note::
 
     使用反斜杠加空格来抑制脚注之前的空格。

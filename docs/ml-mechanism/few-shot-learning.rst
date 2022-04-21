@@ -53,17 +53,17 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 元学习一般有三种基本解决方法：
 
 - 基于度量的方法（学习事物背后的关联）
-  
+
   - 目标是学习不同样本之间的度量或距离函数；
   - 比如 Siamese Network\ :footcite:p:`koch2015siamese`\，Matching Network\ :footcite:p:`vinyals2016matching`\，Relation Network\ :footcite:p:`sung2018learning`\，Prototypical Network\ :footcite:p:`snell2017prototypical`\。
 
 - 基于模型的方法（学习如何建模）
-  
+
   - 目标是让元学习器（Meta-Learner）学习一个后验概率 :math:`P_\theta(y|\mathbf{x})`；
   - 比如 MANN\ :footcite:p:`santoro2016meta`\，Meta Network\ :footcite:p:`munkhdalai2017meta`\，TCML\ :footcite:p:`mishra2017meta`\。
 
 - 基于优化的方法（学习如何学习）
-  
+
   - 目标是加快模型的求解速度；
   - 比如 LSTM-based\ :footcite:p:`ravi2017optimization`\ :footcite:p:`andrychowicz2016learning`\，MAML\ :footcite:p:`finn2017model`\，Repitile，RL-based\ :footcite:p:`zoph2016neural`\ :footcite:p:`wang2016learning`\ :footcite:p:`duan2016rl`\。
 
@@ -162,7 +162,7 @@ Triplet Loss
     目标是让正样本的特征向量和锚点的特征向量之间距离越小越好，负样本的特征向量与锚点的特征向量之间的距离越大越好。
     :math:`Loss(x^a, x^+, x^-)=max\left\{0, d^+ + \alpha - d^-\right\}` 其中 :math:`\alpha` 是一个超参。更新网络参数，最小化 Loss。
 
-.. note:: 
+.. note::
 
     近些年，准确率较高的都是 Embedding，把图片映射成特征向量，想法和 Siamese Network 相似。
 
@@ -210,12 +210,12 @@ Fine Tuning
 
 .. raw:: html
 
-    <iframe 
-        width="560" height="315" 
-        src="https://www.youtube.com/embed/1eYqV_vGlJY" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe
+        width="560" height="315"
+        src="https://www.youtube.com/embed/1eYqV_vGlJY"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
     </iframe>
 
@@ -228,15 +228,15 @@ Fine Tuning
 
 - 元学习与小样本学习 `王树森 <https://space.bilibili.com/1369507485>`__
   on `哔哩哔哩 <https://www.bilibili.com/medialist/play/ml1245757985/BV1B44y1r75K>`__
-  Slide `Introduction <https://kdocs.cn/l/cpTe5jubAGog>`_/\ 
-  `Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_/\ 
+  Slide `Introduction <https://kdocs.cn/l/cpTe5jubAGog>`_/\
+  `Siamese Network <https://kdocs.cn/l/cvbUxZGl0zwe>`_/\
   `Pretraining & Fine Tuning <https://kdocs.cn/l/cbBZGuwm26Yr>`_
 - 深度强化学习 `王树森 <https://www.youtube.com/c/ShusenWang>`__
   on `YouTube <https://www.youtube.com/watch?v=vmkRMvhCW5c&list=PLvOO0btloRnsiqM72G4Uid0UWljikENlU>`__
   Slide `Intro <https://kdocs.cn/l/cnurQ40MrFLJ>`_/\
   `Value-Based <https://kdocs.cn/l/couQ5BWFzS57>`_/\
-  `Policy-Based <https://kdocs.cn/l/cguX6PpD6QSb>`_/\ 
-  `Actor-Critic Methods <https://kdocs.cn/l/cbNH5Phx6tnZ>`_/\ 
+  `Policy-Based <https://kdocs.cn/l/cguX6PpD6QSb>`_/\
+  `Actor-Critic Methods <https://kdocs.cn/l/cbNH5Phx6tnZ>`_/\
   `Model-Based <https://kdocs.cn/l/ceckin3M9Eat>`_
 - 王树森课程讲义 `深度强化学习.PDF <https://kdocs.cn/l/cld4jk5tHgp8>`__
 
@@ -248,7 +248,7 @@ Fine Tuning
 - `元学习的前世今生 <https://zhuanlan.zhihu.com/p/146877957>`_
 - `从 CVPR 2019 一览小样本学习研究进展 <https://www.leiphone.com/category/academic/4wc0990rNQf43mss.html>`_ 每年 CVPR 都会有针对小样本学习的一个总结
 - `Learning to learn - The Berkeley Artificial Intelligence Research <https://bair.berkeley.edu/blog/2017/07/18/learning-to-learn/>`_
-- `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_ 
+- `Meta-Learning: Learning to Learn Fast <https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html>`_
   及 `译文 <https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html>`__
 - `元学习（Meta Learning）与迁移学习（Transfer Learning）的区别联系是什么？ <https://www.zhihu.com/question/299020462/answer/1009811572>`_
 - `How to train your MAML: A step by step approach <https://www.bayeswatch.com/2018/11/30/HTYM/>`_
@@ -260,7 +260,7 @@ Fine Tuning
 领域综述
 ~~~~~~~~
 
-- Generalizing from a Few Examples: A Survey on Few-Shot Learning `笔记 <https://kdocs.cn/l/ce6RjgEp9WT9>`_ 
+- Generalizing from a Few Examples: A Survey on Few-Shot Learning `笔记 <https://kdocs.cn/l/ce6RjgEp9WT9>`_
   及 `文章解读 <https://zhuanlan.zhihu.com/p/129786553>`_
 - `Meta-Learning in Neural Networks: A Survey <https://arxiv.org/pdf/2004.05439.pdf>`_
 - `A CLOSER LOOK AT FEW-SHOT CLASSIFICATION <https://arxiv.org/pdf/1904.04232.pdf>`_
@@ -279,14 +279,14 @@ Fine Tuning
 特邀演讲
 ~~~~~~~~
 
-- Generalizing from Few Examples with Meta-Learning by Hugo Larochelle `Video <https://www.bilibili.com/video/av61821192/>`__ 
+- Generalizing from Few Examples with Meta-Learning by Hugo Larochelle `Video <https://www.bilibili.com/video/av61821192/>`__
   及 `Slides <https://kdocs.cn/l/cpswKp8xJuZj>`__
 - Workshop on Meta-Learning (MetaLearn 2021) `Video <https://meta-learn.github.io/>`__
 - Deep Learning: Bridging Theory and Practice `Video <https://ludwigschmidt.github.io/nips17-dl-workshop-website/>`__
-- Challenges in Multi-Task Learning and Meta-Learning `Video <https://www.youtube.com/watch?v=Rq40Bze_hMA>`__ 
+- Challenges in Multi-Task Learning and Meta-Learning `Video <https://www.youtube.com/watch?v=Rq40Bze_hMA>`__
   及 `Slides <https://ai.stanford.edu/~cbfinn/_files/ias_slides.pdf>`__
-- The Big Problem with Meta-Learning and How Bayesians Can Fix It 
-  `Video <https://slideslive.com/38922670/invited-talk-the-big-problem-with-metalearning-and-how-bayesians-can-fix-it>`__ 
+- The Big Problem with Meta-Learning and How Bayesians Can Fix It
+  `Video <https://slideslive.com/38922670/invited-talk-the-big-problem-with-metalearning-and-how-bayesians-can-fix-it>`__
   及 `Slides <https://ai.stanford.edu/~cbfinn/_files/neurips19_memorization.pdf>`__
 
 算法实现
@@ -294,7 +294,7 @@ Fine Tuning
 
 - `Papers With Code: Few-Shot Learning <https://paperswithcode.com/task/few-shot-learning>`_
 
-数据集 
+数据集
 ~~~~~~
 
 - `Omniglot data set for one-shot learning <https://github.com/brendenlake/omniglot>`_ 及 `Paper <https://kdocs.cn/l/cgtqdhdNglDz>`_

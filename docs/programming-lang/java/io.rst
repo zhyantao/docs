@@ -7,7 +7,7 @@
 
 因此，我们还是首先对类之间的关系做一下梳理。
 
-.. hint:: 
+.. hint::
 
     流，代表任何有能力产出数据的数据源对象或者是有能力接收数据的接收端对象。
 
@@ -77,7 +77,7 @@ OutputStream
     FilterOutputStream <|-- DataOutputStream
     FilterOutputStream <|-- BufferedOutputStream
     FilterOutputStream <|-- PrintStream
-    
+
     @enduml
 
 
@@ -110,7 +110,7 @@ Reader
     StringReader --|> Reader
     URLReader --|> Reader
     InputStreamReader <|-- FileReader
-    
+
     @enduml
 
 .. hint:: InputStreamReader 可以把 InputStream 转化为 Reader
@@ -142,7 +142,7 @@ Writer
     Writer <|-- OutputStreamWriter
     PipedWriter --|> Writer
     StringWriter --|> Writer
-    
+
     @enduml
 
 .. hint:: OutputStreamWriter 可以把 OutputStream 转化为 Writer
@@ -943,7 +943,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
 - 利用 ``asCharBuffer()`` 、 ``asShortBuffer()`` 等获得该缓冲器上的视图；
 - 使用视图的 ``put()`` 方法
-  
+
 注意到，使用 ``ShortBuffer`` 的 ``put()`` 方法时，需要类型转换。
 
 .. code-block:: java
@@ -1207,7 +1207,7 @@ I/O 重定向操纵的是字节流，而不是字符流，因此我们使用的�
 
 锁的类型（共享或独占）可以通过 ``FileLock.isShared()`` 来查询。
 
-.. hint:: 
+.. hint::
 
     ``SocketChannel`` 、 ``DatagramChannel`` 、 ``ServerSocketChannel`` 不需要加锁，因为它们是从单进程实体继承而来，
     我们通常不在两个进程之间共享网络 socket。
@@ -1315,7 +1315,7 @@ Java 中可以序列化的对象包括：
 
 - 创建 ``InputStream`` 对象
 - 将其封装在 ``ObjectInputStream`` 对象内
-- 调用 ``readObject()`` 
+- 调用 ``readObject()``
 
 例如，尝试将一个对象序列化和反序列化。
 
@@ -1449,13 +1449,13 @@ Java 中可以序列化的对象包括：
         Blip1.readExternal
         *///:~
 
-    .. note:: 
-        
+    .. note::
+
         Blip1 的构造器有 public 而 Blip2 没有。 b2 会有异常。
-        
+
         - 恢复 ``Serializable`` 对象，对象完全以它存储的二进制位为基础来构造，不调用构造器
         - 恢复 ``Externalizable`` 对象，所有的普通的默认构造器都会被调用，然后调用 ``readExternal()``
-            
+
 transient（瞬时）关键字
 ~~~~~~~~~~~~~~~~~~~~~~~
 

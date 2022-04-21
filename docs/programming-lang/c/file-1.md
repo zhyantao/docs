@@ -7,7 +7,7 @@ int main()
 {
     char c;
     FILE *fp = NULL;
-    
+
     // 写文件
     fp = fopen("INPUT", "w");
     while((c = getchar()) != '\n')

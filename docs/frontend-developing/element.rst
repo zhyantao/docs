@@ -8,6 +8,6 @@ Element
 
 .. image:: ../_static/images/cc-monitoring-system.*
 
-.. warning:: 
+.. warning::
 
     Element 2.x 和 Element 3.x 使用起来有些区别，这里用 2.x 做演示。

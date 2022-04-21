@@ -45,7 +45,7 @@
 
 泛型类型必须⽤限定内的类型来进⾏初始化，否则会导致编译错误。
 
-在使用泛型时，存取元素时用 ``super``，获取元素时，用 ``extends``。 
+在使用泛型时，存取元素时用 ``super``，获取元素时，用 ``extends``。
 
 频繁往外读取内容的，适合用上界 ``Extends``。经常往里插入的，适合用下界 ``Super``。
 
@@ -65,19 +65,19 @@
 
     public class Holder3<T> {
         private T a;
-        
-        public Holder3(T a) { 
-            this.a = a; 
+
+        public Holder3(T a) {
+            this.a = a;
         }
-        
-        public void set(T a) { 
-            this.a = a; 
+
+        public void set(T a) {
+            this.a = a;
         }
-        
-        public T get() { 
-            return a; 
+
+        public T get() {
+            return a;
         }
-        
+
         public static void main(String[] args) {
             Holder3<Automobile> h3 = new Holder3<Automobile>(new Automobile());
             Automobile a = h3.get(); // No cast needed
@@ -87,7 +87,7 @@
     } ///:~
 
 使用了泛型之后，我们得到了一个类型安全的容器，在取出容器的内容时，编译器自动为我们完成了转型。
-因为我们给容器说，只能接收 ``Automobile`` 类型的对象，因此，在传入 ``String`` 和 ``Interger`` 
+因为我们给容器说，只能接收 ``Automobile`` 类型的对象，因此，在传入 ``String`` 和 ``Interger``
 对象时都报错了。
 
 使用泛型的容器除了能够接收单一类型的对象外，也可以设计为能够接收多个类型的对象，比如下面代码所示：
@@ -100,12 +100,12 @@
     public class TwoTuple<A,B> {
         public final A first;
         public final B second;
-        
-        public TwoTuple(A a, B b) { 
-            first = a; 
-            second = b; 
+
+        public TwoTuple(A a, B b) {
+            first = a;
+            second = b;
         }
-        
+
         public String toString() {
             return "(" + first + ", " + second + ")";
         }
@@ -128,13 +128,13 @@
             super(a, b);
             third = c;
         }
-        
+
         public String toString() {
             return "(" + first + ", " + second + ", " + third +")";
         }
     } ///:~
 
-为了 **使用元组**，你只需要定义一个长度合适的元组，将其作为方法的返回值，然后再 ``return`` 
+为了 **使用元组**，你只需要定义一个长度合适的元组，将其作为方法的返回值，然后再 ``return``
 语句中创建该元组，并返回即可。
 
 .. code-block:: java
@@ -147,7 +147,7 @@
             // Autoboxing converts the int to Integer:
             return new TwoTuple<String,Integer>("hi", 47);
         }
-        
+
         public static void main(String[] args) {
             TwoTuple<String,Integer> ttsi = f();
             System.out.println(ttsi);
@@ -172,9 +172,9 @@
     //: net/mindview/util/Generator.java
     // A generic interface.
     package net.mindview.util;
-    
-    public interface Generator<T> { 
-        T next(); 
+
+    public interface Generator<T> {
+        T next();
     } ///:~
 
 比如我们可以实现 ``Generator`` 类，用以生成 Fibonacci 数列。
@@ -188,13 +188,13 @@
 
     public class Fibonacci implements Generator<Integer> {
         private int count = 0;
-        
-        public Integer next() { 
-            return fib(count++); 
+
+        public Integer next() {
+            return fib(count++);
         }
-        
+
         private int fib(int n) {
-            if(n < 2) 
+            if(n < 2)
                 return 1;
             return fib(n-2) + fib(n-1);
         }
@@ -218,7 +218,7 @@
 泛型方法
 --------
 
-.. hint:: 
+.. hint::
 
     如果使用泛型方法可以取代整个类泛型化，那么就应该只使用泛型方法。
 
@@ -282,7 +282,7 @@
 当使用泛型类时，必须在创建对象的时候指定类型参数的值，而使用泛型方法的时候，通常不必指明参数类型。
 因为编译器会为我们找出具体的类型。这称为 **类型参数推断（type argument inference）**。
 
-因此， **我们可以像调用普通方法一样调用 f()，就好像 f() 被无限次地重载过。** 甚至，它可以接受 
+因此， **我们可以像调用普通方法一样调用 f()，就好像 f() 被无限次地重载过。** 甚至，它可以接受
 ``GenericMethods`` 作为其参数类型。
 
 **类型推断只对赋值操作有效，其他时候并不起作用。**
@@ -329,13 +329,13 @@
 
 类型擦除指的是通过类型参数合并，将泛型类型实例关联到同一份字节码上。
 编译器只为泛型类型生成一份字节码，并将其实例关联到这份字节码上。
-具象化一些就是，我们可以声明 ``ArrayList.class`` 但是不能声明 ``ArrayList<Integer>.class`` 
-就是因为擦除。擦除会移除参数类型信息。 ``List<String>`` 与 ``List<Integer>`` 
+具象化一些就是，我们可以声明 ``ArrayList.class`` 但是不能声明 ``ArrayList<Integer>.class``
+就是因为擦除。擦除会移除参数类型信息。 ``List<String>`` 与 ``List<Integer>``
 在运行时事实上是相同的类型，即 ``List``。
 
 类型擦除的关键在于从泛型类型中清除类型参数的相关信息，并且再必要的时候添加类型检查和类型转换的方法。
 
-类型擦除可以简单的理解为将泛型 Java 代码转换为普通 Java 代码，只不过编译器更直接点，将泛型 Java 
+类型擦除可以简单的理解为将泛型 Java 代码转换为普通 Java 代码，只不过编译器更直接点，将泛型 Java
 代码直接转换成普通 Java 字节码。
 
 以 ``List<T extends HasF>`` 为例，类型擦除的主要过程如下：
@@ -363,7 +363,7 @@
 
     public class Erased<T> {
         private final int SIZE = 100;
-        
+
         public static void f(Object arg) {
             if(arg instanceof T) {}           // Error
             T var = new T();                  // Error
@@ -438,12 +438,12 @@ List 和 List<Object>
 
 **区别二：**
 
-你可以把任何带参数的类型传递给原始类型 ``List``，但却不能把 ``List<String>`` 传递给接受 ``List<Object>`` 
+你可以把任何带参数的类型传递给原始类型 ``List``，但却不能把 ``List<String>`` 传递给接受 ``List<Object>``
 的方法，因为会产生编译错误。
 
 
 List<?> 和 List<Object>
 -------------------------
 
-``List<?>`` 是一个未知类型的 ``List``，而 ``List<Object>`` 其实是任意类型的 ``List``。你可以把 ``List<String>``，\ 
+``List<?>`` 是一个未知类型的 ``List``，而 ``List<Object>`` 其实是任意类型的 ``List``。你可以把 ``List<String>``，\
 ``List<Integer>`` 赋值给 ``List<?>``，却不能把 ``List<String>`` 赋值给 ``List<Object>``。

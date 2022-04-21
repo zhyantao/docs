@@ -2,7 +2,7 @@
 词汇表
 ======
 
-.. hint:: 
+.. hint::
 
     - `Google Developers <https://developers.google.com/machine-learning/glossary>`_
     - `ML-Glossary <https://ml-cheatsheet.readthedocs.io/en/latest/index.html>`_
@@ -74,7 +74,7 @@
     所有样例的集合。
 
 Batch
-    多个样例组成的小的数据集，通常在使用随机梯度下降方法训练神经网络时用于更新网络参数。 
+    多个样例组成的小的数据集，通常在使用随机梯度下降方法训练神经网络时用于更新网络参数。
 
 归一化
     解决不同单位和比例的数据间的差异，消除量纲的影响，将数据范围缩放到 0 和 1 之间，受异常值影响比较严重。
@@ -99,7 +99,7 @@ Batch
     迁移学习强调我们有一个已学习好的源任务，然后将其直接应用于目标任务上，再通过在目标任务上的微调，达到学习目标。
     这已经被证明是一种有效的学习方式。迁移学习的过程可以表示为
     :math:`\theta^*=\arg \min\limits_{\theta} \mathcal{L}(\theta|\theta_0, \mathcal{D})`
-    其中 :math:`\theta^*` 是最优参数， :math:`\theta_0` 是之前任务的超参数。这个过程也就是常用的微调（fine-tune）过程。  
+    其中 :math:`\theta^*` 是最优参数， :math:`\theta_0` 是之前任务的超参数。这个过程也就是常用的微调（fine-tune）过程。
 
 基于度量学习的方法
     其目标是学习一个从图像到嵌入空间的映射，在该空间中，同一类图像彼此间的距离较近，而不同类的图像距离则较远。

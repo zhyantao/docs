@@ -17,7 +17,7 @@ neato
     用于 sprint model 的生成。
 twopi
     用于放射状图形的生成
-circo 
+circo
     用于圆形图形的生成。
 fdp
     另一个用于生成无向图的工具。

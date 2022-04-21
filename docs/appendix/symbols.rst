@@ -4,13 +4,13 @@
 符号表
 ======
 
-.. note:: 
+.. note::
 
     更多 :math:`LaTeX` 符号参考：
-    
+
     - :ref:`LaTeX 入门 <latex-basic>`
     - `一份不太简短的 LaTeX 2ε 介绍 <https://www.kdocs.cn/p/136412211457>`_ 4.9 小节
-    - `常用数学符号和公式排版 <https://www.latexlive.com/help#d11>`_ 
+    - `常用数学符号和公式排版 <https://www.latexlive.com/help#d11>`_
     - `在线 LaTeX 公式编辑器 <https://www.latexlive.com>`_ （可导出为图片）
 
     数学是符号的艺术，能够认识和理解符号背后的含义，才能步入数学的殿堂。
@@ -18,12 +18,12 @@
 .. hint::
 
     函数 :math:`f(x;\theta)` 中的分号用来分隔自变量和参数。
-    
+
     概率 :math:`p(\theta | \phi^*)` 中的竖线用来分隔自变量和参数。
 
     表达式 :math:`\alpha = \arg \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
-    的意思：当函数取最小值时，将 :math:`\omega` 的值赋给 :math:`\alpha`。 
-    
+    的意思：当函数取最小值时，将 :math:`\omega` 的值赋给 :math:`\alpha`。
+
     表达式 :math:`\alpha = \min\limits_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W`
     的意思：当函数取最小值时，将这个最小值赋给 :math:`\alpha`。
 

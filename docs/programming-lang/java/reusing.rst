@@ -32,7 +32,7 @@
             s = "Constructed";
         }
         public String toString() { return s; }
-    }	
+    }
 
     public class Bath {
         private String                          // 情况 1：在对象定义时
@@ -47,8 +47,8 @@
             s3 = "Joy";
             toy = 3.14f;
             castille = new Soap();
-        }	
-        
+        }
+
         { i = 47; }                             // 情况 4：在对象使用时
 
         public String toString() {
@@ -62,7 +62,7 @@
                 "i = " + i + "\n" +
                 "toy = " + toy + "\n" +
                 "castille = " + castille;
-        }	
+        }
         public static void main(String[] args) {
             Bath b = new Bath();
             print(b);
@@ -86,13 +86,13 @@
 
 继承是指在父类的基础上添加新的功能。
 
-Java 中所有的类都继承自 ``Object``，我们将这种现象命名为 **单根继承结构**。 
+Java 中所有的类都继承自 ``Object``，我们将这种现象命名为 **单根继承结构**。
 
 在 :ref:`load-class` 一节，我们发现在调用子类构造器时，父类构造器已经完成了初始化，那么这种现象是如何发生的呢？
-众所周知，程序发生的所有行为都是因为函数调用的存在，所以，即使在子类中没有看到 ``super`` 
+众所周知，程序发生的所有行为都是因为函数调用的存在，所以，即使在子类中没有看到 ``super``
 调用父类构造器，隐式地也是已经调用了的（这可能由编译器生成），对于后面理解类的初始化顺序 **很重要**。
 
-而且，由于 ``Object`` 是所有类的共同父类，所以，每个类的调用链上都会经过很多次的 ``super`` 
+而且，由于 ``Object`` 是所有类的共同父类，所以，每个类的调用链上都会经过很多次的 ``super``
 调用，直到调用到 ``Object`` 的构造器为止。
 
 上面两段话讲的是从子类到父类的类的 **发现过程**，而 **构建过程** 正好是一个相反的过程（从父类到子类）。
@@ -123,8 +123,8 @@ Java 中所有的类都继承自 ``Object``，我们将这种现象命名为 **�
     Cartoon constructor
     *///:~
 
-.. tip:: 
-    
+.. tip::
+
     为了更加方便地进行 **单元测试**，我们可以在每个类中都创建一个 ``main()`` 方法。
     要运行某个单元，只需在编译完成后直接运行 ``java 类名``\ （还有另外两种实现方式
     :ref:`供参考 <nested-class>`）。测试完成后，无需删除 ``main()`` 可以保留待下次测试。
@@ -169,7 +169,7 @@ Java 中所有的类都继承自 ``Object``，我们将这种现象命名为 **�
                 print(x);
                 print("Testing base class:");
                 Cleanser.main(args);
-            }	
+            }
         } /* Output:
         Cleanser dilute() apply() Detergent.scrub() scrub() foam()
         Testing base class:

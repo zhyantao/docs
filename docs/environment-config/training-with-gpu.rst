@@ -14,7 +14,7 @@ x86 架构普遍用在了个人电脑，服务器等高端设备上，而 ARM �
 为了满足更加丰富的定制性，ARM 架构通常采用 RISC 指令集。
 
 .. note::
-    
+
     i386 是指 32 位版本，而 AMD64 (或 x86_64) 是指 Intel 和 AMD 处理器的 64 位版本 [1]_。
 
 GPU 和 CPU 本质上属于同类型的产品，只不过侧重点不一样，CPU 偏向控制，GPU 偏向计算。
@@ -57,22 +57,22 @@ NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包
 因此，如果非要在个人电脑上运行深度学习程序，那么不免在算法准确性和程序运行时间上做出一些妥协，因为根本跑不动。
 
 用 GPU 训练网络肯定会用到 CUDA，但是，安装 CUDA 环境经常会出现一些问题，我们最好先用 ``nvidia-smi``
-看一下电脑上的 Driver API Version，然后去官网下载一个\ **相同版本**\ 的  
-`CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_ 以及与 CUDA 版本相对应的  
+看一下电脑上的 Driver API Version，然后去官网下载一个\ **相同版本**\ 的
+`CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_ 以及与 CUDA 版本相对应的
 `cuDNN <https://developer.nvidia.com/rdp/cudnn-archive>`_。
 
 这个软件比较大，你可以不用完整安装，勾选如下选项即可：
 
 .. image:: ../_static/images/cuda-installation.png
 
-安装完可以通过 ``nvcc --version`` 
+安装完可以通过 ``nvcc --version``
 命令查看 CUDA 是否安装成功。在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
 就可以为你的程序加速了（前提是有 NVIDIA 的 GPU，这通过任务管理器可以查看，见本页第一张图）。
 **但是，令人疑惑的是，我安装了 PaddlePaddle 的 GPU 版本，这句话不管设不设置，效果都一样，都用到了 GPU。**
 英特尔 GPU 应该用什么加速，我没用过，暂时不知道。
 
-根据你安装的 CUDA 版本，再去下载安装对应版本的 
-`PaddlePaddle <https://www.paddlepaddle.org.cn/install/quick>`_ 
+根据你安装的 CUDA 版本，再去下载安装对应版本的
+`PaddlePaddle <https://www.paddlepaddle.org.cn/install/quick>`_
 应该就可以了，因为我的版本都是 11.1 所以，我用 pip 安装了 PaddlePaddle 的 11.1 版本。下图是成功后的训练过程：
 
 .. image:: ../_static/images/training-with-gpu-success.png

@@ -5,7 +5,7 @@
 分布函数与概率分布
 ------------------
 
-.. note:: 
+.. note::
 
     `Cheat Sheet of Probability <https://kdocs.cn/l/cpypzti6jqvK>`_
 

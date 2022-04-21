@@ -30,9 +30,9 @@ git_branch() {
    if [ "${branch}" != "" ];then
        if [ "${branch}" = "(no branch)" ];then
            branch="(`git rev-parse --short HEAD`...)"
-       fi  
+       fi
        echo " ($branch)"
-   fi  
+   fi
 }
 
 PS1 = '\[\033[01;32m\]$(git_branch)\[\033[00m\]'
