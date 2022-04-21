@@ -11,13 +11,16 @@
 
 或者，你也可以参考 [Windows 终端中的动态配置文件](https://docs.microsoft.com/zh-cn/windows/terminal/dynamic-profiles)。
 
-## 更改 Terminal 风格
+## 更改 PowerShell 风格
 
-Microsoft 新开发的 [Terminal](https://github.com/microsoft/terminal) 可以更好地支持本地开发工作，因此，现在换到这个 Terminal 上部署环境。
+Microsoft 新开发的 [Windows Terminal](https://github.com/microsoft/terminal) 可以更好地支持本地开发工作。
 
-1. 首先，遵循 [oh-my-posh 的安装步骤](https://ohmyposh.dev/docs/windows)，完成基本安装。
-2. 现在可能有些字符无法正常显示，我们需要安装一些字体，推荐 [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)。
-3. 然后，修改配置 Windows Termial 的配置文件 [Settings.json](https://docs.microsoft.com/en-us/windows/terminal/customize-settings/profile-general)（这个 Settings.json 可以从 Windows Terminal 软件界面的下拉三角中找见），**补充**如下信息
+1. 安装 Oh My Posh：`Install-Module oh-my-posh -Scope CurrentUser` [^cite_ref-1]（网络原因，耗时较长）
+2. 导入模块：`Import-Module oh-my-posh`（这一步会下载 `oh-my-posh.exe` 并配置环境变量）
+3. 现在可能有些字符无法正常显示，先下载安装字体
+   [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)，
+   再修改 Windows Termial 的配置文件 `Settings.json`（可以从 Windows Terminal 软件界面的下拉三角中找见）
+   **补充**如下信息：
 
 ```json
 {
@@ -31,6 +34,12 @@ Microsoft 新开发的 [Terminal](https://github.com/microsoft/terminal) 可以�
 }
 ```
 
+4. 启用 Oh My Posh：`Set-PoshPrompt -Theme Paradox`
+
 ```{note}
-上面的改动可能会让你的 vscode Terminal 出现乱码。解决方式是打开 vscode 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
+上面的改动可能会让你的 VS Code Terminal 出现乱码。解决方式是打开 VS Code 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
 ```
+
+---
+
+[^cite_ref-1]: <https://ohmyposh.dev/docs/installation/windows>
