@@ -7,11 +7,11 @@
 
 抽象方法仅有声明，没有方法体，如 ``abstract void f();``。
 
-包含抽象方法的类必须限定为抽象类，如 
+包含抽象方法的类必须限定为抽象类，如
 ``abstract class ClassName {}``，我们创建抽象类的目的是希望通过这个通用接口操纵一系列类。
 
 如果从一个抽象类继承，并想创建该新类的对象，那么就必须为基类中的所有抽象方法提供方法定义。
-如果不这样做（可以选择不做），那么导出类便也是抽象类，且编译器将会强制我们使用 ``abstract`` 
+如果不这样做（可以选择不做），那么导出类便也是抽象类，且编译器将会强制我们使用 ``abstract``
 关键字来限定这个类。
 
 
@@ -20,10 +20,10 @@
 接口定义
 --------
 
-抽象方法可以提供接口，抽象方法所属的类是 **部分抽象** 的类（因为抽象类中可以有某些方法的实现）。但是 
+抽象方法可以提供接口，抽象方法所属的类是 **部分抽象** 的类（因为抽象类中可以有某些方法的实现）。但是
 ``interface`` 关键字可以产生一个 **完全抽象** 的类，如 ``interface ClassName {}``。
 
-接口和类一样，也有访问权限控制，如果你想让这个接口具有全局访问性，那么用 ``public`` 
+接口和类一样，也有访问权限控制，如果你想让这个接口具有全局访问性，那么用 ``public``
 声明它，否则它只有包访问权限。
 在接口中声明的方法，若不加以声明，默认都是 ``public`` 访问权限。
 在接口中声明的内部类，若不加以声明，默认都是 ``public static`` 的。
@@ -87,7 +87,7 @@
                 return getClass().getSimpleName();
             }
             Object process(Object input) { return input; }
-        }	
+        }
 
         class Upcase extends Processor {
             String process(Object input) { // Covariant return
@@ -210,9 +210,9 @@
             public Waveform process(Waveform input) { return input; }
         } ///:~
 
-``Filter`` 与 ``Processor`` 具有相同的接口元素 ``process()``，但是因为 ``Filter`` 并非继承自 
+``Filter`` 与 ``Processor`` 具有相同的接口元素 ``process()``，但是因为 ``Filter`` 并非继承自
 ``Processor``，因此在调用 ``Apply.process()`` 时，并不会触发 ``Filter`` 类的 ``process()`` 方法。
-这主要是因为 ``Apply.process()`` 和 ``Processor.process()`` 
+这主要是因为 ``Apply.process()`` 和 ``Processor.process()``
 之间的 **耦合过紧**，于是将其应用于 ``Filter`` 时，\ **复用被禁止** 了。
 
 但是，如果 ``Processor`` 是一个接口（之前是一个普通的类），这些限制就会变得松动，就可以实现复用了。
@@ -227,7 +227,7 @@
         <<abstract>> StringProcessor
         Processor : Object process(Processor p, Object s)
         FilterAdapter : Waveform process()
-        
+
         class StringProcessor
         <<abstract>> StringProcessor
         StringProcessor : abstract String process()
@@ -285,7 +285,7 @@
                 Apply.process(new Downcase(), s);
                 Apply.process(new Splitter(), s);
             }
-        }	
+        }
 
         class Upcase extends StringProcessor {
             public String process(Object input) { // Covariant return
@@ -302,7 +302,7 @@
         class Splitter extends StringProcessor {
             public String process(Object input) {
                 return Arrays.toString(((String)input).split(" "));
-            }	
+            }
         } /* Output:
         Using Processor Upcase
         IF SHE WEIGHS THE SAME AS A DUCK, SHE'S MADE OF WOOD
@@ -328,7 +328,7 @@
             public Waveform process(Object input) {
                 return filter.process((Waveform)input);
             }
-        }	
+        }
 
         public class FilterProcessor {
             public static void main(String[] args) {
@@ -350,24 +350,24 @@
     高亮除的代码实现了 **适配器模式**。
     适配器模式的出现是因为无法修改旧接口，而且旧接口无法与满足新业务的接口需求。
     引进适配器后，在旧接口的基础上稍作修改，满足新业务。
-        
-    在适配器方式中，\ ``FilterAdapter`` 的构造器接受你已经拥有的接口 
+
+    在适配器方式中，\ ``FilterAdapter`` 的构造器接受你已经拥有的接口
     ``Filter``，然后生成具有你所需要的 ``Processor`` 接口的对象。
 
-按照之前的需求，我们还是想要用 ``Apply.process()`` 能够同时处理 ``Processor.process()`` 和 
-``Filter.process()``。修改后的代码结构，既可以让 ``Processor`` 应用于 ``StringProcessor`` 
-也可以应用于 ``FilterAdapter``，而后者，是继承无法办到的。这实现了 ``Processor.process()`` 与 
+按照之前的需求，我们还是想要用 ``Apply.process()`` 能够同时处理 ``Processor.process()`` 和
+``Filter.process()``。修改后的代码结构，既可以让 ``Processor`` 应用于 ``StringProcessor``
+也可以应用于 ``FilterAdapter``，而后者，是继承无法办到的。这实现了 ``Processor.process()`` 与
 ``StringProcessor.process()`` 的解耦。
 
 从这个解决方案可以看出，\ **没有什么是加一层是不能解决的**。
-``Apply.process()`` 方法接受 ``Processor`` 类型的对象，并不接受 ``Filter`` 类型的对象，那么我们将 
-``Processor`` 作为接口，\ ``FilterAdapter`` 也来实现这个接口，然后由 ``FilterAdapter`` 接受 
+``Apply.process()`` 方法接受 ``Processor`` 类型的对象，并不接受 ``Filter`` 类型的对象，那么我们将
+``Processor`` 作为接口，\ ``FilterAdapter`` 也来实现这个接口，然后由 ``FilterAdapter`` 接受
 ``Filter`` 类型的对象，问题就解决了。
 
 再举一个关于解耦的例子。
 ``Scanner`` 类的构造器接受一个 ``Readable`` 接口。
 ``Readable`` 是专门为 ``Scanner`` 类设计的接口。
-``Scanner`` 不必将参数限定为某个特定类，只要某个类实现了 ``Readable`` 接口就可以作为 
+``Scanner`` 不必将参数限定为某个特定类，只要某个类实现了 ``Readable`` 接口就可以作为
 ``Scanner`` 的参数，这就很好地体现了可扩展性和完全解耦。
 
 .. code-block:: java
@@ -384,7 +384,7 @@
         private static final char[] lowers = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         private static final char[] vowels = "aeiou".toCharArray();
         private int count;
-        public RandomWords(int count) { this.count = count; }	
+        public RandomWords(int count) { this.count = count; }
         public int read(CharBuffer cb) {        // 实现 Readable 接口需要重写 read() 方法
             if(count-- == 0)
                 return -1; // Indicates end of input
@@ -418,7 +418,7 @@
 嵌套接口
 --------
 
-接口可以嵌套在类或其他接口中。需要注意的是，当实现某个接口时，\ **不需要实现** 
+接口可以嵌套在类或其他接口中。需要注意的是，当实现某个接口时，\ **不需要实现**
 嵌套在其内部的任何接口，而且 ``private`` 接口不能在定义它的类之外被实现。
 
 .. code-block:: java
@@ -441,7 +441,7 @@
         }
         class CImp implements C {
             public void f() {}
-        }	
+        }
         private class CImp2 implements C {
             public void f() {}
         }
@@ -460,7 +460,7 @@
             dRef = d;
             dRef.f();
         }
-    }	
+    }
 
     interface E {
         interface G {
@@ -473,7 +473,7 @@
         void g();
         // Cannot be private within an interface:
         //! private interface I {}
-    }	
+    }
 
     public class NestingInterfaces {
         public class BImp implements A.B {
@@ -498,7 +498,7 @@
             class EG implements E.G {
                 public void f() {}
             }
-        }	
+        }
         public static void main(String[] args) {
             A a = new A();
             // Can't access A.D:
@@ -565,7 +565,7 @@
         Implementation1() {} // Package access
         public void method1() {print("Implementation1 method1");}
         public void method2() {print("Implementation1 method2");}
-    }	
+    }
 
     class Implementation1Factory implements ServiceFactory {
         public Service getService() {
@@ -583,7 +583,7 @@
         public Service getService() {
             return new Implementation2();
         }
-    }	
+    }
 
     public class Factories {
         public static void serviceConsumer(ServiceFactory fact) {

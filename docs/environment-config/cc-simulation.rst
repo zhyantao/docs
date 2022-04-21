@@ -17,13 +17,13 @@
     :column: col-lg-12
 
     .. image:: ../_static/images/600px-Lingotamento_Continuo-Continuous_Casting.png
-    
+
     +++
     Continuous casting. [1]_
 
-    1: Ladle (大包). 2: Stopper (塞棒). 3: Tundish (中间包). 4: Shroud/pipe (导管). 5: Mold/Crystallizer (模具/结晶器). 
+    1: Ladle (大包). 2: Stopper (塞棒). 3: Tundish (中间包). 4: Shroud/pipe (导管). 5: Mold/Crystallizer (模具/结晶器).
     6: Roll support (支持辊). 7: Turning zone (弯曲段). 8: Shroud/pipe. 9: Bath level (液位). 10: Meniscus (弯月面). 11: Withdrawal unit (引锭杆). 12: Slab (铸坯).
-    
+
     A: Liquid metal. B: Solidified metal. C: Slag. D: Water-cooled copper plates (水冷铜板). E: Refractory material (耐火材料).
 
 

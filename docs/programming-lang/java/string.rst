@@ -16,7 +16,7 @@
 
 "+" 可以用来拼接字符串。
 
-创建字符串时，显式地声明 ``StringBuilder`` 相比于让编译器自动调用 ``StringBuilder`` 的方法 ``append()`` 将会更加高效。 
+创建字符串时，显式地声明 ``StringBuilder`` 相比于让编译器自动调用 ``StringBuilder`` 的方法 ``append()`` 将会更加高效。
 
 因为编译器自动调用 ``StringBuilder.append()`` 方法时，可能会多次构建对象并分配缓存，而显式地声明后，可以只生成一个 ``StringBuilder`` 对象。
 
@@ -41,7 +41,7 @@
         }
     } ///:~
 
-.. note:: 
+.. note::
 
     可以使用 ``javap -c WhitherStringBuilder`` 来进行反编译，查看编译后的代码。
 
@@ -375,7 +375,7 @@ Pattern 和 Matcher
     [The frumious Bandersnatch.][The][frumious Bandersnatch.][frumious][Bandersnatch.]
     *///:~
 
-.. note:: 
+.. note::
 
     ``find()`` 可以在输入的任意位置定位正则表达式，而 ``lookingAt()`` 和 ``matches()`` 只有在正则表达式与输入的最开始处就开始匹配时才会成功。
 
@@ -673,6 +673,6 @@ Scanner 定界符
 
 当 ``next()`` 方法配合指定的正则表达式使用时，将找到下一个匹配该模式的输入部分，调用 ``match()`` 方法就可以获得匹配结果。
 
-.. note:: 
+.. note::
 
     这种配合，仅仅针对下一个输入分词进行匹配，如果你的正则表达式中含有定界符，那永远不可能匹配成功。

@@ -56,7 +56,7 @@ JSON 对象中，除了 ``el`` 的值是一个字符串外，其他键（如 ``d
         <div id="app">                  <!-- 一般通过 id 索引模块 -->
             {{ message }} {{name}}      <!-- HTML 声明式模板语法，文本插值，双大括号 -->
         </div>
-        
+
         <script type="text/javascript">
         var app = new Vue({
             el: '#app',                 // el：用于和对应的 DOM 元素一一对应（绑定）
@@ -238,7 +238,7 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
         var vm = new Vue({
 
             el : "#app",
-            
+
             data : {
                 msg : "hi vue",
                 rawHtml : '<span style="color:red">This should be red</span>',
@@ -256,9 +256,9 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
         .red {
             color: red;
         }
-        
+
         .blue {
-            color: blue; 
+            color: blue;
             font-size: 100px;
         }
     </style>
@@ -354,12 +354,12 @@ class 与 style 绑定
     </head>
     <body>
     <div id="app">
-        <div class="test" 
-            v-bind:class="[ isActive ? 'active' : '', isGreen ? 'green' : '']" 
+        <div class="test"
+            v-bind:class="[ isActive ? 'active' : '', isGreen ? 'green' : '']"
             style="width:200px; height:200px; text-align:center; line-height:200px;">
                 hi vue
         </div>
-        
+
         <div :style="{color:color, fontSize:size, background: isRed ? '#FF0000' : ''}">
             hi vue
         </div>
@@ -367,7 +367,7 @@ class 与 style 绑定
     <script type="text/javascript">
 
         var vm = new Vue({
-        
+
             el : "#app",
 
             data : {
@@ -378,7 +378,7 @@ class 与 style 绑定
                 isRed : true
             }
         });
-    
+
     </script>
 
     <style>
@@ -432,7 +432,7 @@ class 与 style 绑定
                 ok : true
             }
         });
-        
+
     </script>
 
     <style type="text/css">
@@ -610,7 +610,7 @@ class 与 style 绑定
     <script type="text/javascript">
 
         var vm = new Vue({
-            
+
             el : "#app",
 
             data : {
@@ -619,7 +619,7 @@ class 与 style 绑定
                 checkedNames : ['Jack', 'John'],
                 picked : "Two"
             },
-            
+
             methods: {
                 submit : function () {
                     console.log(this.message);
@@ -638,7 +638,7 @@ class 与 style 绑定
 父子组件通信
 ------------
 
-组件是可复用的 Vue 实例，可以通过 ``Vue.component('组件名', JSON 对象)`` 创建组件。 
+组件是可复用的 Vue 实例，可以通过 ``Vue.component('组件名', JSON 对象)`` 创建组件。
 
 ``JSON 对象`` 的一般格式为：
 
@@ -782,7 +782,7 @@ class 与 style 绑定
 
 1. ``src/App.vue`` 是项目的入口文件，在 ``script`` 中 ``import`` 自定义的组件；
 2. 在 ``script`` 中使用 ``export default`` 注册组件；
-   
+
    - 用 ``name:`` 给组件起个名字；
    - 用 ``props`` 在子组件中声明需要向父组件请求的数据；
    - 用 ``data() {}`` 给 ``template`` 中的变量赋予初值
@@ -806,6 +806,6 @@ class 与 style 绑定
 
 未来有更多的知识等待探索。比如，如何更加优雅地组织代码，如何尽量减少第三方库混在业务逻辑中。
 
-当你检查是否已经掌握了上面的知识，可以通过阅读我的 
-`代码仓库笔记 <https://gitee.com/zhyantao/learn-programing-languages/tree/master/vue.js>`_ 
+当你检查是否已经掌握了上面的知识，可以通过阅读我的
+`代码仓库笔记 <https://gitee.com/zhyantao/learn-programing-languages/tree/master/vue.js>`_
 检查一下，或者也可以当做复习用。

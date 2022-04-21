@@ -7,7 +7,7 @@ Git
 ~~~~~~~~
 
 .. figure:: ../_static/images/bg2015120901.png
-    
+
     图源阮一峰的博客 [1]_
 
 - Workspace：工作区
@@ -48,7 +48,7 @@ Git 全局设置
 
     mkdir repository
     cd repository
-    git init 
+    git init
     git add .
     git commit -m "Initial commit"
     git remote add origin git@gitee.com:username/repository.git

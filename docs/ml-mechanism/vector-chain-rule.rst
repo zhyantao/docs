@@ -10,13 +10,13 @@
 
 有时候想一想，这种计算规则，其实本质上就是约定个 shape 的事。
 
-.. tip:: 
+.. tip::
 
     - 向量或标量的一切运算规则都要基于标量运算规则，都要考虑转换到标量形式时才能进行相关计算；
     - 向量或矩阵的求导规则运用多元微分学的知识，对某个变量求导时，其他变量看作常数；
     - 学习路线：标量求导、向量求导、矩阵求导、一元微分(求导)链式法则、向量微分链式法则。
 
-.. note:: 
+.. note::
 
     凡是书写数学相关的内容，都应当遵守 :ref:`符号定义 <symbol-definition>` 规则，这样方便后续阅读和理解，至少对于一个人来讲是如此。
 
@@ -24,15 +24,15 @@
 
     现在，因为在神经网络上，神经元之间的连接通常是线性关系，因此，大概率的情况下，不会出现二次方以及对数函数等其他我们在高中阶段就已经学习过的复杂函数。
     因为通常来讲，我们一般的做法是将神经元上的数字乘以与之相连接的边的权重，再加上某个偏置，即可得到输出。因此，对于单个神经元来讲，它就是线性的。
-    
+
     正因为这种线性关系的存在，我们在下面的假设中，通常假设 :math:`\mathbf{f}(\mathbf{w})=\mathbf{w}`， :math:`\mathbf{g}(\mathbf{x})=\mathbf{x}`
     的隐含意思就是对于神经网络的某一层来讲，影响权值和偏置的函数有两个： :math:`f_i` 和 :math:`g_i`。它们分别作用于权重 :math:`f_i(\mathbf{w})` 和神经元 :math:`g_i(\mathbf{x})`。
     计算得到的结果用于下一层神经元的输入。
-    
+
     但是为什么计算结果还是记作 :math:`\mathbf{w}` 和 :math:`\mathbf{b}` 呢？也就是说，为什么要假设 :math:`f_i(\mathbf{w})=\mathbf{w}` ？
     作者说，这是一个简单的例子，帮助我们理解相关原理应该如何被应用。这个例子虽然简单，但其特有的线性性质，帮助我们简化了计算过程和结果。
 
-.. warning:: 
+.. warning::
 
     关于全微分和偏微分的理解可能网络上并不一致。参考 :footcite:p:`DBLP:journals/corr/abs-1802-01528` 第 19 页，第 4 段。
 
@@ -61,11 +61,11 @@
 
 :math:`\nabla f(x, y) =\begin{bmatrix}\dfrac{\partial f(x,y)}{\partial x}, \dfrac{\partial f(x,y)}{\partial y}\end{bmatrix}=\begin{bmatrix}6yx, 3x^2\end{bmatrix}`
 
-.. note:: 
+.. note::
 
     这里使用了分子布局（ :math:`\mathit{Numerator\ layout}` ）。
-    
-.. tip:: 
+
+.. tip::
 
     设向量 :math:`\mathbf{x}` 表示一组变量 :math:`\mathbf{x} = \begin{bmatrix} \mathit{x_1} \\ \mathit{x_1} \\ \vdots \\ \mathit{x_n} \\ \end{bmatrix}`，
     向量 :math:`\mathbf{f}` 表示一组函数 :math:`\mathbf{f} = \begin{bmatrix} \mathit{f_1} \\ \mathit{f_1} \\ \vdots \\ \mathit{f_m} \\ \end{bmatrix}`，
@@ -80,22 +80,22 @@
 
 .. math::
 
-    J = 
+    J =
         \begin{bmatrix}
             \nabla f(x,y) \\\\
-            \nabla g(x,y) 
-        \end{bmatrix} = 
+            \nabla g(x,y)
+        \end{bmatrix} =
         \begin{bmatrix}
             \dfrac{\partial f(x,y)}{\partial x} & \dfrac{\partial f(x,y)}{\partial y} \\\\
             \dfrac{\partial g(x,y)}{\partial x} & \dfrac{\partial g(x,y)}{\partial y}
-        \end{bmatrix} = 
+        \end{bmatrix} =
         \begin{bmatrix}
             6yx & 3x^2 \\\\
             2 & 8y^7
         \end{bmatrix}
 
 
-.. note:: 
+.. note::
 
     :math:`\mathit{Jacobian\ matrix}` 的一般形式： :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})`。
 
@@ -104,23 +104,23 @@
     :math:`\mathbf{f}(\mathbf{x})=\begin{bmatrix} f_1(\mathbf{x}) \\ f_2(\mathbf{x}) \\ \vdots \\ f_m(\mathbf{x}) \end{bmatrix}`
     ，将 :math:`f_i(\mathbf{x})` 展开后，可以得到标量形式 :math:`f_i(\mathbf{x}) = 2 \mathit{x_1}^2 + 3 \mathit{x_2} + \dots`
     。需要注意的是： :math:`|\mathbf{x}|=n` 但是 :math:`|\mathbf{y}|=|\mathbf{f}|=m`。
-    
+
     .. math::
 
-        J = 
+        J =
             \dfrac{\partial \mathbf{y}}{\partial \mathbf{x}} =
             \begin{bmatrix}
                 \nabla f_1(\mathbf{x}) \\\\
                 \nabla f_2(\mathbf{x}) \\\\
                 \vdots \\\\
                 \nabla f_m(\mathbf{x})
-            \end{bmatrix} = 
+            \end{bmatrix} =
             \begin{bmatrix}
                 \dfrac{\partial}{\partial \mathbf{x}}f_1(\mathbf{x}) \\\\
                 \dfrac{\partial}{\partial \mathbf{x}}f_2(\mathbf{x}) \\\\
                 \vdots \\\\
                 \dfrac{\partial}{\partial \mathbf{x}}f_m(\mathbf{x})
-            \end{bmatrix} = 
+            \end{bmatrix} =
             \begin{bmatrix}
                 \dfrac{\partial}{\partial x_1}f_1(\mathbf{x}) & \dfrac{\partial}{\partial x_2}f_1(\mathbf{x}) & \dots & \dfrac{\partial}{\partial x_n}f_1(\mathbf{x}) \\\\
                 \dfrac{\partial}{\partial x_1}f_2(\mathbf{x}) & \dfrac{\partial}{\partial x_2}f_2(\mathbf{x}) & \dots & \dfrac{\partial}{\partial x_n}f_2(\mathbf{x}) \\\\
@@ -134,7 +134,7 @@
 
     这种展开规则 **很重要**，这是解向量求导问题的一个 **突破点**，学会了展开规则，向量求导就变得非常简单了，因为你可以通过目标方程目测出结果矩阵的形状，而且，结果矩阵是标量形式的。
 
-.. tip:: 
+.. tip::
 
     恒等函数（ :math:`\mathit{Identity\ function}` ） :math:`\mathbf{y}=\mathbf{f}(\mathbf{x})=\mathbf{x}`，即 :math:`y_i = f_i(\mathbf{x})=x_i`，在文中多次出现，是作为一个简单的 demo 来诠释概念是应该如何理解和应用的。
 
@@ -142,14 +142,14 @@
 
     .. math::
 
-        J &= 
+        J &=
             \dfrac{\partial \mathbf{y}}{\partial \mathbf{x}} =
             \begin{bmatrix}
             \nabla f_1(\mathbf{x}) \\\\
             \nabla f_2(\mathbf{x}) \\\\
             \vdots \\\\
             \nabla f_m(\mathbf{x})
-            \end{bmatrix} = 
+            \end{bmatrix} =
             \begin{bmatrix}
             \dfrac{\partial}{\partial \mathbf{x}}f_1(\mathbf{x}) \\\\
             \dfrac{\partial}{\partial \mathbf{x}}f_2(\mathbf{x}) \\\\
@@ -195,7 +195,7 @@ Example 1
 
     \begin{bmatrix}
     y_1 \\\\ y_2 \\\\ \vdots \\\\ y_n
-    \end{bmatrix} = 
+    \end{bmatrix} =
     \begin{bmatrix}
     f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) \\\\
     f_1(\mathbf{w}) \bigcirc g_2(\mathbf{x}) \\\\
@@ -203,7 +203,7 @@ Example 1
     f_1(\mathbf{w}) \bigcirc g_n(\mathbf{x})
     \end{bmatrix}
 
-.. note:: 
+.. note::
 
     :math:`\bigcirc` 是向量的二元操作符（代表加减乘除： :math:`\oplus\ \ominus\ \otimes\ \oslash` ）。向量的四则运算与标量四则运算略有不同，它们是元素级别的操作，比如
     :math:`\begin{bmatrix} 1 \\ 2 \end{bmatrix} + \begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} 4 \\ 6 \end{bmatrix}`。
@@ -212,9 +212,9 @@ Example 1
 
 .. math::
 
-    J_\mathbf{w} 
+    J_\mathbf{w}
     &= \dfrac{\partial \mathbf{y}}{\partial \mathbf{w}} \\\\
-    &= \begin{bmatrix} 
+    &= \begin{bmatrix}
         \dfrac{\partial}{\partial w_1}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) & \dfrac{\partial}{\partial w_2}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) & \dots & \dfrac{\partial}{\partial w_n}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) \\\\
         \dfrac{\partial}{\partial w_1}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) & \dfrac{\partial}{\partial w_2}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) & \dots & \dfrac{\partial}{\partial w_n}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) \\\\
         \vdots & \vdots & \ddots & \vdots \\\\
@@ -237,9 +237,9 @@ Example 1
 
 .. math::
 
-    J_\mathbf{x} 
+    J_\mathbf{x}
     &= \dfrac{\partial \mathbf{y}}{\partial \mathbf{x}} \\\\
-    &= \begin{bmatrix} 
+    &= \begin{bmatrix}
         \dfrac{\partial}{\partial x_1}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) & \dfrac{\partial}{\partial x_2}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) & \dots & \dfrac{\partial}{\partial x_n}f_1(\mathbf{w}) \bigcirc g_1(\mathbf{x}) \\\\
         \dfrac{\partial}{\partial x_1}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) & \dfrac{\partial}{\partial x_2}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) & \dots & \dfrac{\partial}{\partial x_n}f_2(\mathbf{w}) \bigcirc g_2(\mathbf{x}) \\\\
         \vdots & \vdots & \ddots & \vdots \\\\
@@ -258,43 +258,43 @@ Example 1
     &= \text{(and then }g_i(x_i)=x_i\text{)} \\\\
     &= diag\big(\dfrac{\partial}{\partial x_1} w_1 \bigcirc x_1 \quad \dfrac{\partial}{\partial x_2} w_2 \bigcirc x_2 \quad \dots \quad \dfrac{\partial}{\partial x_n} w_n \bigcirc x_n \big)
 
-综上， 
+综上，
 
 .. math::
-        
-    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \oplus \mathbf{f}(\mathbf{x}) 
+
+    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \oplus \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial w_1} w_1 \oplus x_1 \quad \dfrac{\partial}{\partial w_2} w_2 \oplus x_2 \quad \dots \quad \dfrac{\partial}{\partial w_n} w_n \oplus x_n \big) \\\\
     &= diag\big(1 \quad 1 \quad \dots \quad 1 \big) = I \\\\
 
-    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \ominus \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \ominus \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial w_1} w_1 \ominus x_1 \quad \dfrac{\partial}{\partial w_2} w_2 \ominus x_2 \quad \dots \quad \dfrac{\partial}{\partial w_n} w_n \ominus x_n \big) \\\\
     &= diag\big(1 \quad 1 \quad \dots \quad 1 \big) = I \\\\
 
-    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \otimes \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \otimes \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial w_1} w_1 \otimes x_1 \quad \dfrac{\partial}{\partial w_2} w_2 \otimes x_2 \quad \dots \quad \dfrac{\partial}{\partial w_n} w_n \otimes x_n \big) \\\\
     &= diag\big(w_1 \quad w_2 \quad \dots \quad w_n \big) = diag\big(\mathbf{w}\big) \\\\
 
-    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \oslash \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{w}}\mathbf{f}(\mathbf{w}) \oslash \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial w_1} w_1 \oslash x_1 \quad \dfrac{\partial}{\partial w_2} w_2 \oslash x_2 \quad \dots \quad \dfrac{\partial}{\partial w_n} w_n \oslash x_n \big) \\\\
     &= diag\big(\dfrac{1}{x_1} \quad \dfrac{1}{x_2} \quad \dots \quad \dfrac{1}{x_n} \big) \\\\
 
-    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \oplus \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \oplus \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial x_1} w_1 \oplus x_1 \quad \dfrac{\partial}{\partial x_2} w_2 \oplus x_2 \quad \dots \quad \dfrac{\partial}{\partial x_n} w_n \oplus x_n \big) \\\\
     &= diag\big(1 \quad 1 \quad \dots \quad 1 \big) = I \\\\
 
-    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \ominus \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \ominus \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial x_1} w_1 \ominus x_1 \quad \dfrac{\partial}{\partial x_2} w_2 \ominus x_2 \quad \dots \quad \dfrac{\partial}{\partial x_n} w_n \ominus x_n \big) \\\\
     &= diag\big(-1 \quad -1 \quad \dots \quad -1 \big) = -I \\\\
 
-    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \otimes \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \otimes \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial x_1} w_1 \otimes x_1 \quad \dfrac{\partial}{\partial x_2} w_2 \otimes x_2 \quad \dots \quad \dfrac{\partial}{\partial x_n} w_n \otimes x_n \big) \\\\
     &= diag\big(w_1 \quad w_2 \quad \dots \quad w_n \big) = diag\big(\mathbf{w}\big) \\\\
 
-    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \oslash \mathbf{f}(\mathbf{x}) 
+    \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{w}) \oslash \mathbf{f}(\mathbf{x})
     &= diag\big(\dfrac{\partial}{\partial x_1} w_1 \oslash x_1 \quad \dfrac{\partial}{\partial x_2} w_2 \oslash x_2 \quad \dots \quad \dfrac{\partial}{\partial x_n} w_n \oslash x_n \big) \\\\
     &= diag\big(-\dfrac{w_1}{x_1^2} \quad -\dfrac{w_2}{x_2^2} \quad \dots \quad -\dfrac{w_n}{x_n^2} \big) \\\\
 
-.. note:: 
+.. note::
 
     当含有常数项时，:math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(\mathbf{x})` 变成了 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\bigcirc\mathbf{g}(z)`，其中 :math:`\mathbf{g}(z)=\vec{1}z`。
 
@@ -308,7 +308,7 @@ Example 2
 
 .. math::
 
-    \nabla y 
+    \nabla y
     &= \dfrac{\partial y}{\partial \mathbf{x}} = \begin{bmatrix} \dfrac{\partial y}{\partial x_1} \quad \dfrac{\partial y}{\partial x_2} \quad \dots \quad \dfrac{\partial y}{\partial x_n} \end{bmatrix} \\\\
     &= \begin{bmatrix} \dfrac{\partial}{\partial x_1}\displaystyle\sum_i f_i(\mathbf{x}) \quad \dfrac{\partial}{\partial x_2}\displaystyle\sum_i f_i(\mathbf{x}) \quad \dots \quad \dfrac{\partial}{\partial x_n}\displaystyle\sum_i f_i(\mathbf{x}) \end{bmatrix} \\\\
     &= \begin{bmatrix} \displaystyle\sum_i \dfrac{\partial f_i(\mathbf{x})}{\partial x_1} \quad \displaystyle\sum_i \dfrac{\partial f_i(\mathbf{x})}{\partial x_2} \quad \dots \quad \displaystyle\sum_i \dfrac{\partial f_i(\mathbf{x})}{\partial x_n} \end{bmatrix} \\\\
@@ -329,7 +329,7 @@ Example 3
     \dfrac{\partial y}{\partial \mathbf{x}}
     &= \begin{bmatrix} \dfrac{\partial}{\partial x_1}\displaystyle\sum_i x_iz \quad \dfrac{\partial}{\partial x_2}\displaystyle\sum_i x_iz \quad \dots \quad \dfrac{\partial}{\partial x_n}\displaystyle\sum_i x_iz \end{bmatrix} \\\\
     \ &= \begin{bmatrix} z \quad z \quad \dots \quad z \end{bmatrix} \\\\
-    \dfrac{\partial y}{\partial z} 
+    \dfrac{\partial y}{\partial z}
     &= \dfrac{\partial}{\partial z}\displaystyle\sum_i x_iz \quad \text{(and the shape is 1} \times \text{1)}\\\\
     \ &= \displaystyle\sum_i x_i \\\\
     \ &= sum(\mathbf{x}) \\\\
@@ -353,7 +353,7 @@ Example 3
 
 下面将使用单变量全微分法则进行求导。
 
-.. note:: 
+.. note::
 
     **全微分** 假设所有变量都互相依赖， **偏微分** 假设除 :math:`x`
     （这里的 :math:`x` 也可以是 :math:`u`，指的是自变量）外，其他都是常量。这句话的含义可以参考下面的图注。
@@ -387,7 +387,7 @@ Example 3
         =\dfrac{\partial f}{\partial \mathbf{u}} \dfrac{\partial \mathbf{u}}{\partial x}
 
     .. rubric:: 注：函数 :math:`f` 与中间变量之间有这样一条依赖链条
-    
+
     .. graphviz::
 
         digraph foo {
@@ -410,38 +410,38 @@ Example 3
 
 :math:`u_1(x) = x^2`
 
-:math:`u_2(x, u_1) = x+u_1, \ for \ y=f(x)=u_2(x, u_1)` 
+:math:`u_2(x, u_1) = x+u_1, \ for \ y=f(x)=u_2(x, u_1)`
 
 然后，应用全微分公式求导：
 
 .. math::
 
-    \dfrac{\partial f(x, u_1)}{\partial x} = \dfrac{\partial u_2(x, u_1)}{\partial x}  
-    = \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} 
+    \dfrac{\partial f(x, u_1)}{\partial x} = \dfrac{\partial u_2(x, u_1)}{\partial x}
+    = \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x}
     =  1 + 2x
 
-.. hint:: 
-    
+.. hint::
+
     这里的 :math:`f` 与 :math:`u_2` 是一个意思，即，
-    
+
     .. math::
 
-        \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x} 
+        \dfrac{\partial u_2}{\partial x} + \dfrac{\partial u_2}{\partial u_1}\dfrac{\partial u_1}{\partial x}
         =\dfrac{\partial f}{\partial x} + \dfrac{\partial f}{\partial u_1}\dfrac{\partial u_1}{\partial x}
 
-.. hint:: 
+.. hint::
 
     虽然引入了两个中间变量，但是不能将其称之为多变量全微分法则，因为只有 :math:`x` 会影响输出。
 
-.. note:: 
+.. note::
 
     自动求导（Automatic Differentiation）是 PyTorch 中内置的求导规则，它包括两步：
-    
+
     - 前向求导（Forward Differentiation） :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}u}{\mathrm{d}x}\dfrac{\mathrm{d}y}{\mathrm{d}u}`
     - 反向求导（Backward Differentiation，也叫 Back Propagation） :math:`\dfrac{\mathrm{d}y}{\mathrm{d}x}=\dfrac{\mathrm{d}y}{\mathrm{d}u}\dfrac{\mathrm{d}u}{\mathrm{d}x}`
 
     从数据流的角度看：
-    
+
     - 前向求导就是当自变量（输入）取值发生变化时，会如何影响因变量（输出）
     - 反向求导就是当因变量（输出）取值发生变化时，会如何影响自变量（输入），反向求导可以一次性确定所有函数变量的变化量，所以它常被用来更新网络参数
 
@@ -455,7 +455,7 @@ Example 3
 
 .. math::
 
-    \mathbf{y} = \mathbf{f}(x) 
+    \mathbf{y} = \mathbf{f}(x)
     = \begin{bmatrix} y_1(x) \\ y_2(x) \end{bmatrix}
     = \begin{bmatrix} f_1(x) \\ f_2(x) \end{bmatrix}
     = \begin{bmatrix} ln(x^2) \\ sin(3x) \end{bmatrix}
@@ -473,19 +473,19 @@ Example 3
 .. math::
 
     \dfrac{\partial \mathbf{y}}{\partial x}
-    =  \begin{bmatrix} 
-        \dfrac{\partial f_1(\mathbf{g})}{\partial x} \\\\ 
-        \dfrac{\partial f_2(\mathbf{g})}{\partial x} 
-        \end{bmatrix} 
-    =  \begin{bmatrix} 
+    =  \begin{bmatrix}
+        \dfrac{\partial f_1(\mathbf{g})}{\partial x} \\\\
+        \dfrac{\partial f_2(\mathbf{g})}{\partial x}
+        \end{bmatrix}
+    =  \begin{bmatrix}
         \dfrac{\partial f_1}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_1}{\partial g_2} \dfrac{\partial g_2}{\partial x} \\\\
         \dfrac{\partial f_2}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_2}{\partial g_2} \dfrac{\partial g_2}{\partial x}
         \end{bmatrix}
-    =  \begin{bmatrix} 
+    =  \begin{bmatrix}
         \dfrac{1}{g_1} 2x + 0 \\\\
         0 + cos(g_2)3
         \end{bmatrix}
-    =  \begin{bmatrix} 
+    =  \begin{bmatrix}
         \dfrac{2}{x} \\\\
         3cos(3x)
         \end{bmatrix}
@@ -494,15 +494,15 @@ Example 3
 
 .. math::
 
-    \begin{bmatrix} 
+    \begin{bmatrix}
         \dfrac{\partial f_1}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_1}{\partial g_2} \dfrac{\partial g_2}{\partial x} \\\\
         \dfrac{\partial f_2}{\partial g_1} \dfrac{\partial g_1}{\partial x} + \dfrac{\partial f_2}{\partial g_2} \dfrac{\partial g_2}{\partial x}
     \end{bmatrix}
-    =   \begin{bmatrix} 
+    =   \begin{bmatrix}
         \dfrac{\partial f_1}{\partial g_1} & \dfrac{\partial f_1}{\partial g_2} \\\\
-        \dfrac{\partial f_2}{\partial g_1} & \dfrac{\partial f_2}{\partial g_2} 
+        \dfrac{\partial f_2}{\partial g_1} & \dfrac{\partial f_2}{\partial g_2}
         \end{bmatrix}
-        \begin{bmatrix} 
+        \begin{bmatrix}
         \dfrac{\partial g_1}{\partial x} \\\\ \dfrac{\partial g_2}{\partial x}
         \end{bmatrix}
     =   \dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}
@@ -512,14 +512,14 @@ Example 3
 .. math::
 
         \dfrac{\partial \mathbf{f}}{\partial \mathbf{g}}\dfrac{\partial \mathbf{g}}{\partial x}
-    =   \begin{bmatrix} 
+    =   \begin{bmatrix}
         \dfrac{1}{g_1} & 0 \\\\
-        0 & cos(g_2) 
+        0 & cos(g_2)
         \end{bmatrix}
-        \begin{bmatrix} 
+        \begin{bmatrix}
         2x \\\\ 3
         \end{bmatrix}
-    =   \begin{bmatrix} 
+    =   \begin{bmatrix}
         \dfrac{2}{x} \\\\
         3cos(3x)
         \end{bmatrix}
@@ -554,7 +554,7 @@ Example 3
 当 :math:`f_i` 仅是 :math:`g_i` 的函数，且 :math:`g_i` 仅是 :math:`x_i` 的函数时，我们还能对上述结果进行化简，即
 
 .. math::
-    
+
     \dfrac{\partial}{\partial \mathbf{x}}\mathbf{f}(\mathbf{g}(\mathbf{x}))=diag(\dfrac{\partial f_i}{\partial g_i}\dfrac{\partial g_i}{\partial x_i})
 
 到目前为止，我们就讲完了有关神经网络求导的全部知识。下面会有一些具体的案例，帮助我们理解。
@@ -577,8 +577,8 @@ Example 3
 
 现在我们想求 :math:`\mathbf{y}=\mathbf{f}(\mathbf{w})\cdot\mathbf{g}(\mathbf{x})` 的导数，可以使用链式法则。
 
-.. hint:: 
-    
+.. hint::
+
     :math:`\mathbf{w}\cdot\mathbf{x}=\mathbf{w}^T\mathbf{x} = sum(\mathbf{w}\otimes\mathbf{x})`
 
 首先，设置中间变量：
@@ -596,9 +596,9 @@ Example 3
 
 验证结果的正确性时，可以将它们先转成标量形式，在进行求导：
 
-:math:`y=\mathbf{w}\cdot\mathbf{x}=\displaystyle\sum_i(w_i x_i)` 
+:math:`y=\mathbf{w}\cdot\mathbf{x}=\displaystyle\sum_i(w_i x_i)`
 
-:math:`\dfrac{\partial y}{\partial w_j}=\displaystyle\sum_i\dfrac{\partial}{\partial w_j}(w_i x_i)=\dfrac{\partial}{\partial w_j}(w_j x_j)=x_j` 
+:math:`\dfrac{\partial y}{\partial w_j}=\displaystyle\sum_i\dfrac{\partial}{\partial w_j}(w_i x_i)=\dfrac{\partial}{\partial w_j}(w_j x_j)=x_j`
 
 因此， :math:`\dfrac{\partial y}{\partial \mathbf{w}}=[x_1, x_2, \dots, x_n]=\mathbf{x}^T`。
 
@@ -627,7 +627,7 @@ Example 3
 
 令
 
-:math:`z(\mathbf{w}, b, \mathbf{x})=\mathbf{w}\cdot\mathbf{x}+b` 
+:math:`z(\mathbf{w}, b, \mathbf{x})=\mathbf{w}\cdot\mathbf{x}+b`
 
 :math:`activation(z)=max(0, z)`
 
@@ -662,9 +662,9 @@ Example 3
 
 :math:`u(\mathbf{w}, b, \mathbf{x})=max(0, \mathbf{w}\cdot\mathbf{x}+b)`
 
-:math:`v(y, u)=y-u` 
+:math:`v(y, u)=y-u`
 
-:math:`C(v)=\dfrac{1}{n}\displaystyle\sum_{i=1}^N v^2`  
+:math:`C(v)=\dfrac{1}{n}\displaystyle\sum_{i=1}^N v^2`
 
 然后，求 :math:`\dfrac{\partial C(v)}{\partial \mathbf{w}}` ：
 

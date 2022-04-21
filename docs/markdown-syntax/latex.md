@@ -121,15 +121,15 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 % \usepackage[<opt1, opt2, ...>]{<pkg1, pkg2, ...>}
 
 \begin{document}
-    
+
     % 正文内容
     % \chapter{Chapter title}           % 章（只有 book 才有 chapter）
     \section{Section title}             % 节
-    \subsection{Subsection title} 
+    \subsection{Subsection title}
     \subsubsection{Subsubsection title}
     \paragraph{Paragraph title}         % 段落
     \subparagraph{Subparagraph title}
-    
+
 \end{document}
 
 % 此后内容会被忽略
@@ -190,15 +190,15 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 ## 字号
 
 ```{code-block} tex
-\tiny 
-\scriptsize 
-\footnotesize 
-\small 
+\tiny
+\scriptsize
+\footnotesize
+\small
 \normalsize
-\large 
-\Large 
-\LARGE 
-\huge 
+\large
+\Large
+\LARGE
+\huge
 \Huge
 ```
 
@@ -214,8 +214,8 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 ## 对齐方式
 
 ```{code-block} tex
-\begin{center} 
-\begin{flushleft} 
+\begin{center}
+\begin{flushleft}
 \begin{flushright}
 ```
 
@@ -224,25 +224,25 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 ### 无序列表
 
 ```{code-block} tex
-\begin{itemize} 
-    \item First item 
-    \item[-] Item with dash 
+\begin{itemize}
+    \item First item
+    \item[-] Item with dash
 \end{itemize}
 ```
 
 ### 有序列表
 
 ```{code-block} tex
-\begin{enumerate} 
-    \item First item 
-    \item[-] Item with dash 
+\begin{enumerate}
+    \item First item
+    \item[-] Item with dash
 \end{enumerate}
 ```
 
 ## 表格
 
 ```{code-block} tex
-\begin{table}[htpb!] 
+\begin{table}[htpb!]
     \begin{tabular}{lc @{ : } r|p{6em}}  % 用 @{} 自定义竖线样式
         \hline                           % 绘制横线
         left & center & right & par box with fixed width\\
@@ -257,12 +257,12 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 ## 图片
 
 ```{code-block} tex
-\begin{figure}[htpb!] 
-    \centering 
-    
-    \includegraphics{figurename} 
-        \caption{caption} 
-        \label{fig:my_label} 
+\begin{figure}[htpb!]
+    \centering
+
+    \includegraphics{figurename}
+        \caption{caption}
+        \label{fig:my_label}
 \end{figure}
 ```
 
@@ -347,7 +347,7 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 首先，引入已经写好的 `.bib` 和 `.sty` 文件，将以下内容添加到文章末尾。
 
 ```{code-block} tex
-\bibliography{your_bibfile.bib} 
+\bibliography{your_bibfile.bib}
 \bibliographystyle{your_citation_style}
 ```
 

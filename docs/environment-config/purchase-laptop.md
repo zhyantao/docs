@@ -107,8 +107,8 @@
   - 279 元
 * - 三星
   - 500 GB
-  - 
-  - 
+  -
+  -
   - M.2 PCIe
   - 3 Gb/s
   - 519 元
@@ -136,19 +136,19 @@ AMD 的主板只支持 AMD 的 CPU，英特尔的主板只支持英特尔的 CPU
   - DDR4 DIMM
   - ATX
   - 799 元
-* - 
+* -
   - AMD X570
   - Realtek ALC897
   - DDR4 DIMM
   - M-ATX
   - 799 元
-* - 
+* -
   - AMD TRX40
   - Realtek ALC897
   - DDR4 DIMM
   - Mini-ATX
   - 799 元
-* - 
+* -
   - Intel Z170
   - Realtek ALC897
   - DDR4 DIMM
@@ -172,11 +172,11 @@ AMD 的主板只支持 AMD 的 CPU，英特尔的主板只支持英特尔的 CPU
   - 分辨率
   - 点距
   - 价格
-* - 
-  - 
-  - 
-  - 
-  - 
+* -
+  -
+  -
+  -
+  -
 ```
 
 ## 模拟攒机

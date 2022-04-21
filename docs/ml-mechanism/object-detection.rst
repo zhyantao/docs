@@ -82,7 +82,7 @@ YOLO 的锚框可以看成是 :math:`stride = b_w` 的滑动窗口。
 
 .. math::
 
-  AP = \frac{1}{11} \sum_{r \in \{0, 0.1,0.2,...,1\}} p_{interp} (r) 
+  AP = \frac{1}{11} \sum_{r \in \{0, 0.1,0.2,...,1\}} p_{interp} (r)
 
 
 其中，:math:`p_{interp}(r) = \max\limits_{\tilde{r};\tilde{r} \ge r} p(\tilde{r})`，
@@ -101,7 +101,7 @@ mAP 计算的是 :math:`IoU\_threshold = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 
 
 查准率指的是，在你预测出来的所有检测框中，有多少预测对了，也就是说，有多少 IoU 超过了 IoU_threshod 的检测框被计数了。
 
-进一步地，我们从维基百科中搜索一下\ 
+进一步地，我们从维基百科中搜索一下\
 `混淆矩阵 <https://en.wikipedia.org/wiki/Confusion_matrix>`_\，会有下面这张图：
 
 .. image:: ../_static/images/confusion-matrix.png
@@ -179,7 +179,7 @@ Label Assignment in Object Detection
     是positive、negative 还是 ignore。这里面有两个挑战，一个挑战是 negative 非常多，容易导致样本不均衡问题；
     另一个挑战是判定标准只能经验性地设置，然后通过实验结果来验证，基本是一个 trial and error 的过程 [1]_。
     另外，参考 [2]_ [3]_
-    
+
 
 相关工具
 --------

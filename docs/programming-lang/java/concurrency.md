@@ -40,14 +40,14 @@
 
 public class MultiThreadLong {
     public static long t = 0;
-    
+
     public static class ChangeT implements Runnable {
         private long to;
-        
+
         public ChangeT(long to) {
             this.to = to;
         }
-        
+
         @Override
         public void run() {
             while(true) {
@@ -66,7 +66,7 @@ public class MultiThreadLong {
                 if (tmp != 111L && tmp != -999L && tmp != 333L && tmp != -444L) {
                     System.out.println(tmp);
                 }
-                
+
                 Thread.yield();
             }
         }
@@ -160,7 +160,7 @@ public class NewThread2 implements Runnable {
 ```{code-block} java
 public class StopThread {
     public static User u = new User();
-    
+
     public static class User {
         private int id;
         private String name;
@@ -243,7 +243,7 @@ public class StopThread {
 ```{code-block} java
 public class StopThread2 {
     public static User u = new User();
-    
+
     public static class User {
         private int id;
         private String name;
@@ -278,7 +278,7 @@ public class StopThread2 {
     public static class ChangeObjectThread extends Thread {
         // 设置标志位，以安全的方式终止线程
         volatile boolean stopme = false;
-        
+
         public void stopMe() {
             stopme = true;
         }
@@ -332,7 +332,7 @@ public class StopThread2 {
             t.stopMe(); // 通过设置标志位安全地停止
         }
     }
-    
+
 }
 ```
 
@@ -396,7 +396,7 @@ public class InterruptThread2{
         Thread.sleep(2000);
         t1.interrupt();
     }
-    
+
 }
 ```
 
@@ -437,9 +437,9 @@ public class NotifyThread {
                 System.out.println(System.currentTimeMillis() + ": T2 启动了，打算从队列中唤醒某个线程");
 
                 object.notify(); // wait 和 notify 必须放在 synchronized 语句中才能生效
-    
+
                 System.out.println(System.currentTimeMillis() + ": T2 还要睡两秒，还没放弃锁");
-    
+
                 try {
                     Thread.sleep(2000); // sleep 不会放弃锁
                 } catch (InterruptedException e) {
@@ -553,7 +553,7 @@ public class GoodSuspend {
                         System.out.println("in ReadObjectThread");
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        
+
                     }
                 }
 
@@ -678,7 +678,7 @@ public class Visibility {
 public class ThreadGroupName implements Runnable {
     @Override
     public void run() {
-        String groupAndName = Thread.currentThread().getThreadGroup().getName() 
+        String groupAndName = Thread.currentThread().getThreadGroup().getName()
                                 + "-" + Thread.currentThread().getName();
         while(true) {
             System.out.println("线程组和线程名：" + groupAndName);
@@ -1058,7 +1058,7 @@ public class ReenterLock implements Runnable {
             }
         }
     }
-    
+
     public static void main(String[] args) throws InterruptedException {
         ReenterLock rl = new ReenterLock();
         Thread t1 = new Thread(rl);
@@ -1101,7 +1101,7 @@ public class IntLock implements Runnable {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    
+
                 }
 
                 // 需要等待线程 2 释放 lock2（死锁）
@@ -1113,7 +1113,7 @@ public class IntLock implements Runnable {
                 try {
                     Thread.sleep(500);;
                 } catch (InterruptedException e) {
-                    
+
                 }
 
                 // 需要等待线程 1 释放 lock1（死锁）
@@ -1169,12 +1169,12 @@ public class TimeLock implements Runnable {
                 System.out.println("申请锁失败");
             }
         } catch (InterruptedException e) {
-            
+
         } finally {
             if (lock.isHeldByCurrentThread()) {
                 lock.unlock();
             }
-        } 
+        }
     }
 
     public static void main(String[] args) {
@@ -1216,7 +1216,7 @@ public class FairLock implements Runnable {
         Thread t2 = new Thread(fl, "Thread_t2");
 
         t1.start();
-        t2.start();        
+        t2.start();
     }
 }
 ```
@@ -1464,7 +1464,7 @@ public class CyclicBarrierDemo {
         }
     }
 
-    
+
     public static class BarrierRun implements Runnable {
         boolean flag;
         int N;
@@ -1487,7 +1487,7 @@ public class CyclicBarrierDemo {
             System.out.println("BarrierRun 执行了 " + (i++) + " 次");
         }
     }
-    
+
     public static void main(String arg[]) throws InterruptedException {
         final int N = 10;
         Thread[] allSolider = new Thread[N];
@@ -1496,10 +1496,10 @@ public class CyclicBarrierDemo {
         /**
          * 循环栅栏的工作流程：
          * 当到达栅栏的线程数量达到设定值后，执行 barrierAction，也就是这里的 BarrierRun。
-         * 
+         *
          * 如何判定数量是否达到了呢？
          * 因为每个线程都会在栅栏处等待，cyclic.await() 可以借此计数。
-         * 
+         *
          * 如何理解循环？
          * 可以多次调用 await() 函数，每次调用都会重新凑齐设定数目的线程，然后翻越屏障。
          * 执行 barrierAction

@@ -4,10 +4,10 @@
 PlantUML
 =========
 
-.. hint:: 
-    
+.. hint::
+
     本文并未提供更多细节，更多内容可以参考：
-    
+
     - `UML Class Diagrams Reference <https://www.uml-diagrams.org/class-reference.html>`_
     - `UML Diagrams Examples <https://www.uml-diagrams.org/index-examples.html>`_
     - `PlantUML 使用手册 <http://pdf.plantuml.net/>`_
@@ -32,8 +32,8 @@ PlantUML
         circle          CircleDemo          /'圆'/
         diamond         DiamondDemo         /'菱形'/
         entity          EntityDemo          /'条目'/
-        
-        
+
+
         class Foo<? extends Element> {      /'泛型'/
             int size()
         }
@@ -55,13 +55,13 @@ PlantUML
             -privateMethod()
         }
 
-        
+
         interface InterfaceDemo {
             +{static} public_field
             ~package_private_field
             #protected_field
             -private_field
-            +{abstract} publicMethod() 
+            +{abstract} publicMethod()
             ~packagePrivateMethod()
             #protectedMethod()
             -privateMethod()
@@ -81,8 +81,8 @@ PlantUML
     circle          CircleDemo          /'圆'/
     diamond         DiamondDemo         /'菱形'/
     entity          EntityDemo          /'条目'/
-    
-    
+
+
     class Foo<? extends Element> {      /'泛型'/
         int size()
     }
@@ -104,13 +104,13 @@ PlantUML
         -privateMethod()
     }
 
-    
+
     interface InterfaceDemo {
         +{static} public_field
         ~package_private_field
         #protected_field
         -private_field
-        +{abstract} publicMethod() 
+        +{abstract} publicMethod()
         ~packagePrivateMethod()
         #protectedMethod()
         -privateMethod()
@@ -147,7 +147,7 @@ PlantUML
 
         abstract AbsClass
         interface Interface
-    
+
         @enduml
 
 .. uml::

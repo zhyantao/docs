@@ -26,7 +26,7 @@ Makefile
 
     clean:
         rm -f test *.o
- 
+
 还有其他的语法比如 ``.PHONY`` 可以参考下面的参考文献中的 **跟我一起写Makefile**
 
 

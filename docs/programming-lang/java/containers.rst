@@ -36,7 +36,7 @@
     List <|.. ArrayList
     List <|.. LinkedList
     List <|.. Vector
-    
+
     Set <|.. HashSet
     Set <|.. TreeSet
     HashSet <|-- LinkedHashSet
@@ -76,7 +76,7 @@ Collection（根接口）
 ~~~~~~~~~~~~~~~~~~~~
 
 ``Colleciton`` 是描述所有序列容器的共性的根接口，实现 ``Colleciton`` 就要提供 ``iterator()`` 方法。
-所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于 
+所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于
 ``foreach`` 语法。
 
 Map（根接口）
@@ -88,7 +88,7 @@ Map（根接口）
 - ``TreeMap``，按照比较结果升序保存键。
 - ``LinkedHashMap``，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
 
-``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现， 
+``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现，
 ``TreeSet`` 基于 ``TreeMap`` 实现。
 
 List 和 Set
@@ -98,10 +98,10 @@ List 和 Set
 
 不同的是， ``List`` 中的元素有序、可重复，而 ``Set`` 中的元素无序、不可重复。
 
-``Set`` 中最常被使用的是测试归属性（询问某个对象是否在 ``Set`` 中），使用 ``contains()`` 
+``Set`` 中最常被使用的是测试归属性（询问某个对象是否在 ``Set`` 中），使用 ``contains()``
 方法就可以。因此 ``HashSet`` 是最常用的实现方式。
 
-``Set`` 具有与 ``Collection`` 完全一样的接口，因此没有任何额外的功能，实际上 ``Set`` 就是 
+``Set`` 具有与 ``Collection`` 完全一样的接口，因此没有任何额外的功能，实际上 ``Set`` 就是
 ``Collection``，只是行为不同（这是继承与多态思想的典型应用）。
 
 ``TreeSet`` 将元素存储在红黑树数据结构中，而 ``HashSet`` 使用的是散列函数。
@@ -120,13 +120,13 @@ ArrayList、LinkedList 和 Vector
 当然，这些对比都是指数据量很大或者操作很频繁的情况下的对比，如果数据和运算量很小，那么对比将失去意义。
 
 ``Vector`` 和 ``ArrayList`` 类似，但属于强同步类。
-如果你的程序本身是线程安全的（没有在多个线程之间共享同一个集合/对象）那么使用 ``ArrayList`` 
+如果你的程序本身是线程安全的（没有在多个线程之间共享同一个集合/对象）那么使用 ``ArrayList``
 是更好的选择。
 
 ``Vector`` 和 ``ArrayList`` 在更多元素添加进来时会请求更大的空间。
 ``Vector`` 每次请求其大小的双倍空间，而 ``ArrayList`` 每次对 ``size`` 增长 50%。
 
-而 ``LinkedList`` 还实现了 ``Queue`` 接口，该接口比 ``List`` 提供了更多的方法，包括 ``offer()``， 
+而 ``LinkedList`` 还实现了 ``Queue`` 接口，该接口比 ``List`` 提供了更多的方法，包括 ``offer()``，
 ``peek()``， ``poll()`` 等。
 
 注意：默认情况下 ``ArrayList`` 的初始容量非常小，所以如果可以预估数据量的话，
@@ -148,7 +148,7 @@ HashSet 和 TreeSet
 ``TreeSet`` 的底层是 ``TreeMap`` 的 ``keySet()``，而 ``TreeMap`` 是基于红黑树实现的，红黑树是一种平衡二叉查找树，
 它能保证任何一个节点的左右子树的高度差不会超过较矮的那棵的一倍。
 
-``TreeMap`` 是按 ``key`` 排序的，元素在插入 ``TreeSet`` 时 ``compareTo()`` 方法要被调用，所以 
+``TreeMap`` 是按 ``key`` 排序的，元素在插入 ``TreeSet`` 时 ``compareTo()`` 方法要被调用，所以
 ``TreeSet`` 中的元素要实现 ``Comparable`` 接口。 ``TreeSet`` 作为一种 ``Set``，它不允许出 现重复元素。
 ``TreeSet`` 是用 ``compareTo()`` 来判断重复元素的。
 
@@ -166,11 +166,11 @@ HashSet 和 TreeSet
             Collection<Integer> collection = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
             Integer[] moreInts = { 6, 7, 8, 9, 10 };
             collection.addAll(Arrays.asList(moreInts));
-            
+
             // Runs significantly faster, but you can't construct a Collection this way:
             Collections.addAll(collection, 11, 12, 13, 14, 15);
             Collections.addAll(collection, moreInts);
-            
+
             // Produces a list "backed by" an array:
             List<Integer> list = Arrays.asList(16, 17, 18, 19, 20);
             list.set(1, 99); // OK -- modify an element
@@ -186,17 +186,17 @@ HashSet 和 TreeSet
 此类 **不能实例化**，就像一 **个工具类**，服务于 Java 的 Collection 框架。
 
 ``java.lang.Array`` 是 Java 中 **最基本的一个存储结构**。提供了动态创建和访问 Java **数组** 的方法。
-其中的元素的类型必须相同。效率高，但容量固定且无法动态改变。 
+其中的元素的类型必须相同。效率高，但容量固定且无法动态改变。
 它无法判断其中实际存有多少元素， ``length`` 只是告诉我们 array 的容量。
 
 ``java.util.Arrays`` 静态类专门用来操作 array，提供搜索、排序、复制等静态方法。
 
-- ``equals()`` ：比较两个 array 是否相等。array 拥有相同元素个数，且所有对应元素两两相等。 
-- ``sort()`` ：用来对 array 进行排序。 
+- ``equals()`` ：比较两个 array 是否相等。array 拥有相同元素个数，且所有对应元素两两相等。
+- ``sort()`` ：用来对 array 进行排序。
 - ``binarySearch()`` ：在排好序的 array 中寻找元素。
 - ``asList()`` ：传入一个参数 array，将其转化为 ``List``
 
-``Colleciton.addAll()`` 比 ``Collections.allAll()`` 运行更快，但不如 ``Collections.addAll()`` 
+``Colleciton.addAll()`` 比 ``Collections.allAll()`` 运行更快，但不如 ``Collections.addAll()``
 和 ``Arrays.asList()`` 灵活。 ``Colleciton.allAll()`` 只能接受另一个 ``Collection`` 对象作为参数。
 
 容器的打印
@@ -225,7 +225,7 @@ HashSet 和 TreeSet
             map.put("dog", "Bosco");
             map.put("dog", "Spot");
             return map;
-        }	
+        }
         public static void main(String[] args) {
             print(fill(new ArrayList<String>()));
             print(fill(new LinkedList<String>()));
@@ -276,7 +276,7 @@ HashSet 和 TreeSet
             // A simpler approach, when possible:
             for(Pet p : pets)
                 System.out.print(p.id() + ":" + p + " ");
-            System.out.println();	
+            System.out.println();
             // An Iterator can also remove elements:
             it = pets.iterator();
             for(int i = 0; i < 6; i++) {
@@ -293,7 +293,7 @@ HashSet 和 TreeSet
 
 ``ListIterator`` 是一个更加强大的 ``Iterator`` 的子类型，它只能用于各种 ``List`` 类的访问。
 
-``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()`` 
+``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()``
 方法替换它指向的元素， ``listIterator(n)`` 方法可以返回索引为 n 的元素。
 
 .. _full-container-taxonomy:

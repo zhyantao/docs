@@ -14,7 +14,7 @@
 --------
 
 当我们用多态来编写代码时，在编译期，编译器无法知道当前对象正在调用基类的哪个导出类的对象的方法。
-只有到了运行期，通过动态绑定，该问题得以解决，具体的运行细节，在 :ref:`第一章 <ploy-dyna-bind>` 
+只有到了运行期，通过动态绑定，该问题得以解决，具体的运行细节，在 :ref:`第一章 <ploy-dyna-bind>`
 做了比较多的相关描述。
 
 Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属于 ``final`` 方法）之外，其他所有方法都是后期绑定。
@@ -121,14 +121,14 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
 
 由于代码过于简单，也许你会忽略多态现象的发生，因此，我将发生多态的代码所在的行高亮了。
 
-由于有多态机制，我们可以 **根据自己的需求对系统添加任意多的新类型**\，而不需要更改 ``next()`` 
-方法。在一个设计良好的 OOP 程序中，大多数或者所有方法 **都会遵循** ``next()`` 的模型，而且 
-**只与基类接口通信**\。这样的程序是 **可扩展** 
-的，因为可以从通用的基类继承出新的数据类型，从而新添一些功能。那些操纵基类接口的方法 
+由于有多态机制，我们可以 **根据自己的需求对系统添加任意多的新类型**\，而不需要更改 ``next()``
+方法。在一个设计良好的 OOP 程序中，大多数或者所有方法 **都会遵循** ``next()`` 的模型，而且
+**只与基类接口通信**\。这样的程序是 **可扩展**
+的，因为可以从通用的基类继承出新的数据类型，从而新添一些功能。那些操纵基类接口的方法
 **不需要任何改动就可以应用于新类**\。
 
-事实上，不需要改动 ``next()`` 方法，所有的新类都能与原有类一起正确运行。即使 ``next()`` 
-方法是单独存放在某个文件中，并且在 ``Shape`` 接口中添加了其他的新方法，\ ``next()`` 也 
+事实上，不需要改动 ``next()`` 方法，所有的新类都能与原有类一起正确运行。即使 ``next()``
+方法是单独存放在某个文件中，并且在 ``Shape`` 接口中添加了其他的新方法，\ ``next()`` 也
 **不需要再编译就能正确运行**。
 
 
@@ -137,13 +137,13 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
 
 构造器 **不具有** 多态性（实际上它们是 ``static`` 方法，只不过该 ``static`` 声明是隐式的）。
 
-基类的构造器 **总是** 在导出类的构造过程中被调用，而且 **按照继承层次** 逐渐向上链接，以使 
+基类的构造器 **总是** 在导出类的构造过程中被调用，而且 **按照继承层次** 逐渐向上链接，以使
 **每个基类的构造器都能得到调用**。
 
 通过组合和继承方法来创建新类时，永远不必担心对象的 **清理** 问题，子对象通常都会留给垃圾回收器进行处理。
 
-如果确实遇到清理的问题，那么必须为新类创建 ``dispose()`` 
-方法（这个方法名可以自定义）。如果需要进行一些特殊的清理动作，就必须在导出类中覆盖 ``dispose()`` 
+如果确实遇到清理的问题，那么必须为新类创建 ``dispose()``
+方法（这个方法名可以自定义）。如果需要进行一些特殊的清理动作，就必须在导出类中覆盖 ``dispose()``
 方法，示例代码如下。
 
 .. code-block:: java
@@ -258,15 +258,15 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
     disposing Characteristic is alive
     *///:~
 
-当覆盖被继承类的 ``dispose()`` 方法时，务必记住调用基类的 ``dispose()`` 
+当覆盖被继承类的 ``dispose()`` 方法时，务必记住调用基类的 ``dispose()``
 方法，否则，基类的清理动作就不会发生。应该首先对导出类进行清理，然后才是基类。
 
-如果这些成员对象存在于其他一个或多个对象时，不能直接简单使用 ``dispose()`` 
+如果这些成员对象存在于其他一个或多个对象时，不能直接简单使用 ``dispose()``
 方法，需要使用 **引用计数(** ``static int counter`` **)** 来跟踪仍旧访问着共享对象的数量。
 
-.. note:: 
-    
-    在一般的方法内部，动态绑定的调用是在运行时才决定的，因为对象无法知道它是属于 **方法所在的那个类** 
+.. note::
+
+    在一般的方法内部，动态绑定的调用是在运行时才决定的，因为对象无法知道它是属于 **方法所在的那个类**
     还是 **那个类的导出类**\。由于动态绑定的存在，可能会出现难以预料的现象，具体细节参考下文描述。
 
 如果先讲原理，可能会有些抽象且难以理解，因此，我们首先阅读一段代码，将问题澄清。
@@ -287,7 +287,7 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
             draw();
             print("Glyph() after draw()");
         }
-    }	
+    }
 
     class RoundGlyph extends Glyph {
         private int radius = 1;
@@ -298,7 +298,7 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
         void draw() {
             print("RoundGlyph.draw(), radius = " + radius);
         }
-    }	
+    }
 
     public class PolyConstructors {
         public static void main(String[] args) {
@@ -349,26 +349,26 @@ Java 中除了 ``static`` 方法和 ``final`` 方法（\ ``private`` 方法属�
     //: polymorphism/CovariantReturn.java
 
     class Grain {
-        public String toString() { 
-            return "Grain"; 
+        public String toString() {
+            return "Grain";
         }
     }
 
     class Wheat extends Grain {
-        public String toString() { 
-            return "Wheat"; 
+        public String toString() {
+            return "Wheat";
         }
     }
 
     class Mill {
-        Grain process() { 
-            return new Grain(); 
+        Grain process() {
+            return new Grain();
         }
     }
 
     class WheatMill extends Mill {
-        Wheat process() { 
-            return new Wheat(); 
+        Wheat process() {
+            return new Wheat();
         }
     }
 

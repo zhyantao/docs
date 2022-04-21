@@ -55,7 +55,7 @@ class MyDataset(Dataset):
         label = paddle.randint(0, CLASS_NUM-1, dtype='int64')
         # 返回单条数据（训练数据，对应的标签）
         return data, label
-    
+
     # 返回数据集总数目
     def __len__(self):
         return self.num_samples
@@ -67,7 +67,7 @@ class MyDataset(Dataset):
 视觉相关数据集：
 
 ```{code-block} python
-['DatasetFolder', 'ImageFolder', 'MNIST', 'FashionMNIST', 
+['DatasetFolder', 'ImageFolder', 'MNIST', 'FashionMNIST',
 'Flowers', 'Cifar10', 'Cifar100', 'VOC2012']
 ```
 
@@ -80,14 +80,14 @@ class MyDataset(Dataset):
 数据处理方法：
 
 ```{code-block} python
-['BaseTransform', 'Compose', 'Resize', 
+['BaseTransform', 'Compose', 'Resize',
 'RandomResizedCrop', 'CenterCrop', 'RandomCrop',
 'RandomHorizontalFlip', 'RandomVerticalFlip', 'RandomRotation',
-'Transpose', 'Normalize', 
-'BrightnessTransform', 'SaturationTransform', 'ContrastTransform', 
-'HueTransform', 'ColorJitter', 'Pad', 'Grayscale', 
-'ToTensor', 'to_tensor', 'hflip', 'vflip', 'resize', 
-'pad', 'rotate', 'to_grayscale', 'crop', 'center_crop', 
+'Transpose', 'Normalize',
+'BrightnessTransform', 'SaturationTransform', 'ContrastTransform',
+'HueTransform', 'ColorJitter', 'Pad', 'Grayscale',
+'ToTensor', 'to_tensor', 'hflip', 'vflip', 'resize',
+'pad', 'rotate', 'to_grayscale', 'crop', 'center_crop',
 'adjust_brightness', 'adjust_contrast', 'adjust_hue', 'normalize']
 ```
 ````
@@ -143,9 +143,9 @@ class MyModel(paddle.nn.Layer):
 飞桨框架内置模型：
 
 ```{code-block} python
-['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152', 
-'VGG', 'vgg11', 'vgg13', 'vgg16', 'vgg19', 
-'MobileNetV1', 'mobilenet_v1', 'MobileNetV2', 'mobilenet_v2', 
+['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
+'VGG', 'vgg11', 'vgg13', 'vgg16', 'vgg19',
+'MobileNetV1', 'mobilenet_v1', 'MobileNetV2', 'mobilenet_v2',
 'LeNet']
 ```
 
@@ -222,7 +222,7 @@ for epoch in range(epochs):
         acc = paddle.metric.accuracy(predicts, y_data)
         # 反向传播
         loss.backward()
-        
+
         # 输出结果
         if (batch_id+1) % 4 == 0:
             print("epoch: {}, batch_id: {}, loss is: {}, acc is: {}".format(
@@ -252,7 +252,7 @@ for batch_id, data in enumerate(test_loader()):
     # 计算准确率
     acc = paddle.metric.accuracy(predicts, y_data)
     # 模型验证没有反向传播，因此也就不会更新参数
-    
+
     # 输出结果
     if (batch_id+1) % 4 == 0:
         print("epoch: {}, batch_id: {}, loss is: {}, acc is: {}".format(

@@ -112,4 +112,4 @@ Java 基础知识
 
 .. rubric:: 参考资料
 
-.. footbibliography:: 
+.. footbibliography::

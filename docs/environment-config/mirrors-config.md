@@ -453,7 +453,7 @@ under the License.
     rename .repo .repo.bak *.repo
     cp CentOS-Base.repo.bak CentOS_local.repo
     cp CentOS-Media.repo.bak CentOS-local.repo
-    vim CentOS-local.repo 
+    vim CentOS-local.repo
     ```
 
 4. 写入如下内容：

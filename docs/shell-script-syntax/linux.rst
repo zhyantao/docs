@@ -2,13 +2,13 @@
 Linux
 ======
 
-.. tip:: 
+.. tip::
 
     当我们对一个命令印象模糊的时候，首先应该想到的不应该是谷歌百度，而应该是 MAN 手册。
-    
+
     关于如何读懂 MAN 手册，我想大概能明白下面几条就足够了：
 
-    - 由中括号括起来的部分 ``[OPTION1 | OPTION2 | ...]`` 为可选项。 
+    - 由中括号括起来的部分 ``[OPTION1 | OPTION2 | ...]`` 为可选项。
 
       - 中括号内部多个选项之间由 ``|`` 分割，表示从多个 OPTIONS 中选择一个。
 
@@ -70,7 +70,7 @@ Linux 目录结构
         -l      # 除了文件名外，还将文件的权限、所有者、文件大小等信息详细列出来
 
     tree        # 以树状形式显示当前文件和目录
-    
+
     cd          # 进入指定目录
         -       # 返回到最近访问的目录
 
@@ -80,7 +80,7 @@ Linux 目录结构
 
     mkdir       # 新建目录
         -p      # 创建多级目录
-    
+
     rm          # 删除文件
         -r      # 删除目录
         -i      # 提示用户是否删除目录或文件
@@ -94,12 +94,12 @@ Linux 目录结构
         -r user@remotehost:directory/SourceFolder LocalTargetFolder
         LocalTargetFile user@remotehost:directory/SourceFile
         -r LocalTargetFolder user@remotehost:directory/SourceFolder
-    
+
     cat         # 查看文件内容
         <<EOF | tee save/to/tagetFile
         Will override original contents...
         EOF
-    
+
     more        # 将文件内容分页输出到屏幕，不可以上下滑动
         Enter   # 显示下一行
         Space   # 显示下一页
@@ -190,11 +190,11 @@ Linux 目录结构
 .. code-block:: bash
 
     ip addr         # 获取网络接口配置信息（ifconfig）
-    
+
     ping            # 测试与目标主机的连通性
         -C          # 发送指定包数目后停止
         -i          # 设定间隔秒数，每个几秒发送一个包，默认 1 秒
-    
+
     nslookup        # 查看服务器域名对应的 IP 地址
 
     vi /etc/sysconfig/network-scripts/ifcfg-<网口名>    # 设置网卡信息
@@ -205,7 +205,7 @@ Linux 目录结构
         GATEWAY="192.168.3.1"                           # 网关地址（统一路由下保持一致可上网）
         DNS1="114.114.114.114"                          # 中国电信 DNS 服务器（static 方式下不设置无法上网）
         DNS2="8.8.8.8"                                  # 谷歌 DNS 服务器
-    
+
     netstat             # 查看网络连接，路由表，接口统计信息，虚拟连接，组播成员
         -t              # 仅显示 TCP 相关选项
         -u              # 仅显示 UDP 相关选项
@@ -213,11 +213,11 @@ Linux 目录结构
         -l              # 仅列出在 Listen(监听) 状态的服务
         -p              # 显示建立相关链接的程序名
         -napt           # 查看 TCP 连接状态
-    
+
     route -n            # 查看当前系统的路由表
 
     arp -a              # 查看 ARP 缓存的内容
-    
+
     lsof -i:<端口号>    # 查看端口占用情况（netstat也可以，利用管道和 grep 就可以了）
 
     systemctl restart network   # 重启网络服务
@@ -243,11 +243,11 @@ Linux 目录结构
 
     userdel             # 删除用户
         -r              # 顺便把用户的主目录一起删除
- 
+
     whoami              # 查看当前登录用户，相当于 id -un
         who             # 查看当前登录用户信息
         w               # 查看活动用户
-    
+
     chmod               # 修改文件访问权限
         [u|g|o|a]       # 修改用户/同组用户/其他用户/所有用户的权限
         [+|-|=]         # 添加/取消/赋予给定权限并取消其他权限
@@ -269,7 +269,7 @@ Linux 目录结构
 
     tar                     # 解压或压缩命令
        [OPTION...] [FILE]...
-       -C                   # 指定解压或压缩路径 
+       -C                   # 指定解压或压缩路径
        -c                   # 创建压缩包，默认创建 .tar 包（创建压缩包时一定要带的参数）
        -x                   # 解压文件，默认解压 .tar 包（解压压缩包时一定要带的参数）
        -v                   # 显示处理的中间过程
@@ -278,7 +278,7 @@ Linux 目录结构
        -f                   # 选择文件
        --overwrite          # 解压时覆盖重名文件
        --skip-old-files     # 解压时不覆盖重名文件
-    
+
     unzip                   # 解压 .zip 类型的文件
     zip                     # 压缩 .zip 类型的文件
 
@@ -338,5 +338,5 @@ Linux 目录结构
 
     which           # 查看指定命令所在的路径
 
-    fdisk -l        # 查看所有分区 
+    fdisk -l        # 查看所有分区
     swapon -s       # 查看所有交换分区
