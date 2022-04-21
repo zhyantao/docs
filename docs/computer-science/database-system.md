@@ -57,7 +57,7 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
     需要注意的是，这种描述在数据库原理课本上是适用的，但是理论并不是完全照搬地应用于实践，
     在数据库设计时，通常增加一个 `id` 列作为主键，而不是挑选候选键
 * - 外键（foreign key）/ 外码
-  - 关系 $R$ 中的一个属性组，它不是 $R$ 的候选键，但它与另一个关系 $S$ 
+  - 关系 $R$ 中的一个属性组，它不是 $R$ 的候选键，但它与另一个关系 $S$
     的候选键相对应，则称这个属性组为 $R$ 的外码或外键
 * - 主属性与非主属性
   - 包含在任意一个候选键中的属性被称作主属性，而其他属性被称作非主属性
@@ -67,23 +67,23 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
   - 如果关系 $R_1$ 的外键 $F_k$ 与关系 $R_2$ 的主键 $P_k$ 相对应，则 $R_1$ 中的每一个元组的 $F_k$
     值或者等于 $R_2$ 中某个元组的 $P_k$ 值，或者为空值
 * - 用户自定义的完整性
-  - 用户针对具体的应用环境定义的完整性约束条件。如 $S\#$ 要求是 $10$ 
+  - 用户针对具体的应用环境定义的完整性约束条件。如 $S\#$ 要求是 $10$
     位整数，其中前四位为年度，当前年度与他们的差必须在 $4$ 以内
 * - 三级模式 [^cite_ref-8]
   - 外模式 / 局部模式 / External Schema / **View**
-    
+
     概念模式 / 全局模式 / 逻辑模式 / 模式 / **Schema** / Conceptual View
-    
+
     内模式 / 存储模式 / 物理模式 / Internal Schema = Internal View
 * - 两层映像
   - $\text{E-C}$ 映像（$\text{E-C Mapping}$）实现逻辑独立性
-    
+
     $\text{C-I}$ 映像（$\text{C-I Mapping}$）实现物理独立性
 * - 四种 SQL 语言 [^cite_ref-4]
   - 数据库定义语言（DDL，Data Defination Language）定义 SQL 模式、基本表、视图、索引等。
     `CREATE`、`ALTER`、`DROP`、`TRUNCATE`、`COMMENT`、`RENAME`。
-    
-    数据库操纵语言（DML，Data Manipulation Language）由 DBMS 
+
+    数据库操纵语言（DML，Data Manipulation Language）由 DBMS
     提供。`SELECT`、`INSERT`、`UPDATE`、`DELETE`、`MERGE`、`CALL`、`EXPLAIN PLAN`、`LOCK TABLE`。
 
     数据库控制语言（DCL，Data Control Language）授权、角色控制等。`GRANT`、`REVOKE`。
@@ -91,9 +91,9 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
     事务控制语言（TCL，Tranction Control Language）设置保存点、回滚等。`SAVEPOINT`、`ROLLBACK`、`SET TRANSACTION`。
 * - 数据模型
   - 层次模型（一种用树形结构描述实体及其之间关系的数据模型）
-    
+
     网状模型（允许一个结点可以同时拥有多个双亲结点和子结点）
-    
+
     关系模型（采用二维表格结构表达实体类型及实体间联系的数据模型）
 ```
 
@@ -136,15 +136,15 @@ NoSQL 数据库的类型因数据模型而异。 主要类型包括文档、键�
     当一个表需要和其自身进行连接运算时，通常要使用更名操作
 * - 交
   - $R \cap S = \{ t | t \in R \wedge t \in S \} = R - (R - S) = S - (S - R)$
-  
+
     注意，差运算的括号不能去
 * - 自然连接
   - $R \bowtie S = \sigma_{t[B]=s[B]}(R \times S)$
-  
+
     自然连接会筛选出两个表相同属性组上值相等的元组
 * - 内连接（$\theta$-连接）
   - $R \mathop{\bowtie}\limits_{A \theta B}^{} S = \sigma_{t[A]\ \theta\ s[B]}(R \times S)$
-    
+
     内连接是自然连接更一般的情况
 * - 外连接
   - 左外连接 $R ⟕ S$，右外连接 $R ⟖ S$，全外连接 $R ⟗ S$
@@ -170,7 +170,7 @@ close `数据库名`;
 
 -- 创建基本表（概念模式的数据）
 create table if not exists ​`表名`(
-  `列名1` 数据类型 primary key unique not null auto_increment, 
+  `列名1` 数据类型 primary key unique not null auto_increment,
   `列名2` 数据类型 not null,
   index (`列名1`)
 );
@@ -491,7 +491,7 @@ $\rho$ 的无损连接性判断结果如下表所示，由此判断它具有无�
 :header-rows: 1
 :name: 无损连接性判断表
 
-- * 
+- *
   * A
   * B
   * C

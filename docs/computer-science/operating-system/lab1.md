@@ -16,6 +16,11 @@
 - 第二部分着重于跟踪调试 `lab/boot` 目录下的 bootloader。
 - 第三部分深入 kernel 初始化过程，侧重于跟踪调试 `lab/kern` 目录下的 kernel，也就是 JOS。
 
+```{hint}
+实验结束后，你可以通过用命令 `make grade` 来检查作业是否做对了。
+你也可以现在敲一下这个命令，看看是什么效果，方便后面对比。
+```
+
 ## 准备工作环境
 
 MIT6.828 提到使用 Athena machine 将更加方便，但是不是这个学校的学生可能接触不到这个机器。
@@ -39,7 +44,9 @@ sudo ln /usr/bin/python2 /usr/bin/python
 ```{code-block} text
 mkdir ~/6.828
 cd ~/6.828
-git clone https://pdos.csail.mit.edu/6.828/2018/jos.git lab
+git clone https://github.com/zhyantao/reproduce-mit6.828.git lab
+git fetch
+git checkout lab1
 ```
 
 有一些简单的 Git 命令你需要掌握，比如查看做了哪些修改，如何提交代码等，这些知识可以参考
@@ -140,12 +147,12 @@ ld: warning: section `.bss' type changed to PROGBITS
 + ld boot/boot
 boot block is 412 bytes (max 510)
 + mk obj/kern/kernel.img
-user02@node1:~/6.828/lab$ 
+user02@node1:~/6.828/lab$
 ```
 
 那么我们现在已经有了 "内核" 源代码，怎么将内核源码存放到磁盘（disk）中并加载运行呢？
 这个工作已经被 QEMU 做了，它帮我们存储并解析了 bootloader (`obj/boot/boot`) 和 kernel
-(`obj/kernel`)，但它是如何存储和解析的，这些细节现在暂时还不清楚，下一节将会解答。
+(`obj/kern/kernel`)，但它是如何存储和解析的，这些细节现在暂时还不清楚，下一节将会解答。
 现在能知道的是，使用 `make qemu` 或 `make qemu-nox` (在使用 SSH 时推荐用后一种)
 这两个命令中的任何一个，都可以帮我们启动内核。
 因此，`make qemu` 的效果就跟按下电脑开机键一样，从磁盘加载引导文件，然后启动操作系统内核。
@@ -158,7 +165,7 @@ sed "s/localhost:1234/localhost:26000/" < .gdbinit.tmpl > .gdbinit
 *** Use Ctrl-a x to exit qemu
 ***
 qemu-system-i386 -nographic -drive file=obj/kern/kernel.img,index=0,media=disk,\
-    format=raw -serial mon:stdio -gdb tcp::26000 -D qemu.log 
+    format=raw -serial mon:stdio -gdb tcp::26000 -D qemu.log
 6828 decimal is XXX octal!
 entering test_backtrace 5
 entering test_backtrace 4
@@ -271,7 +278,7 @@ The target architecture is assumed to be i8086
 [f000:fff0]    0xffff0: ljmp   $0xf000,$0xe05b
 0x0000fff0 in ?? ()
 + symbol-file obj/kern/kernel
-(gdb) 
+(gdb)
 ```
 
 之所以有上面的的输出，是因为我们在源代码 `.gdbinit` 定义了某些监听规则。
@@ -525,7 +532,7 @@ linker 可以在生成的代码中产生正确的内存地址。
 
 ```{admonition} 练习 5
 重新追踪 bootloader 的初始的几条指令，然后确定程序时从哪里开始 break 的，或者说，如果你拿到了
-bootloader 错误的 linker address 从哪里开始报错。然后尝试在 `boot/Makefrag` 中更改错误的 
+bootloader 错误的 linker address 从哪里开始报错。然后尝试在 `boot/Makefrag` 中更改错误的
 link address，运行 `make clean`，重新编译实验代码 `make`，然后重新追踪 bootloader 观察发生了什么。
 ```
 
@@ -796,7 +803,7 @@ prologue code **之前** 调用了 `read_ebp()`，这将会导致不完整的栈
 - 在文件 `kern/kernel.ld` 中查找 `__STAB_*`
 - 运行命令 `objdump -h obj/kern/kernel`
 - 运行命令 `objdump -G obj/kern/kernel`
-- 运行命令 `gcc -pipe -nostdinc -O2 -fno-builtin -I. -MD -Wall -Wno-format 
+- 运行命令 `gcc -pipe -nostdinc -O2 -fno-builtin -I. -MD -Wall -Wno-format
   -DJOS_KERNEL -gstabs -c -S kern/init.c`，然后查看 `init.s` 文件
 - 查看 bootloader 是否把符号表作为 kernel 二进制文件的一部分，加载到内存中了。
 
@@ -814,7 +821,7 @@ Stack backtrace:
          kern/init.c:49: i386_init+59
   ebp f010fff8  eip f010003d  args 00000000 00000000 0000ffff 10cf9a00 0000ffff
          kern/entry.S:70: <unknown>+0
-K> 
+K>
 ```
 
 关于这种输出格式，我们稍作说明：
