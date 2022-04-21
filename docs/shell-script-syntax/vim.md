@@ -99,9 +99,9 @@ Ctrl + q    # 解冻窗口
 ## 记住上次打开的位置
 
 ```{code-block} bash
-" Uncomment the following to have bash jump to the last position when       
-" reopening a file                                                         
-if has("autocmd")                                                          
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif                                                        
-endif 
+" Uncomment the following to have bash jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 ```
