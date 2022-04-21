@@ -11,30 +11,36 @@
 
 或者，你也可以参考 [Windows 终端中的动态配置文件](https://docs.microsoft.com/zh-cn/windows/terminal/dynamic-profiles)。
 
-## 更改 PowerShell 风格
+## 安装 Posh Git
 
-Microsoft 新开发的 [Windows Terminal](https://github.com/microsoft/terminal) 可以更好地支持本地开发工作。
+在 PowerShell 中更加轻松地使用 Git 命令，拥有命令自动补全、当前分支展示、改动提示等功能。
 
-1. 安装 Oh My Posh：`Install-Module oh-my-posh -Scope CurrentUser` [^cite_ref-1]（网络原因，耗时较长）
+1. 安装模块：`Install-Module posh-git -Scope CurrentUser -Force`
+2. 导入模块：`Import-Module posh-git`
+3. 使用模块：`Add-PoshGitToProfile -AllHosts`
+
+## 安装 Oh My Posh
+
+在 PowerShell 中使用 Oh My Posh，将会有一个更为美观的主题。
+
+1. 安装模块：`Install-Module oh-my-posh -Scope CurrentUser` [^cite_ref-1]
 2. 导入模块：`Import-Module oh-my-posh`（这一步会下载 `oh-my-posh.exe` 并配置环境变量）
-3. 现在可能有些字符无法正常显示，先下载安装字体
-   [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)，
-   再修改 Windows Termial 的配置文件 `Settings.json`（可以从 Windows Terminal 软件界面的下拉三角中找见）
-   **补充**如下信息：
+3. 安装字体 [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)
+4. 修改 Windows Termial 的配置文件 `Settings.json`：
 
-```json
-{
-    "profiles":
+    ```json
     {
-        "defaults":
+        "profiles":
         {
-            "fontFace": "MesloLGM NF"
+            "defaults":
+            {
+                "fontFace": "MesloLGM NF"
+            }
         }
     }
-}
-```
+    ```
 
-4. 启用 Oh My Posh：`Set-PoshPrompt -Theme Paradox`
+5. 使用模块：`Set-PoshPrompt -Theme Paradox`
 
 ```{note}
 上面的改动可能会让你的 VS Code Terminal 出现乱码。解决方式是打开 VS Code 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
