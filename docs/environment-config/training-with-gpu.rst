@@ -61,7 +61,9 @@ NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包
 `CUDA Toolkit <https://developer.nvidia.com/cuda-toolkit-archive>`_ 以及与 CUDA 版本相对应的
 `cuDNN <https://developer.nvidia.com/rdp/cudnn-archive>`_。
 
-这个软件比较大，你可以不用完整安装，勾选如下选项即可：
+如果你已经安装了 Anaconda 或 Miniconda，那么使用 ``conda install cudatoolkit`` 和
+``conda install cudnn`` 可以更加方便快捷地完成环境部署。当然，你也可以先从官网下载安装器，然后按照下面
+UI 界面的提示进行安装。这个软件比较大，你可以不用完整安装，勾选如下选项即可：
 
 .. image:: ../_static/images/cuda-installation.png
 

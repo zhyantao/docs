@@ -11,6 +11,8 @@
 
 或者，你也可以参考 [Windows 终端中的动态配置文件](https://docs.microsoft.com/zh-cn/windows/terminal/dynamic-profiles)。
 
+在 PowerShell 中显示 conda 环境：`conda init powershell`，然后重启 Terminal。
+
 ## 安装 Posh Git
 
 在 PowerShell 中更加轻松地使用 Git 命令，拥有命令自动补全、当前分支展示、改动提示等功能。
@@ -18,6 +20,9 @@
 1. 安装模块：`Install-Module posh-git -Scope CurrentUser -Force`
 2. 导入模块：`Import-Module posh-git`
 3. 使用模块：`Add-PoshGitToProfile -AllHosts`
+
+删除 Posh Git 模块：`Uninstall-Module posh-git`，同时需要删除
+`%USERPROFILE%\Documents\WindowsPowerShell\profile.ps1` 中的 `Import-Module posh-git`。
 
 ## 安装 Oh My Posh
 
@@ -40,10 +45,17 @@
     }
     ```
 
-5. 使用模块：`Set-PoshPrompt -Theme Paradox`
+5. 新建并打开 `%USERPROFILE%\Documents\WindowsPowerShell\profile.ps1` 并在文件中写入：
+
+    ```bash
+    Import-Module oh-my-posh
+    Set-PoshPrompt space
+    ```
 
 ```{note}
-上面的改动可能会让你的 VS Code Terminal 出现乱码。解决方式是打开 VS Code 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
+如果你在 VS Code 中安装了 PowerShell 插件，那么上面的改动可能会让你的 PowerShell 终端出现乱码。
+解决方式是打开 VS Code 使用 ``Ctrl + Shift + P`` 搜索 ``settings.json``，添加新下载的字体
+``"terminal.integrated.fontFamily": "MesloLGM NF",``。
 ```
 
 ---
