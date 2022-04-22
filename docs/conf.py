@@ -7,7 +7,7 @@ import os
 
 # -- Project information -----------------------------------------------------
 
-project = u'Notebook' 
+project = u'Notebook'
 copyright = u'2022, yantao.z@qq.com'
 #author = u'Yantao'
 version = 'v 1.2.0'
@@ -181,7 +181,7 @@ latex_documents = [
 latex_elements = {
     'preamble': r'''
     \usepackage[UTF8]{ctex}     % support Chinese writing
-    \usepackage{graphicx} 
+    \usepackage{graphicx}
     \usepackage{animate}
     ''',
     'extraclassoptions': 'openany, oneside',    # remove blank pages

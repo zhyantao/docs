@@ -42,7 +42,7 @@ class SEG(object):
                     q = p
                     k = char
                 p = p[char]
-    
+
     def _binary_seg(self,s):
         ln = len(s)
         if ln==1:
@@ -52,7 +52,7 @@ class SEG(object):
             tmp = s[i-2:i]
             R.append(tmp)
         return R
-    
+
     def _pro_unreg(self,piece):
         #print(piece)
         R = []
@@ -67,15 +67,15 @@ class SEG(object):
                 else:
                     R.extend(self._binary_seg(r))
         return R
-        
-        
+
+
     def cut(self,text):
         """
         """
         text = str(text)
         p = self.d
         ln = len(text)
-        i = ln 
+        i = ln
         j = 0
         z = ln
         q = 0
@@ -100,7 +100,7 @@ class SEG(object):
                                     i,j,z,q = mem2
                                     del recognised[q:]
                             mem2 = None
-                            
+
                     p = self.d
                     if((i<ln) and (i<z)):
                         unreg_tmp = self._pro_unreg(text[i:z])
@@ -145,7 +145,7 @@ class SEG(object):
         if mem!=None:
             i,j,z = mem
             recognised.extend(self._pro_unreg(text[i:z]))
-            recognised.append(text[i-j:i])        
+            recognised.append(text[i-j:i])
         else:
             recognised.extend(self._pro_unreg(text[i-j:z]))
         return recognised
