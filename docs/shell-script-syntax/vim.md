@@ -89,6 +89,12 @@ r                           # 替换当前字符
 gg=G        # 整理代码，使其符合标准格式
 ```
 
+## 全选
+
+```{code-block} bash
+ggVG        # 全部高亮
+```
+
 ## 窗口
 
 ```{code-block} bash

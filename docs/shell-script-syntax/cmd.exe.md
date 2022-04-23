@@ -58,6 +58,25 @@
 ``"terminal.integrated.fontFamily": "MesloLGM NF",``。
 ```
 
+## 安装 PSReadLine
+
+PSReadLine 是 PowerShell 中的自动补全插件。
+我现在不太清楚是否 Windows 默认给安装了这个插件，如果没有安装，那么使用命令
+`Install-Module PSReadLine -Force` 即可。
+
+然后把下面的内容写入配置文件 `%USERPROFILE%\Documents\WindowsPowerShell\profile.ps1` 中：
+
+```bash
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineOption -Colors @{ InlinePrediction = "#666666" }
+Set-PSReadLineOption -BellStyle none
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+```
+
 ---
 
 [^cite_ref-1]: <https://ohmyposh.dev/docs/installation/windows>
