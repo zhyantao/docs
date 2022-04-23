@@ -47,5 +47,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 ```
 
+打开 `vim`，使用命令 `:PluginInstall` 安装插件。
+
 如果要删除某些不需要的插件，可以参考上面配置文件中的 Brief help 部分。首先编辑 `.vimrc`
 将不需要的 Plugin 删掉，先运行 `:PluginUpdate!` 然后再运行 `:PluginClean!` 即可。
