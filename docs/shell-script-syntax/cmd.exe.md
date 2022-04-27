@@ -24,6 +24,19 @@
 删除 Posh Git 模块：`Uninstall-Module posh-git`，同时需要删除
 `%USERPROFILE%\Documents\WindowsPowerShell\profile.ps1` 中的 `Import-Module posh-git`。
 
+如果要想同时显示 `git branch` 和 `conda environment` 那么必须将
+`Import-Module posh-git` 放在 `conda init` 之前，如下所示（注意，同时需要在
+`%USERPROFILE%\.condarc` 中添加一行 `changeps1: true`）。
+
+```bash
+Import-Module posh-git
+
+#region conda initialize
+# !! Contents within this block are managed by 'conda init' !!
+(& "D:\ProgramData\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+#endregion
+```
+
 ## 安装 Oh My Posh
 
 在 PowerShell 中使用 Oh My Posh，将会有一个更为美观的主题。
