@@ -15,31 +15,31 @@ Git
 - Repository：仓库区（或本地仓库）
 - Remote：远程仓库
 
-.. note::
-
-    - ``<commit>`` ：提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 来代替；
-    - ``<remote>`` ：远程仓库，可通过 ``git remote`` 查询，一般是 ``origin``；
-    - ``<branch>`` ：分支，可通过 ``git branch`` 查询。
-
 在 Learn Git Branching 上，可以更轻松直观地体验 Git 完整流程 [2]_。
 
 
 常用命令
 ~~~~~~~~
 
+.. margin::
+
+    ``<commit>`` 表示历史提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 查询；
+    ``<remote>`` 表示指向远程仓库的指针，可通过 ``git remote`` 查询，一般是 ``origin``；
+    ``<branch>`` 表示分支名称，可通过 ``git branch`` 查询。
+
 Git 全局设置
 -------------
+
+.. margin::
+
+    如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
+    因此，本地的提交邮箱应当与远程仓库保持一致。
+    通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
 
 .. code-block:: bash
 
     git config --global user.name "nickname"
     git config --global user.email "user@example.org"
-
-.. note::
-
-    如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
-    因此，本地的提交邮箱应当与远程仓库保持一致。
-    通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
 
 创建 git 仓库
 --------------
@@ -150,6 +150,19 @@ Git 全局设置
 
 分支
 ~~~~~
+
+.. margin::
+
+    有时想把 ``<other-branch>`` 的内容合并到当前所在分支，使用命令
+    ``git fetch <remote> <other-branch>`` 和 ``git merge FETCH_HEAD``
+    后，发现有冲突。
+
+    那么分支合并时的冲突处理方式如下：``<<<<<<< HEAD`` 表示冲突开始的位置，
+    ``>>>>>>> BRANCH-NAME`` 表示冲突的结束位置，中间部分的 ``=======``
+    分割了当前分支与 ``<other-branch>`` 之间的差异。
+    因此，我们的目标就是对冲突开始和结束之间的部分进行删减。
+
+    解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
 
 .. code-block:: bash
 
