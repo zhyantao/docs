@@ -65,9 +65,9 @@ Java 在 **运行时** 识别对象和类的信息，主要有两种方式：
 1. 运行 ``javac MyType.java`` 得到一堆 ``.class`` 文件，其中有一个叫 ``MyType.class``
 2. 运行 ``java MyType`` 后，JVM 类加载器首先将 ``MyType.class`` 加载到内存（\ `动态加载 <https://www.liaoxuefeng.com/wiki/1252599548343744/1264799402020448>`_\ ）
 3. 为 ``.class`` 文件中包含的静态域分配空间
-4. 为 MyType.class 创建 Class 对象 Class cls = new Class(MyType)
+4. 为 ``MyType.class`` 创建 ``Class`` 对象 ``Class cls = new Class(MyType)``
 5. 用 ``Class`` 对象 ``cls`` 创建这个类的构造器引用
-6. 运行到某一句时，如果发现依赖其他类，就搜索对应的 .class 文件并加载到内存，重复步骤 3 ~ 6
+6. 运行到某一句时，如果发现依赖其他类，就搜索对应的 ``.class`` 文件并加载到内存，重复步骤 3 ~ 6
 
 注意，JVM 在执行 Java 程序的时候，并不是一次性把所有用到的 ``.class`` 全部加载到内存，而是第一次需要用到 ``.class`` 时才加载。
 

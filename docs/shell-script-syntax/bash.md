@@ -23,6 +23,8 @@ halt            # 关机后关闭电源
 
 ## 显示 git 分支
 
+打开 `~/.bashrc` 做如下修改：
+
 ```{code-block} bash
 # display git branch on bash
 git_branch() {
@@ -35,5 +37,5 @@ git_branch() {
    fi
 }
 
-PS1 = '\[\033[01;32m\]$(git_branch)\[\033[00m\]'
+PS1 = '\[\033[01;32m\]$(git_branch)\[\033[00m\]' # 补充到 PS1 变量上
 ```
