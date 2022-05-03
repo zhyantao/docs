@@ -10,11 +10,18 @@
 - `w`：单字（2 个字节，16 位）
 - `b`：单字节（1 个字节，8 位）
 
-类似地，还有 `jmp` 和 `ljmp`，其中带 `ljmp` 能够跳转到比 `jmp` 更远的地方，并且，为了存储
-`ljmp` 需要占用的内存空间更大。
+特殊情况：`ljmp` 中的 `l` 不是后缀，而是前缀，但大概意思没有变，因此这种略微的差异并不影响我们阅读代码。
+`ljmp` 表示能够跳转到比 `jmp` 更远的地方，而且为了存储 `ljmp` 需要占用的内存空间更大。
 
-在指令之后的部分，`$0x33cc` 表示一个数字 `0x33cc`，不加美元符号表示一个地址，`%ax` 表示 `ax`
-寄存器。（但是为什么端口输入输出也是用 `$` 符号呢？比如 `out %ax,$0x64`）
+记住一些约定，对我们理解汇编源代码有一定的好处 [^cite_ref-5]：
+
+- 在 AT&T 语法中，前缀 `%` 后紧接寄存器名，前缀 `$` 后是立即数；
+- 在 Intel 语法下，寄存器名和立即数前都没有前缀；
+- AT&T 中的内存寻址采用的是 `()`，Intel 内存寻址使用的是 `[]`。
+
+但情况也有例外，比如 `out %ax,$0x64` 是一个输出语句，这里的 `$0x64`
+就不能看作一个立即数了，它表示一个端口，因此这句话的意思是将 `ax` 寄存器中的内容输出到
+`0x64` 对应的设备中。
 
 (assembly_instructions)=
 
@@ -173,3 +180,4 @@
 [^cite_ref-2]: <http://wiki.osdev.org/Interrupt_Descriptor_Table>
 [^cite_ref-3]: <http://adam8157.info/blog/2011/01/interesting-opcode-lea>
 [^cite_ref-4]: <https://www.cnblogs.com/fatsheep9146/p/5115086.html>
+[^cite_ref-5]: <https://binhack.readthedocs.io/zh/latest/assembly/diff.html>
