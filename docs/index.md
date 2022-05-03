@@ -26,7 +26,7 @@
 
 ```{toctree}
 :caption: 机器学习基础
-:titlesonly:
+:maxdepth: 2
 :glob:
 :hidden:
 
@@ -35,7 +35,7 @@ ml-mechanism/*
 
 ```{toctree}
 :caption: 计算机基础
-:titlesonly:
+:maxdepth: 2
 :glob:
 :hidden:
 
@@ -45,7 +45,7 @@ computer-science/*
 
 ```{toctree}
 :caption: 编程语言基础
-:titlesonly:
+:maxdepth: 2
 :glob:
 :hidden:
 
@@ -57,7 +57,7 @@ programming-lang/assembly/*
 
 ```{toctree}
 :caption: 脚本/标记语言/框架
-:titlesonly:
+:maxdepth: 2
 :glob:
 :hidden:
 
@@ -69,7 +69,7 @@ frontend-developing/index
 
 ```{toctree}
 :caption: 附录
-:titlesonly:
+:maxdepth: 2
 :glob:
 :hidden:
 
