@@ -5,10 +5,13 @@
 reStructuredText
 =================
 
-.. hint::
+.. margin::
 
-    文档也支持 :ref:`reST 风格的 Markdown 语法 <target_header>`。本文转载自
-    `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_ （有修改），仅供学习参考。
+    本文基于
+    `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_
+    ，供学习参考。
+
+    相比于使用 reST 语法，更推荐 :ref:`Markdown <target_header>`。
 
 .. _indentation-rst:
 
