@@ -13,3 +13,4 @@ sphinx-autodoc-typehints
 sphinxcontrib-mermaid
 sphinxcontrib-plantuml
 sphinxcontrib-bibtex
+sphinx-comments
