@@ -18,7 +18,6 @@ for html_file in html_list:
         html_content_lines = f.readlines()
         for line in html_content_lines:
             html_content += line
-    print(html_content)
     if html_content.find('div.section') != -1:
         html_content = html_content.replace('div.section', 'div>section')
         with open(html_file, 'w', encoding='UTF-8') as f:
