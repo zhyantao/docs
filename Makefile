@@ -6,7 +6,6 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
-PYTHON        = /home/docs/checkouts/readthedocs.org/user_builds/zhyantao/envs/latest/bin/python
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -34,7 +33,7 @@ clean:
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	$(PYTHON) scripts/fix-comments.py
+	@python3 scripts/fix-comments.py
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
