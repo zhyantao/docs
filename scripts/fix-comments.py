@@ -21,6 +21,7 @@ for html_file in html_list:
         for line in html_content_lines:
             html_content += line
     if html_content.find('div.section') != -1:
+        print('Processing: ' + html_file)
         html_content = html_content.replace('div.section', 'div>section')
         with open(html_file, 'w', encoding='UTF-8') as f:
             f.write(html_content)
