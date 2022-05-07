@@ -11,7 +11,9 @@ def collect_html(path):
             if ext == '.html':
                 html_list.append(new_path)
 
-collect_html('_build/html')
+CURRENT_DIR = os.path.abspath('.')
+dirhtml = f'{CURRENT_DIR}/_build/html'
+collect_html(dirhtml)
 for html_file in html_list:
     html_content = ""
     with open(html_file, 'r', encoding='UTF-8') as f:
