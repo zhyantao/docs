@@ -2,21 +2,31 @@
 
 ``````{tabs}
 
-````{margin}
-```{hint}
-👈 部分统计数据
-```
-````
-
-````{tab} Github
+````{tab} GitHub
 
 ```{raw} html
 
-<img src="https://activity-graph.herokuapp.com/graph?username=zhyantao&hide_border=true&theme=github-light" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=zhyantao&hide_border=true&layout=compact&langs_count=5" />
 
-<!-- <img src="https://github-readme-stats.vercel.app/api?username=zhyantao&show_icons=true&hide_border=true" /> -->
+```
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=zhyantao&hide_border=true&layout=compact&langs_count=8" />
+````
+
+````{tab} Gitee
+
+```{raw} html
+
+Most Used Languages: Java, C++, LaTeX
+
+```
+
+````
+
+````{tab} GitLab
+
+```{raw} html
+
+Most Used Languages: NULL
 
 ```
 
