@@ -1,7 +1,8 @@
 # 操作系统基础
 
-学习路线方案的制定参考了 MIT6.828 schedule [^cite_ref-1]，课程讲义为《[xv6 book](https://kdocs.cn/l/caQbBFQ1ener)
-| [中文版](https://xv6-chinese.readthedocs.io)》和《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》。
+学习路线方案的制定参考了
+[MIT 6.S081 schedule](https://pdos.csail.mit.edu/6.S081/2020/schedule.html)，课程讲义为
+[xv6 book 2020](https://kdocs.cn/l/cmH6tSXQ4Cbs)。
 
 ```{panels}
 :container: timeline
@@ -11,11 +12,14 @@
 ---
 :column: +entry left
 
-第 1 讲：操作系统简介
+第 1 讲：O/S 概述
 ^^^
 
-- 了解 UNIX 系统 [[video](https://www.youtube.com/watch?v=tc4ROCJYbm0)]
-- 实验 1：理解启动引导流程 [{ref}`webpage <microkernel_os_lab1>`]
+- 预习 [第 1 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview/)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview.txt) /
+  [课程回放](https://youtu.be/L6YqHxYHa7A)
+- [实验：使用 Xv6 和 Unix 工具](https://pdos.csail.mit.edu/6.S081/2020/labs/util.html)
 
 ---
 :column: +right
@@ -24,24 +28,33 @@
 ---
 :column: +entry right
 
-第 2 讲：计算机硬件架构和 x86 编程
+第 2 讲：系统调用
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》Appendix A 和 B
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-x86.html) 和 [幻灯片](https://kdocs.cn/l/cnhKtkx53jth)
-- 作业：跑通 xv6 代码 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-boot.html)]
+- 学习 [C](https://pdos.csail.mit.edu/6.S081/2020/lec/l-c-slides.pdf) 和
+  [GDB](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview.txt) /
+  [C 指针](https://pdos.csail.mit.edu/6.S081/2020/lec/pointers.c)
+- [C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9) 2.9、第 5 章和 6.4
+- [实验：系统调用](https://pdos.csail.mit.edu/6.S081/2020/labs/syscall.html)
 
 ---
 :column: +entry left
 
-第 3 讲：学习如何调试由 C 编写的代码
+第 3 讲：O/S 组织方式
 ^^^
 
-- 阅读《[C 语言程序设计](https://kdocs.cn/l/coVOZtu777O9)》2.9、5.1 - 5.5 和 6.4
-- 阅读 [幻灯片](https://kdocs.cn/l/co2YLTVPzUy6) 和 [示例代码](https://pdos.csail.mit.edu/6.828/2018/lec/pointers.c)
-- 作业：脚本 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-shell.html)]
-- 实验 2：实现内存管理功能 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab2/)]
+- 预习 [第 2 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.h)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/defs.h)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/entry.S)
+  [4](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/main.c)
+  [5](https://github.com/mit-pdos/xv6-riscv/blob/riscv/user/initcode.S)
+  [6](https://github.com/mit-pdos/xv6-riscv/blob/riscv/user/init.c)
+  [7](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
+  [8](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-os.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-os-boards.pdf) /
+  [课程回放](https://youtu.be/o44d---Dk4o)
 
 ---
 :column: +right
@@ -50,22 +63,30 @@
 ---
 :column: +entry right
 
-第 4 讲：脚本和操作系统组织
+第 4 讲：页表
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 0
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-shell.txt)
+- 预习 [第 3 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c)
+  [4](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h)
+  [5](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm-boards.pdf) /
+  [课程回放](https://youtu.be/f1Hpjty3TT8)
+- [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
 :column: +entry left
 
-第 5 讲：隔离机制（用户态和内核态）
+第 5 讲：RISC-V 的调用规则和栈帧
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 1
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-internal.txt)
-- 作业：系统调用 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-syscall.html)]
+- 预习 [调用规则](https://pdos.csail.mit.edu/6.S081/2020/readings/riscv-calling.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-riscv.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-riscv-slides.pdf) /
+  [课程回放](https://youtu.be/s-Z5t_yTyTM)
 
 ---
 :column: +right
@@ -74,24 +95,26 @@
 ---
 :column: +entry right
 
-第 6 讲：虚拟内存（上）
+第 6 讲：隔离性、系统调用的入口点和出口点
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 2
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vm.md) 和 [幻灯片](https://kdocs.cn/l/caJl0eqf1x83)
-- 阅读 [页表翻译机制](https://kdocs.cn/l/cea84466nzDf)
-- 作业：写内存的懒分配 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-zero-fill.html)]
+- 预习 [第 4 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-internal.txt) /
+  [课程回放](https://youtu.be/T26UuauaxWA)
+- [实验：陷入](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)
 
 ---
 :column: +entry left
 
-第 7 讲：虚拟内存（中）
+第 7 讲：答疑
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-usevm.md)、[手稿](https://pdos.csail.mit.edu/6.828/2018/lec/l-josmem.html)
-  和 [幻灯片](https://kdocs.cn/l/cepqhIjZtd3k)
-- 作业：xv6 CPU 时钟 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-alarm.html)]
-- 实验 3：用户态环境 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab3/)]
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-QA1.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-QA1.pdf) /
+  [课程回放](https://youtu.be/_WWjNIJAfVg)
 
 ---
 :column: +right
@@ -100,27 +123,30 @@
 ---
 :column: +entry right
 
-第 8 讲：系统调用，中断和异常
+第 8 讲：页错误
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 3
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-interrupt.txt)
-  和 [手稿](https://kdocs.cn/l/cszWbTndffuP)
-- 作业：多线程编程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/lock.html)]
+- 预习 [第 4 章](https://kdocs.cn/l/cmH6tSXQ4Cbs)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.pdf) /
+  [课程回放](https://youtu.be/KSYO-gTZo0A)
+- [实验：懒加载](https://pdos.csail.mit.edu/6.S081/2020/labs/lazy.html)
 
 ---
 :column: +entry left
 
-第 9 讲：多处理器和锁
+第 9 讲：中断
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 4
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`spinlock.c` 略读 `mp.c`
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-lockv2.txt)
-  和 [幻灯片](https://kdocs.cn/l/cpgvtTpfx0Wq)
-- 作业：xv6 锁机制的实现 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-lock.html)]
-- 实验 4：抢先式多任务处理 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab4/)]
+- 预习 [第 5 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kernelvec.S)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/plic.c)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/console.c)
+  [4](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/uart.c)
+  [5](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/printf.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-interrupt.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-interrupt.pdf) /
+  [课程回放](https://youtu.be/zRnGNndcVEA)
 
 ---
 :column: +right
@@ -129,24 +155,29 @@
 ---
 :column: +entry right
 
-第 10 讲：上下文切换
+第 10 讲：多处理器和锁
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`proc.c` 和 `swtch.S`
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-threads.txt)
-- 作业：超线程 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-uthread.html)]
+- 预习 [第 6 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/spinlock.h)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/spinlock.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-lockv2.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-lock.pdf) /
+  [课程回放](https://youtu.be/NGXu3vN7yAk)
+- [实验：fork 写入时复制](https://pdos.csail.mit.edu/6.S081/2020/labs/cow.html)
 
 ---
 :column: +entry left
 
-第 11 讲：睡眠和唤醒
+第 11 讲：进程切换
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 5
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`proc.c` 相关代码
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-coordination.txt)
-- 作业：同步屏障 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/barrier.html)]
+- 预习 [第 7 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/swtch.S)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-threads.txt) /
+  [课程回放](https://youtu.be/vsgrTHY5tkg)
+- [实验：多进程](https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html)
 
 ---
 :column: +right
@@ -155,27 +186,25 @@
 ---
 :column: +entry right
 
-第 12 讲：文件系统
+第 12 讲：答疑
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`bio.c`、`fs.c`、`sysfile.c` 和 `file.c`
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-fs.txt)
-- 作业：大文件 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-big-files.html)]
+- [课程回放](https://youtu.be/S8ZTJKzhQao)
 
 ---
 :column: +entry left
 
-第 13 讲：崩溃后恢复
+第 13 讲：睡眠和唤醒
 ^^^
 
-- 阅读《[xv6 book](https://xv6-chinese.readthedocs.io)》chapter 6
-- 阅读《[xv6 source](https://kdocs.cn/l/cbGOwLHZ1EK4)》`log.c`
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-crash.txt)
-- 作业：崩溃 [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/xv6-new-log.html)]
-- 实验 5：文件系统，spawn 和 sh [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab5/)]
-- 实验 6：网络 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab6/)]
-- 实验 7：最终项目 [[webpage](https://pdos.csail.mit.edu/6.828/2018/labs/lab7/)]
+- 预习 [第 7 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://pdos.csail.mit.edu/6.S081/2020/lec/l-coordination.c)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/sleeplock.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-coordination.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm-boards.pdf) /
+  [课程回放](https://youtu.be/gP67sJ4PTnc)
+- [实验：并行和锁](https://pdos.csail.mit.edu/6.S081/2020/labs/lock.html)
 
 ---
 :column: +right
@@ -184,21 +213,31 @@
 ---
 :column: +entry right
 
-第 14 讲：文件系统性能和快速崩溃恢复
+第 14 讲：文件系统
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-journal.txt) 和
-  [论文](https://pdos.csail.mit.edu/6.828/2018/homework/journal-ext2fs.html)
-- 作业：`mmap()` [[webpage](https://pdos.csail.mit.edu/6.828/2018/homework/mmap.html)]
+- 预习 [第 8 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/bio.c)
+  [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/fs.c)
+  [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/sysfile.c)
+  [4](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/file.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-fs.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-fs.pdf) /
+  [课程回放](https://youtu.be/ADzLv1nRtR8)
+- [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
 :column: +entry left
 
-第 15 讲：虚拟内存（下）
+第 15 讲：故障恢复
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vm-again.txt)、[幻灯片](https://kdocs.cn/l/cawTd6G1AMsJ)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/appel-li.pdf)
+- 预习 [第 8 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+  [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/log.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.pdf) /
+  [课程回放](https://youtu.be/7Hk2dIorDkk)
+- [实验：文件系统](https://pdos.csail.mit.edu/6.S081/2020/labs/fs.html)
 
 ---
 :column: +right
@@ -207,20 +246,26 @@
 ---
 :column: +entry right
 
-第 16 讲：操作系统组织
+第 16 讲：文件系统性能和快速恢复
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-organization.txt)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/engler95exokernel.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/journal-ext2fs.html)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-journal.txt) /
+  [课程回放](https://youtu.be/CmDcf6rjFb4)
 
 ---
 :column: +entry left
 
-第 17 讲：内核和高级语言
+第 17 讲：虚拟内存
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-biscuit.txt)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/biscuit.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/appel-li.pdf) /
+  [1](https://pdos.csail.mit.edu/6.S081/2020/lec/sqrt.c)
+  [2](https://pdos.csail.mit.edu/6.S081/2020/lec/baker.c)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-uservm.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-uservm.pdf) /
+  [课程回放](https://youtu.be/YNQghIvk0jc)
+- [实验：mmap](https://pdos.csail.mit.edu/6.S081/2020/labs/mmap.html)
 
 ---
 :column: +right
@@ -229,22 +274,22 @@
 ---
 :column: +entry right
 
-第 18 讲：可扩展锁
+第 18 讲：O/S 组织方式
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-scalable-lock.md)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/linux-lock.pdf)
-- 阅读 [幻灯片](https://kdocs.cn/l/cjgbA4CHxigP)
-  和 [示例代码](https://pdos.csail.mit.edu/6.828/2018/lec/scalable-lock-code.c)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/microkernel.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-organization.txt) /
+  [课程回放](https://youtu.be/dM9PLdaTpnA)
 
 ---
 :column: +entry left
 
-第 19 讲：可扩展内核
+第 19 讲：虚拟机
 ^^^
 
-- 阅读 [幻灯片](https://kdocs.cn/l/cmkxaZO57wbg)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/rcu-decade-later.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/belay-dune.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vmm.txt) /
+  [课程回放](https://youtu.be/R8obXHAIPY0)
 
 ---
 :column: +right
@@ -253,20 +298,24 @@
 ---
 :column: +entry right
 
-第 20 讲：虚拟机（上）
+第 20 讲：内核和 HLL
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vmware.txt)、[幻灯片](https://kdocs.cn/l/cgDpeTi8hufy)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/adams06vmware.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/biscuit.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-biscuit.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-biscuit-slides.pdf) /
+  [课程回放](https://youtu.be/AAtXWGwxI9k)
+- [实验：网络栈](https://pdos.csail.mit.edu/6.S081/2020/labs/net.html)
 
 ---
 :column: +entry left
 
-第 21 讲：虚拟机（下）
+第 21 讲：网络
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-vmm.md)、[幻灯片](https://kdocs.cn/l/co7NAA7sjY0Z)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/belay-dune.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/mogul96usenix.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-net.txt) /
+  [课程回放](https://youtu.be/Fcjychg4Tvk)
 
 ---
 :column: +right
@@ -275,11 +324,23 @@
 ---
 :column: +entry right
 
-第 22 讲：高性能网络
+第 22 讲：安全
 ^^^
 
-- 阅读 [笔记](https://pdos.csail.mit.edu/6.828/2018/lec/l-net.txt)
-  和 [论文](https://pdos.csail.mit.edu/6.828/2018/readings/osdi14-paper-belay.pdf)
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/meltdown.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-meltdown.txt) /
+  [课程回放](https://youtu.be/WpKVr3p5rjE)
+
+---
+:column: +entry left
+
+第 23 讲：写入时更新
+^^^
+
+- 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/rcu-decade-later.pdf)
+- [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-rcu.txt) /
+  [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-rcu.pdf) /
+  [课程回放](https://youtu.be/KUwyCGMTeq8)
 
 ```
 
@@ -290,7 +351,3 @@
 
 operating-system/*
 ```
-
----
-
-[^cite_ref-1]: <https://pdos.csail.mit.edu/6.828/2018/schedule.html>
