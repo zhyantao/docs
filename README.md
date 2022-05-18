@@ -1,6 +1,7 @@
 # Read-the-Docs with Github
 
-[![Documentation Status](https://readthedocs.org/projects/zhyantao/badge/?version=latest)](https://zhyantao.readthedocs.io/zh_CN/latest/?badge=latest)
+![Documentation Status](https://readthedocs.org/projects/zhyantao/badge/?version=latest)
+![Repository Size](https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io)
 
 ## 环境部署
 
