@@ -2,7 +2,7 @@
 
 学习路线方案的制定参考了
 [MIT 6.S081 schedule](https://pdos.csail.mit.edu/6.S081/2020/schedule.html)，课程讲义为
-[xv6 book 2020](https://kdocs.cn/l/cmH6tSXQ4Cbs)。
+[xv6 book 2021](https://kdocs.cn/l/cr5Ryc7FZbRm)。
 
 ```{panels}
 :container: timeline
@@ -15,7 +15,7 @@
 第 1 讲：O/S 概述
 ^^^
 
-- 预习 [第 1 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 1 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview/)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview.txt) /
   [课程回放](https://youtu.be/L6YqHxYHa7A)
@@ -43,7 +43,7 @@
 第 3 讲：O/S 组织方式
 ^^^
 
-- 预习 [第 2 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 2 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.h)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/defs.h)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/entry.S)
@@ -66,7 +66,7 @@
 第 4 讲：页表
 ^^^
 
-- 预习 [第 3 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 3 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/memlayout.h)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/vm.c)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kalloc.c)
@@ -98,7 +98,7 @@
 第 6 讲：隔离性、系统调用的入口点和出口点
 ^^^
 
-- 预习 [第 4 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 4 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/riscv.h)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c)
@@ -126,7 +126,7 @@
 第 8 讲：页错误
 ^^^
 
-- 预习 [第 4 章](https://kdocs.cn/l/cmH6tSXQ4Cbs)
+- 预习 [第 4 章](https://kdocs.cn/l/cr5Ryc7FZbRm)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.pdf) /
   [课程回放](https://youtu.be/KSYO-gTZo0A)
@@ -138,7 +138,7 @@
 第 9 讲：中断
 ^^^
 
-- 预习 [第 5 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 5 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/kernelvec.S)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/plic.c)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/console.c)
@@ -158,7 +158,7 @@
 第 10 讲：多处理器和锁
 ^^^
 
-- 预习 [第 6 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 6 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/spinlock.h)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/spinlock.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-lockv2.txt) /
@@ -172,7 +172,7 @@
 第 11 讲：进程切换
 ^^^
 
-- 预习 [第 7 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 7 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/swtch.S)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-threads.txt) /
@@ -197,7 +197,7 @@
 第 13 讲：睡眠和唤醒
 ^^^
 
-- 预习 [第 7 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 7 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://pdos.csail.mit.edu/6.S081/2020/lec/l-coordination.c)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/sleeplock.c)
@@ -216,7 +216,7 @@
 第 14 讲：文件系统
 ^^^
 
-- 预习 [第 8 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 8 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/bio.c)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/fs.c)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/sysfile.c)
@@ -232,7 +232,7 @@
 第 15 讲：故障恢复
 ^^^
 
-- 预习 [第 8 章](https://kdocs.cn/l/cmH6tSXQ4Cbs) /
+- 预习 [第 8 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/log.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.pdf) /
