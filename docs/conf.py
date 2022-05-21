@@ -38,7 +38,7 @@ html_theme_options = {
     "use_repository_button": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
-    "path_to_docs": "source/",
+    "path_to_docs": "docs/",
     "show_navbar_depth": 1,
 }
 # html_sourcelink_suffix = '.rst'
