@@ -18,7 +18,7 @@
 - 预习 [第 1 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
   [1](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview/)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-overview.txt) /
-  [课程回放](https://youtu.be/L6YqHxYHa7A)
+  [YouTube](https://youtu.be/L6YqHxYHa7A)
 - [实验：使用 Xv6 和 Unix 工具](https://pdos.csail.mit.edu/6.S081/2020/labs/util.html)
 
 ---
@@ -54,7 +54,7 @@
   [8](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-os.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-os-boards.pdf) /
-  [课程回放](https://youtu.be/o44d---Dk4o)
+  [YouTube](https://youtu.be/o44d---Dk4o)
 
 ---
 :column: +right
@@ -74,7 +74,7 @@
   [5](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/exec.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm-boards.pdf) /
-  [课程回放](https://youtu.be/f1Hpjty3TT8)
+  [YouTube](https://youtu.be/f1Hpjty3TT8)
 - [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
@@ -86,7 +86,7 @@
 - 预习 [调用规则](https://pdos.csail.mit.edu/6.S081/2020/readings/riscv-calling.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-riscv.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-riscv-slides.pdf) /
-  [课程回放](https://youtu.be/s-Z5t_yTyTM)
+  [YouTube](https://youtu.be/s-Z5t_yTyTM)
 
 ---
 :column: +right
@@ -103,7 +103,7 @@
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trampoline.S)
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/trap.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-internal.txt) /
-  [课程回放](https://youtu.be/T26UuauaxWA)
+  [YouTube](https://youtu.be/T26UuauaxWA)
 - [实验：陷入](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)
 
 ---
@@ -114,7 +114,7 @@
 
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-QA1.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-QA1.pdf) /
-  [课程回放](https://youtu.be/_WWjNIJAfVg)
+  [YouTube](https://youtu.be/_WWjNIJAfVg)
 
 ---
 :column: +right
@@ -129,7 +129,8 @@
 - 预习 [第 4 章](https://kdocs.cn/l/cr5Ryc7FZbRm)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-pgfaults.pdf) /
-  [课程回放](https://youtu.be/KSYO-gTZo0A)
+  [YouTube](https://youtu.be/KSYO-gTZo0A) /
+  [bilibili](https://www.bilibili.com/video/BV19k4y1C7kA?p=7)
 - [实验：懒加载](https://pdos.csail.mit.edu/6.S081/2020/labs/lazy.html)
 
 ---
@@ -146,7 +147,7 @@
   [5](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/printf.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-interrupt.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-interrupt.pdf) /
-  [课程回放](https://youtu.be/zRnGNndcVEA)
+  [YouTube](https://youtu.be/zRnGNndcVEA)
 
 ---
 :column: +right
@@ -163,7 +164,7 @@
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/spinlock.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-lockv2.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-lock.pdf) /
-  [课程回放](https://youtu.be/NGXu3vN7yAk)
+  [YouTube](https://youtu.be/NGXu3vN7yAk)
 - [实验：fork 写入时复制](https://pdos.csail.mit.edu/6.S081/2020/labs/cow.html)
 
 ---
@@ -176,7 +177,7 @@
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.c)
   [2](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/swtch.S)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-threads.txt) /
-  [课程回放](https://youtu.be/vsgrTHY5tkg)
+  [YouTube](https://youtu.be/vsgrTHY5tkg)
 - [实验：多进程](https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html)
 
 ---
@@ -189,7 +190,7 @@
 第 12 讲：答疑
 ^^^
 
-- [课程回放](https://youtu.be/S8ZTJKzhQao)
+- [YouTube](https://youtu.be/S8ZTJKzhQao)
 
 ---
 :column: +entry left
@@ -203,7 +204,7 @@
   [3](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/sleeplock.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-coordination.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vm-boards.pdf) /
-  [课程回放](https://youtu.be/gP67sJ4PTnc)
+  [YouTube](https://youtu.be/gP67sJ4PTnc)
 - [实验：并行和锁](https://pdos.csail.mit.edu/6.S081/2020/labs/lock.html)
 
 ---
@@ -223,7 +224,7 @@
   [4](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/file.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-fs.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-fs.pdf) /
-  [课程回放](https://youtu.be/ADzLv1nRtR8)
+  [YouTube](https://youtu.be/ADzLv1nRtR8)
 - [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
@@ -236,7 +237,7 @@
   [1](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/log.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-crash.pdf) /
-  [课程回放](https://youtu.be/7Hk2dIorDkk)
+  [YouTube](https://youtu.be/7Hk2dIorDkk)
 - [实验：文件系统](https://pdos.csail.mit.edu/6.S081/2020/labs/fs.html)
 
 ---
@@ -251,7 +252,7 @@
 
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/journal-ext2fs.html)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-journal.txt) /
-  [课程回放](https://youtu.be/CmDcf6rjFb4)
+  [YouTube](https://youtu.be/CmDcf6rjFb4)
 
 ---
 :column: +entry left
@@ -264,7 +265,7 @@
   [2](https://pdos.csail.mit.edu/6.S081/2020/lec/baker.c)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-uservm.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-uservm.pdf) /
-  [课程回放](https://youtu.be/YNQghIvk0jc)
+  [YouTube](https://youtu.be/YNQghIvk0jc)
 - [实验：mmap](https://pdos.csail.mit.edu/6.S081/2020/labs/mmap.html)
 
 ---
@@ -279,7 +280,7 @@
 
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/microkernel.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-organization.txt) /
-  [课程回放](https://youtu.be/dM9PLdaTpnA)
+  [YouTube](https://youtu.be/dM9PLdaTpnA)
 
 ---
 :column: +entry left
@@ -289,7 +290,7 @@
 
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/belay-dune.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-vmm.txt) /
-  [课程回放](https://youtu.be/R8obXHAIPY0)
+  [YouTube](https://youtu.be/R8obXHAIPY0)
 
 ---
 :column: +right
@@ -304,7 +305,7 @@
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/biscuit.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-biscuit.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-biscuit-slides.pdf) /
-  [课程回放](https://youtu.be/AAtXWGwxI9k)
+  [YouTube](https://youtu.be/AAtXWGwxI9k)
 - [实验：网络栈](https://pdos.csail.mit.edu/6.S081/2020/labs/net.html)
 
 ---
@@ -315,7 +316,7 @@
 
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/mogul96usenix.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-net.txt) /
-  [课程回放](https://youtu.be/Fcjychg4Tvk)
+  [YouTube](https://youtu.be/Fcjychg4Tvk)
 
 ---
 :column: +right
@@ -329,7 +330,7 @@
 
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/meltdown.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-meltdown.txt) /
-  [课程回放](https://youtu.be/WpKVr3p5rjE)
+  [YouTube](https://youtu.be/WpKVr3p5rjE)
 
 ---
 :column: +entry left
@@ -340,7 +341,7 @@
 - 预习 [论文](https://pdos.csail.mit.edu/6.S081/2020/readings/rcu-decade-later.pdf)
 - [课程大纲](https://pdos.csail.mit.edu/6.S081/2020/lec/l-rcu.txt) /
   [PPT](https://pdos.csail.mit.edu/6.S081/2020/lec/l-rcu.pdf) /
-  [课程回放](https://youtu.be/KUwyCGMTeq8)
+  [YouTube](https://youtu.be/KUwyCGMTeq8)
 
 ```
 
