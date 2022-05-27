@@ -9,10 +9,19 @@
 使用泛型时，容器知道它保存的是什么类型，在调用容器中对象中的方法时，会替你执行转型。
 另外，你可以将某个类型的子类保存到容器中。
 
-.. _container-taxonomy:
+Java 容器分为 Collection 和 Map 两大类，其下又有很多子类。
 
-集合类和字典
-------------
+Colleciton
+-----------
+
+``Colleciton`` 是描述所有序列容器的共性的根接口，实现 ``Colleciton`` 就要提供 ``iterator()`` 方法。
+所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于
+``foreach`` 语法。
+
+.. margin::
+    
+    - 实线为继承（extends）
+    - 虚线为实现（implements）
 
 .. uml::
 
@@ -22,23 +31,37 @@
     interface List
     interface Set
     interface Queue
-    class Vector
-    class ArrayList
-    class LinkedList
-    class HashSet
-    class PriorityQueue
-    class LinkedHashSet
+    abstract AbstractList
+    class AbstracSequentialtList
+    abstract AbstractSet
+    abstract SortedSet
+    interface Iterator
+    interface ListIterator
+
+    Iterator <|-- ListIterator
 
     Collection <|-- List
     Collection <|-- Set
     Collection <|-- Queue
+    Collection <|.. AbstractCollection
+    
+    AbstractCollection <|-- AbstractList
+    List <|.. AbstractList
+    AbstractCollection <|-- AbstractSet
 
-    List <|.. ArrayList
-    List <|.. LinkedList
-    List <|.. Vector
+    AbstractList <|-- ArrayList
+    AbstractList <|-- Vector
+    AbstractList <|-- AbstracSequentialtList
 
-    Set <|.. HashSet
-    Set <|.. TreeSet
+    AbstracSequentialtList <|-- LinkedList
+
+    Vector <|-- Stack
+
+    Set <|-- AbstractSet
+    Set <|-- SortedSet
+    SortedSet <|.. TreeSet
+    AbstractSet <|.. HashSet
+    AbstractSet <|.. TreeSet
     HashSet <|-- LinkedHashSet
 
     Queue <|.. LinkedList
@@ -46,50 +69,13 @@
 
     @enduml
 
+
 .. uml::
-
-    @startuml
-
-    interface Iterator
-    interface ListIterator
-    interface Map
-    class HashMap
-    class TreeMap
-    class LinkedHashMap
-
-    Iterator <|-- ListIterator
-
-    Map <|.. HashMap
-    Map <|.. TreeMap
-    HashMap <|-- LinkedHashMap
 
     package java.util <<Folder>> {
         class Collections
         class Arrays
     }
-
-    @enduml
-
-上面的分类并不完整，查看完整图片需要看后面 :ref:`full-container-taxonomy`
-
-Collection（根接口）
-~~~~~~~~~~~~~~~~~~~~
-
-``Colleciton`` 是描述所有序列容器的共性的根接口，实现 ``Colleciton`` 就要提供 ``iterator()`` 方法。
-所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于
-``foreach`` 语法。
-
-Map（根接口）
-~~~~~~~~~~~~~~
-
-``Map`` 是一组成对的 "键值对" 对象，允许用一个对象查找另一个对象，也叫 "映射表"、"关联数组" 或 "字典"。
-
-- ``HashMap``，使用了最快的查找技术，没有明显的顺序。
-- ``TreeMap``，按照比较结果升序保存键。
-- ``LinkedHashMap``，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
-
-``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现，
-``TreeSet`` 基于 ``TreeMap`` 实现。
 
 List 和 Set
 ~~~~~~~~~~~~~
@@ -152,6 +138,46 @@ HashSet 和 TreeSet
 ``TreeSet`` 中的元素要实现 ``Comparable`` 接口。 ``TreeSet`` 作为一种 ``Set``，它不允许出 现重复元素。
 ``TreeSet`` 是用 ``compareTo()`` 来判断重复元素的。
 
+
+Map
+----
+
+``Map`` 是一组成对的 "键值对" 对象，允许用一个对象查找另一个对象，也叫 "映射表"、"关联数组" 或 "字典"。
+
+- ``HashMap``，使用了最快的查找技术，没有明显的顺序。
+- ``TreeMap``，按照比较结果升序保存键。
+- ``LinkedHashMap``，按照插入顺序保存键，同时保留了 ``HashMap`` 的查询速度。
+
+``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现，
+``TreeSet`` 基于 ``TreeMap`` 实现。
+
+.. margin::
+    
+    - 实线为继承（extends）
+    - 虚线为实现（implements）
+
+.. uml::
+
+    @startuml
+
+    interface Map
+    abstract AbstractMap
+    interface SortedMap
+
+    Map <|-- AbstractMap
+    Map <|-- SortedMap
+
+    AbstractMap <|.. HashMap
+    AbstractMap <|.. TreeMap
+    AbstractMap <|.. IdentityHashMap
+    AbstractMap <|.. WeakHashMap
+    AbstractMap <|.. HashTable
+    SortedMap <|.. TreeMap
+    HashMap <|-- LinkedHashMap
+
+    @enduml
+
+
 容器的初始化
 ------------
 
@@ -178,7 +204,7 @@ HashSet 和 TreeSet
         }
     } ///:~
 
-``java.util.Collection`` 是一个集合接口（\ :ref:`见上图 <container-taxonomy>`\ ）。它提供了对集合对象进行基本操作的通用接口方法。
+``java.util.Collection`` 是一个集合接口。它提供了对集合对象进行基本操作的通用接口方法。
 ``Collection`` 接口在 Java 类库中有很多具体的实现。
 ``Collection`` 接口的意义是为各种具体的集合提供了最大化的统一操作方式。
 
@@ -295,12 +321,3 @@ HashSet 和 TreeSet
 
 ``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()``
 方法替换它指向的元素， ``listIterator(n)`` 方法可以返回索引为 n 的元素。
-
-.. _full-container-taxonomy:
-
-容器深入研究
-------------
-
-下面这张图是 :ref:`前面那个图 <container-taxonomy>` 的扩充版本。
-
-.. image:: ../../_static/images/java-full-container-taxonomy.png
