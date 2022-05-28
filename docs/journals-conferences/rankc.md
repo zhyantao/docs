@@ -1,4 +1,4 @@
-# CCF 推荐国际学术会议
+# 学术会议分类
 
 ```{list-table}
 :header-rows: 1
