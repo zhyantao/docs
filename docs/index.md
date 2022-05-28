@@ -82,7 +82,8 @@ frontend-developing/index
 :glob:
 :hidden:
 
-appendix/index
-appendix/interview/index
+academic-terms/index
+journals-conferences/index
+interview-points/index
 environment-config/index
 ```
