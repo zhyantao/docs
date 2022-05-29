@@ -50,33 +50,45 @@
     *///:~
 
 
-类库是一个比包更大的概念，它是指多个文件夹的集合，通常我们可见的类库文件也就是 ``.jar`` 或
-``.war`` 文件。
+类库是一个比包更大的概念，它是指多个文件夹的集合，通常我们可见的类库文件是 ``.jar`` 或 ``.war``。
 
-有了类库的概念，那么我们更深一步地讨论一个更大的概念：\ **构件 —— 类库的组合**。
-
+而比类库更大的的概念：\ **构件 —— 类库的组合**。
 构件概念的提出主要基于软件重用的思想。
-虽然对象也是一种可重用的软件实体，但是用对象实现需求需要两部分的代码：1）编写业务逻辑代码，2）\
-编写服务支持代码，如安全服务、事务服务等。第 1 步比较简单，但是第 2 步则需要编写和中间件或服务\
-器接口交互的代码，涉及大量的底层实现，代码量大，移植性、重用性也比较差 [1]_。
+虽然对象也是一种可重用的软件实体，但是用对象实现需求需要两部分的代码：
 
-构件技术通过分离服务支持的逻辑，将对服务的需求实现为描述性文件，代码量小，移植性和重用性高。
+1. 编写业务逻辑代码；
+2. 编写服务支持代码，如安全服务、事务服务等。
+
+第 1 步比较简单，但是第 2 步则需要编写和中间件或服务器接口交互的代码，涉及大量的底层实现，代码量大，移植性、重用性也比较差 [1]_。
+
+构件技术通过分离服务支持的逻辑，将第 2 步实现为 **描述性文件**，代码量小，移植性和重用性高。
 开发者可以通过组装已有的构件来开发新的应用系统，从而达到软件复用的目的。
 如果希望构件从属于同一个群组，可以使用 ``package`` 关键字。
 
-JavaBean 是 Java 中的术语，行业内通常称为 Java 豆，在计算机领域代表 Java 构件 [2]_。
-JavaBean 可分为两种：一种是有用户界面的 JavaBean；还有一种是没有用户界面，主要负责处理事务\
-（如数据运算，操纵数据库）的 JavaBean。JSP 通常访问的是后一种 JavaBean。
+Bean 是 Java 中的构件（或翻译为组件），行业内通常称为 Java 豆，在计算机领域代表 Java 构件 [2]_。
+Bean 可分为两种：
 
-最初，JavaBean 的目的是为了让用户可以使用JavaBean将功能、处理、值、数据库访问和其他任何可以用
-Java 代码创造的对象进行打包，并且其他的开发者可以通过内部的 JSP 页面、Servlet、其他 JavaBean、\
-applet 程序或者应用来使用这些对象。用户可以认为 JavaBean
-提供了一种随时随地的复制和粘贴的功能，而不用关心任何改变。
-特别是用与帮助厂家开发在综合开发环境（IDE）下使用的 Java 软件部件。
-这些包括如 Grid 控件，用户可以将该部件拖放到开发环境中。
-从此，JavaBean 就可以扩展为一个 Java Web 应用的标准部件，并且 JavaBean
-部件框架已经扩展为企业版的 Bean（EJB） [2]_。
+- 有用户界面的 Bean；
+- 没有用户界面，主要负责处理事务（如数据运算，操纵数据库）的 Bean。
 
+为了方便理解，我们把 Bean 看作一系列对象实体的组合，他们共同对外提供服务。
+
+举例来讲，以下是 Spring 的配置文件，它完成了 userService Bean 的装配。
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+            https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean id="userService" class="com.itranswarp.learnjava.service.UserService">
+            <property name="mailService" ref="mailService" />
+        </bean>
+
+        <bean id="mailService" class="com.itranswarp.learnjava.service.MailService" />
+    </beans>
 
 类的访问权限
 -------------
