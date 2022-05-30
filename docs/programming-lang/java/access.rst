@@ -71,9 +71,8 @@ Bean 可分为两种：
 - 有用户界面的 Bean；
 - 没有用户界面，主要负责处理事务（如数据运算，操纵数据库）的 Bean。
 
-为了方便理解，我们把 Bean 看作一系列对象实体的组合，他们共同对外提供服务。
-
-举例来讲，以下是 Spring 的配置文件，它完成了 userService Bean 的装配。
+为了方便理解，我们 *把一个 Bean 看作一个对象实体*，而各个对象实体之间具有相互的依赖关系。
+举例来讲，以下是 Spring 的配置文件，它有两个 Bean，而 userService Bean 依赖于 mailService Bean。
 
 .. code-block:: xml
 
