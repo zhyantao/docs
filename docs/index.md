@@ -84,6 +84,6 @@ frontend-developing/index
 
 academic-terms/index
 journals-conferences/index
-interview-points/index
 environment-config/index
+面试八股文 <https://interview-points.readthedocs.io/>
 ```
