@@ -173,9 +173,7 @@
 第 11 讲：进程切换
 ^^^
 
-- 预习 [第 7 章](https://kdocs.cn/l/cr5Ryc7FZbRm) /
-  [1](https://gitee.com/zhyantao/xv6-riscv/blob/riscv/kernel/proc.c)
-  [2](https://gitee.com/zhyantao/xv6-riscv/blob/riscv/kernel/swtch.S)
+- 预习 [第 7 章](https://kdocs.cn/l/cr5Ryc7FZbRm)
 - [课程大纲](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/l-threads.txt) /
   [YouTube](https://youtu.be/vsgrTHY5tkg)
 - [实验：多进程](https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html)
@@ -290,7 +288,8 @@
 
 - 预习 [论文](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/reading/belay-dune.pdf)
 - [课程大纲](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/l-vmm.txt) /
-  [YouTube](https://youtu.be/R8obXHAIPY0)
+  [YouTube](https://youtu.be/R8obXHAIPY0) /
+  [bilibili](https://www.bilibili.com/video/BV19k4y1C7kA?p=18)
 
 ---
 :column: +right
@@ -305,7 +304,8 @@
 - 预习 [论文](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/reading/biscuit.pdf)
 - [课程大纲](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/l-biscuit.txt) /
   [PPT](https://gitee.com/zhyantao/lec-6.s081-2020/raw/master/l-biscuit-slides.pdf) /
-  [YouTube](https://youtu.be/AAtXWGwxI9k)
+  [YouTube](https://youtu.be/AAtXWGwxI9k) /
+  [bilibili](https://www.bilibili.com/video/BV19k4y1C7kA?p=19)
 - [实验：网络栈](https://pdos.csail.mit.edu/6.S081/2020/labs/net.html)
 
 ---
