@@ -39,8 +39,12 @@ def setup(app):
                     print("Export ", exportType, " to ", exportPath)
 
     CURRENT_DIR = os.path.abspath('.')
-    svgDir = f'{CURRENT_DIR}/_static/images/'
-    exportDir = f'{CURRENT_DIR}/_static/images/'
+    if not 'READTHEDOCS' in os.environ:
+        svgDir = f'{CURRENT_DIR}/docs/_static/images/'
+        exportDir = f'{CURRENT_DIR}/docs/_static/images/'
+    else:
+        svgDir = f'{CURRENT_DIR}/_static/images/'
+        exportDir = f'{CURRENT_DIR}/_static/images/'
     exportFormat = 'png'
     if not os.path.exists(exportDir):
         os.mkdir(exportDir)
