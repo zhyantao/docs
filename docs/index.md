@@ -1,17 +1,12 @@
-# 更新动态
+# 网络笔记本
 
-```{toctree}
-:caption: 机器学习基础
-:maxdepth: 2
-:glob:
-
-ml-mechanism/*
-```
+最后，希望能够有一个比较系统和完整的知识结构。
 
 ```{toctree}
 :caption: 计算机基础
 :maxdepth: 2
 :glob:
+:hidden:
 
 computer-science/*
 ```
@@ -20,6 +15,7 @@ computer-science/*
 :caption: 编程语言基础
 :maxdepth: 2
 :glob:
+:hidden:
 
 programming-lang/java/index
 programming-lang/python/index
@@ -28,9 +24,19 @@ programming-lang/assembly/*
 ```
 
 ```{toctree}
+:caption: 机器学习基础
+:maxdepth: 2
+:glob:
+:hidden:
+
+ml-mechanism/*
+```
+
+```{toctree}
 :caption: 脚本/标记语言/框架
 :maxdepth: 2
 :glob:
+:hidden:
 
 shell-script-syntax/index
 markdown-syntax/index
@@ -42,6 +48,7 @@ frontend-developing/index
 :caption: 附录
 :maxdepth: 2
 :glob:
+:hidden:
 
 academic-terms/index
 journals-conferences/index
