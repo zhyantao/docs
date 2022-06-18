@@ -89,6 +89,7 @@ extensions = [
     'sphinx_tabs.tabs',
     'sphinxcontrib.bibtex',
     'sphinx_comments',
+    'svg2png',
 ]
 
 
