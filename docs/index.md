@@ -1,44 +1,9 @@
 # 更新动态
 
-``````{tabs}
-
-````{tab} GitHub
-
-```{raw} html
-
-Most Used Languages: C, Python, Matlab
-
-```
-
-````
-
-````{tab} Gitee
-
-```{raw} html
-
-Most Used Languages: Java, C++, LaTeX
-
-```
-
-````
-
-````{tab} GitLab
-
-```{raw} html
-
-Most Used Languages: NULL
-
-```
-
-````
-
-``````
-
 ```{toctree}
 :caption: 机器学习基础
 :maxdepth: 2
 :glob:
-:hidden:
 
 ml-mechanism/*
 ```
@@ -47,7 +12,6 @@ ml-mechanism/*
 :caption: 计算机基础
 :maxdepth: 2
 :glob:
-:hidden:
 
 computer-science/*
 ```
@@ -56,7 +20,6 @@ computer-science/*
 :caption: 编程语言基础
 :maxdepth: 2
 :glob:
-:hidden:
 
 programming-lang/java/index
 programming-lang/python/index
@@ -68,7 +31,6 @@ programming-lang/assembly/*
 :caption: 脚本/标记语言/框架
 :maxdepth: 2
 :glob:
-:hidden:
 
 shell-script-syntax/index
 markdown-syntax/index
@@ -80,7 +42,6 @@ frontend-developing/index
 :caption: 附录
 :maxdepth: 2
 :glob:
-:hidden:
 
 academic-terms/index
 journals-conferences/index
