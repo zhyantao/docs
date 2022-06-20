@@ -321,3 +321,110 @@ Map
 
 ``Iterator`` 只能向前移动，但是 ``ListIterator`` 可以双向移动，并且可以使用 ``set()``
 方法替换它指向的元素， ``listIterator(n)`` 方法可以返回索引为 n 的元素。
+
+常用方法
+--------
+
+.. list-table::
+    :header-rows: 1
+
+    * - 
+      - 增
+      - 删
+      - 查
+      - 改
+      - 判空
+      - 判等
+      - 大小
+      - 截取
+      - 拼接
+    * - int[]
+      - 
+      - 
+      - arr[i]
+      - arr[i]=23
+      - arr == null || arr.length == 0
+      - 
+      - arr.length
+      - Arrays.copyOfRange(arr, 2, 6)
+      - 
+    * - String
+      - sb.append(), sb.insert()
+      - sb.deleteCharAt(), sb.delete(i,j)
+      - str.ChatAt()
+      - str.setCharAt()
+      - str == null || str.isEmpty()
+      - str.equals(str2)
+      - str.length()
+      - str.substring(i), str.substring(i, j)
+      - str.concat("abc")
+    * - ArrayList
+      - list.add()
+      - list.remove()
+      - list.get()
+      - list.set(1, 100)
+      - list.isEmpty()
+      - 
+      - list.size()
+      - 
+      - 
+    * - LinkedList
+      - list.add(), list.addFirst()
+      - list.remove(), list.removeLast()
+      - list.get()
+      - 
+      - list.isEmpty()
+      - 
+      - list.size()
+      - 
+      - 
+    * - HashMap
+      - map.put()
+      - map.remove()
+      - map.get(), map.getOrSetDefault(), map.containsKey()
+      - map.keySet()
+      - 
+      - 
+      - 
+      - 
+      - 
+    * - HashSet
+      - set.add()
+      - set.remove()
+      - set.contains()
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+    * - Queue
+      - queue.offer()
+      - queue.poll()
+      - queue.peek()
+      - 
+      - queue.isEmpty()
+      - 
+      - queue.size()
+      - 
+      - 
+    * - Deque
+      - deque.offer(), deque.offerFirst(), deque.offerLast()
+      - deque.poll(), deque.pollFirst(), deque.pollLast()
+      - 
+      - 
+      - deque.isEmpty()
+      - 
+      - deque.size()
+      - 
+      - 
+    * - Stack
+      - stack.push()
+      - stack.pop()
+      - stack.peek()
+      - 
+      - stack.isEmpty()
+      - 
+      - stack.size()
+      - 
+      - 
