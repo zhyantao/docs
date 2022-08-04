@@ -151,10 +151,6 @@ nb_custom_formats = {
   ".Rmd": ["jupytext.reads", {"fmt": "Rmd"}]
 }
 
-jupyter_execute_notebooks = "cache"
-execution_show_tb = "READTHEDOCS" in os.environ
-execution_timeout = 60  # Note: 30 was timing out on RTD
-
 # Setting for PlantUML
 CURRENT_DIR = os.path.abspath('.')
 plantuml = f'java -jar {CURRENT_DIR}/_static/lib/plantuml.jar'
