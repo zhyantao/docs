@@ -417,6 +417,28 @@ gitignore 匹配规则
     表达式后面的空格会在匹配时被忽略掉，如果想要匹配名字后面带有空格的文件或文件夹时，可以使用 ``\`` 加空格来匹配空格。"
     "其他", "使用 ``#`` 添加注释"
 
+
+显示 git 分支
+~~~~~~~~~~~~~~
+
+打开 ``~/.bashrc`` 做如下修改：
+
+.. code-block:: bash
+
+    # display git branch on bash
+    git_branch() {
+    branch="`git branch 2>/dev/null | grep "^\*" | sed -e "s/^\*\ //"`"
+    if [ "${branch}" != "" ];then
+        if [ "${branch}" = "(no branch)" ];then
+            branch="(`git rev-parse --short HEAD`...)"
+        fi
+        echo " ($branch)"
+    fi
+    }
+
+    PS1 = '\[\033[01;32m\]$(git_branch)\[\033[00m\]' # 补充到 PS1 变量上
+
+
 .. rubric:: 参考资料
 
 .. [1] 阮一峰的网络日志 - 常用 Git 命令清单 [`webpage <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__]
