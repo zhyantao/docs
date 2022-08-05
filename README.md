@@ -18,6 +18,7 @@ git clone https://github.com/<your_github_username>/notebook.git
 ```bash
 cd notebook
 pip install -r requirements.txt
+# export PATH=~/.local/bin:$PATH
 make html
 ```
 
