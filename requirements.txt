@@ -1,11 +1,11 @@
 sphinx
 docutils
+furo
 matplotlib
 myst-nb
 myst-parser
 jupytext
 sphinx-autobuild
-sphinx_book_theme
 sphinx-tabs
 sphinx-panels
 sphinx-copybutton

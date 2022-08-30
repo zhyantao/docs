@@ -25,22 +25,10 @@ source_suffix = {
 # -- Options for HTML output -------------------------------------------------
 
 html_title = ''
-html_logo = '_static/images/logo-wide.svg'
-html_favicon = '_static/images/logo-square.svg'
-html_theme = 'sphinx_book_theme'
+html_theme = 'furo'
 html_static_path = ['_static'] # Contain custom static files (such as style sheets) here
 html_css_files = ['css/custom.css',] # These paths are either relative to html_static_path or or fully qualified paths (eg. https://...)
 html_js_files = ['js/custom.js']
-html_theme_options = {
-    "search_bar_text": "输入搜索文本...",
-    "repository_url": "https://github.com/zhyantao/zhyantao.github.io",
-    "repository_branch": "master",
-    "use_repository_button": True,
-    "use_issues_button": True,
-    "use_edit_page_button": True,
-    "path_to_docs": "docs/",
-    "show_navbar_depth": 1,
-}
 # html_sourcelink_suffix = '.rst'
 html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
 html_domain_indices = False

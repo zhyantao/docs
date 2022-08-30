@@ -115,12 +115,9 @@
 
 ## 表格（Tables）
 
-````{margin}
-<br/><br/><br/>
 ```{note}
 通过给表格添加标题，能够让表格**自动编号**，如下{numref}`example-table` 和 表 2。
 ```
-````
 
 ``````{list-table}
 :header-rows: 1
@@ -188,12 +185,9 @@
 
 ## 图片（Figures and images）
 
-``````{margin}
-<br/><br/><br/>
 ```{note}
 图片（Image）中**不允许**出现标题（Caption），但图像（Figure）**可以**。
 ```
-``````
 
 ``````{list-table}
 :header-rows: 1
@@ -435,13 +429,9 @@
 
 ## 脚注（Footnotes）
 
-``````{margin}
-<br/><br/><br/><br/>
-<br/><br/><br/><br/><br/>
 ```{note}
 脚注将在本页的末尾显示。
 ```
-``````
 
 ``````{list-table}
 :header-rows: 1
@@ -596,12 +586,9 @@
 
 ### 引用表格（Tables）
 
-````{margin}
-<br/><br/><br/>
 ```{note}
 为了引用表格，你需要给表格添加 `name` 属性。
 ```
-````
 
 ``````{list-table}
 :header-rows: 1
@@ -625,12 +612,9 @@
 
 ### 引用图像（Figures）
 
-````{margin}
-<br/><br/><br/>
 ```{note}
 使用 `numref` 引用图像（Figures）将带有标号，使用 `ref` 则不带标号。
 ```
-````
 
 ``````{list-table}
 :header-rows: 1
@@ -660,12 +644,9 @@
 
 ### 引用图片（Images）
 
-````{margin}
-<br/><br/><br/>
 ```{note}
 图片（Images）无法使用 `numref` 引用，默认都不带标号。
 ```
-````
 
 ``````{list-table}
 :header-rows: 1
@@ -719,12 +700,9 @@
 
 ## 参考文献（Citations）
 
-````{margin}
-<br/><br/><br/>
 ```{note}
 确保你已经新建了 `references.bib` 文件，点击{download}`查看文件 <../references.bib>`撰写格式。
 ```
-````
 
 ``````{list-table}
 :header-rows: 1
