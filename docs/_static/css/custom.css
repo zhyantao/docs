@@ -9,19 +9,3 @@
 /* .rst-versions.rst-badge {
     display: none;
 } */
-
-.rst-versions.rst-badge.shift-up .rst-current-version .fa-book {
-    line-height: 30px;
-}
-
-img {
-    margin-bottom: 1em;
-}
-
-/* code block css */
-code {
-    background-color: #e9ecef;
-    color: #24292f;
-    padding: .1em .2em;
-    border-radius: 3px;
-}
