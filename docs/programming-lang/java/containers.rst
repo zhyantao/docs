@@ -18,7 +18,7 @@ Colleciton
 所有的 ``Collection`` 都可以使用 ``foreach`` 语法，而且所有实现了 ``iterator()`` 方法的类都可以用于
 ``foreach`` 语法。
 
-.. margin::
+.. note::
     
     - 实线为继承（extends）
     - 虚线为实现（implements）
@@ -151,7 +151,7 @@ Map
 ``Map`` 类为 ``Colleciton`` 类的底层实现提供了支持，比如 ``HashSet`` 基于 ``HashMap`` 实现，
 ``TreeSet`` 基于 ``TreeMap`` 实现。
 
-.. margin::
+.. note::
     
     - 实线为继承（extends）
     - 虚线为实现（implements）
