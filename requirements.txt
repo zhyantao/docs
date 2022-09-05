@@ -1,5 +1,5 @@
-sphinx
-docutils
+sphinx>=1.6
+docutils<0.17
 furo
 matplotlib
 myst-nb
