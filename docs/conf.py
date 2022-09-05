@@ -25,7 +25,7 @@ source_suffix = {
 # -- Options for HTML output -------------------------------------------------
 
 html_title = ''
-html_theme = 'furo'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static'] # Contain custom static files (such as style sheets) here
 html_css_files = ['css/custom.css',] # These paths are either relative to html_static_path or or fully qualified paths (eg. https://...)
 html_js_files = ['js/custom.js']
