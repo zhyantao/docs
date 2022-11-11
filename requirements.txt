@@ -1,7 +1,6 @@
-sphinx>=1.6
 furo
+sphinx>=1.6
 docutils<0.17
-insipid-sphinx-theme
 matplotlib
 myst-nb
 myst-parser
