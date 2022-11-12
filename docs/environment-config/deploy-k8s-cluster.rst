@@ -2,11 +2,11 @@
 部署 Kubernetes 集群
 =====================
 
-下载并安装 Ubuntu 22.04：https://www.releases.ubuntu.com/22.04/
+下载并安装 CentOS 7：http://isoredirect.centos.org/centos/7/isos/x86_64/
 
 .. warning::
 
-    以 2 个节点为例，创建集群：（一个 master 节点，一个 node 节点）
+    以 3 个节点为例，创建集群：（一个 master 节点，两个 node 节点）
 
     - ``uname -a``：集群内每个节点必须为 x86 架构（\ :ref:`不支持 ARM 架构 <training-with-gpu>`\ ）。
     - ``lscpu``：最少 2 核处理器。
@@ -22,173 +22,137 @@
 
 
 安装容器运行时：Docker Engine
------------------------------
-
-本节内容参考：https://docs.docker.com/engine/install/ubuntu/
+------------------------------
 
 删除 Docker 的旧版本
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    su
-    apt-get remove docker docker-engine docker.io containerd runc
+    sudo yum remove docker \
+        docker-client \
+        docker-client-latest \
+        docker-common \
+        docker-latest \
+        docker-latest-logrotate \
+        docker-logrotate \
+        docker-engine
 
 
-使用仓库安装 Docker
-~~~~~~~~~~~~~~~~~~~
+使用仓库安装 Docker（推荐）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    apt-get update
-    apt-get install ca-certificates curl gnupg lsb-release software-properties-common
-    mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo yum install -y yum-utils
+
+    sudo yum-config-manager \
+        --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+
+更新系统软件仓库
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    sudo yum update
 
 
 安装最新版的 Docker 引擎
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    apt-get update
-    apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    sudo yum install docker-ce docker-ce-cli containerd.io
 
 
 测试 Docker 是否安装成功
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
     sudo docker run hello-world
 
 
+Docker 命令自动补全
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    echo 'source /usr/share/bash-completion/completions/docker' >> ~/.bashrc
+
+
 让 Docker 能够开机启动
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    sudo systemctl enable docker
+    sudo systemctl start docker
+
+
+安装 Docker-Compose
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    sudo curl -L "https://get.daocloud.io/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+
+使用 kubeadm 创建生产集群
+--------------------------
+
+初始化集群前的准备工作
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    systemctl enable docker
-    systemctl start docker
+    # 永久关闭Swap分区
+    yes | sudo cp /etc/fstab /etc/fstab_bak
+    sudo cat /etc/fstab_bak | grep -v swap > /etc/fstab
 
+    # 永久关闭防火墙，确保网络通畅
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
 
-使用 Minikube 创建单点集群
---------------------------
+    # 关闭 SELinux 防火墙
+    sudo setenforce 0
+    sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
-本节内容参考：https://minikube.sigs.k8s.io/docs/start/
-
-
-关闭 master 节点的交换分区
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-    yes | cp /etc/fstab /etc/fstab_bak
-    cat /etc/fstab_bak | grep -v swap > /etc/fstab
-    reboot
-    systemctl daemon-reload
-    systemctl restart docker
-
-
-安装 kubeadm、kubelet 和 kubectl
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-    apt-get update
-    apt-get install -y apt-transport-https ca-certificates curl
-
-    # 切换国内源：http://mirrors.ustc.edu.cn/kubernetes/
-    curl http://mirrors.ustc.edu.cn/kubernetes/apt/doc/apt-key.gpg | apt-key add -
-    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg http://mirrors.ustc.edu.cn/kubernetes/apt/doc/apt-key.gpg
-    cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
-    deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] http://mirrors.ustc.edu.cn/kubernetes/apt/ kubernetes-xenial main
-    EOF
-    apt-get update
-
-    apt-get install -y kubelet kubeadm kubectl
-    apt-mark hold kubelet kubeadm kubectl
-
-
-允许 iptables 检查桥接流量
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
+    # 允许 iptables 检查桥接流量
     cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
     br_netfilter
     EOF
-
     cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
     net.bridge.bridge-nf-call-ip6tables = 1
     net.bridge.bridge-nf-call-iptables = 1
     EOF
-
     sudo sysctl --system
 
 
-初始化集群控制平面
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash 
-
-    rm -rf /etc/containerd/config.toml
-    systemctl restart containerd
-    
-    swapoff -a
-    
-    kubeadm init \
-        --pod-network-cidr=10.244.0.0/16 \
-        --image-repository registry.aliyuncs.com/google_containers \
-        --apiserver-advertise-address <主机IP地址>
-    
-    systemctl enable kubelet
-    systemctl restart kubelet
-
-
-安装 Minikube
-~~~~~~~~~~~~~~
+安装 kubeadm、kubelet 和 kubectl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+    [kubernetes]
+    name=Kubernetes
+    baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+    enabled=1
+    gpgcheck=1
+    repo_gpgcheck=1
+    gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+    exclude=kubelet kubeadm kubectl
+    EOF
+
+    sudo yum install -y --nogpgcheck kubelet kubeadm kubectl --disableexcludes=kubernetes
+    sudo systemctl enable --now kubelet
 
 
-创建单点集群
-~~~~~~~~~~~~
-
-.. code-block:: bash
-
-    sudo usermod -aG docker $USER && newgrp docker
-    minikube config set driver docker
-    minikube start --driver=docker
-
-
-使用 kubeadm 创建生产集群
--------------------------
-
-初始化集群前的准备工作：关闭 Swap 分区
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-- 临时关闭Swap分区
-
-.. code-block:: bash
-
-    sudo swapoff -a
-    echo "KUBELET_EXTRA_ARGS=--fail-swap-on=false" >> /etc/sysconfig/kubelet
-
-- 永久关闭Swap分区
-
-.. code-block:: bash
-
-    yes | sudo cp /etc/fstab /etc/fstab_bak
-    sudo cat /etc/fstab_bak | grep -v swap > /etc/fstab
-
-
-修改 Docker 的驱动，使其与 K8s 的 cgroups 保持一致
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+使 Docker 与 K8s 的驱动保持一致
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -202,12 +166,31 @@
     systemctl restart docker
 
 
+使 kubelet 开机启动
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    systemctl start kubelet
+    systemctl enable kubelet
+
+
 后续操作仅 master 节点需要运行
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
+
+初始化集群控制平面
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    kubeadm init \
+        --pod-network-cidr=10.244.0.0/16 \
+        --image-repository registry.aliyuncs.com/google_containers \
+        --apiserver-advertise-address <主机IP地址>
 
 
-切换至需要配置的用户后，为当前用户生成 kubeconfig
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+为当前用户生成 kubeconfig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -216,24 +199,29 @@
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 安装 CNI 插件
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
     curl --insecure -sfL https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml | kubectl apply -f -
 
 移除 master 节点上的污点
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-参考连接：https://icyfenix.cn/
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
     kubectl taint nodes --all node-role.kubernetes.io/master-
 
+启用 kubectl 的自动补全功能
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-生成 token
-^^^^^^^^^^^^
+.. code-block:: bash
+
+    echo 'source <(kubectl completion bash)' >> ~/.bashrc
+    echo 'source /usr/share/bash-completion/bash_completion' >> ~/.bashrc
+
+重新生成 token
+~~~~~~~~~~~~~~~
 
 .. note::
 
@@ -245,7 +233,7 @@
 
 
 查看当前集群中节点的信息
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
