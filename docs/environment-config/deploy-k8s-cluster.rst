@@ -8,17 +8,95 @@
 
     以 3 个节点为例，创建集群：（一个 master 节点，两个 node 节点）
 
-    - ``uname -a``：集群内每个节点必须为 x86 架构（\ :ref:`不支持 ARM 架构 <training-with-gpu>`\ ）。
+    - ``uname -m``：集群内每个节点必须为 x86 架构（\ :ref:`不支持 ARM 架构 <training-with-gpu>`\ ）。
     - ``lscpu``：最少 2 核处理器。
     - ``free -mh``：最小 2GB 内存。
     - ``vim /etc/hostname`` 修改 hostname，使集群内每个节点的 hostname 不同。
-    - ``vim /etc/hosts``：添加地址映射，使集群内网络互通。
-    - ``ping <hostname>``：集群内各节点网络可以互联。
+    - ``vim /etc/sysconfig/network-scripts/ifcfg-ens33``：修改为静态 IP 地址。
+    - ``vim /etc/hosts``：配置主机名和 IP 地址映射，确保各节点 ``ping <hostname>`` 互通。
     - ``ip link``：集群内每个节点的网络接口的 MAC 地址不同。
     - ``sudo cat /sys/class/dmi/id/product_uuid``：集群内每个节点的 product_uuid 不同。
+    - ``firewall-cmd --state``：确保防火墙关闭。
+    - ``sestatus``：确保 SELinux 被禁止。
+    - ``date``：确保集群内各节点的时间保持一致。
     
     确保网络通畅的——这听起来像是废话，但确实有相当一部分的云主机不对
     SELinux、iptables、安全组、防火墙进行设置的话，内网各个节点之间、与外网之间会存在默认的访问障碍，导致部署失败。
+
+
+初始化集群前的准备工作
+----------------------
+
+.. code-block:: bash
+
+    # 每台主机的名字不同
+    hostnamectl set-hostname master # 在主机 1 上操作
+    hostnamectl set-hostname node01 # 在主机 2 上操作
+    hostnamectl set-hostname node02 # 在主机 3 上操作
+
+    # 升级 Linux 内核到 5.4
+    rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    yum -y install https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+    yum --enablerepo="elrepo-kernel" -y install kernel-lt.x86_64
+    grub2-set-default 0
+    grub2-mkconfig -o /boot/grub2/grub.cfg
+    reboot
+    uname -r
+
+    # 同步时间
+    sudo systemctl stop chronyd
+    sudo systemctl disable chronyd
+    sudo yum install ntp ntpdate
+    sudo ntpdate ntp.aliyun.com
+    sudo rm -rf /etc/localtime
+    sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+    # 永久关闭Swap分区
+    yes | sudo cp /etc/fstab /etc/fstab_bak
+    sudo cat /etc/fstab_bak | grep -v swap > /etc/fstab
+
+    # 永久关闭防火墙，确保网络通畅
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    firewall-cmd --state
+
+    # 关闭 SELinux 防火墙
+    sudo sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+
+    # 允许 iptables 检查桥接流量
+    cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+    overlay
+    br_netfilter
+    EOF
+
+    sudo modprobe overlay
+    sudo modprobe br_netfilter
+
+    # 配置端口转发和网桥过滤
+    cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+    net.bridge.bridge-nf-call-iptables  = 1
+    net.bridge.bridge-nf-call-ip6tables = 1
+    net.ipv4.ip_forward                 = 1
+    vm.swappiness                       = 0
+    EOF
+
+    # 应用 sysctl 参数而不重新启动
+    sudo sysctl --system
+
+    # 配置 IPVS
+    yum -y install ipset ipvsadm
+    
+    cat > /etc/sysconfig/modules/ipvs.modules <<EOF
+    #!/bin/bash
+    modprobe -- ip_vs
+    modprobe -- ip_vs_rr
+    modprobe -- ip_vs_wrr
+    modprobe -- ip_vs_sh
+    modprobe -- nf_conntrack
+    EOF
+
+    chmod 755 /etc/sysconfig/modules/ipvs.modules
+    bash /etc/sysconfig/modules/ipvs.modules
 
 
 安装容器运行时：Docker Engine
@@ -39,15 +117,15 @@
         docker-engine
 
 
-使用仓库安装 Docker（推荐）
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+使用仓库安装 Docker
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    sudo yum install -y yum-utils
+    sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
     sudo yum-config-manager \
-        --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+        --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 
 
 更新系统软件仓库
@@ -63,7 +141,9 @@
 
 .. code-block:: bash
 
+    sudo yum makecache fast
     sudo yum install docker-ce docker-ce-cli containerd.io
+    sudo service docker start
 
 
 测试 Docker 是否安装成功
@@ -74,12 +154,31 @@
     sudo docker run hello-world
 
 
-Docker 命令自动补全
-~~~~~~~~~~~~~~~~~~~~
+安装 cri-dockerd
+~~~~~~~~~~~~~~~~~~
+
+因为 K8s 1.24 及以上的版本移除了 dockershim，需要 cri-dockerd 才能初始化 K8s 集群。
 
 .. code-block:: bash
 
-    echo 'source /usr/share/bash-completion/completions/docker' >> ~/.bashrc
+    # 安装 Go
+    wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/profile
+    source /etc/profile
+
+    # 安装 cri-dockerd
+    git clone https://github.com/Mirantis/cri-dockerd.git
+    cd cri-dockerd
+    mkdir bin
+    go build -o bin/cri-dockerd
+    mkdir -p /usr/local/bin
+    sudo install -o root -g root -m 0755 bin/cri-dockerd /usr/local/bin/cri-dockerd
+    sudo cp -a packaging/systemd/* /etc/systemd/system
+    sudo sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable cri-docker.service
+    sudo systemctl enable --now cri-docker.socket
 
 
 让 Docker 能够开机启动
@@ -96,40 +195,12 @@ Docker 命令自动补全
 
 .. code-block:: bash
 
-    sudo curl -L "https://get.daocloud.io/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo curl -L "https://get.daocloud.io/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 
 
 使用 kubeadm 创建生产集群
 --------------------------
-
-初始化集群前的准备工作
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-    # 永久关闭Swap分区
-    yes | sudo cp /etc/fstab /etc/fstab_bak
-    sudo cat /etc/fstab_bak | grep -v swap > /etc/fstab
-
-    # 永久关闭防火墙，确保网络通畅
-    sudo systemctl stop firewalld
-    sudo systemctl disable firewalld
-
-    # 关闭 SELinux 防火墙
-    sudo setenforce 0
-    sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-
-    # 允许 iptables 检查桥接流量
-    cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-    br_netfilter
-    EOF
-    cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-    net.bridge.bridge-nf-call-ip6tables = 1
-    net.bridge.bridge-nf-call-iptables = 1
-    EOF
-    sudo sysctl --system
-
 
 安装 kubeadm、kubelet 和 kubectl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,14 +219,14 @@ Docker 命令自动补全
     EOF
 
     sudo yum install -y --nogpgcheck kubelet kubeadm kubectl --disableexcludes=kubernetes
-    sudo systemctl enable --now kubelet
 
 
-使 Docker 与 K8s 的驱动保持一致
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+使 kubelet 与容器的运行时驱动保持一致
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
+    # 修改 docker 的驱动
     cat <<EOF | sudo tee /etc/docker/daemon.json
     {
         "exec-opts": ["native.cgroupdriver=systemd"]
@@ -164,6 +235,11 @@ Docker 命令自动补全
 
     systemctl daemon-reload
     systemctl restart docker
+
+    # 修改 kubelet 的驱动
+    echo 'KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"' > /etc/sysconfig/kubelet
+    
+    systemctl enable --now kubelet
 
 
 使 kubelet 开机启动
@@ -184,9 +260,21 @@ Docker 命令自动补全
 .. code-block:: bash
 
     kubeadm init \
-        --pod-network-cidr=10.244.0.0/16 \
+        --kubernetes-version v1.25.4 \
+        --pod-network-cidr 10.244.0.0/16 \
         --image-repository registry.aliyuncs.com/google_containers \
+        --cri-socket unix:///var/run/cri-dockerd.sock \
         --apiserver-advertise-address <主机IP地址>
+
+.. warning::
+    
+    如果出现下面的报错：
+
+    .. code-block:: bash
+        
+        [ERROR CRI]: container runtime is not running
+
+    请尝试 ``rm /etc/containerd/config.toml`` 和 ``systemctl restart containerd``，然后重新运行 ``kubeadm init`` 命令。
 
 
 为当前用户生成 kubeconfig
