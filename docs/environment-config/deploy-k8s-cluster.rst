@@ -257,14 +257,57 @@
 初始化集群控制平面
 ~~~~~~~~~~~~~~~~~~
 
+首先使用 ``kubeadm config print init-defaults > kubeadm-config.yaml`` 创建配置文件，并进行如下修改
+
+.. code-block:: yaml
+
+    apiVersion: kubeadm.k8s.io/v1beta3
+    bootstrapTokens:
+    - groups:
+    - system:bootstrappers:kubeadm:default-node-token
+    token: abcdef.0123456789abcdef
+    ttl: 24h0m0s
+    usages:
+    - signing
+    - authentication
+    kind: InitConfiguration
+    localAPIEndpoint:
+    advertiseAddress: 192.168.163.139
+    bindPort: 6443
+    nodeRegistration:
+    criSocket: unix:///var/run/cri-dockerd.sock
+    imagePullPolicy: IfNotPresent
+    name: master
+    taints: null
+    ---
+    apiServer:
+    timeoutForControlPlane: 4m0s
+    apiVersion: kubeadm.k8s.io/v1beta3
+    certificatesDir: /etc/kubernetes/pki
+    clusterName: master
+    controllerManager: {}
+    dns: {}
+    etcd:
+    local:
+        dataDir: /var/lib/etcd
+    imageRepository: registry.aliyuncs.com/google_containers
+    kind: ClusterConfiguration
+    kubernetesVersion: 1.25.4
+    networking:
+    dnsDomain: cluster.local
+    serviceSubnet: 10.96.0.0/12
+    scheduler: {}
+    ---
+    kind: KubeletConfiguration
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    cgroupDriver: systemd
+
+
+之后进行初始化集群：
+
 .. code-block:: bash
 
-    kubeadm init \
-        --kubernetes-version v1.25.4 \
-        --pod-network-cidr 10.244.0.0/16 \
-        --image-repository registry.aliyuncs.com/google_containers \
-        --cri-socket unix:///var/run/cri-dockerd.sock \
-        --apiserver-advertise-address <主机IP地址>
+    kubeadm init --config kubeadm-config.yaml
 
 .. warning::
     
