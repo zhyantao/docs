@@ -21,6 +21,10 @@ programming-lang/java/index
 programming-lang/python/index
 programming-lang/c/index
 programming-lang/assembly/*
+shell-script-syntax/index
+markdown-syntax/index
+ml-framework/index
+frontend-developing/index
 ```
 
 ```{toctree}
@@ -30,18 +34,6 @@ programming-lang/assembly/*
 :hidden:
 
 ml-mechanism/*
-```
-
-```{toctree}
-:caption: 脚本/标记语言/框架
-:maxdepth: 2
-:glob:
-:hidden:
-
-shell-script-syntax/index
-markdown-syntax/index
-ml-framework/index
-frontend-developing/index
 ```
 
 ```{toctree}
