@@ -134,7 +134,7 @@ Vue 实例的生命周期如下图，要理解这个图现在还有些困难，�
 - 将数据保存在 Vue 实例的 ``data`` 部分；
 - 通过父子组件之间的通信，子组件将数据展示在 DOM 上。
 
-.. image:: ../_static/images/vue-lifecycle.*
+.. image:: ../../_static/images/vue-lifecycle.*
 
 代码清单 3：
 

@@ -17,14 +17,14 @@ computer-science/*
 :glob:
 :hidden:
 
-programming-lang/java/index
-programming-lang/python/index
-programming-lang/c/index
-programming-lang/assembly/*
+programming-language/java/index
+programming-language/python/index
+programming-language/c/index
+programming-language/assembly/index
 shell-script-syntax/index
-markdown-syntax/index
-ml-framework/index
-frontend-developing/index
+markup-language/index
+programming-language/machine-learning/index
+programming-language/frontend-developing/index
 ```
 
 ```{toctree}
@@ -33,7 +33,7 @@ frontend-developing/index
 :glob:
 :hidden:
 
-ml-mechanism/*
+machine-learning/*
 ```
 
 ```{toctree}
