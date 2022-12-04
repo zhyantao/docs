@@ -20,3 +20,9 @@ shutdown        # 关机
 reboot          # 重启
 halt            # 关机后关闭电源
 ```
+
+## 命令行高亮
+
+```{code-block} bash
+PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ '
+```

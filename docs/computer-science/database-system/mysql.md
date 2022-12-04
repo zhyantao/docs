@@ -18,21 +18,21 @@
 推荐 [下载 Zip](https://downloads.mysql.com/archives/community/)，然后配一下环境变量。
 第一次使用会比较麻烦，推荐按照以下几个步骤操作：
 
-1）在解压后的根路径（`mysql-8.0.27-winx64` 文件夹）下新建一个 `my.ini` 文件，然后输入以下几行内容：
+1）在解压后的根路径下（`mysql-8.0.27-winx64` 文件夹）新建 `my.ini`，输入以下内容：
 
 ```{code-block} ini
 [mysqld]
 # set basedir to your installation path
-basedir=D:\Program Files\mysql-8.0.27-winx64\
+basedir=D:\ProgramData\mysql-8.0.27-winx64
 # set datadir to the location of your data directory
-datadir=D:\Program Files\mysql-8.0.27-winx64\data\
+datadir=D:\ProgramData\mysql-8.0.27-winx64\data\
 # set port
 port=3306
 # WARNING: comment this after first running
 skip-grant-tables
 ```
 
-2）安装 MySQL 服务前应当先删除旧服务，以 **管理员模式** 打开命令行，输入 `mysqld --install`。
+2）安装 MySQL 服务前应当先 [删除旧服务](https://zhuanlan.zhihu.com/p/68190605)，以 **管理员模式** 打开命令行，输入 `mysqld --install`。
 
 3）使用 `mysqld --initialize-insecure --user=mysql` 初始化配置文件。
 

@@ -8,7 +8,7 @@ paddle 是核心代码，paddlex 是更上层的接口。
 为了便于理解，可以将 paddle 理解为操作系统，而 paddlex 是运行在操作系统上的应用程序。
 除了 paddlex，飞桨 PaddlePaddle 还为我们提供了更多更丰富的上层组件，如下图所示。
 
-```{figure} ../_static/images/paddle-family.png
+```{figure} ../../_static/images/paddle-family.png
 PaddlePaddle 全家桶
 ```
 
