@@ -396,6 +396,56 @@ Git 全局设置
     $ git stash
     $ git stash pop
 
+第三方库
+~~~~~~~~
+
+.. code-block:: bash
+
+    # 添加 submodule 到现有项目
+    git submodule add <remote> <submodule-dir>
+
+    # 从当前项目移除 submodule
+    git submodule deinit -f <submodule-dir> # 删除 .git/config 中的相关条目
+    rm -rf .git/modules/<submodule-dir>     # 删除 .git/modules 中的 submodule 文件夹
+    git rm -f <submodule-dir>               # 删除 submodule 文件夹和 .gitmodules 中的相关条目
+
+    # 更新 submodule 的 URL
+    # 首先修改 .gitmodules 文件中的 url 属性
+    # 如果已经初始化了，先删除 submodule 在本地相应的文件夹
+    git submodule sync
+    git submodule update --init --recursive
+
+    # 把依赖的 submodule 全部拉取到本地并更新为最新版本
+    git submodule update --init --recursive
+
+    # 更新 submodule 为远程项目的最新版本
+    git submodule update --remote
+
+    # 更新指定的 submodule 为远程的最新版本
+    git submodule update --remote <submodule-dir>
+
+    # 检查 submodule 是否有提交未推送，如果有，则使本次提交失败
+    git push --recurse-submodules=check
+
+    # 先推送 submodule 的更新，然后推送主项目的更新
+    # 如果 submodule 推送失败，那么推送任务直接终止
+    git push --recurse-submodules=on-demand
+
+    # 所有的 submodule 会被依次推送到远端，但是 superproject 将不会被推送
+    git push --recurse-submodules=while
+
+    # 与 while 相反，只推送 superproject，不推送其他 submodule
+    git push --recurse-submodules=no
+
+    # 拉取所有子仓库（fetch）并 merge 到所跟踪的分支上
+    git pull --recurse-submodules
+
+    # 查看 submodule 所有改变
+    git diff --submodule
+
+    # 对所有 submodule 执行命令，非常有用。如 git submodule foreach 'git checkout main'
+    git submodule foreach <arbitrary-command-to-run>
+
 gitignore 匹配规则
 ~~~~~~~~~~~~~~~~~~~
 
