@@ -487,6 +487,27 @@ gitignore 匹配规则
     PS1 = '\[\033[01;32m\]$(git_branch)\[\033[00m\]' # 补充到 PS1 变量上
 
 
+# 自动补全
+
+.. code-block:: bash
+
+    # 下载 git-completition.bash
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    
+    # 将 git-completition.bash 放在服务器上    
+    cp ~/git-completion.bash /etc/bash_completion.d/
+    
+    # 使 git-completition.bash 生效
+    . /etc/bash_completion.d/git-completion.bash
+    
+    # 编辑 /etc/profile 添加如下内容
+    if [ -f /etc/bash_completion.d/git-completion.bash ]; then
+        . /etc/bash_completion.d/git-completion.bash
+    fi
+
+    # 使 /etc/profile 生效
+    source /etc/profile
+
 .. rubric:: 参考资料
 
 .. [1] 阮一峰的网络日志 - 常用 Git 命令清单 [`webpage <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__]
