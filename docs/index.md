@@ -23,6 +23,7 @@ programming-language/c/index
 programming-language/assembly/index
 shell-script-syntax/index
 markup-language/index
+data-science/index
 programming-language/machine-learning/index
 programming-language/frontend-developing/index
 ```
