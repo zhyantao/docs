@@ -21,3 +21,4 @@ scikit-learn
 numpy
 pandas
 openpyxl
+xlrd
