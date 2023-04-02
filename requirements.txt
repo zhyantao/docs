@@ -1,4 +1,4 @@
-furo==2021.11.23
+jupyter-book==2021.11.23
 sphinx==4.2.0
 docutils==0.16
 matplotlib
