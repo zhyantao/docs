@@ -21,16 +21,16 @@ Git
 常用命令
 ~~~~~~~~
 
-.. note::
+.. admonition:: 解释本文中出现的名词
 
-    ``<commit>`` 表示历史提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 查询；
-    ``<remote>`` 表示指向远程仓库的指针，可通过 ``git remote`` 查询，一般是 ``origin``；
-    ``<branch>`` 表示分支名称，可通过 ``git branch`` 查询。
+    - ``<commit>`` 表示历史提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 查询；
+    - ``<remote>`` 表示指向远程仓库的指针，可通过 ``git remote`` 查询，一般是 ``origin``；
+    - ``<branch>`` 表示分支名称，可通过 ``git branch`` 查询。
 
 Git 全局设置
 -------------
 
-.. note::
+.. admonition:: 常见问题说明
 
     如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
     因此，本地的提交邮箱应当与远程仓库保持一致。
@@ -38,8 +38,8 @@ Git 全局设置
 
 .. code-block:: bash
 
-    git config --global user.name "nickname"
-    git config --global user.email "user@example.org"
+    git config --global user.name "zhyantao"
+    git config --global user.email "zh6tao@gmail.com"
 
 创建 git 仓库
 --------------
@@ -151,14 +151,20 @@ Git 全局设置
 分支
 ~~~~~
 
-.. note::
+.. admonition:: 冲突处理
 
     有时想把 ``<other-branch>`` 的内容合并到当前所在分支，使用命令
     ``git fetch <remote> <other-branch>`` 和 ``git merge FETCH_HEAD``
-    后，发现 **有冲突**。
-    那么分支合并时的冲突处理方式如下：``<<<<<<< HEAD`` 表示冲突开始的位置，
-    ``>>>>>>> BRANCH-NAME`` 表示冲突的结束位置，中间部分的 ``=======``
-    分割了当前分支与 ``<other-branch>`` 之间的差异。
+    后，发现 **有冲突**。冲突的文件会有类似如下所示的结果：
+
+    .. code-block:: python
+
+        <<<<<<< HEAD (冲突开始的位置)
+        最新的修改
+        =======
+        上一次提交的修改
+        >>>>>>> 上一个分支的名称 (冲突结束的位置)
+
     因此，我们的目标就是对冲突开始和结束之间的部分进行删减。
     解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
 
@@ -449,21 +455,38 @@ Git 全局设置
 gitignore 匹配规则
 ~~~~~~~~~~~~~~~~~~~
 
-.. csv-table::
-    :header: "匹配规则", "说明"
-    :widths: 15, 85
+.. admonition:: 匹配规则
+    
+    - ``gitignore`` 只匹配其所在目录及子目录的文件。
+    - 已经被 ``git track`` 的文件不受 ``gitignore`` 影响。
+    - 子目录的 ``gitignore`` 文件规则会覆盖父目录的规则。
 
-    "作用域", "gitignore 只匹配其所在目录及子目录的文件。已经被 ``git track`` 的文件不受 gitignore 影响。
-    子目录的 gitignore 文件规则会覆盖父目录的规则。"
-    "文件与文件夹匹配", "在表达式前头出现 ``/`` 则匹配从当前目录（gitignore 所在目录）开始的相应文件或文件夹。
-    在表达式后加 ``/`` 来匹配文件夹。如表达式 ``hello/`` 只会匹配文件夹 ``hello``, 而不会匹配文件 ``hello``。
-    ``**`` 匹配任意文件 ``/`` 文件夹，或者空内容。如 ``a/**/b`` 匹配 ``a/b``，``a/x/b`` 以及 ``a/x/y/b``。"
-    "模糊匹配", "``*`` 匹配除了 ``/`` 之外任意数量的任意内容。``?`` 匹配除了 ``/`` 之外的任意一个字符。
-    ``[]`` 匹配包含在 ``[]`` 范围内的任意字符。"
-    "取消匹配", "在表达式前使用 ``!`` 来取消匹配，然而 **当其父文件夹已经被其他表达式匹配时，则该条表达式无效**。"
-    "特殊字符",	"在 git 中有特殊含义的字符如 ``!``、``#`` 等在匹配时在前面加 ``\`` 来转义。
-    表达式后面的空格会在匹配时被忽略掉，如果想要匹配名字后面带有空格的文件或文件夹时，可以使用 ``\`` 加空格来匹配空格。"
-    "其他", "使用 ``#`` 添加注释"
+.. code-block:: bash
+
+    # 忽略特定文件
+    ModelIndex.xml
+    ExportedFiles.xml
+
+    # [] 匹配包含在 [] 范围内的任意字符
+    [Mm]odel/[Dd]eployment
+
+    # 使用 \ 加空格匹配包含空格的文件或文件夹
+    Program\ Files
+
+    # 忽略名为 hello 的目录和该目录下的所有文件，但是不会匹配名为 hello 的文件
+    hello/
+
+    # 忽略名为 hello 的文件
+    hello
+
+    # 忽略名为 b 的文件，该文件在文件夹 a 下，且该文件的路径为 a/b 或 a/任意路径/b
+    a/**/b
+
+    # 强制包含指定文件夹，* 匹配除了 / 之外任意数量的任意字符串
+    !Model/Portal/*/SupportFiles/[Bb]in/
+
+    # 强制包含指定文件，? 匹配除了 / 之外的任意一个字符
+    !Model/Portal/PortalTemplates/?/SupportFiles/[Bb]in
 
 
 显示 git 分支
