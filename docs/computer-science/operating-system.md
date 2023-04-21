@@ -5,12 +5,8 @@
 [xv6 book 2021](https://kdocs.cn/l/cr5Ryc7FZbRm)。
 
 ```{panels}
-:container: timeline
-:column: col-6 p-0
-:card:
-
----
-:column: +entry left
+:container: container-lg pb-2
+:column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
 
 第 1 讲：O/S 概述
 ^^^
@@ -22,11 +18,6 @@
 - [实验：使用 Xv6 和 Unix 工具](https://pdos.csail.mit.edu/6.S081/2020/labs/util.html)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 2 讲：系统调用
 ^^^
@@ -38,7 +29,6 @@
 - [实验：系统调用](https://pdos.csail.mit.edu/6.S081/2020/labs/syscall.html)
 
 ---
-:column: +entry left
 
 第 3 讲：O/S 组织方式
 ^^^
@@ -57,11 +47,6 @@
   [YouTube](https://youtu.be/o44d---Dk4o)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 4 讲：页表
 ^^^
@@ -78,7 +63,6 @@
 - [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
-:column: +entry left
 
 第 5 讲：RISC-V 的调用规则和栈帧
 ^^^
@@ -89,11 +73,6 @@
   [YouTube](https://youtu.be/s-Z5t_yTyTM)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 6 讲：隔离性、系统调用的入口点和出口点
 ^^^
@@ -107,7 +86,6 @@
 - [实验：陷入](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)
 
 ---
-:column: +entry left
 
 第 7 讲：答疑
 ^^^
@@ -117,11 +95,6 @@
   [YouTube](https://youtu.be/_WWjNIJAfVg)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 8 讲：页错误
 ^^^
@@ -134,7 +107,6 @@
 - [实验：懒加载](https://pdos.csail.mit.edu/6.S081/2020/labs/lazy.html)
 
 ---
-:column: +entry left
 
 第 9 讲：中断
 ^^^
@@ -150,11 +122,6 @@
   [YouTube](https://youtu.be/zRnGNndcVEA)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 10 讲：多处理器和锁
 ^^^
@@ -168,7 +135,6 @@
 - [实验：fork 写入时复制](https://pdos.csail.mit.edu/6.S081/2020/labs/cow.html)
 
 ---
-:column: +entry left
 
 第 11 讲：进程切换
 ^^^
@@ -179,11 +145,6 @@
 - [实验：多进程](https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 12 讲：答疑
 ^^^
@@ -206,11 +167,6 @@
 - [实验：并行和锁](https://pdos.csail.mit.edu/6.S081/2020/labs/lock.html)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 14 讲：文件系统
 ^^^
@@ -226,7 +182,6 @@
 - [实验：页表](https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html)
 
 ---
-:column: +entry left
 
 第 15 讲：故障恢复
 ^^^
@@ -239,11 +194,6 @@
 - [实验：文件系统](https://pdos.csail.mit.edu/6.S081/2020/labs/fs.html)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 16 讲：文件系统性能和快速恢复
 ^^^
@@ -253,7 +203,6 @@
   [YouTube](https://youtu.be/CmDcf6rjFb4)
 
 ---
-:column: +entry left
 
 第 17 讲：虚拟内存
 ^^^
@@ -267,11 +216,6 @@
 - [实验：mmap](https://pdos.csail.mit.edu/6.S081/2020/labs/mmap.html)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 18 讲：O/S 组织方式
 ^^^
@@ -281,7 +225,6 @@
   [YouTube](https://youtu.be/dM9PLdaTpnA)
 
 ---
-:column: +entry left
 
 第 19 讲：虚拟机
 ^^^
@@ -292,11 +235,6 @@
   [bilibili](https://www.bilibili.com/video/BV19k4y1C7kA?p=18)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 20 讲：内核和 HLL
 ^^^
@@ -309,7 +247,6 @@
 - [实验：网络栈](https://pdos.csail.mit.edu/6.S081/2020/labs/net.html)
 
 ---
-:column: +entry left
 
 第 21 讲：网络
 ^^^
@@ -320,11 +257,6 @@
   [bilibili](https://www.bilibili.com/video/BV19k4y1C7kA?p=20)
 
 ---
-:column: +right
----
-:column: +left
----
-:column: +entry right
 
 第 22 讲：安全
 ^^^
@@ -334,7 +266,6 @@
   [YouTube](https://youtu.be/WpKVr3p5rjE)
 
 ---
-:column: +entry left
 
 第 23 讲：写入时更新
 ^^^

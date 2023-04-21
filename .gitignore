@@ -62,3 +62,10 @@ target/
 
 # Idea
 .idea/
+
+*.xlsx
+*.csv
+*.png
+*.npz
+*.npy
+*.txt
