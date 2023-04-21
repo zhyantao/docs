@@ -66,7 +66,9 @@ target/
 *.xlsx
 *.csv
 *.png
-!_static/**
 *.npz
 *.npy
 *.txt
+
+# Force include png files in _static dir
+!docs/_static/**/*.png
