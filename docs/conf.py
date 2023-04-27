@@ -149,6 +149,18 @@ bibtex_bibfiles = ['references.bib']
 
 myst_footnote_transition = False
 
+# Setting for sphinx comments
+comments_config = {
+   "utterances": {
+       "repo": "zhyantao/zhyantao.github.io",
+       "issue-term": "pathname",
+       "label": "comments",
+       "theme": "github-light",
+       "crossorigin": "anonymous",
+   }
+}
+
+
 # -- Options for LaTeX output ---------------------------------------------
 
 # Support Chinese compiling
