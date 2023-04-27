@@ -24,7 +24,7 @@ source_suffix = {
 
 # -- Options for HTML output -------------------------------------------------
 
-html_title = ''
+html_title = 'AR0X1V'
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static'] # Contain custom static files (such as style sheets) here
 html_css_files = ['css/custom.css',] # These paths are either relative to html_static_path or or fully qualified paths (eg. https://...)
