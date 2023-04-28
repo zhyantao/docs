@@ -73,7 +73,7 @@ html_theme_options = {
         },
         {
             "name": "Repository Size",
-            "url": "https://github.com/zhyantao/zhyantao.github.io/archive/refs/heads/master.zip",
+            "url": "https://github.com/zhyantao/zhyantao.github.io/tags",
             "icon": "https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io",
             "type": "url",
         },
