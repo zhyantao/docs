@@ -24,17 +24,61 @@ source_suffix = {
 
 # -- Options for HTML output -------------------------------------------------
 
-html_title = 'AR0X1V'
+html_logo = '_static/images/logo-wide.svg'
+html_title = 'Notebook'
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static'] # Contain custom static files (such as style sheets) here
-html_css_files = ['css/custom.css',] # These paths are either relative to html_static_path or or fully qualified paths (eg. https://...)
+html_css_files = ['css/custom.css',] # Either relative to html_static_path or fully qualified paths (eg. https://...)
 html_js_files = ['js/custom.js']
 # html_sourcelink_suffix = '.rst'
+html_favicon = "_static/images/logo-square.svg"
 html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
 html_domain_indices = False
 html_use_index = True
 html_split_index = False
 html_show_sourcelink = True
+html_theme_options = {
+    "path_to_docs": "docs",
+    "repository_url": "https://github.com/zhyantao/zhyantao.github.io",
+    "repository_branch": "master",
+    "launch_buttons": {
+        "binderhub_url": "https://mybinder.org",
+        "colab_url": "https://colab.research.google.com/",
+        "deepnote_url": "https://deepnote.com/",
+        "notebook_interface": "jupyterlab",
+        "thebe": True,
+        # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
+    },
+    "use_edit_page_button": True,
+    "use_source_button": True,
+    "use_issues_button": True,
+    # "use_repository_button": True,
+    "use_download_button": True,
+    "use_sidenotes": True,
+    "show_toc_level": 2,
+    "announcement": (
+        "⚠️本文内容未经官方审核，请仔细甄别后使用！⚠️"
+    ),
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/zhyantao/zhyantao.github.io",
+            "icon": "fa-brands fa-github",
+        },
+        {
+            "name": "Documentation Status",
+            "url": "https://readthedocs.org/projects/zhyantao/builds/",
+            "icon": "https://readthedocs.org/projects/zhyantao/badge",
+            "type": "url",
+        },
+        {
+            "name": "Repository Size",
+            "url": "https://github.com/zhyantao/zhyantao.github.io/archive/refs/heads/master.zip",
+            "icon": "https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io",
+            "type": "url",
+        },
+    ],
+}
 
 
 # -- General configuration ------------------------------------------------
@@ -78,6 +122,7 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx_comments',
     'svg2png',
+    'sphinx_thebe',
 ]
 
 
