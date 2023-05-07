@@ -56,9 +56,9 @@ html_theme_options = {
     "use_download_button": True,
     "use_sidenotes": True,
     "show_toc_level": 2,
-    "announcement": (
-        "⚠️本文内容未经官方审核，请仔细甄别后使用！⚠️"
-    ),
+    # "announcement": (
+    #     "⚠️本文内容未经官方审核，请仔细甄别后使用！⚠️"
+    # ),
     "icon_links": [
         {
             "name": "GitHub",
