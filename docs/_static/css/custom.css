@@ -11,5 +11,6 @@
 } */
 
 .bd-main {
+    flex-grow: 1;
     min-width: 853px;
 }
