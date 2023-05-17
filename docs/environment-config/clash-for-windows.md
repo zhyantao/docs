@@ -33,4 +33,7 @@
 ```{error}
 Win11 System Proxy 无法打开：
 <https://github.com/Fndroid/clash_for_windows_pkg/issues/4402#issuecomment-1528996373>
+
+Could not switch to this profile! invalid dns enhanced-mode: redir-host:
+<https://github.com/Fndroid/clash_for_windows_pkg/issues/4161#issuecomment-1473318333>
 ```
