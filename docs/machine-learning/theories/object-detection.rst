@@ -9,7 +9,7 @@
 
 目标检测主要分为三类 [6]_ ：
 
-.. image:: ../_static/images/obj-det-types.png
+.. image:: ../../_static/images/obj-det-types.png
   :align: center
 
 - 图像分类，预测图像中是否包含某个目标，代表算法如 CNN；
@@ -18,7 +18,7 @@
 
 研究这三类问题主要有两种方法：
 
-.. image:: ../_static/images/obj-det-methods.png
+.. image:: ../../_static/images/obj-det-methods.png
   :align: center
 
 - 边界框检测（注，bbox = Bounding Box）
@@ -30,7 +30,7 @@
 需要注意的是，以像素为中心分别生成多个大小不等的锚框，指的是通常意义上的滑动窗口。
 滑动窗口的运算量极大，包含大量的重复计算，因此出现了像 YOLO 这样的改进算法。
 
-.. image:: ../_static/images/obj-det-yolo-init.png
+.. image:: ../../_static/images/obj-det-yolo-init.png
   :align: center
 
 不同的算法会采用不用的采样方法。以 YOLO 为例（上图所示 [5]_ ），它首先将图像划分为网格结构，每个网格都是一个锚框。
@@ -46,17 +46,17 @@ YOLO 的锚框可以看成是 :math:`stride = b_w` 的滑动窗口。
 
 两种方式任选一种，然后整个网络的标签可以用如法方式表示：
 
-.. image:: ../_static/images/obj-det-label-demo.png
+.. image:: ../../_static/images/obj-det-label-demo.png
   :align: center
 
 模型训练完成后，通常用交并比（Intersection over Union，IoU）来评价模型效果：
 
-.. image:: ../_static/images/obj-det-assessment.png
+.. image:: ../../_static/images/obj-det-assessment.png
   :align: center
 
 常用的基本思路是：1）生成多个候选框，2）计算每个候选框的概率，3）使用非最大抑制方法移除部分候选框。
 
-.. image:: ../_static/images/obj-det-main-idea.png
+.. image:: ../../_static/images/obj-det-main-idea.png
   :align: center
 
 
@@ -104,7 +104,7 @@ mAP 计算的是 :math:`IoU\_threshold = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 
 进一步地，我们从维基百科中搜索一下\
 `混淆矩阵 <https://en.wikipedia.org/wiki/Confusion_matrix>`_\，会有下面这张图：
 
-.. image:: ../_static/images/confusion-matrix.png
+.. image:: ../../_static/images/confusion-matrix.png
   :align: center
 
 - ``true`` ：预测对了
@@ -125,24 +125,24 @@ mAP 计算的是 :math:`IoU\_threshold = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 
 
 mAP 更加详细的计算过程，知乎网友 [9]_ 给了一个说明。
 
-.. image:: ../_static/images/precision-recall.png
+.. image:: ../../_static/images/precision-recall.png
   :align: center
 
 看上图，绿色是真实框，红色是预测框。注意，图中的百分数是置信度，不是 IoU。走一遍流程：
 
-.. image:: ../_static/images/map-workflow.*
+.. image:: ../../_static/images/map-workflow.*
   :align: center
 
 遍历所有的真实框，统计出 TP、FP 的数值（FN 的值不用统计，因为我们是有监督学习，TP + FN = 所有标注样本的数量）。
 
 然后，所有预测框根据置信度排序，求出 Precision 和 Recall 的值。
 
-.. image:: ../_static/images/precision-recall-confidence.jpg
+.. image:: ../../_static/images/precision-recall-confidence.jpg
   :align: center
 
 最后，画出 Precision-Recall 曲线，计算曲线下的面积，得到 AP 和 mAP 的结果，就可以评估我们的模型了。
 
-.. image:: ../_static/images/precision-recall-curve.png
+.. image:: ../../_static/images/precision-recall-curve.png
   :align: center
 
 计算 AP 时，在 PR 曲线上取每个点右侧最大的 Precision 作为该点处的 Precision。
