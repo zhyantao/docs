@@ -5,10 +5,10 @@
 
 struct book_bank
 {
-    char title[15];
-    char author[20];
-    int paper;
-    float price;
+    char title[15];  // 16
+    char author[20];  // 20
+    int paper;  // 4
+    float price;  // 4
 };
 
 int main()

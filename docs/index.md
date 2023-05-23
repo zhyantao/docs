@@ -23,8 +23,6 @@ programming-language/c/index
 programming-language/assembly/index
 shell-script-syntax/index
 markup-language/index
-data-science/index
-programming-language/machine-learning/index
 programming-language/frontend-developing/index
 ```
 
@@ -34,7 +32,9 @@ programming-language/frontend-developing/index
 :glob:
 :hidden:
 
-machine-learning/*
+machine-learning/third-party/index
+machine-learning/framework/index
+machine-learning/theories/*
 ```
 
 ```{toctree}
