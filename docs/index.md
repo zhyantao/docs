@@ -19,7 +19,7 @@ computer-science/*
 
 programming-language/java/index
 programming-language/python/index
-programming-language/c/index
+programming-language/c-cpp/index
 programming-language/assembly/index
 shell-script-syntax/index
 markup-language/index
