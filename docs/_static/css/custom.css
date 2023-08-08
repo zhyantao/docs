@@ -9,8 +9,3 @@
 /* .rst-versions.rst-badge {
     display: none;
 } */
-
-.bd-main {
-    flex-grow: 1;
-    min-width: 853px;
-}

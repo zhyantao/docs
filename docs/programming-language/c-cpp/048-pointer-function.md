@@ -1,6 +1,6 @@
 # 指向函数的指针
 
-```{code-block} c
+```c
 #include <stdio.h>
 
 void f2(void (*f1)(), int n)
