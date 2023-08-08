@@ -14,7 +14,7 @@ sphinx-autodoc-typehints==1.12.0
 sphinx-thebe
 sphinxcontrib-mermaid==0.7.1
 sphinxcontrib-plantuml==0.22
-sphinxcontrib-bibtex==2.4.1
+sphinxcontrib-bibtex==2.5.0
 sphinx-comments==0.0.3
 cairosvg==2.5.2
 seaborn
