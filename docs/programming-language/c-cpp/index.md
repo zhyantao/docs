@@ -1,9 +1,8 @@
-# C 语言基础
+# C/C++ 编程基础
 
 ```{toctree}
 :titlesonly:
 :glob:
-:hidden:
 
 ./*
 ```
