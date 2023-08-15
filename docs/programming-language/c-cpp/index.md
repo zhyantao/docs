@@ -2,6 +2,7 @@
 
 ```{toctree}
 :titlesonly:
+:hidden:
 :glob:
 
 ./*
