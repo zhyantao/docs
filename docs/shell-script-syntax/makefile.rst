@@ -7,28 +7,75 @@ Makefile
 
 .. code-block:: bash
 
-    # := 表示临时赋值
-    src := $(shell ls *.c)
-    objs := $(patsubst %.c,%.o,$(src)
-
-    # 基本格式：target:dependencies
-    # $@ 代表 target
-    # $^ 代表 dependencies
-    test: $(objs)
-        gcc -o $@ $^
-
-    # 生成中目标文件的中间文件（dependencies）
-    # 即 .o 文件的生成规则
-    # $< 表示匹配到的第一个依赖文件名
-    # % 是通配符，它和字符串中任意个数的字符相匹配
-    %.o: %.c
-        gcc -c -o $@ $<
-
+    # VERSION 1
+    # 最简单的方式就是把文件一个一个手打出来进行编译
+    hello: main.cpp printhello.cpp  factorial.cpp
+    	g++ -o hello main.cpp printhello.cpp  factorial.cpp
+    
+    # VERSION 2
+    # 采用 Makefile 只会更新有变动的文件，在工程比较大的情况下可以节省很多时间
+    CXX = g++
+    TARGET = hello
+    	OBJ = main.o printhello.o factorial.o
+    
+    $(TARGET): $(OBJ)
+    	$(CXX) -o $(TARGET) $(OBJ)
+    
+    main.o: main.cpp
+    	$(CXX) -c main.cpp
+    
+    printhello.o: printhello.cpp
+    	$(CXX) -c printhello.cpp
+    
+    factorial.o: factorial.cpp
+    	$(CXX) -c factorial.cpp
+    
+    
+    # VERSION 3
+    CXX = g++
+    TARGET = hello
+    	OBJ = main.o printhello.o factorial.o
+    
+    CXXFLAGS = -c -Wall
+    
+    $(TARGET): $(OBJ)
+    	$(CXX) -o $@ $^
+    
+    %.o: %.cpp
+    	$(CXX) $(CXXFLAGS) $< -o $@
+    
+    .PHONY: clean
     clean:
-        rm -f test *.o
+    	rm -f *.o $(TARGET)
+    
+    
+    # VERSION 4
+    # 这是目前 Makefile 的主流编写方式
+    # := 表示临时赋值
+    CXX := g++
+    TARGET := hello
+    SRC := $(wildcard *.cpp)
+    OBJ := $(patsubst %.cpp, %.o, $(SRC))
+    
+    CXXFLAGS := -c -Wall
 
-还有其他的语法比如 ``.PHONY`` 可以参考下面的参考文献中的 **跟我一起写Makefile**
+    # 基本格式：目标文件:依赖文件
+    # $@ 代表目标文件，匹配目标二进制文件 hello
+    # $^ 代表依赖文件，匹配目标二进制文件 hello 依赖的所有 .o 文件，即 $(OBJ)
+    $(TARGET): $(OBJ)
+    	$(CXX) -o $@ $^
 
+    # 这句话用来将所有的 .cpp 文件编译成对应的 .o 文件（文件名不变，扩展名改变）
+    # $@ 代表目标文件，匹配目标 .o 文件
+    # $< 代表依赖文件，匹配目标 .o 文件依赖的第一个 .c 文件，即与 .o 文件文件名相同的 .cpp 文件
+    # % 是通配符，它和字符串中任意个数的字符相匹配
+    %.o: %.cpp
+    	$(CXX) $(CXXFLAGS) $< -o $@
+
+    # .PHONY 作用在于防止 clean 这个命令和系统中可能存在的 clean 命令冲突
+    .PHONY: clean
+    clean:
+    	rm -f *.o $(TARGET)
 
 .. rubric:: 参考资料
 
