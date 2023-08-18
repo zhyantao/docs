@@ -1,6 +1,6 @@
 # 多维数组
 
-```{code-block} cpp
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -17,7 +17,10 @@ void init_2d_array(float mat[][4], //error, arrays of unknown bound
 
 int main()
 {
-    int mat1[2][3] = {{11,12,13}, {14,15,16}};
+    int mat1[2][3] = {
+        {11,12,13},
+        {14,15,16}
+    };
 
     int rows = 5;
     int cols = 4;
