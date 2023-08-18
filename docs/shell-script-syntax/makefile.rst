@@ -7,16 +7,16 @@ Makefile
 
 .. code-block:: bash
 
-    # VERSION 1
+    # ====================== VERSION 1 ======================
     # 最简单的方式就是把文件一个一个手打出来进行编译
     hello: main.cpp printhello.cpp  factorial.cpp
     	g++ -o hello main.cpp printhello.cpp  factorial.cpp
     
-    # VERSION 2
+    # ====================== VERSION 2 ======================
     # 采用 Makefile 只会更新有变动的文件，在工程比较大的情况下可以节省很多时间
     CXX = g++
     TARGET = hello
-    	OBJ = main.o printhello.o factorial.o
+    OBJ = main.o printhello.o factorial.o
     
     $(TARGET): $(OBJ)
     	$(CXX) -o $(TARGET) $(OBJ)
@@ -31,10 +31,10 @@ Makefile
     	$(CXX) -c factorial.cpp
     
     
-    # VERSION 3
+    # ====================== VERSION 3 ======================
     CXX = g++
     TARGET = hello
-    	OBJ = main.o printhello.o factorial.o
+    OBJ = main.o printhello.o factorial.o
     
     CXXFLAGS = -c -Wall
     
@@ -49,7 +49,7 @@ Makefile
     	rm -f *.o $(TARGET)
     
     
-    # VERSION 4
+    # ====================== VERSION 4 ======================
     # 这是目前 Makefile 的主流编写方式
     # := 表示临时赋值
     CXX := g++
