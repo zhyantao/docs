@@ -1,6 +1,6 @@
 # 多维数组
 
-```cpp
+```{code-block} cpp
 #include <iostream>
 using namespace std;
 
