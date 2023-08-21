@@ -31,4 +31,10 @@ void abssort(float* x, unsigned n) {
 5. trailing-return-type（可选）。
 6. Lambda 体。
 
+在使用 capture 子句时，建议你记住以下几点（尤其是使用采取多线程的 Lambda 时）：
+
+- 引用捕获可用于修改外部变量，而值捕获却不能实现此操作。（mutable 允许修改副本，而不能修改原始项）
+- 引用捕获会反映外部变量的更新，而值捕获不会。
+- 引用捕获引入生存期依赖项，而值捕获却没有生存期依赖项。当 Lambda 以异步方式运行时，这一点尤其重要。如果在异步 Lambda 中通过引用捕获局部变量，该局部变量将很容易在 Lambda 运行时消失。代码可能会导致在运行时发生访问冲突。
+
 更多细节参考：<https://learn.microsoft.com/zh-cn/cpp/cpp/lambda-expressions-in-cpp>
