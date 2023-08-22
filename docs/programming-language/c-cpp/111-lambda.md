@@ -21,7 +21,7 @@ void abssort(float* x, unsigned n) {
 下图显示了 lambda 语法的各个部分：
 
 ```{figure} ../_static/images/lambdaexpsyntax.png
-:caption: Lambda 语法解析
+Lambda 语法解析
 ```
 
 1. capture 子句（在 C++ 规范中也称为 Lambda 引导。）
