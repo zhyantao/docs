@@ -20,7 +20,7 @@ void abssort(float* x, unsigned n) {
 
 下图显示了 lambda 语法的各个部分：
 
-```{figure} ../_static/images/lambdaexpsyntax.png
+```{figure} ../../_static/images/lambdaexpsyntax.png
 Lambda 语法解析
 ```
 
