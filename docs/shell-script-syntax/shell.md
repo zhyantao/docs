@@ -1,4 +1,4 @@
-# Bash
+# Shell
 
 - Bash 4.0 参考文档（[PDF](https://kdocs.cn/l/cf0I6g1Luc87)） | Bash Reference Manual（[LINK](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)）
 
