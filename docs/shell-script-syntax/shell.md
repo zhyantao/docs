@@ -2,6 +2,7 @@
 
 - Bash 4.0 参考文档（[PDF](https://kdocs.cn/l/cf0I6g1Luc87)） | Bash Reference Manual（[LINK](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)）
 - 遇到了不会用的命令？可以在 tldr 上搜索：https://tldr.inbrowser.app/pages/common/tar
+- 更多实用的技巧，可以参考：https://missing-semester-cn.github.io/2020/shell-tools/
 
 ## 1. Hello World
 
