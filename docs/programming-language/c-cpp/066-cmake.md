@@ -70,3 +70,9 @@ project(persondemo)
 
 ADD_EXECUTABLE(persondemo main.cpp student.cpp)
 ```
+
+---
+
+1. 在 Linux 下使用 CMake 构建应用程序. https://www.ibm.com/developerworks/cn/linux/l-cn-cmake/
+2. CMake 入门实战. https://www.hahack.com/codes/cmake/
+3. Cmake 实战 https://kdocs.cn/l/ch0JlSoQjQdm
