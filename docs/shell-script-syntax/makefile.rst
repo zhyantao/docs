@@ -79,10 +79,5 @@ Makefile
 
 .. rubric:: 参考资料
 
-1. Shell 工具和脚本 https://missing-semester-cn.github.io/2020/shell-tools/
-2. 韦东山. 嵌入式 Linux 应用开发完全手册 [M]. 人民邮电出版社, 2008.
-3. 跟我一起写 Makefile. https://seisman.github.io/how-to-write-makefile/index.html
-4. 在 Linux 下使用 CMake 构建应用程序. https://www.ibm.com/developerworks/cn/linux/l-cn-cmake/
-5. CMake 入门实战. https://www.hahack.com/codes/cmake/
-6. Makefile 由浅入深--教程、干货. https://zhuanlan.zhihu.com/p/47390641
-7. Cmake 实战 https://kdocs.cn/l/ch0JlSoQjQdm
+1. 跟我一起写 Makefile. https://seisman.github.io/how-to-write-makefile/index.html
+2. Makefile 由浅入深--教程、干货. https://zhuanlan.zhihu.com/p/47390641
