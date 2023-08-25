@@ -2,6 +2,13 @@
 Makefile
 =========
 
+本文仅提供编写手动编写 Makefile 的简单示例，理解了本文就能够应付大部分的 Makefile 了，更加复杂的 Makefile 都是在这种简单规则上叠加的。但是只阅读本文是远远不够的，为了能够对 Makefile 有更加清晰的认识，我这里推荐另外一个文档：https://seisman.github.io/how-to-write-makefile。
+
+.. note::
+
+    在实际工程中，虽然也有只用 Makefile 的项目，但是更为方便的方式是使用 CMakeList 来生成 Makefile。cmake 管理工程的最大优势在于跨平台，自己不用书写太复杂的脚本了，自己写一写配置文件，后面的工作就都是自动化的了。
+
+
 基本语法
 --------
 
@@ -76,8 +83,3 @@ Makefile
     .PHONY: clean
     clean:
     	rm -f *.o $(TARGET)
-
-.. rubric:: 参考资料
-
-1. 跟我一起写 Makefile. https://seisman.github.io/how-to-write-makefile/index.html
-2. Makefile 由浅入深--教程、干货. https://zhuanlan.zhihu.com/p/47390641
