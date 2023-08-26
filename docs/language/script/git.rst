@@ -6,7 +6,7 @@ Git
 工作流程
 ~~~~~~~~
 
-.. figure:: ../_static/images/bg2015120901.png
+.. figure:: ../../_static/images/bg2015120901.png
 
     图源阮一峰的博客 [1]_
 
