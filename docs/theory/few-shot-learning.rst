@@ -27,23 +27,23 @@
 - 元学习器：学习应该如何学习问题，比如，可以学习如何更快地梯度下降等；
 - 元目标：学习如何更好地在某个特定场景下取得良好效果，比如应用于小样本还是多样本。
 
-.. image:: ../../_static/images/overview-of-meta-learning-landscape.png
+.. image:: ../_static/images/overview-of-meta-learning-landscape.png
 
 元学习一般包括两个学习器，learner 和 meta-learner，每个学习器都有一个超参数，但下图中没写。
 
 - learner 是用来解决手中数据的一个学习器，也叫 base-learner；
 - meta-learner 是预训练得到的一个学习器。
 
-.. image:: ../../_static/images/meta-learning-workflow.png
+.. image:: ../_static/images/meta-learning-workflow.png
 
 读一些相关文献，从论文中的伪代码上可以看出来，它一般包括两层循环，外层循环学习得到 meta-learner，内层循环学习得到 learner。
 为了降低难度，我们看图来直观理解一下：
 
-.. image:: ../../_static/images/meta-learning-framework.*
+.. image:: ../_static/images/meta-learning-framework.*
 
 为了能更进一步理解整体的工作过程，考虑一个例子：
 
-.. image:: ../../_static/images/meta-learning.png
+.. image:: ../_static/images/meta-learning.png
 
 假如我有一个 :math:`10` 类的数据，每个类别 :math:`10` 张图片，共 :math:`10 \times 10=100` 张。
 那元学习的过程就是，首先设置实验，比如 10-way 5-shot。
@@ -72,7 +72,7 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 - 嵌入模块 :math:`f` 将数据样本映射为特征向量；
 - 度量模块 :math:`g` 比较待测样本于其他样本的特征向量的相似度。
 
-.. image:: ../../_static/images/metric-based-meta-learning.png
+.. image:: ../_static/images/metric-based-meta-learning.png
 
 注：图片中的颜色，每种颜色都会有一个特征向量。把待测样本归类为相似度最高的样本所属的类别。分类器一般选择 Softmax。
 
@@ -81,14 +81,14 @@ meta-train 的过程拿 imagenet 这种数据集 pre-train，meta-test 就是在
 
 神经图灵机的框架 :footcite:p:`DBLP:journals/corr/GravesWD14` 提供了一个通用的模型（见下图），在此基础上衍生出了 MANN 和 Meta Network。
 
-.. image:: ../../_static/images/neural-tuning-machine.png
+.. image:: ../_static/images/neural-tuning-machine.png
 
 具体的模型是由记忆产生的，在不同的记忆下，对应不同的函数（Read heads 读取记忆，Write heads 产生记忆）。
 对于新任务，模型把数据集载入记忆，Read heads 根据权重合理地读取记忆，就形成了对这个任务的建模。
 
 基于优化的方法，是我们通常讲的，如何学会学习，也就是说，如何学到一个合适的初始化，让模型更快地收敛。比如 MAML :footcite:p:`finn2017model` （见下图）。
 
-.. image:: ../../_static/images/model-agnostic-meta-learning.png
+.. image:: ../_static/images/model-agnostic-meta-learning.png
 
 注：图中的粗实线是元学习的过程，灰色线是每个任务（task）。元学习器为每个任务学习优化参数 :math:`\theta_i^*`，这些优化参数的矢量和为 :math:`\theta`。
 当面对新场景时，用平均后的参数 :math:`\theta` 来初始化新场景，可以更快地收敛。

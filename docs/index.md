@@ -3,38 +3,36 @@
 <br/>
 
 ```{toctree}
-:caption: 计算机基础
+:caption: 理论知识
 :maxdepth: 2
 :glob:
 :hidden:
 
-computer-science/*
+theory/*
 ```
 
 ```{toctree}
-:caption: 编程语言基础
+:caption: 编程语言
 :maxdepth: 2
 :glob:
 :hidden:
 
-programming-language/java/index
-programming-language/python/index
-programming-language/c-cpp/index
-programming-language/assembly/index
-shell-script-syntax/index
-markup-language/index
-programming-language/frontend-developing/index
+language/java/index
+language/c-cpp/index
+language/assembly/index
+language/python/index
+language/script/index
+language/javascript/index
+language/framework/index
 ```
 
 ```{toctree}
-:caption: 机器学习基础
+:caption: 环境部署
 :maxdepth: 2
 :glob:
 :hidden:
 
-machine-learning/third-party/index
-machine-learning/framework/index
-machine-learning/theories/*
+deploy/*
 ```
 
 ```{toctree}
@@ -43,8 +41,6 @@ machine-learning/theories/*
 :glob:
 :hidden:
 
-academic-terms/index
-journals-conferences/index
-environment-config/index
+appendix/*
 面试八股文 <https://interview-points.readthedocs.io/>
 ```

@@ -438,7 +438,7 @@ reST 支持图像指令，用法如下：
         :align: "top", "middle", "bottom", "left", "center", or "right"
         :target: text (URI or reference name)
 
-    .. figure:: ../_static/images/lenna.jpg
+    .. figure:: ../../_static/images/lenna.jpg
         :height: 200px
         :width: 200px
         :alt: Lenna, 512 times 512, Grayscale
@@ -447,14 +447,14 @@ reST 支持图像指令，用法如下：
 
         lenna.jpg
 
-.. image:: ../_static/images/lenna.jpg
+.. image:: ../../_static/images/lenna.jpg
     :height: 200px
     :width: 200px
     :alt: Lenna, 512 times 512, Grayscale
     :align: center
     :target: http://www.lenna.org/
 
-.. figure:: ../_static/images/lenna.jpg
+.. figure:: ../../_static/images/lenna.jpg
     :height: 200px
     :width: 200px
     :alt: Lenna, 512 times 512, Grayscale
