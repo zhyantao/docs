@@ -1,6 +1,8 @@
 # ...
 
-在 C/C++ 的高级语法中，我们会经常看到 `...` 这个符号，在不同的场景中，有不同的含义：
+在 C/C++ 的高级语法中，我们会经常看到 `...` 这个符号，它通常表示了可变数量的参数。
+
+本节主要介绍不同的场景下，`...` 的含义分别是什么，如下：
 
 - 用在函数模板中，表示接受可变参数的形参（函数形参包）；
 - 用在类模板中，表示接受可变参数的类类型（模板形参包）；
@@ -68,6 +70,58 @@ G(a, )     // 替换为 f(0, a)
 G(a)       // 替换为 f(0, a)
 SDEF(foo);       // 替换为 S foo;
 SDEF(bar, 1, 2); // 替换为 S bar = { 1, 2 };
+
+# __VA_ARGS__ 前的井号会给参数加上一个双引号
+#define showlist(...) puts(#__VA_ARGS__)
+showlist();            // 展开成 puts("")
+showlist(1, "x", int); // 展开成 puts("1, \"x\", int")
+```
+
+```cpp
+#include <iostream>
+ 
+// 制造函数工厂并使用它
+// __VA_ARGS__ 前的两个井号，表示在有形参时直接进行替换，没有形参时什么都不做
+#define FUNCTION(name, a) int fun_##name() { return a; }
+
+FUNCTION(, 100)
+FUNCTION(abcd, 12)
+FUNCTION(fff, 2)
+FUNCTION(qqq, 23)
+ 
+#undef FUNCTION
+#define FUNCTION 34
+#define OUTPUT(a) std::cout << "output: " #a << '\n'
+ 
+// 在后面的宏定义中使用之前的宏
+#define WORD "Hello "
+#define OUTER(...) WORD #__VA_ARGS__
+ 
+int main()
+{
+    std::cout << "" << fun_() << '\n';
+    std::cout << "abcd: " << fun_abcd() << '\n';
+    std::cout << "fff: " << fun_fff() << '\n';
+    std::cout << "qqq: " << fun_qqq() << '\n';
+    std::cout << FUNCTION << '\n';
+    OUTPUT(million); // 注意这里没有引号
+ 
+    std::cout << OUTER(World) << '\n';
+    std::cout << OUTER(WORD World) << '\n';
+}
+
+/**
+ * 上面代码的输出如下：
+ *
+ * 100
+ * abcd: 12
+ * fff: 2
+ * qqq: 23
+ * 34
+ * output: million
+ * Hello World
+ * Hello WORD World
+ */
 ```
 
 ## catch 子句
