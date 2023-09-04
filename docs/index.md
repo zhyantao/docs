@@ -7,22 +7,22 @@
 
 此博客会不定期更新。欢迎对文章中存在的错误和不足提出改进和建议。
 
-## 理论知识
+---
 
 ```{toctree}
 :caption: 理论知识
 :maxdepth: 2
 :glob:
+:hidden:
 
 theory/*
 ```
-
-## 编程语言
 
 ```{toctree}
 :caption: 编程语言
 :maxdepth: 2
 :glob:
+:hidden:
 
 language/java/index
 language/c-cpp/index
@@ -33,22 +33,20 @@ language/javascript/index
 language/framework/index
 ```
 
-## 环境部署
-
 ```{toctree}
 :caption: 环境部署
 :maxdepth: 2
 :glob:
+:hidden:
 
 deploy/*
 ```
-
-## 附录
 
 ```{toctree}
 :caption: 附录
 :maxdepth: 2
 :glob:
+:hidden:
 
 appendix/*
 面试八股文 <https://interview-points.readthedocs.io/>
