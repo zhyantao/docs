@@ -174,10 +174,10 @@ asm ( "statements" : output_registers : input_registers : clobbered_registers);
 
 这个语法，我们的阅读顺序（或执行顺序）应该是这样的：
 
-1. `input_registers` 输入寄存器，表示将 C 语言中的变量如何赋值给 CPU 中的寄存器。
-2. `statements` 函数主体部分，表示需要执行的汇编语言函数体。
+1. `input_registers` 输入寄存器列表，表示将 C 语言中的变量如何赋值给 CPU 中的寄存器。
+2. `statements` 函数具体实现，表示需要执行的汇编语言函数体。
 3. `clobbered_registers` 易失性寄存器列表，声明哪些寄存器可能会发生改变，让 GCC 特别留意。
-4. `output_registers` 输出寄存器，表示将程序计算的结果保存到哪里。
+4. `output_registers` 输出寄存器列表，表示将程序计算的结果保存到哪里。
 
 现在直接看一个例子，后面再解释：
 
