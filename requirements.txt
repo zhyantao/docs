@@ -24,3 +24,4 @@ pandas
 openpyxl
 xlrd
 graphviz
+sphinx-last-updated-by-git
