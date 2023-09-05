@@ -32,8 +32,8 @@ html_css_files = ['css/custom.css',] # Either relative to html_static_path or fu
 html_js_files = ['js/custom.js']
 # html_sourcelink_suffix = '.rst'
 html_favicon = "_static/images/logo-square.svg"
-html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
-html_domain_indices = False
+# html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
+html_domain_indices = True
 html_use_index = True
 html_split_index = False
 html_show_sourcelink = True
@@ -123,6 +123,7 @@ extensions = [
     'sphinx_comments',
     'svg2png',
     'sphinx_thebe',
+    'sphinx_last_updated_by_git',
 ]
 
 
