@@ -9,18 +9,24 @@ Makefile
     在实际工程中，虽然也有只用 Makefile 的项目，但是更为方便的方式是使用 CMakeList 来生成 Makefile。cmake 管理工程的最大优势在于跨平台，自己不用书写太复杂的脚本了，自己写一写配置文件，后面的工作就都是自动化的了。
 
 
-基本语法
---------
+版本一
+-------
+
+最简单的方式就是把文件一个一个手打出来进行编译。
 
 .. code-block:: bash
 
-    # ====================== VERSION 1 ======================
-    # 最简单的方式就是把文件一个一个手打出来进行编译
     hello: main.cpp printhello.cpp  factorial.cpp
     	g++ -o hello main.cpp printhello.cpp  factorial.cpp
-    
-    # ====================== VERSION 2 ======================
-    # 采用 Makefile 只会更新有变动的文件，在工程比较大的情况下可以节省很多时间
+
+
+版本二
+-------
+
+采用 Makefile 只会更新有变动的文件，在工程比较大的情况下可以节省很多时间。
+
+.. code-block:: bash
+
     CXX = g++
     TARGET = hello
     OBJ = main.o printhello.o factorial.o
@@ -36,9 +42,13 @@ Makefile
     
     factorial.o: factorial.cpp
     	$(CXX) -c factorial.cpp
-    
-    
-    # ====================== VERSION 3 ======================
+
+
+版本三
+-------
+
+.. code-block:: bash
+
     CXX = g++
     TARGET = hello
     OBJ = main.o printhello.o factorial.o
@@ -54,10 +64,15 @@ Makefile
     .PHONY: clean
     clean:
     	rm -f *.o $(TARGET)
-    
-    
-    # ====================== VERSION 4 ======================
-    # 这是目前 Makefile 的主流编写方式
+
+
+版本四
+-------
+
+这是目前 Makefile 的主流编写方式。
+
+.. code-block:: bash
+
     # := 表示临时赋值
     CXX := g++
     TARGET := hello
