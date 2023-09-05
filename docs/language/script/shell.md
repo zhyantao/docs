@@ -418,6 +418,14 @@ for (( ; ; ))
 ➜  command > file 2>&1
 ```
 
+```bash
+# 将 .config 中的内容传给 while，一行一行地打印出来
+while read line
+do
+    echo $line
+done < .config
+```
+
 ### 5.2. /dev/null 文件
 
 这是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，也什么也读不到。我们通常将命令的输出重定向到它，起到“禁止输出”的效果。
