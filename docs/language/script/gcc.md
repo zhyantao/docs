@@ -131,12 +131,12 @@
 | `-Wmissing-prototypes`                  | 全局函数没有原型时给出警告                                   |
 | `-Wmudflap`                             | 当构造未被 `-fmudflap` 处理时给出警告                        |
 | `-Wmultichar`                           | 使用多字节字符集的字符常量时给出警告                         |
-| `-Wnested-externs`                      | 当 `extern` `声明不在文件作用域时给出警告                    |
+| `-Wnested-externs`                      | 当 `extern` 声明不在文件作用域时给出警告                    |
 | `-Wnoexcept`                            | Warn when a noexcept expression evaluates to false even though the expression can't actually throw |
 | `-Wnon-template-friend`                 | 在模板内声明未模板化的友元函数时给出警告                     |
 | `-Wnon-virtual-dtor`                    | 当析构函数不是虚函数时给出警告                               |
 | `-Wnonnull`                             | 当将 `NULL` 传递给需要非 `NULL` 的参数的函数时给出警告       |
-| `-Wnormalized=`                         | <id                                                          |
+| `-Wnormalized=`                         |                                                           |
 | `-Wold-style-cast`                      | 程序使用 C 风格的类型转换时给出警告                          |
 | `-Wold-style-declaration`               | 对声明中的过时用法给出警告                                   |
 | `-Wold-style-definition`                | 使用旧式形参定义时给出警告                                   |
@@ -178,7 +178,8 @@
 | `-Wsurprising`                          | 对“可疑”的构造给出警告                                       |
 | `-Wswitch`                              | 当使用枚举类型作为开关变量，没有提供 `default` 分支，但又缺少某个 `case` 时给出警告 |
 | `-Wswitch-default`                      | 当使用枚举类型作为开关变量，但没有提供 `default` 分支时给出警告 |
-| `-Wswitch-enum`                         | 当使用枚举类型作为开关变量但又缺少某个`case` 时给出警告 `-Wsync-nand` 当 `__sync_fetch_and_nand` 和 `__sync_nand_and_fetch` 内建函数被使用时给出警告 |
+| `-Wswitch-enum`                         | 当使用枚举类型作为开关变量但又缺少某个`case` 时给出警告  |
+| `-Wsync-nand`                           | 当 `__sync_fetch_and_nand` 和 `__sync_nand_and_fetch` 内建函数被使用时给出警告 |
 | `-Wsynth`                               | 不建议使用。此开关不起作用。                                 |
 | `-Wsystem-headers`                      | 不抑制系统头文件中的警告                                     |
 | `-Wtabs`                                | 允许使用不符合规范的制表符                                   |
@@ -202,11 +203,15 @@
 | `-Wunused-label`                        | 有未使用的标号时警告                                         |
 | `-Wunused-macros`                       | 当定义在主文件中的宏未被使用时给出警告                       |
 | `-Wunused-parameter`                    | 发现未使用的函数指针时给出警告                               |
-| `-Wunused-result`                       | 当一个带有 warn_unused_result 属性的函数的调用者未使用前者的返回值时给出警告 |
+| `-Wunused-result`                       | 当一个带有 `warn_unused_result` 属性的函数的调用者未使用前者的返回值时给出警告 |
 | `-Wunused-value`                        | 当一个表达式的值未被使用时给出警告                           |
 | `-Wunused-variable`                     | 有未使用的变量时警告                                         |
 | `-Wvariadic-macros`                     | 指定 `-pedantic` 时不为可变参数宏给出警告                    |
 | `-Wvla`                                 | 使用变长数组时警告                                           |
 | `-Wvolatile-register-var`               | 当一个寄存器变量被声明为 `volatile` 时给出警告               |
-| `-Wwrite-strings`                       | 在 C++ 中，非零值表示将字面字符串转换为‘char *’时给出警告。在 C 中，给出相似的警告，但这种类型转换是符合 ISO C 标准的。 |
+| `-Wwrite-strings`                       | 在 C++ 中，非零值表示将字面字符串转换为 `char *` 时给出警告。在 C 中，给出相似的警告，但这种类型转换是符合 ISO C 标准的。 |
 | `-frequire-return-statement`            | Functions which return values must end with return statements |
+
+```{note}
+每一个都有一个相应的否定形式，在 `W` 后面插入 `no-`，这将关闭警告。例如 `-Wno-unused-function`，参考 <https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html>
+```
