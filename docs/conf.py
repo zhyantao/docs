@@ -66,15 +66,15 @@ html_theme_options = {
             "icon": "fa-brands fa-github",
         },
         {
-            "name": "Documentation Status",
+            "name": "Builds",
             "url": "https://readthedocs.org/projects/zhyantao/builds/",
             "icon": "https://readthedocs.org/projects/zhyantao/badge",
             "type": "url",
         },
         {
-            "name": "Repository Size",
+            "name": "Tags",
             "url": "https://github.com/zhyantao/zhyantao.github.io/tags",
-            "icon": "https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io",
+            "icon": "https://img.shields.io/github/v/tag/zhyantao/zhyantao.github.io",
             "type": "url",
         },
     ],
