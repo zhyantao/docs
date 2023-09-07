@@ -61,11 +61,6 @@ html_theme_options = {
     # ),
     "icon_links": [
         {
-            "name": "GitHub",
-            "url": "https://github.com/zhyantao/zhyantao.github.io",
-            "icon": "fa-brands fa-github",
-        },
-        {
             "name": "Builds",
             "url": "https://readthedocs.org/projects/zhyantao/builds/",
             "icon": "https://readthedocs.org/projects/zhyantao/badge",
@@ -76,6 +71,11 @@ html_theme_options = {
             "url": "https://github.com/zhyantao/zhyantao.github.io/tags",
             "icon": "https://img.shields.io/github/v/tag/zhyantao/zhyantao.github.io",
             "type": "url",
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/zhyantao/zhyantao.github.io",
+            "icon": "fa-brands fa-github",
         },
     ],
 }
