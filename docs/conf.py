@@ -32,8 +32,8 @@ html_css_files = ['css/custom.css',] # Either relative to html_static_path or fu
 html_js_files = ['js/custom.js']
 # html_sourcelink_suffix = '.rst'
 html_favicon = "_static/images/logo-square.svg"
-html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
-html_domain_indices = False
+# html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
+html_domain_indices = True
 html_use_index = True
 html_split_index = False
 html_show_sourcelink = True
@@ -61,21 +61,21 @@ html_theme_options = {
     # ),
     "icon_links": [
         {
-            "name": "GitHub",
-            "url": "https://github.com/zhyantao/zhyantao.github.io",
-            "icon": "fa-brands fa-github",
-        },
-        {
-            "name": "Documentation Status",
+            "name": "Builds",
             "url": "https://readthedocs.org/projects/zhyantao/builds/",
             "icon": "https://readthedocs.org/projects/zhyantao/badge",
             "type": "url",
         },
         {
-            "name": "Repository Size",
+            "name": "Tags",
             "url": "https://github.com/zhyantao/zhyantao.github.io/tags",
-            "icon": "https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io",
+            "icon": "https://img.shields.io/github/v/tag/zhyantao/zhyantao.github.io",
             "type": "url",
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/zhyantao/zhyantao.github.io",
+            "icon": "fa-brands fa-github",
         },
     ],
 }
@@ -123,6 +123,7 @@ extensions = [
     'sphinx_comments',
     'svg2png',
     'sphinx_thebe',
+    'sphinx_last_updated_by_git',
 ]
 
 
