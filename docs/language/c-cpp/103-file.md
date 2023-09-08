@@ -28,3 +28,7 @@ int main()
     return 0;
 }
 ```
+
+## fstream 无法使用相对路径
+
+尝试修改 Visual Stuido 中项目的 >> `属性` >> `调试` >> `工作目录`。
