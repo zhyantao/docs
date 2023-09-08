@@ -6,6 +6,41 @@
 2. 使用了 `new` 函数，忘记了 `delete`。
 3. 用一个指针指向了手动申请的一块内存，但是后面修改了指针的指向，导致找不到原来指向的内存空间，无法释放那块内存。
 
+---
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void foo()
+{
+    int* p = (int *) malloc( sizeof(int));
+    return;
+} //memory leak
+
+int main()
+{
+    int * p = NULL;
+    
+    p = (int *) malloc(4 * sizeof(int));
+    // some statements
+    p = (int *) malloc(8 * sizeof(int));
+    // some statements
+    free (p);
+    // the first memory will not be freed
+
+    for(int i = 0; i < 1024; i++)
+    {
+        p = (int *) malloc(1024 * 1024 * 1024);
+    }
+    printf("End\n");
+
+    return 0;
+}
+```
+
+---
+
 main.cpp
 
 ```cpp
