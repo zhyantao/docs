@@ -1,4 +1,4 @@
-# MySQL 基础
+# MySQL
 
 ## 什么是 MySQL
 
