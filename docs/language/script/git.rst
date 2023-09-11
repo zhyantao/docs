@@ -30,16 +30,16 @@ Git
 Git 全局设置
 -------------
 
-.. admonition:: 常见问题说明
-
-    如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
-    因此，本地的提交邮箱应当与远程仓库保持一致。
-    通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
-
 .. code-block:: bash
 
     git config --global user.name "zhyantao"
     git config --global user.email "zh6tao@gmail.com"
+
+.. admonition:: GitHub 不显示头像
+
+    如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
+    因此，本地的提交邮箱应当与远程仓库保持一致。
+    通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
 
 创建 git 仓库
 --------------
@@ -151,23 +151,6 @@ Git 全局设置
 分支
 ~~~~~
 
-.. admonition:: 冲突处理
-
-    有时想把 ``<other-branch>`` 的内容合并到当前所在分支，使用命令
-    ``git fetch <remote> <other-branch>`` 和 ``git merge FETCH_HEAD``
-    后，发现 **有冲突**。冲突的文件会有类似如下所示的结果：
-
-    .. code-block:: python
-
-        <<<<<<< HEAD (冲突开始的位置)
-        最新的修改
-        =======
-        上一次提交的修改
-        >>>>>>> 上一个分支的名称 (冲突结束的位置)
-
-    因此，我们的目标就是对冲突开始和结束之间的部分进行删减。
-    解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
-
 .. code-block:: bash
 
     # 列出所有本地分支
@@ -219,16 +202,35 @@ Git 全局设置
     $ git push origin --delete <branch>
     $ git branch -dr <remote/branch>
 
-.. csv-table::
-    :header: "分支", "命名", "说明"
-    :widths: 15, 15, 40
+.. admonition:: 分支命名规范
 
-    "主分支", "master", "主分支是提供给用户使用的正式版本"
-    "开发分支", "dev", "开发分支永远是功能\ **最新最全**\ 的分支"
-    "功能分支", "feature-*", "新功能分支开发完成后\ **需删除**"
-    "发布版本", "release-*", "发布定期要上线的功能"
-    "发布版本修复分支",	"bugfix-release-*", "修复测试 Bug"
-    "紧急修复分支", "bugfix-master-*", "紧急修复线上代码的 Bug"
+    .. csv-table::
+        :header: "分支", "命名", "说明"
+        :widths: 15, 15, 40
+    
+        "主分支", "master", "主分支是提供给用户使用的正式版本"
+        "开发分支", "dev", "开发分支永远是功能\ **最新最全**\ 的分支"
+        "功能分支", "feature-*", "新功能分支开发完成后\ **需删除**"
+        "发布版本", "release-*", "发布定期要上线的功能"
+        "发布版本修复分支",	"bugfix-release-*", "修复测试 Bug"
+        "紧急修复分支", "bugfix-master-*", "紧急修复线上代码的 Bug"
+
+.. admonition:: 冲突处理
+
+    有时想把 ``<other-branch>`` 的内容合并到当前所在分支，使用命令
+    ``git fetch <remote> <other-branch>`` 和 ``git merge FETCH_HEAD``
+    后，发现 **有冲突**。冲突的文件会有类似如下所示的结果：
+
+    .. code-block:: python
+
+        <<<<<<< HEAD (冲突开始的位置)
+        最新的修改
+        =======
+        上一次提交的修改
+        >>>>>>> 上一个分支的名称 (冲突结束的位置)
+
+    因此，我们的目标就是对冲突开始和结束之间的部分进行删减。
+    解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
 
 
 标签
