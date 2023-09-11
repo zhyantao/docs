@@ -278,11 +278,3 @@
 ```
 
 实验参考答案：<https://github.com/wangdh15/xv6>
-
-```{toctree}
-:titlesonly:
-:glob:
-:hidden:
-
-operating-system/*
-```
