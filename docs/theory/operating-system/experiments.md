@@ -1,4 +1,4 @@
-# 操作系统实验
+# 实验大纲
 
 本文参考了
 [MIT 6.S081 schedule](https://pdos.csail.mit.edu/6.S081/2020/schedule.html)，课程讲义为
