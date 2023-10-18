@@ -93,9 +93,9 @@ int main()
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <sys/mman.h> // 此功能并非所有机器都支持，共享内存性能更高
+#include <sys/mman.h> // 共享内存性能更高，但是此功能并非所有机器都支持
 
-int main(int argc, char *argc[])
+int main(int argc, char *argv[])
 {
     int fd_old, fd_new;
     struct stat stat;
@@ -122,7 +122,7 @@ int main(int argc, char *argc[])
     }
 
     // 映射老文件
-    buf = mmap(NULL, stat.st_size, PORT_READ, MAP_SHARED, fd_old, 0);
+    buf = mmap(NULL, stat.st_size, PROT_READ, MAP_SHARED, fd_old, 0);
     if (buf == MAP_FAILED)
     {
         printf("Can not mmap file: %s\n", argv[1]);
