@@ -1,6 +1,35 @@
 # ...
 
-在 C/C++ 的高级语法中，我们会经常看到 `...` 这个符号，它通常表示了可变数量的参数。
+在 C/C++ 的高级语法中，我们会经常看到 `...` 这个符号，它通常表示了可变数量的参数。下面是一个简单的示例程序：
+
+```c
+#include <stdarg.h> // for va_list
+#include <stdio.h>
+
+double sum(int num, ...)
+{
+    va_list valist; // 创建参数列表
+    double ret = 0.0;
+    int i = 0;
+
+    va_start(valist, num); // 初始化参数列表
+
+    for (int i = 0; i < num; i++)
+    {
+        ret += va_arg(valist, double); // 访问参数列表中的项
+    }
+
+    va_end(valist); // 清理参数列表占用的内存
+
+    return ret;
+}
+
+int main()
+{
+    printf("Sum of 2, 3 is %f\n", sum(2, 2, 3));
+    printf("Sum of 2, 3, 4, 5 is %f\n", sum(4, 2, 3, 4, 5));
+}
+```
 
 本节主要介绍不同的场景下，`...` 的含义分别是什么，如下：
 
