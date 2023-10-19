@@ -88,7 +88,9 @@ CPU 在执行指令时会自动检查是否有异常发生，由程序自动触�
 
 在代码实现中，这五种状态间的切换如下图所示：
 
-<https://www.zhihu.com/question/42962803/answer/120217624>
+```{figure} ../_static/images/os-process-switch.png
+操作系统的进程调度的 5 种状态间切换 [^cite_ref-3]
+```
 
 ### 进程间的通信
 
@@ -1326,6 +1328,7 @@ I/O 任务完成后，I/O 控制器发送中断信号给 CPU（CPU 还是总线�
 
 [^cite_ref-1]: <https://hliangzhao.cn/articles/000001632804098b0d15f52e2794eba809f483763f603b1000>
 [^cite_ref-2]: <https://draveness.me/system-design-scheduler>
+[^cite_ref-3]: <https://www.zhihu.com/question/42962803/answer/120217624>
 
 ```{toctree}
 :titlesonly:
