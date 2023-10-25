@@ -1,7 +1,7 @@
 # Read-the-Docs with Github
 
-[![Documentation Status](https://readthedocs.org/projects/zhyantao/badge/?version=latest)](https://zhyantao.readthedocs.io)
-[![Repository Size](https://img.shields.io/github/repo-size/zhyantao/zhyantao.github.io)](https://github.com/zhyantao/zhyantao.github.io/archive/refs/heads/master.zip)
+[![Documentation Status](https://readthedocs.org/projects/zhyantao/badge/?version=latest)](https://getstarted.readthedocs.io)
+[![Repository Size](https://img.shields.io/github/repo-size/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip)
 
 ## 环境部署
 
@@ -11,7 +11,7 @@
 git clone https://github.com/<your_github_username>/notebook.git
 ```
 
-2、将 [源代码压缩包](https://github.com/zhyantao/readthedocs-with-github/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
+2、将 [源代码压缩包](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
 
 3、下载安装 [Graphviz](https://graphviz.org/) 并添加至系统环境变量。
 

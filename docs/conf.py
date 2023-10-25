@@ -39,7 +39,7 @@ html_split_index = False
 html_show_sourcelink = True
 html_theme_options = {
     "path_to_docs": "docs",
-    "repository_url": "https://github.com/zhyantao/zhyantao.github.io",
+    "repository_url": "https://github.com/zhyantao/getstarted",
     "repository_branch": "master",
     "launch_buttons": {
         "binderhub_url": "https://mybinder.org",
@@ -68,13 +68,13 @@ html_theme_options = {
         },
         {
             "name": "Tags",
-            "url": "https://github.com/zhyantao/zhyantao.github.io/tags",
-            "icon": "https://img.shields.io/github/v/tag/zhyantao/zhyantao.github.io",
+            "url": "https://github.com/zhyantao/getstarted/tags",
+            "icon": "https://img.shields.io/github/v/tag/zhyantao/getstarted",
             "type": "url",
         },
         {
             "name": "GitHub",
-            "url": "https://github.com/zhyantao/zhyantao.github.io",
+            "url": "https://github.com/zhyantao/getstarted",
             "icon": "fa-brands fa-github",
         },
     ],
@@ -152,10 +152,10 @@ mermaid_version = "10.2.0-rc.2"  # from CDN unpkg.com
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`
 extlinks = {
-    "src": ("https://github.com/zhyantao/zhyantao.github.io/blob/master/%s", ""),
-    "docs": ("https://github.com/zhyantao/zhyantao.github.io/blob/master/%s", ""),
-    "issue": ("https://github.com/zhyantao/zhyantao.github.io/issues/%s", "Issue #"),
-    "pull": ("https://github.com/zhyantao/zhyantao.github.io/pull/%s", "Pull Requset #"),
+    "src": ("https://github.com/zhyantao/getstarted/blob/master/%s", ""),
+    "docs": ("https://github.com/zhyantao/getstarted/blob/master/%s", ""),
+    "issue": ("https://github.com/zhyantao/getstarted/issues/%s", "Issue #"),
+    "pull": ("https://github.com/zhyantao/getstarted/pull/%s", "Pull Requset #"),
     "duref": ("http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s", "",),
 }
 
@@ -198,7 +198,7 @@ myst_footnote_transition = False
 # Setting for sphinx comments
 comments_config = {
    "utterances": {
-       "repo": "zhyantao/zhyantao.github.io",
+       "repo": "zhyantao/getstarted",
        "issue-term": "pathname",
        "label": "comments",
        "theme": "github-light",
