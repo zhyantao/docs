@@ -62,8 +62,8 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "Builds",
-            "url": "https://readthedocs.org/projects/zhyantao/builds/",
-            "icon": "https://readthedocs.org/projects/zhyantao/badge",
+            "url": "https://readthedocs.org/projects/getstarted/builds",
+            "icon": "https://readthedocs.org/projects/getstarted/badge",
             "type": "url",
         },
         {
