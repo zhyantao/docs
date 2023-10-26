@@ -22,3 +22,10 @@ repo sync -n -j 4 && repo sync -l -j 16
 # the same but sync only current branch -c
 repo sync -c -n -j 4 && repo sync -c -l -j 16
 ```
+
+## manifest
+
+```bash
+# 查看当前项目的清单文件
+repo manifest
+```
