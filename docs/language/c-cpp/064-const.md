@@ -12,7 +12,7 @@ int &func(int &a) const {} // 修饰成员函数
 - `const` 修饰参数时，通常也是引用，表示在函数内部我们不希望改变实参的值。
 - `const` 修饰成员函数，表示在成员函数实现中，不可修改成员变量。
 
-```cpp
+```{code-block} cpp
 :emphasize-lines: 9, 20, 24, 39, 49
 
 #include <iostream>
