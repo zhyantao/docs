@@ -14,24 +14,24 @@
 
 void foo()
 {
-    int* p = (int *) malloc( sizeof(int));
+    int *p = (int *)malloc(sizeof(int));
     return;
-} //memory leak
+} // memory leak
 
 int main()
 {
-    int * p = NULL;
-    
-    p = (int *) malloc(4 * sizeof(int));
+    int *p = NULL;
+
+    p = (int *)malloc(4 * sizeof(int));
     // some statements
-    p = (int *) malloc(8 * sizeof(int));
+    p = (int *)malloc(8 * sizeof(int));
     // some statements
-    free (p);
+    free(p);
     // the first memory will not be freed
 
-    for(int i = 0; i < 1024; i++)
+    for (int i = 0; i < 1024; i++)
     {
-        p = (int *) malloc(1024 * 1024 * 1024);
+        p = (int *)malloc(1024 * 1024 * 1024);
     }
     printf("End\n");
 
@@ -55,7 +55,7 @@ int main()
     MyString str1(10, "Shenzhen");
     cout << "str1: " << str1 << endl;
 
-    MyString str2 = str1; 
+    MyString str2 = str1;
     cout << "str2: " << str2 << endl;
 
     MyString str3;
@@ -77,38 +77,42 @@ mystring.hpp
 
 class MyString
 {
-  private:
+private:
     int buf_len;
-    char * characters;
-  public:
-    MyString(int buf_len = 64, const char * data = NULL)
+    char *characters;
+
+public:
+    MyString(int buf_len = 64, const char *data = NULL)
     {
         std::cout << "Constructor(int, char*)" << std::endl;
         this->buf_len = 0;
         this->characters = NULL;
         create(buf_len, data);
     }
+
     ~MyString()
     {
-        delete []this->characters;
+        delete[] this->characters;
     }
-    bool create(int buf_len,  const char * data)
+
+    bool create(int buf_len, const char *data)
     {
         this->buf_len = buf_len;
 
-        if( this->buf_len != 0)
+        if (this->buf_len != 0)
         {
             this->characters = new char[this->buf_len]{};
-            if(data)
+            if (data)
                 strncpy(this->characters, data, this->buf_len);
         }
-    
+
         return true;
     }
-    friend std::ostream & operator<<(std::ostream & os, const MyString & ms)
+
+    friend std::ostream &operator<<(std::ostream &os, const MyString &ms)
     {
         os << "buf_len = " << ms.buf_len;
-        os << ", characters = " << static_cast<void*>(ms.characters);
+        os << ", characters = " << static_cast<void *>(ms.characters);
         os << " [" << ms.characters << "]";
         return os;
     }
