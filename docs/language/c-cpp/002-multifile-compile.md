@@ -62,4 +62,8 @@ g++ main.o mul.o -o mul
 
 举例来讲，如果代码中使用了 `pthread_create()` 这个函数，就需要引用 `libpthread.so` 这个动态链接库。具体的做法就是去掉库文件名中的 `lib` 和 `.so`，在库名前面加上 `-l`，因此，最后的结果就是 `-lpthread`，这里的 `-l` 是 `link` 的意思。这样 GCC 编译期就知道要去 `libpthread.so` 这个库中去找函数定义了。
 
+在链接时，编译期会在当前目录下已经编译生成的 `.o` 文件和编译选项中指定的 `.so` 文件中去找函数定义。记住这一点很重要，会帮助我们解决很多 `undefined reference` 问题。
+
+如果出现 `DWARF error: could not find variable specification at offset xxxx`，报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
+
 更多链接阶段出现的问题，可以参考 <https://www.cnblogs.com/schips/p/13728080.html>。
