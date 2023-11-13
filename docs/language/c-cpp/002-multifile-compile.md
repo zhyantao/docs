@@ -64,6 +64,6 @@ g++ main.o mul.o -o mul
 
 在链接时，编译期会在当前目录下已经编译生成的 `.o` 文件和编译选项中指定的 `.so` 文件中去找函数定义。记住这一点很重要，会帮助我们解决很多 `undefined reference` 问题。
 
-如果出现 `DWARF error: could not find variable specification at offset xxxx`，报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
+如果出现 `DWARF error: could not find variable specification at offset xxxx`，这个错误和 `-g` 参数有关。报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
 
 更多链接阶段出现的问题，可以参考 <https://www.cnblogs.com/schips/p/13728080.html>。
