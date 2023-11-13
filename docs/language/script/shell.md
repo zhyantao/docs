@@ -713,6 +713,19 @@ fi
 ➜  find -name "*.c" | xargs ls -l
 ```
 
+### 8.6. sed 命令
+
+`sed` 命令主要用于替换文本中的字符串。
+
+示例：
+
+```bash
+# 将 filename.txt 中的 abc def 替换为 def abc
+➜  sed -i 's@abc def@def abc@' filename.txt
+```
+
+在前面的例子中，`@` 可以是其他符号，它的主要作用在于区分需要替换的字符串和原始字符串。
+
 ## 9. 补充
 
 ### 9.1. 变量替换
