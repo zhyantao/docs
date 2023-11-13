@@ -55,15 +55,43 @@ g++ -c mul.cpp
 ## 链接
 
 ```shell
-g++ main.o mul.o -o mul
+g++ -o mul main.o mul.o
 ```
 
-链接阶段的常见的错误是 `collect2: ld returned 1 exit status` 和 ``undefined reference to `main'``，这是因为编译器无法找到函数定义。对应的解决方法就是我们需要 **显式地给编译器指明去哪里找函数定义**，做法就是增加编译选项。
+## 常见的链接错误
 
-举例来讲，如果代码中使用了 `pthread_create()` 这个函数，就需要引用 `libpthread.so` 这个动态链接库。具体的做法就是去掉库文件名中的 `lib` 和 `.so`，在库名前面加上 `-l`，因此，最后的结果就是 `-lpthread`，这里的 `-l` 是 `link` 的意思。这样 GCC 编译期就知道要去 `libpthread.so` 这个库中去找函数定义了。
+**1、undefined reference to**
 
-在链接时，编译期会在当前目录下已经编译生成的 `.o` 文件和编译选项中指定的 `.so` 文件中去找函数定义。记住这一点很重要，会帮助我们解决很多 `undefined reference` 问题。
+出现这个问题，一般有以下几个原因：
 
-如果出现 `DWARF error: could not find variable specification at offset xxxx`，这个错误和 `-g` 参数有关。报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
+1. 链接时缺少相关的 `.o` 文件（目标文件）
+2. 链接时缺少相关的 `.so` 文件（动态库）
+3. 链接时缺少相关的 `.a` 文件（静态库）
+4. 链接库文件时顺序错误
+5. 在 C++ 代码中链接了 C 语言相关的库
+
+针对前 3 个问题，只需要显式地给编译器指明去哪里找函数定义就可以了，具体做法就是在编译时增加编译选项 `-l<libname>` 和 `-L<libpath>`。
+
+针对第 4 个问题，根据源代码的引用顺序调整库的链接顺序就可以了。
+
+解决第 5 个问题，需要在 C++ 源代码的头文件中显示地声明引用的哪些头文件是用 C 语言写的，举例如下：
+
+```cpp
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include "head_file_c.h"
+...
+
+#ifdef __cplusplus
+}
+#endif
+```
 
 更多链接阶段出现的问题，可以参考 <https://www.cnblogs.com/schips/p/13728080.html>。
+
+**2、DWARF error: could not find variable specification at offset**
+
+这个错误和 `-g` 参数有关。报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
