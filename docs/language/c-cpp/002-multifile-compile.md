@@ -82,8 +82,7 @@ extern "C"
 {
 #endif
 
-#include "head_file_c.h"
-...
+// TODO: include C header files here
 
 #ifdef __cplusplus
 }
