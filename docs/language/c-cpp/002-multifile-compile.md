@@ -58,7 +58,7 @@ g++ -c mul.cpp
 g++ -o mul main.o mul.o
 ```
 
-## 常见的链接错误
+## Q&A
 
 **1、undefined reference to**
 
