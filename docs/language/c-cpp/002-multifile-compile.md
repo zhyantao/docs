@@ -58,7 +58,7 @@ g++ -c mul.cpp
 g++ -o mul main.o mul.o
 ```
 
-## Q&A
+## Q & A
 
 **1、undefined reference to**
 
