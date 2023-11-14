@@ -94,3 +94,11 @@ extern "C"
 **2、DWARF error: could not find variable specification at offset**
 
 这个错误和 `-g` 参数有关。报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
+
+**line 1: can't open: no such file**
+
+出现这个错误，通常是因为使用的编译器和运行平台不匹配。可能是你用 GCC 编译了程序，但是却在开发板上运行了程序。
+
+**line 2: syntax error: bad function name**
+
+出现这个错误，通常是因为使用的编译器和运行平台不匹配。可能是你用 GCC 编译了程序，但是却在开发板上运行了程序。
