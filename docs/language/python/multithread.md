@@ -24,8 +24,6 @@ threads = []
 questionQueueLock = threading.Lock()
 questionQueue = queue.Queue(10)
 answerQueue = queue.Queue(10)
-
-
 questionList = [
     "What is your name?",
     "Where are you from?",
@@ -33,8 +31,7 @@ questionList = [
     "What day is it today?",
     "Do you like fruits?",
 ]
-
-answerList = ["ZTE", "China", "Sunny", "Friday", "Yes"]
+answerList = ["Sam", "China", "Sunny", "Friday", "Yes"]
 for answer in answerList:
     answerQueue.put(answer)
 
@@ -67,7 +64,6 @@ def process_data(threadName, q):
             questionQueueLock.release()
             question_asked.wait()  # P(q)
             question_asked.clear()
-            time.sleep(1)  # 思考 1 秒后作答
             print("Thread-A: " + answerQueue.get())
             question_answered.set()  # V(a)
         else:
@@ -75,6 +71,11 @@ def process_data(threadName, q):
 
 
 if __name__ == "__main__":
+    # 创建同步事件
+    question_asked = threading.Event()
+    question_answered = threading.Event()
+    question_answered.set()  # 让 question_asked 先运行，破除死锁
+
     # 创建新线程
     threadId = 1
     for tName in threadList:
@@ -82,10 +83,6 @@ if __name__ == "__main__":
         thread.start()
         threads.append(thread)
         threadId += 1
-
-    question_asked = threading.Event()
-    question_answered = threading.Event()
-    question_answered.set()  # 让 question_asked 先运行，破除死锁
 
     # 填充队列
     questionQueueLock.acquire()
