@@ -205,7 +205,7 @@ def foo():
 
 ## 递归
 
-Python对递归函数调用的次数作了限制。函数 sys.getrecursionlimit()返回当前允许的最大递归次数，而函数sys.setrecursionlimit()可以改变该函数的返回值。默认的最大递归次数为1000。当一个函数递归次数超过最大递归次数时，就会引发`RuntimeError`异常。
+Python对递归函数调用的次数作了限制。函数 `sys.getrecursionlimit()` 返回当前允许的最大递归次数，而函数 `sys.setrecursionlimit()` 可以改变该函数的返回值。默认的最大递归次数为 1000。当一个函数递归次数超过最大递归次数时，就会引发 `RuntimeError` 异常。
 
 ## apply() 函数
 
