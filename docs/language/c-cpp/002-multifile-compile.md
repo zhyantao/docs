@@ -2,9 +2,9 @@
 
 ## 创建三个文件
 
-main.cpp
-
 ```cpp
+// main.cpp
+
 #include <iostream>
 #include "mul.hpp"
 
@@ -26,9 +26,9 @@ int main()
 
 ```
 
-mul.cpp
-
 ```cpp
+// mul.cpp
+
 #include "mul.hpp"
 
 int mul(int a, int b)
@@ -37,9 +37,9 @@ int mul(int a, int b)
 }
 ```
 
-mul.hpp
-
 ```cpp
+// mul.hpp
+
 #pragma once
 
 int mul(int a, int b);
