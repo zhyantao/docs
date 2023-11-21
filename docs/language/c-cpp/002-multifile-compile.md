@@ -102,3 +102,7 @@ extern "C"
 **4、line 2: syntax error: bad function name**
 
 出现这个错误，通常是因为使用的编译器和运行平台不匹配。可能是你用 GCC 编译了程序，但是却在开发板上运行了程序。
+
+**5、real-ld: cannot find crti.o: No such file or directory**
+
+在编译时，明明使用 `-L` 指定了 `crti.o` 所在的路径，为什么还是会提示找不到这个文件呢？这种情况下，应该是忘记了在链接时指定 `--sysroot`。
