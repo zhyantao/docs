@@ -726,6 +726,19 @@ fi
 
 在前面的例子中，`@` 可以是其他符号，它的主要作用在于区分需要替换的字符串和原始字符串。
 
+### 8.7. tee 命令
+
+`tee` 命令主要用于将一段文字写入文件。
+
+```bash
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+EOF
+```
+
 ## 9. 补充
 
 ### 9.1. 变量替换
