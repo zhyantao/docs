@@ -17,9 +17,11 @@
 
 在 PowerShell 中更加轻松地使用 Git 命令，拥有命令自动补全、当前分支展示、改动提示等功能。
 
-1. 安装模块：`Install-Module posh-git -Scope CurrentUser -Force`
-2. 导入模块：`Import-Module posh-git`
-3. 使用模块：`Add-PoshGitToProfile -AllHosts`
+1. 以管理员身份运行 PowerShell
+2. 修改执行策略：`Set-ExecutionPolicy RemoteSigned`
+3. 安装模块：`Install-Module posh-git -Scope CurrentUser -Force`
+4. 导入模块：`Import-Module posh-git`
+5. 使用模块：`Add-PoshGitToProfile -AllHosts`
 
 删除 Posh Git 模块：`Uninstall-Module posh-git`，同时需要删除
 `%USERPROFILE%\Documents\WindowsPowerShell\profile.ps1` 中的 `Import-Module posh-git`。
