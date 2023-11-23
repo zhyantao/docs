@@ -107,3 +107,13 @@ extern "C"
 
 在编译时，明明使用 `-L` 指定了 `crti.o` 所在的路径，为什么还是会提示找不到这个文件呢？这种情况下，应该是忘记了在链接时指定 `--sysroot`。
 参考 <https://blog.csdn.net/u011192270/article/details/106176333>。
+
+**6、undefined reference to `rpl_malloc'**
+
+这种错误多出现在交叉编译时，对 `rpl_malloc` 函数进行了重新定义，导致找不到原来的函数了。我们只需要注释掉重新定义的语句就可以了。
+
+```cpp
+// config.h
+
+//#define malloc rpl_malloc
+```
