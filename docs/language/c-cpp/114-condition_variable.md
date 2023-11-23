@@ -1,4 +1,27 @@
-# wait_for
+# condition_variable
+
+条件变量（`condition_vatiable`）主要用于线程间同步。
+
+条件变量是同步原语，能用于阻塞一个线程，或同时阻塞多个线程吗，直到另一个线程修改共享变量（条件），并通知条件变量。
+
+有意修改变量的线程必须：
+
+- 获得 `std::mutex`（常通过 `std::lock_guard`）
+- 在保有锁时进行修改
+- 在 `std::condition_variable` 上执行 `notify_one` 或 `notify_all`（不需要为通知保有锁）
+
+**即使共享变量是原子的，也必须在互斥下修改它，以正确地发布修改到等待的线程。**
+
+任何有意在 `std::condition_variable` 上等待的线程必须：
+
+- 获得用于保护共享变量的 `std::unique_lock<std::mutex>`
+- 使用 `wait`、`wait_for` 及 `wait_until` 等待其他线程释放互斥锁
+
+注意事项：
+
+- `std::condition_variable` 只可与 `std::unique_lock<std::mutex>` 一同使用；此限制在一些平台上允许最大效率。
+- `std::condition_variable_any` 提供可与任何基础可锁对象，例如 `std::shared_lock` 一同使用的条件变量。
+- `condition_variable` 允许 `wait`、`wait_for`、`wait_until`、`notify_one` 及 `notify_all` 被同时调用。
 
 ```cpp
 #include <iostream>
@@ -9,8 +32,8 @@
 #include <condition_variable>
 
 std::mutex m;
-std::condition_variable cv;
-std::string data;
+std::condition_variable cv; // 条件变量
+std::string data;           // 共享变量
 
 bool ready = false;
 bool processed = false;
