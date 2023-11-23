@@ -744,6 +744,12 @@ trusted-host=mirrors.aliyun.com
 EOF
 ```
 
+### 8.8. source 命令
+
+`source <file_name>` 表示读取并执行 `file_name` 中的命令。
+
+习惯上，用 `.` 代替 `source`，也就是说 `source <file_name>` 等价于 `. <file_name>`。
+
 ## 9. 补充
 
 ### 9.1. 变量替换
