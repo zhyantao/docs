@@ -141,7 +141,12 @@ echo "hello world"
 - 读取
 
   ```bash
-  # 指定下标的元素
+  # 获取第 1 个元素
+  ➜  echo ${array2};  // 输出 value0
+  ➜  echo ${array2-};
+  ➜  echo ${array2?}
+  
+  # 获取指定下标的元素
   ➜  echo ${array2[2]}; // 输出 value2
   
   # 获取数组所有元素
