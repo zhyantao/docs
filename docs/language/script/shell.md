@@ -516,21 +516,26 @@ func param1 param2 param3
 
 ```bash
 #!/bin/echo
-# /home/user1/lib/comm_function.lib
+# /home/zhyantao/lib/comm_function.lib
 
 function add {
     echo "`expr $1 + $2`"
 }
-#!/bin/bash
-# /home/user1/test.sh
+```
 
-# 引入函数库文件
-# 使用绝对 或 相对路径
+```bash
+#!/bin/bash
+# /home/zhyantao/test.sh
+
+# 引入函数库文件：使用绝对或相对路径
 . ./lib/comm_function.lib
 
 # 使用文件中的函数
 add 1 3
-➜  sh -x test_functions.sh
+```
+
+```bash
+➜  sh -x test.sh
 + . ./lib/comm_function.lib
 + add 1 3
 ++ expr 1 + 3
@@ -749,6 +754,20 @@ EOF
 `source <file_name>` 表示读取并执行 `file_name` 中的命令。
 
 习惯上，用 `.` 代替 `source`，也就是说 `source <file_name>` 等价于 `. <file_name>`。
+
+### 8.9. scp 命令
+
+`scp` 命令主要用于在本地机器和远端机器之间复制文件。
+
+```bash
+# 将远端文件（或文件夹）复制到本地
+scp <root>@<remote_ip>:/path/to/<target_filename> <local_filename>
+scp -r <root>@<remote_ip>:/path/to/<remote_dirname> <local_dirname>
+
+# 将本地文件（或文件夹）复制到远端
+scp <local_filename> <root>@<remote_ip>:/path/to/<target_filename>
+scp -r <local_dirname> <root>@<remote_ip>:/path/to/<remote_dirname>
+```
 
 ## 9. 补充
 
