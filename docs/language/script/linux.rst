@@ -3,6 +3,33 @@ Linux
 ======
 
 
+查看系统信息
+-------------
+
+.. code-block:: text
+
+    # 查看内核版本
+    ➜  cat /proc/version
+    Linux version 5.4.154 (oe-user@oe-host) (gcc version 9.3.0 (GCC)) #1 SMP PREEMPT Thu Sep 21 17:01:31 UTC 2023
+    ➜  uname -a
+    Linux OpenWrt 5.4.154 #1 SMP PREEMPT Thu Sep 21 17:01:31 UTC 2023 aarch64 GNU/Linux
+    ➜  uname -r
+    Linux OpenWrt 5.4.154 #1 SMP PREEMPT Thu Sep 21 17:01:31 UTC 2023 aarch64 GNU/Linux
+    
+    # 查看 Linux 版本信息
+    ➜  lsb_release -a
+    ➜  cat /etc/issue
+    zxic Distro v2x 16bit 1.0
+
+    # 查看系统是 32 位还是 64 位
+    ➜  getconf LONG_BIT
+    ➜  file /bin/ls
+
+    # 查看系统架构
+    ➜  aarch
+    aarch64
+
+
 目录结构
 ---------
 
