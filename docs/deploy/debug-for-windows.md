@@ -1,5 +1,15 @@
 # Windows 故障调试
 
+## 无法通过 SSH 连接 VMware 虚拟机
+
+**问题描述**
+
+以前配置好了环境，可以通过 SSH 直接连接 VMware 虚拟机。重启电脑后，双击 MobaXterm 中保存的会话，无法连接到虚拟机，并且发现 Windows ping 不通虚拟机。
+
+**解决方法**
+
+控制面板 - 网络和 Internet - 网络连接：重启 VMnet8。
+
 ## Hyper-V 兼容性问题
 
 **问题描述**
