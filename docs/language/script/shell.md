@@ -31,12 +31,12 @@ echo "hello world"
 
 ```bash
 # 增加可执行权限
-➜  chmod u+x helloWorld.sh
+chmod u+x helloWorld.sh
 
 # 运行脚本
-➜  ./helloWorld.sh
+./helloWorld.sh
 或
-➜  sh hellowWorld.sh
+sh hellowWorld.sh
 ```
 
 ### 1.2. 注释
@@ -142,29 +142,29 @@ echo "hello world"
 
   ```bash
   # 获取第 1 个元素
-  ➜  echo ${array2};  // 输出 value0
-  ➜  echo ${array2-};
-  ➜  echo ${array2?}
+  echo ${array2};  // 输出 value0
+  echo ${array2-};
+  echo ${array2?}
   
   # 获取指定下标的元素
-  ➜  echo ${array2[2]}; // 输出 value2
+  echo ${array2[2]}; // 输出 value2
   
   # 获取数组所有元素
-  ➜  echo ${array2[*]}; // 输出 value0 value1 value2
-  ➜  echo ${array2[@]}
+  echo ${array2[*]}; // 输出 value0 value1 value2
+  echo ${array2[@]}
   ```
 
 - 获取数组元素个数
 
   ```bash
-  ➜  echo ${#array2[@]}; // 输出 3
-  ➜  echo ${#array2[*]};
+  echo ${#array2[@]}; // 输出 3
+  echo ${#array2[*]};
   ```
 
 - 取得数组中指定下标元素的字符长度
 
   ```bash
-  ➜  echo ${#array2[2]};
+  echo ${#array2[2]};
   ```
 
 ### 2.4. 传递参数
@@ -185,7 +185,7 @@ echo "第三个参数为：$3";
 执行该文件，并传递参数，如下：
 
 ```bash
-➜  ./demo3.sh param1 param2 param3
+./demo3.sh param1 param2 param3
 执行的文件名：./demo3.sh
 第一个参数为：param1
 第二个参数为：param2
@@ -420,7 +420,7 @@ for (( ; ; ))
 
 ```bash
 # 将 stdout 和 stderr 合并后重定向到 file
-➜  command > file 2>&1
+command > file 2>&1
 ```
 
 ```bash
@@ -439,7 +439,7 @@ done < .config
 
 ```bash
 # 屏蔽 stdout 和 stderr
-➜  command > /dev/null 2>&1
+command > /dev/null 2>&1
 ```
 
 ### 5.3. Here 文档
@@ -535,12 +535,7 @@ add 1 3
 ```
 
 ```bash
-➜  sh -x test.sh
-+ . ./lib/comm_function.lib
-+ add 1 3
-++ expr 1 + 3
-+ echo 4
-4
+sh -x test.sh
 ```
 
 ## 8. 常用命令
@@ -566,31 +561,31 @@ add 1 3
 
 ```bash
 # 文件名
-➜  find /etc/ -name '*.conf'
+find /etc/ -name '*.conf'
 
 # 文件类型
 # f 文件；d 目录；c 字符设备文件；
 # b 块设备文件；l 链接文件；p 管道文件
-➜  find /etc/ -type f
+find /etc/ -type f
 
 # 文件大小
 # -n 小于等于；+n 大于等于
-➜  find . -size +100M
-➜  find . -size -10k
+find . -size +100M
+find . -size -10k
 
 # 文件修改时间
 # -n < n天以内修改过的文件；
 # n = n 天修改过得文件；
 # +n > n天以外修改过的文件；
-➜  find . -mtime -3
-➜  find . -mtime 3
-➜  find . -mtime +3
+find . -mtime -3
+find . -mtime 3
+find . -mtime +3
 
 # 排除目录
 # -path ./test1 -prune 排除 test1 目录
 # -path ./test2 -prune 排除 test2 目录
 # -o type f 固定结尾写法
-➜  find . -path ./test1 -prune -o -path ./test2 -prune -o type f
+find . -path ./test1 -prune -o -path ./test2 -prune -o type f
 ```
 
 #### 操作
@@ -603,10 +598,10 @@ add 1 3
 
 ```bash
 # 查找 30 天以前的日志文件并删除
-➜  find /var/log -name '*.log' -mtime +30 -exec rm -f {} \;
+find /var/log -name '*.log' -mtime +30 -exec rm -f {} \;
 
 # 查找所有 .conf 文件，并移动到指定目录
-➜  find /etc/apache -name '*.conf' -exec cp {} /home/user1/backup \;
+find /etc/apache -name '*.conf' -exec cp {} /home/user1/backup \;
 ```
 
 ### 8.2. echo 命令
@@ -617,29 +612,29 @@ add 1 3
 
 ```bash
 # 显示普通字符
-➜  echo "It is a test" # 输出 It is a test
+echo "It is a test" # 输出 It is a test
 
 # 显示转义字符
-➜  echo "\"It is a test\"" # 输出 "It is a test"
+echo "\"It is a test\"" # 输出 "It is a test"
 
 # 显示变量
 #!/bin/sh
 NAME="xiaoming"
-➜  echo "$NAME It is a test" # 输出 xiaoming is a test
+echo "$NAME It is a test" # 输出 xiaoming is a test
 
 # 显示换行
-➜  echo -e "OK! \n" # -e 开启转义
-➜  echo "It is a test"
+echo -e "OK! \n" # -e 开启转义
+echo "It is a test"
 
 # 显示不换行
-➜  echo -e "OK! \c" # -e 开启转义 \c 不换行
-➜  echo "It is a test"
+echo -e "OK! \c" # -e 开启转义 \c 不换行
+echo "It is a test"
 
 # 显示结果定向至文件
-➜  echo "It is a test" > myfile
+echo "It is a test" > myfile
 
 # 显示命令执行结果
-➜  echo `date`
+echo `date`
 ```
 
 ### 8.3. printf 命令
@@ -651,7 +646,7 @@ NAME="xiaoming"
 其基本语法格式为：
 
 ```bash
-➜  printf  format-string  [arguments...]
+printf  format-string  [arguments...]
 ```
 
 说明：
@@ -662,14 +657,10 @@ NAME="xiaoming"
 示例：
 
 ```bash
-➜  printf "%-10s %-8s %-4s\n" 姓名 性别 体重kg
-➜  printf "%-10s %-8s %-4.2f\n" 郭靖 男 66.1234
-➜  printf "%-10s %-8s %-4.2f\n" 杨过 男 48.6543
-➜  printf "%-10s %-8s %-4.2f\n" 郭芙 女 47.9876
-姓名     性别   体重kg
-郭靖     男      66.12
-杨过     男      48.65
-郭芙     女      47.99
+printf "%-10s %-8s %-4s\n" 姓名 性别 体重kg
+printf "%-10s %-8s %-4.2f\n" 郭靖 男 66.1234
+printf "%-10s %-8s %-4.2f\n" 杨过 男 48.6543
+printf "%-10s %-8s %-4.2f\n" 郭芙 女 47.9876
 ```
 
 其中：
@@ -682,19 +673,14 @@ NAME="xiaoming"
 
 ```bash
 # 没有引号也可以输出
-➜  printf %s abcdef
+printf %s abcdef
 
 # 格式只指定了一个参数，但多出的参数仍然会按照该格式输出，format-string 被重用
-➜  printf %s abc def
-abcdef
-
-➜  printf "%s\n" abc def
-abc
-def
+printf %s abc def
+printf "%s\n" abc def
 
 # 如果没有 arguments，那么 %s 用NULL代替，%d 用 0 代替
-➜  printf "%s and %d \n"
- and 0
+printf "%s and %d \n"
 ```
 
 ### 8.4. test 命令
@@ -720,7 +706,7 @@ fi
 示例：
 
 ```bash
-➜  find -name "*.c" | xargs ls -l
+find -name "*.c" | xargs ls -l
 ```
 
 ### 8.6. sed 命令
@@ -731,7 +717,7 @@ fi
 
 ```bash
 # 将 filename.txt 中的 abc def 替换为 def abc
-➜  sed -i 's@abc def@def abc@' filename.txt
+sed -i 's@abc def@def abc@' filename.txt
 ```
 
 在前面的例子中，`@` 可以是其他符号，它的主要作用在于区分需要替换的字符串和原始字符串。
@@ -798,9 +784,8 @@ Shell 中变量默认都是**字符串**，除非使用以下方式声明。
 示例：
 
 ```bash
-➜  declare -r var1="hello shell type"
-➜  var1="hello lalala"
-zsh: read-only variable: var1
+declare -r var1="hello shell type"
+var1="hello lalala"
 ```
 
 ### 9.3. 使用 bc 进行浮点数运算
@@ -810,24 +795,16 @@ zsh: read-only variable: var1
 示例：
 
 ```bash
-➜  which bc
-/usr/bin/bc
+which bc
 
 # 示例
-➜  echo "5+4" | bc
-9
-➜  echo "5-4" | bc
-1
-➜  echo "5*4" | bc
-20
-➜  echo "5/4" | bc
-1
-➜  echo "scale=3;5/4" | bc
-1.250
-➜  echo "5%4" | bc
-1
-➜  echo "5^4" | bc
-625
+echo "5+4" | bc
+echo "5-4" | bc
+echo "5*4" | bc
+echo "5/4" | bc
+echo "scale=3;5/4" | bc
+echo "5%4" | bc
+echo "5^4" | bc
 ```
 
 ### 9.4. [ ... ] 与 [[ ... ]]
