@@ -1,10 +1,8 @@
 # 第八章 模块和包
 
-本章的主题就是模块和包。较大的Python程序基本上都使用模块和包进行组织，Python发行版也包括方方面面许许多多的模块...
-
 ## 模块
 
-你可以使用import语句将一个源代码文件作为模块导入.例如:
+你可以使用 `import` 语句将一个源代码文件作为模块导入。例如：
 
 ```python
 # file : spam.py
@@ -17,10 +15,11 @@ class bar:                # 一个类
 b = bar()                 # 创建一个实例
 ```
 
-使用import spam 语句就可以将这个文件作为模块导入。系统在导入模块时，要做以下三件事：
+使用 `import spam` 语句就可以将这个文件作为模块导入。系统在导入模块时，要做以下三件事：
 
-1. 为源代码文件中定义的对象创建一个名字空间，通过这个名字空间可以访问到模块中定义的函数及变量。 2.在新创建的名字空间里执行源代码文件. 3.创建一个名为源代码文件的对象，该对象引用模块的名字空间，这样就可以通过这个对象访问模块中的函数及变量，如：
-
+1. 为源代码文件中定义的对象创建一个名字空间，通过这个名字空间可以访问到模块中定义的函数及变量。
+2. 在新创建的名字空间里执行源代码文件.
+3. 创建一个名为源代码文件的对象，该对象引用模块的名字空间，这样就可以通过这个对象访问模块中的函数及变量，如：
 
 ```python
  import spam           # 导入并运行模块 spam
@@ -32,11 +31,11 @@ b = bar()                 # 创建一个实例
 
 用逗号分割模块名称就可以同时导入多个模块:
 
-```
+```python
 import socket, os, regex
 ```
 
-模块导入时可以使用 as 关键字来改变模块的引用对象名字:
+模块导入时可以使用 `as` 关键字来改变模块的引用对象名字:
 
 ```python
 import os as system
@@ -45,7 +44,7 @@ system.chdir("..")
 net.gethostname()
 ```
 
-使用from语句可以将模块中的对象直接导入到当前的名字空间. from语句不创建一个到模块名字空间的引用对象，而是把被导入模块的一个或多个对象直接放入当前的名字空间:
+使用 `from` 语句可以将模块中的对象直接导入到当前的名字空间。`from` 语句不创建一个到模块名字空间的引用对象，而是把被导入模块的一个或多个对象直接放入当前的名字空间:
 
 ```python
 from socket import gethostname
@@ -54,28 +53,28 @@ print gethostname()            # 直接调用
 socket.gethostname()           # 引发异常NameError: socket
 ```
 
-from语句支持逗号分割的对象，也可以使用星号(`*`)代表模块中除下划线开头的所有对象:
+`from` 语句支持逗号分割的对象，也可以使用星号(`*`)代表模块中除下划线开头的所有对象:
 
 ```python
 from socket import gethostname, socket
 from socket import *   # 载入所有对象到当前名字空间
 ```
 
-不过，如果一个模块如果定义有列表`__all__`，则from module import * 语句只能导入`__all__`列表中存在的对象。
+不过，如果一个模块如果定义有列表 `__all__`，则 `from module import *` 语句只能导入 `__all__` 列表中存在的对象。
 
-```
+```python
 # module: foo.py
 __all__ = [ 'bar', 'spam' ]     # 定义使用 `*` 可以导入的对象
 ```
 
-另外, as 也可以和 from 联合使用:
+另外, `as` 也可以和 `from` 联合使用:
 
 ```python
 from socket import gethostname as hostname
 h = hostname()
 ```
 
-import 语句可以在程序的任何位置使用，你可以在程序中多次导入同一个模块，但模块中的代码*仅仅*在该模块被首次导入时执行。后面的import语句只是简单的创建一个到模块名字空间的引用而已。sys.modules字典中保存着所有被导入模块的模块名到模块对象的映射。这个字典用来决定是否需要使用import语句来导入一个模块的最新拷贝.
+`import` 语句可以在程序的任何位置使用，你可以在程序中多次导入同一个模块，但模块中的代码*仅仅*在该模块被首次导入时执行。后面的import语句只是简单的创建一个到模块名字空间的引用而已。sys.modules字典中保存着所有被导入模块的模块名到模块对象的映射。这个字典用来决定是否需要使用import语句来导入一个模块的最新拷贝.
 
 from module import `*` 语句只能用于一个模块的最顶层.*特别注意*：由于存在作用域冲突，不允许在函数中使用from 语句。
 
@@ -130,11 +129,11 @@ Windows:
 
 已编译扩展在附录B:"Extending and Embedding Python."中有详细描述.
 
-对于.py文件,当一个模块第一次被导入时,它就被汇编为字节代码,并将字节码写入一个同名的 .pyc文件.后来的导入操作会直接读取.pyc文件而不是.py文件.(除非.py文件的修改日期更新,这种情况会重新生成.pyc文件) 在解释器使用 -O 选项时，扩展名为.pyo的同名文件被使用. pyo文件的内容虽去掉行号,断言,及其他调试信息的字节码，体积更小,运行速度更快.如果使用-OO选项代替-O,则文档字符串也会在创建.pyo文件时也被忽略.
+对于.py文件,当一个模块第一次被导入时,它就被汇编为字节代码,并将字节码写入一个同名的 .pyc 文件.后来的导入操作会直接读取.pyc文件而不是.py文件.(除非.py文件的修改日期更新,这种情况会重新生成.pyc文件) 在解释器使用 -O 选项时，扩展名为.pyo的同名文件被使用. pyo文件的内容虽去掉行号,断言,及其他调试信息的字节码，体积更小,运行速度更快.如果使用-OO选项代替-O,则文档字符串也会在创建.pyo文件时也被忽略.
 
-如果在sys.path提供的所有路径均查找失败,解释器会继续在内建模块中寻找,如果再次失败，则引发 `ImportError` 异常.
+如果在 sys.path 提供的所有路径均查找失败,解释器会继续在内建模块中寻找,如果再次失败，则引发 `ImportError` 异常.
 
-.pyc和.pyo文件的汇编,当且仅当import 语句执行时进行.
+.pyc 和 .pyo 文件的汇编,当且仅当import 语句执行时进行.
 
 当 import 语句搜索文件时,文件名是大小写敏感的
 
@@ -187,11 +186,9 @@ Graphics/
 
 import语句使用以下几种方式导入包中的模块:
 
-\* import Graphics.Primitive.fill 导入模块Graphics.Primitive.fill,只能以全名访问模块属性,例如 `Graphics.Primitive.fill.floodfill(img,x,y,color)`.
-
-\* from Graphics.Primitive import fill 导入模块fill ,只能以 fill.属性名 这种方式访问模块属性,例如 fill.floodfill(img,x,y,color).
-
-\* from Graphics.Primitive.fill import floodfill 导入模块fill ,并将函数floodfill放入当前名称空间,直接访问被导入的属性，例如 floodfill(img,x,y,color).
+* import Graphics.Primitive.fill 导入模块Graphics.Primitive.fill,只能以全名访问模块属性,例如 `Graphics.Primitive.fill.floodfill(img,x,y,color)`.
+* from Graphics.Primitive import fill 导入模块fill ,只能以 fill.属性名 这种方式访问模块属性,例如 fill.floodfill(img,x,y,color).
+* from Graphics.Primitive.fill import floodfill 导入模块fill ,并将函数floodfill放入当前名称空间,直接访问被导入的属性，例如 floodfill(img,x,y,color).
 
 无论一个包的哪个部分被导入, 在文件`__init__.py`中的代码都会运行.这个文件的内容允许为空,不过通常情况下它用来存放包的初始化代码。导入过程遇到的所有 `__init__.py`文件都被运行.因此 import Graphics.Primitive.fill 语句会顺序运行 Graphics 和 Primitive 文件夹下的`__init__.py`文件.
 
