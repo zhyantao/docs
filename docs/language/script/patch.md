@@ -48,7 +48,7 @@ patch path/to/file < patch.diff
 # Patch a file writing the result to a different file:
 patch path/to/input_file -o path/to/output_file < patch.diff
 
-# 在当前目录下应用补丁文件（可以同时对多个文件打补丁，打补丁的依据是补丁中出现的文件目录名）
+# 在当前目录下应用补丁文件（可以同时对多个文件打补丁，打补丁的依据是补丁中出现的文件路径）
 # p1 表示忽略第 1 级目录
 patch -p1 < patch.diff
 # 如果不想忽略第 1 级目录，需要用下面的命令
