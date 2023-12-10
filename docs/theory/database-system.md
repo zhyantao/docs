@@ -199,7 +199,7 @@ drop database `数据库名`;
 
 ## SQL-DML 基本语句
 
-```{code-block} mysql
+```{code-block} text
 -- 单一元组新增（列名可省略不写）
 insert into `表名` (`列名1`, `列名2`)
   values(值1, 值2);
