@@ -44,26 +44,6 @@
     ":math:`\partial`", "求偏导", "``\partial``", "求导符号 :math:`\mathrm{d}` 的变体"
     ":math:`\nabla_\theta`", "对 :math:`\theta` 求梯度", "``\nabla_\theta``", "向量微分算子"
 
-.. _Meta-FSL-symbols:
-
-元学习和小样本学习
-------------------
-
-.. csv-table::
-    :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
-    :widths: 15, 40, 30, 20
-
-    ":math:`M_{meta}`", "元学习模型", "``M_{meta}``", "大写"
-    ":math:`M_{fine-tune}`", "数学模型（小样本模型）", "``M_{fine-tune}``", "大写"
-    ":math:`\mathscr{D}_{meta-train}`", "用于训练 :math:`M_{meta}` 的数据集", "``\mathscr{D}_{meta-train}``", "大写花体"
-    ":math:`\mathscr{D}_{meta-test}`", "用于训练和测试 :math:`M_{fine-tune}` 的数据集", "``\mathscr{D}_{meta-test}``", "大写花体"
-    ":math:`\mathcal{D}_{train}`", "支持集（Support Set）", "``\mathcal{D}_{train}``", "大写花体"
-    ":math:`\mathcal{D}_{test}`", "查询集（Query Set）", "``\mathcal{D}_{test}``", "大写花体"
-    ":math:`\mathcal{T}` aka task", ":math:`\mathcal{D}` 的一行，即神经网络输入", "``\mathcal{T}``", "大写花体"
-    ":math:`C_1 \sim C_{10}`", ":math:`\mathcal{D}_{meta-train}` 中的 10 个类别", "``C_1 \sim C_{10}``", "大写"
-    ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``P_1 \sim P_{5}``", "大写"
-    ":math:`\mathcal{L}`", "损失函数", "``\mathcal{L}``", "大写花体"
-
 .. _probability-statistics-symbols:
 
 概率和统计
@@ -106,6 +86,26 @@
     ":math:`\subseteq`", "包含（子集）", "``\subseteq``", "高中课本记作 :math:`\subset`，因此有歧义， `注意约定 <https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86>`_"
     ":math:`\in`", "属于", "``\in``", ":math:`a \in A`"
     ":math:`\notin`", "不属于", "``\notin``", ":math:`a \notin A`"
+
+.. _Meta-FSL-symbols:
+
+机器学习
+--------
+
+.. csv-table::
+    :header: "符号", "含义", ":math:`\LaTeX` 语法", "备注"
+    :widths: 15, 40, 30, 20
+
+    ":math:`M_{meta}`", "元学习模型", "``M_{meta}``", "大写"
+    ":math:`M_{fine-tune}`", "数学模型（小样本模型）", "``M_{fine-tune}``", "大写"
+    ":math:`\mathscr{D}_{meta-train}`", "用于训练 :math:`M_{meta}` 的数据集", "``\mathscr{D}_{meta-train}``", "大写花体"
+    ":math:`\mathscr{D}_{meta-test}`", "用于训练和测试 :math:`M_{fine-tune}` 的数据集", "``\mathscr{D}_{meta-test}``", "大写花体"
+    ":math:`\mathcal{D}_{train}`", "支持集（Support Set）", "``\mathcal{D}_{train}``", "大写花体"
+    ":math:`\mathcal{D}_{test}`", "查询集（Query Set）", "``\mathcal{D}_{test}``", "大写花体"
+    ":math:`\mathcal{T}` aka task", ":math:`\mathcal{D}` 的一行，即神经网络输入", "``\mathcal{T}``", "大写花体"
+    ":math:`C_1 \sim C_{10}`", ":math:`\mathcal{D}_{meta-train}` 中的 10 个类别", "``C_1 \sim C_{10}``", "大写"
+    ":math:`P_1 \sim P_{5}`", ":math:`\mathcal{D}_{meta-test}` 中的 5 个类别", "``P_1 \sim P_{5}``", "大写"
+    ":math:`\mathcal{L}`", "损失函数", "``\mathcal{L}``", "大写花体"
 
 数据库
 -------
