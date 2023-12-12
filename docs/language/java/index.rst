@@ -10,27 +10,38 @@ Java 基础知识
 这些附属工具出现的目的仅是简化开发流程，让业务人员不用太过关注与业务无关的代码逻辑。
 但是，因为这些附属工具有很强的前后关联性，因此学习它们的先后顺序显得尤为重要，故制定以下学习路线供参考。
 
+
+学习路线
+---------
+
 .. panels::
-    :container: container-lg pb-2
-    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
 
-    Java / Servlet / Maven / Tomcat [`video <https://www.bilibili.com/video/BV12J411M7Sj?p=3>`__]
+    Java / Servlet / Maven / Tomcat
     ^^^
+    
+    - `JavaWeb 入门到实战 <https://www.bilibili.com/video/BV12J411M7Sj?p=3>`__
 
     ---
     
-    JavaScript [`webpage <https://wangdoc.com/javascript/>`__] [`webpage <https://zh.javascript.info/>`__] / Vue [:ref:`webpage <vue.js-basic>`]
+    JavaScript / Vue [:ref:`2 <vue.js-basic>`]
     ^^^
+
+    - `JavaScript 教程 <https://wangdoc.com/javascript/>`__
+    - `现代 JavaScript 教程 <https://zh.javascript.info/>`__
 
     ---
     
-    MySQL / JDBC [`video <https://www.bilibili.com/video/BV1NJ411J79W>`__]
+    MySQL / JDBC
     ^^^
+
+    - `MySQL 最新教程通俗易懂 <https://www.bilibili.com/video/BV1NJ411J79W>`__
 
     ---
     
-    MyBatis-3 入门 [`webpage <https://mybatis.org/mybatis-3/zh/index.html>`__]
+    MyBatis-3 入门
     ^^^
+
+    - `MyBatis <https://mybatis.org/mybatis-3/zh/index.html>`__
 
     ---
     
@@ -41,6 +52,8 @@ Java 基础知识
     
     Spring Boot / Spring Cloud
     ^^^
+
+    - `Building an Application with Spring Boot <https://spring.io/guides/gs/spring-boot/>`__
 
     ---
     
@@ -54,8 +67,10 @@ Java 基础知识
 
     ---
     
-    阅读《凤凰架构》项目代码
+    项目实战
     ^^^
+
+    - `凤凰架构：构建可靠的大型分布式系统 <https://icyfenix.cn/introduction/about-book.html>`__
 
 
 .. toctree::
@@ -82,6 +97,5 @@ Java 基础知识
     annotations.rst
     concurrency.rst
 
-.. rubric:: 参考资料
 
 .. footbibliography::
