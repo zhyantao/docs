@@ -1,13 +1,5 @@
 # Yocto
 
-A summary of all things one might need to work with [Yocto Project](https://yoctoproject.org).
-One stop repository for Yocto since there are so many variables and CLIs to work with.
-
-## Contributing
-
-Please feel free to add / adapt the list accordingly via PRs. As OE/Yocto Project still has a steep learning-curve,
-a better way would be to share resources with the community.
-
 ## Commands
 
 All hints for CLIs like `bitbake`, `bitbake-layers`, `devtool` etc. used within common Yocto Project development
@@ -47,9 +39,6 @@ All hints for CLIs like `bitbake`, `bitbake-layers`, `devtool` etc. used within 
 | __List layer dependencies from OE Index__ |   `bitbake-layers layerindex-show-depends <layer_name>`              |
 | __Fetch & add layer using OE Index__      |   `bitbake-layers layerindex-fetch <layer name>`                     |
 
-
-
-
 ## Configuration
 
 All variables that can be added to files like `bblayers.conf` or `local.conf` or other configuration files in Yocto.
@@ -84,35 +73,9 @@ All variables that can be added to files like `bblayers.conf` or `local.conf` or
 | Value of `-j` in `make`       | `local.conf` | `PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"`                                           |
 | Add Real-Time Kernel          | `local.conf` | `PREFERRED_PROVIDER_virtual/kernel = "<RT_Kernel_Image_name_from_Meta-Layer>"`             |
 
+## Q & A
 
-## Misc.
+**ERROR: No space left on device or exceeds fs.inotify.max_user_watches?**
 
-All miscellaneous resources once can find for understanding the Yocto Project and working with it.
-
-### Documentation / Websites
-
-* [`repo` Command Reference](https://source.android.com/setup/develop/repo)
-* [OpenEmbedded Layers Index](http://layers.openembedded.org)
-* [OpenEmbedded Errors Index](http://errors.openembedded.org)
-
-### Repositories
-
-* [yocto-research by @davisRoman](https://github.com/davisRoman/yocto-research)
-* [meta-diet layer, part of Blog by Johan Thelin (@e8johan)](https://github.com/e8johan/meta-diet)
-
-
-### Blogs
-* Blogs by Johan Thelin (@e8johan)
-    - [Yocto part I – baseline boot time](http://www.thelins.se/johan/blog/2014/06/yocto-part-i-baseline-boot-time/)
-    - [Yocto part II – baseline image size](http://www.thelins.se/johan/blog/2014/06/yocto-part-ii-baseline-image-size/)
-    - [Yocto part III – a custom meta layer](http://www.thelins.se/johan/blog/2014/06/yocto-part-iii-a-custom-meta-layer/)
-    - [Yocto part IV – going on a diet](http://www.thelins.se/johan/blog/2014/06/yocto-part-iv-going-on-a-diet/)
-* Blog by Khem Raj (@kraj)
-    - [Bake 64-bit Raspberry Pi 3 images with Yocto, Openembedded](https://himvis.com/bake-64-bit-raspberrypi3-images-with-yoctoopenembedded/)
-
-
-### Videos
-
-* [Yocto Project YouTube Channel](https://www.youtube.com/user/TheYoctoProject)
-* [Live Coding with Yocto Project Playlist](https://www.youtube.com/playlist?list=PLD4M5FoHz-TxMfBFrDKfIS_GLY25Qsfyj)
-* [Paul Barker's YouTube Channel/ Rust with Yocto Project](https://www.youtube.com/channel/UCvnVQTiuS9-1dxZI-SJGBRA)
+- <https://unix.stackexchange.com/questions/13751/kernel-inotify-watch-limit-reached>
+- <https://ruanyifeng.com/blog/2011/12/inode.html>
