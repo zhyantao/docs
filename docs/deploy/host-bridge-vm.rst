@@ -204,7 +204,18 @@ Windows 网络
   服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务 [6]_。
 - **Bluetooth Device (Personal Area Network)**\ ：蓝牙网络连接
 
-.. rubric:: 参考资料
+
+Q & A
+------
+
+**Ubuntu 宿主机 ping 不同 VMware**
+
+可以试试下面几种方法：
+
+- Windows 网络连接，重启 VMNet8
+- ``sudo systemctl disable ufw.service``
+- ``sudo apt install openssh-server``
+
 
 .. [1] https://answers.microsoft.com/en-us/windows/forum/windows_7-networking/what-is-realtek-pcie-gbe-family-controller-why-it/5a6cdd17-155b-e011-8dfc-68b599b31bf5
 .. [2] https://www.nakivo.com/blog/hyper-v-network-adapters-what-why-and-how/
