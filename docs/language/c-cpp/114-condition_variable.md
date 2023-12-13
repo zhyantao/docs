@@ -93,3 +93,50 @@ int main()
 
 // 运行： g++ wait_for.cpp --std=c++11 -lpthread
 ```
+
+## 为什么条件变量要配合 mutex
+
+
+通常在程序里，我们使用条件变量来表示等待“某一条件”的发生。虽然名叫“条件变量”，但是它本身并不保存条件状态，本质上条件变量仅仅是一种通讯机制：当有一个线程在等待（`pthread_cond_wait`）某一条件变量的时候，会将当前的线程挂起，直到另外的线程发送信号（`pthread_cond_signal`）通知其解除阻塞状态。
+
+由于要用额外的共享变量保存条件状态（这个变量可以是任何类型比如 `bool`），由于这个变量会同时被不同的线程访问，因此需要一个额外的 `mutex` 保护它。条件变量总是结合 `mutex` 使用，条件变量就共享变量的状态改变发出通知，`mutex` 就是用来保护这个共享变量的。
+
+一个生产者-消费者模型的例子，会让你更深刻地理解这一点。
+
+首先，我们使用条件变量的接口实现一个简单的生产者-消费者模型，`avail` 就是保存条件状态的共享变量，它对生产者线程、消费者线程均可见。不考虑错误处理，先看生产者实现：
+
+```cpp
+pthread_mutex_lock(&mutex);
+avail++;
+pthread_mutex_unlock(&mutex);
+
+pthread_cond_signal(&cond); /* Wake sleeping consumer */
+```
+
+因为 `avail` 对两个线程都可见，因此对其修改均应该在 `mutex` 的保护之下，再来看消费者线程实现：
+
+```cpp
+for (;;)
+{
+    pthread_mutex_lock(&mutex);
+    while (avail == 0)
+        pthread_cond_wait(&cond, &mutex);
+
+    while (avail > 0)
+    {
+        /* Do something */
+        avail--;
+    }
+    pthread_mutex_unlock(&mutex);
+}
+```
+
+当 `avail == 0` 时，消费者线程会阻塞在 `pthread_cond_wait()` 函数上。如果 `pthread_cond_wait()` 仅需要一个 `pthread_cond_t` 参数的话，此时 `mutex` 已经被锁，要是不先将 `mutex` 变量解锁，那么其他线程（如生产者线程）永远无法访问 `avail` 变量，也就无法继续生产，消费者线程会一直阻塞下去。因此 `pthread_cond_wait()` 需要传递给它一个 `pthread_mutex_t` 类型的变量。
+
+`pthread_cond_wait()` 函数的执行过程大致会分为 3 个部分：
+
+1. 解锁互斥量 `mutex`
+2. 阻塞调用线程，直到当前的条件变量收到通知
+3. 重新锁定互斥量 `mutex`
+
+其中 1 和 2 是原子操作，也就是说在 `pthread_cond_wait()` 调用线程陷入阻塞之前其他的线程无法获取当前的 `mutex`，也就不能就该条件变量发出通知。
