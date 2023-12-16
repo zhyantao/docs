@@ -4712,15 +4712,6 @@
 ```
 
 ```{raw} html
-<style>
-.bd-toc {
-    display: none;
-}
-#main-content {
-    max-width: 100% !important;
-}
-</style>
-
 <script>
 var tbl1 = document.getElementById("ccf-journals-en");
 for (var i = 0, row; row = tbl1.rows[i]; i++) {
