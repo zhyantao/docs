@@ -1,13 +1,13 @@
 # stderr
 
-stderr.cpp
-
 ```cpp
+// stderr.cpp
+
 #include <stdio.h>
 
 void div2(int n)
 {
-    if( n % 2 != 0)
+    if (n % 2 != 0)
     {
         fprintf(stderr, "Error: The input must be an even number. Here it's %d\n", n);
     }
@@ -21,20 +21,20 @@ void div2(int n)
 
 int main()
 {
-    for(int n = -5; n <= 5; n++)
+    for (int n = -5; n <= 5; n++)
         div2(n);
     return 0;
 }
 ```
 
-stderr.c
-
 ```c
+// stderr.c
+
 #include <stdio.h>
 
 void div2(int n)
 {
-    if( n % 2 != 0)
+    if (n % 2 != 0)
     {
         fprintf(stderr, "Error: The input must be an even number. Here it's %d\n", n);
     }
@@ -48,7 +48,7 @@ void div2(int n)
 
 int main()
 {
-    for(int n = -5; n <= 5; n++)
+    for (int n = -5; n <= 5; n++)
         div2(n);
     return 0;
 }

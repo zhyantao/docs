@@ -1,8 +1,8 @@
 # 使用 CMakeLists
 
-main.cpp
-
 ```cpp
+// main.cpp
+
 #include "student.hpp"
 
 int main()
@@ -16,9 +16,9 @@ int main()
 }
 ```
 
-student.cpp
-
 ```cpp
+// student.cpp
+
 #include <iostream>
 #include "student.hpp"
 
@@ -34,36 +34,39 @@ void Student::printInfo()
 }
 ```
 
-student.hpp
-
 ```cpp
+// student.hpp
+
 #pragma once
 
 #include <cstring>
 class Student
 {
-  private:
+private:
     char name[4];
     int born;
-    bool male; 
-  public:
-    void setName(const char * s)
+    bool male;
+
+public:
+    void setName(const char *s)
     {
         strncpy(name, s, sizeof(name));
     }
+
     void setBorn(int b)
     {
         born = b;
     }
+
     // the declarations, the definitions are out of the class
     void setGender(bool isMale);
     void printInfo();
 };
 ```
 
-CMakeLists.txt
-
 ```cmake
+# CMakeLists.txt
+
 cmake_minimum_required(VERSION 3.12)
 
 project(persondemo)

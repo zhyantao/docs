@@ -2,6 +2,7 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
 
 inline float max_function(float a, float b)
@@ -12,9 +13,9 @@ inline float max_function(float a, float b)
         return b;
 }
 
-//#define MAX_MACRO(a, b) a>b ? a : b
+// #define MAX_MACRO(a, b) a > b ? a : b
 
-#define MAX_MACRO(a, b) (a)>(b) ? (a) : (b)
+#define MAX_MACRO(a, b) (a) > (b) ? (a) : (b)
 
 int main()
 {
@@ -33,7 +34,7 @@ int main()
 
     num1 = 0xAB09;
     num2 = 0xEF08;
-    maxv = MAX_MACRO(num1&0xFF, num2&0xFF);
+    maxv = MAX_MACRO(num1 & 0xFF, num2 & 0xFF);
     cout << maxv << endl;
 
     return 0;

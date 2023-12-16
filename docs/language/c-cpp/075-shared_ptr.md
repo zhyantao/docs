@@ -8,45 +8,49 @@ class MyTime
 {
     int hours;
     int minutes;
-  public:
-    MyTime(): hours(0), minutes(0)
+
+public:
+    MyTime() : hours(0), minutes(0)
     {
         std::cout << "Constructor MyTime()" << std::endl;
     }
-    MyTime(int m): hours(0), minutes(m)
+
+    MyTime(int m) : hours(0), minutes(m)
     {
         std::cout << "Constructor MyTime(int)" << std::endl;
-        this->hours +=  this->minutes / 60;
+        this->hours += this->minutes / 60;
         this->minutes %= 60;
     }
-    MyTime(int h, int m): hours(h), minutes(m)
+
+    MyTime(int h, int m) : hours(h), minutes(m)
     {
         std::cout << "Constructor MyTime(int,int)" << std::endl;
-        this->hours +=  this->minutes / 60;
+        this->hours += this->minutes / 60;
         this->minutes %= 60;
     }
+
     ~MyTime()
     {
         std::cout << "Destructor MyTime(). Bye!" << std::endl;
     }
+
     MyTime operator+(int m) const
     {
         MyTime sum;
         sum.minutes = this->minutes + m;
         sum.hours = this->hours;
-        sum.hours +=  sum.minutes / 60;
+        sum.hours += sum.minutes / 60;
         sum.minutes %= 60;
         return sum;
     }
-    friend std::ostream & operator<<(std::ostream & os, const MyTime & t)
+
+    friend std::ostream &operator<<(std::ostream &os, const MyTime &t)
     {
-        std::string str = std::to_string(t.hours) + " hours and " 
-                        + std::to_string(t.minutes) + " minutes.";
+        std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }
 };
-
 
 int main()
 {

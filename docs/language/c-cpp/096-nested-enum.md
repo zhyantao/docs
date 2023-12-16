@@ -3,7 +3,6 @@
 ```cpp
 #include <iostream>
 
-
 class Mat
 {
 public:
@@ -14,13 +13,15 @@ public:
         TYPE32F,
         TYPE64F
     };
+
 private:
     DataType type;
-    void * data;
-public:
-    Mat(DataType type) : type(type), data(NULL){}
+    void *data;
 
-    DataType getType() const { return type;  }
+public:
+    Mat(DataType type) : type(type), data(NULL) {}
+
+    DataType getType() const { return type; }
 };
 
 int main()
@@ -29,7 +30,7 @@ int main()
 
     if (image.getType() == Mat::DataType::TYPE8U)
         std::cout << "This is an 8U matrix." << std::endl;
-	else
+    else
         std::cout << "I am not an 8U matrix." << std::endl;
 
     return 0;

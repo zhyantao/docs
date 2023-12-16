@@ -3,6 +3,7 @@
 ```cpp
 #include <iostream>
 #include <cstring>
+
 using namespace std;
 
 int main()
@@ -11,17 +12,17 @@ int main()
     char str2[] = "SUSTech";
     char result[128];
 
-    for(int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; i++)
         cout << i << ":" << +str1[i] << "(" << str1[i] << ")" << endl;
 
     strcpy(result, str1);
-    cout << "Result = " <<  result << endl;
+    cout << "Result = " << result << endl;
     strcat(result, str2);
-    cout << "Result = " <<  result << endl;
+    cout << "Result = " << result << endl;
 
     cout << "strcmp() = " << strcmp(str1, str2) << endl;
 
-    //strcat(str1, str2); //danger operation!
-    //cout << "str1 = " << str1 << endl;
+    // strcat(str1, str2); //danger operation!
+    // cout << "str1 = " << str1 << endl;
 }
 ```

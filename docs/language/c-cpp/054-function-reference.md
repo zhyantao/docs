@@ -3,11 +3,12 @@
 ```cpp
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
-float norm_l1(float x, float y); //declaration
-float norm_l2(float x, float y); //declaration
-float (&norm_ref)(float x, float y) = norm_l1; //norm_ref is a function reference
+float norm_l1(float x, float y);               // declaration
+float norm_l2(float x, float y);               // declaration
+float (&norm_ref)(float x, float y) = norm_l1; // norm_ref is a function reference
 
 int main()
 {

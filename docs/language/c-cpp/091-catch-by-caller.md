@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cfloat>
 
-float ratio(float a, float b) 
+float ratio(float a, float b)
 {
     if (a < 0)
         throw 1;
@@ -19,10 +19,11 @@ float ratio(float a, float b)
 
 float ratio_wrapper(float a, float b)
 {
-    try{
+    try
+    {
         return ratio(a, b);
     }
-    catch(int eid)
+    catch (int eid)
     {
         if (eid == 1)
             std::cerr << "Call ratio() failed: the 1st argument should be positive." << std::endl;
@@ -43,11 +44,12 @@ int main()
     std::cout << "Please input two numbers <q to quit>:";
     while (std::cin >> x >> y)
     {
-        try{
-            z = ratio_wrapper(x,y);
-            std::cout << "ratio(" << x << ", " << y<< ") = " << z << std::endl;
+        try
+        {
+            z = ratio_wrapper(x, y);
+            std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
         }
-        catch(const char * msg)
+        catch (const char *msg)
         {
             std::cerr << "Call ratio() failed: " << msg << std::endl;
             std::cerr << "I give you another chance." << std::endl;

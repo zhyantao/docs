@@ -8,18 +8,18 @@ struct Matrix
 {
     int rows;
     int cols;
-    float * pData;
+    float *pData;
 };
 
-float matrix_max(const struct Matrix & mat)
+float matrix_max(const struct Matrix &mat)
 {
     float max = FLT_MIN;
-    //find max value of mat
-    for(int r = 0; r < mat.rows; r++)
+    // find max value of mat
+    for (int r = 0; r < mat.rows; r++)
         for (int c = 0; c < mat.cols; c++)
         {
-            float val = mat.pData[ r * mat.cols + c];
-            max = ( max > val ? max : val);
+            float val = mat.pData[r * mat.cols + c];
+            max = (max > val ? max : val);
         }
     return max;
 }
@@ -28,10 +28,10 @@ int main()
 {
     using namespace std;
 
-    Matrix matA = {3,4};
+    Matrix matA = {3, 4};
     matA.pData = new float[matA.rows * matA.cols]{1.f, 2.f, 3.f};
 
-    Matrix matB = {4,8};
+    Matrix matB = {4, 8};
     matB.pData = new float[matB.rows * matB.cols]{10.f, 20.f, 30.f};
 
     Matrix matC = {4, 2};
@@ -47,10 +47,9 @@ int main()
     cout << "max(matB) = " << maxb << endl;
     cout << "max(matC) = " << maxc << endl;
 
-
-    delete [] matA.pData;
-    delete [] matB.pData;
-    delete [] matC.pData;
+    delete[] matA.pData;
+    delete[] matB.pData;
+    delete[] matC.pData;
 
     return 0;
 }

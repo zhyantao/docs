@@ -2,17 +2,18 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
 
-//float array_sum(const float *values, size_t length)
-//float array_sum(const float values[4], size_t length)
+// float array_sum(const float *values, size_t length)
+// float array_sum(const float values[4], size_t length)
 float array_sum(const float values[], size_t length)
 {
     float sum = 0.0f;
     for (int i = 0; i < length; i++)
     {
         sum += values[i];
-        //values[i] = 0; //error
+        // values[i] = 0; //error
     }
     return sum;
 }

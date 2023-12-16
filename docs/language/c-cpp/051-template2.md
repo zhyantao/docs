@@ -3,9 +3,10 @@
 ```cpp
 #include <iostream>
 #include <typeinfo>
+
 using namespace std;
 
-template<typename T>
+template <typename T>
 T sum(T x, T y)
 {
     cout << "The input type is " << typeid(T).name() << endl;

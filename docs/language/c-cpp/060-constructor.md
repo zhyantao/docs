@@ -8,11 +8,12 @@ using namespace std;
 
 class Student
 {
-  private:
+private:
     char name[4];
     int born;
-    bool male; 
-  public:
+    bool male;
+
+public:
     Student()
     {
         name[0] = 0;
@@ -20,12 +21,14 @@ class Student
         male = false;
         cout << "Constructor: Person()" << endl;
     }
-    Student(const char * initName): born(0), male(true)
+
+    Student(const char *initName) : born(0), male(true)
     {
         setName(initName);
         cout << "Constructor: Person(const char*)" << endl;
     }
-    Student(const char * initName, int initBorn, bool isMale)
+
+    Student(const char *initName, int initBorn, bool isMale)
     {
         setName(initName);
         born = initBorn;
@@ -33,7 +36,7 @@ class Student
         cout << "Constructor: Person(const char, int , bool)" << endl;
     }
 
-    void setName(const char * s)
+    void setName(const char *s)
     {
         strncpy(name, s, sizeof(name));
     }
@@ -50,6 +53,7 @@ void Student::setGender(bool isMale)
 {
     male = isMale;
 }
+
 void Student::printInfo()
 {
     std::cout << "Name: " << name << std::endl;
@@ -71,10 +75,10 @@ int main()
     li.printInfo();
 
     Student xue = Student("XueQikun", 1962, true);
-    //a question: what will happen since "XueQikun" has 4+ characters?
+    // a question: what will happen since "XueQikun" has 4+ characters?
     xue.printInfo();
 
-    Student * zhou =  new Student("Zhou", 1991, false);
+    Student *zhou = new Student("Zhou", 1991, false);
     zhou->printInfo();
     delete zhou;
 

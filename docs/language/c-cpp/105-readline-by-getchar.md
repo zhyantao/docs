@@ -7,7 +7,7 @@ int main()
 {
     char c;
     c = ' ';
-    while(c != '\n')
+    while (c != '\n')
     {
         c = getchar();
         printf("%c %5d \n", c, c);

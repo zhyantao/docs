@@ -41,9 +41,9 @@ int main()
 
 ---
 
-main.cpp
-
 ```cpp
+// main.cpp
+
 #include <iostream>
 #include "mystring.hpp"
 
@@ -67,9 +67,9 @@ int main()
 }
 ```
 
-mystring.hpp
-
 ```cpp
+// mystring.hpp
+
 #pragma once
 
 #include <iostream>

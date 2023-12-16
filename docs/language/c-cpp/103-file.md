@@ -66,7 +66,7 @@ int main()
 
     // 写文件
     fp = fopen("INPUT", "w");
-    while((c = getchar()) != '\n')
+    while ((c = getchar()) != '\n')
     {
         putc(c, fp);
     }
@@ -74,7 +74,7 @@ int main()
 
     // 读文件
     fp = fopen("INPUT", "r");
-    while((c = getc(fp)) != EOF)
+    while ((c = getc(fp)) != EOF)
     {
         printf("%c", c);
     }

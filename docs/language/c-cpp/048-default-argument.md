@@ -3,6 +3,7 @@
 ```cpp
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 float norm(float x, float y, float z);

@@ -2,20 +2,25 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
+
 class Storage
 {
-public: 
+public:
     class Fruit
     {
         string name;
         int weight;
+
     public:
-        Fruit(string name="", int weight=0):name(name), weight(weight){}
-        string getInfo(){return name + ", weight " + to_string(weight) + "kg.";}
+        Fruit(string name = "", int weight = 0) : name(name), weight(weight) {}
+        string getInfo() { return name + ", weight " + to_string(weight) + "kg."; }
     };
+
 private:
     Fruit fruit;
+
 public:
     Storage(Fruit f)
     {
@@ -25,7 +30,6 @@ public:
     {
         cout << fruit.getInfo() << endl;
     }
-
 };
 
 int main()

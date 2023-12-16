@@ -8,9 +8,9 @@ using namespace std;
 int main()
 {
     int num = 10;
-    int * p1 = NULL, * p2 = NULL; // declaration, initialize to 0
-    p1 = &num; // take the address of num, assign to p1
-    p2 = &num; // take the address of num, assign to p2
+    int *p1 = NULL, *p2 = NULL; // declaration, initialize to 0
+    p1 = &num;                  // take the address of num, assign to p1
+    p2 = &num;                  // take the address of num, assign to p2
 
     cout << "num = " << num << endl;
 

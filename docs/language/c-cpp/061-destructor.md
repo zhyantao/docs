@@ -8,11 +8,12 @@ using namespace std;
 
 class Student
 {
-  private:
-    char * name;
+private:
+    char *name;
     int born;
-    bool male; 
-  public:
+    bool male;
+
+public:
     Student()
     {
         name = new char[1024]{0};
@@ -20,9 +21,9 @@ class Student
         male = false;
         cout << "Constructor: Person()" << endl;
     }
-    Student(const char * initName, int initBorn, bool isMale)
+    Student(const char *initName, int initBorn, bool isMale)
     {
-        name =  new char[1024];
+        name = new char[1024];
         setName(initName);
         born = initBorn;
         male = isMale;
@@ -31,10 +32,10 @@ class Student
     ~Student()
     {
         cout << "To destroy object: " << name << endl;
-        delete [] name;
+        delete[] name;
     }
 
-    void setName(const char * s)
+    void setName(const char *s)
     {
         strncpy(name, s, 1024);
     }
@@ -72,7 +73,7 @@ int main()
     Student xue = Student("XueQikun", 1962, true);
     xue.printInfo();
 
-    Student * zhou =  new Student("Zhou", 1991, false);
+    Student *zhou = new Student("Zhou", 1991, false);
     zhou->printInfo();
     delete zhou;
 

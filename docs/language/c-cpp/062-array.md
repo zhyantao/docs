@@ -8,11 +8,12 @@ using namespace std;
 
 class Student
 {
-  private:
-    char * name;
+private:
+    char *name;
     int born;
-    bool male; 
-  public:
+    bool male;
+
+public:
     Student()
     {
         name = new char[1024]{0};
@@ -20,28 +21,32 @@ class Student
         male = false;
         cout << "Constructor: Person()" << endl;
     }
-    Student(const char * initName, int initBorn, bool isMale)
+
+    Student(const char *initName, int initBorn, bool isMale)
     {
-        name =  new char[1024];
+        name = new char[1024];
         setName(initName);
         born = initBorn;
         male = isMale;
         cout << "Constructor: Person(const char, int , bool)" << endl;
     }
+
     ~Student()
     {
         cout << "To destroy object: " << name << endl;
-        delete [] name;
+        delete[] name;
     }
 
-    void setName(const char * s)
+    void setName(const char *s)
     {
         strncpy(name, s, 1024);
     }
+
     void setBorn(int b)
     {
         born = b;
     }
+
     // the declarations, the definitions are out of the class
     void setGender(bool isMale);
     void printInfo();
@@ -51,6 +56,7 @@ void Student::setGender(bool isMale)
 {
     male = isMale;
 }
+
 void Student::printInfo()
 {
     std::cout << "Name: " << name << std::endl;
@@ -60,7 +66,7 @@ void Student::printInfo()
 
 int main()
 {
-    Student * class1 = new Student[3]{
+    Student *class1 = new Student[3]{
         {"Tom", 2000, true},
         {"Bob", 2001, true},
         {"Amy", 2002, false},
@@ -68,8 +74,7 @@ int main()
 
     class1[1].printInfo();
     delete class1;
-    //delete []class1;
-
+    // delete []class1;
 
     return 0;
 }

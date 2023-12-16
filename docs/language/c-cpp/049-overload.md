@@ -35,7 +35,7 @@ int main()
     cout << "sum = " << sum(1.1f, 2.2f) << endl;
     cout << "sum = " << sum(1.1, 2.2) << endl;
 
-    //which function will be called?
+    // which function will be called?
     cout << "sum = " << sum(1, 2.2) << endl;
 
     return 0;

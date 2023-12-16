@@ -2,6 +2,7 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
 
 struct Student

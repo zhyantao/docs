@@ -8,12 +8,14 @@ Lambda 通常用于封装传递给算法或异步函数的 **少量代码行**�
 #include <algorithm>
 #include <cmath>
 
-void abssort(float* x, unsigned n) {
+void abssort(float *x, unsigned n)
+{
     std::sort(x, x + n,
-        // Lambda expression begins
-        [](float a, float b) {
-            return (std::abs(a) < std::abs(b));
-        } // end of lambda expression
+              // Lambda expression begins
+              [](float a, float b)
+              {
+                  return (std::abs(a) < std::abs(b));
+              } // end of lambda expression
     );
 }
 ```

@@ -15,27 +15,27 @@ int main()
     printf("Give one sapce after each word.\n");
     printf("When completed, press 'Enter'.\n\n");
 
-    while(1)
+    while (1)
     {
         /* 读取一行文本 */
         c = 0;
-        while((ctr = getchar()) != '\n')
+        while ((ctr = getchar()) != '\n')
             line[c++] = ctr;
         line[c] = '\0';
 
         /* 计算一行中的字数 */
-        if(line[0] == '\0')
+        if (line[0] == '\0')
             break;
         else
         {
             words++;
-            for(i = 0; line[i] != '\0'; i++)
-                if(line[i] == ' ' || line[i] == '\t')
+            for (i = 0; line[i] != '\0'; i++)
+                if (line[i] == ' ' || line[i] == '\t')
                     words++;
         }
 
         /* 计算行数和字符数 */
-        lines= lines + 1;
+        lines = lines + 1;
         characters = characters + strlen(line);
     }
 

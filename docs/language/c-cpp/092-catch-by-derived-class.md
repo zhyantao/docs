@@ -9,7 +9,7 @@ public:
     Base() {}
 };
 
-class Derived: public Base
+class Derived : public Base
 {
 public:
     Derived() {}
@@ -21,11 +21,11 @@ int main()
     {
         throw Derived();
     }
-    catch (const Base& base)
+    catch (const Base &base)
     {
         std::cerr << "I caught Base." << std::endl;
     }
-    catch (const Derived& derived) 
+    catch (const Derived &derived)
     { // never reach here
         std::cerr << "I caught Derived." << std::endl;
     }

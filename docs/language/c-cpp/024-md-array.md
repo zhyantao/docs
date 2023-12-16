@@ -4,6 +4,7 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
 
 // You must tell the function the bound of an array, otherwise, elements cannot be accessed

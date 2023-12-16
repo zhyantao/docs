@@ -2,15 +2,17 @@
 
 ```cpp
 #include <iostream>
+
 using namespace std;
 
 // Class Template
-template<typename T, size_t rows, size_t cols>
+template <typename T, size_t rows, size_t cols>
 class Mat
 {
     T data[rows][cols];
-  public:
-    Mat(){}
+
+public:
+    Mat() {}
     //// the default copy constructor will copy each element of a static array member
     //// so we do not 'delete' the copy constructor
     //// the same with the assignment operator
@@ -19,20 +21,22 @@ class Mat
     T getElement(size_t r, size_t c);
     bool setElement(size_t r, size_t c, T value);
 };
-template<typename T, size_t rows, size_t cols>
+
+template <typename T, size_t rows, size_t cols>
 T Mat<T, rows, cols>::getElement(size_t r, size_t c)
 {
-    if ( r >= rows || c >= cols)
+    if (r >= rows || c >= cols)
     {
         cerr << "getElement(): indices are out of range" << endl;
         return 0;
     }
     return data[r][c];
 }
-template<typename T, size_t rows, size_t cols>
+
+template <typename T, size_t rows, size_t cols>
 bool Mat<T, rows, cols>::setElement(size_t r, size_t c, T value)
 {
-    if ( r >= rows || c >= cols)
+    if (r >= rows || c >= cols)
     {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
@@ -45,7 +49,7 @@ bool Mat<T, rows, cols>::setElement(size_t r, size_t c, T value)
 template class Mat<int, 2, 2>; // Explicitly instantiate template Mat<int, 2, 2>
 typedef Mat<int, 2, 2> Mat22i;
 
-//template Mat<float, 3, 1> will be instantiate implicitly
+// template Mat<float, 3, 1> will be instantiate implicitly
 
 int main()
 {
