@@ -10,6 +10,15 @@
     display: none;
 } */
 
+/* keep article at reasonable width in absence of sidebar */
 .bd-main {
-    flex-grow: -1;
+    flex-grow: 1;
+
+    .bd-content {
+        justify-content: left;
+
+        .bd-article-container {
+            max-width: calc(100% - var(--pst-sidebar-secondary));
+        }
+    }
 }
