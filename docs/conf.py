@@ -10,7 +10,7 @@ import os
 project = u'Notebook'
 copyright = u'2023, zh6tao@gmail.com'
 #author = u'Yantao'
-version = 'v 1.2.0'
+version = 'v 1.9.6'
 
 master_doc = 'index'
 language = 'zh_CN'
