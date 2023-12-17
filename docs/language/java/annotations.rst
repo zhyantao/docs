@@ -238,6 +238,5 @@ Java 语言使用 ``@interface`` 语法来定义自己的注解，格式如下�
     Warning: Missing use case-50
     *///:~
 
-.. rubric:: 参考资料
 
 .. [1] https://www.liaoxuefeng.com/wiki/1252599548343744/1266265100383840

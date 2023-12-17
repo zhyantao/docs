@@ -88,6 +88,5 @@ UI 界面的提示进行安装。这个软件比较大，你可以不用完整�
 - cmd.exe ``>>`` systeminfo
 - 使用工具软件 `CPU-Z <https://www.cpuid.com/>`_
 
-.. rubric:: 参考资料
 
 .. [1] https://ubuntuqa.com/article/371.html

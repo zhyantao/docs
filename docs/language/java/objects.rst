@@ -209,8 +209,6 @@ Hello, World!
     }
 
 
-.. rubric:: 参考资料
-
 .. [1] 凤凰架构 http://icyfenix.cn/methodology/forward-msa/governance.html
 .. [2] Java 多态 https://www.runoob.com/java/java-polymorphism.html
 .. [3] 流对象：对象转化为字节流，通常发送给另一台机器。

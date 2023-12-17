@@ -80,6 +80,5 @@ i.i.d. 独立同分布
 1. 如果求一个结果发生的概率，而且知道这个结果有不同的原因，考虑全概率公式。
 2. 已知结果发生，求某个原因发生的概率，考虑贝叶斯公式。
 
-.. rubric:: 参考资料
 
 - `Probability Cheatsheet v2.0 <https://kdocs.cn/l/cuUQ21Xer5d0>`_

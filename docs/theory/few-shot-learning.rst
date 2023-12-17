@@ -319,7 +319,6 @@ Fine Tuning
 - `David Abel <https://david-abel.github.io/>`_, Brown University
 - `Brenden Lake <https://cims.nyu.edu/~brenden/>`_, Facebook AI Research
 
-.. rubric:: 参考资料
 
 .. [1] 赵凯琳,靳小龙,王元卓.小样本学习研究综述.软件学报,2021,32(2):349-369
 .. [2] `小样本学习与元学习资料调研：白小鱼 <https://youngfish42.yuque.com/docs/share/5cd14926-6954-4dca-bf39-d17c56fece53>`_

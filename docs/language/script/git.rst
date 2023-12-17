@@ -534,7 +534,6 @@ gitignore 匹配规则
     # 使 /etc/profile 生效
     source /etc/profile
 
-.. rubric:: 参考资料
 
 .. [1] 阮一峰的网络日志 - 常用 Git 命令清单 [`webpage <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__]
 .. [2] Learn Git Branching [`webpage <https://oschina.gitee.io/learn-git-branching/>`__]

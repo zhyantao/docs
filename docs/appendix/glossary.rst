@@ -140,7 +140,5 @@ K-way，N-shot
     通常作为标签。
 
 
-.. rubric:: 参考资料
-
 .. [1] https://zhuanlan.zhihu.com/p/29957294
 .. [2] https://www.zhihu.com/question/38102762

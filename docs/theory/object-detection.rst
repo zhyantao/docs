@@ -186,7 +186,6 @@ Label Assignment in Object Detection
 
 - `MMDetection <https://mmdetection.readthedocs.io/en/latest/>`_
 
-.. rubric:: 参考资料
 
 .. [1] https://zhuanlan.zhihu.com/p/166275032
 .. [2] https://zhuanlan.zhihu.com/p/160991530

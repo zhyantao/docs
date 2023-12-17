@@ -585,7 +585,5 @@
     } ///:~
 
 
-.. rubric:: 参考资料
-
 .. [1] 内部类的加载时机 https://blog.csdn.net/brouth/article/details/51656603
 .. [2] 闭包 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures

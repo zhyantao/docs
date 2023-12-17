@@ -139,7 +139,5 @@ Bean 可分为两种：
     } ///:~
 
 
-.. rubric:: 参考资料
-
 .. [1] 窦蕾 袁臻 刘冬梅. 基于构件的中间件技术J2EE[J]. 计算机科学, 2004, 31(6): 13-16.
 .. [2] Java Bean [`webpage <https://www.cnblogs.com/wzooey/p/3687557.html>`__]

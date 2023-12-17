@@ -242,6 +242,5 @@ switch
         default: statement;
     }
 
-.. rubric:: 参考资料
 
 .. [1] 传指针和传指针引用的区别/指针和引用的区别（本质） [`webpage <https://www.cnblogs.com/x_wukong/p/5712345.html>`__]

@@ -55,7 +55,6 @@ Conda
 - 使用脚本文件运行命令： ``conda install --yes PKG1 PKG2``
 - 测试 Conda 配置和服务： ``conda config --show 、conda config --show-sources``
 
-.. rubric:: 参考资料
 
 [1] `[金山文档] conda-cheatsheet.pdf <https://kdocs.cn/l/cpfKQN7jodro>`_
 
