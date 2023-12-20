@@ -2,6 +2,7 @@
 docs/_build/
 !docs/_static/lib/
 !docs/_static/**/*.png
+docs/_tmp/
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,python,java,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,python,java,jupyternotebooks
