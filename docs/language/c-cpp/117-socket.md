@@ -35,7 +35,7 @@ int socket(int domain, int type, int protocol);
 
 - `AF_INET`（必须用 32 位的 IPv4 地址和 16 位的端口号）
 - `AF_INET6`（必须使用 IPv6 协议）
-- `AF_LOCAL` 或 `AF_UNIX`（必须用绝对路径名作为地址）
+- `AF_UNIX` 或 `AF_LOCAL`（本地通信，必须用绝对路径作为地址）
 - `AF_ROUTE`
 
 **type：指定了 socket 的类型**
