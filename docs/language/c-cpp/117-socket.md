@@ -1,6 +1,6 @@
 # Socket 网络编程
 
-“一切皆 Socket，些许有些夸张，但是事实也是如此，现在的网络编程几乎都是用的 Socket。”
+“一切皆 Socket，些许有些夸张，但是事实也是如此，现在的网络编程几乎都是用的 Socket。” [^cite_ref-1]
 
 进程间通信，可以分为本地和远程。
 
@@ -29,7 +29,7 @@
 int socket(int domain, int type, int protocol);
 ```
 
-打开socket文件时，需要指定的参数有三个：
+打开 socket 文件时，需要指定的参数有三个：
 
 **domain：协议族（family）决定了 socket 的地址类型**
 
@@ -373,3 +373,5 @@ int main(int argc, char **argv)
 ```
 
 当然，上面的代码很简单，也有很多缺点，这仅仅简单地演示 socket 的基本使用。其实不管有多复杂的网络程序，都使用的这些基本函数。上面的服务器使用的是迭代模式的，即只有处理完一个客户端请求才会去处理下一个客户端的请求，这样的服务器处理能力是很弱的，现实中的服务器都需要有并发处理能力！为了需要并发处理，服务器需要 `fork()` 一个新的进程或者线程去处理请求等。
+
+[^cite_ref-1]: Linux Socket编程（不限Linux）<https://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html>
