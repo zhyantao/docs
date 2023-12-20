@@ -30,7 +30,6 @@ language/assembly/index
 language/python/index
 language/script/index
 language/javascript/index
-language/framework/index
 ```
 
 ```{toctree}

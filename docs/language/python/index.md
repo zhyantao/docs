@@ -22,6 +22,14 @@ modules-and-packages.ipynb
 multithread.ipynb
 gui.ipynb
 web.ipynb
+numpy.ipynb
+matplotlib.ipynb
+pandas.ipynb
+scikit-learn.ipynb
+seaborn.ipynb
+tensorflow.md
+pytorch.md
+paddle.md
 llm.md
 ```
 
