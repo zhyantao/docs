@@ -26,6 +26,7 @@ if "%1" == "help" (
 if "%1" == "clean" (
 	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
 	del /q /s %BUILDDIR%\*
+	del /q /s "docs/_tmp"
 	goto end
 )
 
@@ -43,6 +44,7 @@ if errorlevel 9009 (
 )
 
 if "%1" == "html" (
+	mkdir "docs/_tmp"
 	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html
 	if errorlevel 1 exit /b 1
 	echo.
