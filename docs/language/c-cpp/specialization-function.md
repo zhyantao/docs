@@ -1,4 +1,4 @@
-# 特例化
+# 特例化（函数）
 
 ```cpp
 #include <iostream>

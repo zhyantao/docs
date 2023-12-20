@@ -9,7 +9,20 @@ Python 是一门非常简单易懂的语言，非常符合人们的阅读习惯�
 :glob:
 :hidden:
 
-./*
+datatypes.ipynb
+for.ipynb
+function.ipynb
+exception.ipynb
+class.ipynb
+decorator.ipynb
+with.ipynb
+file.ipynb
+io.ipynb
+modules-and-packages.ipynb
+multithread.ipynb
+gui.ipynb
+web.ipynb
+llm.md
 ```
 
 ## Python 命名规范
