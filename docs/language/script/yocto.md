@@ -112,6 +112,10 @@ do_install() {
 }
 ```
 
+注意：`.bb` 文件中好多全局变量都是 Bitbake 为我们创建好的，默认情况下在 `poky/meta/conf/bitbake.conf` 中声明 [^ref-cite-2]。
+
+另外，关于这些全局变量的解释可以参考 Variables Glossary，比如 SRC_URI [^ref-cite-3]。
+
 ## BitBake 常用命令
 
 | 命令                                                         | 作用               |
@@ -128,3 +132,5 @@ do_install() {
 - <https://ruanyifeng.com/blog/2011/12/inode.html>
 
 [^ref-cite-1]: [Cookbook:Appliance:Startup Scripts - Yocto Project](https://wiki.yoctoproject.org/wiki/Cookbook:Appliance:Startup_Scripts)
+[^ref-cite-2]: [bitbake.conf « conf - bitbake - Bitbake Development tree (openembedded.org)](https://git.openembedded.org/bitbake/tree/conf/bitbake.conf)
+[^ref-cite-3]: [5 Variables Glossary — Bitbake dev documentation (yoctoproject.org)](https://docs.yoctoproject.org/bitbake/2.6/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI)
