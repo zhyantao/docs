@@ -114,7 +114,7 @@ do_install() {
 
 注意：`.bb` 文件中好多全局变量都是 Bitbake 为我们创建好的，默认情况下在 `poky/meta/conf/bitbake.conf` 中声明 [^ref-cite-2]。
 
-另外，关于这些全局变量的解释可以参考 Variables Glossary，比如 SRC_URI [^ref-cite-3]。
+另外，关于这些全局变量的解释可以参考 Variables Glossary，比如 `SRC_URI` [^ref-cite-3]。
 
 ## BitBake 常用命令
 
