@@ -1,77 +1,124 @@
 # Yocto
 
-## Commands
 
-All hints for CLIs like `bitbake`, `bitbake-layers`, `devtool` etc. used within common Yocto Project development
+Yocto 是**用于构建**针对嵌入式设备的**定制 Linux 发行版的**一套综合的**工具套件、模板和资源**。
 
-| Purpose                       | Command(s)                                                                       |
-|:------------------------------|----------------------------------------------------------------------------------|
-| __Populate Classic SDK__      |   `bitbake -c populate_sdk <IMAGE_NAME>`                                         |
-| __Populate Extensible SDK__   |   `bitbake -c populate_sdk_ext <IMAGE_NAME>`                                     |
-| __Start build from scratch__  |   `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                                     |
-| __Supported HW Boards__       |   `ls sources/meta-<hardware>*/recipes*/conf/machine/*.conf`                     |
-| __Supported Images__          |   `ls sources/meta-<hardware>*/recipes*/images/*.bb`                             |
-| __Single PR Server instance__ |   `bitbake-prserv --host <server_ip> --port <port> --start`                      |
-| __Find a package in a layer__ |   `cd sources && find --name "*busybox*"`                                        |
-| __Find a recipe in a layer__  |   `cd sources && find --name "*busybox*.bb*"`                                    |
-| __Search recipe__             |   `bitbake-layers show-recipes "gdb*"`                                           |
-| __Find dependency cache__     |   `devtool search <RegEx>`                                                       |
-| __Dump global env & find__    |   `bitbake -e`<code>&#124;</code>`grep -w DISTRO_FEATURES`                       |
-| __Locate source directory__   |   `bitbake -e <recipe>`<code>&#124;</code>`grep ^S=`                             |
-| __Locate working directory__  |   `bitbake -e <recipe>`<code>&#124;</code>`grep ^WORKDIR=`                       |
-| `devshell`                    |   `bitbake -c devshell <target>`                                                 |
-| `devpyshell`                  |   `bitbake -c devpyshell <target>`                                               |
-| __List tasks for a recipe__   |   `bitbake -c listtasks <target>`                                                |
-| __Force a build__             |   `bitbake -f <target>`                                                          |
-| __Force-run a specific task__ |   `bitbake -c compile -f <target>`                                               |
-| __Current/given pkg version__ |   `bitbake --show-versions`                                                      |
-| __Verbose output__            |   `bitbake -v <target>`                                                          |
-| __Display debug information__ |   `bitbake -DDD <target>`                                                        |
-| __Send error report__         |   `send-error-report ${LOG_DIR}/error-report/error-report_${TSTAMP}`             |
-| __Create a new layer__        |   `yocto-layer create <layer_name>`                                              |
-| __Add custom layer__          |   `bitbake-layers add-layer /path/to/your_meta-layer`                            |
-| __Remove custom layer__       |   `bitbake-layers remove-layer /path/to/your_meta-layer`                         |
-| __Find all recipe layers__    |   `bitbake-layers show-recipes`                                                  |
-| __Find all clashing recipe__  |   `bitbake-layers show-overlayed`                                                |
-| __Show all `bbappend` files__ |   `bitbake-layers show-appends`                                                  |
-| __Flatten all Layers__        |   `bitbake-layers flatten <output_dir>`                                          |
-| __Show recipe cross-depends__ |   `bitbake-layers show-cross-depends`                                            |
-| __List layer dependencies from OE Index__ |   `bitbake-layers layerindex-show-depends <layer_name>`              |
-| __Fetch & add layer using OE Index__      |   `bitbake-layers layerindex-fetch <layer name>`                     |
+学习 Yocto 应该从以下几个方面入手：
 
-## Configuration
+- Poky 工作流
+- OpenEmbedded 构建系统（包括 BitBake 构建引擎）
+- 定制操作系统栈
+- 板支持包（Board Support Package，BSP）
+- 应用开发工具包
 
-All variables that can be added to files like `bblayers.conf` or `local.conf` or other configuration files in Yocto.
+本文仅介绍常用的 BitBake 语法和命令，更多请参考《嵌入式 Linux 系统开发：基于 Yocto Project》。
 
-| Purpose                       | File         | Variable(s)                                                                                |
-|:------------------------------|:-------------|--------------------------------------------------------------------------------------------|
-| __Add__ `systemd`             | `local.conf` | `DISTRO_FEATURES_append = " systemd"` <br> `VIRTUAL-RUNTIME_init_manager = "systemd"`      |
-| __Remove__ `sysvinit`         | `local.conf` | `DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"` <br> `VIRTUAL-RUNTIME_initscripts = ""` |
-| __Add__ `strace`              | `local.conf` | `CORE_IMAGE_EXTRA_INSTALL += "strace"`                                                     |
-| `root` __Login w/o Password__ | `local.conf` | `EXTRA_IMAGE_FEATURES ?= "debug-tweaks"`                                                   |
-| __Add__ `gcc`                 | `local.conf` | `EXTRA_IMAGE_FEATURES ?= "tools-sdk"`                                                      |
-| __Add__ `dropbear-ssh-server` | `local.conf` | `EXTRA_IMAGE_FEATURES ?= "ssh-server-dropbear"`                                            |
-| __Add__ `virtualization`      | `local.conf` | `DISTRO_FEATURES_append = " virtualization"`                                               |
-| Persistent Bitbake server     | `local.conf` | `BB_SERVER_TIMEOUT= "n" # n in seconds`                                                    |
-| __Remove__ build packages     | `local.conf` | `INHERIT += "rm_work"`                                                                     |
-| Exclude packages from cleaning| `local.conf` | `RM_WORK_EXCLUDE += "recipe_name"`                                                         |
-| Avoid `-dbg` packages         | `local.conf` | `INHIBIT_PACKAGE_DEBUG_SPLIT = "1"`                                                        |
-| Accept FSL's EULA license     | `local.conf` | `ACCEPT_FSL_EULA = "1"`                                                                    |
-| Download Directory            | `local.conf` | `DL_DIR ?= "${BSP_DIR}/downloads/"`                                                        |
-| Configuring a Pre-mirror      | `local.conf` | `INHERIT += "own-mirrors"` <br> `SOURCE_MIRROR_URL = "http://example.com/source-mirror"`   |
-| *tarballs* of git repos.      | `local.conf` | `BB_GENERATE_MIRROR_TARBALLS = "1"`                                                        |
-| Build using Pre-mirrors only  | `local.conf` | `BB_FETCH_PREMIRRORONLY = "1"`                                                             |
-| _Add_ Package Mgmt. System    | `local.conf` | `EXTRA_IMAGE_FEATURES += "package-management"`                                             |
-| Simple `PR` server            | `local.conf` | `PRSERV_HOST = "<server_ip>:<port>"`                                                       |
-| Enable build history          | `local.conf` | `INHERIT += "buildhistory"`                                                                |
-| Store build history in repo.  | `local.conf` | `BUILDHISTORY_COMMIT = "1"`                                                                |
-| Track image, pkg, SDKs change | `local.conf` | `BUILDHISTORY_FEATURES = "image" # package or sdk`                                         |
-| Track a file for buildhistory | `local.conf` | `BUILDHISTORY_IMAGE_FILES += "/path/to/file"`                                              |
-| Terminal for `dev(py)shell`   | `local.conf` | `OE_TERMINAL = "screen"`                                                                   |
-| Submit Failed build error     | `local.conf` | `INHERIT += "report-error"`                                                                |
-| Number of parallel tasks      | `local.conf` | `BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()}"`                                          |
-| Value of `-j` in `make`       | `local.conf` | `PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"`                                           |
-| Add Real-Time Kernel          | `local.conf` | `PREFERRED_PROVIDER_virtual/kernel = "<RT_Kernel_Image_name_from_Meta-Layer>"`             |
+## BitBake 文件简介
+
+当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件。
+
+`.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
+
+下面将介绍 `.bb` 文件最基本也是最常用的编写方法。
+
+前提：假设你已经编写好了下面这几个文件，并且你打算将它们添加到 Linux 发行版中：
+
+```bash
+startup-script  # 一个在系统启动时运行的脚本（例如，用于恢复持久状态）。
+run-script      # 一个用于启动设备应用程序的脚步（设备的运行级别为 5）。
+support-script  # 上面两个脚本运行所需的脚本。
+```
+
+将脚本添加到 Linux 发行版中以及它们与各种 `init` 运行级别的交互是通过 BitBake 菜谱（`.bb` 文件）控制的。模板如下所示：[^ref-cite-1]
+
+```bash
+DESCRIPTON = "Startup scripts"
+LICENSE = "MIT"
+
+# 菜谱的版本：更新菜谱后，不要忘记修改这里的版本号
+PR = "r0"
+
+# 运行时依赖
+#
+# 添加类似于以下内容的行，以确保运行脚本所需的所有包都安装在映像中
+#
+# RDEPENDS_${PN} = "parted"
+
+# SRC_URI 指定制作菜谱所需的源文件（或脚本文件）
+#
+# src_uri 常用的有效格式有 files、https、git 等
+# 本例假设所有的源文件都存储在 files 目录下
+#
+SRC_URI = "              \
+   file://startup-script \
+   file://run-script     \
+   file://support-script \
+   "
+
+# do_install 的功能如下：
+#  1) 确保映像中存在所需的目录；
+#  2) 将脚本安装到映像中；
+#  3) 为脚本创建符合其运行级别的软连接。
+#
+do_install() {
+    #
+    # 创建目录：
+    #   ${D}${sysconfdir}/init.d - 用于保存脚本
+    #   ${D}${sysconfdir}/rcS.d  - 用于保存系统启动时运行的脚本的软链接
+    #   ${D}${sysconfdir}/rc5.d  - 用于保存 runlevel=5 的脚本的软链接
+    #   ${D}${sbindir}           - 用于保存被上面两个脚本调用的脚本
+    #
+    # ${D} 实际上是目标系统的根目录
+    # ${D}${sysconfdir} 是存储系统配置文件的位置（例如 /etc）
+    # ${D}${sbindir} 是存储可执行文件的位置（例如 /sbin）
+    #
+    install -d ${D}${sysconfdir}/init.d
+    install -d ${D}${sysconfdir}/rcS.d
+    install -d ${D}${sysconfdir}/rc1.d
+    install -d ${D}${sysconfdir}/rc2.d
+    install -d ${D}${sysconfdir}/rc3.d
+    install -d ${D}${sysconfdir}/rc4.d
+    install -d ${D}${sysconfdir}/rc5.d
+    install -d ${D}${sbindir}
+
+    #
+    # 将脚本安装到 Linux 发行版中
+    #
+    # 通过 SRC_URI 获取的文件会存在于 ${WORKDIR} 目录下
+    # ${WORKDIR}=file://
+    #
+    install -m 0755 ${WORKDIR}/startup-script  ${D}${sysconfdir}/init.d/
+    install -m 0755 ${WORKDIR}/run-script      ${D}${sysconfdir}/init.d/
+    install -m 0755 ${WORKDIR}/support-script  ${D}${sbindir}/
+
+    #
+    # 软链接同样可以被安装到 Linux 发行版中，比如：
+    #
+    # ln -s support-script-link ${D}${sbindir}/support-script
+
+    #
+    # 在 runlevel 目录下创建指向脚本的软链接
+    # 以 S... 和 K... 开头的文件分别表示在 entering 和 exiting 相应 runlevel 时会被调用的脚本
+    # 比如：
+    #   rc5.d/S90run-script 会在进入 runlevel 5 时调用 (with %1='start')
+    #   rc5.d/K90run-script 会在退出 runlevel 5 时调用 (with %1='stop')
+    #
+    ln -sf ../init.d/startup-script  ${D}${sysconfdir}/rcS.d/S90startup-script
+    ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc1.d/K90run-script
+    ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc2.d/K90run-script
+    ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc3.d/K90run-script
+    ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc4.d/K90run-script
+    ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc5.d/S90run-script
+}
+```
+
+## BitBake 常用命令
+
+| 命令                                                         | 作用               |
+| :----------------------------------------------------------- | ------------------ |
+| `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                   | 删除所有的构建     |
+| `bitbake <recipe>`                                           | 单编一个模块       |
+| `bitbake -c clean <recipe> && bitbake -c cleansstate <recipe>` | 删除指定模块的构建 |
 
 ## Q & A
 
@@ -79,3 +126,5 @@ All variables that can be added to files like `bblayers.conf` or `local.conf` or
 
 - <https://unix.stackexchange.com/questions/13751/kernel-inotify-watch-limit-reached>
 - <https://ruanyifeng.com/blog/2011/12/inode.html>
+
+[^ref-cite-1]: [Cookbook:Appliance:Startup Scripts - Yocto Project](https://wiki.yoctoproject.org/wiki/Cookbook:Appliance:Startup_Scripts)
