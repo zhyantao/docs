@@ -73,9 +73,10 @@ html_theme_options = {
             "type": "url",
         },
         {
-            "name": "GitHub",
+            "name": "Stars",
             "url": "https://github.com/zhyantao/getstarted",
-            "icon": "fa-brands fa-github",
+            "icon": "https://img.shields.io/github/stars/zhyantao/getstarted",
+            "type": "url",
         },
     ],
 }
