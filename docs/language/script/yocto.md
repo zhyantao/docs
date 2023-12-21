@@ -17,6 +17,16 @@ Yocto 是**用于构建**针对嵌入式设备的**定制 Linux 发行版的**�
 
 当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件。
 
+````{note}
+如果运行 `bitbake` 命令后，报错如下：
+
+```bash
+bitbake: command not found
+```
+
+是因为你还没有初始化环境变量，默认情况下，你需要先运行 `source oe-init-build-env` 这个脚本，将 `bitbake` 添加到环境变量中。
+````
+
 `.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
 
 下面将介绍 `.bb` 文件最基本也是最常用的编写方法。
