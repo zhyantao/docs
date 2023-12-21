@@ -19,7 +19,7 @@ theory/*
 ```
 
 ```{toctree}
-:caption: 编程语言
+:caption: 开发运维
 :maxdepth: 2
 :glob:
 :hidden:
