@@ -386,26 +386,6 @@ Example 3
         \displaystyle\sum_{i=1}^{n+1} \dfrac{\partial f}{\partial u_i}\dfrac{\partial u_i}{\partial x}
         =\dfrac{\partial f}{\partial \mathbf{u}} \dfrac{\partial \mathbf{u}}{\partial x}
 
-    .. rubric:: 注：函数 :math:`f` 与中间变量之间有这样一条依赖链条
-
-    .. graphviz::
-
-        digraph foo {
-            u_1 [label=<u<SUB>1</SUB>>];
-            u_2 [label=<u<SUB>2</SUB>>];
-            u_3 [label=<...>];
-            u_n [label=<u<SUB>n</SUB>>];
-            "f" -> "x";
-            "f" -> "u_1";
-            "u_1" -> "x";
-            "f" -> "u_2";
-            "u_2" -> "x";
-            "f" -> "u_3";
-            "u_3" -> "x";
-            "f" -> "u_n";
-            "u_n" -> "x";
-        }
-
 首先，设置中间变量 :math:`u_1` 和 :math:`u_2` ：
 
 :math:`u_1(x) = x^2`

@@ -108,27 +108,25 @@ sys.path.insert(0, os.path.abspath("_exts"))
 # WARNING: Do not modify the order unless you know what will happen!!!
 extensions = [
     "chinese_search",
-    "sphinx.ext.napoleon",
+    "myst_nb",
+    "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.extlinks",
-    "myst_nb",
-    "sphinx_togglebutton",
-    "sphinx_copybutton",
-    "sphinx.ext.autodoc",
-    "sphinx.ext.viewcode",
     "sphinx.ext.mathjax",
-    "sphinxcontrib.mermaid",
-    "sphinx.ext.graphviz",
-    "sphinxcontrib.plantuml",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
+    "sphinx_comments",
+    "sphinx_copybutton",
+    "sphinx_last_updated_by_git",
     "sphinx_panels",
     "sphinx_tabs.tabs",
-    "sphinxcontrib.bibtex",
-    "sphinx_comments",
-    "svg2png",
     "sphinx_thebe",
-    "sphinx_last_updated_by_git",
+    "sphinx_togglebutton",
+    "sphinxcontrib.bibtex",
+    "sphinxcontrib.mermaid",
+    "svg2png",
 ]
 
 
@@ -192,11 +190,6 @@ myst_enable_extensions = [
 panels_add_bootstrap_css = False
 
 nb_custom_formats = {".Rmd": ["jupytext.reads", {"fmt": "Rmd"}]}
-
-# Setting for PlantUML
-CURRENT_DIR = os.path.abspath(".")
-plantuml = f"java -jar {CURRENT_DIR}/_static/lib/plantuml.jar"
-plantuml_output_format = "svg"
 
 # Setting for sphinxcontrib.bibtex
 bibtex_bibfiles = ["references.bib"]

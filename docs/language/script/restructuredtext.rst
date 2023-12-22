@@ -465,7 +465,7 @@ reST 支持图像指令，用法如下：
     - 文档中若包含 ``gif`` 或 ``svg`` 格式的图片将无法通过 XLaTeX 编译。解决方法是图片后缀名使用通配符 ``*``\。
     - ``figure`` 和 ``image`` 的区别在于， ``figure`` 可以添加图片标题，而 ``image`` 不能。
     - 文档中所使用的图片统一放在 ``source/_static/images`` 目录内。
-    - 优先使用 ``svg`` 格式的矢量图或使用 :ref:`Graphviz <graphviz-ext>` 或 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
+    - 优先使用 ``svg`` 格式的矢量图或使用 :ref:`Mermaid <mermaid-ext>` 语法绘制示意图。
 
 视频（Videos）
 --------------
@@ -676,50 +676,6 @@ Sphinx 插件语法
 .. note::
 
     下面的语法通过 Sphinx Extensions 支持，同样可以用于 Python 文档字符串。
-
-PlantUML 语法支持
-~~~~~~~~~~~~~~~~~
-
-文件已通过 `sphinxcontrib-plantuml <https://github.com/sphinx-contrib/plantuml>`_
-插件支持 PlantUML 语法，语法规则参考 :ref:`plantuml`，样例如下：
-
-.. code-block::
-
-    .. uml::
-
-        Alice -> Bob: Hi!
-        Alice <- Bob: How are you?
-
-.. uml::
-
-    Alice -> Bob: Hi!
-    Alice <- Bob: How are you?
-
-.. tip:: 相同条件下，优先使用 PlantUML 或 GraphViz 绘制图片，因为 Mermaid 无法在 PDF 文件上渲染。
-
-.. _graphviz-ext:
-
-Graphviz 语法支持
-~~~~~~~~~~~~~~~~~
-
-文档已经通过 `sphinx.ext.graphviz
-<https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html>`_ 插件支持
-Graphviz 语法，语法规则参考 :ref:`graphviz`，样例如下：
-
-.. code-block::
-
-    .. graphviz::
-
-        digraph foo {
-            "bar" -> "baz";
-        }
-
-
-.. graphviz::
-
-    digraph foo {
-        "bar" -> "baz";
-    }
 
 .. _mermaid-ext:
 

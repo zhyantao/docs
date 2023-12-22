@@ -13,11 +13,9 @@ git clone https://github.com/<your_github_username>/notebook.git
 
 2、将 [源代码压缩包](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
 
-3、下载安装 [Graphviz](https://graphviz.org/) 并添加至系统环境变量。
+3、下载并安装 [GTK-for-Windows-Runtime-Environment](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer)。
 
-4、下载并安装 [GTK-for-Windows-Runtime-Environment](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer)。
-
-5、安装项目所需依赖，预览效果。
+4、安装项目所需依赖，预览效果。
 
 ```bash
 cd notebook
@@ -26,13 +24,13 @@ pip install -r requirements.txt
 make html
 ```
 
-6、提交 `notebook` 仓库的修改到 Github。
+5、提交 `notebook` 仓库的修改到 Github。
 
 ```bash
 git add . && git commit -m "v1.0.0" && git pull && git push
 ```
 
-7、登录 [Readthedocs](https://readthedocs.org/) 导入刚刚新建的 Github 项目 `notebook`，构建完成后方可阅读文档。
+6、登录 [Readthedocs](https://readthedocs.org/) 导入刚刚新建的 Github 项目 `notebook`，构建完成后方可阅读文档。
 
 ## 撰写文档
 

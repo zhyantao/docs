@@ -9,20 +9,8 @@
 
 这样，如果要添加一个新类来扩展程序，就不会影响到原来的代码。
 
-.. uml::
+.. image:: ../../_static/images/java-typeinfo.png
 
-    @startuml
-
-    class Shape
-    class Circle
-    class Square
-    class Triangle
-
-    Shape <|-- Circle
-    Shape <|-- Square
-    Shape <|-- Triangle
-
-    @enduml
 
 比如，当把元素放入数组 ``List<Shape>`` 中时，会丢失 ``Shape`` 类型信息，向上转型为 ``Object``。
 
@@ -387,15 +375,7 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
 
 代理可以帮你做一些事情，但是你又不知道是谁做的。
 
-.. uml::
-
-    @startuml
-    interface Interface
-    class RealObject
-    class SimpleProxy
-    Interface <|.. RealObject
-    Interface <|.. SimpleProxy
-    @enduml
+.. image:: ../../_static/images/java-proxy.png
 
 .. code-block:: java
 
@@ -451,13 +431,7 @@ Java 的 ``Class`` 类是反射机制的基础，通过 ``Class`` 类，我们�
 在动态代理上所做的所有调用都会被重定向到单一的调用处理器上。
 调用处理器的工作是揭示调用的类型并确定相应的对策。
 
-.. uml::
-
-    @startuml
-    interface InvocationHandler
-    class DynamicProxyHandler
-    InvocationHandler <|.. DynamicProxyHandler
-    @enduml
+.. image:: ../../_static/images/java-dynamic-proxy.png
 
 .. code-block:: java
 

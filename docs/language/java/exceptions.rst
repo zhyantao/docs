@@ -512,27 +512,7 @@ finally 用来做什么
 
 这个限制很有用，因为这意味着，当基类使用的代码应用到其派生类对象的时候，一样能工作，异常也不例外。
 
-.. uml::
-
-    @startuml
-    class Exception
-    class BaseballException
-    class Foul
-    class Strike
-    class StormException
-    class RainedOut
-    abstract Inning
-    interface Storm
-    class StormyInning
-    Inning <|-- StormyInning
-    Storm <|.. StormyInning
-    Exception <|-- BaseballException
-    Exception <|-- StormException
-    StormException <|-- RainedOut
-    BaseballException <|-- Foul
-    Foul <|-- PopFoul
-    BaseballException <|-- Strike
-    @enduml
+.. image:: ../../_static/images/java-exception.png
 
 .. code-block:: java
 

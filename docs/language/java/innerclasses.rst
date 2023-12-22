@@ -122,37 +122,7 @@
 
 举个例子来支持上面的表述：
 
-.. uml::
-
-    @startuml
-    Contents <|.. PContents
-    Destination <|.. PDestination
-    Parcel4 +-- PContents
-    Parcel4 +-- PDestination
-
-    class PDestination {
-        -String label
-        +readLabel()
-    }
-
-    class PContents {
-        -int i
-        +int value()
-    }
-
-    class Parcel4 {
-        +Destination destination
-        +Contents contents
-    }
-
-    interface Destination {
-        +String readLabel()
-    }
-
-    interface Contents {
-        +int Value()
-    }
-    @enduml
+.. image:: ../../_static/images/java-innerclasses.png
 
 .. code-block:: java
 
@@ -427,49 +397,11 @@
 ``increment()``，但是根据 Java 的语法规则可知，我们不能在同一个类中编写两个同名且同参的函数，\
 那么这个问题怎么解决呢？现在的答案是，只能通过内部类这种手段来实现。
 
-.. uml::
-
-    @startuml
-
-    MyIncrement <|-- Callee2
-    Incrementable <|.. Callee2
-
-    interface Incrementable {
-        +increment(): void
-    }
-    class MyIncrement {
-        +increment(): void
-    }
-    class Callee2 {
-        +increment(): void
-    }
-
-    @enduml
+.. image:: ../../_static/images/java-innerclasses2.png
 
 .. rubric:: 引入闭包，解决重名问题
 
-.. uml::
-
-    @startuml
-
-    MyIncrement <|-- Callee2
-    Callee2 +-- Closure
-    Incrementable <|.. Closure
-
-    interface Incrementable {
-        +increment(): void
-    }
-    class MyIncrement {
-        +increment(): void
-    }
-    class Callee2 {
-        +increment(): void
-    }
-    class Closure {
-        +increment(): void
-    }
-
-    @enduml
+.. image:: ../../_static/images/java-closure.png
 
 .. admonition:: Callbacks.java
     :class: dropdown

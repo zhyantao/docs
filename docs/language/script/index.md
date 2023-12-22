@@ -8,5 +8,24 @@
 :titlesonly:
 :glob:
 
-./*
+cmd.exe.md
+conda.rst
+gcc.md
+gdb.md
+git.rst
+kubectl.md
+latex.md
+linux.md
+makefile.md
+myst-nb.md
+patch.md
+perf.md
+PlantUML <https://plantuml.com/>
+regex.md
+repo.md
+restructuredtext.rst
+shell.md
+vim.md
+virtualenv.md
+yocto.md
 ```
