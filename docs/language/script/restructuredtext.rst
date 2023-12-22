@@ -7,10 +7,7 @@ reStructuredText
 
 .. note::
 
-    本文基于
-    `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_
-    ，供学习参考。
-    相比于使用 reST 语法，更推荐 :ref:`Markdown <target_header>`。
+    本文基于 `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_，供学习参考。相比于使用 reST 语法，更推荐 `Markdown <./myst-nb>`_。
 
 .. _indentation-rst:
 
