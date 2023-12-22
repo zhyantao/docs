@@ -18,7 +18,6 @@ build:
     pre_create_environment:
       - echo "Command run at 'pre_create_environment' step"
       - mkdir -p docs/_tmp
-      - apt-get install graphviz
     post_build:
       - echo "Command run at 'post_build' step"
       - echo `date`
