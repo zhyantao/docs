@@ -2,7 +2,7 @@
 
 在 Linux 中，一切皆文件。学会操作文件，对于学习 Linux 来讲，是一项必备技能。在操作系统的底层，对文件操作的 API 封装已经很好了，使用起来也比较方便，下面是三个文件操作的例子。
 
-第一个例子是使用 `open` 和 `write` 函数复制文件：
+## 例 1：open / write
 
 ```c
 #include <sys/types.h>
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-第二个例子是使用 `putc` 写文件，使用 `getc` 读文件：
+## 例 2：putc / getc
 
 ```c
 #include <stdio.h>
@@ -85,7 +85,7 @@ int main()
 }
 ```
 
-第三个例子相较于前两个更加高级，它使用 `mmap` 将文件内容映射到内存，实现了对内存操作即可修改文件内容的功能：
+## 例 3：mmap 共享内存
 
 ```c
 #include <sys/types.h>
@@ -150,6 +150,8 @@ int main(int argc, char *argv[])
 }
 ```
 
-## fstream 无法使用相对路径
+## Q & A
+
+**fstream 无法使用相对路径**
 
 尝试修改 Visual Stuido 中项目的 >> `属性` >> `调试` >> `工作目录`。
