@@ -98,6 +98,13 @@ make
 sudo make install
 ```
 
+如果使用 `apt` 命令安装了软件，卸载软件的方式如下：
+
+- 仅卸载应用程序：`sudo apt-get remove <packagename>`
+- 卸载应用程序及其依赖：`sudo apt-get -y autoremove <packagename>`
+- 删除用户数据：`sudo apt-get -y purge <packagename>`
+- 卸载应用程序及其依赖并删除用户数据：`sudo apt-get -y autoremove --purge <packagename>`
+
 ## npm 源
 
 `npm` 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。
