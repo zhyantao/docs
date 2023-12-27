@@ -15,7 +15,9 @@ Yocto 是**用于构建**针对嵌入式设备的**定制 Linux 发行版的**�
 
 ## BitBake 文件简介
 
-当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件。将源代码拷贝一份到 `tmp/work/` 目录下，然后执行 `do_compile` 和 `do_install` 函数。执行过程跟我们在 Shell 中直接执行命令无异，只不过 `bb` 文件使用了由 `source oe-init-build-env` 初始化的环境变量，可以进行交叉编译。其中 `do_compile` 可以省略 [^ref-cite-4]。
+当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件，`.bb` 文件包含了一系列的任务（Tasks）：configuring、compiling、packaging。
+
+Bitbake 的执行流程：首先将源代码拷贝一份到 `build/tmp/work/<archname>` 目录下，然后执行 `.bb` 文件中的 `do_compile` 和 `do_install` 函数。这两个函数体中包含了一些运行脚本，这跟我们在 Shell 中直接执行命令无异，只不过这些运行脚本使用了由 `source oe-init-build-env` 声明的环境变量，可以进行交叉编译 [^ref-cite-4]。
 
 `.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
 
@@ -54,6 +56,18 @@ SRC_URI = "              \
    file://run-script     \
    file://support-script \
    "
+
+# do_compile 的功能如下：
+#  1) 将当前目录设置为 build 目录
+#  2) 运行 oe_runmake 编译源代码
+#
+do_compile() {
+    #
+    # 默认运行 Makefile、makefile 或 GNUmakefile
+    # 若不存在上述文件，则什么都不做
+    #
+    make
+}
 
 # do_install 的功能如下：
 #  1) 确保映像中存在所需的目录；
@@ -112,7 +126,7 @@ do_install() {
 }
 ```
 
-注意：`.bb` 文件中好多全局变量都是在 `poky/meta/conf/bitbake.conf` 中声明的 [^ref-cite-2]，关于这些全局变量的解释可以参考 Variables Glossary [^ref-cite-3]，比如 `SRC_URI`。
+注意：`.bb` 文件中好多全局变量都是在 `poky/meta/conf/bitbake.conf` 中声明的 [^ref-cite-2]，关于这些全局变量的解释可以参考 Variables Glossary [^ref-cite-3]，比如 `SRC_URI`。重点理解 `BUILD_DIRECTORY` [^ref-cite-5]。
 
 ## BitBake 常用命令
 
@@ -134,3 +148,4 @@ do_install() {
 [^ref-cite-2]: [bitbake.conf « conf - bitbake - Bitbake Development tree (openembedded.org)](https://git.openembedded.org/bitbake/tree/conf/bitbake.conf)
 [^ref-cite-3]: [5 Variables Glossary — Bitbake dev documentation (yoctoproject.org)](https://docs.yoctoproject.org/bitbake/2.6/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI)
 [^ref-cite-4]: [6 Tasks — The Yocto Project ® 4.3.999 documentation](https://docs.yoctoproject.org/ref-manual/tasks.html#do-compile)
+[^ref-cite-5]: [2 Yocto Project Terms — The Yocto Project ® 4.3.999 documentation](https://docs.yoctoproject.org/ref-manual/terms.html#term-Build-Directory)
