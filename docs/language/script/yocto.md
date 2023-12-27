@@ -15,7 +15,7 @@ Yocto 是**用于构建**针对嵌入式设备的**定制 Linux 发行版的**�
 
 ## BitBake 文件简介
 
-当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件。
+当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件。将源代码拷贝一份到 `tmp/work/` 目录下，然后执行 `do_compile` 和 `do_install` 函数。执行过程跟我们在 Shell 中直接执行命令无异，只不过 `bb` 文件使用了由 `source oe-init-build-env` 初始化的环境变量，可以进行交叉编译。其中 `do_compile` 可以省略 [^ref-cite-4]。
 
 `.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
 
@@ -133,3 +133,4 @@ do_install() {
 [^ref-cite-1]: [Cookbook:Appliance:Startup Scripts - Yocto Project](https://wiki.yoctoproject.org/wiki/Cookbook:Appliance:Startup_Scripts)
 [^ref-cite-2]: [bitbake.conf « conf - bitbake - Bitbake Development tree (openembedded.org)](https://git.openembedded.org/bitbake/tree/conf/bitbake.conf)
 [^ref-cite-3]: [5 Variables Glossary — Bitbake dev documentation (yoctoproject.org)](https://docs.yoctoproject.org/bitbake/2.6/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI)
+[^ref-cite-4]: [6 Tasks — The Yocto Project ® 4.3.999 documentation](https://docs.yoctoproject.org/ref-manual/tasks.html#do-compile)
