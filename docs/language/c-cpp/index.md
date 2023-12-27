@@ -127,7 +127,7 @@ weak_ptr.md
 socket.md
 ```
 
-## Code Style
+## Google Code Style
 
 - 尽量不使用宏
 - 不使用异常
