@@ -135,7 +135,7 @@ do_install() {
 | `source oe-init-build-env`                                   | 将 `bitbake` 添加到环境变量中                 |
 | `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                   | 删除所有的构建                                |
 | `bitbake <recipe>`                                           | 单编一个模块                                  |
-| `bitbake -c clean <recipe> && bitbake -c cleansstate <recipe>` | 删除指定模块的构建                            |
+| `bitbake -c clean <recipe>`<br/>`bitbake -c cleansstate <recipe>` | 删除指定模块的构建                            |
 | `bitbake -e <recipe>`<code>&#124;</code>`grep ^S=`           | 定位源代码所在目录                            |
 | `bitbake -e <recipe>`<code>&#124;</code>`grep ^WORKDIR=`     | 定位 `${WORKDIR}`                              |
 | `bitbake-layers show-recipes "gdb*"`                         | 搜索 `<recipe>`                               |
@@ -145,16 +145,23 @@ do_install() {
 | `bitbake -f <recipe>`                                        | 强制构建                                      |
 | `bitbake -v <recipe>`                                        | 显示构建过程的细节                            |
 | `bitbake -DDD <recipe>`                                      | 显示构建过程的 Debug 信息                     |
-| `yocto-layer create <layer_name>`                            | 新建一个 `layer`                              |
-| `bitbake-layers add-layer /path/to/your_meta-layer`          | 新建一个自定义的 `layer`                      |
-| `bitbake-layers remove-layer /path/to/your_meta-layer`       | 删除自定义的 `layer`                          |
+| `yocto-layer create <layer_name>`                            | 新建一个 layer                              |
+| `bitbake-layers add-layer /path/to/your_meta-layer`          | 新建一个自定义的 layer                      |
+| `bitbake-layers remove-layer /path/to/your_meta-layer`       | 删除自定义的 layer                          |
 | `bitbake-layers show-recipes`                                | 列出所有的 `<recipe>`                         |
 | `bitbake-layers show-overlayed`                              | 列出所有冲突的 `<recipe>`                     |
-| `bitbake-layers show-appends`                                | 列出所有的 `bbappend` 文件                    |
-| `bitbake-layers flatten <output_dir>`                        | 将所有的 `bb` 文件抽离出来放到 `<output_dir>` |
-| `bitbake-layers show-cross-depends`                          | 列出所有 `layers` 的交叉依赖关系              |
-| `bitbake-layers layerindex-show-depends <layer_name>`        | 根据 OE index 列出指定 `layer` 的依赖         |
-| `bitbake-layers layerindex-fetch <layer name>`               | 使用 OE index 拉取和添加 `layer`              |
+| `bitbake-layers show-appends`                                | 列出所有的 `.bbappend` 文件                    |
+| `bitbake-layers flatten <output_dir>`                        | 将所有的 `.bb` 文件抽离出来放到 `<output_dir>` |
+| `bitbake-layers show-cross-depends`                          | 列出所有 layers 的交叉依赖关系              |
+| `bitbake-layers layerindex-show-depends <layer_name>`        | 根据 OE index 列出指定 layer 的依赖         |
+| `bitbake-layers layerindex-fetch <layer name>`               | 使用 OE index 拉取和添加 layer              |
+
+## BitBake 构建流程
+
+1. 解析 `build` 目录下的 `conf/bblayers.conf`
+2. 根据 `bblayers.conf` 依次解析每个 layer 中的 `layer.conf` 和 `bitbake.conf`
+3. 解决 layer 的依赖关系，生成 `cache` 文件夹
+4. 根据 `.bb` 文件执行任务（根据 `.bbappend` 文件执行补充任务）
 
 ## Q & A
 
