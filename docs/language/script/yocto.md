@@ -136,8 +136,8 @@ do_install() {
 | `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                   | 删除所有的构建                                |
 | `bitbake <recipe>`                                           | 单编一个模块                                  |
 | `bitbake -c clean <recipe>`<br/>`bitbake -c cleansstate <recipe>` | 删除指定模块的构建                            |
-| `bitbake -e <recipe>`<code>&#124;</code>`grep ^S=`           | 定位源代码所在目录                            |
-| `bitbake -e <recipe>`<code>&#124;</code>`grep ^WORKDIR=`     | 定位 `${WORKDIR}`                              |
+| `bitbake -e <recipe> \| grep ^S=`           | 定位源代码所在目录                            |
+| `bitbake -e <recipe> \| grep ^WORKDIR=`     | 定位 `${WORKDIR}`                              |
 | `bitbake-layers show-recipes "gdb*"`                         | 搜索 `<recipe>`                               |
 | `bitbake -c devshell <recipe>`                               | 进入命令行交互界面进行编译                    |
 | `bitbake -c devpyshell <recipe>`                             | 进入 Python 交互界面进行编译                  |
