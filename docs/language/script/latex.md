@@ -6,10 +6,10 @@
 
 学习使用 $\LaTeX$ 书写文档，应该做到如下两点：
 
-- 本文将对常用的 $\LaTeX$ 语法做简单介绍，之后就可以学习[别人精心制作的模板](https://cn.overleaf.com/latex/templates)了；
-- 本文不会记录常用的符号，反复多用几次就记住了，不常用的符号记不住[上网查一下](https://www.latexlive.com/help#d11)就行了。
+- 本文将对常用的 $\LaTeX$ 语法做简单介绍，之后学习 [别人制作的模板](https://cn.overleaf.com/latex/templates) 就会轻松很多；
+- 本文不会记录常用的符号，遇到时可以 [上网查一下](https://www.latexlive.com/help#d11)。
 
-如果已经熟练掌握基本语法，但是有些细节记不住，[查看小抄表](https://kdocs.cn/l/ceOwwHjUhGVQ)也许会有帮助。
+如果已经熟练掌握基本语法，但是有些细节记不住，[查看小抄表](https://kdocs.cn/l/ceOwwHjUhGVQ) 也许会有帮助。
 
 ## 环境配置
 
@@ -366,10 +366,7 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 
 当然，你也可以添加脚注 `\footnote{text}`
 
----
-
-````{admonition} 示例代码
-:class: dropdown
+## 一个例子
 
 ```{code-block} tex
 \documentclass[11pt, a4paper]{book}
@@ -541,9 +538,6 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
     \bibliography{sample.bib}
 \end{document}
 ```
-````
-
----
 
 [^cite_ref-1]: [一份（不太）简短的 LATEX 2ε 介绍](https://kdocs.cn/l/cvhLkILXI6Ti)
 [^cite_ref-2]: [LaTeX Cheat Sheet September 2020](https://kdocs.cn/l/ccMezohdXTt2)
