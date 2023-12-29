@@ -474,24 +474,20 @@ reST 支持图像指令，用法如下：
 
     .. raw:: html
 
-        <iframe
-            width="560" height="315"
-            src="https://www.youtube.com/embed/1eYqV_vGlJY"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
+        <iframe src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" 
+            scrolling="no"
+            border="0" frameborder="no" 
+            framespacing="0" 
+            allowfullscreen="true">
         </iframe>
 
 .. raw:: html
 
-    <iframe
-        width="560" height="315"
-        src="https://www.youtube.com/embed/1eYqV_vGlJY"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
+    <iframe src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" 
+        scrolling="no"
+        border="0" frameborder="no" 
+        framespacing="0" 
+        allowfullscreen="true">
     </iframe>
 
 .. _cross-reference-rst:
@@ -827,13 +823,13 @@ GitHub URL 缩写
 
 .. code-block::
 
-    - :src:`source/docs/`
-    - :docs:`source/conf.py`
+    - :src:`docs/`
+    - :docs:`docs/conf.py`
     - :issue:`1`
     - :pull:`21`
 
-- :src:`source/docs/`
-- :docs:`source/conf.py`
+- :src:`docs/`
+- :docs:`docs/conf.py`
 - :issue:`1`
 - :pull:`21`
 
