@@ -32,7 +32,7 @@ Import-Module posh-git
 #endregion
 ```
 
-## 安装 Oh My Posh
+## 安装 Oh My Posh（不建议安装）
 
 在 PowerShell 中使用 Oh My Posh，将会有一个更为美观的主题。
 
