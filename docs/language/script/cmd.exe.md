@@ -39,8 +39,8 @@ Import-Module posh-git
 1. 安装模块：`Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))` [^cite_ref-1]
 2. 激活模块：`(Get-Command oh-my-posh).Source`
 3. 新建或编辑配置文件：`notepad $PROFILE`，并添加一条命令：`oh-my-posh init pwsh | Invoke-Expression`
-4. 安装字体 [MesloLGM NF](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip)
-5. 修改 Windows Termial 的配置文件 `Settings.json`：
+4. 安装字体 [Meslo.zip](https://github.com/ryanoasis/nerd-fonts/releases/) [^cite-ref-2]
+5. 修改 Windows Termial 的配置文件 `Settings.json`（默认是 `CTRL + Shift + ,`）：
 
 ```json
 {
@@ -48,14 +48,17 @@ Import-Module posh-git
     {
         "defaults":
         {
-            "fontFace": "MesloLGM NF",
+            "font":
+            {
+                "face": "MesloLGM Nerd Font"
+            }
         }
     }
 }
 ```
 
 ```{note}
-如果你在 VS Code 中安装了 PowerShell 插件，那么上面的改动可能会让你的 PowerShell 终端出现乱码。解决方式是打开 VS Code 使用 `Ctrl + Shift + P` 搜索 `settings.json`，添加新下载的字体 `"terminal.integrated.fontFamily": "MesloLGM NF",`。
+如果你在 VS Code 中安装了 PowerShell 插件，那么上面的改动可能会让你的 PowerShell 终端出现乱码。解决方式是 `Ctrl + Shift + P` 搜索 `settings.json`，添加新下载的字体 `"terminal.integrated.fontFamily": "MesloLGM Nerd Font"`。
 ```
 
 ## 配置 PSReadLine
@@ -77,6 +80,5 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 经过一段时间的体验后，我把不希望使用的一些选项给关闭了，实在是影响我们键入命令。
 
----
-
 [^cite_ref-1]: <https://ohmyposh.dev/docs/installation/windows>
+[^cite-ref-2]: <https://ohmyposh.dev/docs/installation/fonts>
