@@ -17,6 +17,7 @@ kubectl.md
 latex.md
 linux.md
 makefile.md
+msys2.md
 myst-nb.md
 patch.md
 perf.md
