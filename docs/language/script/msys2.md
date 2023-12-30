@@ -35,3 +35,9 @@ pacman -S mingw-w64-i686-autotools
 ```bash
 pacman -S mingw-w64-x86_64-clang
 ```
+
+## 安装 GCC
+
+```bash
+pacman -S mingw-w64-x86_64-gcc
+```
