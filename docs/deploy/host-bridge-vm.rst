@@ -47,79 +47,97 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
 
 然后说完了设置的值是什么，那么从哪里找到这些配置文件呢？
 
-1）Windows（基本都是鼠标操作）：
+1）Windows：
 
 ``控制面板`` > ``网络和 Internet`` > ``网络和共享中心`` > ``更改适配器设置`` > ``VMnet8 属性``
 > ``IPv4 属性``。
 
-2）虚拟机需要修改两个位置，一个是 VMare，另一个就是 Linux 操作系统：
+2）虚拟机需要修改两个位置，一个是 VMware，另一个就是 Linux 操作系统：
 
-（a）VMware（基本都是鼠标操作）：
+（a）VMware：
 
 ``Edit`` > ``Virtual Network Editor`` > ``选中 VMnet8`` > ``Change Settings``
 > ``Subnet IP: 192.168.?.0`` > ``NAT Settings`` > ``GATEWAY IP: 192.168.?.1``
 > ``Apply`` > ``OK``。
 
-（b）Linux（修改完成后重启虚拟机）：
+（b）Linux：
 
-.. code-block:: bash
+.. tabs::
 
-    # 针对 Ubuntu 20.04，参考 https://ubuntu.com/server/docs/network-configuration
-    # 若 netplan 文件夹下没有 .yaml 文件，则新建文件
-    # 经测试，netplan 文件夹下 .yaml 文件的数量等于这台主机拥有的 IP 地址的数量
-    touch /etc/netplan/99_config.yaml
-    # 编辑配置
-    network:
-      version: 2
-      renderer: networkd
-      ethernets:
-        ens33:
-          addresses:
-            - 192.168.?.xxx/24
-          gateway4: 192.168.?.1
-          nameservers:
-            search: [localdomain, localhost]
-            addresses: [114.114.114.114, 8.8.8.8]
-    # 刷新网络
-    sudo netplan apply
+    .. tab:: Ubuntu 16.04
 
-    # 针对 Ubuntu 18.04
-    vim /etc/sysconfig/network-scripts/ifcfg-*
-    # 在文件中修改如下内容
-    BOOTPROTO=static
-    ONBOOT=yes
-    IPADDR=192.168.?.xxx
-    GATEWAY=192.168.?.1
-    # 重启系统
-    sudo reboot
+            sudo vim /etc/network/interfaces
+            
+            # 在文件中添加如下内容
+            auto ens33              # ens33 这个名字用 ifconfig 或 ip addr 查看
+            iface ens33 inet static
+            address 192.168.?.xxx   # 注意替换这里的 ? 和 xxx
+            netmask 255.255.255.0
+            gateway 192.168.?.1     # 注意替换这里的 ?
+            
+            # 编辑 resolv.conf
+            sudo vim /etc/resolvconf/resolv.conf.d/base
+            # 修改 DNS 服务器
+            search localdomain
+            nameserver 114.114.114.114
+            nameserver 8.8.8.8
+            
+            # 编辑 NetworkManager.conf
+            sudo vim /etc/NetworkManager/NetworkManager.conf
+            # 在文件中修改如下内容
+            managed=true
+            
+            # 重启系统
+            sudo reboot
 
-    # 针对 Ubuntu 16.04 要麻烦一些
-    sudo vim /etc/network/interfaces
-    # 在文件中添加如下内容
-    auto ens33              # ens33 这个名字用 ifconfig 或 ip addr 查看
-    iface ens33 inet static
-    address 192.168.?.xxx   # 注意替换这里的 ? 和 xxx
-    netmask 255.255.255.0
-    gateway 192.168.?.1     # 注意替换这里的 ?
-    # 编辑 resolv.conf
-    sudo vim /etc/resolvconf/resolv.conf.d/base
-    # 修改 DNS 服务器
-    search localdomain
-    nameserver 114.114.114.114
-    nameserver 8.8.8.8
-    # 编辑 NetworkManager.conf
-    sudo vim /etc/NetworkManager/NetworkManager.conf
-    # 在文件中修改如下内容
-    managed=true
-    # 重启系统
-    sudo reboot
+    .. tab:: Ubuntu 18.04
+
+        .. code-block:: bash
+        
+            # 参考 https://ubuntu.com/server/docs/network-configuration
+            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
+            network:
+              version: 2
+              renderer: networkd
+              ethernets:
+                ens33:
+                  dhcp4: no
+                  addresses:
+                    - 192.168.?.xxx/24
+                  gateway4: 192.168.?.1
+                  nameservers:
+                    addresses: [114.114.114.114, 8.8.8.8]
+            EOF
+            # 刷新网络
+            sudo netplan apply
+
+    .. tab:: Ubuntu 22.04
+
+        .. code-block:: bash
+        
+            # 参考 https://ubuntu.com/server/docs/network-configuration
+            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
+            network:
+              version: 2
+              renderer: networkd
+              ethernets:
+                ens33:
+                  addresses:
+                    - 192.168.?.xxx/24
+                  routes:
+                    - to: default
+                      via: 192.168.?.1
+                  nameservers:
+                    addresses: [114.114.114.114, 8.8.8.8]
+            EOF
+            # 刷新网络
+            sudo netplan apply
 
 注意，在 Windows 中双击 VMnet8 查看状态，显示 "无网络访问权限"，但是虚拟机能正常上网，不知道为什么。
 
 最后测试，宿主机和虚拟机互相 ``ping`` 一下，如果 ``ping`` 不通，检查一下防火墙。
 
 .. admonition:: 防火墙设置
-    :class: dropdown
 
     Windows
 
@@ -167,13 +185,10 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
 - （必须）参考 :ref:`config-network-firewall` 修改 IP 地址。
 - （必须）删除 ``/etc/sysconfig/network-scripts/ifcfg-*`` 的 MAC 地址，然后重启自动生成。
 - （必须）删除 ``/etc/sysconfig/network-scripts/ifcfg-*`` 的 UUID，重启后也会自动生成。
-- （非必须）在 ``/etc/hostname`` 中修改 ``hostname``。
-- （非必须）在 ``/etc/hosts`` 中添加地址映射 ``<ip-address> hostname``。
+- （可选）在 ``/etc/hostname`` 中修改 ``hostname``。
+- （可选）在 ``/etc/hosts`` 中添加地址映射 ``<ip-address> hostname``。
 
-注：Ubuntu 16.04 的配置文件 ``/etc/network/interfaces``
-没有指定 UUID 和 MAC 地址，故现在不知道怎么修改，等后面出现问题，再找解决方案吧。
-并且，早期版本很容易出现问题，而又停止维护，故现在不推荐使用 16.04
-了，有可能的话还是用更高版本的吧，不然你会浪费更多时间再配置环境上。
+注：Ubuntu 16.04 的配置文件 ``/etc/network/interfaces`` 没有指定 UUID 和 MAC 地址，故现在不知道怎么修改，等后面出现问题，再找解决方案吧。并且，早期版本很容易出现问题，而又停止维护，故现在不推荐使用 16.04 了，有可能的话还是用更高版本的吧，不然你会浪费更多时间再配置环境上。
 
 Windows 网络
 -------------
@@ -182,28 +197,13 @@ Windows 网络
 
 - **Realtek PCIe GbE Family Controller**\ ：网线/有线入网使用的协议 [1]_。
 - **Hyper-V**\ ：微软原生的虚拟机管理程序，它允许你在一台物理机上创建多个虚拟机，多个虚拟机之间相互独立，但是资源共享。
-- **Hyper-V Virtual Ethernet Adapter（Default Switch）**\ ：虚拟网络适配器（Virtual NIC）或称虚拟网卡。
-  它通过 LAN 连接一个物理服务器和多个 VM 或其他网络设备。它管理着所有的网络通信，每个 VM 都有一个或多个
-  vNIC，你可以通过给 NIC 分配 IP 地址，让更多子网中的机器可以相互通信 [2]_。
-- **Intel(R) Wi-Fi 6 AX200 160MHz**：\ WLAN/无线入网使用的协议
-- **Microsoft Wi-Fi Direct Virtual Adapter**：主要用于创建无线热点。
-  这项虚拟化技术把一个物理无线适配器转换为两个虚拟无线适配器。
-  然后，你通过连接一个虚拟无线适配器到常规无线网络，并使用另一个虚拟适配器连接到另一个网络（例如 WiFi
-  热点），并让其他人像连接到普通 AP 一样无线连接到你的 Windows 机器 [3]_。
+- **Hyper-V Virtual Ethernet Adapter（Default Switch）**\ ：虚拟网络适配器（Virtual NIC）或称虚拟网卡。它通过 LAN 连接一个物理服务器和多个 VM 或其他网络设备。它管理着所有的网络通信，每个 VM 都有一个或多个 vNIC，你可以通过给 NIC 分配 IP 地址，让更多子网中的机器可以相互通信 [2]_。
+- **Intel(R) Wi-Fi 6 AX200 160MHz**：\ WLAN/无线入网使用的协议。
+- **Microsoft Wi-Fi Direct Virtual Adapter**：无线热点。这项虚拟化技术把一个物理无线适配器转换为两个虚拟无线适配器。然后，你通过连接一个虚拟无线适配器到常规无线网络，并使用另一个虚拟适配器连接到另一个网络（例如 WiFi 热点），并让其他人像连接到普通 AP 一样无线连接到你的 Windows 机器 [3]_。
 - **VMware Virtual Ethernet Adapter for VMnet0**\ ：桥接模式。虚拟机和宿主机通过网桥建立通信 [4]_。
-- **VMware Virtual Ethernet Adapter for VMnet1**\ ：Host-Only 模式。
-  其中 VMnet1 是一个虚拟的交换机，交换机的一个端口连接到你的 Host 上，另外一个端口连接到虚拟的 DHCP
-  服务器上（实际上是 VMware 的一个组件），剩下的端口连到虚拟机上。
-  虚拟网卡 VMnet1 作为虚拟机的网关接口，为虚拟机提供服务。
-  在虚拟机启动之后，如果你用 ipconfig 命令，你会看到默认网关指向了 VMnet1 网卡的地址。
-  （实际上它并不能提供路由，这是 VMware 设计使然，它是干除了提供路由之外的一些事情——实际上是我也不知道它干了什么事情），
-  这里没有提供路由主要表现在没有提供 NAT 服务，使得虚拟机不可以访问 Host-Only 模式所指定的网段之外的地址 [5]_。
-- **VMware Virtual Ethernet Adapter for VMnet8**\ ：NAT 模式，是最简单的组网方式。VMnet8
-  是一张虚拟网卡。物理机使用 VMnet8 和虚拟机通信时，网卡和虚拟机的网关需要保持一致。
-  虚拟网卡一个接口连接到虚拟的 NAT 服务器上（这也是一个VMware组件），一个接口连接到虚拟 DHCP
-  服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务 [6]_。
-- **Bluetooth Device (Personal Area Network)**\ ：蓝牙网络连接
-
+- **VMware Virtual Ethernet Adapter for VMnet1**\ ：Host-Only 模式。其中 VMnet1 是一个虚拟交换机，交换机的一个端口连接到你的 Host 上，另外一个端口连接到虚拟的 DHCP 服务器上（实际上是 VMware 的一个组件），剩下的端口连到虚拟机上。虚拟网卡 VMnet1 作为虚拟机的网关接口，为虚拟机提供服务。在虚拟机启动之后，如果你用 ``ipconfig`` 命令，你会看到默认网关指向了 VMnet1 网卡的地址 [5]_。
+- **VMware Virtual Ethernet Adapter for VMnet8**\ ：NAT 模式。这是最简单的组网方式，VMnet8 是一张虚拟网卡。物理机使用 VMnet8 和虚拟机通信时，网卡和虚拟机的网关需要保持一致。虚拟网卡一个接口连接到虚拟的 NAT 服务器上（这也是一个VMware组件），一个接口连接到虚拟 DHCP 服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务 [6]_。
+- **Bluetooth Device (Personal Area Network)**\ ：蓝牙网络连接。
 
 Q & A
 ------
