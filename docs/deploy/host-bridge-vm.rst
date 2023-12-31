@@ -71,11 +71,11 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
             sudo vim /etc/network/interfaces
             
             # 在文件中添加如下内容
-            auto ens33              # ens33 这个名字用 ifconfig 或 ip addr 查看
+            auto ens33  # 通过 ip addr 查询网络名称
             iface ens33 inet static
-            address 192.168.?.xxx   # 注意替换这里的 ? 和 xxx
+            address 192.168.?.xxx
             netmask 255.255.255.0
-            gateway 192.168.?.1     # 注意替换这里的 ?
+            gateway 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
             
             # 编辑 resolv.conf
             sudo vim /etc/resolvconf/resolv.conf.d/base
@@ -102,11 +102,11 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
               version: 2
               renderer: networkd
               ethernets:
-                ens33:
+                ens33:  # 通过 ip addr 查询网络名称
                   dhcp4: no
                   addresses:
                     - 192.168.?.xxx/24
-                  gateway4: 192.168.?.1
+                  gateway4: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
                   nameservers:
                     addresses: [114.114.114.114, 8.8.8.8]
             EOF
@@ -123,13 +123,14 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
               version: 2
               renderer: networkd
               ethernets:
-                ens33:
+                ens33:  # 通过 ip addr 查询网络名称
                   addresses:
                     - 192.168.?.xxx/24
                   routes:
                     - to: default
-                      via: 192.168.?.1
+                      via: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
                   nameservers:
+                    search: [localdomain, localhost]
                     addresses: [114.114.114.114, 8.8.8.8]
             EOF
             # 刷新网络
