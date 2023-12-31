@@ -37,32 +37,53 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
 配置网关和防火墙
 ----------------
 
-在 Windows 上我们可以检查虚拟网卡的信息，默认应该是动态分配的。
-但是大多时候，我们不希望我们的虚拟机 IP 地址经常改动，为了相互匹配，所以对宿主机一般也是静态分配。
-
-确保宿主机和虚拟机的 **网关（GATEWAY）地址保持一致**，随便给宿主机和虚拟机分配一个
-**不重复的 IP 地址** 就可以了。网关地址一般都是 ``192.168.?.1`` 这里的 ``?``
-可以随便取一个 0 到 255 的数字，子网掩码都设置为 ``255.255.255.0``。
-
-
-然后说完了设置的值是什么，那么从哪里找到这些配置文件呢？
-
-1）Windows：
-
-``控制面板`` > ``网络和 Internet`` > ``网络和共享中心`` > ``更改适配器设置`` > ``VMnet8 属性``
-> ``IPv4 属性``。
-
-2）虚拟机需要修改两个位置，一个是 VMware，另一个就是 Linux 操作系统：
-
-（a）VMware：
-
-``Edit`` > ``Virtual Network Editor`` > ``选中 VMnet8`` > ``Change Settings``
-> ``Subnet IP: 192.168.?.0`` > ``NAT Settings`` > ``GATEWAY IP: 192.168.?.1``
-> ``Apply`` > ``OK``。
-
-（b）Linux：
+在 Windows 上我们可以检查虚拟网卡的信息，默认应该是动态分配的。但是大多时候，我们不希望我们的虚拟机 IP 地址经常改动，为了相互匹配，所以对宿主机一般也是静态分配。
 
 .. tabs::
+
+    .. tab:: Ubuntu 22.04
+
+        .. code-block:: bash
+        
+            # 参考 https://ubuntu.com/server/docs/network-configuration
+            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
+            network:
+              version: 2
+              renderer: networkd
+              ethernets:
+                ens33:  # 通过 ip addr 查询网络名称
+                  addresses:
+                    - 192.168.?.xxx/24
+                  routes:
+                    - to: default
+                      via: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
+                  nameservers:
+                    search: [localdomain, localhost]
+                    addresses: [114.114.114.114, 8.8.8.8]
+            EOF
+            # 刷新网络
+            sudo netplan apply
+
+    .. tab:: Ubuntu 18.04
+
+        .. code-block:: bash
+        
+            # 参考 https://ubuntu.com/server/docs/network-configuration
+            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
+            network:
+              version: 2
+              renderer: networkd
+              ethernets:
+                ens33:  # 通过 ip addr 查询网络名称
+                  dhcp4: no
+                  addresses:
+                    - 192.168.?.xxx/24
+                  gateway4: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
+                  nameservers:
+                    addresses: [114.114.114.114, 8.8.8.8]
+            EOF
+            # 刷新网络
+            sudo netplan apply
 
     .. tab:: Ubuntu 16.04
 
@@ -92,92 +113,51 @@ VMware 这个软件本身充当了虚拟交换机的角色，它可以帮我们�
             # 重启系统
             sudo reboot
 
-    .. tab:: Ubuntu 18.04
+检查虚拟机是否可正常入网 ``ping www.baidu.com``，如果不能上网，按下面的步骤排查：
+
+- 检查网关：``编辑`` > ``虚拟机网络设置`` > 选中 ``VMnet8`` > ``NAT 设置`` > ``网关``
+- 检查 DNS：中国电信 ``114.114.114.114``、谷歌 ``8.8.8.8``
+
+注意：VMware 的网关应该和虚拟机的网关保持一致。
+
+然后，宿主机和虚拟机互相 ``ping`` 一下，如果 ``ping`` 不通，按下面的步骤排查：
+
+.. tabs::
+
+    .. tab:: Windows 关闭防火墙
+
+        ``控制面板`` > ``系统和安全`` > ``检查防火墙状态`` > ``启用或关闭 Windows Defender 防火墙`` > ``公用网络设置`` > ``关闭``
+
+    .. tab:: Windows 重启 VMnet8
+
+        ``控制面板`` > ``查看网络状态和任务`` > ``更改适配器设置`` > 禁用 ``VMnet8`` > 启用 ``VMnet8``
+
+.. tabs::
+
+    .. tab:: Ubuntu
 
         .. code-block:: bash
-        
-            # 参考 https://ubuntu.com/server/docs/network-configuration
-            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
-            network:
-              version: 2
-              renderer: networkd
-              ethernets:
-                ens33:  # 通过 ip addr 查询网络名称
-                  dhcp4: no
-                  addresses:
-                    - 192.168.?.xxx/24
-                  gateway4: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
-                  nameservers:
-                    addresses: [114.114.114.114, 8.8.8.8]
-            EOF
-            # 刷新网络
-            sudo netplan apply
 
-    .. tab:: Ubuntu 22.04
+            sudo apt install openssh-server
+            service sshd start
+            service ufw stop
+            sudo ufw disable
+
+    .. tab:: CentOS or Fedora
 
         .. code-block:: bash
-        
-            # 参考 https://ubuntu.com/server/docs/network-configuration
-            cat <<EOF | sudo tee /etc/netplan/99_config.yaml
-            network:
-              version: 2
-              renderer: networkd
-              ethernets:
-                ens33:  # 通过 ip addr 查询网络名称
-                  addresses:
-                    - 192.168.?.xxx/24
-                  routes:
-                    - to: default
-                      via: 192.168.?.2  # 通过 VMware 虚拟网络编辑器查询网关
-                  nameservers:
-                    search: [localdomain, localhost]
-                    addresses: [114.114.114.114, 8.8.8.8]
-            EOF
-            # 刷新网络
-            sudo netplan apply
 
-注意，在 Windows 中双击 VMnet8 查看状态，显示 "无网络访问权限"，但是虚拟机能正常上网，不知道为什么。
+            systemctl stop firewalld.service
+            yum install openssh-server
+            service sshd start
 
-最后测试，宿主机和虚拟机互相 ``ping`` 一下，如果 ``ping`` 不通，检查一下防火墙。
+    .. tab:: Debian
 
-.. admonition:: 防火墙设置
+        .. code-block:: bash
 
-    Windows
-
-    .. code-block:: bash
-
-        1. 控制面板
-        2. 系统和安全
-        3. Windows Defender 防火墙
-        4. 允许应用或功能通过 Windows Defender 防火墙
-        5. 文件和打印机共享（专用打上对勾）
-
-    CentOS、Fedora
-
-    .. code-block:: bash
-
-        systemctl stop firewalld.service
-        yum install openssh-server
-        service sshd start
-
-    Debian
-
-    .. code-block:: bash
-
-        iptables -F
-        apt install openssh-server
-        service sshd start
-
-    Ubuntu
-
-    .. code-block:: bash
-
-        ufw disable
-        apt install openssh-server
-        service sshd start
-
-最后 ``ping www.baidu.com``，检查是否可正常接入网络。
-如果不能上网，检查一下 DNS，常用的 DNS 服务器有中国电信 ``114.114.114.114`` 和谷歌 ``8.8.8.8``。
+            iptables -F
+            apt install openssh-server
+            service sshd start
 
 虚拟机克隆
 ----------
@@ -207,17 +187,6 @@ Windows 网络
 - **VMware Virtual Ethernet Adapter for VMnet1**\ ：Host-Only 模式。其中 VMnet1 是一个虚拟交换机，交换机的一个端口连接到你的 Host 上，另外一个端口连接到虚拟的 DHCP 服务器上（实际上是 VMware 的一个组件），剩下的端口连到虚拟机上。虚拟网卡 VMnet1 作为虚拟机的网关接口，为虚拟机提供服务。在虚拟机启动之后，如果你用 ``ipconfig`` 命令，你会看到默认网关指向了 VMnet1 网卡的地址 [5]_。
 - **VMware Virtual Ethernet Adapter for VMnet8**\ ：NAT 模式。这是最简单的组网方式，VMnet8 是一张虚拟网卡。物理机使用 VMnet8 和虚拟机通信时，网卡和虚拟机的网关需要保持一致。虚拟网卡一个接口连接到虚拟的 NAT 服务器上（这也是一个VMware组件），一个接口连接到虚拟 DHCP 服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务 [6]_。
 - **Bluetooth Device (Personal Area Network)**\ ：蓝牙网络连接。
-
-Q & A
-------
-
-**Ubuntu 宿主机 ping 不同 VMware**
-
-可以试试下面几种方法：
-
-- Windows 网络连接，重启 VMNet8
-- ``sudo systemctl disable ufw.service``
-- ``sudo apt install openssh-server``
 
 
 .. [1] https://answers.microsoft.com/en-us/windows/forum/windows_7-networking/what-is-realtek-pcie-gbe-family-controller-why-it/5a6cdd17-155b-e011-8dfc-68b599b31bf5
