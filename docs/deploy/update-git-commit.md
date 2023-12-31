@@ -50,6 +50,10 @@ EOF
 
 ```bash
 zhyantao <zh6tao@gmail.com>
+<zh6tao@gmail.com> <zhyantao@126.com>
+<zh6tao@gmail.com> <yanntao@yeah.net>
+<zh6tao@gmail.com> <yann.tao@qq.com>
+<zh6tao@gmail.com> <yantao.z@qq.com>
 zhyantao <zh6tao@gmail.com> toooney <toooney@126.com>
 zhyantao <zh6tao@gmail.com> Zh YT <zhyantao@126.com>
 ```
