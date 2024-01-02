@@ -604,37 +604,16 @@ find /var/log -name '*.log' -mtime +30 -exec rm -f {} \;
 find /etc/apache -name '*.conf' -exec cp {} /home/user1/backup \;
 ```
 
-### 8.2. echo 命令
+### 8.2. netstat 命令
 
-用于字符串的输出，基本格式 `echo string`。
-
-使用示例：
+主要用于查看和网络相关的信息。
 
 ```bash
-# 显示普通字符
-echo "It is a test" # 输出 It is a test
+# 查看端口被哪个进程占用
+netstat -tulpn | grep :<port_number>
 
-# 显示转义字符
-echo "\"It is a test\"" # 输出 "It is a test"
-
-# 显示变量
-#!/bin/sh
-NAME="xiaoming"
-echo "$NAME It is a test" # 输出 xiaoming is a test
-
-# 显示换行
-echo -e "OK! \n" # -e 开启转义
-echo "It is a test"
-
-# 显示不换行
-echo -e "OK! \c" # -e 开启转义 \c 不换行
-echo "It is a test"
-
-# 显示结果定向至文件
-echo "It is a test" > myfile
-
-# 显示命令执行结果
-echo `date`
+# 查看进程正在使用哪个端口
+netstat -tulpn | grep <process_name>
 ```
 
 ### 8.3. printf 命令
