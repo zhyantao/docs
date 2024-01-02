@@ -125,6 +125,7 @@ condition_variable.md
 future.md
 weak_ptr.md
 socket.md
+callback.md
 ```
 
 ## Google Code Style
