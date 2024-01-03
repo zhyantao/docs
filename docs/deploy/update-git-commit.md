@@ -71,7 +71,7 @@ git filter-repo --mailmap ../mailmap.txt
 `git filter-repo` 工具将自动删除你配置的远程库。使用 `git remote set-url` 命令还原远程库：
 
 ```bash
-git remote add origin git@github.com:username/repo.git
+git remote add origin git@github.com:username/repository.git
 ```
 
 需要强制推送才能将修改提交到远程仓库：
