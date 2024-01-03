@@ -18,13 +18,19 @@ Git
 在 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`__ 上，可以更轻松直观地体验 Git 完整流程。
 
 
-常用命令
+快速上手
 ~~~~~~~~
 
-快速上手
----------
-
 .. code-block:: bash
+
+    # 本地创建空仓库
+    mkdir repository
+    cd repository
+    git init
+
+    # 配置用户名和邮箱
+    git config --global user.name "zhyantao"
+    git config --global user.email "zh6tao@gmail.com"
 
     # 只关注文件内容变更，忽略文件模式变化
     git config --global core.filemode false
@@ -41,53 +47,28 @@ Git
     # 将代码添加到本地仓库
     git commit -m "commit message"
 
+    # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
+    git remote add origin git@gitee.com:username/repository.git
+
     # 查看 <remote>
     git remote -v
 
     # 查看 <branch>
     git branch -r
 
-    # 将代码添加到远程仓库（HEAD 表示本地分支，refs/for 表示提交后的代码需要 Code Review）
-    git push <remote> HEAD:refs/for/<branch>
+    # 将代码添加到远程仓库
+    # -u (set upstream) 表示设置本地仓库与远程仓库的关联关系
+    # HEAD 表示本地分支，refs/for 表示提交后的代码需要 Code Review
+    git push [-u] <remote> HEAD:refs/for/<branch>
 
     # 查看 <commit>
     git log --graph
-
-Git 全局设置
--------------
-
-.. code-block:: bash
-
-    git config --global user.name "zhyantao"
-    git config --global user.email "zh6tao@gmail.com"
 
 .. admonition:: GitHub 不显示头像
 
     如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。
     因此，本地的提交邮箱应当与远程仓库保持一致。
     通过 **再次运行** 上面的命令可以更新本地提交邮箱，也可以修改 ``~/.gitconfig`` 文件。
-
-创建 git 仓库
---------------
-
-.. code-block:: bash
-
-    mkdir repository
-    cd repository
-    git init
-    git add .
-    git commit -m "Initial commit"
-    git remote add origin git@gitee.com:username/repository.git
-    git push -u origin "master"
-
-已有仓库
---------
-
-.. code-block:: bash
-
-    cd existing_git_repo
-    git remote add origin git@gitee.com:username/repository.git
-    git push -u origin "master"
 
 
 仓库
