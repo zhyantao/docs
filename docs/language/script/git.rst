@@ -94,6 +94,9 @@ Git 全局设置
     $ git config [--global] user.name "<name>"
     $ git config [--global] user.email "<email address>"
 
+    # 只关注文件内容变更，忽略文件权限变化
+    $ git config --global core.filemode false
+
 
 增加/删除文件
 ~~~~~~~~~~~~~
