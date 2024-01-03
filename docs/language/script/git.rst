@@ -8,24 +8,50 @@ Git
 
 .. figure:: ../../_static/images/bg2015120901.png
 
-    图源阮一峰的博客 [1]_
+    图源 `阮一峰的博客 <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__
 
 - Workspace：工作区
 - Index / Stage：暂存区
 - Repository：仓库区（或本地仓库）
 - Remote：远程仓库
 
-在 Learn Git Branching 上，可以更轻松直观地体验 Git 完整流程 [2]_。
+在 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`__ 上，可以更轻松直观地体验 Git 完整流程。
 
 
 常用命令
 ~~~~~~~~
 
-.. admonition:: 解释本文中出现的名词
+快速上手
+---------
 
-    - ``<commit>`` 表示历史提交记录，可通过 ``git log`` 查询，推荐使用相对引用 ``HEAD`` 查询；
-    - ``<remote>`` 表示指向远程仓库的指针，可通过 ``git remote`` 查询，一般是 ``origin``；
-    - ``<branch>`` 表示分支名称，可通过 ``git branch`` 查询。
+.. code-block:: bash
+
+    # 只关注文件内容变更，忽略文件模式变化
+    git config --global core.filemode false
+
+    # 查看文件变更
+    git status
+
+    # 查看文件内容变更
+    git diff path/to/file
+
+    # 将代码添加到暂存区
+    git add .
+
+    # 将代码添加到本地仓库
+    git commit -m "commit message"
+
+    # 查看 <remote>
+    git remote -v
+
+    # 查看 <branch>
+    git branch -r
+
+    # 将代码添加到远程仓库（HEAD 表示本地分支，refs/for 表示提交后的代码需要 Code Review）
+    git push <remote> HEAD:refs/for/<branch>
+
+    # 查看 <commit>
+    git log --graph
 
 Git 全局设置
 -------------
@@ -536,7 +562,3 @@ gitignore 匹配规则
 
     # 使 /etc/profile 生效
     source /etc/profile
-
-
-.. [1] 阮一峰的网络日志 - 常用 Git 命令清单 [`webpage <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__]
-.. [2] Learn Git Branching [`webpage <https://oschina.gitee.io/learn-git-branching/>`__]
