@@ -50,7 +50,7 @@ $(TARGET): $(OBJ)
     $(CXX) -o $@ $^
 
 %.o: %.cpp
-    $(CXX) $(CXXFLAGS) $< -o $@
+    $(CXX) -o $@ -c $< $(CXXFLAGS)
 
 .PHONY: clean
 clean:
@@ -65,15 +65,15 @@ clean:
 # := 表示临时赋值
 CXX := g++
 TARGET := hello
-SRC := $(wildcard *.cpp)
-OBJ := $(patsubst %.cpp, %.o, $(SRC))
+SRCS := $(wildcard *.cpp)
+OBJS := $(patsubst %.cpp, %.o, $(SRC))
 
 CXXFLAGS := -c -Wall
 
 # 基本格式：目标文件:依赖文件
 # $@ 代表目标文件，匹配目标二进制文件 hello
 # $^ 代表依赖文件，匹配目标二进制文件 hello 依赖的所有 .o 文件，即 $(OBJ)
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJS)
     $(CXX) -o $@ $^
 
 # 这句话用来将所有的 .cpp 文件编译成对应的 .o 文件（文件名不变，扩展名改变）
@@ -81,7 +81,7 @@ $(TARGET): $(OBJ)
 # $< 代表依赖文件，匹配目标 .o 文件依赖的第一个 .c 文件，即与 .o 文件文件名相同的 .cpp 文件
 # % 是通配符，它和字符串中任意个数的字符相匹配
 %.o: %.cpp
-    $(CXX) $(CXXFLAGS) $< -o $@
+    $(CXX) -o $@ -c $< $(CXXFLAGS)
 
 # .PHONY 作用在于防止 clean 这个命令和系统中可能存在的 clean 命令冲突
 .PHONY: clean
