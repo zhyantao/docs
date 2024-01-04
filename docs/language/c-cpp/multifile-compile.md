@@ -107,7 +107,6 @@ extern "C"
 **5、real-ld: cannot find crti.o: No such file or directory**
 
 在编译时，明明使用 `-L` 指定了 `crti.o` 所在的路径，为什么还是会提示找不到这个文件呢？这种情况下，应该是忘记了在链接时指定 `--sysroot`。
-参考 <https://blog.csdn.net/u011192270/article/details/106176333>。
 
 **6、undefined reference to `rpl_malloc'**
 
