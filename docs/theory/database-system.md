@@ -476,9 +476,7 @@ $F$ 等价于 $\Pi_{R1}(F) \cup \Pi_{R2}(F) \cup \dots \cup \Pi_{Rk}(F)$，则�
 
 当然，无损连接和保持依赖这两个概念理解起来还是比较抽象，做个习题，会更好理解一些 [^cite_ref-7]。
 
-````{panels}
-:column: col-lg-12 p-2
-
+:::{card}
 例 1：设有关系模式 $R<U, F>$，其中：
 
 $$
@@ -510,9 +508,9 @@ $\rho$ 的无损连接性判断结果如下表所示，由此判断它具有无�
 ```
 
 如果你不能理解上表，应该阅读本文末尾的参考文献 [^cite_ref-7]。
+:::
 
----
-
+:::{card}
 例 2：设有关系模式 $R(ABCD)$，$R$ 上的 FD 集为 [^cite_ref-10]：
 
 $$
@@ -529,7 +527,7 @@ $\Pi_{BD}(F) = \{ D \rightarrow B \}$
 
 由于 $\Pi_{ACD}(F) \cup \Pi_{BD}(F)$ 丢失了 $A \rightarrow B$ 和 $B \rightarrow C$，
 故分解 $\rho = {ACD, BD}$ 不保持依赖。
-````
+:::
 
 理解了无损连接和保持依赖的求解方法，那么它们有什么指导意义呢？
 
@@ -554,6 +552,7 @@ $\Pi_{BD}(F) = \{ D \rightarrow B \}$
   * $\times$
   * 不能接受（丢失数据）
 ```
+:::
 
 ## 物理存储
 
@@ -633,15 +632,17 @@ RAID 0 的缺点是不提供数据冗余，因此一旦用户数据损坏，损�
 
 4、RAID 10（RAID 0 和 RAID 1 的折衷方案）
 
-````{panels}
+:::{card}
 ```{figure} ../_static/images/RAID_10.*
 :height: 200px
 ```
----
+:::
+
+:::{card}
 ```{figure} ../_static/images/RAID_01.*
 :height: 200px
 ```
-````
+:::
 
 RAID 10 也被称为镜象阵列条带。RAID 10 提供最好的性能、更好的可靠性。
 

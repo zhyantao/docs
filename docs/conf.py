@@ -119,9 +119,9 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx_comments",
     "sphinx_copybutton",
+    "sphinx_design",
     "sphinx_last_updated_by_git",
-    "sphinx_panels",
-    "sphinx_tabs.tabs",
+    # "sphinx_tabs.tabs",
     "sphinx_thebe",
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
@@ -155,13 +155,13 @@ mermaid_version = "10.2.0-rc.2"  # from CDN unpkg.com
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`
 extlinks = {
-    "src": ("https://github.com/zhyantao/getstarted/blob/master/%s", ""),
-    "docs": ("https://github.com/zhyantao/getstarted/blob/master/%s", ""),
-    "issue": ("https://github.com/zhyantao/getstarted/issues/%s", "Issue #"),
-    "pull": ("https://github.com/zhyantao/getstarted/pull/%s", "Pull Requset #"),
+    "src": ("https://github.com/zhyantao/getstarted/blob/master/%s", "%s"),
+    "docs": ("https://github.com/zhyantao/getstarted/blob/master/%s", "%s"),
+    "issue": ("https://github.com/zhyantao/getstarted/issues/%s", "Issue #%s"),
+    "pull": ("https://github.com/zhyantao/getstarted/pull/%s", "Pull Requset #%s"),
     "duref": (
         "http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s",
-        "",
+        "%s",
     ),
 }
 

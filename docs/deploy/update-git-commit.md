@@ -9,8 +9,8 @@
 
 ## 修改历史提交记录
 
-``````{tabs}
-`````{tab} 删除敏感信息
+::::{tab-set}
+:::{tab-item} 删除敏感信息
 
 在开发过程中，发现将密码或私钥上传到 GitHub 上，思考如何在不删除仓库的情况下，仅修改敏感信息来将密码隐藏掉。首先，创建 `replacements.txt`，添加如下变更内容：
 
@@ -29,9 +29,9 @@ EOF
 ```bash
 git filter-repo --replace-text ../replacement.txt
 ```
-`````
+:::
 
-`````{tab} 修改用户名和邮箱
+:::{tab-item} 修改用户名和邮箱
 
 如果你修改了邮箱，你在 Windows 上设置的提交邮箱与 GitHub 上设置的邮箱不一致，历史提交信息中的头像可能会空白。这种情况下下，可以使用下面的方法解决。
 
@@ -63,8 +63,8 @@ zhyantao <zh6tao@gmail.com> Zh YT <zhyantao@126.com>
 ```bash
 git filter-repo --mailmap ../mailmap.txt
 ```
-`````
-``````
+:::
+::::
 
 ## 提交到远程仓库
 

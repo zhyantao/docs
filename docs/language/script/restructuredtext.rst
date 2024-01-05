@@ -44,7 +44,7 @@ reStructuredText
     - **标记符必须与文本长度一致，否则会导致 Warning （无法通过 CI）。**
     - 你可以采用更深的嵌套级别，但在文档中应当避免出现四级甚至更深的标题。
 
-.. panels::
+.. card::
 
   正确示范
   ^^^^^^^^
@@ -119,7 +119,7 @@ reStructuredText
 
         标记符号与被包裹的文本内容之间不能存在空格，与外部文本之间必须存在空格。
 
-    .. panels::
+    .. card::
 
       正确示范
       ^^^^^^^^
@@ -179,10 +179,8 @@ reStructuredText
 无序列表（:duref:`参考 <bullet-lists>`）的用法很自然。
 只需要在段落开头放置横杠，然后正确地缩进：
 
-.. panels::
+.. card:: 正确的示范（ **2 格缩进** ）
 
-    正确的示范（ **2 格缩进** ）
-    ^^^^^^^^^^^^^^^^^^^^^^
     .. code-block::
 
         - 这是一个无序列表。
@@ -192,9 +190,9 @@ reStructuredText
     - 这是一个无序列表。
     - 它有两个元素，
       第二个元素占据两行源码，视作同一个段落。
-    ---
-    错误的示范（4 格缩进）
-    ^^^^^^^^^^^^^^^^^^^^^^
+
+.. card:: 错误的示范（4 格缩进）
+
     .. code-block::
 
         - 这是一个无序列表。
@@ -231,10 +229,8 @@ reStructuredText
 
 嵌套列表必须使用 **空白行** 和父列表项目隔开：
 
-.. panels::
+.. card:: 正确示范（ **2 格缩进** ）
 
-    正确示范（ **2 格缩进** ）
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
     .. code-block::
 
         - 这是一个列表。
@@ -250,9 +246,9 @@ reStructuredText
       - 并且有自己的子元素。
 
     - 这里是父列表的后续元素。
-    ---
-    错误示范
-    ^^^^^^^^
+
+.. card:: 错误示范
+
     .. code-block::
 
         - 这并不是嵌套列表，
@@ -744,73 +740,73 @@ Pannels 语法支持
 
 .. code-block::
 
-    .. panels::
-        :container: container-lg pb-3
-        :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+    .. card:: Card Title
 
-        panel1
-        ---
-        panel2
-        ---
-        panel3
-        ---
-        :column: col-lg-12 p-2
-        panel4
+        Header
+        ^^^
+        Card content
+        +++
+        Footer
 
-.. panels::
-    :container: container-lg pb-3
-    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+    .. card:: Card Title
 
-    panel1
-    ---
-    panel2
-    ---
-    panel3
-    ---
-    :column: col-lg-12 p-2
-    panel4
+        Header
+        ^^^
+        Card content
+        +++
+        Footer
 
-以上展示的为 Grid Layout 用法，Card Layout, Image Caps 等用法请参考文档。
+.. card:: Card Title
 
-.. note::
+    Header
+    ^^^
+    Card content
+    +++
+    Footer
 
-    该插件也实现了 Toggle, Tabs 语法功能。
+.. card:: Card Title
+
+    Header
+    ^^^
+    Card content
+    +++
+    Footer
+
 
 .. _tabs-ext:
 
 Tabs 语法支持
 ~~~~~~~~~~~~~
 
-文档已经通过 `sphinx-tabs
-<https://sphinx-tabs.readthedocs.io/en/latest/>`_ 插件支持常见 Tabs 功能，样例如下：
+文档已经通过 `sphinx-tabs <https://sphinx-design.readthedocs.io/en/sbt-theme/tabs.html>`_ 插件支持常见 Tabs 功能，样例如下：
 
 .. code-block::
 
-    .. tabs::
+    .. tab-set::
 
-        .. tab:: Apples
+        .. tab-item:: Apples
 
             Apples are green, or sometimes red.
 
-        .. tab:: Pears
+        .. tab-item:: Pears
 
             Pears are green.
 
-        .. tab:: Oranges
+        .. tab-item:: Oranges
 
             Oranges are orange.
 
-.. tabs::
+.. tab-set::
 
-    .. tab:: Apples
+    .. tab-item:: Apples
 
         Apples are green, or sometimes red.
 
-    .. tab:: Pears
+    .. tab-item:: Pears
 
         Pears are green.
 
-    .. tab:: Oranges
+    .. tab-item:: Oranges
 
         Oranges are orange.
 

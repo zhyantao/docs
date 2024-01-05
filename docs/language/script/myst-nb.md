@@ -429,10 +429,6 @@
 
 ## 脚注（Footnotes）
 
-```{note}
-脚注将在本页的末尾显示。
-```
-
 ``````{list-table}
 :header-rows: 1
 :widths: 20 10
@@ -511,41 +507,35 @@
 
 * - Example
   - Result
-* - ````md
-    ```{panels}
-    :container: container-lg pb-2
-    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
-
-    panel1
-    ---
-    panel2
-    ---
-    panel3
-    ---
-    :column: col-lg-12 p-2
-    panel4
+* - ```md
+    :::{card} Card Title
+    Header
+    ^^^
+    Card content
+    +++
+    Footer
+    :::
     ```
-    ````
-  - ```{panels}
-    :container: container-lg pb-2
-    :column: col-lg-4 col-md-4 col-sm-6 col-xs-12 p-2
+  - :::{card} Card Title
+    Header
+    ^^^
+    Card content
+    +++
+    Footer
+    :::
+* - ```md
+    :::{card} Clickable Card (external)
+    :link: https://example.com
 
-    panel1
-    ---
-    panel2
-    ---
-    panel3
-    ---
-    :column: col-lg-12 p-2
-    panel4
+    The entire card can be clicked to navigate to <https://example.com>.
+    :::
     ```
+  - :::{card} Clickable Card (external)
+    :link: https://example.com
+
+    The entire card can be clicked to navigate to <https://example.com>.
+    :::
 ``````
-
-- `container` 用于支持 Bootstrap 网格系统正常运作。
-- `pb-2` 是 Bootstra 4 支持的简写模式，表示 `{padding-bottom: 0.5rem !important}`。
-- Bootstrap 网格系统最多可在页面上显示 12 列。
-- `col-lg-*`、`col-md-*` 等均用来指定一列的宽度。
-- `lg`、`md`、`sm`、`xs` 等用来响应不同的屏幕大小。
 
 ## 交叉引用（Cross reference）
 

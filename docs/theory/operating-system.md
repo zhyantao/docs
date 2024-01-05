@@ -255,10 +255,7 @@ $$
 
 #### 单标志法的软件实现
 
-````{panels}
-:container: container-lg pb-3
-:column: col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3
-
+:::{card}
 ```{code-block} c
 int turn = 0;
 // P0 进程
@@ -267,9 +264,9 @@ critical section;  // 临界区
 turn = 1;          // 退出区
 remainder section; // 剩余区
 ```
+:::
 
----
-
+:::{card}
 ```{code-block} c
 int turn = 0;
 // P1 进程
@@ -278,7 +275,7 @@ critical section;  // 临界区
 turn = 0;          // 退出区
 remainder section; // 剩余区
 ```
-````
+:::
 
 在进⼊区只做 "检查"，不
 "上锁"，在退出区把临界区的使用权转交给另一个进程（相当于在退出区既给另一个进程
@@ -288,10 +285,7 @@ remainder section; // 剩余区
 
 #### 双标志先检查的软件实现
 
-````{panels}
-:container: container-lg pb-3
-:column: col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 flag[0] = false;
@@ -303,9 +297,9 @@ critical section;  // 临界区
 flag[0] = false;   // 退出区
 remainder section; // 剩余区
 ```
+:::
 
----
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 flag[0] = false;
@@ -317,16 +311,13 @@ critical section;  // 临界区
 flag[1] = false;   // 退出区
 remainder section; // 剩余区
 ```
-````
+:::
 
 由于检查和上锁两个操作并不是原子操作，所以不遵循 "忙则等待" 原则。
 
 #### 双标志后检查的软件实现
 
-````{panels}
-:container: container-lg pb-3
-:column: col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 flag[0] = false;
@@ -338,9 +329,9 @@ critical section;  // 临界区
 flag[0] = false;   // 退出区
 remainder section; // 剩余区
 ```
+:::
 
----
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 flag[0] = false;
@@ -352,16 +343,13 @@ critical section;  // 临界区
 flag[1] = false;   // 退出区
 remainder section; // 剩余区
 ```
-````
+:::
 
 解决了 "忙则等待" 问题，但是违背了 "空闲让进" 和 "有限等待" 原则，有可能产生 "饥饿"。
 
 #### Perterson 算法的软件实现
 
-````{panels}
-:container: container-lg pb-3
-:column: col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 int turn = 0;
@@ -373,9 +361,9 @@ critical section;             // 临界区
 flag[0] = false;              // 退出区
 remainder section;            // 剩余区
 ```
+:::
 
----
-
+:::{card}
 ```{code-block} c
 bool flag[2];
 int turn = 0;
@@ -387,7 +375,7 @@ critical section;             // 临界区
 flag[1] = false;              // 退出区
 remainder section;            // 剩余区
 ```
-````
+:::
 
 在进入区 "主动争取 —— 主动谦让 —— 检查对方是否想进、己方是否谦让"。
 
@@ -401,10 +389,7 @@ remainder section;            // 剩余区
 
 #### `TS`指令/`TSL`指令的硬件描述
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 // 硬件实现的逻辑表达
 bool TestAndSet(bool *lock) {
@@ -421,7 +406,7 @@ while (TestAndSet(&lock)) { // 上锁并检查
   remainder section;        // 剩余区
 }
 ```
-````
+:::
 
 将上锁和检查变为了原子操作，适用于多处理机环境。
 
@@ -429,10 +414,7 @@ while (TestAndSet(&lock)) { // 上锁并检查
 
 #### `XCHG`指令的硬件描述
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 // 硬件实现的逻辑表达
 Swap (bool *a, bool *b) {
@@ -451,7 +433,7 @@ critial section;
 lock = false;
 remainder section;
 ```
-````
+:::
 
 将上锁和检查变为了原子操作，适用于多处理机环境。
 
@@ -477,10 +459,7 @@ remainder section;
 
 ##### 整型信号量
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 int S = 1;
 
@@ -493,27 +472,25 @@ void signal(int S) { // signal 原语，相当于退出区
   S = S + 1;
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 // P0 进程
 wait(S);
 //使用打印机资源;
 signal(S);
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 // P1 进程
 wait(S);
 //使用打印机资源;
 signal(S);
 ```
-````
+:::
 
 不满足 "让权等待" 原则。
 
@@ -521,10 +498,7 @@ signal(S);
 
 整型信号量的缺陷是存在 "忙等" 问题，因此人们又提出了 "记录型信号量"，即用记录型数据结构表示的信号量。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 typedef struct {
   int value;         // 剩余资源数
@@ -545,43 +519,37 @@ void signal(semaphore S) {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 // P0 进程
 wait(S);
 //使用打印机资源;
 signal(S);
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 // P1 进程
 wait(S);
 //使用打印机资源;
 signal(S);
 ```
-````
+:::
 
 因为资源不可用时，会自动加入到阻塞队列，符合 "让权等待" 原则，不会出现 "忙等" 现象。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 例：有如下所示的同步关系，请完成代码实现。
 
 ```{figure} ../_static/images/os-process-semaphore.*
 进程之间的同步关系
 ```
+:::
 
----
-:column: col-lg-3 col-md-3 col-sm-3 p-3
-
+:::{card}
 ```{code-block} c
 P1() {
   S1;
@@ -589,9 +557,9 @@ P1() {
   V(b);
 }
 ```
----
-:column: col-lg-3 col-md-3 col-sm-3 p-3
+:::
 
+:::{card}
 ```{code-block} c
 P2() {
   P(a);
@@ -599,25 +567,25 @@ P2() {
   V(c);
 }
 ```
----
-:column: col-lg-3 col-md-3 col-sm-3 p-3
+:::
 
+:::{card}
 ```{code-block} c
 P3() {
   P(b);
   S3;
 }
 ```
----
-:column: col-lg-3 col-md-3 col-sm-3 p-3
+:::
 
+:::{card}
 ```{code-block} c
 P4() {
   P(c);
   S4;
 }
 ```
-````
+:::
 
 #### 经典同步问题
 
@@ -635,19 +603,15 @@ P4() {
 思考：能不能用一个同步信号量实现生产者消费者模型？
 ```
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 semaphore mutex = 1;        // 互斥信号量，实现对缓冲区的互斥访问
 semaphore not_empty = n;    // 同步信号量，表示空闲缓冲区的数量
 semaphore not_full = 0;     // 同步信号量，表示非空缓冲区的数量
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 producer() {
   while (1) {
@@ -660,10 +624,9 @@ producer() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 consumer() {
   while (1) {
@@ -676,7 +639,7 @@ consumer() {
   }
 }
 ```
-````
+:::
 
 ##### 多生产者-多消费者问题
 
@@ -694,20 +657,16 @@ consumer() {
 当然，这不是绝对的，要具体问题具体分析。
 ```
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 semaphore mutex = 1;      // 互斥信号量，实现对缓冲区（盘子）的互斥访问
 semaphore apple = 0;      // 同步信号量，盘子中有几个苹果
 semaphore orange = 0;     // 同步信号量，盘子中有几个橘子
 semaphore plate = 1;      // 同步信号量，盘子中还可以放几个水果
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 producer1() {
   while (1) {
@@ -720,10 +679,9 @@ producer1() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 producer2() {
   while (1) {
@@ -736,10 +694,9 @@ producer2() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 consumer1() {
   while (1) {
@@ -752,10 +709,9 @@ consumer1() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 consumer2() {
   while (1) {
@@ -768,7 +724,7 @@ consumer2() {
   }
 }
 ```
-````
+:::
 
 ##### 吸烟者问题
 
@@ -778,10 +734,7 @@ consumer2() {
 
 本质上，这个问题也是属于 "生产者-消费者" 问题，更详细地说是 "单生产者-多消费者" 问题。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 //semaphore mutex = 1;    // 缓冲区只有一个，忽略不写了
 semaphore offer1 = 0;     // 同步信号量
@@ -790,10 +743,9 @@ semaphore offer3 = 0;     // 同步信号量
 semaphore finish = 0;     // 同步信号量
 int i = 0;                // 用于实现 "三个吸烟者轮流吸烟"
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 provider() {
   while (1) {
@@ -814,10 +766,9 @@ provider() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 smoker1() {
   while (1) {
@@ -827,10 +778,9 @@ smoker1() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 smoker2() {
   while (1) {
@@ -840,6 +790,7 @@ smoker2() {
   }
 }
 ```
+:::
 
 ---
 :column: col-lg-6 col-md-6 col-sm-6 p-3
@@ -853,25 +804,21 @@ smoker3() {
   }
 }
 ```
-````
+:::
 
 ##### 读者-写者问题
 
 允许多个读者同时读，读者和写者、写者和写者不能同时操作。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 semaphore rw = 1;         // 用于实现对共享文件的互斥访问
 int count = 0;            // 记录当前几个读进程在访问文件
 semaphore mutex = 1;      // 保证对 count 变量的互斥访问
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 writer() {
   while (1) {
@@ -881,10 +828,9 @@ writer() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 reader() {
   while (1) {
@@ -902,26 +848,22 @@ reader() {
   }
 }
 ```
-````
+:::
 
 只要有都进程还在读，写进程就要一直阻塞等待，可能 "饿死"。因此，在这种算法中，读进程是优先的。
 
 在下面的算法中，实现了写优先。有的书上也把这个算法称为 "读写公平法"。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 semaphore rw = 1;         // 用于实现对共享文件的互斥访问
 int count = 0;            // 记录当前几个读进程在访问文件
 semaphore mutex = 1;      // 保证对 count 变量的互斥访问
 semaphore w = 1;          // 用于实现 "写优先"
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 writer() {
   while (1) {
@@ -933,10 +875,9 @@ writer() {
   }
 }
 ```
+:::
 
----
-:column: col-lg-6 col-md-6 col-sm-6 p-3
-
+:::{card}
 ```{code-block} c
 reader() {
   while (1) {
@@ -956,7 +897,7 @@ reader() {
   }
 }
 ```
-````
+:::
 
 ##### 哲学家进餐问题
 
@@ -982,10 +923,7 @@ reader() {
 - 仅当一个哲学家左右两边的筷子都能拿时，才允许他抓起筷子。
 - 最多允许 4 位哲学家拿筷子，这样肯定有一个人时满足可以拿起两边的筷子的。
 
-````{panels}
-:container: container-lg
-:column: col-lg-12 col-md-12 col-sm-12 p-3
-
+:::{card}
 ```{code-block} c
 semaphore chopstick[5] = {1, 1, 1, 1, 1};
 semaphore mutex = 1;    // 互斥地取筷子
@@ -1002,7 +940,7 @@ Pi() {
   }
 }
 ```
-````
+:::
 
 #### 管程
 

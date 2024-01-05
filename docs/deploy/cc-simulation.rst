@@ -13,8 +13,7 @@
 
 对连铸过程建模，首先应该理解连铸到底是怎么一个过程。首先认识一下连铸机（侧视图）：
 
-.. panels::
-    :column: col-lg-12
+.. card::
 
     .. image:: ../_static/images/600px-Lingotamento_Continuo-Continuous_Casting.png
 
@@ -45,8 +44,7 @@ Brain G. Thomas :footcite:p:`thomas2018review` 对很多现象应该如何建模
 
 把结晶器作为重点的研究对象，宏观了解一下它内部流体的流动现象，如下图：
 
-.. panels::
-    :column: col-lg-12
+.. card::
 
     .. image:: ../_static/images/fluid-flow-phenomena-in-the-mold-region.png
 

@@ -31,65 +31,48 @@
     因此，我们在工具选型时要注意区分。
 
 
-.. panels::
-    :container: container-lg pb-3
-    :column: col-lg-6 col-md-4 col-sm-6 col-xs-12 p-2
+.. grid:: 2
+    :gutter: 2
 
-    机械模型
-    ^^^
+    .. grid-item-card:: 机械模型
 
-    - SolidWorks：构造实体模型，广泛用于机械模型，强调物理尺度保真度；
+        - SolidWorks：构造实体模型，广泛用于机械模型，强调物理尺度保真度；
 
-    ---
+    .. grid-item-card:: 建筑模型
 
-    建筑模型
-    ^^^
+        - Autodesk Revit：适合建筑师、景观设计师，结构工程师，给排水工程师、承包商；
 
-    - Autodesk Revit：适合建筑师、景观设计师，结构工程师，给排水工程师、承包商；
+    .. grid-item-card:: 电子/元件
 
-    ---
+        - Altium Designer
+        - SolidWorks Electrical
+        - Proteus
+        - NI Multisim
 
-    电子/元件
-    ^^^
+    .. grid-item-card:: 影视/游戏
 
-    - Altium Designer
-    - SolidWorks Electrical
-    - Proteus
-    - NI Multisim
+        - Blender：可提供动画、建模、渲染、材质功能，可与中高端收费套件竞争；
+        - Wings 3D：比 Blender 更简单，但功能更少，适合初学者；
+        - Autodesk Maya：许多电影特效均有这个软件制作；
+        - Autodesk 3ds Max：电子游戏行业占主导地位的动画程序；
+        - Cinema 4D：对艺术家友善的界面，以及低廉的价格；
 
-    ---
+    .. grid-item-card:: 仿真模型
 
-    影视/游戏
-    ^^^
+        - Protein Structure Prediction
+        - Nucleic Acid Simulations
+        - Quantum Chemistry
+        - Molecular Modeling
+        - Monte Carlo Molecular Modeling
+        - Molecular Design
+        - Finite Element
+        - Cosmological Simulation
 
-    - Blender：可提供动画、建模、渲染、材质功能，可与中高端收费套件竞争；
-    - Wings 3D：比 Blender 更简单，但功能更少，适合初学者；
-    - Autodesk Maya：许多电影特效均有这个软件制作；
-    - Autodesk 3ds Max：电子游戏行业占主导地位的动画程序；
-    - Cinema 4D：对艺术家友善的界面，以及低廉的价格；
+    .. grid-item-card:: 虚拟现实
 
-    ---
-
-    仿真模型
-    ^^^
-
-    - Protein Structure Prediction
-    - Nucleic Acid Simulations
-    - Quantum Chemistry
-    - Molecular Modeling
-    - Monte Carlo Molecular Modeling
-    - Molecular Design
-    - Finite Element
-    - Cosmological Simulation
-
-    ---
-
-    虚拟现实
-    ^^^
-
-    - Unreal Engine
-    - Unity3D
-    - `List of game engines <https://en.wikipedia.org/wiki/List_of_game_engines>`_
+        - Unreal Engine
+        - Unity3D
+        - `List of game engines <https://en.wikipedia.org/wiki/List_of_game_engines>`_
 
 应用程序接口 (API)
 ~~~~~~~~~~~~~~~~~~
@@ -97,30 +80,25 @@
 除了使用集成软件（IDE）辅助设计，我们也可以使用应用程序接口（API）处理三维模型。
 这些API对于计算机图形硬件厂商也是极为重要的，因为他们提供给程序员一种使用硬件的抽象方式，而依然能够利用那个显卡的特定硬件的长处。
 
-.. panels::
-    :container: container-lg pb-3
-    :column: col-lg-6 col-md-4 col-sm-6 col-xs-12 p-2
+.. grid:: 2
+    :gutter: 2
 
-    三维计算机图形的底层 API
-    ^^^
+    .. grid-item-card:: 三维计算机图形的底层 API
 
-    - OpenGL 和 OpenGL 着色语言
-    - OpenGL ES 嵌入式设备的三维 API
-    - Direct3D（DirectX 的子集）
-    - RenderMan
-    - RenderWare
+        - OpenGL 和 OpenGL 着色语言
+        - OpenGL ES 嵌入式设备的三维 API
+        - Direct3D（DirectX 的子集）
+        - RenderMan
+        - RenderWare
 
-    ---
+    .. grid-item-card:: 高层 API 提供底层 API 的附加功能
 
-    高层 API 提供底层 API 的附加功能
-    ^^^
-
-    - QSDK
-    - Quesa
-    - Java 3D
-    - JSR 184（M3G）
-    - NVidia Scene Graph
-    - OpenSceneGraph
-    - OpenSG
-    - OGRE
-    - Irrlicht
+        - QSDK
+        - Quesa
+        - Java 3D
+        - JSR 184（M3G）
+        - NVidia Scene Graph
+        - OpenSceneGraph
+        - OpenSG
+        - OGRE
+        - Irrlicht
