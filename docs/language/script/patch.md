@@ -1,9 +1,6 @@
 # patch
 
-补丁（Patch）是透过更新计算机程序或支持文件，用来修补软件问题的资料程序。
-Linux 一般自带了 `diff` 和 `patch` 这两个命令，无需自己安装。
-
-## diff
+## 制作补丁
 
 `diff` 命令主要用于制作补丁。`diff` 可以比较两个文件，并可同时记录下二者的区别。
 
@@ -36,7 +33,7 @@ diff --recursive --brief <old_dir> <new_dir>
 diff --text --unified --new-file <old_file> <new_file> > diff.patch
 ```
 
-## patch
+## 应用补丁
 
 `patch` 主要用于应用补丁。将 `diff` 记录的结果（即补丁）应用到相应文件（夹）上。
 
