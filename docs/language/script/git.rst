@@ -21,6 +21,8 @@ Git
 快速上手
 ~~~~~~~~
 
+本节介绍典型的 Git 工作流程：``创建仓库`` > ``编辑源代码`` > ``提交源代码``。
+
 .. code-block:: bash
 
     # 本地创建空仓库
@@ -35,6 +37,22 @@ Git
     # 只关注文件内容变更，忽略文件模式变化
     git config --global core.filemode false
 
+    # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
+    git remote add origin git@gitee.com:username/repository.git
+
+    # 查看 <remote> 及其 URL
+    git remote -v
+
+    # 查看远程分支 <branch>
+    git fetch
+    git branch -r
+
+    # 切换到分支
+    git checkout <branch>
+
+    # 编辑源代码
+    code <directory>
+
     # 查看文件变更
     git status
 
@@ -47,19 +65,10 @@ Git
     # 将代码添加到本地仓库
     git commit -m "commit message"
 
-    # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
-    git remote add origin git@gitee.com:username/repository.git
-
-    # 查看 <remote>
-    git remote -v
-
-    # 查看 <branch>
-    git branch -r
-
     # 将代码添加到远程仓库
-    # -u (set upstream) 表示设置本地仓库与远程仓库的关联关系
+    # -u (set upstream)：设置本地仓库与远程仓库的关联关系（仅在创建仓库后的首次 push 时需要）
     # HEAD 表示本地分支，refs/for 表示提交后的代码需要 Code Review
-    git push [-u] <remote> HEAD:refs/for/<branch>
+    git push [-u] $(git remote) HEAD:refs/for/$(git branch --show-current)
 
     # 查看 <commit>
     git log --graph
