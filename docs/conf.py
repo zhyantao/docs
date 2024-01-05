@@ -65,12 +65,6 @@ html_theme_options = {
     # ),
     "icon_links": [
         {
-            "name": "Builds",
-            "url": "https://readthedocs.org/projects/getstarted/builds",
-            "icon": "https://readthedocs.org/projects/getstarted/badge",
-            "type": "url",
-        },
-        {
             "name": "Tags",
             "url": "https://github.com/zhyantao/getstarted/tags",
             "icon": "https://img.shields.io/github/v/tag/zhyantao/getstarted",
@@ -121,7 +115,6 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx_last_updated_by_git",
-    # "sphinx_tabs.tabs",
     "sphinx_thebe",
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
@@ -198,13 +191,10 @@ myst_footnote_transition = False
 
 # Setting for sphinx comments
 comments_config = {
-    "utterances": {
-        "repo": "zhyantao/getstarted",
-        "issue-term": "pathname",
-        "label": "comments",
-        "theme": "github-light",
-        "crossorigin": "anonymous",
-    }
+   "utterances": {
+      "repo": "zhyantao/getstarted",
+      "optional": "config",
+   }
 }
 
 

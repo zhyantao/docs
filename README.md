@@ -1,6 +1,6 @@
 # Read-the-Docs with Github
 
-[![Documentation Status](https://readthedocs.org/projects/getstarted/badge/?version=latest)](https://getstarted.readthedocs.io)
+[![Documentation Status](https://readthedocs.org/projects/getstarted/badge)](https://readthedocs.org/projects/getstarted/builds)
 [![Repository Size](https://img.shields.io/github/repo-size/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip)
 
 ## 环境部署

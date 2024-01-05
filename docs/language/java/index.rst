@@ -11,61 +11,34 @@ Java 基础知识
 但是，因为这些附属工具有很强的前后关联性，因此学习它们的先后顺序显得尤为重要，故制定以下学习路线供参考。
 
 
-.. card::
-
-    Java / Servlet / Maven / Tomcat
-    ^^^
+.. card:: Java / Servlet / Maven / Tomcat
     
     - `JavaWeb 入门到实战 <https://www.bilibili.com/video/BV12J411M7Sj?p=3>`__
 
-    ---
-    
-    JavaScript / Vue [:ref:`2 <vue.js-basic>`]
-    ^^^
+.. card:: JavaScript / Vue [:ref:`2 <vue.js-basic>`]
 
     - `JavaScript 教程 <https://wangdoc.com/javascript/>`__
     - `现代 JavaScript 教程 <https://zh.javascript.info/>`__
-
-    ---
     
-    MySQL / JDBC
-    ^^^
+.. card:: MySQL / JDBC
 
     - `MySQL 最新教程通俗易懂 <https://www.bilibili.com/video/BV1NJ411J79W>`__
-
-    ---
     
-    MyBatis-3 入门
-    ^^^
+.. card:: MyBatis-3 入门
 
     - `MyBatis <https://mybatis.org/mybatis-3/zh/index.html>`__
-
-    ---
     
-    Spring、SpringMVC
-    ^^^
+.. card:: Spring、SpringMVC
 
-    ---
-    
-    Spring Boot / Spring Cloud
-    ^^^
+.. card:: Spring Boot / Spring Cloud
 
     - `Building an Application with Spring Boot <https://spring.io/guides/gs/spring-boot/>`__
 
-    ---
-    
-    中间件 Redis / Kafka / Dubbo
-    ^^^
+.. card:: 中间件 Redis / Kafka / Dubbo
 
-    ---
-    
-    JVM 原理 / Java 高并发
-    ^^^
+.. card:: JVM 原理 / Java 高并发
 
-    ---
-    
-    项目实战
-    ^^^
+.. card:: 项目实战
 
     - `凤凰架构：构建可靠的大型分布式系统 <https://icyfenix.cn/introduction/about-book.html>`__
 
