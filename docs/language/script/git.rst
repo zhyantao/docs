@@ -35,7 +35,7 @@ Git
     git config --global user.email "zh6tao@gmail.com"
 
     # 只关注文件内容变更，忽略文件模式变化
-    git config --global core.filemode false
+    git config [--global] core.filemode false
 
     # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
     git remote add origin git@gitee.com:username/repository.git
