@@ -1,5 +1,7 @@
 import os
+import sys
 
+dirhtml = sys.argv[1]
 html_list = []
 
 
@@ -14,8 +16,6 @@ def collect_html(path):
                 html_list.append(new_path)
 
 
-CURRENT_DIR = os.path.abspath(".")
-dirhtml = f"{CURRENT_DIR}/docs/_build/html"
 print("dirhtml: ", dirhtml)
 collect_html(dirhtml)
 for html_file in html_list:
