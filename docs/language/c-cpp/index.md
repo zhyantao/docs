@@ -126,6 +126,7 @@ future.md
 weak_ptr.md
 socket.md
 callback.md
+read-tty.md
 ```
 
 ## Google Code Style
