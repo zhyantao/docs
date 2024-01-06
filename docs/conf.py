@@ -29,11 +29,7 @@ html_title = "Notebook"
 html_theme = "sphinx_book_theme"
 html_static_path = [
     "_static"
-]  # Contain custom static files (such as style sheets) here
-html_css_files = [
-    "css/custom.css",
-]  # Either relative to html_static_path or fully qualified paths (eg. https://...)
-html_js_files = ["js/custom.js"]
+]
 # html_sourcelink_suffix = '.rst'
 html_favicon = "_static/images/logo-square.svg"
 # html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
