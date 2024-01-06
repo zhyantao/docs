@@ -15,7 +15,7 @@ def collect_html(path):
 
 
 CURRENT_DIR = os.path.abspath(".")
-dirhtml = f"{CURRENT_DIR}/../../_build/html"
+dirhtml = f"{CURRENT_DIR}/_build/html"
 print("dirhtml: ", dirhtml)
 collect_html(dirhtml)
 for html_file in html_list:
