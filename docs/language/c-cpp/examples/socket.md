@@ -44,8 +44,8 @@ int socket(int domain, int type, int protocol);
 
 **type：指定了 socket 的类型**
 
-- `SOCK_STREAM`
-- `SOCK_DGRAM`
+- `SOCK_STREAM`（流格式套接字，使用面向连接的 TCP 协议，可靠性高）
+- `SOCK_DGRAM`（数据报格式套接字，使用无连接的 UDP 协议，速度快）
 - `SOCK_RAW`
 - `SOCK_PACKET`
 - `SOCK_SEQPACKET`
@@ -189,9 +189,9 @@ ssize_t recv(int sockfd, void *buf, size_t len, int flags);
 #include <sys/socket.h>
 
 ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-			   const struct sockaddr *dest_addr, socklen_t addrlen);
+               const struct sockaddr *dest_addr, socklen_t addrlen);
 ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-				 struct sockaddr *src_addr, socklen_t *addrlen);
+                 struct sockaddr *src_addr, socklen_t *addrlen);
 ```
 
 **sendmsg() / recvmsg()**
@@ -211,9 +211,9 @@ ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
 #include <sys/socket.h>
 
 ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-			   const struct sockaddr *dest_addr, socklen_t addrlen);
+               const struct sockaddr *dest_addr, socklen_t addrlen);
 ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-				 struct sockaddr *src_addr, socklen_t *addrlen);
+                 struct sockaddr *src_addr, socklen_t *addrlen);
 ```
 
 推荐使用 `sendmsg()` 和 `recvmsg()` 函数，这两个是最通用的 I/O 函数，实际上可以把其他函数都替换成这两个。
@@ -285,7 +285,7 @@ int main(int argc, char **argv)
         // (4) 建立连接，三次握手
         if ((connfd = accept(listenfd, (struct sockaddr *)NULL, NULL)) == -1)
         {
-            printf("accept socket failed: %s(errno: %d)", strerror(errno), errno);
+            printf("accept socket failed: %s(errno: %d)\n", strerror(errno), errno);
             continue;
         }
 
