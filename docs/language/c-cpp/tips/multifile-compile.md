@@ -94,7 +94,7 @@ extern "C"
 
 **2、DWARF error: could not find variable specification at offset**
 
-这个错误和 `-g` 参数有关。报这个错误有可能是因为函数签名用了 `static`，但是在函数体内部，却调用了非 `static` 函数。这种情况下，因为 `static` 函数在链接时就会去找函数实现，但是非 `static` 函数在运行时才会加载到内存，才会出现找不到引用的故障。
+出现这个问题，可能的原因有：（1）非 `static` 函数，调用了 `static` 函数。（2）忘记了在 Makefile 中链接 undefined reference 指向函数所在的文件。
 
 **3、line 1: can't open: no such file**
 
