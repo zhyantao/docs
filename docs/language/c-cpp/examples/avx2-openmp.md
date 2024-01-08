@@ -1,4 +1,4 @@
-# 使用 AVX2 和 OpenMP
+# AVX2 和 OpenMP
 
 ```cpp
 // main.cpp
