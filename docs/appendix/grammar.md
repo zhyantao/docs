@@ -12,6 +12,27 @@
 
 按照我的理解，我将上面句子中的修饰成分标注为斜体，主干为粗体。
 
----
+## 英语口语
+
+关于连读：要想听懂，先得听见，声音永远放在字的前面。跟着原声复述，本身就是连读，什么是句型？这种固定的说法，这种声音本身就是句型。大家不要总是先学字再去学怎么连读，而是应该先学声音，再去拆解成字，于是很多问题就变得更简单了。
+
+- 没必要听清到底读的是什么单词，反复听，把这个声音记住就可以了。
+- 记住声音之后再记意思。
+- 就像我们学汉语一样，先学会了模仿别人说话，在去拆解这句话中的没个字是怎么写的。
+
+```{raw} html
+<iframe width="560" height="315"
+    src="//player.bilibili.com/player.html?aid=368426618&bvid=BV1w94y1u7gV&cid=1399088859&p=1" scrolling="no" border="0"
+    frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+```
+
+听力练习技巧：
+
+```{raw} html
+<iframe width="560" height="315"
+    src="//player.bilibili.com/player.html?aid=839263918&bvid=BV1p54y1U7TU&cid=228268741&p=1" scrolling="no" border="0"
+    frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
+```
 
 [^cite_ref-1]: Reading <https://en.wikipedia.org/wiki/Reading>

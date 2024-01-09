@@ -470,20 +470,16 @@ reST 支持图像指令，用法如下：
 
     .. raw:: html
 
-        <iframe src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" 
-            scrolling="no"
-            border="0" frameborder="no" 
-            framespacing="0" 
-            allowfullscreen="true">
+        <iframe width="560" height="315"
+            src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" scrolling="no" border="0"
+            frameborder="no" framespacing="0" allowfullscreen="true">
         </iframe>
 
 .. raw:: html
 
-    <iframe src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" 
-        scrolling="no"
-        border="0" frameborder="no" 
-        framespacing="0" 
-        allowfullscreen="true">
+    <iframe width="560" height="315"
+        src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" scrolling="no" border="0"
+        frameborder="no" framespacing="0" allowfullscreen="true">
     </iframe>
 
 .. _cross-reference-rst:
