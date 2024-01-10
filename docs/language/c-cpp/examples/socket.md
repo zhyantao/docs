@@ -250,8 +250,6 @@ int main(int argc, char **argv)
 {
     int listenfd, connfd;
     struct sockaddr_in serveraddr;
-    char buf[4096];
-    int n;
 
     // (1) 创建 socket
     if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -290,6 +288,8 @@ int main(int argc, char **argv)
         }
 
         // (5) 网络 I/O 操作
+        char buf[4096];
+        int n;
         n = recv(connfd, buf, MAXLINE, 0);
         buf[n] = '\0';
 
