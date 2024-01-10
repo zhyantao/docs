@@ -250,6 +250,8 @@ int main(int argc, char **argv)
 {
     int listenfd, connfd;
     struct sockaddr_in serveraddr;
+    char buf[4096];
+    int n;
 
     // (1) 创建 socket
     if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -288,10 +290,8 @@ int main(int argc, char **argv)
         }
 
         // (5) 网络 I/O 操作
-        char buf[4096];
-        int n;
+        memset(buf, 0, sizeof(buf));
         n = recv(connfd, buf, MAXLINE, 0);
-        buf[n] = '\0';
 
         // (6) TODO: 处理客户端发来的数据
         printf("[server] recv msg from client: %s\n", buf);
@@ -376,6 +376,6 @@ int main(int argc, char **argv)
 }
 ```
 
-当然，上面的代码很简单，也有很多缺点，这仅仅简单地演示 socket 的基本使用。其实不管有多复杂的网络程序，都使用的这些基本函数。上面的服务器使用的是迭代模式的，即只有处理完一个客户端请求才会去处理下一个客户端的请求，这样的服务器处理能力是很弱的，现实中的服务器都需要有并发处理能力！为了需要并发处理，服务器需要 `fork()` 一个新的进程或者线程去处理请求等。
+当然，上面的代码很简单，也有很多缺点，比如每次建立连接后只能接收一条消息，就断开连接了，这仅仅简单地演示 socket 的基本使用。其实不管有多复杂的网络程序，都使用的这些基本函数。上面的服务器使用的是迭代模式的，即只有处理完一个客户端请求才会去处理下一个客户端的请求，这样的服务器处理能力是很弱的，现实中的服务器都需要有并发处理能力！为了需要并发处理，服务器需要 `fork()` 一个新的进程或者线程去处理请求等。
 
 [^cite_ref-1]: Linux Socket编程（不限Linux）<https://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html>
