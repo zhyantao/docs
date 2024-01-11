@@ -296,11 +296,15 @@ int main(int argc, char **argv)
         // (6) TODO: 处理客户端发来的数据
         printf("[server] recv msg from client: %s\n", buf);
 
-        // (7) 关闭连接，四次挥手
+        // (7) TODO: 将处理结果返回给客户端
+        printf("[server] send msg to client: %s\n", buf);
+        send(connfd, buf, strlen(buf), 0);
+
+        // (8) 关闭连接，四次挥手
         close(connfd);
     }
 
-    // (8) 关闭 socket
+    // (9) 关闭 socket
     close(listenfd);
 
     return 0;
@@ -369,7 +373,16 @@ int main(int argc, char **argv)
         exit(-5);
     }
 
-    // (5) 关闭 socket
+    // (5) 接收服务器的回复
+    if (recv(sockfd, recvline, MAXLINE, 0) < 0)
+    {
+        printf("recv msg error: %s(errno: %d)\n", strerror(errno), errno);
+        exit(-6);
+    }
+
+    printf("[client] received reply from server: %s\n", recvline);
+
+    // (6) 关闭 socket
     close(sockfd);
 
     return 0;
