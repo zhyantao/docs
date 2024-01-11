@@ -49,4 +49,7 @@ deploy/*
 
 appendix/*
 面试八股文 <https://interview-points.readthedocs.io/>
+Java 小抄表 <https://github.com/zhyantao/leetcode/blob/main/java.pdf>
+C++ 小抄表 <https://github.com/zhyantao/leetcode/blob/main/cpp.pdf>
+C 语言小抄表 <https://github.com/zhyantao/leetcode/blob/main/c.pdf>
 ```
