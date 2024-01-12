@@ -1,13 +1,13 @@
 # 大数运算
 
-## 十六进制加法和乘法
+## 加法和乘法
 
 ```cpp
 #include <iostream>
 #include <string>
 #include <cmath>
 
-// transfrom character 0 ~ F to integer 0 ~ 15
+// 将十六进制字符 '0' ~ 'F' 转换为相应的整数，即 0 ~ 15
 int char2int(char ch)
 {
     if (!('0' <= ch && ch <= '9' || 'a' <= ch && ch <= 'f' || 'A' <= ch && ch <= 'F'))
@@ -50,7 +50,7 @@ int char2int(char ch)
     return ret;
 }
 
-// transfrom integer 0 ~ 15 to character 0 ~ F
+// 将十进制整数 0 ~ 15 转换相应的十六进制字符 '0' ~ 'F'
 char int2char(int num)
 {
     if (num < 0 || num > 15)
@@ -87,7 +87,7 @@ char int2char(int num)
     return ret;
 }
 
-// the calculation will be in base mode (10: decmail mode, 16 hex mode)
+// 计算 num1 + num2，如果 base=16，则使用 16 进制的运算法则
 std::string add(std::string num1, std::string num2, int base)
 {
     std::string str;
@@ -164,18 +164,35 @@ std::string add(std::string num1, std::string num2, int base)
     return ret;
 }
 
-// calculate the result of (num1 * num2)
+// 计算 num1 和 num2 的乘积，如果 base=10 则使用 10 进制的运算法则
 std::string multiply(std::string num1, std::string num2, int base)
 {
     std::string ret = "0";
     int len1 = num1.length();
     int len2 = num2.length();
 
+    // 检查输入的合法性
+    for (int i = 0; i < len1; i++)
+    {
+        if (char2int(num1[i]) < 0 || char2int(num1[i]) > base)
+        {
+            std::cout << "the element in number " << num1 << " should between 0 and " << base << std::endl;
+            return ret;
+        }
+    }
+    for (int i = 0; i < len2; i++)
+    {
+        if (char2int(num2[i]) < 0 || char2int(num2[i]) > base)
+        {
+            std::cout << "the element in number " << num2 << " should between 0 and " << base << std::endl;
+            return ret;
+        }
+    }
+
     for (int i = 0; i < len1; i++)
     {
         int tmp1 = char2int(num1[len1 - 1 - i]);
         char carry = '0';
-        char pre_carry = '0';
         std::string str;
         for (int j = 0; j < len2; j++)
         {
@@ -185,8 +202,6 @@ std::string multiply(std::string num1, std::string num2, int base)
             carry = int2char(sum / base);
             char digit = int2char(sum % base);
             str.push_back(digit);
-            std::cout << int2char(tmp1) << "x" << int2char(tmp2) << "+" << pre_carry << "=" << carry << digit << "    \t";
-            pre_carry = carry;
         }
 
         std::string rev(str.rbegin(), str.rend());
@@ -202,24 +217,48 @@ std::string multiply(std::string num1, std::string num2, int base)
                 tmp3.push_back(int2char(0));
         }
         ret = add(tmp3, ret, base);
-
-        std::cout << "sum=" << rev << std::endl;
     }
 
     return ret;
 }
 
+// 计算 base 指数次幂，即 base^n
+std::string power(std::string base, int n)
+{
+    std::string ret = "1";
+    for (int i = 0; i < n; i++)
+    {
+        ret = multiply(ret, base, 10);
+    }
+    return ret;
+}
+
+// 使用自定义的运算法则
+std::string get_phonenumber2(std::string hexdata, std::string &phonenumber)
+{
+    int len = hexdata.length();
+    std::string sum = "0";
+    for (int i = len - 1; i >= 0; i--)
+    {
+        int j = len - 1 - i;
+        std::string base = power("16", j);
+        std::string num = std::to_string(char2int(hexdata[i]));
+        sum = add(multiply(num, base, 10), sum, 10);
+    }
+    return sum;
+}
+
+// 使用标准库中的 power 函数
 int get_phonenumber(std::string hexdata, std::string &phonenumber)
 {
     int ret = -1;
     int len = hexdata.length();
-    long sum = 0;
+    long long sum = 0;
     for (int i = len - 1; i >= 0; i--)
     {
         int j = len - 1 - i;
         sum = char2int(hexdata[i]) * pow(16, j) + sum;
     }
-    std::cout << "sum: " << sum << std::endl;
     phonenumber = std::to_string(sum);
     return ret;
 }
@@ -232,7 +271,7 @@ int main()
     std::cout << "hexdata: " << hexdata << "\t"
               << "phonenumber:" << phonenumber << std::endl;
 
-    std::string str1 = add(hexdata, hexdata, 16); // 66D1ACA20
+    std::string str1 = add(hexdata, hexdata, 10); // 66D1ACA20
     std::cout << "str1: " << str1 << std::endl;
 
     std::string str2 = multiply(hexdata, hexdata, 16); // A52F0531B3B85A100
@@ -241,6 +280,12 @@ int main()
     hexdata = "FFFFFF";
     std::string str3 = multiply(hexdata, hexdata, 16); // FFFFFE000001
     std::cout << "str3: " << str3 << std::endl;
+
+    std::string str4 = power("16", 6); // 16777216
+    std::cout << "str4: " << str4 << std::endl;
+
+    std::string str5 = get_phonenumber2("3368D6510", phonenumber); // 13800138000
+    std::cout << "str5: " << str5 << std::endl;
 
     return ret;
 }
