@@ -94,6 +94,26 @@ std::string add(std::string num1, std::string num2, int base)
     int len1 = num1.length();
     int len2 = num2.length();
 
+    // 检查输入的合法性
+    for (int i = 0; i < len1; i++)
+    {
+        if (char2int(num1[i]) < 0 || char2int(num1[i]) > base)
+        {
+            std::cout << "the element in number " << num1;
+            std::cout << " should between 0 and " << base << std::endl;
+            return str;
+        }
+    }
+    for (int i = 0; i < len2; i++)
+    {
+        if (char2int(num2[i]) < 0 || char2int(num2[i]) > base)
+        {
+            std::cout << "the element in number " << num2;
+            std::cout << " should between 0 and " << base << std::endl;
+            return str;
+        }
+    }
+
     int carry = 0;
     int i = 0;
     while (i < len1 && i < len2)
@@ -176,7 +196,8 @@ std::string multiply(std::string num1, std::string num2, int base)
     {
         if (char2int(num1[i]) < 0 || char2int(num1[i]) > base)
         {
-            std::cout << "the element in number " << num1 << " should between 0 and " << base << std::endl;
+            std::cout << "the element in number " << num1;
+            std::cout << " should between 0 and " << base << std::endl;
             return ret;
         }
     }
@@ -184,7 +205,8 @@ std::string multiply(std::string num1, std::string num2, int base)
     {
         if (char2int(num2[i]) < 0 || char2int(num2[i]) > base)
         {
-            std::cout << "the element in number " << num2 << " should between 0 and " << base << std::endl;
+            std::cout << "the element in number " << num2;
+            std::cout << " should between 0 and " << base << std::endl;
             return ret;
         }
     }
@@ -271,7 +293,7 @@ int main()
     std::cout << "hexdata: " << hexdata << "\t"
               << "phonenumber:" << phonenumber << std::endl;
 
-    std::string str1 = add(hexdata, hexdata, 10); // 66D1ACA20
+    std::string str1 = add(hexdata, hexdata, 16); // 66D1ACA20
     std::cout << "str1: " << str1 << std::endl;
 
     std::string str2 = multiply(hexdata, hexdata, 16); // A52F0531B3B85A100
