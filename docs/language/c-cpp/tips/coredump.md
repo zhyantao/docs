@@ -1,4 +1,4 @@
-# Segmentation fault (core dumped)
+# Segmentation fault
 
 ## 什么是 Segmentation fault
 
@@ -26,16 +26,18 @@ cat /proc/sys/kernel/core_pattern
 # echo "/root/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
 ```
 
-```{note}
-%%  单个%字符
-%p  所dump进程的进程ID
-%u  所dump进程的实际用户ID
-%g  所dump进程的实际组ID
-%s  导致本次core dump的信号
-%t  core dump的时间 (由1970年1月1日计起的秒数)
+````{note}
+```text
+%%  单个 % 字符
+%p  所 dump 进程的进程 ID
+%u  所 dump 进程的实际用户 ID
+%g  所 dump 进程的实际组 ID
+%s  导致本次 core dump 的信号
+%t  core dump 的时间 (由 1970 年 1 月 1 日计起的秒数)
 %h  主机名
 %e  程序文件名
 ```
+````
 
 如果在 `core_pattern` 指定目录下没有找到 core 文件，检查当前系统是否使能了 core dump 模式：
 
@@ -61,7 +63,7 @@ file locks                      (-x) unlimited
 
 如果 `core file size` 不等于 0，则说明已经使能了 core dump，无需额外的操作，只需要将发生 Segmentation fault 的程序再运行一遍就可以了，然后去指定目录下去找 core 文件。
 
-如果 `core file size` 等于 0，发生 Segmentation fault 时是不显示 `(core dump)` 这个字段的，你可以使用下面的命令使能 core dump：
+如果 `core file size` 等于 0，发生 Segmentation fault 时是不显示 `(core dumped)` 这个字段的，你可以使用下面的命令使能 core dump：
 
 ```bash
 ulimit -c 1024
