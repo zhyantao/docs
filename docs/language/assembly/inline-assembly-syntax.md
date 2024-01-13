@@ -19,9 +19,23 @@
 
 以 `%` 开头来标识寄存器 `eax`。
 
-AT&T：`%eax`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`eax`
+```bash
+%eax
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+eax
+```
+:::
+::::
 
 ### src/dest 的书写顺序
 
@@ -29,9 +43,23 @@ AT&T 语法始终将 `src` 放在左侧，`dest` 放在右侧。
 
 将 `eax` 寄存器中的值赋值给 `ebx`。
 
-AT&T：`movl %eax, %ebx`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`mov ebx, eax`
+```bash
+movl %eax, %ebx
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+mov ebx, eax
+```
+:::
+::::
 
 ### 常量值/立即数的格式
 
@@ -39,24 +67,66 @@ Intel：`mov ebx, eax`
 
 将 C 语言中的 `static` 变量 `booga` 的内存地址赋值给 `eax` 寄存器。
 
-AT&T：`movl $_booga, %eax`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`mov eax, _booga`
+```bash
+movl $_booga, %eax
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+mov eax, _booga
+```
+:::
+::::
 
 将 `0xd00d` 赋值给 `eax` 寄存器。
 
-AT&T：`movl $0xd00d, %ebx`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`mov ebx, d00dh`
+```bash
+movl $0xd00d, %ebx
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+mov ebx, d00dh
+```
+:::
+::::
 
 ### 指定操作数据的大小
 
 使用前缀 `b`、`w` 或 `l` 来指定目标寄存器的宽度是 `byte`、`word` 还是 `longword`。
 如果你省略了前缀 GAS（GNU Assembler）会去猜需要多大的存储空间，这种不可控的局面可能会导致错误发生。
 
-AT&T：`movw %ax, %bx`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`mov bx, ax`
+```bash
+movw %ax, %bx
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+mov bx, ax
+```
+:::
+::::
 
 ### 汇编寻址方式汇总
 
@@ -64,9 +134,23 @@ DJGPP 使用 386 保护模式，所以你不用在乎实模式下寻址方式（
 因此，我们只考虑 6 个通用寄存器（如果算上 `ebp` 那就是 7 个，但是如果要使用这个寄存器的时候，记得手动恢复，或者编译时带上
 `-fomit-frame-pointer` 这个参数）
 
-AT&T：`immed32(basepointer, indexpointer, indexscale)`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[basepointer + indexpointer * indexscale + immed32]`
+```bash
+immed32(basepointer, indexpointer, indexscale)
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[basepointer + indexpointer * indexscale + immed32]
+```
+:::
+::::
 
 使用段地址和偏移地址计算物理地址的方式如下：
 
@@ -77,9 +161,23 @@ Intel：`[basepointer + indexpointer * indexscale + immed32]`
 
 寻址一个指定的 C 变量：
 
-AT&T：`_booga`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[_booga]`
+```bash
+_booga
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[_booga]
+```
+:::
+::::
 
 通过使用下划线可以拿到一个 `static` (global) C 变量。
 *这种取数据的方式仅对全局变量起作用。*
@@ -87,41 +185,127 @@ Intel：`[_booga]`
 
 直接以寄存器中的值作为目标地址，进行寻址：
 
-AT&T：`(%eax)`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[eax]`
+```bash
+(%eax)
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[eax]
+```
+:::
+::::
 
 以变量名的地址作为基地址，寄存器中的值作为偏移地址，进行寻址：
 
-AT&T：`_variable(%eax)`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[eax + _variable]`
+```bash
+_variable(%eax)
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[eax + _variable]
+```
+:::
+::::
 
 以数组名作为基地址，寄存器中的值作为偏移地址，步长指定为 4 字节，进行寻址：（**冲突**）
 
-AT&T：`_array(, %eax, 4)`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[eax * 4 + array]`
+```bash
+_array(, %eax, 4)
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[eax * 4 + array]
+```
+:::
+::::
 
 以 `eax` 中的值作为基地址，立即数作为偏移地址，进行寻址：
 
 C code：`*(p+1)` where `p` is a `char *`
 
-AT&T：`1(%eax)` where `eax` has the value of `p`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[eax + 1]`
+```bash
+1(%eax) # where `eax` has the value of `p`
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[eax + 1]
+```
+:::
+::::
 
 也可以在立即数进行一些简单的数学运算：
 
-AT&T：`_struct_pointer + 8`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
+
+```bash
+_struct_pointer + 8
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+
+```
+:::
+::::
 
 在字符数组中（含有 8 个字符）中寻址指定的字符：
 
 eax 保存的是数组元素的数量（这里是 8 个），ebx 保存的是字符的偏移地址。（**冲突**）
 
-AT&T：`_array(%ebx, %eax, 8)`
+::::{tab-set}
+:::{tab-item} AT&T
+:sync: att
 
-Intel：`[ebx + eax * 8 + _array]`
+```bash
+_array(%ebx, %eax, 8)
+```
+:::
+
+:::{tab-item} Intel
+:sync: intel
+
+```bash
+[ebx + eax * 8 + _array]
+```
+:::
+::::
 
 ## 基本的内联语句
 

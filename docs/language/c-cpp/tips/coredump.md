@@ -22,11 +22,14 @@ SIGSEGV 是一个用户态的概念，是操作系统在用户态程序错误访
 发生 core dump 时，会生成文件名为诸如 `core.%e.%p.%t` 的文件，存放路径由下面的文件指定：
 
 ```bash
+# 查看 core 文件的存放路径
 cat /proc/sys/kernel/core_pattern
-# echo "/root/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
+
+# 修改 core 文件的存放路径
+echo "/root/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
 ```
 
-````{note}
+````{dropdown}
 ```text
 %%  单个 % 字符
 %p  所 dump 进程的进程 ID
@@ -42,8 +45,11 @@ cat /proc/sys/kernel/core_pattern
 如果在 `core_pattern` 指定目录下没有找到 core 文件，检查当前系统是否使能了 core dump 模式：
 
 ```bash
-$ uname -a
+uname -a
+```
 
+````{dropdown}
+```text
 core file size (blocks)         (-c) 1024
 data seg size (kb)              (-d) unlimited
 scheduling priority             (-e) 0
@@ -60,8 +66,9 @@ max user processes              (-u) 2795
 virtual memory (kb)             (-v) unlimited
 file locks                      (-x) unlimited
 ```
+````
 
-如果 `core file size` 不等于 0，则说明已经使能了 core dump，无需额外的操作，只需要将发生 Segmentation fault 的程序再运行一遍就可以了，然后去指定目录下去找 core 文件。
+如果 `core file size` 不等于 0，则说明已经使能了 core dump，无需额外的操作，只需要将发生 Segmentation fault 的程序再运行一遍就可以了，然后去 `core_pattern` 指定的目录下去找 core 文件。
 
 如果 `core file size` 等于 0，发生 Segmentation fault 时是不显示 `(core dumped)` 这个字段的，你可以使用下面的命令使能 core dump：
 
