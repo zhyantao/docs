@@ -126,7 +126,7 @@ std::string add(std::string num1, std::string num2, int base)
             return str;
         }
         int tmp2 = char2int(num2[len2 - 1 - i]);
-        if (tmp1 < 0)
+        if (tmp2 < 0)
         {
             std::cout << __FILE__ << ":" << __LINE__ << ":"
                       << "the invalid number is " << num2 << std::endl;
