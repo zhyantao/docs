@@ -8,7 +8,7 @@
 sudo apt install tmux
 ```
 
-更进一步地，我们需要掌握一些常用的 tmux 命令 [^cite_ref-1]：
+更进一步地，我们需要掌握一些 [常用的 tmux 命令](https://quickref.me/tmux)：
 
 ```{code-block} text
 # 创建 tmux 会话
@@ -27,7 +27,7 @@ Ctrl + b, x
 Ctrl + b, 方向键
 ```
 
-接下来，你会学习关于 GDB 中常用的命令，但并不是全部，有兴趣的话请参考 `man gdb` [^cite_ref-2]。
+接下来，你会学习关于 GDB 中常用的命令，但并不是全部，有兴趣的话请参考 [`man gdb`](https://www.kdocs.cn/l/cncEx5Kq8rkd)。
 
 本文使用的书写格式为：`[c]ommand <required arg> (optional arg)`
 
@@ -173,10 +173,4 @@ disassemble <函数名>
 
 使用 `Ctrl + z` 可以暂时将 GDB 挂起，然后使用命令 `jobs` 查看后台进程，使用 `fg <编号>` 恢复。
 
-100 个 GDB 小技巧 [^cite_ref-3]。
-
----
-
-[^cite_ref-1]: <https://quickref.me/tmux>
-[^cite_ref-2]: <https://www.kdocs.cn/l/cncEx5Kq8rkd>
-[^cite_ref-3]: <https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html>
+[100 个 GDB 小技巧](https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html)。
