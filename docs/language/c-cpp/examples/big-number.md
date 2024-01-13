@@ -10,7 +10,7 @@
 // 将十六进制字符 '0' ~ 'F' 转换为相应的整数，即 0 ~ 15
 int char2int(char ch)
 {
-    if (!('0' <= ch && ch <= '9' || 'a' <= ch && ch <= 'f' || 'A' <= ch && ch <= 'F'))
+    if (!(('0' <= ch && ch <= '9') || ('a' <= ch && ch <= 'f') || ('A' <= ch && ch <= 'F')))
     {
         std::cout << __FILE__ << ":" << __LINE__ << ":"
                   << "invalid character: " << ch << ", it should between '0' ~ 'F'" << std::endl;
@@ -235,7 +235,7 @@ std::string multiply(std::string num1, std::string num2, int base)
         if (char2int(carry) > 0)
         {
             tmp3.push_back(carry);
-            for (int k = 0; k < rev.length(); k++)
+            for (size_t k = 0; k < rev.length(); k++)
                 tmp3.push_back(int2char(0));
         }
         ret = add(tmp3, ret, base);
@@ -256,18 +256,19 @@ std::string power(std::string base, int n)
 }
 
 // 使用自定义的运算法则
-std::string get_phonenumber2(std::string hexdata, std::string &phonenumber)
+std::string get_phonenumber2(std::string hexdata)
 {
     int len = hexdata.length();
-    std::string sum = "0";
+    std::string ret = "0";
+    std::string base = "16";
     for (int i = len - 1; i >= 0; i--)
     {
         int j = len - 1 - i;
-        std::string base = power("16", j);
+        std::string res = power(base, j);
         std::string num = std::to_string(char2int(hexdata[i]));
-        sum = add(multiply(num, base, 10), sum, 10);
+        ret = add(multiply(num, res, 10), ret, 10);
     }
-    return sum;
+    return ret;
 }
 
 // 使用标准库中的 power 函数
@@ -306,7 +307,7 @@ int main()
     std::string str4 = power("16", 6); // 16777216
     std::cout << "str4: " << str4 << std::endl;
 
-    std::string str5 = get_phonenumber2("3368D6510", phonenumber); // 13800138000
+    std::string str5 = get_phonenumber2("3368D6510"); // 13800138000
     std::cout << "str5: " << str5 << std::endl;
 
     return ret;
