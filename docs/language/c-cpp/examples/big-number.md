@@ -50,7 +50,7 @@ int char2int(char ch)
     return ret;
 }
 
-// 将十进制整数 0 ~ 15 转换相应的十六进制字符 '0' ~ 'F'
+// 将十进制整数 0 ~ 15 转换为相应的十六进制字符 '0' ~ 'F'
 char int2char(int num)
 {
     if (num < 0 || num > 15)
@@ -87,7 +87,7 @@ char int2char(int num)
     return ret;
 }
 
-// 计算 num1 + num2，如果 base=16，则使用 16 进制的运算法则
+// 计算 num1 + num2，如果 base = 16，则使用 16 进制的运算法则
 std::string add(std::string num1, std::string num2, int base)
 {
     std::string str;
@@ -184,7 +184,7 @@ std::string add(std::string num1, std::string num2, int base)
     return ret;
 }
 
-// 计算 num1 和 num2 的乘积，如果 base=10 则使用 10 进制的运算法则
+// 计算 num1 和 num2 的乘积，如果 base = 10 则使用 10 进制的运算法则
 std::string multiply(std::string num1, std::string num2, int base)
 {
     std::string ret = "0";
@@ -244,7 +244,7 @@ std::string multiply(std::string num1, std::string num2, int base)
     return ret;
 }
 
-// 计算 base 指数次幂，即 base^n
+// 计算 base 的 n 次幂，即 base^n
 std::string power(std::string base, int n)
 {
     std::string ret = "1";
