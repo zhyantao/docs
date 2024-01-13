@@ -2,8 +2,6 @@
 
 在跟踪源代码的过程中，学会使用 GDB 将会很大程度上提升你跟踪源代码的效率。
 
-(gdb_tips)=
-
 ## 安装分屏工具 tmux
 
 ```{code-block} bash
@@ -33,7 +31,9 @@ Ctrl + b, 方向键
 
 本文使用的书写格式为：`[c]ommand <required arg> (optional arg)`
 
-## 调试源代码
+(gdb_tips)=
+
+## 运行和调试程序
 
 ```{code} bash
 # 设置断点
@@ -93,7 +93,7 @@ where
 [q]uit
 ```
 
-## 交互模式
+## 进入交互模式
 
 `layout` 命令允许我们调试源代码的同时，显示源代码。
 
