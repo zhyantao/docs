@@ -117,3 +117,44 @@ extern "C"
 
 //#define malloc rpl_malloc
 ```
+
+**7、静态库的链接问题**
+
+如果静态库就在 gcc 的默认搜索路径下，可以直接使用下面的命令：
+
+```bash
+gcc your_program.c -lSDK
+```
+
+它会默认搜索名为 `libSDK.a` 这样的文件。
+
+如果静态库没有在 gcc 的默认搜索路径下，需要人为指定搜索路径：
+
+```bash
+gcc your_program.c -Lpath/to/static/lib -lSDK
+```
+
+它会定位到 `path/to/static/lib/libSDK.a` 这个文件。
+
+如果库文件名没有 `lib` 前缀，那么在链接的时候，需要在 `-l` 参数后面加个冒号，改为 `-l:`：
+
+```bash
+gcc your_program.c -l:SDK
+```
+
+它会定位到名为 `SDK.a` 这个静态库文件。
+
+如果链接时报 skipping incompatible 错误，这主要是因为库版本和平台版本不一致：
+
+- 查看平台版本：`readelf -h main.o | grep "Magic\|Machine"`
+- 查看库版本：`readelf -h HD_CORS_SDK.a | grep "Magic\|Machine"`
+
+```{note}
+Magic 字段主要关注前 5 个字节，第 1 个字节都是以 `0x7f` 开头，第 2、3、4 个字节分别是字母 `E`、`L`、`F` 的 ASCII 码，第 5 个字节如果是 `0x01` 表示该文件适用于 32 位平台，如果是 `0x02` 表示适用于 64 位平台。
+
+Machine 字段中的 ARM 表示最高支持到 ARMv7 或 Aarch32，ARM 64-bit architecture 表示最高可支持到 ARMv8 或 Aarch64。
+
+注意：用正则表达式匹配字符的时候，不应该随便在 pattern 中加空格，如果写成 `"Magic \| Machine"` 就匹配不到 `Magic` 字段了。
+```
+
+参考：[ELF 文件解析 1-前述+文件头分析 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/380908650)
