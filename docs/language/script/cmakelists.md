@@ -1,4 +1,15 @@
-# 使用 CMakeLists
+# CMakeLists
+
+## 使用方法
+
+```bash
+mkdir build
+cd build && cmake ..
+make
+sudo make install
+```
+
+## 一个例子
 
 ```cpp
 // main.cpp

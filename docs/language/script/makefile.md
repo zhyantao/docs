@@ -6,6 +6,34 @@
 在实际工程中，虽然也有只用 Makefile 的项目，但是更为方便的方式是使用 CMakeList 来生成 Makefile。cmake 管理工程的最大优势在于跨平台，自己不用书写太复杂的脚本了，自己写一写配置文件，后面的工作就都是自动化的了。
 ```
 
+## 使用方法
+
+```bash
+cat <<EOF | tee config.site
+ac_cv_file__dev_ptmx=no
+ac_cv_file__dev_ptc=no
+EOF
+```
+
+```bash
+make clean
+
+cd /path/to/src && ./configure \
+--prefix=/path/to/install \
+--build=i686-pc-linux-gnu \
+--target=aarch64-linux \
+--host=aarch64-linux \
+--disable-test-modules \
+--enable-optimizations \
+--with-openssl=/path/to/sysroot/usr \
+--with-openssl-rpath=auto \
+--disable-ipv6 \
+--with-config-site=CONFIG_SITE
+
+make -C /path/to/src -j8
+sudo make -C /path/to/src install
+```
+
 ## 版本一
 
 最简单的方式就是把文件一个一个手打出来进行编译。

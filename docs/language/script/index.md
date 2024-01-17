@@ -8,6 +8,8 @@
 :titlesonly:
 :glob:
 
+autoconf.md
+cmakelists.md
 cmd.exe.md
 conda.rst
 gcc.md
@@ -17,6 +19,7 @@ kubectl.md
 latex.md
 linux.md
 makefile.md
+meson.md
 msys2.md
 myst-nb.md
 patch.md
