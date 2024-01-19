@@ -34,8 +34,9 @@ Git
     git config --global user.name "zhyantao"
     git config --global user.email "zh6tao@gmail.com"
 
-    # 只关注文件内容变更，忽略文件模式变化
-    git config [--global] core.filemode false
+    # 解决 VSCode 未修改代码，但显示变更的问题
+    git config --add core.filemode false
+    git config --global core.autocrlf false
 
     # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
     git remote add origin git@gitee.com:username/repository.git
