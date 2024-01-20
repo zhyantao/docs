@@ -111,6 +111,35 @@ clean:
     rm -f *.o $(TARGET)
 ```
 
+## 赋值操作
+
+|运算符|行为描述|
+|---|---|
+|`=`|定义变量 |
+|`:=`|重新定义变量，覆盖之前的值 |
+|`?=`|如果变量未定义，则赋予默认值 |
+|`+=`|在变量后追加值 |
+```bash
+var = "hello world"
+$(info $(var))  # "hello world"
+
+var ?= "update or not"
+$(info $(var))  # "hello world"
+
+var += "append"
+$(info $(var))  # "hello world" "append"
+
+var := "always update"
+$(info $(var))  # "always update"
+
+# 默认目标
+all: 
+	@echo "All done"  # All done
+
+# 空目标，确保每个语句都会执行
+.PHONY: all
+```
+
 ## 通配符
 
 | 通配符 | 作用                                |
