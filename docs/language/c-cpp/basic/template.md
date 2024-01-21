@@ -1,6 +1,8 @@
 # template
 
-## 函数模板-显式特例化
+## 函数模板
+
+### 实例化
 
 ```cpp
 #include <iostream>
@@ -15,44 +17,25 @@ T sum(T x, T y)
     return x +
            y;
 }
-// Explicitly instantiate
+
+// 显式实例化
 template double sum<double>(double, double);
 
 int main()
 {
     auto val = sum(4.1, 5.2);
     cout << val << endl;
-    return 0;
-}
-```
 
-## 函数模板-隐式特例化
-
-```cpp
-#include <iostream>
-#include <typeinfo>
-
-using namespace std;
-
-template <typename T>
-T sum(T x, T y)
-{
-    cout << "The input type is " << typeid(T).name() << endl;
-    return x + y;
-}
-
-int main()
-{
-    // Implicitly instantiates product<int>(int, int)
+    // 隐式实例化：sum<int>(int, int)
     cout << "sum = " << sum<int>(2.2f, 3.0f) << endl;
-    // Implicitly instantiates product<float>(float, float)
+    // 隐式实例化：sum<float>(float, float)
     cout << "sum = " << sum(2.2f, 3.0f) << endl;
 
     return 0;
 }
 ```
 
-## 特例化函数
+### 特例化
 
 ```cpp
 #include <iostream>
@@ -73,7 +56,7 @@ struct Point
     int y;
 };
 
-// Specialization for Point + Point operation
+// 特例化函数模板为 Point + Point
 template <>
 Point sum<Point>(Point pt1, Point pt2)
 {
@@ -86,26 +69,104 @@ Point sum<Point>(Point pt1, Point pt2)
 
 int main()
 {
-    // Explicit instantiated functions
-    cout << "sum = " << sum(1, 2) << endl;
-    cout << "sum = " << sum(1.1, 2.2) << endl;
-
     Point pt1{1, 2};
     Point pt2{2, 3};
+
+    // 实例化函数模板
     Point pt = sum(pt1, pt2);
     cout << "pt = (" << pt.x << ", " << pt.y << ")" << endl;
     return 0;
 }
 ```
 
-## 特例化类
+## 类模板
+
+### 实例化
 
 ```cpp
 #include <iostream>
 
 using namespace std;
 
-// Class Template
+template <typename T>
+class Mat
+{
+    size_t rows;
+    size_t cols;
+    T *data;
+
+public:
+    Mat(size_t rows, size_t cols) : rows(rows), cols(cols)
+    {
+        data = new T[rows * cols]{};
+    }
+
+    ~Mat()
+    {
+        delete[] data;
+    }
+
+    Mat(const Mat &) = delete;            // 不允许拷贝构造
+    Mat &operator=(const Mat &) = delete; // 不允许赋值构造
+    T getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, T value);
+};
+
+template <typename T>
+T Mat<T>::getElement(size_t r, size_t c)
+{
+    if (r >= this->rows || c >= this->cols)
+    {
+        cerr << "getElement(): Indices are out of range" << endl;
+        return 0;
+    }
+    return data[this->cols * r + c];
+}
+
+template <typename T>
+bool Mat<T>::setElement(size_t r, size_t c, T value)
+{
+    if (r >= this->rows || c >= this->cols)
+    {
+        cerr << "setElement(): Indices are out of range" << endl;
+        return false;
+    }
+
+    data[this->cols * r + c] = value;
+    return true;
+}
+
+int main()
+{
+    // 使用显式实例化类模板
+    Mat<int> imat(3, 4);
+    imat.setElement(1, 2, 256);
+    
+    // 隐式实例化类模板
+    Mat<float> fmat(2, 3);
+    fmat.setElement(1, 2, 3.14159f);
+    Mat<double> dmat(2, 3);
+    dmat.setElement(1, 2, 2.718281828);
+
+    cout << imat.getElement(1, 2) << endl;
+    cout << fmat.getElement(1, 2) << endl;
+    cout << dmat.getElement(1, 2) << endl;
+
+    // Mat<float> fmat2(fmat); // error
+    // Mat<float> fmat3(2,3);
+    // fmat3 = fmat; // error
+
+    return 0;
+}
+```
+
+### 特例化
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
 template <typename T>
 class MyVector
 {
@@ -146,14 +207,14 @@ bool MyVector<T>::setElement(size_t index, T value)
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
     }
-
     data[index] = value;
     return true;
 }
 
-template class MyVector<int>; // Explicitly instantiate template Mat<int>
+// 特例化类模板
+template class MyVector<int>;
 
-// class specialization
+// 特例化类模板
 template <>
 class MyVector<bool>
 {
@@ -227,83 +288,32 @@ int main()
 }
 ```
 
-## 类模板
+## std::function
+
+`std::function` 是 C++ 标准库中的一个模板类，用于包装可调用对象（函数、函数指针、成员函数指针等），并提供一种通用的方式来存储、传递和调用它们。这个类位于 `<functional>` 头文件中。使用 `std::function` 可以实现函数对象的泛型封装，使得在编写泛型代码时更加灵活。
+
+下面是一个简单的例子，演示了 `std::function` 的基本用法：
 
 ```cpp
 #include <iostream>
+#include <functional>
 
-using namespace std;
-
-// Class Template
-template <typename T>
-class Mat
-{
-    size_t rows;
-    size_t cols;
-    T *data;
-
-public:
-    Mat(size_t rows, size_t cols) : rows(rows), cols(cols)
-    {
-        data = new T[rows * cols]{};
-    }
-
-    ~Mat()
-    {
-        delete[] data;
-    }
-
-    Mat(const Mat &) = delete;
-    Mat &operator=(const Mat &) = delete;
-    T getElement(size_t r, size_t c);
-    bool setElement(size_t r, size_t c, T value);
-};
-
-template <typename T>
-T Mat<T>::getElement(size_t r, size_t c)
-{
-    if (r >= this->rows || c >= this->cols)
-    {
-        cerr << "getElement(): Indices are out of range" << endl;
-        return 0;
-    }
-    return data[this->cols * r + c];
+// 定义一个普通的函数
+int add(int a, int b) {
+    return a + b;
 }
 
-template <typename T>
-bool Mat<T>::setElement(size_t r, size_t c, T value)
-{
-    if (r >= this->rows || c >= this->cols)
-    {
-        cerr << "setElement(): Indices are out of range" << endl;
-        return false;
-    }
+int main() {
+    // 使用 std::function 包装普通函数
+    std::function<int(int, int)> addFunction = add;
 
-    data[this->cols * r + c] = value;
-    return true;
-}
-
-template class Mat<int>; // Explicitly instantiate template Mat<int>
-// template Mat<float> and Mat<double> will be instantiate implicitly
-int main()
-{
-    Mat<int> imat(3, 4);
-    imat.setElement(1, 2, 256);
-    Mat<float> fmat(2, 3);
-    fmat.setElement(1, 2, 3.14159f);
-    Mat<double> dmat(2, 3);
-    dmat.setElement(1, 2, 2.718281828);
-
-    // Mat<float> fmat2(fmat); //error
-
-    // Mat<float> fmat3(2,3);
-    // fmat3 = fmat; //error
-
-    cout << imat.getElement(1, 2) << endl;
-    cout << fmat.getElement(1, 2) << endl;
-    cout << dmat.getElement(1, 2) << endl;
+    // 调用包装后的函数
+    std::cout << "Result: " << addFunction(3, 4) << std::endl;
 
     return 0;
 }
 ```
 
+这个例子中，`std::function<int(int, int)>` 表示一个能够接受两个整数参数并返回整数的 `std::function` 对象。通过将普通函数 `add` 赋值给 `addFunction`，我们可以使用 `addFunction` 来调用 `add` 函数。
+
+总的来说，`std::function` 是 C++ 中处理可调用对象的通用机制，为泛型编程提供了更大的灵活性。
