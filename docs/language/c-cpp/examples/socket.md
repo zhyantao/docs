@@ -364,6 +364,7 @@ int main(int argc, char **argv)
 
     // (3) TODO: 撰写需要向服务器发送的数据
     printf("[client] send msg to server: ");
+    memset(sendline, 0, sizeof(sendline));
     fgets(sendline, 4096, stdin);
 
     // (4) 向服务器发送数据
@@ -374,6 +375,7 @@ int main(int argc, char **argv)
     }
 
     // (5) 接收服务器的回复
+    memset(recvline, 0, sizeof(recvline));
     if (recv(sockfd, recvline, MAXLINE, 0) < 0)
     {
         printf("recv msg error: %s(errno: %d)\n", strerror(errno), errno);
