@@ -7,27 +7,27 @@
 1、编写 Makefile
 
 ```bash
-# 使用变量赋值
 CXX := g++
+CXXFLAGS := -c -Wall
+LDFLAGS :=
+
 TARGET := hello
 SRCS := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(SRC))
 
-# 编译标志
-CXXFLAGS := -c -Wall
+# 声明 `all` 为伪目标，防止与系统中的同名目标冲突
+.PHONY:
+all: $(TARGET)
 
 # 目标规则: 生成可执行文件
 $(TARGET): $(OBJS)
-    $(CXX) -o $@ $^
+    $(CXX) -o $@ $^ $(LDFLAGS)
 
 # 编译规则: 生成目标文件
 $(OBJS): %.o: %.cpp
     $(CXX) -o $@ -c $< $(CXXFLAGS)
 
-# 声明 `clean` 为伪目标，防止与系统中的同名目标冲突
-.PHONY: clean
-
-# 清理规则: 删除目标文件和可执行文件
+.PHONY:
 clean:
     rm -f *.o $(TARGET)
 ```
