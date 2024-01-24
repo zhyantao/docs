@@ -58,3 +58,14 @@ patch path/to/input_file -o path/to/output_file < patch.diff
 # 反向应用补丁，即将打过补丁的文件还原
 patch -R < patch.diff
 ```
+
+````{note}
+前文提到 **忽略第 n 级目录**，解释一下这句话，以下述为例：
+
+```text
+--- a/src/module/filename.c
++++ b/src/module/filename.c
+```
+
+在这里，`a` 表示第 1 级目录，`src` 是第 2 级目录，以此类推。假设你在 `workshop` 目录下运行了 `patch` 命令，并且指定了 `-p2` 参数（忽略 2 级目录），那么程序就会寻找 `./module/filename.c` 这个文件，并在这个文件上应用补丁。
+````
