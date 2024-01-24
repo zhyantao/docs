@@ -99,3 +99,76 @@ int main()
     return 0;
 }
 ```
+
+## catch(...)
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+
+// 自定义异常类
+class except1 : public std::exception
+{
+public:
+    const char *what() const noexcept override
+    {
+        return "Exception 1";
+    }
+};
+
+class except2 : public std::exception
+{
+public:
+    const char *what() const noexcept override
+    {
+        return "Exception 2";
+    }
+};
+
+void func(int arg)
+{
+    try
+    {
+        if (arg == 1)
+        {
+            throw except1();
+        }
+        else if (arg == 2)
+        {
+            throw except2();
+        }
+        else
+        {
+            throw std::runtime_error("Unknown exception");
+        }
+    }
+    catch (except1 &e1)
+    {
+        std::cerr << "Caught exception: " << e1.what() << std::endl;
+    }
+    catch (except2 &e2)
+    {
+        std::cerr << "Caught exception: " << e2.what() << std::endl;
+    }
+    catch (...) // 接受所有异常
+    {
+        std::cerr << "Caught unknown exception" << std::endl;
+    }
+}
+
+int main()
+{
+    try
+    {
+        func(1);
+        func(2);
+        func(3);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Caught exception in main: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+```
