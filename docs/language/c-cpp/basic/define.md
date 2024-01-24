@@ -1,43 +1,90 @@
 # define
 
-```cpp
-#include <iostream>
-#define PI 2.14 + 1.0
+::::{tab-set}
+:::{tab-item} \_\_VA\_ARGS\_\_
 
-using namespace std;
+- **含义：**`__VA_ARGS__` 是一个在宏中用来表示可变参数的标识符。它允许在宏中使用可变数量的参数。
+- **用法：**`__VA_ARGS__` 被用在宏定义中，用于表示可变参数的位置。
+- **示例：**
+
+```cpp
+#include <cstdio>
+
+#define PRINT_VALUES(...) printf(__VA_ARGS__)
 
 int main()
 {
-    double len = 2 * PI * 3;
-    cout << "len = " << len << endl; // it will output 7.28, nor 18.84
+    PRINT_VALUES("Sum: %d\n", 10 + 20);
+    PRINT_VALUES("Product: %d\n", 5 * 6);
+    return 0;
 }
 ```
+:::
 
-## Variadic 宏
+:::{tab-item} \#\_\_VA\_ARGS\_\_
+
+- **含义：**`#__VA_ARGS__` 是字符串化运算符，用于将可变参数转换为字符串。
+- **用法：**`#` 运算符用于将宏参数转换为字符串。
+- **示例：**
 
 ```cpp
-#define F(...) f(0 __VA_OPT__(, ) __VA_ARGS__)
-#define G(X, ...) f(0, X __VA_OPT__(, ) __VA_ARGS__)
-#define SDEF(sname, ...) S sname __VA_OPT__(= {__VA_ARGS__})
-F(a, b, c)       // 替换为 f(0, a, b, c)
-F()              // 替换为 f(0)
-G(a, b, c)       // 替换为 f(0, a, b, c)
-G(a, )           // 替换为 f(0, a)
-G(a)             // 替换为 f(0, a)
-SDEF(foo);       // 替换为 S foo;
-SDEF(bar, 1, 2); // 替换为 S bar = { 1, 2 };
+#include <cstdio>
 
-//__VA_ARGS__ 前的井号会给参数加上一个双引号
-#define showlist(...) puts(#__VA_ARGS__)
-showlist();            // 展开成 puts("")
-showlist(1, "x", int); // 展开成 puts("1, \"x\", int")
+#define SHOW_VALUES(...) puts(#__VA_ARGS__)
+
+int main()
+{
+    SHOW_VALUES(1, "x", int); // 展开成 puts("1, \"x\", int")
+    return 0;
+}
 ```
+:::
+
+:::{tab-item} \#\#\_\_VA\_ARGS\_\_
+
+- **含义：**`##` 运算符用于在宏中连接两个标识符。`##__VA_ARGS__` 用于处理可变参数的连接问题。
+- **用法：**`##` 用于在宏中连接可变参数和其他标识符。
+- **示例：**
+
+```cpp
+#include <cstdio>
+
+#define CONCATENATE(a, b) a##b
+
+int main()
+{
+    int xy = CONCATENATE(10, 20); // 展开成 int xy = 1020;
+    printf("%d", xy);
+    return 0;
+}
+```
+:::
+
+:::{tab-item} \_\_VA\_OPT\_\_
+
+- **含义：**`__VA_OPT__` 是一个在可变参数宏中用于处理可选参数的特殊宏。
+- **用法：**`__VA_OPT__(...)` 表示可选参数，若 `__VA_ARGS__` 非空，则插入括号内的内容；否则，将其忽略。
+- **示例：**
+
+```cpp
+#include <cstdio>
+
+#define LOG_MSG(fmt, ...) printf(fmt __VA_OPT__(, ) __VA_ARGS__)
+
+int main()
+{
+    LOG_MSG("Sum: %d, %d\n", 10 + 20, 40); // 展开成 printf("Sum: %d, %d\n", 10 + 20, 40);
+    LOG_MSG("Hello, World!\n");            // 展开成 printf("Hello, World!\n");
+    return 0;
+}
+```
+:::
+::::
 
 ```cpp
 #include <iostream>
 
 // 制造函数工厂并使用它
-// __VA_ARGS__ 前的两个井号，表示在有形参时直接进行替换，没有形参时什么都不做
 #define FUNCTION(name, a) \
     int fun_##name() { return a; }
 
@@ -47,7 +94,9 @@ FUNCTION(fff, 2)
 FUNCTION(qqq, 23)
 
 #undef FUNCTION
+
 #define FUNCTION 34
+
 #define OUTPUT(a) std::cout << "output: " #a << '\n'
 
 // 在后面的宏定义中使用之前的宏
@@ -68,8 +117,6 @@ int main()
 }
 
 /**
- * 上面代码的输出如下：
- *
  * 100
  * abcd: 12
  * fff: 2
