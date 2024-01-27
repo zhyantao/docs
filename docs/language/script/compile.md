@@ -16,7 +16,7 @@ SRCS := $(wildcard *.cpp)
 OBJS := $(patsubst %.cpp, %.o, $(SRC))
 
 # 声明 `all` 为伪目标，防止与系统中的同名目标冲突
-.PHONY:
+.PHONY: all
 all: $(TARGET)
 
 # 目标规则: 生成可执行文件
@@ -27,7 +27,7 @@ $(TARGET): $(OBJS)
 $(OBJS): %.o: %.cpp
     $(CXX) -o $@ -c $< $(CXXFLAGS)
 
-.PHONY:
+.PHONY: clean
 clean:
     rm -f *.o $(TARGET)
 ```
