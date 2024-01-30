@@ -8,6 +8,7 @@
 :titlesonly:
 :glob:
 
+buildroot.md
 cmd.exe.md
 compile.md
 conda.rst
