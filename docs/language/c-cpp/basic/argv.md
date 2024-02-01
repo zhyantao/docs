@@ -208,6 +208,28 @@ g++ -std=c++20 -O2 -Wall -pedantic -pthread main.cpp && ./a.out --reqarg 100 --o
 #include <cstdarg>
 #include <iostream>
 
+void log(char *fmt, ...)
+{
+    char buf[512] = {0};
+    va_list ap;
+
+    va_start(ap, fmt);
+    (void)vsnprintf(buf, sizeof(buf) - 2, fmt, ap);
+    va_end(ap);
+
+    printf("%s\n", buf);
+}
+
+int main()
+{
+    log((char *)"%s, %d, %s", "hello", 100, "world");
+}
+```
+
+```cpp
+#include <cstdarg>
+#include <iostream>
+
 double sum(int num, ...)
 {
     va_list valist; // 创建参数列表
