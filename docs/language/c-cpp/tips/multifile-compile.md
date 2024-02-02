@@ -1,67 +1,43 @@
 # 多文件编译
 
-## 创建三个文件
+## 指定链接时 `.a` 文件的搜索路径
 
-```cpp
-// main.cpp
+静态链接库的默认搜索行为和动态链接库是一样的。
 
-#include <iostream>
-#include "mul.hpp"
+如果静态库就在 GCC 的默认搜索路径下，可以直接使用下面的命令：
 
-using namespace std;
-
-int main()
-{
-    int a, b;
-    int result;
-
-    cout << "Pick two integers:";
-    cin >> a;
-    cin >> b;
-
-    result = mul(a, b);
-
-    cout << "The result is " << result << endl;
-    return 0;
-}
-
+```bash
+gcc your_program.c -lSDK
 ```
 
-```cpp
-// mul.cpp
+它会默认搜索名为 `libSDK.a` 的文件。
 
-#include "mul.hpp"
+如果静态库没有在 GCC 的默认搜索路径下，需要人为指定搜索路径：
 
-int mul(int a, int b)
-{
-    return a * b;
-}
+```bash
+gcc your_program.c -Lpath/to/static/lib -lSDK
 ```
 
-```cpp
-// mul.hpp
+它会定位到名为 `path/to/static/lib/libSDK.a` 的文件。
 
-#pragma once
+如果库文件名没有 `lib` 前缀，那么在链接的时候，需要在 `-l` 参数后面加个冒号，改为 `-l:`：
 
-int mul(int a, int b);
+```bash
+gcc your_program.c -l:SDK
 ```
 
-## 编译
+它会定位到名为 `SDK.a` 的文件。
 
-```shell
-g++ -c main.cpp
-g++ -c mul.cpp
+## 指定运行时 so 文件的搜索路径
+
+增加编译选项：`rpath`
+
+```bash
+# 让程序在当前路径下搜索 so 文件
+LDFLAGS += -Wl,--hash-style=sysv,-Bsymbolic,-rpath=.
 ```
 
-## 链接
-
-```shell
-g++ -o mul main.o mul.o
-```
-
-## Q & A
-
-**1、undefined reference to**
+## undefined reference to
 
 出现这个问题，一般有以下几个原因：
 
@@ -95,23 +71,23 @@ extern "C"
 
 更多链接阶段出现的问题，可以参考 <https://www.cnblogs.com/schips/p/13728080.html>。
 
-**2、DWARF error: could not find variable specification at offset**
+## DWARF error: could not find variable specification at offset
 
 出现这个问题，可能的原因有：（1）非 `static` 函数，调用了 `static` 函数。（2）忘记了在 Makefile 中链接 undefined reference 指向函数所在的文件。
 
-**3、line 1: can't open: no such file**
+## line 1: can't open: no such file
 
 出现这个错误，通常是因为使用的编译器和运行平台不匹配。可能是你用 GCC 编译了程序，但是却在开发板上运行了程序。
 
-**4、line 2: syntax error: bad function name**
+## line 2: syntax error: bad function name
 
 出现这个错误，通常是因为使用的编译器和运行平台不匹配。可能是你用 GCC 编译了程序，但是却在开发板上运行了程序。
 
-**5、real-ld: cannot find crti.o: No such file or directory**
+## real-ld: cannot find crti.o: No such file or directory
 
 在编译时，明明使用 `-L` 指定了 `crti.o` 所在的路径，为什么还是会提示找不到这个文件呢？这种情况下，应该是忘记了在链接时指定 `--sysroot`。
 
-**6、undefined reference to `rpl_malloc'**
+## undefined reference to `rpl_malloc'
 
 这种错误多出现在交叉编译时，对 `rpl_malloc` 函数进行了重新定义，导致找不到原来的函数了。我们只需要注释掉重新定义的语句就可以了。
 
@@ -121,33 +97,7 @@ extern "C"
 //#define malloc rpl_malloc
 ```
 
-**7、静态库的链接问题**
-
-如果静态库就在 GCC 的默认搜索路径下，可以直接使用下面的命令：
-
-```bash
-gcc your_program.c -lSDK
-```
-
-它会默认搜索名为 `libSDK.a` 的文件。
-
-如果静态库没有在 GCC 的默认搜索路径下，需要人为指定搜索路径：
-
-```bash
-gcc your_program.c -Lpath/to/static/lib -lSDK
-```
-
-它会定位到名为 `path/to/static/lib/libSDK.a` 的文件。
-
-如果库文件名没有 `lib` 前缀，那么在链接的时候，需要在 `-l` 参数后面加个冒号，改为 `-l:`：
-
-```bash
-gcc your_program.c -l:SDK
-```
-
-它会定位到名为 `SDK.a` 的文件。
-
-**8、skipping incompatible**
+## skipping incompatible
 
 如果链接时报 skipping incompatible 错误，这主要是因为库版本和平台版本不一致：
 
