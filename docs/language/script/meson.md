@@ -2,7 +2,7 @@
 # Meson
 
 ```bash
-cat <<EOF | tee /path/to/aarch64-linux.ini
+cat <<EOF | tee aarch64-linux.ini
 [constants]
 sdk_dir = '/path/to/sdk'
 sysroot_dir = sdk_dir + '/sysroot'
