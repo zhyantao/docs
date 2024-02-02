@@ -37,9 +37,9 @@ EOF
 export CMAKE := /path/to/bin/cmake
 
 export PKG_CONFIG_DIR := "$(SYSROOT_DIR)/usr/lib/pkgconfig"
-export PKG_CONFIG_PATH := "${PKG_CONFIG_DIR}:$(SYSROOT_DIR)/usr/share/pkgconfig"
-export PKG_CONFIG_LIBDIR := "${PKG_CONFIG_DIR}"
-export PKG_CONFIG_SYSROOT_DIR := "${SYSROOT_DIR}"
+export PKG_CONFIG_PATH := "$(PKG_CONFIG_DIR):$(SYSROOT_DIR)/usr/share/pkgconfig"
+export PKG_CONFIG_LIBDIR := "$(PKG_CONFIG_DIR)"
+export PKG_CONFIG_SYSROOT_DIR := "$(SYSROOT_DIR)"
 export PKG_CONFIG_DISABLE_UNINSTALLED := "yes"
 
 CURR_DIR := $(shell pwd)
