@@ -1,6 +1,6 @@
 # define
 
-## 使用可变参数宏
+## 可变参数宏
 
 ::::{tab-set}
 :::{tab-item} \_\_VA\_ARGS\_\_
