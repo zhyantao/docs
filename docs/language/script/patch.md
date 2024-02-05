@@ -5,6 +5,9 @@
 `diff` 命令主要用于制作补丁。`diff` 可以比较两个文件，并可同时记录下二者的区别。
 
 ```bash
+# （推荐）对指定 commit 生成 patch
+git format-patch -1 <commit_id>
+
 # （推荐）对已被 git track 的文件（夹）制作补丁
 git diff > diff.patch
 
