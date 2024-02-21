@@ -1,0 +1,36 @@
+# 科学上网
+
+## 购买渠道
+
+- <https://ikuuu.club/>
+- <https://xn--mes358a9urctx.com/#/register?code=Dg0WsPV3>
+- <https://xn--wtq35pfyd55o.co/#/register?code=E4cAVYMl>
+- <https://moon.uinio.in/auth/register>
+- <https://secure.bitzapp.uk/#/login>
+- <https://my.xn--cloud-cl5i.com/index.html>
+- <https://xn--mesr8b36x.net/#/login>
+- <https://www.netbridge.uk/#/register?code=Wvkas0Cg>
+- <https://qianggewangluo.com/#/register?code=Nz5JIkjz>
+- <https://xn--4gqx1hgtfdmt.com/#/register?code=Rj7jbQqS>
+- <https://xn--fpzt75b.com/#/register?code=sChtl5oM>
+- <https://xn--mes358akko7nu.net/#/register?code=sChtl5oM>
+- <https://xn--9kqq77hqun.com/#/register?code=sChtl5oM>
+- <https://newhua99.com/#/register?code=cfKDdOzz>
+- <https://xn--mes53ddysu0o3gl.com/#/register?code=BP1rABR6>
+- <https://xn--31t720bz9j7oo.xyz/>
+- <https://hajimi.online/#/register?v=3&p=1fe5556b28c8c9ae&a=MzYzMmQ3>
+- <https://azumase.ren/#/register?code=iPulyZDz>
+- <https://xn--mesr8b36xr0o.com/#/register?code=dJdf5ifd>
+- <https://xn--ehq00hgtfdmt.net/#/register?code=p66Wrd5r>
+- <https://xn--4gq62f52gdss.com/#/register?code=ALEDTzdw>
+- <https://daniu.e300daniu.top/#/register?code=fHs6PjMS>
+- <https://xqcloud.icu/#/register?code=jgHPqZ9C>
+- <https://biteb.one/auth/register>
+- <https://vpn.emoyyds.top/#/register?code=OG2nnByK>
+- <https://xn--mes91r2ng7p4a.com/#/register?code=cphiNIh0>
+- <https://v2.bujidao.org/auth/login>
+- <https://juzicloud.net/auth/login>
+- <https://ssr.giize.com/#/login>
+- <https://tuboshu.bet/auth/register>
+- <https://www.gw-yundong.net/>
+- <https://www.rymfq.com/#/register?code=SvC1iJQ0>
