@@ -1,33 +1,14 @@
 # GDB
 
-在跟踪源代码的过程中，学会使用 GDB 将会很大程度上提升你跟踪源代码的效率。
+## 如何使用 GDB
 
-## 安装分屏工具 tmux
+首先要做的就是将程序编译出来，然后，运行下面的命令进入 gdb 模式：
 
-```{code-block} bash
-sudo apt install tmux
+```bash
+gdb <your_program>
 ```
 
-更进一步地，我们需要掌握一些 [常用的 tmux 命令](https://quickref.me/tmux)：
-
-```{code-block} text
-# 创建 tmux 会话
-tmux
-
-# 纵向分屏
-Ctrl + b, "
-
-# 横向分屏
-Ctrl + b, %
-
-# 关闭当前分屏
-Ctrl + b, x
-
-# 切换分屏（按住 Ctrl + b 不放，再按方向键，可以调整窗口大小）
-Ctrl + b, 方向键
-```
-
-接下来，你会学习关于 GDB 中常用的命令，但并不是全部，有兴趣的话请参考 [`man gdb`](https://www.kdocs.cn/l/cncEx5Kq8rkd)。
+参考文档：[`man gdb`](https://www.kdocs.cn/l/cncEx5Kq8rkd)。
 
 本文使用的书写格式为：`[c]ommand <required arg> (optional arg)`
 
@@ -37,7 +18,7 @@ Ctrl + b, 方向键
 
 ```{code} bash
 # 设置断点
-[b]reak <函数名 or 函数名:行号 or *内存地址>
+[b]reak <函数名 | 函数名:行号 | *内存地址>
 
 # 反汇编
 disassemble <函数名>
@@ -165,6 +146,31 @@ Ctrl + l
 
 # 反汇编某个函数
 disassemble <函数名>
+```
+
+## 安装分屏工具 tmux
+
+```{code-block} bash
+sudo apt install tmux
+```
+
+更进一步地，我们需要掌握一些 [常用的 tmux 命令](https://quickref.me/tmux)：
+
+```{code-block} text
+# 创建 tmux 会话
+tmux
+
+# 纵向分屏
+Ctrl + b, "
+
+# 横向分屏
+Ctrl + b, %
+
+# 关闭当前分屏
+Ctrl + b, x
+
+# 切换分屏（按住 Ctrl + b 不放，再按方向键，可以调整窗口大小）
+Ctrl + b, 方向键
 ```
 
 ## 小技巧
