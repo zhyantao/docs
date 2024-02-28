@@ -7,25 +7,28 @@
 ##  init
 
 ```bash
+# 初始化仓库，-u 指定要使用的清单文件（manifest）所在位置
 repo init -u https://android.googlesource.com/platform/manifest
 
-# the same but depth=1 for faster clone
-repo init  --depth=1 -u https://android.googlesource.com/platform/manifest
+# --depth=1 只检出最近的一次提交
+repo init --depth=1 -u https://android.googlesource.com/platform/manifest
 ```
 
 ## sync
 
 ```bash
-# sync network in 4 threads and sync local in 16 threads
+# -n 不会下载任何文件，只会显示将要执行的操作
+# -l 下载和同步操作
+# -j 指定会同时运行的线程数量
 repo sync -n -j 4 && repo sync -l -j 16
 
-# the same but sync only current branch -c
+# -c 只在当前分支上执行同步操作
 repo sync -c -n -j 4 && repo sync -c -l -j 16
 ```
 
 ## manifest
 
 ```bash
-# 查看当前项目的清单文件
+# 查看被 repo 管理的各个仓库的分支
 repo manifest
 ```
