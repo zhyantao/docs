@@ -17,7 +17,7 @@ repo init --depth=1 -u https://android.googlesource.com/platform/manifest
 ## manifest
 
 ```bash
-# 查看被 repo 管理的各个仓库的名称、
+# 查看被 repo 管理的各个仓库的远程仓库名称、本地存储路径、当前分支等信息
 repo manifest
 ```
 
