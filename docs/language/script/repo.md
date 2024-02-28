@@ -14,6 +14,13 @@ repo init -u https://android.googlesource.com/platform/manifest
 repo init --depth=1 -u https://android.googlesource.com/platform/manifest
 ```
 
+## manifest
+
+```bash
+# 查看被 repo 管理的各个仓库的名称、
+repo manifest
+```
+
 ## sync
 
 ```bash
@@ -24,11 +31,4 @@ repo sync -n -j 4 && repo sync -l -j 16
 
 # -c 只在当前分支上执行同步操作
 repo sync -c -n -j 4 && repo sync -c -l -j 16
-```
-
-## manifest
-
-```bash
-# 查看被 repo 管理的各个仓库的分支
-repo manifest
 ```
