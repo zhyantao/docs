@@ -10,27 +10,6 @@
 ## 修改历史提交记录
 
 ::::{tab-set}
-:::{tab-item} 删除敏感信息
-
-在开发过程中，发现将密码或私钥上传到 GitHub 上，思考如何在不删除仓库的情况下，仅修改敏感信息来将密码隐藏掉。首先，创建 `replacements.txt`，添加如下变更内容：
-
-```bash
-cat <<EOF | sudo tee ../replacements.txt
-PASSWORD1                       # 将所有提交记录中的 'PASSWORD1' 替换为 '***REMOVED***' (默认)
-PASSWORD2==>examplePass         # 将所有提交记录中的 'PASSWORD2' 替换为 'examplePass'
-PASSWORD3==>                    # 将所有提交记录中的 'PASSWORD3' 替换为空字符串
-regex:password=\w+==>password=  # 使用正则表达式将 'password=\w+' 替换为 'password='
-regex:\r(\n)==>$1               # 将所有提交记录中的 Windows 中的换行符替换为 Unix 的换行符
-EOF
-```
-
-`cd` 到仓库的根目录，运行下面的命令：
-
-```bash
-git filter-repo --replace-text ../replacement.txt
-```
-:::
-
 :::{tab-item} 修改用户名和邮箱
 
 如果你修改了邮箱，你在 Windows 上设置的提交邮箱与 GitHub 上设置的邮箱不一致，历史提交信息中的头像可能会空白。这种情况下下，可以使用下面的方法解决。
@@ -64,6 +43,27 @@ zhyantao <zh6tao@gmail.com> Zh YT <zhyantao@126.com>
 git filter-repo --mailmap ../mailmap.txt
 ```
 :::
+
+:::{tab-item} 删除敏感信息
+
+在开发过程中，发现将密码或私钥上传到 GitHub 上，思考如何在不删除仓库的情况下，仅修改敏感信息来将密码隐藏掉。首先，创建 `replacements.txt`，添加如下变更内容：
+
+```bash
+cat <<EOF | sudo tee ../replacements.txt
+PASSWORD1                       # 将所有提交记录中的 'PASSWORD1' 替换为 '***REMOVED***' (默认)
+PASSWORD2==>examplePass         # 将所有提交记录中的 'PASSWORD2' 替换为 'examplePass'
+PASSWORD3==>                    # 将所有提交记录中的 'PASSWORD3' 替换为空字符串
+regex:password=\w+==>password=  # 使用正则表达式将 'password=\w+' 替换为 'password='
+regex:\r(\n)==>$1               # 将所有提交记录中的 Windows 中的换行符替换为 Unix 的换行符
+EOF
+```
+
+`cd` 到仓库的根目录，运行下面的命令：
+
+```bash
+git filter-repo --replace-text ../replacement.txt
+```
+:::
 ::::
 
 ## 提交到远程仓库
@@ -79,6 +79,17 @@ git remote add origin git@github.com:username/repository.git
 ```bash
 git push origin --force --all
 ```
+
+````{dropdown} ! [remote rejected] main -> main (protected branch hook declined)
+```bash
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote: error: Cannot force-push to this branch
+To github.com:zhyantao/cc-frontend-preview.git
+ ! [remote rejected] main -> main (protected branch hook declined)
+```
+
+解决方法：`Settings` > `General` > `Danger Zone` > `Disable branch protection rules`
+````
 
 要从标记版本删除敏感文件，还需要针对 Git 标记强制推送：
 
