@@ -2,10 +2,10 @@
 
 ## 购买渠道
 
-- <https://ikuuu.club/>
+- <https://ikuuu.club/>（免费 50G 流量/月）
 - <https://xn--mes358a9urctx.com/#/register>
 - <https://xn--wtq35pfyd55o.co/#/register>
-- <https://moon.uinio.in/auth/register>
+- <https://moon.uinio.in/auth/register>（8元/月）
 - <https://secure.bitzapp.uk/#/login>
 - <https://my.xn--cloud-cl5i.com/index.html>
 - <https://xn--mesr8b36x.net/#/login>
