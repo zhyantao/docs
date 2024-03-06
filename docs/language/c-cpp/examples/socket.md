@@ -235,77 +235,98 @@ int close(int fd);
 ```cpp
 // server.c
 
-#include <errno.h>
-#include <netinet/in.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/select.h>
+#include <sys/time.h>
 
-#define MAXLINE 4096
+#define MAX_BUFFER_SIZE 1024
 
-int main(int argc, char **argv)
+void handle_error(const char *msg)
 {
-    int listenfd, connfd;
-    struct sockaddr_in serveraddr;
-    char buf[4096];
-    int n;
+    perror(msg);
+    exit(EXIT_FAILURE);
+}
 
-    // (1) 创建 socket
-    if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+int main(int argc, char *argv[])
+{
+    int serverfd, clientfd, portno, n;
+    socklen_t clilen;
+    char buffer[MAX_BUFFER_SIZE];
+    struct sockaddr_in serveraddr, clientaddr;
+    fd_set readfds;
+
+    if (argc < 2)
     {
-        printf("create socket failed: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-1);
+        fprintf(stderr, "ERROR, no port provided\n");
+        exit(1);
     }
 
-    memset(&serveraddr, 0, sizeof(serveraddr));
-    serveraddr.sin_family = AF_INET;                // 使用 IPv4 协议
-    serveraddr.sin_addr.s_addr = htonl(INADDR_ANY); // 将主机字节序转换为网络字节序
-    serveraddr.sin_port = htons(6666);              // 将无符号整数转换为网络字节序
+    serverfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (serverfd < 0)
+        handle_error("ERROR opening socket");
 
-    // (2) 为 socket 分配 IP 和端口号
-    if (bind(listenfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) == -1)
-    {
-        printf("bind socket failed: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-2);
-    }
+    bzero((char *)&serveraddr, sizeof(serveraddr));
+    portno = atoi(argv[1]);
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_addr.s_addr = INADDR_ANY;
+    serveraddr.sin_port = htons(portno);
 
-    // (3) 监听 socket
-    if (listen(listenfd, 10) == -1)
-    {
-        printf("listen socket failed: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-3);
-    }
-    printf("...... waiting for client's request\n");
+    if (bind(serverfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
+        handle_error("ERROR on binding");
+
+    listen(serverfd, 5);
+    clilen = sizeof(clientaddr);
+
+    FD_ZERO(&readfds);
+    FD_SET(serverfd, &readfds);
 
     while (1)
     {
-        // (4) 建立连接，三次握手
-        if ((connfd = accept(listenfd, (struct sockaddr *)NULL, NULL)) == -1)
+        fd_set tempfds = readfds;
+        int retval = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
+        if (retval < 0)
+            handle_error("ERROR in pselect");
+
+        for (int i = 0; i < FD_SETSIZE; i++)
         {
-            printf("accept socket failed: %s(errno: %d)\n", strerror(errno), errno);
-            continue;
+            if (FD_ISSET(i, &tempfds))
+            {
+                if (i == serverfd)
+                {
+                    clientfd = accept(serverfd, (struct sockaddr *)&clientaddr, &clilen);
+                    if (clientfd < 0)
+                        handle_error("ERROR on accept");
+                    FD_SET(clientfd, &readfds);
+                }
+                else
+                {
+                    bzero(buffer, MAX_BUFFER_SIZE);
+                    n = read(i, buffer, MAX_BUFFER_SIZE - 1);
+                    if (n < 0)
+                        handle_error("ERROR reading from socket");
+                    else if (n == 0)
+                    {
+                        close(i);
+                        FD_CLR(i, &readfds);
+                    }
+                    else
+                    {
+                        printf("Here is the message: %s\n", buffer);
+                        n = write(i, "I got your message", 18);
+                        if (n < 0)
+                            handle_error("ERROR writing to socket");
+                    }
+                }
+            }
         }
-
-        // (5) 网络 I/O 操作
-        memset(buf, 0, sizeof(buf));
-        n = recv(connfd, buf, MAXLINE, 0);
-
-        // (6) TODO: 处理客户端发来的数据
-        printf("[server] recv msg from client: %s\n", buf);
-
-        // (7) TODO: 将处理结果返回给客户端
-        printf("[server] send msg to client: %s\n", buf);
-        send(connfd, buf, strlen(buf), 0);
-
-        // (8) 关闭连接，四次挥手
-        close(connfd);
     }
-
-    // (9) 关闭 socket
-    close(listenfd);
 
     return 0;
 }
@@ -314,79 +335,65 @@ int main(int argc, char **argv)
 ```cpp
 // client.c
 
-#include <arpa/inet.h>
-#include <errno.h>
-#include <netinet/in.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-#define MAXLINE 4096
+#define MAX_BUFFER_SIZE 1024
 
-int main(int argc, char **argv)
+void handle_error(const char *msg)
 {
-    int sockfd;
-    char recvline[4096], sendline[4096];
-    struct sockaddr_in serveraddr;
+    perror(msg);
+    exit(EXIT_FAILURE);
+}
 
-    if (argc != 2)
+int main(int argc, char *argv[])
+{
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    char buffer[MAX_BUFFER_SIZE];
+
+    if (argc < 3)
     {
-        printf("usage: ./client <ipaddress>\n");
-        exit(-1);
+        fprintf(stderr, "usage %s hostname port\n", argv[0]);
+        exit(0);
     }
 
-    // (1) 创建 socket
-    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0)
+        handle_error("ERROR opening socket");
+
+    bzero((char *)&serv_addr, sizeof(serv_addr));
+    portno = atoi(argv[2]);
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
+    serv_addr.sin_port = htons(portno);
+
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+        handle_error("ERROR connecting");
+
+    while (1)
     {
-        printf("create socket error: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-2);
+        printf("Please enter the message: ");
+        bzero(buffer, MAX_BUFFER_SIZE);
+        fgets(buffer, MAX_BUFFER_SIZE - 1, stdin);
+        n = write(sockfd, buffer, strlen(buffer));
+        if (n < 0)
+            handle_error("ERROR writing to socket");
+
+        bzero(buffer, MAX_BUFFER_SIZE);
+        n = read(sockfd, buffer, MAX_BUFFER_SIZE - 1);
+        if (n < 0)
+            handle_error("ERROR reading from socket");
+        printf("%s\n", buffer);
     }
 
-    memset(&serveraddr, 0, sizeof(serveraddr));
-    serveraddr.sin_family = AF_INET;   // 使用 IPv4 协议
-    serveraddr.sin_port = htons(6666); // 将无符号整数转换为网络字节序
-    // 将标准文本表示形式的 IPv4 或 IPv6 地址转换为数字二进制形式
-    if (inet_pton(AF_INET, argv[1], &serveraddr.sin_addr) <= 0)
-    {
-        printf("inet_pton error for %s\n", argv[1]);
-        exit(-3);
-    }
-
-    // (2) 发送连接请求
-    if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
-    {
-        printf("connect error: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-4);
-    }
-
-    // (3) TODO: 撰写需要向服务器发送的数据
-    printf("[client] send msg to server: ");
-    memset(sendline, 0, sizeof(sendline));
-    fgets(sendline, 4096, stdin);
-
-    // (4) 向服务器发送数据
-    if (send(sockfd, sendline, strlen(sendline), 0) < 0)
-    {
-        printf("send msg error: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-5);
-    }
-
-    // (5) 接收服务器的回复
-    memset(recvline, 0, sizeof(recvline));
-    if (recv(sockfd, recvline, MAXLINE, 0) < 0)
-    {
-        printf("recv msg error: %s(errno: %d)\n", strerror(errno), errno);
-        exit(-6);
-    }
-
-    printf("[client] received reply from server: %s\n", recvline);
-
-    // (6) 关闭 socket
     close(sockfd);
-
     return 0;
 }
 ```
