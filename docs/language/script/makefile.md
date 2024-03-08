@@ -11,7 +11,7 @@ LDFLAGS :=
 
 TARGET := hello
 SRCS := $(wildcard *.cpp)
-OBJS := $(patsubst %.cpp, %.o, $(SRC))
+OBJS := $(patsubst %.cpp, %.o, $(SRCS))
 
 # 声明 `all` 为伪目标，防止与系统中的同名目标冲突
 .PHONY: all
