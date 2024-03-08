@@ -19,15 +19,15 @@ all: $(TARGET)
 
 # 目标规则: 生成可执行文件
 $(TARGET): $(OBJS)
-    $(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 # 编译规则: 生成目标文件
 $(OBJS): %.o: %.cpp
-    $(CXX) -o $@ -c $< $(CXXFLAGS)
+	$(CXX) -o $@ -c $< $(CXXFLAGS)
 
 .PHONY: clean
 clean:
-    rm -f *.o $(TARGET)
+	rm -f *.o $(TARGET)
 ```
 
 2、配置编译选项
