@@ -1,4 +1,12 @@
-# Cmd
+# Windows Terminal
+
+## 分栏快捷键
+
+左右分栏：`Alt` + `Shift` + `=`
+
+上下分栏：`Alt` + `Shift` + `-`
+
+关闭分栏：`Ctrl` + `Shift` + `w`
 
 ## 设置 Anaconda 自动启动
 
