@@ -15,14 +15,14 @@
 :glob:
 :hidden:
 
-language/theory/index
-language/java/index
-language/c-cpp/index
-language/assembly/index
-language/python/index
-language/script/index
-language/javascript/index
-language/deploy/index
+theory/index
+java/index
+c-cpp/index
+assembly/index
+python/index
+script/index
+javascript/index
+deploy/index
 ```
 
 ```{toctree}
