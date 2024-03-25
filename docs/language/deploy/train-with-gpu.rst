@@ -32,7 +32,7 @@ GPU 是显卡的核心，它是显卡上的一块芯片，因此我们很多时�
 
 打开任务管理器后，我们或许会看到这样一张图：
 
-.. image:: ../_static/images/gpuinfo.png
+.. image:: ../../_static/images/gpuinfo.png
 
 图中的共享 GPU 内存，是集成显卡的一部分。集成或共享显卡内置在 CPU 所处的同一个芯片上。
 与依赖于专用或独立显卡的 CPU 相比，某些 CPU 可以配备内置式 GPU。
@@ -51,7 +51,7 @@ NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包
 
 比如，我在笔记本电脑上首先安装了 PaddlePaddle，如下图所示。
 
-.. image:: ../_static/images/paddlepaddle_install.png
+.. image:: ../../_static/images/paddlepaddle_install.png
 
 然后用 PaddlePaddle 跑了 YOLO 模型，发现 batch_size 设置的稍微大一点就会发生程序内存溢出，不得改小这个值。
 因此，如果非要在个人电脑上运行深度学习程序，那么不免在算法准确性和程序运行时间上做出一些妥协，因为根本跑不动。
@@ -65,7 +65,7 @@ NVIDIA 的 Titan 系列、Intel 的 Xeon 系列，都可以通过官方软件包
 ``conda install cudnn`` 可以更加方便快捷地完成环境部署。当然，你也可以先从官网下载安装器，然后按照下面
 UI 界面的提示进行安装。这个软件比较大，你可以不用完整安装，勾选如下选项即可：
 
-.. image:: ../_static/images/cuda-installation.png
+.. image:: ../../_static/images/cuda-installation.png
 
 安装完可以通过 ``nvcc --version``
 命令查看 CUDA 是否安装成功。在 Python 中添加这样一行代码 ``os.environ['CUDA_VISIBLE_DEVICES'] = '0'``
@@ -77,7 +77,7 @@ UI 界面的提示进行安装。这个软件比较大，你可以不用完整�
 `PaddlePaddle <https://www.paddlepaddle.org.cn/install/quick>`_
 应该就可以了，因为我的版本都是 11.1 所以，我用 pip 安装了 PaddlePaddle 的 11.1 版本。下图是成功后的训练过程：
 
-.. image:: ../_static/images/training-with-gpu-success.png
+.. image:: ../../_static/images/training-with-gpu-success.png
 
 另外，如果想查看本机的其他参数，可以使用下面几种方式中的一种：
 

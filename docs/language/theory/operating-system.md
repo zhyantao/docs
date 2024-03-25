@@ -26,7 +26,7 @@
 
 操作系统的层次结构如下图所示：
 
-```{figure} ../_static/images/os-architecture.*
+```{figure} ../../_static/images/os-architecture.*
 操作系统的层次结构
 ```
 
@@ -76,7 +76,7 @@ CPU 在执行指令时会自动检查是否有异常发生，由程序自动触�
 
 进程之间的切换如下图所示：
 
-```{figure} ../_static/images/os-process-schedule.*
+```{figure} ../../_static/images/os-process-schedule.*
 操作系统的进程调度的 5 状态模型
 ```
 
@@ -88,7 +88,7 @@ CPU 在执行指令时会自动检查是否有异常发生，由程序自动触�
 
 在代码实现中，这五种状态间的切换如下图所示：
 
-```{figure} ../_static/images/os-process-switch.png
+```{figure} ../../_static/images/os-process-switch.png
 操作系统的进程调度的 5 种状态间切换 [^cite_ref-3]
 ```
 
@@ -147,7 +147,7 @@ CPU 在执行指令时会自动检查是否有异常发生，由程序自动触�
 
 为减轻系统负担，提高系统的资源利用率，将暂时不执行的进程调到外存，变为 "挂起态"。
 
-```{figure} ../_static/images/os-process-schedule-7.*
+```{figure} ../../_static/images/os-process-schedule-7.*
 操作系统的进程调度的 7 状态模型
 ```
 
@@ -544,7 +544,7 @@ signal(S);
 :::{card}
 例：有如下所示的同步关系，请完成代码实现。
 
-```{figure} ../_static/images/os-process-semaphore.*
+```{figure} ../../_static/images/os-process-semaphore.*
 进程之间的同步关系
 ```
 :::
@@ -591,7 +591,7 @@ P4() {
 
 ##### 生产者-消费者问题
 
-```{figure} ../_static/images/os-process-producer-consumer.*
+```{figure} ../../_static/images/os-process-producer-consumer.*
 生产者-消费者问题
 ```
 
@@ -646,7 +646,7 @@ consumer() {
 单生产者-单消费者问题指的是生产者生产额消费者消费的是同一种产品，
 而多生产者-多消费者问题指的是生产者可以生产多种产品，消费者也可以消费多种产品。
 
-```{figure} ../_static/images/os-process-multi-producer-consumer.*
+```{figure} ../../_static/images/os-process-multi-producer-consumer.*
 多生产者-多消费者问题
 ```
 
@@ -728,7 +728,7 @@ consumer2() {
 
 ##### 吸烟者问题
 
-```{figure} ../_static/images/os-process-smoker.*
+```{figure} ../../_static/images/os-process-smoker.*
 吸烟者问题
 ```
 
@@ -901,7 +901,7 @@ reader() {
 
 ##### 哲学家进餐问题
 
-```{figure} ../_static/images/An_illustration_of_the_dining_philosophers_problem.png
+```{figure} ../../_static/images/An_illustration_of_the_dining_philosophers_problem.png
 :height: 300px
 
 哲学家就餐问题

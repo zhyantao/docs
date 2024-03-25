@@ -6,7 +6,7 @@
 
 【编辑】-【首选项】-【高级】-【文件和文件夹】
 
-```{figure} ../_static/images/zotero_1.png
+```{figure} ../../_static/images/zotero_1.png
 ```
 
 ## 格式化 PDF 文件名
@@ -17,7 +17,7 @@
 
 【工具】-【Zotfile Preferences】
 
-```{figure} ../_static/images/zotero_2.png
+```{figure} ../../_static/images/zotero_2.png
 ```
 
 右击参考文献 - 【Management Attachments】 - 【Rename and Move】
@@ -28,7 +28,7 @@
 
 安装插件 <https://github.com/wshanks/Zutilo>，打开下面这两个选项：
 
-```{figure} ../_static/images/zotero_4.png
+```{figure} ../../_static/images/zotero_4.png
 ```
 
 选中一篇文献 - 右击 - 【Zutilo】 - 【显示附件路径】

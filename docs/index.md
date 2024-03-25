@@ -10,35 +10,19 @@
 ---
 
 ```{toctree}
-:caption: 理论知识
+:caption: 专业基础
 :maxdepth: 2
 :glob:
 :hidden:
 
-theory/*
-```
-
-```{toctree}
-:caption: 开发运维
-:maxdepth: 2
-:glob:
-:hidden:
-
+language/theory/index
 language/java/index
 language/c-cpp/index
 language/assembly/index
 language/python/index
 language/script/index
 language/javascript/index
-```
-
-```{toctree}
-:caption: 环境部署
-:maxdepth: 2
-:glob:
-:hidden:
-
-deploy/*
+language/deploy/index
 ```
 
 ```{toctree}

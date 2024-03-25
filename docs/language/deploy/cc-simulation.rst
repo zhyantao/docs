@@ -15,7 +15,7 @@
 
 .. card::
 
-    .. image:: ../_static/images/600px-Lingotamento_Continuo-Continuous_Casting.png
+    .. image:: ../../_static/images/600px-Lingotamento_Continuo-Continuous_Casting.png
 
     +++
     Continuous casting. [1]_
@@ -46,7 +46,7 @@ Brain G. Thomas :footcite:p:`thomas2018review` 对很多现象应该如何建模
 
 .. card::
 
-    .. image:: ../_static/images/fluid-flow-phenomena-in-the-mold-region.png
+    .. image:: ../../_static/images/fluid-flow-phenomena-in-the-mold-region.png
 
     +++
 
