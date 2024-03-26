@@ -1,9 +1,8 @@
-# 理论知识
+# 通识课程
 
 ```{toctree}
 :titlesonly:
 :glob:
-:hidden:
 
 *
 ```
