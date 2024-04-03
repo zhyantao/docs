@@ -83,7 +83,7 @@ ulimit -c 1024
 首先，`cd` 到 core 文件所在的目录，然后运行下面的命令，将 core 文件与可执行程序关联起来：
 
 ```bash
-gdb -c core.* <your_program>
+gdb -c <core_dump_file> <exec_file>
 ```
 
 接下来，第一条命令一般是设置断点，例如将断点打在第 10 行：
