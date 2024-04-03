@@ -45,7 +45,7 @@ echo "/root/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
 如果在 `core_pattern` 指定目录下没有找到 core 文件，检查当前系统是否使能了 core dump 模式：
 
 ```bash
-uname -a
+ulimit -a
 ```
 
 ````{dropdown}
