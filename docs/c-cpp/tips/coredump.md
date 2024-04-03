@@ -25,8 +25,11 @@ SIGSEGV 是一个用户态的概念，是操作系统在用户态程序错误访
 # 查看 core 文件的存放路径
 cat /proc/sys/kernel/core_pattern
 
-# 修改 core 文件的存放路径
-echo "/root/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
+# 临时修改 core 文件的存放路径
+echo "/var/log/core.%e.%p.%t" > /proc/sys/kernel/core_pattern
+
+# 永久修改 core 文件的存放路径
+/sbin/sysctl -w kernel.core_pattern=/var/log/core.%e.%p.%t
 ```
 
 ````{dropdown}
@@ -83,7 +86,7 @@ ulimit -c 1024
 首先，`cd` 到 core 文件所在的目录，然后运行下面的命令，将 core 文件与可执行程序关联起来：
 
 ```bash
-gdb -c <core_dump_file> <exec_file>
+gdb <exec_file> <core_dump_file>
 ```
 
 接下来，第一条命令一般是设置断点，例如将断点打在第 10 行：
