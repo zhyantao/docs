@@ -59,32 +59,6 @@ html_theme_options = {
     # "announcement": (
     #     "ATTENTION PLEASE: null"
     # ),
-    "icon_links": [
-        {
-            "name": "Documentation Status",
-            "url": "https://readthedocs.org/projects/getstarted/builds",
-            "icon": "https://readthedocs.org/projects/getstarted/badge",
-            "type": "url",
-        },
-        {
-            "name": "GitHub Issues",
-            "url": "https://github.com/zhyantao/getstarted/issues",
-            "icon": "https://img.shields.io/github/issues/zhyantao/getstarted",
-            "type": "url",
-        },
-        {
-            "name": "GitHub Release",
-            "url": "https://github.com/zhyantao/getstarted/releases",
-            "icon": "https://img.shields.io/github/v/release/zhyantao/getstarted",
-            "type": "url",
-        },
-        {
-            "name": "GitHub Stars",
-            "url": "https://github.com/zhyantao/getstarted",
-            "icon": "https://img.shields.io/github/stars/zhyantao/getstarted",
-            "type": "url",
-        },
-    ],
 }
 
 
