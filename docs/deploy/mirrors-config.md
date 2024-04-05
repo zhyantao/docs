@@ -1,109 +1,284 @@
 
 # 软件包及镜像源管理
 
-本文提到的各种类型的源（比如 `pip`，`npm`，`apt`，`yum`），都可以通过国内一些公司或高校的镜像站中找到。比如常用的镜像站有：
-
-- 阿里巴巴官方镜像站：<https://developer.aliyun.com/mirror/>
-- 腾讯软件源：<https://mirrors.cloud.tencent.com/>
-- 网易开源镜像站：<http://uni.mirrors.163.com/>
-- 清华大学开源软件镜像站：<https://mirrors.tuna.tsinghua.edu.cn/>
-- 中科大镜像站：<http://mirrors.ustc.edu.cn/>
-- 浙江大学开源镜像站：<http://mirrors.zju.edu.cn/>
-
-## pip 源
-
-镜像站中的 PyPI 即为 `pip` 源。`pip` 是 Python 包管理工具，该工具提供了对 Python 包的查找、下载、安装、卸载的功能。
-
-（1）**永久使用国内镜像源**：Windows 用户修改文件 `C:\Users\%USERNAME%\pip\pip.ini`（如果没有则新建），
-Linux 用户修改文件 `~/.config/pip/pip.conf`（如果没有则新建），然后在相关文件中添加如下内容。
-注意，`trusted-host` 非必须，使用时提示不受信任可添加 `--trusted-host=mirrors.aliyun.com`。
-
-```bash
-[global]
-index-url=http://mirrors.aliyun.com/pypi/simple/
-[install]
-trusted-host=mirrors.aliyun.com
-```
-
-（2）**临时使用国内镜像源**，只需要在命令后面加上 `-i` 参数：
-
-```bash
-pip install pythonModuleName -i https://mirror.baidu.com/pypi/simple
-```
-
-```{admonition} 其他公司或高校提供的镜像源
-:class: dropdown
-
-- 官方源：<https://pypi.python.org/pypi>
-- 豆瓣源：<https://pypi.doubanio.com/simple/>
-- 阿里云源：<http://mirrors.aliyun.com/pypi/simple/>
-- 中科大源：<https://mirrors.ustc.edu.cn/pypi/web/simple/>
-- 百度源：<https://mirror.baidu.com/pypi/simple>
-- 清华源：<https://pypi.tuna.tsinghua.edu.cn/simple/>
-- 更多：<https://blog.csdn.net/u011433858/article/details/80398947>
-```
-
-（3）**离线安装第三方库**。从 <https://pypi.org/> 搜索相应的版本并下载。
-使用如下命令进行安装。
-
-```bash
-pip install /path/to/file.whl
-```
-
-（4）**如果使用的是 conda 管理各个版本的 Python**，可以修改文件
-`C:\Users\%USERNAME%\.condarc`（如果没有则新建），添加如下内容：
-
-```bash
-channels:
-  - defaults
-show_channel_urls: true
-default_channels:
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
-custom_channels:
-  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-```
-
 ## apt/yum 源
 
-不同的 Linux 系统提供了不同的软件包管理器，其中典型的两种是：
+软件包管理器 apt 和 yum 可以自动地下载、配置、安装、卸载自家的软件包，分别对应 `.deb` 和 `.rpm`。软件包管理器会自动地处理软件包之间的依赖关系，给用户提供了极大方便。
 
-- 高级打包工具（英语：Advanced Packaging Tools，缩写为 APT）
-- YUM（全称为 Yellow dog Updater, Modified）
+**(1) 以 Ubuntu 为例，更新镜像源**
 
-软件包管理器可以自动地下载、配置、安装、卸载自家的软件包，比如 `.deb` 和 `.rpm`。
-软件包管理器会自动地处理软件包之间的依赖关系，给用户提供了极大方便。
+```{note}
+如要用于其他版本，把 `jammy` 换成其他版本代号即可: 22.04：`jammy`；20.04：`focal`；18.04：`bionic`；16.04：`xenial`；14.04：`trusty`。
+```
 
-更新镜像源后，不要忘记更新缓存：
+::::{tab-set}
+:::{tab-item} 阿里云源
+```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+
+# deb https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+EOF
+```
+:::
+:::{tab-item} 清华源
+```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+EOF
+```
+:::
+:::{tab-item} 腾讯源
+```bash
+deb http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
+deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
+#deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-proposed main restricted universe multiverse
+#deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
+#deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-proposed main restricted universe multiverse
+#deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-backports main restricted universe multiverse
+```
+:::
+:::{tab-item} 中科大源
+```bash
+# 默认注释了源码仓库，如有需要可自行取消注释
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+```
+:::
+:::{tab-item} 浙大源
+```bash
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+# 预发布软件源，不建议启用
+# deb https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+```
+:::
+:::{tab-item} 网易源
+```bash
+deb http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+```
+:::
+::::
+
+若官方源找不到安装包，有两种方法可以解决这个问题：
+
+- 从 <https://pkgs.org/> 下载，手动安装：Ubuntu 用 `dpkg` 命令安装，CentOS 用 `rpm` 命令安装。
+- 从源代码的安装：
+
+  ```bash
+  ./configure --prefix=/path/to/install/
+  make
+  sudo make install
+  ```
+
+**(2) 更新缓存**
 
 ```bash
 sudo apt-get clean all
 sudo apt-get update
 ```
 
-从镜像源中**获取不到**的软件安装包，可以从 <https://pkgs.org/> 查一下，然后用离线的方式安装。
-Ubuntu 用 `dpkg` 命令安装，CentOS 用 `rpm` 命令安装。
-
-当然，你也可以选择使用下载**源代码的方式安装**：
-
-```bash
-./configure --prefix=/path/to/install/
-make
-sudo make install
-```
+**(3) 卸载软件**
 
 如果使用 `apt` 命令安装了软件，卸载软件的方式如下：
 
-- 仅卸载应用程序：`sudo apt-get remove <packagename>`
-- 卸载应用程序及其依赖：`sudo apt-get -y autoremove <packagename>`
-- 删除用户数据：`sudo apt-get -y purge <packagename>`
-- 卸载应用程序及其依赖并删除用户数据：`sudo apt-get -y autoremove --purge <packagename>`
+
+::::{tab-set}
+:::{tab-item} 卸载 APP
+```bash
+sudo apt-get remove <package_name>
+```
+:::
+:::{tab-item} 卸载 APP 和依赖
+```bash
+sudo apt-get -y autoremove <package_name>
+```
+:::
+:::{tab-item} 删除用户数据
+```bash
+sudo apt-get -y purge <package_name>
+```
+:::
+:::{tab-item} 卸载 APP 和依赖并删除用户数据
+```bash
+sudo apt-get -y autoremove --purge <package_name>
+```
+:::
+::::
+
+## pip 源
+
+`pip` 是 Python 包管理工具，该工具提供了对 Python 包的查找、下载、安装、卸载的功能。
+
+**(1) 永久切换镜像源**
+
+Windows 用户修改文件 `C:\Users\%USERNAME%\pip\pip.ini`（如果没有则新建）。
+
+::::{tab-set}
+:::{tab-item} 阿里云源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+EOF
+```
+:::
+:::{tab-item} 清华源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=https://pypi.tuna.tsinghua.edu.cn/simple/
+[install]
+trusted-host=pypi.tuna.tsinghua.edu.cn
+EOF
+```
+:::
+:::{tab-item} 百度源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=https://mirror.baidu.com/pypi/simple
+[install]
+trusted-host=mirror.baidu.com
+EOF
+```
+:::
+:::{tab-item} 中科大源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=https://mirrors.ustc.edu.cn/pypi/web/simple/
+[install]
+trusted-host=mirrors.ustc.edu.cn
+EOF
+```
+:::
+:::{tab-item} 豆瓣源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=https://pypi.doubanio.com/simple/
+[install]
+trusted-host=pypi.doubanio.com
+EOF
+```
+:::
+:::{tab-item} 官方源
+```bash
+mkdir -p ~/.config/pip
+cat <<EOF | tee ~/.config/pip/pip.conf
+[global]
+index-url=https://pypi.python.org/pypi
+[install]
+trusted-host=pypi.python.org
+EOF
+```
+:::
+::::
+
+**(2) 临时切换镜像源**
+
+```bash
+pip install <module_name> -i https://mirror.baidu.com/pypi/simple
+```
+
+**(3) 第三方镜像源**
+
+若官方源找不到安装包，从 <https://pypi.org/> 下载版本后，使用下面的命令安装：
+
+```bash
+pip install /path/to/file.whl
+```
+
+**(4) Conda 管理安装包**
+
+在 Windows 下修改 `C:\Users\%USERNAME%\.condarc`（如果没有则新建）。
+
+```bash
+cat <<EOF | tee C:/Users/$USERNAME/.condarc
+channels:
+    - defaults
+show_channel_urls: true
+default_channels:
+    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+    conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+EOF
+```
 
 ## npm 源
 
@@ -139,7 +314,7 @@ IDEA 默认的 Maven 配置文件在 `C:\Users\%USERNAME%\.m2` 目录下，如�
 如果找不到这个文件的话，自己新建一个 `settings.xml`，然后在文件中写入下面的内容（以阿里镜像源为例）：
 
 ````{admonition} settings.xml
-:class: dropdown
+:class: dropdown, full-width
 
 ```{code-block} xml
 <?xml version="1.0" encoding="UTF-8"?>
