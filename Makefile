@@ -43,7 +43,7 @@ latex:
 	@cd docs/cheatsheet && latexmk -pdf java.tex
 	@cd docs/cheatsheet && latexmk -pdf cpp.tex
 	@cd docs/cheatsheet && latexmk -pdf c.tex
-	@echo "Build finished; the LaTeX files are in docs/_static/pdf."
+	@echo "Build finished; the LaTeX files are in docs/_static/cheatsheet."
 
 cleanpdf:
 	@cd docs/cheatsheet && latexmk -c -C java.tex

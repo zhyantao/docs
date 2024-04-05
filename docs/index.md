@@ -73,7 +73,7 @@ appendix/index
 :hidden:
 
 PlantUML 官网 <https://plantuml.com/>
-Java 小抄表 <https://getstarted.readthedocs.io/_static/pdf/java.pdf>
-C++ 小抄表 <https://getstarted.readthedocs.io/_static/pdf/cpp.pdf>
-C 语言小抄表 <https://getstarted.readthedocs.io/_static/pdf/c.pdf>
+Java 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/java.pdf>
+C++ 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/cpp.pdf>
+C 语言小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/c.pdf>
 ```
