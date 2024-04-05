@@ -19,18 +19,19 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) doc
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) docs
 
-.PHONY: help clean html latex latexpdf
+.PHONY: help clean html latex cleanpdf
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  html       to make standalone HTML files"
-	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
-	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
-	@echo "  latexpdfja to make LaTeX files and run them through platex/dvipdfmx"
+	@echo "  clean      to clean the whole porject output"
+	@echo "  latex      to make LaTeX files that generated from cheatsheet"
+	@echo "  cleanpdf   to clean LaTeX files that generated from cheatsheet"
 
 clean:
-	rm -rf $(BUILDDIR)/*
-	rm -rf docs/_tmp
+	@rm -rf $(BUILDDIR)/*
+	@rm -rf docs/_tmp
+	@echo "Clean finished."
 
 html:
 	@mkdir -p "docs/_tmp"
@@ -39,20 +40,13 @@ html:
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 latex:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo
-	@echo "Build finished; the LaTeX files are in $(BUILDDIR)/latex."
-	@echo "Run \`make' in that directory to run these through (pdf)latex" \
-	      "(use \`make latexpdf' here to do that automatically)."
+	@cd docs/cheatsheet && latexmk -pdf java.tex
+	@cd docs/cheatsheet && latexmk -pdf cpp.tex
+	@cd docs/cheatsheet && latexmk -pdf c.tex
+	@echo "Build finished; the LaTeX files are in docs/_static/pdf."
 
-latexpdf:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo "Running LaTeX files through pdflatex..."
-	$(MAKE) -C $(BUILDDIR)/latex all-pdf
-	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
-
-latexpdfja:
-	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
-	@echo "Running LaTeX files through platex and dvipdfmx..."
-	$(MAKE) -C $(BUILDDIR)/latex all-pdf-ja
-	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
+cleanpdf:
+	@cd docs/cheatsheet && latexmk -c -C java.tex
+	@cd docs/cheatsheet && latexmk -c -C cpp.tex
+	@cd docs/cheatsheet && latexmk -c -C c.tex
+	@echo "Clean LaTeX pdf files finished."
