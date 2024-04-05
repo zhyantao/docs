@@ -8,10 +8,7 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = "Notebook"
-copyright = "2023, zh6tao@gmail.com"
-# author = u'Yantao'
-version = "v 1.9.6"
-
+copyright = "2024, zh6tao@gmail.com"
 master_doc = "index"
 language = "zh_CN"
 source_encoding = "utf-8-sig"
@@ -30,9 +27,7 @@ html_theme = "sphinx_book_theme"
 html_static_path = [
     "_static"
 ]
-# html_sourcelink_suffix = '.rst'
 html_favicon = "_static/images/logo-square.svg"
-# html_last_updated_fmt = '%Y/%m/%d %H:%M:%S (GMT%z)'
 html_domain_indices = True
 html_use_index = True
 html_split_index = False
@@ -57,7 +52,7 @@ html_theme_options = {
     "use_sidenotes": True,
     "show_toc_level": 2,
     # "announcement": (
-    #     "ATTENTION PLEASE: null"
+    #     "WHEN YOU PRAY, MOVE YOUR FEET!"
     # ),
 }
 
@@ -177,31 +172,4 @@ comments_config = {
       "repo": "zhyantao/getstarted",
       "optional": "config",
    }
-}
-
-
-# -- Options for LaTeX output ---------------------------------------------
-
-# Support Chinese compiling
-latex_engine = "xelatex"
-
-# Grouping the document tree into LaTeX files. List of tuples
-latex_documents = [
-    (
-        master_doc,  # source_start_file
-        "Notebook.tex",  # target_name
-        "Notebook Documentation",  # title
-        "zh6tao@gmail.com",  # author
-        "manual",
-    ),  # documentclass [howto, manual, or own class]
-]
-
-# To generate Chinese PDF, you need to add the following code.
-latex_elements = {
-    "preamble": r"""
-    \usepackage[UTF8]{ctex}     % support Chinese writing
-    \usepackage{graphicx}
-    \usepackage{animate}
-    """,
-    "extraclassoptions": "openany, oneside",  # remove blank pages
 }
