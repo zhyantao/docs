@@ -63,15 +63,7 @@ python/index
 script/index
 javascript/index
 deploy/index
-```
-
-```{toctree}
-:caption: 附录
-:maxdepth: 2
-:glob:
-:hidden:
-
-appendix/*
+appendix/index
 ```
 
 ```{toctree}
