@@ -276,6 +276,7 @@ pyrightconfig.json
 # *.eps
 # *.pdf
 docs/cheatsheet/*.pdf
+docs/resume/*.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
