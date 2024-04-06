@@ -131,7 +131,7 @@ char *p = NULL;         // NULL 存在二义性
 p = (char *)malloc(sizeof(char) * (len + 1));
 strcpy_s(buf, len + 1, str);// 不能忘记 + 1
 if (strcmp(buf, str) == 0)  // 不能用 b == a
-  free(p);              // 释放动态开辟的空间
+  free(p);             // 释放动态开辟的空间
 p = NULL;               // 避免出现野指针
 \end{verbatim}
 

@@ -101,8 +101,8 @@ char *p = nullptr;
 p = (char *) malloc(sizeof(char) * (len + 1));
 strcpy_s(buf, len + 1, str);// 不能忘记 + 1
 if (strcmp(buf, str) == 0)  // 不能用 b == a
-  free(p);              // 释放动态开辟的空间
-p = nullptr;                // 避免出现野指针
+  free(p);           // 释放动态开辟的空间
+p = nullptr;         // 避免出现野指针
 \end{verbatim}
 
       \end{minipage}
@@ -160,7 +160,7 @@ string str = chs;         // char[] -> string
       \begin{minipage}{0.3\textwidth}
 
         \begin{verbatim}
-vector<int> arr(sz, val); // sz, val 均可缺省 
+vector<int> arr(sz, val); // sz,val 均可缺省 
 vector<vector<int>> dp(m, vector<int>(n));
 empty(), size()
 push_back(), pop_back(), dp[i][j] = 13
