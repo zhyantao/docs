@@ -5,6 +5,7 @@
 [![GitHub Release](https://img.shields.io/github/v/release/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/releases)
 [![GitHub Issues](https://img.shields.io/github/issues/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/zhyantao/getstarted)](https://github.com/zhyantao/getstarted)
+[![Curriculum Vitae](https://img.shields.io/badge/CV-ongoing-blue)](https://getstarted.readthedocs.io/_static/resume/cv.pdf)
 
 ## 环境部署
 
