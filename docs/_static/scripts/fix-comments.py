@@ -16,7 +16,7 @@ def collect_html(path):
                 html_list.append(new_path)
 
 
-print("dirhtml: ", dirhtml)
+# print("dirhtml: ", dirhtml)
 collect_html(dirhtml)
 for html_file in html_list:
     html_content = ""
@@ -29,5 +29,5 @@ for html_file in html_list:
         html_content = html_content.replace("div.section", "div>article")
         with open(html_file, "w", encoding="UTF-8") as f:
             f.write(html_content)
-    with open(html_file, "r", encoding="UTF-8") as f:
-        print(f.readlines())
+    # with open(html_file, "r", encoding="UTF-8") as f:
+    #     print(f.readlines())
