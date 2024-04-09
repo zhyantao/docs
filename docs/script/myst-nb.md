@@ -537,6 +537,154 @@
     :::
 ``````
 
+## Mermaid 语法
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```md
+    :::{mermaid}
+    sequenceDiagram
+        participant Alice
+        participant Bob
+        Alice->John: Hello John, how are you?
+        loop Healthcheck
+              John->John: Fight against hypochondria
+        end
+        Note right of John: Rational thoughts <br/>prevail...
+        John-->Alice: Great!
+        John->Bob: How about you?
+        Bob-->John: Jolly good!
+    :::
+    ```
+  - :::{mermaid}
+    sequenceDiagram
+        participant Alice
+        participant Bob
+        Alice->John: Hello John, how are you?
+        loop Healthcheck
+              John->John: Fight against hypochondria
+        end
+        Note right of John: Rational thoughts <br/>prevail...
+        John-->Alice: Great!
+        John->Bob: How about you?
+        Bob-->John: Jolly good!
+    :::
+``````
+
+## Toggle 语法
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```md
+    :::{dropdown} Here's my title
+
+    My note
+    :::
+    ```
+  - :::{dropdown} Here's my title
+
+    My note
+    :::
+* - ```md
+    :::{admonition} Here's my title
+    :class: dropdown, warning
+
+    My note
+    :::
+    ```
+  - :::{admonition} Here's my title
+    :class: dropdown, warning
+
+    My note
+    :::
+``````
+
+## Tabs 语法
+
+``````{list-table}
+:header-rows: 1
+:widths: 15 15
+
+* - Example
+  - Result
+* - ```md
+    ::::{tab-set}
+    :::{tab-item} Apples
+    Apples are green, or sometimes red.
+    :::
+    :::{tab-item} Pears
+    Pears are green.
+    :::
+    :::{tab-item} Oranges
+    Oranges are orange.
+    :::
+    ::::
+    ```
+  - ::::{tab-set}
+    :::{tab-item} Apples
+    Apples are green, or sometimes red.
+    :::
+    :::{tab-item} Pears
+    Pears are green.
+    :::
+    :::{tab-item} Oranges
+    Oranges are orange.
+    :::
+    ::::
+* - ```md
+    ::::{tab-set}
+    :::{tab-item} Google
+    :sync: google
+    (1) Google is big company.
+    :::
+    :::{tab-item} Microsoft
+    :sync: microsoft
+    (1) Microsoft is one of my favorite companies.
+    :::
+    ::::
+    ```
+  - ::::{tab-set}
+    :::{tab-item} Google
+    :sync: google
+    (1) Google is big company.
+    :::
+    :::{tab-item} Microsoft
+    :sync: microsoft
+    (1) Microsoft is one of my favorite companies.
+    :::
+    ::::
+* - ```md
+    ::::{tab-set}
+    :::{tab-item} Google
+    :sync: google
+    (2) Google is big company.
+    :::
+    :::{tab-item} Microsoft
+    :sync: microsoft
+    (2) Microsoft is one of my favorite companies.
+    :::
+    ::::
+    ```
+  - ::::{tab-set}
+    :::{tab-item} Google
+    :sync: google
+    (2) Google is big company.
+    :::
+    :::{tab-item} Microsoft
+    :sync: microsoft
+    (2) Microsoft is one of my favorite companies.
+    :::
+    ::::
+``````
+
 ## 交叉引用（Cross reference）
 
 ### 引用标题（Headers）

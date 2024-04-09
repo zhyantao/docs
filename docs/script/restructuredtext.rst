@@ -5,10 +5,6 @@
 reStructuredText
 =================
 
-.. note::
-
-    本文基于 `MegEngine <https://megengine.org.cn/doc/1.6/zh/development/docs/restructuredtext.html>`_，供学习参考。相比于使用 reST 语法，更推荐 `Markdown <./myst-nb.html>`_。
-
 .. _indentation-rst:
 
 缩进（Indentation）
@@ -113,7 +109,7 @@ reStructuredText
 
 ``两个反引号表示预定义格式文本``
 
-.. dropdown:: :fa:`eye,mr-1` 使用注意事项
+.. dropdown:: 注意事项
 
     .. warning::
 
@@ -475,13 +471,6 @@ reST 支持图像指令，用法如下：
             frameborder="no" framespacing="0" allowfullscreen="true">
         </iframe>
 
-.. raw:: html
-
-    <iframe width="560" height="315"
-        src="//player.bilibili.com/player.html?aid=497651138&bvid=BV1BK411L7DJ&cid=177974677&p=1" scrolling="no" border="0"
-        frameborder="no" framespacing="0" allowfullscreen="true">
-    </iframe>
-
 .. _cross-reference-rst:
 
 交叉引用（Cross-reference）
@@ -572,103 +561,10 @@ Lorem ipsum [Ref]_ dolor sit amet.
 
 Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
 
-.. _sphinx-directives:
-
-Sphinx 拓展指令
----------------
-
-.. warning::
-
-    以下语法非原生 ReStructuredText 语法，需要通过 Sphinx 进行支持。
-
-``.. toctree::``
-  Table of contents tree. 用于组织文档结构。
-
-``.. note::``
-  用于添加提示性信息，用户忽视这些信息可能出错。
-
-``.. warning::``
-  用于添加警告性信息，用户忽视这些信息一定出错。
-
-``.. versionadded:: version``
-  描述 API 添加版本，如果用于单个模块, 则必须放在显式文本内容顶部。
-
-``.. versionchanged:: version``
-  描述 API 变更版本，指出以何种方式（新参数）进行了更改以及可能的副作用。
-
-``.. deprecated:: version``
-  描述 API 弃用版本，简要地告知替代使用方式。
-
-``.. seealso::``
-  包括对模块文档或外部文档的引用列表，内容应该是一个 reST 定义列表，比如：
-
-  .. code-block::
-
-      .. seealso::
-
-      Module :py:mod:`zipfile`
-          Documentation of the :py:mod:`zipfile` standard module.
-
-      `GNU tar manual, Basic Tar Format <http://link>`_
-          Documentation for tar archive files, including GNU tar extensions.
-
-  也可以使用简略写法，如下所示：
-
-  .. code-block::
-
-      .. seealso:: modules :py:mod:`zipfile`, :py:mod:`tarfile`
-
-``.. rubric:: title``
-  用于创建一个不会产生导航锚点的标题。
-
-``.. centered::``
-  创建居中文本
-
-``.. math::``
-  LaTeX 标记的数学公式，相较于 ``:math:`` 语法提供了更干净的阅读空间。
-
-  .. code-block::
-
-      .. math::
-
-        (a + b)^2 = a^2 + 2ab + b^2
-
-        (a - b)^2 = a^2 - 2ab + b^2
-
-  .. math::
-
-    (a + b)^2 = a^2 + 2ab + b^2
-
-    (a - b)^2 = a^2 - 2ab + b^2
-
-  .. warning::
-
-      用于 Python 文档字符串中时，必须将所有反斜杠加倍，或者使用 Python 原始字符串 ``r"raw"``.
-
-``.. highlight:: language``
-  使用指定语言（Pygments 支持）的语法高亮，直到再次被定义。
-
-``.. code-block:: [language]``
-  展示代码块，如果未设置 ``language``, highlight_language 将被使用。
-
-.. note::
-
-    想要了解完整的指令和配置项，请访问 `Directives
-    <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`_ 页面。
-
-.. _sphinx-ext:
-
-Sphinx 插件语法
----------------
-
-.. note::
-
-    下面的语法通过 Sphinx Extensions 支持，同样可以用于 Python 文档字符串。
-
 .. _mermaid-ext:
 
 Mermaid 语法支持
-~~~~~~~~~~~~~~~~
+-----------------
 
 文档已经通过 `sphinxcontrib-mermaid
 <https://sphinxcontrib-mermaid-demo.readthedocs.io/en/latest/>`_ 插件支持
@@ -707,7 +603,7 @@ Mermaid 语法支持
 .. _toggle-ext:
 
 Toggle 语法支持
-~~~~~~~~~~~~~~~
+---------------
 
 文档已经通过 `sphinx-togglebutton
 <https://sphinx-togglebutton.readthedocs.io/en/latest/>`_ 插件支持常见 Toggle 功能，样例如下：
@@ -729,7 +625,7 @@ Toggle 语法支持
 .. _pannels-ext:
 
 Pannels 语法支持
-~~~~~~~~~~~~~~~~
+-----------------
 
 文档已经通过 `sphinx-panels
 <https://sphinx-panels.readthedocs.io/en/latest/>`_ 插件支持常见 Pannels 功能，样例如下：
@@ -772,7 +668,7 @@ Pannels 语法支持
 .. _tabs-ext:
 
 Tabs 语法支持
-~~~~~~~~~~~~~
+--------------
 
 文档已经通过 `sphinx-tabs <https://sphinx-design.readthedocs.io/en/sbt-theme/tabs.html>`_ 插件支持常见 Tabs 功能，样例如下：
 
@@ -809,7 +705,7 @@ Tabs 语法支持
 以上展示的为 Basic 用法，Nested / Group / Code Tabs 用法请参考文档。
 
 GitHub URL 缩写
-~~~~~~~~~~~~~~~
+----------------
 
 为了方面写文档时引用 GitHub 上的源代码，支持如下语法：
 
