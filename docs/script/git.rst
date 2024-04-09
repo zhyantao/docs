@@ -74,8 +74,7 @@ Git
     # 查看 <commit>
     git log --graph
 
-.. admonition:: GitHub 不显示头像
-    :class: dropdown
+.. dropdown:: GitHub 不显示头像
 
     如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 ``~/.gitconfig`` 可解决问题。
 
@@ -166,8 +165,7 @@ Git
     # 重做上一次 commit，并包括指定文件的新变化
     git commit --amend <file1> <file2> ...
 
-.. admonition:: 代码提交规范
-    :class: dropdown
+.. dropdown:: 代码提交规范
 
     .. list-table::
         :header-rows: 1
@@ -252,8 +250,7 @@ Git
     git push origin --delete <branch>
     git branch -dr <remote/branch>
 
-.. admonition:: 分支命名规范
-    :class: dropdown
+.. dropdown:: 分支命名规范
 
     .. csv-table::
         :header: "分支", "命名", "说明"
@@ -265,8 +262,7 @@ Git
         "发布版本修复分支",	"``bugfix-release-*``", "修复测试 BUG"
         "紧急修复分支", "``bugfix-master-*``", "紧急修复线上代码的 BUG"
 
-.. admonition:: 冲突处理
-    :class: dropdown
+.. dropdown:: 冲突处理
 
     有时想把 ``<other-branch>`` 的内容合并到当前所在分支，使用命令
     ``git fetch <remote> <other-branch>`` 和 ``git merge FETCH_HEAD``
@@ -319,8 +315,7 @@ Git
     # 生成一个可供发布的压缩包
     git archive
 
-.. admonition:: 标签命名规范
-    :class: dropdown
+.. dropdown:: 标签命名规范
 
     标签命名遵循 `主版本号.次版本号.修订号` 的规则，例如 `v1.2.3` 是版本 1.2 的第 4 次修订。以下是版本号的升级规则：
 
@@ -517,8 +512,7 @@ Git
 gitignore 匹配规则
 ~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: 匹配规则
-    :class: dropdown
+.. dropdown:: 匹配规则
     
     - ``gitignore`` 只匹配其所在目录及子目录的文件。
     - 已经被 ``git track`` 的文件不受 ``gitignore`` 影响。
