@@ -7,10 +7,6 @@
 
 **(1) 以 Ubuntu 为例，更新镜像源**
 
-```{note}
-如要用于其他版本，把 `jammy` 换成其他版本代号即可: 22.04：`jammy`；20.04：`focal`；18.04：`bionic`；16.04：`xenial`；14.04：`trusty`。
-```
-
 ::::{tab-set}
 :::{tab-item} 阿里云源
 ```bash
@@ -56,6 +52,8 @@ EOF
 :::
 :::{tab-item} 腾讯源
 ```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
@@ -66,10 +64,13 @@ deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted 
 deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
 #deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-proposed main restricted universe multiverse
 #deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-backports main restricted universe multiverse
+EOF
 ```
 :::
 :::{tab-item} 中科大源
 ```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
 # 默认注释了源码仓库，如有需要可自行取消注释
 deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
@@ -86,10 +87,13 @@ deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe
 # 预发布软件源，不建议启用
 # deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+EOF
 ```
 :::
 :::{tab-item} 浙大源
 ```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
 # deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
@@ -102,10 +106,13 @@ deb https://mirrors.zju.edu.cn/ubuntu/ jammy-security main restricted universe m
 # 预发布软件源，不建议启用
 # deb https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
 # deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+EOF
 ```
 :::
 :::{tab-item} 网易源
 ```bash
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | tee /etc/apt/sources.list
 deb http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
@@ -116,20 +123,26 @@ deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe m
 deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
 deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
 deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+EOF
 ```
 :::
 ::::
+
+:::{dropdown} 切换 Ubuntu 版本或找不到安装包
+
+如要用于其他版本，把 `jammy` 换成其他版本代号即可: 22.04：`jammy`；20.04：`focal`；18.04：`bionic`；16.04：`xenial`；14.04：`trusty`。
 
 若官方源找不到安装包，有两种方法可以解决这个问题：
 
 - 从 <https://pkgs.org/> 下载，手动安装：Ubuntu 用 `dpkg` 命令安装，CentOS 用 `rpm` 命令安装。
 - 从源代码的安装：
 
-  ```bash
-  ./configure --prefix=/path/to/install/
-  make
-  sudo make install
-  ```
+```bash
+./configure --prefix=/path/to/install/
+make
+sudo make install
+```
+:::
 
 **(2) 更新缓存**
 

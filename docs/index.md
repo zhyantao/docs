@@ -57,12 +57,12 @@ git add . && git commit -m "v1.0.0" && git pull && git push
 :hidden:
 
 theory/index
-java/index
-c-cpp/index
+ccc/index
 assembly/index
+java/index
 python/index
+js/index
 script/index
-javascript/index
 deploy/index
 appendix/index
 ```

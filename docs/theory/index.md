@@ -1,4 +1,4 @@
-# 通识课程
+# 通识基础
 
 ```{toctree}
 :titlesonly:

@@ -1,4 +1,4 @@
-# 配置 SELinux 安全策略
+# SELinux
 
 SELinux 是一种安全访问控制的软件实现，它主要回答类似这样的问题：网站管理员是否有权限访问用户目录？
 
@@ -6,29 +6,23 @@ SELinux 对所有的进程和文件都做了标记（Context），然后根据�
 
 我们在本文主要学习如何手动调整这些访问规则。
 
-## 查看违规记录
+## SELinux Status
 
 ```bash
-cat /var/log/audit/audit.log | grep avc
-```
+# 查看 SELinux 配置
+cat /etc/selinux/config
 
-## 查看 SELinux Status
-
-```bash
-# cat /etc/selinux/config
+# 检查 SELinux 是否开启
 getenforce
 sestatus
-```
 
-## 设置 SELinux Status
-
-```bash
+# 打开/关闭 SELinux
 setenforce [Enforcing|Permissive|1|0]
 ```
 
-## 查看 SELinux Context
+## SELinux Context
 
-进程和文件都被标记为 SELinux 上下文（也包括额外的信息：`user:role:type:level`）。SELinux 根据上下文对访问权限进行控制。
+进程和文件都被标记为 SELinux 上下文（也包括额外的信息：`user:role:type:level`）。
 
 ```bash
 # 查看文件的 SELinux 上下文
@@ -38,29 +32,30 @@ stat -c "%C" /etc/adjtime
 # 查看进程的 SELinux 上下文
 ps -eZ | grep passwd
 
-# 查看文件的目标上下文，参考 /etc/selinux/targeted/contexts/files/
+# 信息来源 /etc/selinux/targeted/contexts/files/
+# 查看文件的目标上下文
 restorecon -R -v /var/lib/isulad/storage/overlay2
-```
 
-## 修改 SELinux Context
-
-```bash
+# 修改 SELinux 上下文
 chcon -R -t container_ro_file_t /var/lib/isulad/storage/overlay2
 ```
 
-## 查看 SELinux Boolearn
+## SELinux Boolearn
 
 ```bash
+# 查看 SELinux 布尔值
 getsebool -a
 getsebool allow_cvs_read_shadow
+
+# 修改 SELinux 布尔值
+# SELinux 布尔值可以在程序运行期间修改
+setsebool allow_cvs_read_shadow [on/off]
 ```
 
-## 设置 SELinux Boolean
-
-SELinux 布尔值可以在程序运行期间修改，修改方法如下：
+## 查看违规记录
 
 ```bash
-setsebool allow_cvs_read_shadow [on/off]
+cat /var/log/audit/audit.log | grep avc
 ```
 
 ## 添加规则
