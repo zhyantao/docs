@@ -6,16 +6,26 @@ Git
 工作流程
 ~~~~~~~~
 
-.. figure:: ../_static/images/bg2015120901.png
+.. figure:: ../_static/images/basic-usage.*
 
-    图源 `阮一峰的博客 <https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html>`__
+上面的四条命令在工作目录、暂存目录（也叫做索引）和仓库之间复制文件。
 
-- Workspace：工作区
-- Index / Stage：暂存区
-- Repository：仓库区（或本地仓库）
-- Remote：远程仓库
+- ``git add files`` 把当前文件放入暂存区域。
+- ``git commit`` 给暂存区域生成快照并提交。
+- ``git reset -- files`` 用来撤销最后一次 ``git add files``，你也可以用 ``git reset`` 撤销所有暂存区域文件。
+- ``git checkout -- files`` 把文件从暂存区域复制到工作目录，用来丢弃本地修改。
 
-在 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`__ 上，可以更轻松直观地体验 Git 完整流程。
+你可以用 ``git reset -p``, ``git checkout -p``, ``git add -p`` 进入交互模式。
+
+也可以跳过暂存区域直接从仓库取出文件或者直接提交代码。
+
+.. figure:: ../_static/images/basic-usage-2.*
+
+- ``git commit -a`` 相当于先运行 ``git add`` 把所有当前目录下的文件加入暂存区域，再运行 ``git commit``。
+- ``git commit files`` 将工作目录中文件的快照同时提交到暂存区域和仓库中。
+- ``git checkout HEAD -- files`` 回滚到最后一次提交。
+
+上文摘自 `图解 Git <https://marklodato.github.io/visual-git-guide/index-zh-cn.html>`__，你也可以在 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`__ 上更直观地体验 Git 流程。
 
 
 快速上手
@@ -298,6 +308,14 @@ Git
 
         git push origin --force --tags
 
+.. figure:: ../_static/images/commit-main.*
+
+.. figure:: ../_static/images/commit-stable.*
+
+.. figure:: ../_static/images/commit-amend.*
+
+.. figure:: ../_static/images/commit-detached.*
+
 
 分支
 ~~~~~
@@ -325,26 +343,11 @@ Git
     # 新建一个分支，与指定的远程分支建立追踪关系
     git branch --track <local-branch> <remote-branch>
 
-    # 切换到指定分支，并更新工作区
-    git checkout <branch>
-
-    # 切换到上一个分支
-    git checkout -
-
     # 建立追踪关系，在现有分支与指定的远程分支之间
     git branch --set-upstream <local-branch> <remote-branch>
 
     # 重命名分支
     git branch -m <old-name> <new-name>
-
-    # 合并指定分支到当前分支（适用场景：主分支 <- 子分支）
-    git merge <branch>
-
-    # 合并指定分支到当前分支（适用场景：子分支 <-- 主分支）
-    git rebase <branch>
-
-    # 选择一个 commit，合并进当前分支
-    git cherry-pick <commit>
 
     # 删除分支
     git branch -d <branch>
@@ -427,13 +430,45 @@ Git
     - 架构变化，接口变更：主版本号 + 1。
 
 
-查看信息
-~~~~~~~~
+检查：diff
+~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # 显示暂存区和工作区的差异
+    git diff
+
+    # 显示暂存区和上一个 commit 的差异
+    git diff --cached <filename>
+
+    # 显示工作区与当前分支最新 commit 之间的差异
+    git diff HEAD
+
+    # 显示两次提交之间的差异
+    git diff <first-branch> <second-branch>
+
+    # 显示今天你写了多少行代码
+    git diff --shortstat "@{0 day ago}"
+
+.. figure:: ../_static/images/diff.*
+
+
+检查：status
+~~~~~~~~~~~~~
 
 .. code-block:: bash
 
     # 显示有变更的文件
     git status
+
+    # 显示有变更的文件，包括被删除的文件
+    git status -u
+
+
+检查：log
+~~~~~~~~~~
+
+.. code-block:: bash
 
     # 显示当前分支的版本历史
     git log
@@ -465,21 +500,6 @@ Git
 
     # 显示指定文件是什么人在什么时间修改过
     git blame <filename>
-
-    # 显示暂存区和工作区的差异
-    git diff
-
-    # 显示暂存区和上一个 commit 的差异
-    git diff --cached <filename>
-
-    # 显示工作区与当前分支最新 commit 之间的差异
-    git diff HEAD
-
-    # 显示两次提交之间的差异
-    git diff <first-branch> <second-branch>
-
-    # 显示今天你写了多少行代码
-    git diff --shortstat "@{0 day ago}"
 
     # 显示某次提交的元数据和内容变化
     git show <commit>
@@ -526,10 +546,16 @@ Git
     # 推送所有分支到远程仓库
     git push <remote> --all
 
-撤销
-~~~~
+撤销：checkout
+~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
+
+    # 切换到指定分支，并更新工作区
+    git checkout <branch>
+
+    # 切换到上一个分支
+    git checkout -
 
     # 恢复暂存区的指定文件到工作区
     git checkout <filename>
@@ -539,6 +565,26 @@ Git
 
     # 恢复暂存区的所有文件到工作区
     git checkout .
+
+    # 暂时将未提交的变化移除，稍后再移入
+    git stash
+    git stash pop
+
+.. figure:: ../_static/images/checkout-files.*
+
+.. figure:: ../_static/images/checkout-branch.*
+
+.. figure:: ../_static/images/checkout-detached.*
+
+.. figure:: ../_static/images/checkout-after-detached.*
+
+.. figure:: ../_static/images/checkout-b-detached.*
+
+
+撤销：reset
+~~~~~~~~~~~~
+
+.. code-block:: bash
 
     # 重置暂存区的指定文件，与上一次 commit 保持一致，但工作区不变
     git reset <filename>
@@ -555,12 +601,85 @@ Git
     # 重置当前 HEAD 为指定 commit，但保持暂存区和工作区不变
     git reset --keep <commit>
 
-    # 新建一个 commit，用来撤销某个旧的 commit，但保留旧 commit 之后的 commit
+.. figure:: ../_static/images/reset-commit.*
+
+.. figure:: ../_static/images/reset.*
+
+.. figure:: ../_static/images/reset-files.*
+
+
+撤销：revert
+~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # 新建一个 commit，用来撤销对指定文件的修改，但保留文件修改内容
+    git revert filename
+
+    # 新建一个 commit，用来撤销对当前分支指定 commit 的修改，但保留 commit 内容
     git revert <commit>
 
-    # 暂时将未提交的变化移除，稍后再移入
-    git stash
-    git stash pop
+    # 新建一个 commit，用来撤销对当前分支指定 commit 的修改，并改写 commit 信息
+    git revert <commit>-m <n>
+
+
+合并：cherry-pick
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # 撤销对当前分支指定 commit 的修改，但保留 commit 内容
+    git cherry-pick <commit>
+
+    # 撤销对当前分支指定 commit 的修改，并改写 commit 信息
+    git cherry-pick <commit>-m <n>
+
+    # 撤销对当前分支指定 commit 的修改，并改写 commit 信息
+    git cherry-pick <commit>^!
+
+.. figure:: ../_static/images/cherry-pick.*
+
+
+合并：merge
+~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # 合并指定 commit 到当前分支
+    git merge <commit>
+
+    # 合并指定分支到当前分支
+    git merge <branch>
+
+    # 合并指定分支到当前分支，并提交合并记录
+    git merge --no-ff <branch>
+
+    # 合并指定分支到当前分支，并提交合并记录，同时改写提交信息
+    git merge--no-ff <branch> -m <message>
+
+.. figure:: ../_static/images/merge-ff.*
+
+.. figure:: ../_static/images/merge.*
+
+
+合并：rebase
+~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    # 将当前分支的提交历史，重新应用到另一个分支
+    git rebase <branch>
+
+    # 将当前分支的提交历史，重新应用到另一个分支，但保留提交信息
+    git rebase -i <branch>
+
+    # 将当前分支的提交历史，重新应用到另一个分支，但保留提交信息
+    git rebase -i HEAD~<n>
+
+.. figure:: ../_static/images/rebase.*
+
+.. figure:: ../_static/images/rebase-onto.*
+
 
 第三方库
 ~~~~~~~~
