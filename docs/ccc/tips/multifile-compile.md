@@ -116,4 +116,4 @@ Machine 字段中的 ARM 表示最高支持到 ARMv7 或 Aarch32，ARM 64-bit ar
 
 ## error: storage size of 'xxx' isn't known
 
-一个可能的原因是 sysroot 搜索下头文件和当前项目所用的同名头文件内容不一致。
+一个可能的原因是 `$SYSROOT/usr/include` 目录下头文件和当前项目所用的同名头文件内容不一致。
