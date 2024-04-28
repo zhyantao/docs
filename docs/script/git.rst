@@ -587,7 +587,7 @@ Git
 .. code-block:: bash
 
     # 重置暂存区的指定文件，与上一次 commit 保持一致，但工作区不变
-    git reset <filename>
+    git reset -- <filename>
 
     # 重置暂存区与工作区，与上一次 commit 保持一致
     git reset --hard
