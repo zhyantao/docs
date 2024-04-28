@@ -782,7 +782,7 @@ gitignore 匹配规则
         if [ "${branch}" = "(no branch)" ];then
             branch="(`git rev-parse --short HEAD`...)"
         fi
-        echo " ($branch)"
+        echo "($branch)"
     fi
     }
 
