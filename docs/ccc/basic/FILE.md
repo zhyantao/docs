@@ -54,33 +54,42 @@ int main(int argc, char *argv[])
 }
 ```
 
-## 例 2：putc / getc
+## 例 2：fread / fwrite
 
 ```c
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdio.h>
 
-int main()
-{
-    char c;
-    FILE *fp = NULL;
+int main() {
+    FILE *fd_old, *fd_new;
+    char buf[1024];
+    int bytesread;
+    char file_old[256] = { 0 };
+    sprintf(file_old, "%s", "serial1.log");
+    char file_new[256] = { 0 };
+    sprintf(file_new, "%s", "serial2.log");
 
-    // 写文件
-    fp = fopen("INPUT", "w");
-    while ((c = getchar()) != '\n')
-    {
-        putc(c, fp);
+    fd_old = fopen(file_old, "rb");
+    if (fd_old == NULL) {
+        perror("Open file error");
+        return -1;
     }
-    fclose(fp);
 
-    // 读文件
-    fp = fopen("INPUT", "r");
-    while ((c = getc(fp)) != EOF)
-    {
-        printf("%c", c);
+    fd_new = fopen(file_new, "wb");
+    if (fd_new == NULL) {
+        perror("Open file error");
+        return -1;
     }
-    fclose(fp);
-    printf("\n");
 
+    while ((bytesread = fread(buf, 1, sizeof(buf), fd_old)) > 0) {
+        fwrite(buf, 1, bytesread, fd_new);
+    }
+
+    fclose(fd_old);
+    fclose(fd_new);
     return 0;
 }
 ```
