@@ -16,7 +16,7 @@ git clone https://github.com/<your_github_username>/notebook.git
 
 2、将 [源代码压缩包](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
 
-3、Windows 用户下载并安装 [GTK-for-Windows-Runtime-Environment](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer)，Linux 用户 `sudo apt install libcairo2 libcairo2-dev`。
+3、Windows 用户需安装 [GTK-for-Windows-Runtime-Environment](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer)，Ubuntu 用户需安装 `libcairo2 libcairo2-dev`。
 
 4、安装项目所需依赖，预览效果。
 
