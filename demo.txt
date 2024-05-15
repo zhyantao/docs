@@ -1,0 +1,1 @@
+export ALL_PROXY="http://172.29.32.1:7890"
