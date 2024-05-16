@@ -761,23 +761,17 @@
 * - Example
   - Result
 * - ```md
-    {numref}`figure-example`is a
-    figure example.
+    {numref}`figure-example` is a figure example.
     ```
-  - {numref}`figure-example` is a
-    figure example.
+  - {numref}`figure-example` is a figure example.
 * - ```md
-    {numref}`Figure %s <figure-example>`
-    is an example.
+    {numref}`Figure %s <figure-example>` is an example.
     ```
-  - {numref}`Figure %s <figure-example>`
-    is an example.
+  - {numref}`Figure %s <figure-example>` is an example.
 * - ```md
-    This {ref}`figure <figure-example>`
-    is an example.
+    This {ref}`figure <figure-example>` is an example.
     ```
-  - This {ref}`figure <figure-example>`
-    is an example.
+  - This {ref}`figure <figure-example>` is an example.
 ``````
 
 ### 引用图片（Images）
