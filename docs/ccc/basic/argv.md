@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
          */
         opt = getopt_long(argc, argv, "a::b:c:d", long_options, &option_index);
 
-        if (opt == -1)
+        if (opt == -1) // 选项遍历完毕，退出循环
             break;
 
         printf("opt = %c\t\t", opt);
