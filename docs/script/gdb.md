@@ -1,16 +1,37 @@
 # GDB
 
+本文使用的书写格式为：`[c]ommand <required arg> (optional arg)`
+
+参考文档：[`CSCI0330 gdb Cheatsheet`](https://www.kdocs.cn/l/cncEx5Kq8rkd)。
+
 ## 如何使用 GDB
 
 首先要做的就是将程序编译出来，然后，运行下面的命令进入 gdb 模式：
 
 ```bash
-gdb <your_program>
+# 切换到项目目录
+cd project_dir
+
+# 打开 gdb
+gdb
+
+# 加载可执行程序
+file path/to/file
 ```
 
-参考文档：[`man gdb`](https://www.kdocs.cn/l/cncEx5Kq8rkd)。
+```{tip}
 
-本文使用的书写格式为：`[c]ommand <required arg> (optional arg)`
+如果想要在调试过程中修改源代码，可以按照下面的步骤进行操作：
+
+1. 使用 `Ctrl+z` 暂时将 GDB 挂起；
+2. 修改源代码；
+3. 使用命令 `jobs` 查看后台进程；
+4. 使用 `fg proc_num` 恢复；
+5. 使用 `run (args)` 重新定位到上次离开的地方。
+
+参考：[100 个 GDB 小技巧](https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html)。
+
+```
 
 (gdb_tips)=
 
@@ -34,6 +55,7 @@ disassemble <函数名>
 
 # 列出参数列表
 [i]nfo (about)
+
     (about) 可以是下面的任何一个：
     [f]rame     当前栈帧，上一个栈帧，寄存器地址，参数列表，局部变量
     [s]tack     栈轨迹，函数调用，参数列表
@@ -133,6 +155,7 @@ Ctrl + l
 ```{code-block} bash
 # 打印表达式的值
 [p]rint <表达式>
+
     表达式中可以包含变量名、*内存地址、$寄存器名、常量
 
 # 打印表达式的值（16 进制表示）
@@ -140,6 +163,7 @@ Ctrl + l
 
 # 打印内存地址中的值
 [x]/(number)(format)(unit_size) <内存地址>
+
     number      从指定内存地址开始，连续的几个单位
     format      打印格式，如果是 i 则不打印数字，而是打印指令
     unit_size   数据大小 [b]ytes, [h]alfwords, [w]ords, [g]iants
@@ -172,11 +196,3 @@ Ctrl + b, x
 # 切换分屏（按住 Ctrl + b 不放，再按方向键，可以调整窗口大小）
 Ctrl + b, 方向键
 ```
-
-## 小技巧
-
-如果在调试过程中修改了源代码，在下次运行 GDB 时使用 `run (args)` 可以重新定位到上次离开的地方。
-
-使用 `Ctrl + z` 可以暂时将 GDB 挂起，然后使用命令 `jobs` 查看后台进程，使用 `fg <编号>` 恢复。
-
-[100 个 GDB 小技巧](https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html)。
