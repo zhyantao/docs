@@ -10,8 +10,8 @@
 ::::{tab-set}
 :::{tab-item} 阿里云源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
 deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
 
@@ -31,8 +31,8 @@ EOF
 :::
 :::{tab-item} 清华源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
@@ -52,8 +52,8 @@ EOF
 :::
 :::{tab-item} 腾讯源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
@@ -69,8 +69,8 @@ EOF
 :::
 :::{tab-item} 中科大源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码仓库，如有需要可自行取消注释
 deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
@@ -92,8 +92,8 @@ EOF
 :::
 :::{tab-item} 浙大源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
 # deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
@@ -111,8 +111,8 @@ EOF
 :::
 :::{tab-item} 网易源
 ```bash
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | tee /etc/apt/sources.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
 deb http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
