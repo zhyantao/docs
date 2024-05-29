@@ -47,7 +47,6 @@ export CROSS_COMPILE := arm-buildroot-linux-gnueabihf-
 
 export CC := $(CROSS_COMPILE)gcc
 # export CXX := $(CROSS_COMPILE)g++
-# export CPP := $(CROSS_COMPILE)gcc -E
 export AS := $(CROSS_COMPILE)as
 export LD := $(CROSS_COMPILE)ld
 export STRIP := $(CROSS_COMPILE)strip
@@ -59,7 +58,6 @@ export NM := $(CROSS_COMPILE)nm
 
 export CFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
 # export CXXFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
-# export CPPFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
 export LDFLAGS := -L$(SYSROOT_DIR)/lib -L$(SYSROOT_DIR)/usr/lib
 
 export PKG_CONFIG_DIR := "$(SYSROOT_DIR)/usr/lib/pkgconfig"
@@ -96,7 +94,7 @@ cd $(SRC_DIR) && ./configure \
 出于跨平台的目的，你可能会用到一些比 Makefile 更自动化的构建工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
 
 ::::{tab-set}
-:::{tab-item} CMakelists
+:::{tab-item} CMakeLists
 ```bash
 cat <<EOF | tee CMakeLists.txt
 cmake_minimum_required(VERSION 3.12)
@@ -114,7 +112,7 @@ make install
 ```bash
 cd $(SRC_DIR) && autoreconf -vi
 cd $(SRC_DIR) && ./configure \
---build=i686-pc-linux-gnu \
+--build=x86_64-pc-linux-gnu \
 --target=aarch64-linux \
 --host=aarch64-linux
 make -C $(SRC_DIR)
@@ -184,7 +182,7 @@ all:
 	$(CC) --print-file-name=include
 	@cd $(SRC_DIR) && ./configure \
 	--prefix=$(DESTDIR) \
-	--build=i686-pc-linux-gnu \
+	--build=x86_64-pc-linux-gnu \
 	--target=aarch64-linux \
 	--host=aarch64-linux
 	# {x86,amd64,arm32,arm64,ppc32,ppc64le,ppc64be,s390x,mips32,mips64}-linux, 
