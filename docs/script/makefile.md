@@ -161,6 +161,7 @@ export DESTDIR := $(CURR_DIR)/build
 # make
 .PHONY: all
 all:
+	@echo "SYSROOT=$(SYSROOT_DIR)"
 	@cd $(SRC_DIR) && ./configure \
 	--prefix=$(DESTDIR) \
 	--build=i686-pc-linux-gnu \
