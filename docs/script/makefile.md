@@ -2,7 +2,7 @@
 
 ## 使用方法
 
-1、编写 Makefile
+1、编写 Makefile（参考 <https://seisman.github.io/how-to-write-makefile>）
 
 ```makefile
 CXX := g++
@@ -50,7 +50,7 @@ export ARCH := arm
 export CROSS_COMPILE := arm-buildroot-linux-gnueabihf-
 
 export CC := $(CROSS_COMPILE)gcc
-export CXX := $(CROSS_COMPILE)g++
+# export CXX := $(CROSS_COMPILE)g++
 # export CPP := $(CROSS_COMPILE)gcc -E
 export AS := $(CROSS_COMPILE)as
 export LD := $(CROSS_COMPILE)ld
@@ -61,7 +61,9 @@ export OBJDUMP := $(CROSS_COMPILE)objdump
 export AR := $(CROSS_COMPILE)ar
 export NM := $(CROSS_COMPILE)nm
 
-export CCFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
+export CFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
+# export CXXFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
+# export CPPFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
 export LDFLAGS := -L$(SYSROOT_DIR)/lib -L$(SYSROOT_DIR)/usr/lib
 
 export PKG_CONFIG_DIR := "$(SYSROOT_DIR)/usr/lib/pkgconfig"
@@ -222,8 +224,6 @@ help:
 	@echo -e "Step 5:\033[35m make diff  \033[0m  Generate a patch file"
 	@echo ""
 ```
-
-参考文档：<https://seisman.github.io/how-to-write-makefile>。
 
 ## 赋值操作
 
