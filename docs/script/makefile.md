@@ -106,8 +106,7 @@ make -C $(SRC_DIR) install
 ```bash
 cat <<EOF | tee aarch64-linux.ini
 [constants]
-sdk_dir = '/path/to/sdk'
-sysroot_dir = sdk_dir + '/sysroot'
+sysroot_dir = '/arm-buildroot-linux-gnueabihf_sdk-buildroot/sysroot'
 toochain_dir = sysroot_dir + '/usr/bin'
 crosstools_prefix = toolchain_dir + '/aarch64-linux-'
 
@@ -137,7 +136,7 @@ EOF
 meson build_dir \
 --prefix=$(CURR_DIR) \
 --build-type=plain \
---cross-file /path/to/aarch64-linux.ini
+--cross-file $(CURR_DIR)/aarch64-linux.ini
 cd build_dir && meson compile -C output_dir
 meson install -C output_dir
 ```
@@ -148,7 +147,7 @@ meson install -C output_dir
 
 ```makefile
 CURR_DIR := $(shell pwd)
-include sdk.mk
+-include sdk.mk
 
 # where is source code?
 PROJECT_NAME := valgrind
@@ -163,13 +162,13 @@ export DESTDIR := $(CURR_DIR)/build
 .PHONY: all
 all:
 	@cd $(SRC_DIR) && ./configure \
-	--prefix=/path/to/install \
+	--prefix=$(DESTDIR) \
 	--build=i686-pc-linux-gnu \
 	--target=aarch64-linux \
 	--host=aarch64-linux \
 	--disable-test-modules \
 	--enable-optimizations \
-	--with-openssl=/path/to/sysroot/usr \
+	--with-openssl=$(SYSROOT_DIR)/usr \
 	--with-openssl-rpath=auto \
 	--disable-ipv6 \
 	--with-config-site=CONFIG_SITE
