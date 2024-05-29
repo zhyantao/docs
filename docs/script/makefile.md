@@ -74,7 +74,7 @@ EOF
 
 3、开始编译
 
-在开始编译之前，你可能会用到一些比 Makefile 更自动化的工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
+出于跨平台的目的，你可能会用到一些比 Makefile 更自动化的构建工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
 
 ::::{tab-set}
 :::{tab-item} CMakelists
@@ -144,7 +144,7 @@ meson install -C output_dir
 :::
 ::::
 
-这些工具本质上还是会生成 Makefile，因此，不管你用的什么生成工具，下面的步骤是通用的，唯一的区别是不同的生成工具生成 Makefile 的命令不一样。
+这些工具本质上还是会生成 Makefile，因此，不管你用的什么构建工具，下面的步骤是通用的：
 
 ```makefile
 CURR_DIR := $(shell pwd)
