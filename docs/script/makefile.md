@@ -37,11 +37,44 @@ cat <<EOF | tee config.site
 ac_cv_file__dev_ptmx=no
 ac_cv_file__dev_ptc=no
 EOF
+
+cat <<EOF | tee sdk.mk
+CURR_DIR := $(shell pwd)
+
+SYSROOT_DIR := $(CURR_DIR)/../../arm-buildroot-linux-gnueabihf_sdk-buildroot
+TOOLCHAIN_DIR := $(SYSROOT_DIR)/usr/bin
+export PATH := $(addsuffix :$(TOOLCHAIN_DIR), $(PATH))
+
+# cross compile options
+export ARCH := arm
+export CROSS_COMPILE := arm-buildroot-linux-gnueabihf-
+
+export CC := $(CROSS_COMPILE)gcc
+export CXX := $(CROSS_COMPILE)g++
+# export CPP := $(CROSS_COMPILE)gcc -E
+export AS := $(CROSS_COMPILE)as
+export LD := $(CROSS_COMPILE)ld
+export STRIP := $(CROSS_COMPILE)strip
+export RANLIB := $(CROSS_COMPILE)ranlib
+export OBJCOPY := $(CROSS_COMPILE)objcopy
+export OBJDUMP := $(CROSS_COMPILE)objdump
+export AR := $(CROSS_COMPILE)ar
+export NM := $(CROSS_COMPILE)nm
+
+export CCFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
+export LDFLAGS := -L$(SYSROOT_DIR)/lib -L$(SYSROOT_DIR)/usr/lib
+
+export PKG_CONFIG_DIR := "$(SYSROOT_DIR)/usr/lib/pkgconfig"
+export PKG_CONFIG_PATH := "$(PKG_CONFIG_DIR):$(SYSROOT_DIR)/usr/share/pkgconfig"
+export PKG_CONFIG_LIBDIR := "$(PKG_CONFIG_DIR)"
+export PKG_CONFIG_SYSROOT_DIR := "$(SYSROOT_DIR)"
+export PKG_CONFIG_DISABLE_UNINSTALLED := "yes"
+EOF
 ```
 
 3、开始编译
 
-```bash
+```makefile
 CURR_DIR := $(shell pwd)
 include sdk.mk
 
@@ -68,6 +101,9 @@ all:
 	--with-openssl-rpath=auto \
 	--disable-ipv6 \
 	--with-config-site=CONFIG_SITE
+	# {x86,amd64,arm32,arm64,ppc32,ppc64le,ppc64be,s390x,mips32,mips64}-linux, 
+	# {arm32,arm64,x86,mips32}-android, {x86,amd64}-solaris, 
+	# {x86,amd64,arm64}-FreeBSD and {x86,amd64}-darwin
 	@cd $(SRC_DIR) && make -C $(SRC_DIR) -j8
 	@cd $(SRC_DIR) && make -C $(SRC_DIR) install
 
