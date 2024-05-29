@@ -203,6 +203,7 @@ repo:
 
 # make diff
 .PHONY: diff
+diff:
 	@cd $(SRC_DIR) && git config --add core.filemode false
 	@cd $(SRC_DIR) && git config --global core.autocrlf false
 	@cd $(SRC_DIR) && git add .
@@ -211,6 +212,7 @@ repo:
 
 # make help
 .PHONY: help
+help:
 	@echo ""
 	@echo -e "Step 1:\033[35m make patch \033[0m  Apply patches"
 	@echo -e "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit"
