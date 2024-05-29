@@ -74,6 +74,78 @@ EOF
 
 3、开始编译
 
+在开始编译之前，你可能会用到一些比 Makefile 更自动化的工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
+
+::::{tab-set}
+:::{tab-item} CMakelists
+```bash
+cat <<EOF | tee CMakeLists.txt
+cmake_minimum_required(VERSION 3.12)
+project(persondemo)
+ADD_EXECUTABLE(persondemo main.cpp student.cpp)
+EOF
+
+mkdir $(SRC_DIR)/build
+cd build && cmake ..
+make
+make install
+```
+:::
+:::{tab-item} Autoconf
+```bash
+cd $(SRC_DIR) && autoreconf -vi
+cd $(SRC_DIR) && ./configure \
+--build=i686-pc-linux-gnu \
+--target=aarch64-linux \
+--host=aarch64-linux
+make -C $(SRC_DIR)
+make -C $(SRC_DIR) install
+```
+:::
+:::{tab-item} Meson
+```bash
+cat <<EOF | tee aarch64-linux.ini
+[constants]
+sdk_dir = '/path/to/sdk'
+sysroot_dir = sdk_dir + '/sysroot'
+toochain_dir = sysroot_dir + '/usr/bin'
+crosstools_prefix = toolchain_dir + '/aarch64-linux-'
+
+[binaries]
+c = crosstools_prefix + 'gcc'
+cpp = crosstools_prefix + 'g++'
+strip = crosstools_prefix + 'strip'
+pkgconfig = 'pkg-config'
+
+[build-in options]
+has_function_print = true
+has_function_hfkerhisadf = false
+allow_default_for_cross = true
+
+[host_machine]
+system = 'linux'
+cpu_family = 'arm'
+cpu = 'cortex-a9'
+endian = 'little'
+
+[build_machine]
+system = 'linux'
+cpu_family = 'x86_64'
+cpu = 'i686'
+EOF
+
+meson build_dir \
+--prefix=$(CURR_DIR) \
+--build-type=plain \
+--cross-file /path/to/aarch64-linux.ini
+cd build_dir && meson compile -C output_dir
+meson install -C output_dir
+```
+:::
+::::
+
+这些工具本质上还是会生成 Makefile，因此，不管你用的什么生成工具，下面的步骤是通用的，唯一的区别是不同的生成工具生成 Makefile 的命令不一样。
+
 ```makefile
 CURR_DIR := $(shell pwd)
 include sdk.mk
@@ -141,11 +213,11 @@ repo:
 # make help
 .PHONY: help
 	@echo ""
-	@echo -e "Step 1:\033[35m make patch \033[0m  Apply patches, run only once"
-	@echo -e "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit original project"
+	@echo -e "Step 1:\033[35m make patch \033[0m  Apply patches"
+	@echo -e "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit"
 	@echo -e "Step 3:\033[35m make       \033[0m  Check if the modifications are valid"
 	@echo -e "Step 4:\033[35m TODO: edit \033[0m  Create, edit and save modifications"
-	@echo -e "Step 5:\033[35m make diff  \033[0m  Generate a patch file: patches/0000-undefined.patch"
+	@echo -e "Step 5:\033[35m make diff  \033[0m  Generate a patch file"
 	@echo ""
 ```
 
