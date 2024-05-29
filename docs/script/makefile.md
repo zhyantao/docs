@@ -33,16 +33,12 @@ clean:
 2、配置编译选项
 
 ```bash
-cat <<EOF | tee config.site
-ac_cv_file__dev_ptmx=no
-ac_cv_file__dev_ptc=no
-EOF
-
-cat <<EOF | tee sdk.mk
+cat <<\EOF | tee sdk.mk
 CURR_DIR := $(shell pwd)
 
-SYSROOT_DIR := $(CURR_DIR)/../../arm-buildroot-linux-gnueabihf_sdk-buildroot
-TOOLCHAIN_DIR := $(SYSROOT_DIR)/usr/bin
+BUILDROOT_DIR := $(CURR_DIR)/../buildroot-2023.02.9/output/host
+SYSROOT_DIR := $(BUILDROOT_DIR)/arm-buildroot-linux-gnueabihf/sysroot
+TOOLCHAIN_DIR := $(BUILDROOT_DIR)/bin
 export PATH := $(addsuffix :$(TOOLCHAIN_DIR), $(PATH))
 
 # cross compile options
@@ -73,6 +69,27 @@ export PKG_CONFIG_SYSROOT_DIR := "$(SYSROOT_DIR)"
 export PKG_CONFIG_DISABLE_UNINSTALLED := "yes"
 EOF
 ```
+
+````{dropdown} 编译 Python 需要的选项
+```bash
+cat <<EOF | tee config.site
+ac_cv_file__dev_ptmx=no
+ac_cv_file__dev_ptc=no
+EOF
+
+cd $(SRC_DIR) && ./configure \
+--prefix=$(DESTDIR) \
+--build=i686-pc-linux-gnu \
+--target=aarch64-linux \
+--host=aarch64-linux \
+--disable-test-modules \
+--enable-optimizations \
+--with-openssl=$(SYSROOT_DIR)/usr \
+--with-openssl-rpath=auto \
+--disable-ipv6 \
+--with-config-site=CONFIG_SITE
+```
+````
 
 3、开始编译
 
@@ -164,17 +181,12 @@ export DESTDIR := $(CURR_DIR)/build
 .PHONY: all
 all:
 	@echo "SYSROOT=$(SYSROOT_DIR)"
+	$(CC) --print-file-name=include
 	@cd $(SRC_DIR) && ./configure \
 	--prefix=$(DESTDIR) \
 	--build=i686-pc-linux-gnu \
 	--target=aarch64-linux \
-	--host=aarch64-linux \
-	--disable-test-modules \
-	--enable-optimizations \
-	--with-openssl=$(SYSROOT_DIR)/usr \
-	--with-openssl-rpath=auto \
-	--disable-ipv6 \
-	--with-config-site=CONFIG_SITE
+	--host=aarch64-linux
 	# {x86,amd64,arm32,arm64,ppc32,ppc64le,ppc64be,s390x,mips32,mips64}-linux, 
 	# {arm32,arm64,x86,mips32}-android, {x86,amd64}-solaris, 
 	# {x86,amd64,arm64}-FreeBSD and {x86,amd64}-darwin
@@ -217,11 +229,11 @@ diff:
 .PHONY: help
 help:
 	@echo ""
-	@echo -e "Step 1:\033[35m make patch \033[0m  Apply patches"
-	@echo -e "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit"
-	@echo -e "Step 3:\033[35m make       \033[0m  Check if the modifications are valid"
-	@echo -e "Step 4:\033[35m TODO: edit \033[0m  Create, edit and save modifications"
-	@echo -e "Step 5:\033[35m make diff  \033[0m  Generate a patch file"
+	@echo "Step 1:\033[35m make patch \033[0m  Apply patches"
+	@echo "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit"
+	@echo "Step 3:\033[35m make       \033[0m  Check if the modifications are valid"
+	@echo "Step 4:\033[35m TODO: edit \033[0m  Create, edit and save modifications"
+	@echo "Step 5:\033[35m make diff  \033[0m  Generate a patch file"
 	@echo ""
 ```
 

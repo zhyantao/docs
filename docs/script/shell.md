@@ -720,6 +720,14 @@ trusted-host=mirrors.aliyun.com
 EOF
 ```
 
+如果向文件中添加的内容包含特殊字符，比如 `$()`，我们发现 `$()` 消失不见了，解决方式如下：
+
+```bash
+cat <<\EOF | tee test.txt
+CURR_DIR := $(shell pwd)
+EOF
+```
+
 ### 8.8. source 命令
 
 `source <file_name>` 表示读取并执行 `file_name` 中的命令。

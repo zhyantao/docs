@@ -293,6 +293,32 @@ custom_channels:
 EOF
 ```
 
+## Python 源
+
+使用这个源，可以在 Linux 上轻松地安装多个 Python 版本：
+
+```bash
+# 添加 PPA 源，此源可安装多个 Python 版本
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+# 安装 Python 3.9
+sudo apt install python3.9
+
+# 建立 Python 的组,并添加 Python3.9 的可选项，优先级为 1
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+
+# 验证当前 Python 是否是 3.9 版本
+python --version
+
+# 如果不是，用以下命令手动配置一下
+sudo update-alternatives --config python
+
+# 安装当前 Python 版本对应的 pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo apt-get install python3.9-distutils
+sudo python get-pip.py
+```
+
 ## npm 源
 
 `npm` 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。
