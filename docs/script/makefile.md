@@ -42,22 +42,75 @@ EOF
 3、开始编译
 
 ```bash
-make clean
+CURR_DIR := $(shell pwd)
+include sdk.mk
 
-cd /path/to/src && ./configure \
---prefix=/path/to/install \
---build=i686-pc-linux-gnu \
---target=aarch64-linux \
---host=aarch64-linux \
---disable-test-modules \
---enable-optimizations \
---with-openssl=/path/to/sysroot/usr \
---with-openssl-rpath=auto \
---disable-ipv6 \
---with-config-site=CONFIG_SITE
+# where is source code?
+PROJECT_NAME := valgrind
+VERSION := 3.23.0
+TAR_BALL := $(PROJECT_NAME)-$(VERSION).tar.bz2
+SRC_DIR := $(CURR_DIR)/$(PROJECT_NAME)-$(VERSION)
 
-make -C /path/to/src -j8
-sudo make -C /path/to/src install
+# where is the build results?
+export DESTDIR := $(CURR_DIR)/build
+
+# make
+.PHONY: all
+all:
+	@cd $(SRC_DIR) && ./configure \
+	--prefix=/path/to/install \
+	--build=i686-pc-linux-gnu \
+	--target=aarch64-linux \
+	--host=aarch64-linux \
+	--disable-test-modules \
+	--enable-optimizations \
+	--with-openssl=/path/to/sysroot/usr \
+	--with-openssl-rpath=auto \
+	--disable-ipv6 \
+	--with-config-site=CONFIG_SITE
+	@cd $(SRC_DIR) && make -C $(SRC_DIR) -j8
+	@cd $(SRC_DIR) && make -C $(SRC_DIR) install
+
+# make clean
+.PHONY: clean
+clean:
+	rm -rf $(SRC_DIR)
+	rm -rf $(DESTDIR)
+
+# make patch
+.PHONY: patch
+patch:
+	tar xf $(TAR_BALL)
+	@if [ ! -d "patches" ]; then mkdir -p $(CURR_DIR)/patches; fi
+	@rm -rf $(DESTDIR) && mkdir -p $(DESTDIR)
+
+# make repo
+.PHONY: repo
+repo:
+	@cd $(SRC_DIR) && if [ ! -d ".git" ]; then git init; fi
+	@cd $(SRC_DIR) && git config --add core.filemode false
+	@cd $(SRC_DIR) && git config --global core.autocrlf false
+	@cd $(SRC_DIR) && git add .
+	@cd $(SRC_DIR) && git commit -m "commit before make patch"
+	@echo "$(SRC_DIR) is already up to date"
+
+# make diff
+.PHONY: diff
+	@cd $(SRC_DIR) && git config --add core.filemode false
+	@cd $(SRC_DIR) && git config --global core.autocrlf false
+	@cd $(SRC_DIR) && git add .
+	@cd $(SRC_DIR) && git diff --cached > $(CURR_DIR)/patches/0000-undefined.patch
+	@echo "patch file is saved to $(CURR_DIR)/patches/0000-undefined.patch"
+
+# make help
+.PHONY: help
+	@echo ""
+	@echo -e "Step 1:\033[35m make patch \033[0m  Apply patches, run only once"
+	@echo -e "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit original project"
+	@echo -e "Step 3:\033[35m make       \033[0m  Check if the modifications are valid"
+	@echo -e "Step 4:\033[35m TODO: edit \033[0m  Create, edit and save modifications"
+	@echo -e "Step 5:\033[35m make diff  \033[0m  Generate a patch file: patches/0000-undefined.patch"
+	@echo ""
 ```
 
 参考文档：<https://seisman.github.io/how-to-write-makefile>。
