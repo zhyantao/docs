@@ -4,7 +4,7 @@
 
 1、编写 Makefile
 
-```bash
+```makefile
 CXX := g++
 CXXFLAGS := -c -Wall
 LDFLAGS :=
@@ -159,7 +159,8 @@ repo:
 |`:=`|重新定义变量，覆盖之前的值 |
 |`?=`|如果变量未定义，则赋予默认值 |
 |`+=`|在变量后追加值 |
-```bash
+
+```makefile
 var = "hello world"
 $(info $(var))  # "hello world"
 
