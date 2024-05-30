@@ -89,42 +89,70 @@ Git
     如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 ``~/.gitconfig`` 可解决问题。
 
 
-仓库
-~~~~~
+远程同步：pull/fetch
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    # 在当前目录新建一个 Git 代码库
-    git init
+    # 下载远程仓库的所有变动
+    git fetch <remote>
 
-    # 新建一个目录，将其初始化为 Git 代码库
-    git init [project-name]
+    # 显示所有远程仓库
+    git remote -v
 
-    # 下载一个项目和它的整个代码历史
-    git clone <url>
+    # 更新远程仓库链接
+    git remote set-url <remote> <url>
+
+    # 显示某个远程仓库的信息
+    git remote show <remote>
+
+    # 增加一个新的远程仓库，并命名
+    git remote add <shortname> <url>
+
+    # 取回远程仓库的变化，并与本地分支合并
+    git pull <remote> <branch>
+
+    # 上传本地指定分支到远程仓库
+    git push <remote> <branch>
+
+    # 强行推送当前分支到远程仓库，即使有冲突
+    git push <remote> --force
+
+    # 推送所有分支到远程仓库
+    git push <remote> --all
 
 
-配置
-~~~~
+检查变更：status/diff
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    # 显示当前的 Git 配置
-    git config --list
+    # 显示有变更的文件
+    git status
 
-    # 编辑 Git 配置文件
-    git config -e [--global]
+    # 显示有变更的文件，包括被删除的文件
+    git status -u
 
-    # 设置提交代码时的用户信息
-    git config --global user.name "<name>"
-    git config --global user.email "<email address>"
+    # 显示暂存区和工作区的差异
+    git diff
 
-    # 只关注文件内容变更，忽略文件权限变化
-    git config --global core.filemode false
+    # 显示暂存区和上一个 commit 的差异
+    git diff --cached <filename>
+
+    # 显示工作区与当前分支最新 commit 之间的差异
+    git diff HEAD
+
+    # 显示两次提交之间的差异
+    git diff <first-branch> <second-branch>
+
+    # 显示今天你写了多少行代码
+    git diff --shortstat "@{0 day ago}"
+
+.. figure:: ../_static/images/diff.*
 
 
-增加/删除文件
-~~~~~~~~~~~~~
+添加/删除变更：add/rm
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -151,8 +179,8 @@ Git
     git mv <file-original> <file-renamed>
 
 
-代码提交
-~~~~~~~~
+提交变更：commit
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -317,8 +345,8 @@ Git
 .. figure:: ../_static/images/commit-detached.*
 
 
-分支
-~~~~~
+检查/切换分支：branch
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -386,8 +414,8 @@ Git
     解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
 
 
-标签
-~~~~
+标签：tag
+~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -430,43 +458,8 @@ Git
     - 架构变化，接口变更：主版本号 + 1。
 
 
-检查：diff
-~~~~~~~~~~~
-
-.. code-block:: bash
-
-    # 显示暂存区和工作区的差异
-    git diff
-
-    # 显示暂存区和上一个 commit 的差异
-    git diff --cached <filename>
-
-    # 显示工作区与当前分支最新 commit 之间的差异
-    git diff HEAD
-
-    # 显示两次提交之间的差异
-    git diff <first-branch> <second-branch>
-
-    # 显示今天你写了多少行代码
-    git diff --shortstat "@{0 day ago}"
-
-.. figure:: ../_static/images/diff.*
-
-
-检查：status
-~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-    # 显示有变更的文件
-    git status
-
-    # 显示有变更的文件，包括被删除的文件
-    git status -u
-
-
-检查：log
-~~~~~~~~~~
+查看历史提交：log
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -514,40 +507,8 @@ Git
     git reflog
 
 
-远程同步
-~~~~~~~~
-
-.. code-block:: bash
-
-    # 下载远程仓库的所有变动
-    git fetch <remote>
-
-    # 显示所有远程仓库
-    git remote -v
-
-    # 更新远程仓库链接
-    git remote set-url <remote> <url>
-
-    # 显示某个远程仓库的信息
-    git remote show <remote>
-
-    # 增加一个新的远程仓库，并命名
-    git remote add <shortname> <url>
-
-    # 取回远程仓库的变化，并与本地分支合并
-    git pull <remote> <branch>
-
-    # 上传本地指定分支到远程仓库
-    git push <remote> <branch>
-
-    # 强行推送当前分支到远程仓库，即使有冲突
-    git push <remote> --force
-
-    # 推送所有分支到远程仓库
-    git push <remote> --all
-
-撤销：checkout
-~~~~~~~~~~~~~~~~
+撤销变更：checkout
+~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -581,8 +542,8 @@ Git
 .. figure:: ../_static/images/checkout-b-detached.*
 
 
-撤销：reset
-~~~~~~~~~~~~
+撤销变更：reset
+~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -608,8 +569,8 @@ Git
 .. figure:: ../_static/images/reset-files.*
 
 
-撤销：revert
-~~~~~~~~~~~~
+撤销变更：revert
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -623,8 +584,8 @@ Git
     git revert <commit>-m <n>
 
 
-合并：cherry-pick
-~~~~~~~~~~~~~~~~~~
+合并分支：cherry-pick
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -640,8 +601,8 @@ Git
 .. figure:: ../_static/images/cherry-pick.*
 
 
-合并：merge
-~~~~~~~~~~~~
+合并分支：merge
+~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -662,8 +623,8 @@ Git
 .. figure:: ../_static/images/merge.*
 
 
-合并：rebase
-~~~~~~~~~~~~
+合并分支：rebase
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -681,8 +642,8 @@ Git
 .. figure:: ../_static/images/rebase-onto.*
 
 
-第三方库
-~~~~~~~~
+子库：submodule
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -731,8 +692,8 @@ Git
     # 对所有 submodule 执行命令，非常有用。如 git submodule foreach 'git checkout main'
     git submodule foreach <arbitrary-command-to-run>
 
-gitignore 匹配规则
-~~~~~~~~~~~~~~~~~~~
+gitignore
+~~~~~~~~~~~
 
 .. dropdown:: 匹配规则
     
