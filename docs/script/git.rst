@@ -271,8 +271,15 @@ Git
                 <zh6tao@gmail.com> <yanntao@yeah.net>
                 <zh6tao@gmail.com> <yann.tao@qq.com>
                 <zh6tao@gmail.com> <yantao.z@qq.com>
+                <zh6tao@gmail.com> <zhyantao@foxmail.com>
+                <zh6tao@gmail.com> <zh6tao@qq.com>
+                zhyantao <zh6tao@gmail.com> github-bak <zhyantao@foxmail.com>
                 zhyantao <zh6tao@gmail.com> toooney <toooney@126.com>
+                zhyantao <zh6tao@gmail.com> toney-z <toooney@126.com>
                 zhyantao <zh6tao@gmail.com> Zh YT <zhyantao@126.com>
+                zhyantao <zh6tao@gmail.com> ToneY_Z <toooney@126.com>
+                zhyantao <zh6tao@gmail.com> ToneY_Z <zyantao@outlook.com>
+                zhyantao <zh6tao@gmail.com> 非鱼 <yann.tao@qq.com>
             
 
             ``cd`` 到仓库的根目录，运行下面的命令：
