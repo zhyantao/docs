@@ -25,10 +25,9 @@ source_suffix = {
 html_logo = "_static/images/logo-wide.svg"
 html_title = "Notebook"
 html_theme = "sphinx_book_theme"
-html_static_path = [
-    "_static"
-]
+html_static_path = ["_static"]
 html_favicon = "_static/images/logo-square.svg"
+html_last_updated_fmt = ""
 html_domain_indices = True
 html_use_index = True
 html_split_index = False
@@ -92,7 +91,6 @@ extensions = [
     "sphinx_comments",
     "sphinx_copybutton",
     "sphinx_design",
-    "sphinx_last_updated_by_git",
     "sphinx_thebe",
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
