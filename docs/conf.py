@@ -8,7 +8,8 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = "Notebook"
-copyright = "2024, zh6tao@gmail.com"
+copyright = "2024"
+author = "Yantao Zhang"
 master_doc = "index"
 language = "zh_CN"
 source_encoding = "utf-8-sig"
