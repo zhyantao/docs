@@ -7,7 +7,7 @@ perf 是一个事件驱动的性能采集工具，本文是 <https://www.brendan
 
 ## 事件类型
 
-```
+```bash
 # Listing all currently known events:
 perf list
 
@@ -17,7 +17,7 @@ perf list 'sched:*'
 
 ## 计数事件
 
-```
+```bash
 # CPU counter statistics for the specified command:
 perf stat command
 
@@ -75,7 +75,7 @@ perf stat -e 'vmscan:*' -a -I 1000
 
 ## 性能采样
 
-```
+```bash
 # Sample on-CPU functions for the specified command, at 99 Hertz:
 perf record -F 99 command
 
@@ -136,7 +136,7 @@ perf top -F 49 -ns comm,dso
 
 ## 静态追踪
 
-```
+```bash
 # Trace new processes, until Ctrl-C:
 perf record -e sched:sched_process_exec -a
 
@@ -212,7 +212,7 @@ perf record -e sdt_node:http__server__request -a
 
 ## 动态追踪
 
-```
+```bash
 # Add a tracepoint for the kernel tcp_sendmsg() function entry ("--add" is optional):
 perf probe --add tcp_sendmsg
 
@@ -279,7 +279,7 @@ perf probe -l
 
 ## 混合
 
-```
+```bash
 # Trace system calls by process, showing a summary refreshing every 2 seconds:
 perf top -e raw_syscalls:sys_enter -ns comm
 
@@ -295,7 +295,7 @@ perf record -F99 -e cpu-clock/max-stack=2/ -e cs/max-stack=5/ -a -g
 
 ## Special
 
-```
+```bash
 # Record cacheline events (Linux 4.10+):
 perf c2c record -a -- sleep 10
 
@@ -305,7 +305,7 @@ perf c2c report
 
 ## 生成报告
 
-```
+```bash
 # Show perf.data in an ncurses browser (TUI) if possible:
 perf report
 
