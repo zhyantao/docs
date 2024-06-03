@@ -39,7 +39,7 @@ CURR_DIR := $(shell pwd)
 BUILDROOT_DIR := $(CURR_DIR)/../buildroot-2023.02.9/output/host
 SYSROOT_DIR := $(BUILDROOT_DIR)/arm-buildroot-linux-gnueabihf/sysroot
 TOOLCHAIN_DIR := $(BUILDROOT_DIR)/bin
-export PATH := $(addsuffix :$(TOOLCHAIN_DIR), $(PATH))
+export PATH := $(TOOLCHAIN_DIR):$(PATH)
 
 # cross compile options
 export ARCH := arm
