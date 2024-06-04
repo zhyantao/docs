@@ -1,11 +1,8 @@
 # Read-the-Docs with Github
 
 [![Documentation Status](https://readthedocs.org/projects/getstarted/badge)](https://readthedocs.org/projects/getstarted/builds)
-[![Repository Size](https://img.shields.io/github/repo-size/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip)
 [![GitHub Release](https://img.shields.io/github/v/release/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/releases)
-[![GitHub Issues](https://img.shields.io/github/issues/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/zhyantao/getstarted)](https://github.com/zhyantao/getstarted)
-[![Curriculum Vitae](https://img.shields.io/badge/CV-ongoing-blue)](https://getstarted.readthedocs.io/_static/resume/cv.pdf)
+[![Curriculum Vitae](https://img.shields.io/badge/cv-ongoing-blue)](https://getstarted.readthedocs.io/_static/resume/cv.pdf)
 
 ## 环境部署
 
