@@ -179,7 +179,11 @@ export DESTDIR := $(CURR_DIR)/build
 .PHONY: all
 all:
 	@echo "SYSROOT=$(SYSROOT_DIR)"
-	$(CC) --print-file-name=include
+	@echo "$(CC) --print-file-name=include"
+	@echo "CC=`which $(CC)`"
+	@echo "CXX=`which $(CXX)`"
+	@echo "CMake=`which cmake`"
+	@echo "Clang=`which clang`"
 	@cd $(SRC_DIR) && ./configure \
 	--prefix=$(DESTDIR) \
 	--build=x86_64-pc-linux-gnu \
