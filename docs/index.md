@@ -54,7 +54,7 @@ git add . && git commit -m "v1.0.0" && git pull && git push
 :hidden:
 
 theory/index
-ccc/index
+cc/index
 assembly/index
 java/index
 python/index
