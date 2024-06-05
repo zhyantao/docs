@@ -232,6 +232,8 @@ Git
           - 代码合并
         * - ``sync``
           - 同步主线或分支的变动
+        * - ``typo``
+          - 更改一些拼写错误
 
 .. dropdown:: 修改 Git Commit 历史
 
