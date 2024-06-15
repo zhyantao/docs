@@ -752,11 +752,11 @@ gitignore
         if [ "${branch}" = "(no branch)" ];then
             branch="(`git rev-parse --short HEAD`...)"
         fi
-        echo "$branch"
+        echo -e ":\033[01;32m$branch\033[00m"
     fi
     }
 
-    PS1 = ':\[\033[01;32m\]$(git_branch)\[\033[00m\]' # 补充到 PS1 变量上
+    PS1 = '$(git_branch)' # 补充到 PS1 变量上
 
 
 自动补全
