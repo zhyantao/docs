@@ -301,22 +301,16 @@ EOF
 # 添加 PPA 源，此源可安装多个 Python 版本
 sudo add-apt-repository ppa:deadsnakes/ppa
 
-# 安装 Python 3.9
-sudo apt install python3.9
+# 制定需要安装的 Python 版本号
+PYTHON_VERSION=python3.13
 
-# 建立 Python 的组,并添加 Python3.9 的可选项，优先级为 1
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+# 安装另一个版本的 Python
+sudo apt install $PYTHON_VERSION
 
-# 验证当前 Python 是否是 3.9 版本
-python --version
-
-# 如果不是，用以下命令手动配置一下
-sudo update-alternatives --config python
-
-# 安装当前 Python 版本对应的 pip
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo apt-get install python3.9-distutils
-sudo python get-pip.py
+# 使用新版本的 Python
+$PYTHON_VERSION -m venv $PYTHON_VERSION --without-pip
+source $PYTHON_VERSION/bin/activate
+curl https://bootstrap.pypa.io/get-pip.py | $PYTHON_VERSION
 ```
 
 ## npm 源
