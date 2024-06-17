@@ -13,8 +13,12 @@
 ::::{tab-set}
 :::{tab-item} LLVM (x86)
 参考 <https://apt.llvm.org>，在安装 LLVM 的同时，也就把 Clang 装好了。
+
+```bash
+sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+```
 :::
 :::{tab-item} LLVM (AArch64)
-参考 <https://learn.arm.com/install-guides/llvm-embedded>
+参考 [How do I cross-compile LLVM/Clang for AArch64 on x64 host?](https://stackoverflow.com/questions/61771494/how-do-i-cross-compile-llvm-clang-for-aarch64-on-x64-host)
 :::
 ::::
