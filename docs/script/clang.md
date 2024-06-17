@@ -10,8 +10,11 @@
 
 ## 安装 Clang
 
-参考 <https://apt.llvm.org>，在安装 LLVM 的同时，也就把 Clang 装好了。但是这个文档没有关于如何安装 arm64（aka aarch64）版本 LLVM 的介绍。
-
-```bash
-
-```
+::::{tab-set}
+:::{tab-item} LLVM (x86)
+参考 <https://apt.llvm.org>，在安装 LLVM 的同时，也就把 Clang 装好了。
+:::
+:::{tab-item} LLVM (AArch64)
+参考 <https://learn.arm.com/install-guides/llvm-embedded>
+:::
+::::
