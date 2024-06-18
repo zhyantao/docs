@@ -15,7 +15,8 @@
 参考 <https://apt.llvm.org>，在安装 LLVM 的同时，也就把 Clang 装好了。
 
 ```bash
-sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu \
+    gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 ```
 :::
 :::{tab-item} LLVM (AArch64)
