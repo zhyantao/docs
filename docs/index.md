@@ -60,7 +60,7 @@ java/index
 python/index
 js/index
 script/index
-deploy/index
+config/index
 appendix/index
 ```
 

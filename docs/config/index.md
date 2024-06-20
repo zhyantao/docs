@@ -1,8 +1,7 @@
-# 环境部署
+# 环境和配置
 
 ```{toctree}
 :titlesonly:
-:hidden:
 :glob:
 
 *
