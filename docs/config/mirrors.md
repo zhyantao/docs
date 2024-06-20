@@ -313,6 +313,41 @@ source $PYTHON_VERSION/bin/activate
 curl https://bootstrap.pypa.io/get-pip.py | $PYTHON_VERSION
 ```
 
+## MSYS2 源
+
+::::{tab-set}
+:::{tab-item} 中科大源
+```bash
+# modify config files
+sed -i "s#mirror.msys2.org/#mirrors.ustc.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+
+# verify the modification
+head -n 6 /etc/pacman.d/mirrorlist.msys
+
+# clear cache
+pacman -Scc
+
+# update mirrors
+pacman -Sy
+```
+:::
+:::{tab-item} 清华源
+```bash
+# modify config files
+sed -i "s#mirror.msys2.org/#mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+
+# verify the modification
+head -n 6 /etc/pacman.d/mirrorlist.msys
+
+# clear cache
+pacman -Scc
+
+# update mirrors
+pacman -Syu
+```
+:::
+::::
+
 ## npm 源
 
 `npm` 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。
