@@ -684,47 +684,4 @@ under the License.
 
 修改完成后，在 IDEA 中记得勾选 `文件` > `设置` > `构建、执行、部署` > `构建工具` > `Maven` > `使用 Maven 包装器` > `重写`。
 
-## Linux 本地源
-
-```{hint}
-以下内容未经验证！
-```
-
-1. 安装好 Linux 操作系统；
-2. 将安装镜像 `.iso` 文件上传至虚拟机任意目录；
-3. 使用如下命令完成后续操作：
-
-    ```bash
-    sudo mkdir /dev/local_mirror
-    mount -o loop /home/CentOS-6.10-x86_64-bin-DVD1.iso /dev/local_mirror/
-    sudo mkdir /mnt/local_mirror
-    sudo cp -r /dev/local_mirror/* /mnt/local_mirror
-    cd /etc/yum.repos.d/
-    rename .repo .repo.bak *.repo
-    cp CentOS-Base.repo.bak CentOS_local.repo
-    cp CentOS-Media.repo.bak CentOS-local.repo
-    vim CentOS-local.repo
-    ```
-
-4. 写入如下内容：
-
-    ```bash
-    [LocalMirror]
-    name=LocalMirror
-    baseurl=file:///mnt/local_mirror
-    enabled=1
-    gpgcheck=0
-    ```
-
-5. 更新 yum 源
-
-    ```bash
-    yum clean all
-    yum repolist
-    sudo umount /dev/local_mirror
-    sudo rm /dev/local_mirror/ -rf
-    ```
-
----
-
 [^cite_ref-1]: Maven 安装与配置 <https://www.cnblogs.com/seve/p/10903679.html>
