@@ -2,111 +2,109 @@
 
 ## 移动
 
-```{code-block} bash
-h j k l     # 左 下 右 上
-
-gg          # 光标移动到文件开头
-G           # 光标移动到文件末尾
-0           # 光标移动到行首
-$           # 光标移动到行尾
-23G         # 光标跳转到第23行
-:23         # 跳转到第 23 行
-```
+| 键位    | 功能        |
+| ----- | --------- |
+| `h`   | 左         |
+| `j`   | 下         |
+| `k`   | 上         |
+| `l`   | 右         |
+| `gg`  | 光标移动到文件开头 |
+| `G`   | 光标移动到文件末尾 |
+| `0`   | 光标移动到行首   |
+| `$`   | 光标移动到行尾   |
+| `23G` | 光标跳转到第 23 行 |
+| `:23` | 跳转到第 23 行 |
 
 ## 插入
 
-```{code-block} bash
-i           # 在光标前插入一个字符
-I           # 在行首插入一个字符
-a           # 在光标后插入一个字符
-A           # 在行尾插入一个字符
-o           # 向下新开辟一行，插入行首
-O           # 向上新开辟一行，插入行首
-s           # 删除光标所在的字符，并进入插入状态
-S           # 删除光标所在的行，并进入插入状态
-```
+| 键位  | 功能                |
+| --- | ----------------- |
+| `i` | 在光标前插入一个字符        |
+| `I` | 在行首插入一个字符         |
+| `a` | 在光标后插入一个字符        |
+| `A` | 在行尾插入一个字符         |
+| `o` | 向下新开辟一行，插入行首      |
+| `O` | 向上新开辟一行，插入行首      |
+| `s` | 删除光标所在的字符，并进入插入状态 |
+| `S` | 删除光标所在的行，并进入插入状态  |
 
 ## 复制、粘贴
 
-```{code-block} bash
-yy          # 复制当前行
-10yy        # 复制 10 行
-
-p           # 在光标所在位置向下开辟一行，粘贴
-P           # 在光标所在位置向上开辟一行，粘贴
-
-set paste   # 防止粘贴时，格式错乱
-```
+| 键位           | 功能           |
+| ------------ | ------------ |
+| `yy`         | 复制当前行        |
+| `10yy`       | 复制 10 行      |
+| `p`          | 在光标所在位置下一行粘贴 |
+| `P`          | 在光标所在位置上一行粘贴 |
+| `:set paste` | 防止粘贴时格式错乱    |
 
 ## 剪切、删除
 
-```{code-block} bash
-x           # 删除光标后一个字符
-X           # 删除光标前一个字符
-dw          # 删除光标开始位置的单词
-d0          # 删除光标前本行文本的所有内容，不包含光标所在的字符
-D           # 删除光标后本行所有的内容，包含光标所在的字符
-dd          # 删除光标所在的行
-n dd        # 删除光标后面所有的行，包含光标所在的行
-
-```
+| 键位     | 功能                        |
+| ------ | ------------------------- |
+| `x`    | 删除光标后一个字符                 |
+| `X`    | 删除光标前一个字符                 |
+| `dw`   | 删除光标开始位置的单词               |
+| `d0`   | 删除光标前本行文本的所有内容，不包含光标所在的字符 |
+| `D`    | 删除光标后本行所有的内容，包含光标所在的字符    |
+| `dd`   | 删除光标所在的行                  |
+| `n dd` | 删除光标后面所有的行，包含光标所在的行       |
 
 ## 撤销
 
-```{code-block} bash
-u           # 一步撤销，可多次使用
-Ctrl + r    # 反撤销
-```
+| 键位         | 功能         |
+| ---------- | ---------- |
+| `u`        | 一步撤销，可多次使用 |
+| `Ctrl + r` | 反撤销        |
 
 ## 查找
 
-```{code-block} bash
-/PATTERN    # 从光标所在位置向下查找
-?PATTERN    # 从光标所在位置向上查找
-    Enter   # 输入完毕
-    n       # 向下查找下一个
-    N       # 向上查找下一个
-    #       # 查找光标当前指向的字符串
-```
+| 键位         | 功能           |
+| ---------- | ------------ |
+| `/PATTERN` | 从光标所在位置向下查找  |
+| `?PATTERN` | 从光标所在位置向上查找  |
+| `Enter`    | 完成输入模式       |
+| `n`        | 向下查找下一个      |
+| `N`        | 向上查找下一个      |
+| `#`        | 查找光标当前指向的字符串 |
 
 ## 替换
 
-```{code-block} bash
-r                           # 替换当前字符
-:s/PATTERN/toString         # 将当前行第一次出现的 PATTERN 替换为 toString
-:s/PATTERN/toString/g       # 将当前行出现的 PATTERN 全部替换为 toString
-:%s/PATTERN/toString        # 将所有行第一次出现的 PATTERN 替换为 toString
-:%s/PATTERN/toString/g      # 将当前行出现的 PATTERN 全部替换为 toString
-:2,3s/PATTERN/toString      # 将[2,3]行第一次出现的 PATTERN 替换为 toString
-:2,3s/PATTERN/toString/g    # 将[2,3]行第一次出现的 PATTERN 替换为 toString
-```
+| 命令                         | 功能                                |
+| -------------------------- | --------------------------------- |
+| `r`                        | 替换当前字符                            |
+| `:s/PATTERN/toString`      | 将当前行第一次出现的 `PATTERN` 替换为 `toString`   |
+| `:s/PATTERN/toString/g`    | 将当前行所有 `PATTERN` 替换为 `toString`       |
+| `:%s/PATTERN/toString`     | 将所有行第一次出现的 `PATTERN` 替换为 `toString`   |
+| `:%s/PATTERN/toString/g`   | 将所有行所有 `PATTERN` 替换为 `toString`       |
+| `:2,3s/PATTERN/toString`   | 将第 2 至 3 行第一次出现的 `PATTERN` 替换为 `toString` |
+| `:2,3s/PATTERN/toString/g` | 将第 2 至 3 行所有 `PATTERN` 替换为 `toString`     |
 
 ## 格式化文本
 
-```{code-block} bash
->>          # 文本右移一个 Tab 大小
-<<          # 文本左移一个 Tab 大小
-gg=G        # 整理代码，使其符合标准格式
-```
+| 键位     | 功能            |
+| ------ | ------------- |
+| `>>`   | 文本右移一个 Tab 大小   |
+| `<<`   | 文本左移一个 Tab 大小   |
+| `gg=G` | 整理代码，使其符合标准格式 |
 
 ## 全选
 
-```{code-block} bash
-ggVG        # 全部高亮
-```
+| 键位     | 功能   |
+| ------ | ---- |
+| `ggVG` | 全部选择 |
 
 ## 窗口
 
-```{code-block} bash
-Ctrl + S    # 冻结窗口
-Ctrl + q    # 解冻窗口
-```
+| 键位         | 功能   |
+| ---------- | ---- |
+| `Ctrl + S` | 冻结窗口 |
+| `Ctrl + q` | 解冻窗口 |
 
 ## 记住上次打开的位置
 
-```{code-block} bash
-" Uncomment the following to have bash jump to the last position when
-" reopening a file
+```vim
+" 若要在重新打开文件时跳转到最后位置，请取消以下注释
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
@@ -114,54 +112,55 @@ endif
 
 ## 配置 Vim 插件
 
-Linux 默认安装的 VIM 版本是 7.x，如果要使用 YouCompelteMe，需要先升级到 8.x。
+对于 Linux，默认安装的 Vim 版本如果是 7.x，而要使用 YouCompleteMe，则需要升级到 8.x。
 
-为了更方便地管理我们的 VIM 插件，推荐使用 Vundle。具体步骤如下：
+### 使用 Vundle 管理插件
 
-```{code-block} bash
+**安装 Vundle**
+
+```bash
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
-新建或打开 `~/.vimrc`，然后再文件中添加如下内容：
+**配置 Vundle**
 
-```{code-block} text
+在 `~/.vimrc` 文件中添加配置：
+
+```vim
 " General settings
-set nu                  " show line numbers
-set tabstop     =4      " Width of tab character
-set softtabstop =4      " Fine tunes the amount of white space to be added
-set shiftwidth  =4      " Determines the amount of whitespace to add in normal mode
-"set expandtab          " When this option is enabled, vi will use spaces instead of tabs
+set nu                  " 显示行号
+set tabstop=4           " 设置 Tab 字符宽度
+set softtabstop=4       " 设置缩进宽度
+set shiftwidth=4        " 设置自动缩进宽度
+"set expandtab          " 使用空格代替 Tab
 
-set nocompatible        " be iMproved, required
-filetype off            " required
+set nocompatible        " 开启 Vim 增强模式
+filetype off            " 关闭文件类型检测
 
-" set the runtime path to include Vundle and initialize
+" 设置运行路径以包含Vundle并初始化
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
+" Vundle管理自身
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-scripts/Auto-Pairs'             " Autocomplete parens/quotes/brackets
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" 添加其他插件示例
+Plugin 'vim-scripts/Auto-Pairs'             " 自动完成括号/引号/方括号
+
+call vundle#end()            " 结束 Vundle 配置
+filetype plugin indent on    " 开启文件类型检测、插件和缩进
+
+" 插件管理快捷方式
+" :PluginList       - 列出已配置插件
+" :PluginInstall    - 安装插件；加 ! 更新，或直接 :PluginUpdate
+" :PluginSearch foo - 搜索 foo 插件；加 ! 刷新本地缓存
+" :PluginClean      - 确认删除未使用的插件；加 ! 自动批准删除
+" 更多详情见 :h vundle 或访问 wiki 查询 FAQ
 ```
 
-打开 `vim`，使用命令 `:PluginInstall` 安装插件。
+打开 Vim，执行 `:PluginInstall` 安装插件。
 
-如果要删除某些不需要的插件，可以参考上面配置文件中的 Brief help 部分。首先编辑 `.vimrc`
-将不需要的 Plugin 删掉，先运行 `:PluginUpdate!` 然后再运行 `:PluginClean!` 即可。
+**删除插件**
+
+- 从 `.vimrc` 中移除不需要的插件条目。
+- 运行 `:PluginUpdate!` 更新插件列表。
+- 最后，运行 `:PluginClean!` 清理不再配置的插件。
