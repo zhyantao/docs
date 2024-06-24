@@ -1,4 +1,3 @@
-
 # 软件包及镜像源管理
 
 ## apt/yum 源
@@ -298,7 +297,7 @@ EOF
 使用这个源，可以在 Linux 上轻松地安装多个 Python 版本：
 
 ```bash
-# 添加 PPA 源，此源可安装多个 Python 版本
+# 添加 PPA (Personal Package Archives) 源，此源可安装多个 Python 版本
 sudo add-apt-repository ppa:deadsnakes/ppa
 
 # 制定需要安装的 Python 版本号
