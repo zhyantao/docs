@@ -19,7 +19,7 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) doc
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) docs
 
-.PHONY: help html tex clean-html clean-tex
+.PHONY: help html pdf clean-html clean-pdf
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
