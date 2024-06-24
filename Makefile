@@ -19,13 +19,14 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) doc
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) docs
 
-.PHONY: help clean html pdf
+.PHONY: help html tex clean-html clean-tex
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  html       to make standalone HTML files"
-	@echo "  clean      to clean the whole porject output"
-	@echo "  pdf        to generate LaTeX pdf files"
+	@echo "  html        to make standalone HTML files"
+	@echo "  pdf         to make LaTeX files and run them through pdflatex"
+	@echo "  clean-html  to remove the HTML files"
+	@echo "  clean-pdf   to remove the LaTeX files"
 
 all: pdf html
 
@@ -36,15 +37,19 @@ html:
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 pdf:
+	@mkdir -p "docs/_static/cheatsheet"
 	@cd docs/cheatsheet && latexmk -pdf java.tex
 	@cd docs/cheatsheet && latexmk -pdf cpp.tex
 	@cd docs/cheatsheet && latexmk -pdf c.tex
 	@cd docs/resume && latexmk -pdf cv.tex
-	@echo "Build finished; the LaTeX files are in docs/_static/cheatsheet."
+	@echo "Build finished. the LaTeX files are in docs/_static/cheatsheet."
 
-clean:
+clean-html:
 	@rm -rf $(BUILDDIR)/*
 	@rm -rf docs/_tmp
+	@echo "Clean finished."
+
+clean-pdf:
 	@cd docs/cheatsheet && latexmk -c -C java.tex
 	@cd docs/cheatsheet && latexmk -c -C cpp.tex
 	@cd docs/cheatsheet && latexmk -c -C c.tex
