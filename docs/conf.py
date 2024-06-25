@@ -96,6 +96,7 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
     "svg2png",
+    "notfound.extension",
 ]
 
 
