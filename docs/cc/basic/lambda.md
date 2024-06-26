@@ -56,7 +56,7 @@ void processArguments(Args... args)
 template<typename... Args>
 void wrapperFunction(Args... args)
 {
-    auto lambda = [&](/* 捕获 args 通过引用 */)
+    auto lambda = [&](/* 通过引用捕获外部变量 args */)
     {
         processArguments(args...); // 通过展开运算符传递参数
     };
@@ -71,4 +71,4 @@ int main()
 }
 ```
 
-在这个例子中，`wrapperFunction` 创建了一个 Lambda 表达式，该表达式捕获了所有传入的参数并通过引用，并将它们转发给 `processArguments` 函数。这展示了 Lambda 表达式与变参模板结合使用的灵活性。
+在这个例子中，`wrapperFunction` 创建了一个 Lambda 表达式，该表达式通过引用捕获了所有传入的参数，并将它们转发给 `processArguments` 函数。这展示了 Lambda 表达式与变参模板结合使用的灵活性。
