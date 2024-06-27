@@ -1,17 +1,16 @@
 # Yocto
 
+**Yocto 用于构建**针对嵌入式设备**定制 Linux 发行版的**一套综合的**工具套件、模板和资源**。
 
-Yocto 是**用于构建**针对嵌入式设备的**定制 Linux 发行版的**一套综合的**工具套件、模板和资源**。
+探索 Yocto Project，建议从以下几个核心领域开始：
 
-学习 Yocto 应该从以下几个方面入手：
+1. **Poky 工作流程**：作为 Yocto 的基础参考发行版，Poky 提供了定制发行版的实践范例。
+2. **OpenEmbedded 构建系统**：利用 BitBake 构建引擎来驱动整个构建过程。
+3. **定制操作系统组件**：学习如何根据需求选择和调整软件包。
+4. **板级支持包(BSP)**：为特定硬件平台提供必要的驱动和配置。
+5. **应用开发工具**：了解如何使用 Extensible SDK 或 Legacy SDK 进行应用开发。
 
-- Poky 工作流
-- OpenEmbedded 构建系统（包括 BitBake 构建引擎）
-- 定制操作系统栈
-- 板支持包（Board Support Package，BSP）
-- 应用开发工具包
-
-本文仅介绍常用的 BitBake 语法和命令，更多请参考《嵌入式 Linux 系统开发：基于 Yocto Project》。
+本文聚焦于 BitBake 基础语法和操作命令，更深入的学习资源推荐《嵌入式Linux系统开发：基于 Yocto Project》一书。
 
 ## BitBake 文件简介
 
@@ -21,17 +20,7 @@ Bitbake 的执行流程：首先将源代码拷贝一份到 `build/tmp/work/<arc
 
 `.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
 
-下面将介绍 `.bb` 文件最基本也是最常用的编写方法。
-
-前提：假设你已经编写好了下面这几个文件，并且你打算将它们添加到 Linux 发行版中：
-
-```bash
-startup-script  # 一个在系统启动时运行的脚本（例如，用于恢复持久状态）。
-run-script      # 一个用于启动设备应用程序的脚步（设备的运行级别为 5）。
-support-script  # 上面两个脚本运行所需的脚本。
-```
-
-将脚本添加到 Linux 发行版中以及它们与各种 `init` 运行级别的交互是通过 BitBake 菜谱（`.bb` 文件）控制的。模板如下所示：[^ref-cite-1]
+假设你有三个脚本需要加入发行版：`startup-script`、`run-script` 和 `support-script`，以下是如何通过 `.bb` 文件实现这一过程的简要指南 [^ref-cite-1]。
 
 ```bash
 DESCRIPTON = "Startup scripts"
@@ -158,10 +147,10 @@ do_install() {
 
 ## BitBake 构建流程
 
-1. 解析 `build` 目录下的 `conf/bblayers.conf`
-2. 根据 `bblayers.conf` 依次解析每个 layer 中的 `layer.conf` 和 `bitbake.conf`
-3. 解决 layer 的依赖关系，生成 `cache` 文件夹
-4. 根据 `.bb` 文件执行任务（根据 `.bbappend` 文件执行补充任务）
+1. **解析层配置**：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
+2. **配置解析**：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
+3. **依赖解析**：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
+4. **任务执行**：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
 
 ## Q & A
 
