@@ -10,17 +10,21 @@
 4. **板级支持包(BSP)**：为特定硬件平台提供必要的驱动和配置。
 5. **应用开发工具**：了解如何使用 Extensible SDK 或 Legacy SDK 进行应用开发。
 
-本文聚焦于 BitBake 基础语法和操作命令，更深入的学习资源推荐《嵌入式Linux系统开发：基于 Yocto Project》一书。
+本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习《嵌入式Linux系统开发：基于 Yocto Project》。
 
 ## BitBake 文件简介
 
-当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个 `.bb` 文件，`.bb` 文件包含了一系列的任务（[Tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)）：configuring、compiling、packaging software。
+当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个文件，`.bb` 文件包含了一系列的任务（[Tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)）：`do_fetch`、`do_patch`、`do_compile`、`do_install` 及 `do_package` 等等。
 
-Bitbake 的执行流程：首先将源代码拷贝一份到 `build/tmp/work/<archname>` 目录下，然后执行 `.bb` 文件中的 [`do_compile`](https://docs.yoctoproject.org/ref-manual/tasks.html#do-compile) 和 `do_install` 函数。这两个函数体中包含了一些运行脚本，这跟我们在 Shell 中直接执行命令无异，只不过这些运行脚本使用了由 `source oe-init-build-env` 声明的环境变量，可以进行交叉编译。
+Bitbake 的执行流程：
 
-`.bb` 文件的作用在于，它可以帮助我们将编写好的代码或脚本添加到 Yocto 镜像中。
+1. `do_fetch`：此阶段默认负责从网络源（根据 `SRC_URI` 变量指定）下载源代码，并将其保存至默认的下载目录 `${DL_DIR}`，该目录通常位于 `${TOPDIR}/downloads`，但实际位置可由用户在 `build/conf/local.conf` 文件中配置。下载完成后，还会验证源码完整性。
+2. `源代码解压与准备`：下载后的源代码会被解压缩并准备到一个工作目录下，通常是 `${WORKDIR}`，路径类似 `build/tmp/work/<archname>/<recipe>-<version>/`，其中 `<archname>` 是目标体系结构，`<recipe>-<version>` 对应于具体的配方及其版本。这个步骤确保了源代码在一个干净、独立的环境中准备就绪，以便后续构建过程使用。
+3. `do_compile`：接着，Bitbake 调用 `do_compile` 任务来编译源代码。此阶段通常在 `${B}`（即编译目录）下设置当前工作目录，并默认尝试运行 `oe_runmake` 函数来执行 Makefile 中定义的编译指令。这一步骤利用了由 `oe-init-build-env` 脚本初始化的环境，支持交叉编译，确保生成的目标代码适用于目标架构。
+4. `do_install`：编译完成后，`do_install` 任务将指定的编译输出（如库文件、可执行文件等）安装到一个临时的安装目录 `${D}`。这个目录作为打包前的暂存区，用于收集所有将被包含进最终包或根文件系统（`ROOTFS`）的文件。此过程在 `${B}` 目录下执行，并通常在 `fakeroot` 环境下操作，以模拟包的安装者权限。
+5. `do_package`：最后，`do_package` 任务负责将 `${D}` 目录下的文件打包成合适的软件包格式（如 `.ipk`, `.deb`, `.rpm` 等），具体格式由配方和构建配置确定。这一阶段涉及文件归档、元数据生成以及可能的包管理数据库更新，为软件分发和部署做准备。
 
-假设你有三个脚本需要加入发行版：`startup-script`、`run-script` 和 `support-script`，以下是如何通过 `.bb` 文件实现这一过程的简要指南 [^ref-cite-1]。
+例：假设你有三个脚本需要加入发行版：`startup-script`、`run-script` 和 `support-script`，以下是如何通过 `.bb` 文件实现这一过程的简要指南 [^ref-cite-1]。
 
 ```bash
 DESCRIPTON = "Startup scripts"
