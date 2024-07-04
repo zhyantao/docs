@@ -14,6 +14,15 @@
 
 ## BitBake 文件简介
 
+Bitbake 的构建流程可以分为四个步骤：
+
+1. **解析层配置**：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
+2. **配置解析**：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
+3. **依赖解析**：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
+4. **任务执行**：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
+
+其中，第四步是工作中最常遇到的，因此展开来讲：
+
 当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个文件，`.bb` 文件包含了一系列的任务（[Tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)）：`do_fetch`、`do_patch`、`do_compile`、`do_install` 及 `do_package` 等等。
 
 Bitbake 的执行流程：
@@ -149,12 +158,31 @@ do_install() {
 | `bitbake-layers layerindex-show-depends <layer_name>`              | 根据 OE index 列出指定 `layer` 的依赖     |
 | `bitbake-layers layerindex-fetch <layer name>`                     | 使用 OE index 拉取和添加 `layer`        |
 
-## BitBake 构建流程
+## 离线构建 meta-clang
 
-1. **解析层配置**：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
-2. **配置解析**：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
-3. **依赖解析**：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
-4. **任务执行**：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
+```bash
+# 添加底包合 meta-clang 层
+git clone git://github.com/openembedded/openembedded-core.git
+cd openembedded-core
+git clone git://github.com/openembedded/bitbake.git
+git clone git://github.com/kraj/meta-clang.git
+
+# 激活 bitbake 环境变量
+source ./oe-init-build-env
+
+# Add meta-clang overlay
+bitbake-layers add-layer ../meta-clang
+
+# 允许 bitbake 检查本地缓存
+echo BB_NO_NETWORK=1
+
+# 将提前下载好的 git2_github.com.llvm.llvm-project.tar.gz 放到 DL_DIR 目录下
+cp git2_github.com.llvm.llvm-project.tar.gz <build-dir>/downloads
+
+# (可选) 如果离线包是以 git2_ 开头的，需要手动创建 .done 文件
+cd <build-dir>/downloads
+touch git2_github.com.llvm.llvm-project.tar.gz.done
+```
 
 ## Q & A
 
