@@ -1,4 +1,4 @@
-# 常用环境变量的设置方式
+# Windows Path
 
 ## Java
 

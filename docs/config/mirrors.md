@@ -11,20 +11,20 @@
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
-deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 
-deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
 
-deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
 
-# deb https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
-# deb-src https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
 
-deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
-deb-src https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
 :::
@@ -33,19 +33,19 @@ EOF
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
 
-deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
-# deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+# deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
 
 # 预发布软件源，不建议启用
-# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
-# # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
+# # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
 :::
@@ -53,16 +53,16 @@ EOF
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
-deb http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
-deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
-deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
-#deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-proposed main restricted universe multiverse
-#deb http://mirrors.cloud.tencent.com/ubuntu/ jammy-backports main restricted universe multiverse
-deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy main restricted universe multiverse
-deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-security main restricted universe multiverse
-deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-updates main restricted universe multiverse
-#deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-proposed main restricted universe multiverse
-#deb-src http://mirrors.cloud.tencent.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal-updates main restricted universe multiverse
+#deb http://mirrors.cloud.tencent.com/ubuntu/ focal-proposed main restricted universe multiverse
+#deb http://mirrors.cloud.tencent.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-updates main restricted universe multiverse
+#deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-proposed main restricted universe multiverse
+#deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
 :::
@@ -71,21 +71,21 @@ EOF
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码仓库，如有需要可自行取消注释
-deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
 
-deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 
-deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
 
-deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
 
 # 预发布软件源，不建议启用
-# deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
 :::
@@ -94,17 +94,17 @@ EOF
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
-deb https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
-# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy main restricted universe multiverse
-deb https://mirrors.zju.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-deb https://mirrors.zju.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-deb https://mirrors.zju.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
-# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ focal main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+deb https://mirrors.zju.edu.cn/ubuntu/ focal-security main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 # 预发布软件源，不建议启用
-# deb https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
-# deb-src https://mirrors.zju.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb https://mirrors.zju.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src https://mirrors.zju.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
 :::
@@ -112,16 +112,16 @@ EOF
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
-deb http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
 :::
@@ -129,7 +129,7 @@ EOF
 
 :::{dropdown} 切换 Ubuntu 版本或找不到安装包
 
-如要用于其他版本，把 `jammy` 换成其他版本代号即可: 22.04：`jammy`；20.04：`focal`；18.04：`bionic`；16.04：`xenial`；14.04：`trusty`。
+如要用于其他版本，把 `focal` 换成其他版本代号即可: 22.04：`jammy`；20.04：`focal`；18.04：`bionic`；16.04：`xenial`；14.04：`trusty`。
 
 若官方源找不到安装包，有两种方法可以解决这个问题：
 
