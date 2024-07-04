@@ -4,6 +4,41 @@ MSYS2 可以用来在 Windows 上配置编译工具链，包括 `make`、`cmake`
 
 下载 MSYS2：<https://www.msys2.org/>。
 
+## 切换镜像源
+
+::::{tab-set}
+:::{tab-item} 中科大源
+```bash
+# modify config files
+sed -i "s#mirror.msys2.org/#mirrors.ustc.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+
+# verify the modification
+head -n 6 /etc/pacman.d/mirrorlist.msys
+
+# clear cache
+pacman -Scc
+
+# update mirrors
+pacman -Sy
+```
+:::
+:::{tab-item} 清华源
+```bash
+# modify config files
+sed -i "s#mirror.msys2.org/#mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+
+# verify the modification
+head -n 6 /etc/pacman.d/mirrorlist.msys
+
+# clear cache
+pacman -Scc
+
+# update mirrors
+pacman -Syu
+```
+:::
+::::
+
 ## 更新 MSYS2
 
 ```bash
