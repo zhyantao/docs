@@ -20,6 +20,21 @@ sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu \
 ```
 :::
 :::{tab-item} LLVM (AArch64)
-参考 [How do I cross-compile LLVM/Clang for AArch64 on x64 host?](https://stackoverflow.com/questions/61771494/how-do-i-cross-compile-llvm-clang-for-aarch64-on-x64-host)
+使用 Yocto 安装 Clang：
+
+```bash
+git clone https://github.com/openembedded/openembedded-core.git
+cd openembedded-core
+git clone https://github.com/openembedded/bitbake.git
+git clone https://github.com/kraj/meta-clang.git
+
+source ./oe-init-build-env
+
+# Add meta-clang overlay
+bitbake-layers add-layer ../meta-clang
+
+# Cross compile Clang
+bitbake clang
+```
 :::
 ::::
