@@ -2,7 +2,12 @@
 
 MSYS2 可以用来在 Windows 上配置编译工具链，包括 `make`、`cmake`、`gcc` 等。
 
-下载 MSYS2：<https://www.msys2.org/>。
+下载 MSYS2：<https://www.msys2.org>。然后，配置环境变量：
+
+```text
+D:\msys64\usr\bin
+D:\msys64\mingw64\bin
+```
 
 ## 切换镜像源
 

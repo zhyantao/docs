@@ -1,320 +1,218 @@
 \documentclass[a4paper]{ctexart}
-\usepackage[landscape]{geometry}
+\usepackage[landscape, margin=1in]{geometry} % 调整页边距
 \usepackage{multicol}
 \usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
 \usepackage{listings}
-
-\makeatletter
-
-\advance\topmargin-.8in
-\advance\textheight3in
-\advance\textwidth3in
-\advance\oddsidemargin-1.5in
-\advance\evensidemargin-1.5in
-\parindent0pt
-\parskip2pt
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
 
 \begin{document}
 
-\begin{multicols*}{3}
+\begin{multicols}{2}[\section*{C++ 小抄表}] % 使用两列并添加标题
 
-  \tikzstyle{mybox} = [draw=black, fill=white, very thick,
-  rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
-  \tikzstyle{fancytitle} =[fill={rgb:red,220;green,220;blue,221},
-  text=white, font=\bfseries]
-  %------------ START OF CONTENT -------------
+  \tikzstyle{mybox} = [
+  draw=black, fill=white, very thick,
+  rectangle split, rectangle split parts=2,
+  rectangle split part align={center, center},
+  inner sep=10pt, inner ysep=10pt,
+  rounded corners,
+  text width=0.95\columnwidth, % 调整宽度适应列宽
+  ]
 
+  \tikzstyle{fancytitle} = [
+  fill=gray!20, text=white, font=\bfseries,
+  rectangle, rounded corners,
+  draw=black, inner sep=1pt, inner ysep=2pt
+  ]
 
-  %------------- START SECTION ---------------
+  % 基本框架
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
+    \node [mybox] (box){
+      \nodepart{one} 基本框架
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
+#include <bits/stdc++.h>
+using namespace std;
 
-        编码规范：\verb!*! 和 \verb!&! 紧挨变量名且与关键字之间保留一个空格。
-        引用传递 \verb|int &b = a| 修改 \verb|b| 等于修改 \verb|a|。
-        地址传递 \verb|int *b = &a| 修改 \verb|*b| 等于修改 \verb|a|。
-        指针 \verb!*! 的优先级低于 \verb![]!，故 \verb!int *nums[3]! 是指针数组。\\
-        \verb![捕获变量](参数列表) -> 返回类型 {函数主体}!
-        是 Labmda 表达式，即匿名函数，其返回类型可以省略。
+typedef long long ll;
+typedef long double ld;
 
-      \end{minipage}
+const ll mod7 = 1e9 + 7;
+const ll mod9 = 998244353;
+const ll INF = 2 * 1024 * 1024 * 1023;
+const char nl = '\n';
+
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+
+    int t;
+    cin >> t;
+
+    auto solve = [&]() {
+        // TODO
+        cout << nl; // 使用 endl 会导致 tie 失效
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {指针和引用};
+
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
+        \end{lstlisting}
+    };
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 类型转换
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-char arr[] = {'A', 0}; // 必须有 0 终止符
-int arr[10]{ 0 }; // 必须赋初值 0，否则乱码
-char *arr[] = {"ABC", "DEF"}; // 指针数组
-\end{verbatim}
-
-      \end{minipage}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
+string str = "";
+char *ptr = nullptr;
+char chs[100] = { 0 };
+ptr = const_cast< char * >(str.c_str()); // string -> char*
+double d = atof("0.23");                 // string -> double
+int i = atoi("1021");                    // string -> int
+long l = atol("303992");                 // string -> long
+sprintf(chs, "%f", 2.3);                 // double -> char[]
+strcpy(chs, ptr);                        // char* -> char[]
+string str(chs);                         // char[] -> string
+        \end{lstlisting}
+      \nodepart{one} 类型转换
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {字符数组的初始化};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 数组
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{one} 数组
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 char arr[] = "hello";
-arr[0] = 'X'; // 正确，可以修改栈区
-char *ptr = "world";
-ptr[0] = 'X'; // 错误，不能修改常量区
-\end{verbatim}
-
-      \end{minipage}
+arr[0] = 'X';              // 正确，修改数组元素
+const char *ptr = "world"; // 应使用 const，因为字符串字面值不可改
+        \end{lstlisting}
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {字符数组的修改};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 动态数组 \verb!vector!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-// 将数组复制到栈区
-char str[] = "hello";
-char buf[10];              // 开辟栈区空间
-int sz = sizeof(str) / sizeof(str[0]);
-//strcpy(buf, str);        // UNIX 习惯
-strcpy_s(buf, sz, str);    // 不能用 b = a
-strcmp(buf, str) == 0;     // 不能用 b == a
-
-// 将数组复制到堆区
-size_t len = strlen(str);
-char *p = nullptr;
-p = (char *) malloc(sizeof(char) * (len + 1));
-strcpy_s(buf, len + 1, str);// 不能忘记 + 1
-if (strcmp(buf, str) == 0)  // 不能用 b == a
-  free(p);           // 释放动态开辟的空间
-p = nullptr;         // 避免出现野指针
-\end{verbatim}
-
-      \end{minipage}
+    \node [mybox] (box){
+      \nodepart{one} 动态数组 \verb!vector!
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
+vector< int > arr(sz, val);                      // sz 和 val 可选
+vector< vector< int > > dp(m, vector< int >(n)); // m * n 的数组
+arr.empty(), arr.size() arr.push_back(val), arr.pop_back(), arr[i] = val
+        \end{lstlisting}
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {字符数组的复制};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 字符串 \verb!string!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-Object *ptr = new Object[100];
-delete[] ptr; // 删除对象数组，防止内存泄漏
-char **ptr = new char *[100];
-delete[] ptr; // 动态创建指针（字符串）数组
-\end{verbatim}
-
-      \end{minipage}
-    };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {动态开辟空间 \verb!new / delete!};
-  \end{tikzpicture}
-
-
-  %------------- START SECTION ---------------
-  \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-ptr = (char *) str.c_str();// string -> char*
-double d = atof("0.23");  // string -> double
-int i = atoi("1021");     // string -> int
-long l = atol("303992");  // string -> long
-sprintf(chs, "%f", 2.3);  // 保存到 chs
-char *ptr = chs;          // char[] -> char*
-strcpy(chs, ptr, len);    // char* -> char[]
-string str = chs;         // char[] -> string
-\end{verbatim}
-
-      \end{minipage}
-    };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {类型转换 \verb!char chs[100]{ 0 }!};
-  \end{tikzpicture}
-
-
-  %------------- START SECTION ---------------
-  \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-vector<int> arr(sz, val); // sz,val 均可缺省 
-vector<vector<int>> dp(m, vector<int>(n));
-empty(), size()
-push_back(), pop_back(), dp[i][j] = 13
-\end{verbatim}
-
-      \end{minipage}
-    };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {动态数组 \verb!vector!};
-  \end{tikzpicture}
-
-
-  %------------- START SECTION ---------------
-  \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{one} 字符串 \verb!string!
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 string str = "ABCDEFG";
-size(), empty()
-push_back(), pop_back(), str[i] = 'X'
-s1 == s2, substr(start, len)
-\end{verbatim}
-
-      \end{minipage}
+str.size(), str.empty()
+str.push_back('X'), str.pop_back(), str[i] = 'X'
+str == s2, str.substr(start, len)
+        \end{lstlisting}
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {字符串 \verb!string!};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 哈希表 \verb!unordered_map!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 unordered_map<string, int> map;
-size(), empty(), count(key), emplace(k, v)
-insert({key, val}), erase(key), at(key) = val
-\end{verbatim}
-
-      \end{minipage}
+map.size(), map.empty(), map.count(key)
+map.insert({key, val}), map.erase(key), map[key] = val
+        \end{lstlisting}
+      \nodepart{one} 哈希表 \verb!unordered_map!
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {哈希表 \verb!unordered_map!};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 哈希集合 \verb!unordered_set!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 unordered_set<string> set;
-size(), empty(), count(key)
-insert(key), erase(key)
-\end{verbatim}
-
-      \end{minipage}
+set.size(), set.empty(), set.count(key)
+set.insert(key), set.erase(key)
+        \end{lstlisting}
+      \nodepart{one} 哈希集合 \verb!unordered_set!
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {哈希集合 \verb!unordered_set!};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 队列 \verb!queue!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
-queue<sting> q;
-size(), empty(), push(), pop(), front()
-\end{verbatim}
-
-      \end{minipage}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
+queue<string> q;
+q.size(), q.empty(), q.push(val), q.pop(), q.front()
+        \end{lstlisting}
+      \nodepart{one} 队列 \verb!queue!
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {队列 \verb!queue!};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 堆栈 \verb!stack!
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 stack<string> s;
-size(), empty(), push(), pop(), top()
-\end{verbatim}
-
-      \end{minipage}
+s.size(), s.empty(), s.push(val), s.pop(), s.top()
+        \end{lstlisting}
+      \nodepart{one} 堆栈 \verb!stack!
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {堆栈 \verb!stack!};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 运算符重载
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        作为类成员时，重载二元运算符参数只有一个，重载一元运算符不需要参数。
-        作为全局函数时，重载二元运算符需要两个参数，重载一元运算符需要一个参数。
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{two}
+      作为类成员时，重载二元运算符参数为另一个对象，一元运算符不需额外参数。
+      作为全局函数时，重载二元运算符需要两个参数，一元运算符需要一个参数。
+      示例：
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 // 作为成员函数
-Complex Complex::operator+(Complex &a) {
-  Complex b; // 复数
-  b.real = this->real + a.real; // 实部
-  b.img = this->img + a.img; // 虚部
-  return b;
+Complex Complex::operator+(const Complex &a) const {
+  return Complex(real + a.real, img + a.img);
 }
 // 作为全局函数
-Complex operator+(Complex &a, int b) {
+Complex operator+(const Complex &a, int b) {
   return Complex(a.real + b, a.img);
 }
-\end{verbatim}
-
-        将运算符重载函数作为全局函数时，一般都需要在类中将该函数声明为友元函数。
-
-      \end{minipage}
+// 类中声明全局函数为友元
+friend Complex operator+<>(...);
+        \end{lstlisting}
+      \nodepart{one} 运算符重载
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {运算符重载};
   \end{tikzpicture}
 
-
-  %------------- START SECTION ---------------
+  % 工具函数
   \begin{tikzpicture}
-    \node [mybox] (box){%
-      \begin{minipage}{0.3\textwidth}
-
-        \begin{verbatim}
+    \node [mybox] (box){
+      \nodepart{two}
+      \begin{lstlisting}[language=C++, basicstyle=\ttfamily\footnotesize]
 sort(v1.begin(), v1.end(), greater<int>());
-sort(v1.begin(), v1.end(), [](int a, int b) {
-  return a > b; // 降序排列
-});
+sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
 reverse(v1.begin(), v1.end());
 binary_search(v1.begin(), v1.end(), target);
-\end{verbatim}
-
-      \end{minipage}
+        \end{lstlisting}
+      \nodepart{one} 工具函数
     };
-    %-----------------------------------------
-    \node[fancytitle, right=10pt] at (box.north west) {工具函数};
   \end{tikzpicture}
 
-
-  %------------ END OF CONTENT ---------------
-\end{multicols*}
+\end{multicols}
 
 \end{document}

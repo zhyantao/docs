@@ -184,8 +184,8 @@ sudo apt-get -y autoremove --purge <package_name>
 
 **(1) 永久切换镜像源**
 
-Windows 用户修改文件 `C:\Users\%USERNAME%\pip\pip.ini`（如果没有则新建）。
-
+::::::{tab-set}
+:::::{tab-item} Linux
 ::::{tab-set}
 :::{tab-item} 阿里云源
 ```bash
@@ -254,6 +254,84 @@ EOF
 ```
 :::
 ::::
+:::::
+:::::{tab-item} Windows
+::::{tab-set}
+:::{tab-item} 阿里云源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+:::{tab-item} 清华源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=https://pypi.tuna.tsinghua.edu.cn/simple/
+[install]
+trusted-host=pypi.tuna.tsinghua.edu.cn
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+:::{tab-item} 百度源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=https://mirror.baidu.com/pypi/simple
+[install]
+trusted-host=mirror.baidu.com
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+:::{tab-item} 中科大源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=https://mirrors.ustc.edu.cn/pypi/web/simple/
+[install]
+trusted-host=mirrors.ustc.edu.cn
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+:::{tab-item} 豆瓣源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=https://pypi.doubanio.com/simple/
+[install]
+trusted-host=pypi.doubanio.com
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+:::{tab-item} 官方源
+```powershell
+New-Item -ItemType Directory -Path $HOME\pip -Force
+$iniContent = @"
+[global]
+index-url=https://pypi.python.org/pypi
+[install]
+trusted-host=pypi.python.org
+"@
+$iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
+```
+:::
+::::
+:::::
+::::::
 
 **(2) 临时切换镜像源**
 
@@ -271,10 +349,9 @@ pip install /path/to/file.whl
 
 **(4) Conda 管理安装包**
 
-在 Windows 下修改 `C:\Users\%USERNAME%\.condarc`（如果没有则新建）。
-
-```bash
-cat <<EOF | tee C:/Users/$USERNAME/.condarc
+```powershell
+New-Item -ItemType Directory -Path $HOME\.condarc -Force
+$iniContent = @"
 channels:
     - defaults
 show_channel_urls: true
@@ -289,7 +366,8 @@ custom_channels:
     menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
     pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
     simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-EOF
+"@
+$iniContent | Add-Content -Path ($HOME + "\.condarc") -PassThru | Out-Host
 ```
 
 ## Python 源

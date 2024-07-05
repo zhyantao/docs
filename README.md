@@ -13,7 +13,15 @@ git clone https://github.com/<your_github_username>/notebook.git
 
 2、将 [源代码压缩包](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
 
-3、Windows 用户需安装 [GTK](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer)，Ubuntu 用户需安装 `libcairo2 libcairo2-dev`。
+3、安装 Cairo 依赖（Windows 用户需提前下载 [MSYS2](./docs/script/msys2.md)）。
+
+```bash
+# For Windows
+pacman -S mingw-w64-x86_64-gtk2
+
+# For Linux
+sudo apt install libcairo2 libcairo2-dev
+```
 
 4、安装项目所需依赖，预览效果。
 
