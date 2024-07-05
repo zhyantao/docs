@@ -730,42 +730,107 @@ gitignore
 显示 git 分支
 ~~~~~~~~~~~~~~
 
-打开 ``~/.bashrc`` 做如下修改：
+.. tab-set::
 
-.. code-block:: bash
+    .. tab-item:: Linux
+        :sync: Linux
 
-    # display git branch on bash
-    git_branch() {
-    branch="`git branch 2>/dev/null | grep "^\*" | sed -e "s/^\*\ //"`"
-    if [ "${branch}" != "" ];then
-        if [ "${branch}" = "(no branch)" ];then
-            branch="(`git rev-parse --short HEAD`...)"
-        fi
-        echo -e ":\033[01;32m$branch\033[00m"
-    fi
-    }
+        方法一：使用 https://github.com/romkatv/gitstatus 提供的服务：
 
-    PS1 = '$(git_branch)' # 补充到 PS1 变量上
+        .. code-block:: bash
 
+            git clone --depth=1 https://github.com/romkatv/gitstatus.git ~/gitstatus
+            echo 'source ~/gitstatus/gitstatus.prompt.sh' >> ~/.bashrc
+
+
+        方法二：打开 ``~/.bashrc`` 做如下修改：
+
+        .. code-block:: bash
+
+            # display git branch on bash
+            git_branch() {
+            branch="`git branch 2>/dev/null | grep "^\*" | sed -e "s/^\*\ //"`"
+            if [ "${branch}" != "" ];then
+                if [ "${branch}" = "(no branch)" ];then
+                    branch="(`git rev-parse --short HEAD`...)"
+                fi
+                echo -e ":\033[01;32m$branch\033[00m"
+            fi
+            }
+
+            PS1 = '$(git_branch)' # 补充到 PS1 变量上
+
+    .. tab-item:: Windows
+        :sync: Windows
+
+        Posh Git 拥有命令自动补全、当前分支展示、改动提示等功能。
+
+        1. 以管理员身份运行 PowerShell
+        2. 修改执行策略：``Set-ExecutionPolicy RemoteSigned``
+        3. 安装模块：``Install-Module posh-git -Scope CurrentUser -Force``
+        4. 导入模块：``Import-Module posh-git``
+        5. 使用模块：``Add-PoshGitToProfile -AllHosts``
+
+        删除 Posh Git 模块：``Uninstall-Module posh-git``，同时需要删除 ``notepad $PROFILE`` 中的 ``Import-Module posh-git``。
+
+        如果要想同时显示 ``git branch`` 和 ``conda environment`` 那么必须将 ``Import-Module posh-git`` 放在 ``conda init`` 之前，如下所示（注意，同时需要在 ``%USERPROFILE%\.condarc`` 中添加一行 ``changeps1: true``）。
+
+        .. code-block:: bash
+
+            Import-Module posh-git
+
+            #region conda initialize
+            # !! Contents within this block are managed by 'conda init' !!
+            (& "D:\ProgramData\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+            #endregion
 
 自动补全
 ~~~~~~~~~
 
-.. code-block:: bash
+.. tab-set::
 
-    # 下载 git-completition.bash
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-    
-    # 将 git-completition.bash 放在服务器上    
-    cp ~/git-completion.bash /etc/bash_completion.d/
-    
-    # 使 git-completition.bash 生效
-    . /etc/bash_completion.d/git-completion.bash
-    
-    # 编辑 /etc/profile 添加如下内容
-    if [ -f /etc/bash_completion.d/git-completion.bash ]; then
-        . /etc/bash_completion.d/git-completion.bash
-    fi
+    .. tab-item:: Linux
+        :sync: Linux
 
-    # 使 /etc/profile 生效
-    source /etc/profile
+        .. code-block:: bash
+
+            # 下载 git-completition.bash
+            wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+            
+            # 将 git-completition.bash 放在服务器上    
+            cp ~/git-completion.bash /etc/bash_completion.d/
+            
+            # 使 git-completition.bash 生效
+            . /etc/bash_completion.d/git-completion.bash
+            
+            # 编辑 /etc/profile 添加如下内容
+            if [ -f /etc/bash_completion.d/git-completion.bash ]; then
+                . /etc/bash_completion.d/git-completion.bash
+            fi
+
+            # 使 /etc/profile 生效
+            source /etc/profile
+
+    .. tab-item:: Windows
+        :sync: Windows
+
+        Posh Git 拥有命令自动补全、当前分支展示、改动提示等功能。
+
+        1. 以管理员身份运行 PowerShell
+        2. 修改执行策略：``Set-ExecutionPolicy RemoteSigned``
+        3. 安装模块：``Install-Module posh-git -Scope CurrentUser -Force``
+        4. 导入模块：``Import-Module posh-git``
+        5. 使用模块：``Add-PoshGitToProfile -AllHosts``
+
+        删除 Posh Git 模块：``Uninstall-Module posh-git``，同时需要删除 ``notepad $PROFILE`` 中的 ``Import-Module posh-git``。
+
+        如果要想同时显示 ``git branch`` 和 ``conda environment`` 那么必须将 ``Import-Module posh-git`` 放在 ``conda init`` 之前，如下所示（注意，同时需要在 ``%USERPROFILE%\.condarc`` 中添加一行 ``changeps1: true``）。
+
+        .. code-block:: bash
+
+            Import-Module posh-git
+
+            #region conda initialize
+            # !! Contents within this block are managed by 'conda init' !!
+            (& "D:\ProgramData\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+            #endregion
