@@ -286,11 +286,11 @@ scp -r <local_dirname> <root>@<remote_ip>:/path/to/<remote_dirname>
 
 `tar` 命令主要用于打包文件和目录，并不直接进行压缩。
 
-如果你希望在打包的同时也减小文件的大小，你需要在使用`tar`命令时结合一个压缩工具，如`gzip`, `bzip2`, `xz`等。例如：
+如果你希望在打包的同时也减小文件的大小，你需要在使用 `tar` 命令时结合一个压缩工具，如 `gzip`、`bzip2`、`xz` 等。例如：
 
-- 使用`gzip`压缩：`tar czf archive_name.tar.gz file_or_directory_to_compress`
-- 使用`bzip2`压缩：`tar cjf archive_name.tar.bz2 file_or_directory_to_compress`
-- 使用`xz`压缩：`tar cJf archive_name.tar.xz file_or_directory_to_compress`
+- 使用 `gzip` 压缩：`tar czf archive_name.tar.gz file_or_directory_to_compress`
+- 使用 `bzip2` 压缩：`tar cjf archive_name.tar.bz2 file_or_directory_to_compress`
+- 使用 `xz` 压缩：`tar cJf archive_name.tar.xz file_or_directory_to_compress`
 
 解压时，仍然需要跟上 `z`、`j` 或者 `J` 选项，才能正常解压。
 
