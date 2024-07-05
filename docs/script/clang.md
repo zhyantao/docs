@@ -20,7 +20,7 @@ sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu \
 ```
 :::
 :::{tab-item} LLVM (AArch64)
-使用 Yocto 安装 Clang：
+使用 Yocto 安装 Clang（<https://github.com/kraj/meta-clang>）：
 
 ```bash
 git clone https://github.com/openembedded/openembedded-core.git
