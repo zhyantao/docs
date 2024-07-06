@@ -10,6 +10,10 @@
 | `CLASSPATH` | `.;%JAVA_HOME%\lib;%JAVA_HOME%\jre\lib` |
 | `PATH`      | `%JAVA_HOME%\bin`                       |
 
+```{note}
+配置好 Java 环境变量才能让 VS Code 识别到 Java 环境。
+```
+
 ## Python
 
 | 变量名         | 变量值                                            |
