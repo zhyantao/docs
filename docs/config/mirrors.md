@@ -393,7 +393,7 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 PYTHON_VERSION=python3.13
 
 # 安装另一个版本的 Python
-sudo apt install $PYTHON_VERSION
+sudo apt install $PYTHON_VERSION $PYTHON_VERSION-dev
 
 # 使用新版本的 Python
 $PYTHON_VERSION -m venv $PYTHON_VERSION --without-pip
