@@ -338,7 +338,7 @@ $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 导出 `requirements.txt` 中列出的软件包，对应在本机上已经安装的版本号：
 
 ```bash
-while IFS= read -r line; do
+while IFS= read -r line || [[ -n $line ]]; do
     package=$(echo "$line" | awk -F '==' '{print $1}')
     required_version=$(echo "$line" | awk '{print $2}')
     installed_version=$(pip show "$package" 2>/dev/null | grep Version | awk -F': ' '{print $2}' | tr -d '[:space:]')
