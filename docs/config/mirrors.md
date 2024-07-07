@@ -333,10 +333,21 @@ $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 :::::
 ::::::
 
-**(2) 临时切换镜像源**
+**(2) requirements.txt**
+
+导出 `requirements.txt` 中列出的软件包，对应在本机上已经安装的版本号：
 
 ```bash
-pip install <module_name> -i https://mirror.baidu.com/pypi/simple
+while IFS= read -r line; do
+    package=$(echo "$line" | awk -F '==' '{print $1}')
+    required_version=$(echo "$line" | awk '{print $2}')
+    installed_version=$(pip show "$package" 2>/dev/null | grep Version | awk -F': ' '{print $2}' | tr -d '[:space:]')
+    if [[ -n "$installed_version" ]]; then
+        echo "$package==$installed_version"
+    else
+        echo "$package is not installed."
+    fi
+done <requirements.txt
 ```
 
 **(3) 第三方镜像源**
