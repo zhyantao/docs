@@ -40,6 +40,15 @@ Git
     cd repository
     git init
 
+    # (可选) 添加子仓库
+    git submodule add https://github.com/username/subrepo.git path/to/subrepo
+    git submodule update --init --recursive
+
+    # (可选) 更新子仓库
+    cd path/to/subrepo
+    git checkout -b master
+    git pull origin master
+
     # 配置用户名和邮箱
     git config --global user.name "zhyantao"
     git config --global user.email "zh6tao@gmail.com"
