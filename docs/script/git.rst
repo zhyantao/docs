@@ -772,26 +772,26 @@ gitignore
     .. tab-item:: Windows
         :sync: Windows
 
-        Posh Git 拥有命令自动补全、当前分支展示、改动提示等功能。
+        安装 Posh Git，请执行以下步骤：
 
-        1. 以管理员身份运行 PowerShell
-        2. 修改执行策略：``Set-ExecutionPolicy RemoteSigned``
-        3. 安装模块：``Install-Module posh-git -Scope CurrentUser -Force``
-        4. 导入模块：``Import-Module posh-git``
-        5. 使用模块：``Add-PoshGitToProfile -AllHosts``
+        1. 以管理员身份启动 PowerShell。
+        2. 修改执行策略以允许脚本运行：
+           ``Set-ExecutionPolicy RemoteSigned``
+        3. 安装 Posh Git 模块，指定范围为当前用户并强制安装：
+           ``Install-Module posh-git -Scope CurrentUser -Force``
+        4. 导入 Posh Git 模块以便使用：
+           ``Import-Module posh-git``
+        5. 将 Posh Git 添加到 PowerShell 配置文件中，以便对所有会话有效：
+           ``Add-PoshGitToProfile -AllHosts``
 
-        删除 Posh Git 模块：``Uninstall-Module posh-git``，同时需要删除 ``notepad $PROFILE`` 中的 ``Import-Module posh-git``。
+        卸载 Posh Git，请执行以下步骤：
 
-        如果要想同时显示 ``git branch`` 和 ``conda environment`` 那么必须将 ``Import-Module posh-git`` 放在 ``conda init`` 之前，如下所示（注意，同时需要在 ``%USERPROFILE%\.condarc`` 中添加一行 ``changeps1: true``）。
-
-        .. code-block:: bash
-
-            Import-Module posh-git
-
-            #region conda initialize
-            # !! Contents within this block are managed by 'conda init' !!
-            (& "D:\ProgramData\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-            #endregion
+        1. 以管理员身份运行 PowerShell。
+        2. 删除 Posh Git 模块：
+           ``Uninstall-Module posh-git``
+        3. 编辑 PowerShell 配置文件以移除 Posh Git 模块的导入命令。打开配置文件：
+           ``notepad $PROFILE``
+           然后，删除文件中包含 ``Import-Module posh-git`` 的行。
 
 自动补全
 ~~~~~~~~~
@@ -823,23 +823,20 @@ gitignore
     .. tab-item:: Windows
         :sync: Windows
 
-        Posh Git 拥有命令自动补全、当前分支展示、改动提示等功能。
+        安装 Posh Git，请执行以下步骤：
 
-        1. 以管理员身份运行 PowerShell
-        2. 修改执行策略：``Set-ExecutionPolicy RemoteSigned``
-        3. 安装模块：``Install-Module posh-git -Scope CurrentUser -Force``
-        4. 导入模块：``Import-Module posh-git``
-        5. 使用模块：``Add-PoshGitToProfile -AllHosts``
+        1. 以管理员身份启动 PowerShell。
+        2. 修改执行策略以允许脚本运行：``Set-ExecutionPolicy RemoteSigned``
+        3. 安装 Posh Git 模块，指定范围为当前用户并强制安装：
+           ``Install-Module posh-git -Scope CurrentUser -Force``
+        4. 导入 Posh Git 模块以便使用：``Import-Module posh-git``
+        5. 将 Posh Git 添加到 PowerShell 配置文件中，以便对所有会话有效：
+           ``Add-PoshGitToProfile -AllHosts``
 
-        删除 Posh Git 模块：``Uninstall-Module posh-git``，同时需要删除 ``notepad $PROFILE`` 中的 ``Import-Module posh-git``。
+        卸载 Posh Git，请执行以下步骤：
 
-        如果要想同时显示 ``git branch`` 和 ``conda environment`` 那么必须将 ``Import-Module posh-git`` 放在 ``conda init`` 之前，如下所示（注意，同时需要在 ``%USERPROFILE%\.condarc`` 中添加一行 ``changeps1: true``）。
-
-        .. code-block:: bash
-
-            Import-Module posh-git
-
-            #region conda initialize
-            # !! Contents within this block are managed by 'conda init' !!
-            (& "D:\ProgramData\Miniconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
-            #endregion
+        1. 以管理员身份运行 PowerShell。
+        2. 删除 Posh Git 模块：``Uninstall-Module posh-git``
+        3. 编辑 PowerShell 配置文件以移除 Posh Git 模块的导入命令。
+           打开配置文件：``notepad $PROFILE`` 
+           然后，删除文件中包含 ``Import-Module posh-git`` 的行。
