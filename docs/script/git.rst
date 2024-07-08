@@ -772,30 +772,30 @@ gitignore
     .. tab-item:: Windows
         :sync: Windows
 
-        安装 Posh Git，请执行以下步骤：
+        Post Git 提供了显示 Git 分支的功能，安装 Posh Git，请执行以下步骤：
 
         1. 以管理员身份启动 PowerShell。
         2. 修改执行策略以允许脚本运行：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Set-ExecutionPolicy RemoteSigned
 
         3. 安装 Posh Git 模块，指定范围为当前用户并强制安装：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Install-Module posh-git -Scope CurrentUser -Force
 
         4. 导入 Posh Git 模块以便使用：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Import-Module posh-git
 
         5. 将 Posh Git 添加到 PowerShell 配置文件中，以便对所有会话有效：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Add-PoshGitToProfile -AllHosts
 
@@ -804,13 +804,13 @@ gitignore
         1. 以管理员身份运行 PowerShell。
         2. 删除 Posh Git 模块：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Uninstall-Module posh-git
 
         3. 编辑 PowerShell 配置文件以移除 Posh Git 模块的导入命令。打开配置文件：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                notepad $PROFILE
 
@@ -846,30 +846,30 @@ gitignore
     .. tab-item:: Windows
         :sync: Windows
 
-        安装 Posh Git，请执行以下步骤：
+        Post Git 提供了自动补全的功能，安装 Posh Git，请执行以下步骤：
 
         1. 以管理员身份启动 PowerShell。
         2. 修改执行策略以允许脚本运行：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Set-ExecutionPolicy RemoteSigned
 
         3. 安装 Posh Git 模块，指定范围为当前用户并强制安装：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Install-Module posh-git -Scope CurrentUser -Force
 
         4. 导入 Posh Git 模块以便使用：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Import-Module posh-git
 
         5. 将 Posh Git 添加到 PowerShell 配置文件中，以便对所有会话有效：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Add-PoshGitToProfile -AllHosts
 
@@ -878,13 +878,13 @@ gitignore
         1. 以管理员身份运行 PowerShell。
         2. 删除 Posh Git 模块：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                Uninstall-Module posh-git
 
         3. 编辑 PowerShell 配置文件以移除 Posh Git 模块的导入命令。打开配置文件：
 
-           .. code-block::bash
+           .. code-block:: bash
 
                notepad $PROFILE
 
