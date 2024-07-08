@@ -36,7 +36,11 @@ EOF
 ## 安装 Docker
 
 ```bash
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install apt-transport-https \
+  ca-certificates \
+  curl \
+  software-properties-common \
+  docker-ce docker-ce-cli containerd.io
 ```
 
 ## 验证 Docker 是否安装成功
