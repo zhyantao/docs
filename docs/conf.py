@@ -88,7 +88,6 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
-    "sphinx_comments",
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx_thebe",
@@ -163,11 +162,3 @@ nb_custom_formats = {".Rmd": ["jupytext.reads", {"fmt": "Rmd"}]}
 bibtex_bibfiles = ["references.bib"]
 
 myst_footnote_transition = False
-
-# Setting for sphinx comments
-comments_config = {
-   "utterances": {
-      "repo": "zhyantao/getstarted",
-      "optional": "config",
-   }
-}
