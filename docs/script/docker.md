@@ -53,7 +53,7 @@ sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 ```
 
-# 删除无效的镜像
+## 删除无效的镜像
 
 ```bash
 # 清理 <none> 容器
@@ -64,13 +64,13 @@ docker rmi -f $(docker images | grep '<none>' | awk '{print $3}')
 docker rm $(docker ps -a | grep Exited | awk '{print $1}')
 ```
 
-# 列出所有镜像
+## 列出所有镜像
 
 ```bash
 docker images
 ```
 
-# 删除指定镜像
+## 删除指定镜像
 
 ```bash
 docker image rm 192.168.163.146:5000/python3action:1.0.0
