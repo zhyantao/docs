@@ -79,7 +79,11 @@ appendix/index
 :hidden:
 
 PlantUML 官网 <https://plantuml.com/>
-Java 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/java.pdf>
+Competitive Programming <https://getstarted.readthedocs.io/_static/cheatsheet/CompetitiveProgramming-Steven&Felix-NUS.pdf>
+Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/CompetitiveProgrammer’sHandbook.pdf>
 C++ 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/cpp.pdf>
+ACM 模板 <https://getstarted.readthedocs.io/_static/cheatsheet/ACMTemplate-kuangbin.pdf>
 C 语言小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/c.pdf>
+Java 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/java.pdf>
+Algorithm Design Manual <https://getstarted.readthedocs.io/_static/cheatsheet/SkienaTheAlgorithmDesignManual.pdf>
 ```
