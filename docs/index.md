@@ -83,7 +83,4 @@ Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/Comp
 Algorithm Design Manual <https://getstarted.readthedocs.io/_static/cheatsheet/SkienaTheAlgorithmDesignManual.pdf>
 ACM 常用算法模板 <https://getstarted.readthedocs.io/_static/cheatsheet/ACMTemplate-kuangbin.pdf>
 PlantUML Online Editor <https://pansinm.github.io/plantuml-editor/>
-C++ 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/cpp.pdf>
-C 语言小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/c.pdf>
-Java 小抄表 <https://getstarted.readthedocs.io/_static/cheatsheet/java.pdf>
 ```
