@@ -34,15 +34,12 @@ html:
 	@mkdir -p "docs/_tmp"
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@echo "Build finished."
 
 pdf:
-	@mkdir -p "docs/_static/cheatsheet"
-	@cd docs/cheatsheet && latexmk -pdf java.tex
-	@cd docs/cheatsheet && latexmk -pdf cpp.tex
-	@cd docs/cheatsheet && latexmk -pdf c.tex
+	@mkdir -p "docs/_static/resume"
 	@cd docs/resume && latexmk -pdf cv.tex
-	@echo "Build finished. the LaTeX files are in docs/_static/cheatsheet."
+	@echo "Build finished."
 
 clean-html:
 	@rm -rf $(BUILDDIR)/*
@@ -50,8 +47,5 @@ clean-html:
 	@echo "Clean finished."
 
 clean-pdf:
-	@cd docs/cheatsheet && latexmk -c -C java.tex
-	@cd docs/cheatsheet && latexmk -c -C cpp.tex
-	@cd docs/cheatsheet && latexmk -c -C c.tex
 	@cd docs/resume && latexmk -c -C cv.tex
 	@echo "Clean finished."
