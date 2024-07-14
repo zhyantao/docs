@@ -4,7 +4,7 @@
 
 ## 标题（Headers）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 15
 
@@ -21,11 +21,11 @@
   - ```md
     # MyST Cheat Sheet
     ```
-``````
+````
 
 ## 引用（Quote）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 10
 
@@ -35,11 +35,11 @@
     > this is a quote
     ```
   - > 引用文本
-``````
+````
 
 ## 超链接（Links）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 10
 
@@ -57,13 +57,13 @@
     <https://jupyterbook.org>
     ```
   - <https://jupyterbook.org>
-``````
+````
 
 ## 列表（Lists）
 
 ### 有序列表（Ordered list）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -85,11 +85,11 @@
   - 1. First item
     2. Second item
         * First subitem
-``````
+````
 
 ### 无序列表（Unordered list）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -111,7 +111,7 @@
   - * First item
       1. First subitem
       2. Second subitem
-``````
+````
 
 ## 表格（Tables）
 
@@ -119,7 +119,7 @@
 通过给表格添加标题，能够让表格**自动编号**，如下{numref}`example-table` 和 表 2。
 ```
 
-``````{list-table}
+`````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -181,15 +181,11 @@
     * - 13720
       - 2744
     ```
-``````
+`````
 
-## 图片（Figures and images）
+## 图片（Figures）
 
-```{note}
-图片（Image）中**不允许**出现标题（Caption），但图像（Figure）**可以**。
-```
-
-``````{list-table}
+`````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -209,21 +205,11 @@
 
     Here is my figure caption!
     ```
-* - ````md
-    ```{image} ../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: image-example
-    ```
-    ````
-  - ```{image} ../_static/images/C-3PO_droid.png
-    :height: 150px
-    :name: image-example
-    ```
-``````
+`````
 
 ## 公式（Math）
 
-``````{list-table}
+`````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -281,13 +267,13 @@
 
     z=\sqrt{x^2+y^2}
     ```
-``````
+`````
 
 ## 代码（Code）
 
 ### 行内代码（In-line code）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -297,11 +283,11 @@
     In-line code blocks: `boolean example = true;`.
     ```
   - In-line code blocks: `boolean example = true;`.
-``````
+````
 
 ### 代码高亮（Syntax highlighting）
 
-``````{list-table}
+`````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -321,11 +307,11 @@
     note = "Python syntax highlighting"
     print(node)
     ```
-``````
+`````
 
 ### HTML 代码（HTML block）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -335,11 +321,11 @@
     <p> This is a paragraph </p>
     ```
   - <p> This is a paragraph </p>
-``````
+````
 
 ## 注解（Admonitions）
 
-``````{list-table}
+`````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -425,11 +411,11 @@
   - ```{important} This is an example
     of an important directive.
     ```
-``````
+`````
 
 ## 脚注（Footnotes）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 10
 
@@ -443,11 +429,11 @@
     添加注释：[^myref]: Example for footnote definition.
     ```
   - [^myref]: Example for footnote definition.
-``````
+````
 
 ## 注释（Comment）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -461,11 +447,11 @@
   - a line
     % a comment
     another line
-``````
+````
 
 ## 分隔线（Thematic break）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -479,11 +465,11 @@
     ## New Header
     ```
   - 创建水平分隔线
-``````
+````
 
 ## 分隔块（Block break）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -497,11 +483,11 @@
   - This is an example of
     +++ {"meta": "data"}
     a block break
-``````
+````
 
 ## 面包板（Pannels）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -535,11 +521,11 @@
 
     The entire card can be clicked to navigate to <https://example.com>.
     :::
-``````
+````
 
 ## Mermaid 语法
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -573,11 +559,11 @@
         John->Bob: How about you?
         Bob-->John: Jolly good!
     :::
-``````
+````
 
 ## Toggle 语法
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -605,11 +591,11 @@
 
     My note
     :::
-``````
+````
 
 ## Tabs 语法
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 15
 
@@ -683,13 +669,13 @@
     (2) Microsoft is one of my favorite companies.
     :::
     ::::
-``````
+````
 
 ## 交叉引用（Cross reference）
 
 ### 引用标题（Headers）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 15 15
 
@@ -720,7 +706,7 @@
     (target_header)=
     ## 标题（Headers）
     ```
-``````
+````
 
 ### 引用表格（Tables）
 
@@ -728,7 +714,7 @@
 为了引用表格，你需要给表格添加 `name` 属性。
 ```
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -746,7 +732,7 @@
     {numref}`Tbl %s <example-table>` is an example.
     ```
   - {numref}`Tbl %s <example-table>` is an example.
-``````
+````
 
 ### 引用图像（Figures）
 
@@ -754,7 +740,7 @@
 使用 `numref` 引用图像（Figures）将带有标号，使用 `ref` 则不带标号。
 ```
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -772,31 +758,11 @@
     This {ref}`figure <figure-example>` is an example.
     ```
   - This {ref}`figure <figure-example>` is an example.
-``````
-
-### 引用图片（Images）
-
-```{note}
-图片（Images）无法使用 `numref` 引用，默认都不带标号。
-```
-
-``````{list-table}
-:header-rows: 1
-:widths: 20 15
-
-* - Example
-  - Result
-* - ```md
-    This {ref}`image <image-example>`
-    is an example.
-    ```
-  - This {ref}`image <image-example>`
-    is an example.
-``````
+````
 
 ### 引用公式（Math directives）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 15
 
@@ -806,11 +772,11 @@
     Check out equation {eq}`eq-label`.
     ```
   - Check out equation {eq}`eq-label`.
-``````
+````
 
 ### 引用文件（Documents）
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 15 20
 
@@ -828,7 +794,7 @@
     ```
   - See {doc}`here <restructuredtext>`
     for more information.
-``````
+````
 
 ## 参考文献（Citations）
 
@@ -836,7 +802,7 @@
 确保你已经新建了 `references.bib` 文件，点击{download}`查看文件 <../references.bib>`撰写格式。
 ```
 
-``````{list-table}
+````{list-table}
 :header-rows: 1
 :widths: 20 20
 
@@ -846,12 +812,12 @@
     Generates a citation {cite}`perez2011python`.
     ```
   - Generates a citation {cite}`perez2011python`.
-``````
+````
 
 你可以用下面的 `bibliography` 指令添加参考文献目录。
 
-``````md
+````md
 ```{bibliography}
 :filter: docname in docnames
 ```
-``````
+````
