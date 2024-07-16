@@ -68,18 +68,11 @@ public class Main {
 :::{tab-item} C++
 :sync: cpp
 
-```cpp
-string str = "";
-char *ptr = nullptr;
-char chs[100] = { 0 };
-ptr = const_cast< char * >(str.c_str()); // string -> char*
-double d = atof("0.23");                 // string -> double
-int i = atoi("1021");                    // string -> int
-long l = atol("303992");                 // string -> long
-sprintf(chs, "%f", 2.3);                 // double -> char[]
-strcpy(chs, ptr);                        // char* -> char[]
-string str(chs);                         // char[] -> string
-```
+| 原始类型 | 目标类型 | 转换方法 |
+| --------- | ------------ | ------- |
+| `string` | `int` | `stoi()` |
+| `int` | `string` | `to_string()` |
+
 
 :::
 
@@ -317,9 +310,353 @@ void traverse(ListNode head) {
 
 ## 树
 
+### 递归遍历
+
 ::::{tab-set}
 :::{tab-item} C++
 :sync: cpp
+
+```cpp
+vector< int > ans;
+vector< int > traverse(TreeNode *root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    // ans.push_back(root->val); // 前序遍历
+    traverse(root->left);
+    ans.push_back(root->val); // 中序遍历
+    traverse(root->right);
+    // ans.push_back(root->val); // 后序遍历
+
+    return ans;
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+void traverse(TreeNode root) {
+    if (root == null)
+        return;
+
+    // TODO: 前序遍历代码
+    traverse(root.left);
+    // TODO: 中序遍历代码
+    traverse(root.right);
+    // TODO: 后序遍历代码
+
+    return;
+}
+```
+
+:::
+::::
+
+### 前序遍历
+
+::::{tab-set}
+:::{tab-item} C++
+
+```cpp
+vector< int > preorderTraversal(TreeNode *root) {
+    if (root == nullptr) {
+        return {};
+    }
+
+    vector< int > ans;
+    stack< TreeNode * > stk;
+    TreeNode *curr = root;
+    stk.push(root);
+    while (!stk.empty()) {
+        curr = stk.top();
+        stk.pop();
+
+        ans.push_back(curr->val);
+
+        if (curr->right != nullptr) { // 先右后左
+            stk.push(curr->right);
+        }
+        if (curr->left != nullptr) {
+            stk.push(curr->left);
+        }
+    }
+
+    return ans;
+}
+```
+
+:::
+
+:::{tab-item} Java
+
+```java
+void preorder(TreeNode root) {
+    if (root == null)
+        return;
+
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        TreeNode cur = stack.peek();
+        stack.pop();
+
+        // ans.add(cur.val);
+
+        if (cur.right != null) { // 先右后左
+            stack.push(cur.right);
+        }
+        if (cur.left != null) {
+            stack.push(cur.left);
+        }
+    }
+}
+```
+
+:::
+::::
+
+### 中序遍历
+
+::::{tab-set}
+:::{tab-item} C++
+
+```cpp
+vector< int > inorderTraversal(TreeNode *root) {
+    if (root == nullptr) {
+        return {};
+    }
+
+    vector< int > ans;
+    stack< TreeNode * > stk;
+    TreeNode *curr = root;
+    while (curr != nullptr || !stk.empty()) {
+        if (curr != nullptr) {
+            stk.push(curr);
+            curr = curr->left;
+        } else {
+            curr = stk.top();
+            stk.pop();
+
+            ans.push_back(curr->val);
+
+            curr = curr->right;
+        }
+    }
+
+    return ans;
+}
+```
+
+:::
+
+:::{tab-item} Java
+
+```java
+void inorder(TreeNode root) {
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode cur = root;
+    while (cur != null || !stack.isEmpty()) {
+        if (cur != null) {
+            stack.push(cur);
+            cur = cur.left;
+        } else {
+            cur = stack.peek();
+            stack.pop();
+
+            // ans.add(cur.val);
+
+            cur = cur.right;
+        }
+    }
+}
+```
+
+:::
+::::
+
+### 后序遍历
+
+::::{tab-set}
+:::{tab-item} C++
+
+```cpp
+// 后序遍历代码和前序遍历代码几乎一样，有 2 点区别
+vector< int > postorderTraversal(TreeNode *root) {
+    if (root == nullptr) {
+        return {};
+    }
+
+    vector< int > ans;
+    stack< TreeNode * > stk;
+    TreeNode *curr = root;
+    stk.push(root);
+    while (!stk.empty()) {
+        curr = stk.top();
+        stk.pop();
+
+        ans.push_back(curr->val);
+
+        if (curr->left != nullptr) { // 区别 1：先左后右
+            stk.push(curr->left);
+        }
+        if (curr->right != nullptr) {
+            stk.push(curr->right);
+        }
+    }
+
+    reverse(ans.begin(), ans.end()); // 区别 2：reverse
+    return ans;
+}
+```
+
+:::
+
+:::{tab-item} Java
+
+```java
+void postorder(TreeNode root) {
+    if (root == null)
+        return;
+
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode cur = root;
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        cur = stack.peek();
+        stack.pop();
+
+        // ans.add(cur.val);
+
+        if (cur.left != null) { // 先左后右
+            stack.push(cur.left);
+        }
+        if (cur.right != null) {
+            stack.push(cur.right);
+        }
+
+    }
+
+    // reverse(ans); // 记得 reverse
+}
+```
+
+:::
+::::
+
+### 层序遍历
+
+::::{tab-set}
+:::{tab-item} C++
+
+```cpp
+vector< vector< int > > levelOrder(TreeNode *root) {
+    if (root == nullptr) {
+        return {};
+    }
+
+    vector< vector< int > > ans;
+    deque< TreeNode * > dq;
+    TreeNode *curr = root;
+    dq.push_back(root);
+    while (!dq.empty()) {
+        int sz = dq.size();
+        vector< int > lvl;
+        while (sz--) {
+            curr = dq.front();
+            dq.pop_front();
+
+            lvl.push_back(curr->val);
+
+            if (curr->left != nullptr) {
+                dq.push_back(curr->left);
+            }
+            if (curr->right != nullptr) {
+                dq.push_back(curr->right);
+            }
+        }
+        ans.push_back(lvl);
+    }
+
+    return ans;
+}
+```
+
+:::
+
+:::{tab-item} Java
+
+```java
+Queue<Integer> queue = new LinkedList<>();
+
+void traverse(TreeNode root) {
+    if (root != null)
+        queue.offer(root);
+    else
+        return;
+
+    TreeNode p = queue.poll();
+    while (p != null) {
+        if (p.left != null) {
+            queue.offer(p.left);
+        }
+        if (p.right != null) {
+            queue.offer(p.right);
+        }
+        if (!queue.isEmpty()) {
+            p = queue.poll();
+        }
+    }
+}
+```
+
+:::
+::::
+
+### 二叉树的最大深度
+
+::::{tab-set}
+:::{tab-item} C++
+
+```cpp
+int maxDepth(TreeNode *root) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int left = maxDepth(root->left) + 1;
+    int right = maxDepth(root->right) + 1;
+
+    return left > right ? left : right;
+}
+```
+
+:::
+
+:::{tab-item} Java
+
+```java
+public int maxDepth(TreeNode root) {
+    if (root == null)
+        return 0;
+    
+    int left = maxDepth(root.left) + 1;
+    int right = maxDepth(root.right) + 1;
+
+    return left > right ? left : right;
+}
+```
+
+:::
+::::
+
+### 遍历 N 叉树
+
+::::{tab-set}
+:::{tab-item} C++
 
 ```cpp
 
@@ -328,156 +665,86 @@ void traverse(ListNode head) {
 :::
 
 :::{tab-item} Java
-:sync: java
-
-遍历二叉树
-
-```java
-void traverse(TreeNode root) {
-  if (root == null) return;
-  // 前序遍历代码
-  traverse(root.left);
-  // 中序遍历代码
-  traverse(root.right);
-  // 后序遍历代码
-}
-```
-
-遍历 N 叉树
 
 ```java
 class TreeNode {
-  int val;
-  TreeNode[] children;
+    int val;
+    TreeNode[] children;
 }
 
 void traverse(TreeNode root) {
-  for (TreeNode child : children)
-    traverse(child);
-}
-```
-
-求二叉树的深度
-
-```java
-// 利用这个例子学习如何使用递归的返回值
-int traverse(TreeNode root) {
-  // 叶节点相当于 dp 的最后一个状态
-  if (root == null)
-    return 0; // 实际意义： 0 层
-  // 从叶结点到根结点逆向推理 left 和 right
-  int left = traverse(root.left);
-  int right = traverse(root.right);
-  // 下一次递归利用上一次递归 return 的结果
-  return left>right ? left+1 : right+1;
-}
-```
-
-层序遍历
-
-```java
-Queue<Integer> queue = new LinkedList<>();
-void traverse(TreeNode root) {
-  if (root != null)
-    queue.offer(root);
-  else
-    return;
-
-  TreeNode p = queue.poll();
-  while (p != null) {
-    if (p.left != null)
-      queue.offer(p.left);
-    if (p.right != null)
-      queue.offer(p.right);
-    if ( ! queue.isEmpty())
-      p = queue.poll();
-  }
-}
-```
-
-前序遍历
-
-```java
-void preorder(TreeNode root) {
-  Stack<TreeNode> stack = new Stack<>();
-  if (root == null)
-    return;
-  stack.push(root);
-  while (!stack.isEmpty()) {
-    TreeNode cur = stack.peek();
-    stack.pop();
-    // ans.add(cur.val);
-    if (cur.right != null) // 先右后左
-      stack.push(cur.right);
-    if (cur.left != null)
-      stack.push(cur.left);
-  }
-}
-```
-
-中序遍历
-
-```java
-// 需要借助栈和指针来实现
-void inorder(TreeNode root) {
-  Stack<TreeNode> stack = new Stack<>();
-  TreeNode cur = root;
-  while (cur != null || !stack.isEmpty()) {
-    if (cur != null) { // 遍历左子节点，入栈
-      stack.push(cur);
-      cur = cur.left;
+    for (TreeNode child : root.children) {
+        traverse(child);
     }
-    else { // 遍历完左子节点，出栈，保存结果
-      cur = stack.peek();
-      stack.pop();
-      // ans.add(cur.val);
-      cur = cur.right;
+}
+```
+
+:::
+::::
+
+### 对称二叉树的判定
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+bool compare(TreeNode *left, TreeNode *right) {
+    if (left == nullptr && right == nullptr) {
+        return true;
+    } else if (left != nullptr && right == nullptr) {
+        return false;
+    } else if (left == nullptr && right != nullptr) {
+        return false;
+    } else if (left->val != right->val) {
+        return false;
     }
-  }
+
+    bool oo = compare(left->left, right->right); // 对比外侧
+    bool ii = compare(left->right, right->left); // 对比内侧
+
+    return oo && ii;
+}
+
+bool isSymmetric(TreeNode *root) {
+    if (root == nullptr) {
+        return true;
+    }
+    return compare(root->left, root->right);
 }
 ```
 
-前序遍历
+:::
+
+:::{tab-item} Java
+:sync: java
 
 ```java
-void preorder(TreeNode root) {
-  Stack<TreeNode> stack = new Stack<>();
-  if (root == null)
-    return;
-  stack.push(root);
-  while (!stack.isEmpty()) {
-    TreeNode cur = stack.peek();
-    stack.pop();
-    // ans.add(cur.val);
-    if (cur.right != null) // 先右后左
-      stack.push(cur.right);
-    if (cur.left != null)
-      stack.push(cur.left);
-  }
+public boolean isSymmetric(TreeNode root) {
+    if (root == null)
+        return true;
+    return compare(root.left, root.right);
 }
-```
 
-后序遍历
+public boolean compare(TreeNode left, TreeNode right) {
+    if (left == null && right != null) 
+        return false;
+    else if (left != null && right == null)
+        return false;
+    else if (left == null && right == null)
+        return true;
+    else if (left.val != right.val)
+        return false;
+    
+    // 后序遍历代码如下：
 
-```java
-// 和前序遍历类似的代码，也需要借助栈来实现
-// 遍历顺序不一样，且多了一个 reverse 环节
-void postorder(TreeNode root) {
-  Stack<TreeNode> stack = new Stack<>();
-  TreeNode cur = root;
-  if (root == null)
-    return;
-  stack.push(root);
-  while (!stack.isEmpty()) {
-    TreeNode cur = stack.peek();
-    stack.pop();
-    // ans.add(cur.val);
-    if (cur.left != null) // 先左后右
-      stack.push(cur.left);
-    if (cur.right != null)
-      stack.push(cur.right);
-  }
-  reverse(ans);
+    // 比较外侧是否相同
+    boolean outside = compare(left.left, right.right);
+
+    // 比较内侧是否相同
+    boolean inside = compare(left.right, right.left);
+
+    return outside && inside;
 }
 ```
 
