@@ -68,10 +68,10 @@ public class Main {
 :::{tab-item} C++
 :sync: cpp
 
-| 原始类型 | 目标类型 | 转换方法 |
-| --------- | ------------ | ------- |
-| `string` | `int` | `stoi()` |
-| `int` | `string` | `to_string()` |
+| 原始类型 | 目标类型 | 转换方法      |
+| -------- | -------- | ------------- |
+| `string` | `int`    | `stoi()`      |
+| `int`    | `string` | `to_string()` |
 
 
 :::
@@ -310,7 +310,7 @@ void traverse(ListNode head) {
 
 ## 树
 
-### 递归遍历
+### 二叉树的递归遍历
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -356,7 +356,7 @@ void traverse(TreeNode root) {
 :::
 ::::
 
-### 前序遍历
+### 二叉树的前序遍历
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -419,7 +419,7 @@ void preorder(TreeNode root) {
 :::
 ::::
 
-### 中序遍历
+### 二叉树的中序遍历
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -478,7 +478,7 @@ void inorder(TreeNode root) {
 :::
 ::::
 
-### 后序遍历
+### 二叉树的后序遍历
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -547,7 +547,7 @@ void postorder(TreeNode root) {
 :::
 ::::
 
-### 层序遍历
+### 二叉树的层序遍历
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -653,35 +653,6 @@ public int maxDepth(TreeNode root) {
 :::
 ::::
 
-### 遍历 N 叉树
-
-::::{tab-set}
-:::{tab-item} C++
-
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-
-```java
-class TreeNode {
-    int val;
-    TreeNode[] children;
-}
-
-void traverse(TreeNode root) {
-    for (TreeNode child : root.children) {
-        traverse(child);
-    }
-}
-```
-
-:::
-::::
-
 ### 对称二叉树的判定
 
 ::::{tab-set}
@@ -746,6 +717,50 @@ public boolean compare(TreeNode left, TreeNode right) {
 
     return outside && inside;
 }
+```
+
+:::
+::::
+
+### 二叉树的所有路径
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+// path 变量的值，系统栈会自动帮我们维护，不管是压栈还是出栈
+// paths 必须是引用，这个变量是需要我们手工维护的
+void dfs(TreeNode *root, string path, vector< string > &paths) {
+    if (root == nullptr) {
+        return;
+    }
+
+    // 构造路径
+    path += to_string(root->val);
+    if (root->left == nullptr && root->right == nullptr) {
+        paths.push_back(path);
+    }
+    path += "->";
+
+    dfs(root->left, path, paths);
+    dfs(root->right, path, paths);
+}
+
+vector< string > binaryTreePaths(TreeNode *root) {
+    vector< string > paths;
+    dfs(root, "", paths); // 为了把 paths 保存在栈里，所以把 paths 当做参数传递
+    return paths;
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+
 ```
 
 :::
