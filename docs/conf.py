@@ -9,7 +9,7 @@ import os
 
 project = "Notebook"
 copyright = "2024"
-author = "Yantao Zhang"
+author = "Yantao Zhang (yantao.z [at] outlook [dot] com)"
 master_doc = "index"
 language = "zh_CN"
 source_encoding = "utf-8-sig"
