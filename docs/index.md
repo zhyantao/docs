@@ -2,7 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/getstarted/badge)](https://readthedocs.org/projects/getstarted/builds)
 [![GitHub Release](https://img.shields.io/github/v/release/zhyantao/getstarted)](https://github.com/zhyantao/getstarted/releases)
-[![Curriculum Vitae](https://img.shields.io/badge/cv-ongoing-blue)](https://getstarted.readthedocs.io/_static/resume/cv.pdf)
+[![Curriculum Vitae](https://img.shields.io/badge/cv-ongoing-blue)](https://zhyantao.github.io/cv/)
 
 ## 环境部署
 

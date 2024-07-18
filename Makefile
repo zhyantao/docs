@@ -19,16 +19,14 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) doc
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) docs
 
-.PHONY: help html pdf clean-html clean-pdf
+.PHONY: help html clean
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  html        to make standalone HTML files"
-	@echo "  pdf         to make LaTeX files and run them through pdflatex"
-	@echo "  clean-html  to remove the HTML files"
-	@echo "  clean-pdf   to remove the LaTeX files"
+	@echo "  clean       to remove the HTML files"
 
-all: pdf html
+all: html
 
 html:
 	@mkdir -p "docs/_tmp"
@@ -36,16 +34,7 @@ html:
 	@echo
 	@echo "Build finished."
 
-pdf:
-	@mkdir -p "docs/_static/resume"
-	@cd docs/resume && latexmk -pdf cv.tex
-	@echo "Build finished."
-
-clean-html:
+clean:
 	@rm -rf $(BUILDDIR)/*
 	@rm -rf docs/_tmp
-	@echo "Clean finished."
-
-clean-pdf:
-	@cd docs/resume && latexmk -c -C cv.tex
 	@echo "Clean finished."
