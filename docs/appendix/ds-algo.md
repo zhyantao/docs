@@ -62,7 +62,9 @@ public class Main {
 :::
 ::::
 
-## 类型转换
+## 工具函数
+
+### 类型转换
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -90,7 +92,7 @@ list = Arrays.asList(arr) // [] -> ArrayList
 :::
 ::::
 
-## 最值
+### 最值
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -104,7 +106,7 @@ list = Arrays.asList(arr) // [] -> ArrayList
 :::
 ::::
 
-## 运算符重载
+### 运算符重载
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -132,29 +134,11 @@ friend Complex operator+<>(...);
 ```
 
 :::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
 ::::
 
-## 大数计算
+### 大数计算
 
 ::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
 :::{tab-item} Java
 :sync: java
 
@@ -171,7 +155,39 @@ A.divide(A);
 
 ::::
 
-## 数组
+### 排序
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+sort(v1.begin(), v1.end(), greater<int>());
+sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
+reverse(v1.begin(), v1.end());
+binary_search(v1.begin(), v1.end(), target);
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+Arrays.sort(nums);       // 数组排序
+Arrays.binarySearch(nums, 23);
+Arrays.stream(nums).max().getAsInt();
+Collections.sort(list); // 列表排序
+list.sort(Collections.reverseOrder());// 逆序
+Collections.reverse(list); // 翻转链表
+```
+
+:::
+::::
+
+## 数据结构
+
+### 数组
 
 虽然 C++ 和 Java 中都有静态数组，但是静态数组不太灵活。我们在刷题时，首要目的是把题解出来，因此，我们统一使用动态数组。同时，也方便我们调用各种库函数。
 
@@ -198,7 +214,7 @@ ArrayList<Integer> v = new ArrayList<>();
 :::
 ::::
 
-## 字符串
+### 字符串
 
 ::::{tab-set}
 :::{tab-item} C++
@@ -278,18 +294,9 @@ str.concat("abc");
 :::
 ::::
 
-## 链表
+### 链表
 
 ::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
 :::{tab-item} Java
 :sync: java
 
@@ -316,6 +323,219 @@ void traverse(ListNode head) {
   traverse(head.next);
   // 后序遍历代码
 }
+```
+
+:::
+::::
+
+### 栈
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+stack<string> stk;
+```
+
+:::
+::::
+
+### 双端队列
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+queue<string> Q;
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+// 双端队列
+Deque<String> stack = new ArrayDeque<>();
+Deque<String> queue = new LinkedDeque<>();
+```
+
+:::
+::::
+
+### 单调队列
+
+::::{tab-set}
+:::{tab-item} Java
+:sync: java
+
+```java
+// 单调队列，要始终维持队列递增或递减的状态。
+// 递增（减）队列的队头是最小（大）值。
+int[] maxSlidingWindow(int[] arr, int sz) {
+    int[] ans = new int[arr.length - sz + 1];
+    Deque<Integer> deque = new LinkedList<>();
+    // r 表示滑动窗口右边界
+    for (int r = 0; r < arr.length; r++) {
+        // 移除队尾比当前值小的元素的索引
+        while (!deque.isEmpty()
+                && arr[r] >= arr[deque.peekLast()])
+            deque.removeLast();
+        deque.addLast(r); // 存储元素下标
+        int l = r - sz + 1; // 窗口左边界
+        if (deque.peekFirst() < l)// 超出左边界
+            deque.removeFirst();
+        if (r + 1 >= sz) // 若已经形成窗口
+            ans[l] = arr[deque.peekFirst()];
+    }
+    return ans;
+}
+```
+
+::::
+
+### 优先队列
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+优先队列支持以下几种操作：
+
+- `push` 向优先队列中插入一个元素。
+- `pop` 删除并返回优先队列中优先级最高的元素。
+- `top` 查看优先队列中优先级最高的元素。
+- `empty` 判断优先队列是否为空。
+- `size` 返回优先队列中的元素数量。
+
+优先队列的声明方式：
+
+```cpp
+priority_queue< int > PQ;
+```
+
+优先队列默认是降序排列的，也就是最大值在堆顶。如果想创建一个小根堆，声明方式如下：
+
+```cpp
+priority_queue< int, vector< int >, greater< int > > PQ;
+```
+
+在很多情况下，我们会想**在优先队列中存储自定义的数据类型，并按照某个属性排列**。这种情况下，我们需要重载运算符来达到要求：
+
+```cpp
+// 假设：我们想将 hashMap 中的 {key, value} 对存储到 priority queue 中
+unordered_map< int, int > hashMap;
+for (int num : nums) {
+    hashMap[num]++;
+}
+
+// 创建一个根据哈希表的值升序排列的小根堆，并且只保存 k 个元素
+struct HashEntry {
+    int key;
+    int value;
+
+    // 重载 > 运算符
+    bool operator>(const HashEntry &other) const {
+        return value > other.value;
+    }
+};
+
+priority_queue< HashEntry, vector< HashEntry >, greater< HashEntry > > minHeap;
+
+for (const auto &entry : hashMap) {
+    minHeap.push({ entry.first, entry.second });
+    if (minHeap.size() > k) {
+        minHeap.pop();
+    }
+}
+
+// 取出小根堆中的元素
+vector< int > ans;
+while (!minHeap.empty()) {
+    ans.push_back(minHeap.top().key);
+    minHeap.pop();
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+// 默认的初始化方法
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+// 自定义排序规则
+PriorityQueue<Integer> pq = new PriorityQueue<>(
+        new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2; // (升序) 谁小谁优先
+            }
+        });
+```
+
+:::
+::::
+
+### 哈希表
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+unordered_map<string, int> map;
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+初始化
+
+```java
+Map<Integer, String> map = new HashMap<>();
+```
+
+遍历
+
+```java
+Map<String, String> map = new HashMap<>();
+for (Map.Entry<String, String> entry : map.entrySet()) {
+    int key = entry.getKey();
+    int value = entry.getValue();
+}
+```
+
+:::
+::::
+
+### 哈希集合
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+unordered_set<string> set;
+```
+
+:::
+::::
+
+### 有序表
+
+::::{tab-set}
+:::{tab-item} Java
+:sync: java
+
+```java
+Map<String> map = new TreeSet<>();
 ```
 
 :::
@@ -768,15 +988,6 @@ vector< string > binaryTreePaths(TreeNode *root) {
 ```
 
 :::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
 ::::
 
 ### 二叉搜索树中的插入操作
@@ -800,15 +1011,6 @@ TreeNode *insertIntoBST(TreeNode *root, int val) {
 
     return root;
 }
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
 ```
 
 :::
@@ -866,15 +1068,6 @@ TreeNode *deleteNode(TreeNode *root, int key) {
 ```
 
 :::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
 ::::
 
 ### 裁剪二叉搜索树
@@ -906,300 +1099,45 @@ TreeNode *trimBST(TreeNode *root, int low, int high) {
 ```
 
 :::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
 ::::
 
 ### 树状数组
 
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
 ### 线段树
 
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
+## 回溯算法
 
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
-## 栈
+### 组合 k 个数
 
 ::::{tab-set}
 :::{tab-item} C++
 :sync: cpp
 
 ```cpp
-stack<string> stk;
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
-## 队列
-
-### 双端队列
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-queue<string> Q;
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-// 双端队列
-Deque<String> stack = new ArrayDeque<>();
-Deque<String> queue = new LinkedDeque<>();
-```
-
-:::
-::::
-
-### 单调队列
-
-::::{tab-set}
-:::{tab-item} Java
-:sync: java
-
-```java
-// 单调队列，要始终维持队列递增或递减的状态。
-// 递增（减）队列的队头是最小（大）值。
-int[] maxSlidingWindow(int[] arr, int sz) {
-    int[] ans = new int[arr.length - sz + 1];
-    Deque<Integer> deque = new LinkedList<>();
-    // r 表示滑动窗口右边界
-    for (int r = 0; r < arr.length; r++) {
-        // 移除队尾比当前值小的元素的索引
-        while (!deque.isEmpty()
-                && arr[r] >= arr[deque.peekLast()])
-            deque.removeLast();
-        deque.addLast(r); // 存储元素下标
-        int l = r - sz + 1; // 窗口左边界
-        if (deque.peekFirst() < l)// 超出左边界
-            deque.removeFirst();
-        if (r + 1 >= sz) // 若已经形成窗口
-            ans[l] = arr[deque.peekFirst()];
+// n 个数字的组合问题，其实等价于 n 个数字的全连接图问题
+// 每个数字都可以作为起点，每个数字都可以作为终点，但是两条路径不能重合
+void dfs(vector< vector< int > > &paths, vector< int > &path, int curr, int n, int k) {
+    if (path.size() == k) {
+        paths.push_back(path);
+        return;
     }
-    return ans;
-}
-```
 
-::::
-
-### 优先队列
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-优先队列支持以下几种操作：
-
-- `push` 向优先队列中插入一个元素。
-- `pop` 删除并返回优先队列中优先级最高的元素。
-- `top` 查看优先队列中优先级最高的元素。
-- `empty` 判断优先队列是否为空。
-- `size` 返回优先队列中的元素数量。
-
-优先队列的声明方式：
-
-```cpp
-priority_queue< int > PQ;
-```
-
-优先队列默认是降序排列的，也就是最大值在堆顶。如果想创建一个小根堆，声明方式如下：
-
-```cpp
-priority_queue< int, vector< int >, greater< int > > PQ;
-```
-
-在很多情况下，我们会想**在优先队列中存储自定义的数据类型，并按照某个属性排列**。这种情况下，我们需要重载运算符来达到要求：
-
-```cpp
-// 假设：我们想将 hashMap 中的 {key, value} 对存储到 priority queue 中
-unordered_map< int, int > hashMap;
-for (int num : nums) {
-    hashMap[num]++;
-}
-
-// 创建一个根据哈希表的值升序排列的小根堆，并且只保存 k 个元素
-struct HashEntry {
-    int key;
-    int value;
-
-    // 重载 > 运算符
-    bool operator>(const HashEntry &other) const {
-        return value > other.value;
+    // for (int i = curr; i <= n - (k - path.size()) + 1; i++) { // 剪枝优化
+    for (int i = curr; i <= n; i++) {
+        path.push_back(i);
+        dfs(paths, path, i + 1, n, k);
+        path.pop_back(); // 回溯
     }
-};
 
-priority_queue< HashEntry, vector< HashEntry >, greater< HashEntry > > minHeap;
-
-for (const auto &entry : hashMap) {
-    minHeap.push({ entry.first, entry.second });
-    if (minHeap.size() > k) {
-        minHeap.pop();
-    }
+    return;
 }
 
-// 取出小根堆中的元素
-vector< int > ans;
-while (!minHeap.empty()) {
-    ans.push_back(minHeap.top().key);
-    minHeap.pop();
+vector< vector< int > > combine(int n, int k) {
+    vector< vector< int > > paths;
+    vector< int > path;
+    dfs(paths, path, 1, n, k);
+    return paths;
 }
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-// 默认的初始化方法
-PriorityQueue<Integer> pq = new PriorityQueue<>();
-
-// 自定义排序规则
-PriorityQueue<Integer> pq = new PriorityQueue<>(
-        new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2; // (升序) 谁小谁优先
-            }
-        });
-```
-
-:::
-::::
-
-## 哈希函数
-
-### 哈希表
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-unordered_map<string, int> map;
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-初始化
-
-```java
-Map<Integer, String> map = new HashMap<>();
-```
-
-遍历
-
-```java
-Map<String, String> map = new HashMap<>();
-for (Map.Entry<String, String> entry : map.entrySet()) {
-    int key = entry.getKey();
-    int value = entry.getValue();
-}
-```
-
-:::
-::::
-
-### 哈希集合
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-unordered_set<string> set;
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
-### 有序表
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-Map<String> map = new TreeSet<>();
 ```
 
 :::
@@ -1238,79 +1176,9 @@ int fib(int n) {
 
 ### 树形 DP
 
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
 ### 状压 DP
 
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-
-```
-
-:::
-::::
-
 ## 排序算法
-
-### 排序工具包
-
-::::{tab-set}
-:::{tab-item} C++
-:sync: cpp
-
-```cpp
-sort(v1.begin(), v1.end(), greater<int>());
-sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
-reverse(v1.begin(), v1.end());
-binary_search(v1.begin(), v1.end(), target);
-```
-
-:::
-
-:::{tab-item} Java
-:sync: java
-
-```java
-Arrays.sort(nums);       // 数组排序
-Arrays.binarySearch(nums, 23);
-Arrays.stream(nums).max().getAsInt();
-Collections.sort(list); // 列表排序
-list.sort(Collections.reverseOrder());// 逆序
-Collections.reverse(list); // 翻转链表
-```
-
-:::
-::::
 
 ### 堆排序
 
