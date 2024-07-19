@@ -96,8 +96,8 @@ list = Arrays.asList(arr) // [] -> ArrayList
 :::{tab-item} C++
 :sync: cpp
 
-| 最大值    | 最小值    |
-| --------- | --------- |
+| 最大值      | 最小值      |
+| ----------- | ----------- |
 | `LONG_MAX`  | `LONG_MIN`  |
 | `INT32_MAX` | `INT32_MIN` |
 
@@ -764,6 +764,144 @@ vector< string > binaryTreePaths(TreeNode *root) {
     vector< string > paths;
     dfs(root, "", paths); // 为了把 paths 保存在栈里，所以把 paths 当做参数传递
     return paths;
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+
+```
+
+:::
+::::
+
+### 二叉搜索树中的插入操作
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+TreeNode *insertIntoBST(TreeNode *root, int val) {
+    // 一定会到叶子结点上，因为树上的所有的值都不相等，而连接两个节点的值又是邻值
+    if (root == nullptr) {
+        return new TreeNode(val);
+    }
+
+    if (root->val > val) {
+        root->left = insertIntoBST(root->left, val);
+    } else {
+        root->right = insertIntoBST(root->right, val);
+    }
+
+    return root;
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+
+```
+
+:::
+::::
+
+### 二叉搜索树中的删除操作
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+TreeNode *deleteNode(TreeNode *root, int key) {
+    // 递归终止条件 1
+    if (root == nullptr) {
+        return nullptr;
+    }
+
+    // 递归：将其转为更小的问题（将递归放在递归终止条件 2 前面会提高效率）
+    if (root->val < key) {
+        root->right = deleteNode(root->right, key);
+    }
+
+    if (root->val > key) {
+        root->left = deleteNode(root->left, key);
+    }
+
+    // 递归终止条件 2：考虑删除节点相等的情况，如何调整树的结构
+    if (root->val == key) {
+        // case 1: 左子树为空
+        if (root->left == nullptr) {
+            return root->right;
+        }
+
+        // case 2: 右子树为空
+        if (root->right == nullptr) {
+            return root->left;
+        }
+
+        // case3: 左子树和右子树都为空的情况，包含在 case1 或 case2 了
+
+        // case4: 若左子树和右子树都不为空
+        // 那么，将要删除的节点的左子树挂在右子树的最左子节点的左子树上
+        TreeNode *p = root->right; // 找到右子树的最左子节点
+        while (p->left != nullptr) {
+            p = p->left;
+        }
+        p->left = root->left; // 重新挂载左子树
+        root = root->right;
+        return root;
+    }
+
+    return root;
+}
+```
+
+:::
+
+:::{tab-item} Java
+:sync: java
+
+```java
+
+```
+
+:::
+::::
+
+### 裁剪二叉搜索树
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+TreeNode *trimBST(TreeNode *root, int low, int high) {
+    if (root == nullptr) {
+        return nullptr;
+    }
+
+    if (root->val < low) { // 裁剪右子树
+        return trimBST(root->right, low, high);
+    }
+
+    if (root->val > high) { // 裁剪左子树
+        return trimBST(root->left, low, high);
+    }
+
+    // 下面两个递归其实并没有对节点进行改动，只是遍历
+    root->left = trimBST(root->left, low, high);
+    root->right = trimBST(root->right, low, high);
+
+    return root;
 }
 ```
 
