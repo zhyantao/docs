@@ -1116,14 +1116,14 @@ TreeNode *trimBST(TreeNode *root, int low, int high) {
 ```cpp
 // n 个数字的组合问题，其实等价于 n 个数字的全连接图问题
 // 每个数字都可以作为起点，每个数字都可以作为终点，但是两条路径不能重合
-void dfs(vector< vector< int > > &paths, vector< int > &path, int curr, int n, int k) {
+void dfs(vector< vector< int > > &paths, vector< int > &path, int start, int n, int k) {
     if (path.size() == k) {
         paths.push_back(path);
         return;
     }
 
-    // for (int i = curr; i <= n - (k - path.size()) + 1; i++) { // 剪枝优化
-    for (int i = curr; i <= n; i++) {
+    // for (int i = start; i <= n - (k - path.size()) + 1; i++) { // 剪枝优化
+    for (int i = start; i <= n; i++) {
         path.push_back(i);
         dfs(paths, path, i + 1, n, k);
         path.pop_back(); // 回溯
