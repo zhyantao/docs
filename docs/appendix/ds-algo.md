@@ -1125,7 +1125,7 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, int start, int n, 
     // for (int i = start; i <= n - (k - path.size()) + 1; i++) { // 剪枝优化
     for (int i = start; i <= n; i++) {
         path.push_back(i);
-        dfs(paths, path, i + 1, n, k);
+        dfs(paths, path, i + 1, n, k); // dfs(i+1) 表示不可重复选
         path.pop_back(); // 回溯
     }
 
@@ -1136,6 +1136,41 @@ vector< vector< int > > combine(int n, int k) {
     vector< vector< int > > paths;
     vector< int > path;
     dfs(paths, path, 1, n, k);
+    return paths;
+}
+```
+
+:::
+::::
+
+### 组合总和（可重复选）
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector< int > &candidates, int target) {
+    if (target < 0) {
+        return;
+    }
+
+    if (target == 0) {
+        paths.push_back(path);
+        return;
+    }
+
+    for (int i = start; i < candidates.size(); i++) {
+        path.push_back(candidates[i]);
+        dfs(paths, path, i, candidates, target - candidates[i]); // dfs(i) 表示可重复选
+        path.pop_back();
+    }
+}
+
+vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
+    vector< vector< int > > paths;
+    vector< int > path;
+    dfs(paths, path, 0, candidates, target);
     return paths;
 }
 ```
