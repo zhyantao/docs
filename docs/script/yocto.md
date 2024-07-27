@@ -27,7 +27,7 @@ Bitbake 的构建流程可以分为四个步骤：
 
 Bitbake 的执行流程：
 
-1. `do_fetch`：此阶段默认负责从网络源（根据 `SRC_URI` 变量指定）下载源代码，并将其保存至默认的下载目录 `${DL_DIR}`，该目录通常位于 `${TOPDIR}/downloads`，但实际位置可由用户在 `build/conf/local.conf` 文件中配置。下载完成后，还会验证源码完整性。
+1. `do_fetch`：此阶段默认负责从网络源（根据 [`SRC_URI`](https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI) 变量指定）下载源代码，并将其保存至默认的下载目录 `${DL_DIR}`，该目录通常位于 `${TOPDIR}/downloads`，但实际位置可由用户在 `build/conf/local.conf` 文件中配置。下载完成后，还会验证源码完整性，生成一个 `.done` 文件。
 2. `源代码解压与准备`：下载后的源代码会被解压缩并准备到一个工作目录下，通常是 `${WORKDIR}`，路径类似 `build/tmp/work/<archname>/<recipe>-<version>/`，其中 `<archname>` 是目标体系结构，`<recipe>-<version>` 对应于具体的配方及其版本。这个步骤确保了源代码在一个干净、独立的环境中准备就绪，以便后续构建过程使用。
 3. `do_compile`：接着，Bitbake 调用 `do_compile` 任务来编译源代码。此阶段通常在 `${B}`（即编译目录）下设置当前工作目录，并默认尝试运行 `oe_runmake` 函数来执行 Makefile 中定义的编译指令。这一步骤利用了由 `oe-init-build-env` 脚本初始化的环境，支持交叉编译，确保生成的目标代码适用于目标架构。
 4. `do_install`：编译完成后，`do_install` 任务将指定的编译输出（如库文件、可执行文件等）安装到一个临时的安装目录 `${D}`。这个目录作为打包前的暂存区，用于收集所有将被包含进最终包或根文件系统（`ROOTFS`）的文件。此过程在 `${B}` 目录下执行，并通常在 `fakeroot` 环境下操作，以模拟包的安装者权限。
