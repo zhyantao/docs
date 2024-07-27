@@ -1178,6 +1178,55 @@ vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
 :::
 ::::
 
+### 非递减子序列（去重）
+
+::::{tab-set}
+:::{tab-item} C++
+:sync: cpp
+
+```cpp
+// 判断是否为递增序列
+bool isValid(vector< int > &path) {
+    for (int i = 1; i < path.size(); i++) {
+        if (path[i] < path[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector< int > &nums) {
+    if (path.size() > 1) {
+        if (isValid(path)) {
+            paths.push_back(path);
+        }
+    }
+
+    unordered_set< int > used_set; // 对本层应用去重
+    for (int i = start; i < nums.size(); i++) {
+        if (used_set.find(nums[i]) != used_set.end()) { // 已经使用过 nums[i] 了
+            continue;
+        }
+
+        path.push_back(nums[i]);
+        used_set.insert(nums[i]);
+        dfs(paths, path, i + 1, nums);
+        // used_set.erase(nums[i]); // 不能解开注释
+        path.pop_back();
+    }
+}
+
+vector< vector< int > > findSubsequences(vector< int > &nums) {
+    vector< vector< int > > paths;
+    vector< int > path;
+    dfs(paths, path, 0, nums);
+    return paths;
+}
+```
+
+:::
+::::
+
 ## 动态规划
 
 ::::{tab-set}
