@@ -89,8 +89,12 @@ public:
     // 取：同变量名
     // 存：值函数名为 set_varname
     // 短小的存取函数可用内联
-    int num_entries() const /* 尽可能使用 const */ { return num_entries_; }
-    void set_num_entries(int num_entries) { num_entries_ = num_entries; }
+    int num_entries() const /* 尽可能使用 const */ {
+        return num_entries_;
+    }
+    void set_num_entries(int num_entries) {
+        num_entries_ = num_entries;
+    }
 
     // 仅在需要拷贝对象时，使用拷贝构造函数
 
@@ -136,7 +140,8 @@ using std::string;
 
 namespace mynamespace {
 
-EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {}
+EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {
+}
 
 ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_name2) {
     bool retval = DoSometing(averyveryveryverylongargument1, argument2, argument3);
@@ -223,7 +228,7 @@ AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: false
