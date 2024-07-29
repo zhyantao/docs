@@ -115,7 +115,7 @@ list = Arrays.asList(arr) // [] -> ArrayList
 作为类成员时，重载二元运算符参数为另一个对象，一元运算符不需额外参数。
 
 ```cpp
-Complex Complex::operator+(const Complex &a) const {
+Complex Complex::operator+(const Complex& a) const {
     return Complex(real + a.real, img + a.img);
 }
 ```
@@ -123,14 +123,14 @@ Complex Complex::operator+(const Complex &a) const {
 作为全局函数时，重载二元运算符需要两个参数，一元运算符需要一个参数。
 
 ```cpp
-Complex operator+(const Complex &a, int b) {
+Complex operator+(const Complex& a, int b) {
     return Complex(a.real + b, a.img);
 }
 ```
 
 ```cpp
 // 类中声明全局函数为友元
-friend Complex operator+<>(...);
+friend Complex operator+ <>(...);
 ```
 
 :::
@@ -198,8 +198,8 @@ Collections.reverse(list); // 翻转链表
 :sync: cpp
 
 ```cpp
-vector< int > arr(sz, val);                      // sz 和 val 可选
-vector< vector< int > > dp(m, vector< int >(n)); // m * n 的数组
+vector<int> arr(sz, val);                  // sz 和 val 可选
+vector<vector<int>> dp(m, vector<int>(n)); // m * n 的数组
 ```
 
 :::
@@ -413,20 +413,20 @@ int[] maxSlidingWindow(int[] arr, int sz) {
 优先队列的声明方式：
 
 ```cpp
-priority_queue< int > PQ;
+priority_queue<int> PQ;
 ```
 
 优先队列默认是降序排列的，也就是最大值在堆顶。如果想创建一个小根堆，声明方式如下：
 
 ```cpp
-priority_queue< int, vector< int >, greater< int > > PQ;
+priority_queue<int, vector<int>, greater<int>> PQ;
 ```
 
 在很多情况下，我们会想**在优先队列中存储自定义的数据类型，并按照某个属性排列**。这种情况下，我们需要重载运算符来达到要求：
 
 ```cpp
 // 假设：我们想将 hashMap 中的 {key, value} 对存储到 priority queue 中
-unordered_map< int, int > hashMap;
+unordered_map<int, int> hashMap;
 for (int num : nums) {
     hashMap[num]++;
 }
@@ -437,22 +437,22 @@ struct HashEntry {
     int value;
 
     // 重载 > 运算符
-    bool operator>(const HashEntry &other) const {
+    bool operator>(const HashEntry& other) const {
         return value > other.value;
     }
 };
 
-priority_queue< HashEntry, vector< HashEntry >, greater< HashEntry > > minHeap;
+priority_queue<HashEntry, vector<HashEntry>, greater<HashEntry>> minHeap;
 
-for (const auto &entry : hashMap) {
-    minHeap.push({ entry.first, entry.second });
+for (const auto& entry : hashMap) {
+    minHeap.push({entry.first, entry.second});
     if (minHeap.size() > k) {
         minHeap.pop();
     }
 }
 
 // 取出小根堆中的元素
-vector< int > ans;
+vector<int> ans;
 while (!minHeap.empty()) {
     ans.push_back(minHeap.top().key);
     minHeap.pop();
@@ -550,8 +550,8 @@ Map<String> map = new TreeSet<>();
 :sync: cpp
 
 ```cpp
-vector< int > ans;
-vector< int > traverse(TreeNode *root) {
+vector<int> ans;
+vector<int> traverse(TreeNode* root) {
     if (root == nullptr) {
         return;
     }
@@ -595,14 +595,14 @@ void traverse(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector< int > preorderTraversal(TreeNode *root) {
+vector<int> preorderTraversal(TreeNode* root) {
     if (root == nullptr) {
         return {};
     }
 
-    vector< int > ans;
-    stack< TreeNode * > stk;
-    TreeNode *curr = root;
+    vector<int> ans;
+    stack<TreeNode*> stk;
+    TreeNode* curr = root;
     stk.push(root);
     while (!stk.empty()) {
         curr = stk.top();
@@ -658,14 +658,14 @@ void preorder(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector< int > inorderTraversal(TreeNode *root) {
+vector<int> inorderTraversal(TreeNode* root) {
     if (root == nullptr) {
         return {};
     }
 
-    vector< int > ans;
-    stack< TreeNode * > stk;
-    TreeNode *curr = root;
+    vector<int> ans;
+    stack<TreeNode*> stk;
+    TreeNode* curr = root;
     while (curr != nullptr || !stk.empty()) {
         if (curr != nullptr) {
             stk.push(curr);
@@ -718,14 +718,14 @@ void inorder(TreeNode root) {
 
 ```cpp
 // 后序遍历代码和前序遍历代码几乎一样，有 2 点区别
-vector< int > postorderTraversal(TreeNode *root) {
+vector<int> postorderTraversal(TreeNode* root) {
     if (root == nullptr) {
         return {};
     }
 
-    vector< int > ans;
-    stack< TreeNode * > stk;
-    TreeNode *curr = root;
+    vector<int> ans;
+    stack<TreeNode*> stk;
+    TreeNode* curr = root;
     stk.push(root);
     while (!stk.empty()) {
         curr = stk.top();
@@ -786,18 +786,18 @@ void postorder(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector< vector< int > > levelOrder(TreeNode *root) {
+vector<vector<int>> levelOrder(TreeNode* root) {
     if (root == nullptr) {
         return {};
     }
 
-    vector< vector< int > > ans;
-    deque< TreeNode * > dq;
-    TreeNode *curr = root;
+    vector<vector<int>> ans;
+    deque<TreeNode*> dq;
+    TreeNode* curr = root;
     dq.push_back(root);
     while (!dq.empty()) {
         int sz = dq.size();
-        vector< int > lvl;
+        vector<int> lvl;
         while (sz--) {
             curr = dq.front();
             dq.pop_front();
@@ -855,7 +855,7 @@ void traverse(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-int maxDepth(TreeNode *root) {
+int maxDepth(TreeNode* root) {
     if (root == nullptr) {
         return 0;
     }
@@ -893,7 +893,7 @@ public int maxDepth(TreeNode root) {
 :sync: cpp
 
 ```cpp
-bool compare(TreeNode *left, TreeNode *right) {
+bool compare(TreeNode* left, TreeNode* right) {
     if (left == nullptr && right == nullptr) {
         return true;
     } else if (left != nullptr && right == nullptr) {
@@ -910,7 +910,7 @@ bool compare(TreeNode *left, TreeNode *right) {
     return oo && ii;
 }
 
-bool isSymmetric(TreeNode *root) {
+bool isSymmetric(TreeNode* root) {
     if (root == nullptr) {
         return true;
     }
@@ -964,7 +964,7 @@ public boolean compare(TreeNode left, TreeNode right) {
 ```cpp
 // path 变量的值，系统栈会自动帮我们维护，不管是压栈还是出栈
 // paths 必须是引用，这个变量是需要我们手工维护的
-void dfs(TreeNode *root, string path, vector< string > &paths) {
+void dfs(TreeNode* root, string path, vector<string>& paths) {
     if (root == nullptr) {
         return;
     }
@@ -980,8 +980,8 @@ void dfs(TreeNode *root, string path, vector< string > &paths) {
     dfs(root->right, path, paths);
 }
 
-vector< string > binaryTreePaths(TreeNode *root) {
-    vector< string > paths;
+vector<string> binaryTreePaths(TreeNode* root) {
+    vector<string> paths;
     dfs(root, "", paths); // 为了把 paths 保存在栈里，所以把 paths 当做参数传递
     return paths;
 }
@@ -997,7 +997,7 @@ vector< string > binaryTreePaths(TreeNode *root) {
 :sync: cpp
 
 ```cpp
-TreeNode *insertIntoBST(TreeNode *root, int val) {
+TreeNode* insertIntoBST(TreeNode* root, int val) {
     // 一定会到叶子结点上，因为树上的所有的值都不相等，而连接两个节点的值又是邻值
     if (root == nullptr) {
         return new TreeNode(val);
@@ -1023,7 +1023,7 @@ TreeNode *insertIntoBST(TreeNode *root, int val) {
 :sync: cpp
 
 ```cpp
-TreeNode *deleteNode(TreeNode *root, int key) {
+TreeNode* deleteNode(TreeNode* root, int key) {
     // 递归终止条件 1
     if (root == nullptr) {
         return nullptr;
@@ -1054,7 +1054,7 @@ TreeNode *deleteNode(TreeNode *root, int key) {
 
         // case4: 若左子树和右子树都不为空
         // 那么，将要删除的节点的左子树挂在右子树的最左子节点的左子树上
-        TreeNode *p = root->right; // 找到右子树的最左子节点
+        TreeNode* p = root->right; // 找到右子树的最左子节点
         while (p->left != nullptr) {
             p = p->left;
         }
@@ -1077,7 +1077,7 @@ TreeNode *deleteNode(TreeNode *root, int key) {
 :sync: cpp
 
 ```cpp
-TreeNode *trimBST(TreeNode *root, int low, int high) {
+TreeNode* trimBST(TreeNode* root, int low, int high) {
     if (root == nullptr) {
         return nullptr;
     }
@@ -1116,7 +1116,7 @@ TreeNode *trimBST(TreeNode *root, int low, int high) {
 ```cpp
 // n 个数字的组合问题，其实等价于 n 个数字的全连接图问题
 // 每个数字都可以作为起点，每个数字都可以作为终点，但是两条路径不能重合
-void dfs(vector< vector< int > > &paths, vector< int > &path, int start, int n, int k) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, int start, int n, int k) {
     if (path.size() == k) {
         paths.push_back(path);
         return;
@@ -1126,15 +1126,15 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, int start, int n, 
     for (int i = start; i <= n; i++) {
         path.push_back(i);
         dfs(paths, path, i + 1, n, k); // dfs(i+1) 表示不可重复选
-        path.pop_back(); // 回溯
+        path.pop_back();               // 回溯
     }
 
     return;
 }
 
-vector< vector< int > > combine(int n, int k) {
-    vector< vector< int > > paths;
-    vector< int > path;
+vector<vector<int>> combine(int n, int k) {
+    vector<vector<int>> paths;
+    vector<int> path;
     dfs(paths, path, 1, n, k);
     return paths;
 }
@@ -1150,7 +1150,7 @@ vector< vector< int > > combine(int n, int k) {
 :sync: cpp
 
 ```cpp
-void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector< int > &candidates, int target) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& candidates, int target) {
     if (target < 0) {
         return;
     }
@@ -1167,9 +1167,9 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector<
     }
 }
 
-vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
-    vector< vector< int > > paths;
-    vector< int > path;
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> paths;
+    vector<int> path;
     dfs(paths, path, 0, candidates, target);
     return paths;
 }
@@ -1186,7 +1186,7 @@ vector< vector< int > > combinationSum(vector< int > &candidates, int target) {
 
 ```cpp
 // 判断是否为递增序列
-bool isValid(vector< int > &path) {
+bool isValid(vector<int>& path) {
     for (int i = 1; i < path.size(); i++) {
         if (path[i] < path[i - 1]) {
             return false;
@@ -1195,14 +1195,14 @@ bool isValid(vector< int > &path) {
     return true;
 }
 
-void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector< int > &nums) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& nums) {
     if (path.size() > 1) {
         if (isValid(path)) {
             paths.push_back(path);
         }
     }
 
-    unordered_set< int > used_set; // 对本层应用去重
+    unordered_set<int> used_set; // 对本层应用去重
     for (int i = start; i < nums.size(); i++) {
         if (used_set.find(nums[i]) != used_set.end()) { // 已经使用过 nums[i] 了
             continue;
@@ -1216,9 +1216,9 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, int start, vector<
     }
 }
 
-vector< vector< int > > findSubsequences(vector< int > &nums) {
-    vector< vector< int > > paths;
-    vector< int > path;
+vector<vector<int>> findSubsequences(vector<int>& nums) {
+    vector<vector<int>> paths;
+    vector<int> path;
     dfs(paths, path, 0, nums);
     return paths;
 }
@@ -1234,7 +1234,7 @@ vector< vector< int > > findSubsequences(vector< int > &nums) {
 :sync: cpp
 
 ```cpp
-void dfs(vector< vector< int > > &paths, vector< int > &path, vector< int > &nums, vector< bool > &used) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums, vector<bool>& used) {
     if (path.size() == nums.size()) {
         paths.push_back(path);
         return;
@@ -1252,10 +1252,10 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, vector< int > &num
     }
 }
 
-vector< vector< int > > permute(vector< int > &nums) {
-    vector< vector< int > > paths;
-    vector< int > path;
-    vector< bool > used(nums.size(), false);
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> paths;
+    vector<int> path;
+    vector<bool> used(nums.size(), false);
     dfs(paths, path, nums, used);
     return paths;
 }
@@ -1302,7 +1302,7 @@ void dfs(int[] arr, boolean[] used, int i) {
 :sync: cpp
 
 ```cpp
-void dfs(vector< vector< int > > &paths, vector< int > &path, vector< int > &nums, vector< bool > &used) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums, vector<bool>& used) {
     if (path.size() == nums.size()) {
         paths.push_back(path);
         return;
@@ -1321,10 +1321,10 @@ void dfs(vector< vector< int > > &paths, vector< int > &path, vector< int > &num
     }
 }
 
-vector< vector< int > > permuteUnique(vector< int > &nums) {
-    vector< vector< int > > paths;
-    vector< int > path;
-    vector< bool > used(nums.size(), false);
+vector<vector<int>> permuteUnique(vector<int>& nums) {
+    vector<vector<int>> paths;
+    vector<int> path;
+    vector<bool> used(nums.size(), false);
     sort(nums.begin(), nums.end());
     dfs(paths, path, nums, used);
     return paths;
@@ -1341,7 +1341,7 @@ vector< vector< int > > permuteUnique(vector< int > &nums) {
 :sync: cpp
 
 ```cpp
-void dfs(vector< vector< string > > &paths, vector< string > &path, int row, int n) {
+void dfs(vector<vector<string>>& paths, vector<string>& path, int row, int n) {
     if (row == n) { // 遍历到最后一行，说明已经找到了一种解法
         paths.push_back(path);
         return;
@@ -1389,9 +1389,9 @@ void dfs(vector< vector< string > > &paths, vector< string > &path, int row, int
     }
 }
 
-vector< vector< string > > solveNQueens(int n) {
-    vector< vector< string > > paths;
-    vector< string > path(n, string(n, '.'));
+vector<vector<string>> solveNQueens(int n) {
+    vector<vector<string>> paths;
+    vector<string> path(n, string(n, '.'));
     dfs(paths, path, 0, n);
     return paths;
 }
@@ -1407,7 +1407,7 @@ vector< vector< string > > solveNQueens(int n) {
 :sync: cpp
 
 ```cpp
-bool isValid(vector< vector< char > > &board, int row, int col, char num) {
+bool isValid(vector<vector<char>>& board, int row, int col, char num) {
     // 检查当前行或列是否有重复的数字
     for (int i = 0; i < 9; i++) {
         if (board[row][i] == num || board[i][col] == num) {
@@ -1428,7 +1428,7 @@ bool isValid(vector< vector< char > > &board, int row, int col, char num) {
     return true;
 }
 
-void dfs(vector< vector< char > > &temp, vector< vector< char > > &board, int row, int col) {
+void dfs(vector<vector<char>>& temp, vector<vector<char>>& board, int row, int col) {
     if (row == 9) {
         temp = board;
         return;
@@ -1453,9 +1453,9 @@ void dfs(vector< vector< char > > &temp, vector< vector< char > > &board, int ro
     }
 }
 
-void solveSudoku(vector< vector< char > > &board) {
+void solveSudoku(vector<vector<char>>& board) {
     // 回溯后 board 会恢复原样，因此需要创建一个临时变量保存 board 的状态
-    vector< vector< char > > temp = board;
+    vector<vector<char>> temp = board;
     dfs(temp, board, 0, 0);
     board = temp;
 }
@@ -1729,7 +1729,7 @@ int binarySearch(int[] arr, int target, int left, int right) {
 
 ```cpp
 // next[] = 构建最长公共前后缀长度数组
-void getNext(vector< int > &next, string pat) {
+void getNext(vector<int>& next, string pat) {
     // 初始化 next 数组的第一个元素为 0
     int j = 0;
     next[0] = 0;
@@ -1752,7 +1752,7 @@ void getNext(vector< int > &next, string pat) {
 int kmp(string pat, string txt) {
     int n = txt.size();
     int m = pat.size();
-    vector< int > next(m);
+    vector<int> next(m);
     getNext(next, pat);
     int j = 0;
     for (int i = 0; i < n; i++) {
