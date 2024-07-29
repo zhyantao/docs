@@ -78,7 +78,6 @@ appendix/index
 :glob:
 :hidden:
 
-Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/CompetitiveProgrammer’sHandbook.pdf>
-Algorithm Design Manual <https://getstarted.readthedocs.io/_static/cheatsheet/AlgorithmDesignManual_Skiena.pdf>
+Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/cph.pdf>
 PlantUML Online Editor <https://pansinm.github.io/plantuml-editor/>
 ```
