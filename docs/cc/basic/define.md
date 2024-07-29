@@ -14,8 +14,7 @@
 
 #define PRINT_VALUES(...) printf(__VA_ARGS__)
 
-int main()
-{
+int main() {
     PRINT_VALUES("Sum: %d\n", 10 + 20);
     PRINT_VALUES("Product: %d\n", 5 * 6);
     return 0;
@@ -34,8 +33,7 @@ int main()
 
 #define SHOW_VALUES(...) puts(#__VA_ARGS__)
 
-int main()
-{
+int main() {
     SHOW_VALUES(1, "x", int); // 展开成 puts("1, \"x\", int")
     return 0;
 }
@@ -53,8 +51,7 @@ int main()
 
 #define CONCATENATE(a, b) a##b
 
-int main()
-{
+int main() {
     int xy = CONCATENATE(10, 20); // 展开成 int xy = 1020;
     printf("%d", xy);
     return 0;
@@ -73,8 +70,7 @@ int main()
 
 #define LOG_MSG(fmt, ...) printf(fmt __VA_OPT__(, ) __VA_ARGS__)
 
-int main()
-{
+int main() {
     LOG_MSG("Sum: %d, %d\n", 10 + 20, 40); // 展开成 printf("Sum: %d, %d\n", 10 + 20, 40);
     LOG_MSG("Hello, World!\n");            // 展开成 printf("Hello, World!\n");
     return 0;
@@ -87,8 +83,10 @@ int main()
 #include <iostream>
 
 // 制造函数工厂并使用它
-#define FUNCTION(name, a) \
-    int fun_##name() { return a; }
+#define FUNCTION(name, a)                                                                                              \
+    int fun_##name() {                                                                                                 \
+        return a;                                                                                                      \
+    }
 
 FUNCTION(, 100)
 FUNCTION(abcd, 12)
@@ -105,8 +103,7 @@ FUNCTION(qqq, 23)
 #define WORD "Hello "
 #define OUTER(...) WORD #__VA_ARGS__
 
-int main()
-{
+int main() {
     std::cout << "" << fun_() << '\n';
     std::cout << "abcd: " << fun_abcd() << '\n';
     std::cout << "fff: " << fun_fff() << '\n';

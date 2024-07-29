@@ -8,14 +8,10 @@
 #include <algorithm>
 #include <cmath>
 
-void sort_by_absolute_value(float *elements, size_t count)
-{
+void sort_by_absolute_value(float* elements, size_t count) {
     std::sort(elements, elements + count,
               // 从这里开始是 Lambda 表达式
-              [](float a, float b) -> bool
-              {
-                  return std::abs(a) < std::abs(b);
-              } // Lambda 表达式到此结束
+              [](float a, float b) -> bool { return std::abs(a) < std::abs(b); } // Lambda 表达式到此结束
     );
 }
 ```
@@ -45,27 +41,21 @@ Lambda 语法解析
 #include <iostream>
 
 // 假设这是你实现的一个处理多种类型参数的函数
-template<typename... Args>
-void processArguments(Args... args)
-{
+template <typename... Args> void processArguments(Args... args) {
     std::cout << "Processing arguments: ";
     (std::cout << ... << args) << std::endl; // 使用折叠表达式输出所有参数
 }
 
 // 使用 Lambda 表达式包装对 processArguments 的调用
-template<typename... Args>
-void wrapperFunction(Args... args)
-{
-    auto lambda = [&](/* 通过引用捕获外部变量 args */)
-    {
+template <typename... Args> void wrapperFunction(Args... args) {
+    auto lambda = [&](/* 通过引用捕获外部变量 args */) {
         processArguments(args...); // 通过展开运算符传递参数
     };
-    
+
     lambda(); // 执行Lambda
 }
 
-int main()
-{
+int main() {
     wrapperFunction(1, 2, "Example", 3.14);
     return 0;
 }

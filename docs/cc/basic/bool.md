@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     bool b1 = true;
     int i = b1;
     bool b2 = -256;

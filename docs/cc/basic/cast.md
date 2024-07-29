@@ -7,8 +7,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     int num_int1 = 9;        // assigning an int value to num_int1
     int num_int2 = 'C';      // implicit conversion
     int num_int3 = (int)'C'; // explicit conversion, C-style
@@ -55,17 +54,16 @@ C 语言中的强制类型转化，在编译器看来，这并没有什么问题
 
 using namespace std;
 
-int main()
-{
+int main() {
     int value1 = 100;
     const int value2 = 200;
     cout << "value1 = " << value1 << endl;
     cout << "value2 = " << value2 << endl;
 
     // int *pv1 = &value1;
-    int *pv1 = const_cast<int *>(&value1);
+    int* pv1 = const_cast<int*>(&value1);
     // int *pv2 = &value2; // error
-    int *pv2 = const_cast<int *>(&value2);
+    int* pv2 = const_cast<int*>(&value2);
 
     (*pv1)++;
     (*pv2)++; // 允许编译通过，但是 value2 并没有自增
@@ -74,7 +72,7 @@ int main()
     cout << "value2 = " << (value2) << endl;
 
     // int &v2 = value2; // error
-    int &v2 = const_cast<int &>(value2);
+    int& v2 = const_cast<int&>(value2);
     v2++;
     cout << "value2 = " << value2 << endl;
 
@@ -92,11 +90,10 @@ int main()
 
 using namespace std;
 
-int main()
-{
+int main() {
     int i = 18;
-    float *p1 = reinterpret_cast<float *>(i); // static_cast will fail
-    int *p2 = reinterpret_cast<int *>(p1);
+    float* p1 = reinterpret_cast<float*>(i); // static_cast will fail
+    int* p2 = reinterpret_cast<int*>(p1);
 
     printf("p1=%p\n", p1);
     printf("p2=%p\n", p2);

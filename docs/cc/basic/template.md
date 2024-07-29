@@ -10,19 +10,15 @@
 
 using namespace std;
 
-template <typename T>
-T sum(T x, T y)
-{
+template <typename T> T sum(T x, T y) {
     cout << "The input type is " << typeid(T).name() << endl;
-    return x +
-           y;
+    return x + y;
 }
 
 // 显式实例化
 template double sum<double>(double, double);
 
-int main()
-{
+int main() {
     auto val = sum(4.1, 5.2);
     cout << val << endl;
 
@@ -43,23 +39,18 @@ int main()
 
 using namespace std;
 
-template <typename T>
-T sum(T x, T y)
-{
+template <typename T> T sum(T x, T y) {
     cout << "The input type is " << typeid(T).name() << endl;
     return x + y;
 }
 
-struct Point
-{
+struct Point {
     int x;
     int y;
 };
 
 // 特例化函数模板为 Point + Point
-template <>
-Point sum<Point>(Point pt1, Point pt2)
-{
+template <> Point sum<Point>(Point pt1, Point pt2) {
     cout << "The input type is " << typeid(pt1).name() << endl;
     Point pt;
     pt.x = pt1.x + pt2.x;
@@ -67,8 +58,7 @@ Point sum<Point>(Point pt1, Point pt2)
     return pt;
 }
 
-int main()
-{
+int main() {
     Point pt1{1, 2};
     Point pt2{2, 3};
 
@@ -88,46 +78,36 @@ int main()
 
 using namespace std;
 
-template <typename T>
-class Mat
-{
+template <typename T> class Mat {
     size_t rows;
     size_t cols;
-    T *data;
+    T* data;
 
 public:
-    Mat(size_t rows, size_t cols) : rows(rows), cols(cols)
-    {
+    Mat(size_t rows, size_t cols) : rows(rows), cols(cols) {
         data = new T[rows * cols]{};
     }
 
-    ~Mat()
-    {
+    ~Mat() {
         delete[] data;
     }
 
-    Mat(const Mat &) = delete;            // 不允许拷贝构造
-    Mat &operator=(const Mat &) = delete; // 不允许赋值构造
+    Mat(const Mat&) = delete;            // 不允许拷贝构造
+    Mat& operator=(const Mat&) = delete; // 不允许赋值构造
     T getElement(size_t r, size_t c);
     bool setElement(size_t r, size_t c, T value);
 };
 
-template <typename T>
-T Mat<T>::getElement(size_t r, size_t c)
-{
-    if (r >= this->rows || c >= this->cols)
-    {
+template <typename T> T Mat<T>::getElement(size_t r, size_t c) {
+    if (r >= this->rows || c >= this->cols) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
     }
     return data[this->cols * r + c];
 }
 
-template <typename T>
-bool Mat<T>::setElement(size_t r, size_t c, T value)
-{
-    if (r >= this->rows || c >= this->cols)
-    {
+template <typename T> bool Mat<T>::setElement(size_t r, size_t c, T value) {
+    if (r >= this->rows || c >= this->cols) {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
     }
@@ -136,12 +116,11 @@ bool Mat<T>::setElement(size_t r, size_t c, T value)
     return true;
 }
 
-int main()
-{
+int main() {
     // 使用显式实例化类模板
     Mat<int> imat(3, 4);
     imat.setElement(1, 2, 256);
-    
+
     // 隐式实例化类模板
     Mat<float> fmat(2, 3);
     fmat.setElement(1, 2, 3.14159f);
@@ -167,43 +146,33 @@ int main()
 
 using namespace std;
 
-template <typename T>
-class MyVector
-{
+template <typename T> class MyVector {
     size_t length;
-    T *data;
+    T* data;
 
 public:
-    MyVector(size_t length) : length(length)
-    {
+    MyVector(size_t length) : length(length) {
         data = new T[length]{};
     }
-    ~MyVector()
-    {
+    ~MyVector() {
         delete[] data;
     }
-    MyVector(const MyVector &) = delete;
-    MyVector &operator=(const MyVector &) = delete;
+    MyVector(const MyVector&) = delete;
+    MyVector& operator=(const MyVector&) = delete;
     T getElement(size_t index);
     bool setElement(size_t index, T value);
 };
 
-template <typename T>
-T MyVector<T>::getElement(size_t index)
-{
-    if (index >= this->length)
-    {
+template <typename T> T MyVector<T>::getElement(size_t index) {
+    if (index >= this->length) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
     }
     return data[index];
 }
 
-template <typename T>
-bool MyVector<T>::setElement(size_t index, T value)
-{
-    if (index >= this->length)
-    {
+template <typename T> bool MyVector<T>::setElement(size_t index, T value) {
+    if (index >= this->length) {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
     }
@@ -215,34 +184,28 @@ bool MyVector<T>::setElement(size_t index, T value)
 template class MyVector<int>;
 
 // 特例化类模板
-template <>
-class MyVector<bool>
-{
+template <> class MyVector<bool> {
     size_t length;
-    unsigned char *data;
+    unsigned char* data;
 
 public:
-    MyVector(size_t length) : length(length)
-    {
+    MyVector(size_t length) : length(length) {
         int num_bytes = (length - 1) / 8 + 1;
         data = new unsigned char[num_bytes]{};
     }
 
-    ~MyVector()
-    {
+    ~MyVector() {
         delete[] data;
     }
 
-    MyVector(const MyVector &) = delete;
-    MyVector &operator=(const MyVector &) = delete;
+    MyVector(const MyVector&) = delete;
+    MyVector& operator=(const MyVector&) = delete;
     bool getElement(size_t index);
     bool setElement(size_t index, bool value);
 };
 
-bool MyVector<bool>::getElement(size_t index)
-{
-    if (index >= this->length)
-    {
+bool MyVector<bool>::getElement(size_t index) {
+    if (index >= this->length) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
     }
@@ -252,10 +215,8 @@ bool MyVector<bool>::getElement(size_t index)
     return bool(data[byte_id] & mask);
 }
 
-bool MyVector<bool>::setElement(size_t index, bool value)
-{
-    if (index >= this->length)
-    {
+bool MyVector<bool>::setElement(size_t index, bool value) {
+    if (index >= this->length) {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
     }
@@ -272,8 +233,7 @@ bool MyVector<bool>::setElement(size_t index, bool value)
     return true;
 }
 
-int main()
-{
+int main() {
     MyVector<int> vec(16);
     vec.setElement(3, 256);
     cout << vec.getElement(3) << endl;
@@ -295,8 +255,8 @@ int main()
 下面是一个简单的例子，演示了 `std::function` 的基本用法：
 
 ```cpp
-#include <iostream>
 #include <functional>
+#include <iostream>
 
 // 定义一个普通的函数
 int add(int a, int b) {

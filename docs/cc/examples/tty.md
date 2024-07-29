@@ -7,19 +7,17 @@
 ## 读串口数据
 
 ```cpp
+#include <errno.h> /* ERROR Number Definitions           */
+#include <fcntl.h> /* File Control Definitions           */
 #include <stdio.h>
-#include <fcntl.h>   /* File Control Definitions           */
 #include <termios.h> /* POSIX Terminal Control Definitions */
 #include <unistd.h>  /* UNIX Standard Definitions      */
-#include <errno.h>   /* ERROR Number Definitions           */
 
-int main()
-{
+int main() {
     int fd = -1; // file descriptor for the serial port
 
     fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY);
-    if (fd == -1)
-    {
+    if (fd == -1) {
         perror("open_port: Unable to open /dev/ttyUSB0 - ");
     }
 
@@ -44,21 +42,15 @@ int main()
 
     char buf[255] = {0};
 
-    while (1)
-    {
+    while (1) {
         int n = read(fd, buf, sizeof(buf)); /* read up to 255 characters if ready to read */
 
-        if (n < 0)
-        {
+        if (n < 0) {
             perror("Read failed - ");
             return -1;
-        }
-        else if (n == 0)
-        {
+        } else if (n == 0) {
             printf("No data on port\n");
-        }
-        else
-        {
+        } else {
             buf[n] = 0;
             printf("%i bytes read : %s\n", n, buf);
         }

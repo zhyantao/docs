@@ -44,14 +44,13 @@ int main()
 ```cpp
 // main.cpp
 
-#include <iostream>
 #include "mystring.hpp"
+#include <iostream>
 
 using namespace std;
 
 // Why memory leak and memory double free?
-int main()
-{
+int main() {
     MyString str1(10, "Shenzhen");
     cout << "str1: " << str1 << endl;
 
@@ -72,35 +71,30 @@ int main()
 
 #pragma once
 
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
-class MyString
-{
+class MyString {
 private:
     int buf_len;
-    char *characters;
+    char* characters;
 
 public:
-    MyString(int buf_len = 64, const char *data = NULL)
-    {
+    MyString(int buf_len = 64, const char* data = NULL) {
         std::cout << "Constructor(int, char*)" << std::endl;
         this->buf_len = 0;
         this->characters = NULL;
         create(buf_len, data);
     }
 
-    ~MyString()
-    {
+    ~MyString() {
         delete[] this->characters;
     }
 
-    bool create(int buf_len, const char *data)
-    {
+    bool create(int buf_len, const char* data) {
         this->buf_len = buf_len;
 
-        if (this->buf_len != 0)
-        {
+        if (this->buf_len != 0) {
             this->characters = new char[this->buf_len]{};
             if (data)
                 strncpy(this->characters, data, this->buf_len);
@@ -109,10 +103,9 @@ public:
         return true;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const MyString &ms)
-    {
+    friend std::ostream& operator<<(std::ostream& os, const MyString& ms) {
         os << "buf_len = " << ms.buf_len;
-        os << ", characters = " << static_cast<void *>(ms.characters);
+        os << ", characters = " << static_cast<void*>(ms.characters);
         os << " [" << ms.characters << "]";
         return os;
     }

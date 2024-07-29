@@ -14,8 +14,7 @@ typedef struct _rgb_struct // name _rgb_struct can be omit
     unsigned char b;
 } rgb_struct;
 
-int main()
-{
+int main() {
     myint num = 32;
 
     // the following two lines are identical

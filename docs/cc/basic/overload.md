@@ -6,8 +6,7 @@
 #include <iostream>
 #include <string>
 
-int main()
-{
+int main() {
     std::string s("Hello ");
     s += "C";
     s.operator+=(" and CPP!");
@@ -24,18 +23,15 @@ int main()
 
 using namespace std;
 
-int sum(int x, int y)
-{
+int sum(int x, int y) {
     cout << "sum(int, int) is called" << endl;
     return x + y;
 }
-float sum(float x, float y)
-{
+float sum(float x, float y) {
     cout << "sum(float, float) is called" << endl;
     return x + y;
 }
-double sum(double x, double y)
-{
+double sum(double x, double y) {
     cout << "sum(double, double) is called" << endl;
     return x + y;
 }
@@ -47,8 +43,7 @@ double sum(double x, double y)
 //     return x + y;
 // }
 
-int main()
-{
+int main() {
 
     cout << "sum = " << sum(1, 2) << endl;
     cout << "sum = " << sum(1.1f, 2.2f) << endl;

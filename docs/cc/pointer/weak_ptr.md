@@ -12,16 +12,20 @@
 #include <iostream>
 #include <memory>
 
-struct Foo : public std::enable_shared_from_this<Foo>
-{
-    Foo() { std::cout << "Foo::Foo\n"; }
-    ~Foo() { std::cout << "Foo::~Foo\n"; }
-    std::shared_ptr<Foo> getFoo() { return shared_from_this(); }
+struct Foo : public std::enable_shared_from_this<Foo> {
+    Foo() {
+        std::cout << "Foo::Foo\n";
+    }
+    ~Foo() {
+        std::cout << "Foo::~Foo\n";
+    }
+    std::shared_ptr<Foo> getFoo() {
+        return shared_from_this();
+    }
 };
 
-int main()
-{
-    Foo *f = new Foo;
+int main() {
+    Foo* f = new Foo;
     std::shared_ptr<Foo> pf1;
 
     {

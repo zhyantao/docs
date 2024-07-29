@@ -13,8 +13,8 @@ std::bind(函数, 参数1, 参数2, ...);
 例如：
 
 ```cpp
-#include <iostream>
 #include <functional>
+#include <iostream>
 
 void myFunction(int a, int b, int c) {
     std::cout << a << ", " << b << ", " << c << std::endl;
@@ -22,7 +22,7 @@ void myFunction(int a, int b, int c) {
 
 int main() {
     auto f = std::bind(myFunction, 1, std::placeholders::_2, 3);
-    f(7, 8);  // 输出：1, 8, 3
+    f(7, 8); // 输出：1, 8, 3
     return 0;
 }
 ```

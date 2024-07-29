@@ -24,12 +24,12 @@
 - `condition_variable` 允许 `wait`、`wait_for`、`wait_until`、`notify_one` 及 `notify_all` 被同时调用。
 
 ```cpp
-#include <iostream>
-#include <string>
 #include <chrono>
-#include <thread>
-#include <mutex>
 #include <condition_variable>
+#include <iostream>
+#include <mutex>
+#include <string>
+#include <thread>
 
 std::mutex m;
 std::condition_variable cv; // 条件变量
@@ -44,8 +44,7 @@ void worker_thread() // 这个函数什么时候才会被执行？
     // 等待直至 main() 发送数据
     std::cout << "Worker: before unique_lock\n";
     std::unique_lock<std::mutex> lk(m);
-    cv.wait(lk, []
-            { return ready; }); // ready == true 后继续执行
+    cv.wait(lk, [] { return ready; }); // ready == true 后继续执行
 
     // 等待后，我们占有锁
     std::cout << "Worker thread is processing data\n";
@@ -62,8 +61,7 @@ void worker_thread() // 这个函数什么时候才会被执行？
     cv.notify_one();
 }
 
-int main()
-{
+int main() {
     // 创建 worker 线程，该线程运行的代码为 worker_thread
     std::thread worker(worker_thread);
 
@@ -85,8 +83,7 @@ int main()
     // 等候 worker
     {
         std::unique_lock<std::mutex> lk(m);
-        cv.wait(lk, []
-                { return processed; });
+        cv.wait(lk, [] { return processed; });
     }
     std::cout << "Back in main(), data = " << data << '\n';
 
@@ -118,14 +115,12 @@ pthread_cond_signal(&cond); /* Wake sleeping consumer */
 因为 `avail` 对两个线程都可见，因此对其修改均应该在 `mutex` 的保护之下，再来看消费者线程实现：
 
 ```cpp
-for (;;)
-{
+for (;;) {
     pthread_mutex_lock(&mutex);
     while (avail == 0)
         pthread_cond_wait(&cond, &mutex);
 
-    while (avail > 0)
-    {
+    while (avail > 0) {
         /* Do something */
         avail--;
     }

@@ -3,14 +3,13 @@
 ```cpp
 // main.cpp
 
-#include <iostream>
 #include "mystring.hpp"
+#include <iostream>
 
 using namespace std;
 
 // Why memory leak and memory double free?
-int main()
-{
+int main() {
     MyString str1(10, "Shenzhen");
     cout << "str1: " << str1 << endl;
 
@@ -30,51 +29,44 @@ int main()
 // mystring.hpp
 
 #pragma once
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
-class MyString
-{
+class MyString {
 private:
     int buf_len;
-    char *characters;
+    char* characters;
 
 public:
-    MyString(int buf_len = 64, const char *data = NULL)
-    {
+    MyString(int buf_len = 64, const char* data = NULL) {
         std::cout << "Constructor(int, char*)" << std::endl;
         this->buf_len = 0;
         this->characters = NULL;
         create(buf_len, data);
     }
 
-    MyString(const MyString &ms)
-    {
+    MyString(const MyString& ms) {
         std::cout << "Constructor(MyString&)" << std::endl;
         this->buf_len = 0;
         this->characters = NULL;
         create(ms.buf_len, ms.characters);
     }
 
-    ~MyString()
-    {
+    ~MyString() {
         release();
     }
 
-    MyString &operator=(const MyString &ms)
-    {
+    MyString& operator=(const MyString& ms) {
         create(ms.buf_len, ms.characters);
         return *this;
     }
 
-    bool create(int buf_len, const char *data)
-    {
+    bool create(int buf_len, const char* data) {
         release();
 
         this->buf_len = buf_len;
 
-        if (this->buf_len != 0)
-        {
+        if (this->buf_len != 0) {
             this->characters = new char[this->buf_len]{};
         }
         if (data)
@@ -83,21 +75,18 @@ public:
         return true;
     }
 
-    bool release()
-    {
+    bool release() {
         this->buf_len = 0;
-        if (this->characters != NULL)
-        {
+        if (this->characters != NULL) {
             delete[] this->characters;
             this->characters = NULL;
         }
         return 0;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const MyString &ms)
-    {
+    friend std::ostream& operator<<(std::ostream& os, const MyString& ms) {
         os << "buf_len = " << ms.buf_len;
-        os << ", characters = " << static_cast<void *>(ms.characters);
+        os << ", characters = " << static_cast<void*>(ms.characters);
         os << " [" << ms.characters << "]";
         return os;
     }

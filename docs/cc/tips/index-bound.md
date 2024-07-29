@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     int num_array[5];
 
     for (int idx = -1; idx <= 5; idx++) // out of bounds

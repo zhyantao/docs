@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     int i = 0;
     short s = 0;
     cout << "sizeof(int)=" << sizeof(int) << endl;
@@ -26,14 +25,11 @@ int main()
 #include <iostream>
 
 // 定义模板结构体 count
-template <class... Types>
-struct count
-{
+template <class... Types> struct count {
     static const std::size_t value = sizeof...(Types);
 };
 
-int main()
-{
+int main() {
     // 使用 count 结构体计算不同类型的数量
     std::cout << "Number of types: " << count<int, double, char>::value << std::endl;
 

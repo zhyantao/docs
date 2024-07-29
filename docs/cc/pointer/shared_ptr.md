@@ -4,38 +4,32 @@
 #include <iostream>
 #include <memory>
 
-class MyTime
-{
+class MyTime {
     int hours;
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0)
-    {
+    MyTime() : hours(0), minutes(0) {
         std::cout << "Constructor MyTime()" << std::endl;
     }
 
-    MyTime(int m) : hours(0), minutes(m)
-    {
+    MyTime(int m) : hours(0), minutes(m) {
         std::cout << "Constructor MyTime(int)" << std::endl;
         this->hours += this->minutes / 60;
         this->minutes %= 60;
     }
 
-    MyTime(int h, int m) : hours(h), minutes(m)
-    {
+    MyTime(int h, int m) : hours(h), minutes(m) {
         std::cout << "Constructor MyTime(int,int)" << std::endl;
         this->hours += this->minutes / 60;
         this->minutes %= 60;
     }
 
-    ~MyTime()
-    {
+    ~MyTime() {
         std::cout << "Destructor MyTime(). Bye!" << std::endl;
     }
 
-    MyTime operator+(int m) const
-    {
+    MyTime operator+(int m) const {
         MyTime sum;
         sum.minutes = this->minutes + m;
         sum.hours = this->hours;
@@ -44,16 +38,14 @@ public:
         return sum;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const MyTime &t)
-    {
+    friend std::ostream& operator<<(std::ostream& os, const MyTime& t) {
         std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }
 };
 
-int main()
-{
+int main() {
     // std::shared_ptr<MyTime> mt0 = new MyTime(0,70); //error
     // MyTime * mt1 = std::make_shared<MyTime>(1, 70); //error
     // {

@@ -64,7 +64,7 @@ int socket(int domain, int type, int protocol);
 ## bind() 函数
 
 ```cpp
-int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+int bind(int sockfd, const struct sockaddr* addr, socklen_t addrlen);
 ```
 
 `bind()` 函数用于把地址族中的一个特定地址赋值给 socket。例如 `AF_INET` 和 `AF_INET6` 就是把一个 IPv4 或 IPv6 地址和端口号组合赋给 socket。
@@ -77,41 +77,41 @@ IPv4 对应的地址结构如下：
 
 ```cpp
 struct sockaddr_in {
-    sa_family_t    sin_family; /* address family: AF_INET */
-    in_port_t      sin_port;   /* port in network byte order */
-    struct in_addr sin_addr;   /* internet address */
+    sa_family_t sin_family;  /* address family: AF_INET */
+    in_port_t sin_port;      /* port in network byte order */
+    struct in_addr sin_addr; /* internet address */
 };
 
 /* Internet address. */
 struct in_addr {
-    uint32_t       s_addr;     /* address in network byte order */
+    uint32_t s_addr; /* address in network byte order */
 };
 ```
 
 IPv6 对应的地址结构如下：
 
 ```cpp
-struct sockaddr_in6 { 
-    sa_family_t     sin6_family;   /* AF_INET6 */ 
-    in_port_t       sin6_port;     /* port number */ 
-    uint32_t        sin6_flowinfo; /* IPv6 flow information */ 
-    struct in6_addr sin6_addr;     /* IPv6 address */ 
-    uint32_t        sin6_scope_id; /* Scope ID (new in 2.4) */ 
+struct sockaddr_in6 {
+    sa_family_t sin6_family;   /* AF_INET6 */
+    in_port_t sin6_port;       /* port number */
+    uint32_t sin6_flowinfo;    /* IPv6 flow information */
+    struct in6_addr sin6_addr; /* IPv6 address */
+    uint32_t sin6_scope_id;    /* Scope ID (new in 2.4) */
 };
 
-struct in6_addr { 
-    unsigned char   s6_addr[16];   /* IPv6 address */ 
+struct in6_addr {
+    unsigned char s6_addr[16]; /* IPv6 address */
 };
 ```
 
 UNIX 协议的地址结构如下：
 
 ```cpp
-#define UNIX_PATH_MAX    108
+#define UNIX_PATH_MAX 108
 
-struct sockaddr_un { 
-    sa_family_t sun_family;               /* AF_UNIX */ 
-    char        sun_path[UNIX_PATH_MAX];  /* pathname */ 
+struct sockaddr_un {
+    sa_family_t sun_family;       /* AF_UNIX */
+    char sun_path[UNIX_PATH_MAX]; /* pathname */
 };
 ```
 
@@ -134,7 +134,7 @@ struct sockaddr_un {
 
 ```cpp
 int listen(int sockfd, int backlog);
-int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+int connect(int sockfd, const struct sockaddr* addr, socklen_t addrlen);
 ```
 
 在服务器端，调用 `socket()` 和 `bind()` 函数后就应该调用 `listen()` 来监听这个 socket，这时在客户端调用 `connect()` 发出连接请求，服务器端就会收到这个请求。
@@ -148,7 +148,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 TCP 服务器端依次调用 `socket()`、`bind()`、`listen()` 之后，就会监听指定的 socket 地址了。TCP 客户端依次调用 `socket()`、`connect()` 之后就向 TCP 服务器发送了一个连接请求。TCP 服务器监听到这个请求之后，就会调用 `accept()` 函数取接收请求，这样连接就建立好了。之后就可以开始网络 I/O 操作了，类似于普通文件的读写操作。
 
 ```cpp
-int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+int accept(int sockfd, struct sockaddr* addr, socklen_t* addrlen);
 ```
 
 `accept()` 函数的第一个参数是服务器的 socket 描述符，第二个参数是指向客户端的协议地址的指针，第三个参数是客户端协议地址的长度。如果 `accpet()` 成功，那么其返回值是由系统自动生成的一个**全新的描述符**，代表 TCP 连接。
@@ -164,8 +164,8 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 ```cpp
 #include <unistd.h>
 
-ssize_t read(int fd, void *buf, size_t count);
-ssize_t write(int fd, const void *buf, size_t count);
+ssize_t read(int fd, void* buf, size_t count);
+ssize_t write(int fd, const void* buf, size_t count);
 ```
 
 `read()` 函数从 `fd` 中读取内容。读成功时，返回读取的字节数。如果返回值是 0，表示已经读到文件末尾，小于 0 表示出现了错误。如果错误为 `EINTR` 表示读操作被中断了，如果是 `ECONNREST` 表示网络连接出了问题。
@@ -175,45 +175,41 @@ ssize_t write(int fd, const void *buf, size_t count);
 **send() / recv()**
 
 ```cpp
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
-ssize_t send(int sockfd, const void *buf, size_t len, int flags);
-ssize_t recv(int sockfd, void *buf, size_t len, int flags);
+ssize_t send(int sockfd, const void* buf, size_t len, int flags);
+ssize_t recv(int sockfd, void* buf, size_t len, int flags);
 ```
 
 **readv() / writev()**
 
 ```cpp
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-               const struct sockaddr *dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-                 struct sockaddr *src_addr, socklen_t *addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr, socklen_t addrlen);
+ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addrlen);
 ```
 
 **sendmsg() / recvmsg()**
 
 ```cpp
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
-ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);
-ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
+ssize_t sendmsg(int sockfd, const struct msghdr* msg, int flags);
+ssize_t recvmsg(int sockfd, struct msghdr* msg, int flags);
 ```
 
 **sendto() / recvfrom()**
 
 ```cpp
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-               const struct sockaddr *dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-                 struct sockaddr *src_addr, socklen_t *addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr, socklen_t addrlen);
+ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addrlen);
 ```
 
 推荐使用 `sendmsg()` 和 `recvmsg()` 函数，这两个是最通用的 I/O 函数，实际上可以把其他函数都替换成这两个。
@@ -235,35 +231,32 @@ int close(int fd);
 ```cpp
 // server.c
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <sys/select.h>
+#include <sys/socket.h>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define MAX_BUFFER_SIZE 1024
 
-void handle_error(const char *msg)
-{
+void handle_error(const char* msg) {
     perror(msg);
     exit(EXIT_FAILURE);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     int serverfd, clientfd, portno, n;
     socklen_t clilen;
     char buffer[MAX_BUFFER_SIZE];
     struct sockaddr_in serveraddr, clientaddr;
     fd_set readfds;
 
-    if (argc < 2)
-    {
+    if (argc < 2) {
         fprintf(stderr, "ERROR, no port provided\n");
         exit(1);
     }
@@ -272,13 +265,13 @@ int main(int argc, char *argv[])
     if (serverfd < 0)
         handle_error("ERROR opening socket");
 
-    bzero((char *)&serveraddr, sizeof(serveraddr));
+    bzero((char*)&serveraddr, sizeof(serveraddr));
     portno = atoi(argv[1]);
     serveraddr.sin_family = AF_INET;
     serveraddr.sin_addr.s_addr = INADDR_ANY;
     serveraddr.sin_port = htons(portno);
 
-    if (bind(serverfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
+    if (bind(serverfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr)) < 0)
         handle_error("ERROR on binding");
 
     listen(serverfd, 5);
@@ -287,37 +280,28 @@ int main(int argc, char *argv[])
     FD_ZERO(&readfds);
     FD_SET(serverfd, &readfds);
 
-    while (1)
-    {
+    while (1) {
         fd_set tempfds = readfds;
         int retval = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
         if (retval < 0)
             handle_error("ERROR in pselect");
 
-        for (int i = 0; i < FD_SETSIZE; i++)
-        {
-            if (FD_ISSET(i, &tempfds))
-            {
-                if (i == serverfd)
-                {
-                    clientfd = accept(serverfd, (struct sockaddr *)&clientaddr, &clilen);
+        for (int i = 0; i < FD_SETSIZE; i++) {
+            if (FD_ISSET(i, &tempfds)) {
+                if (i == serverfd) {
+                    clientfd = accept(serverfd, (struct sockaddr*)&clientaddr, &clilen);
                     if (clientfd < 0)
                         handle_error("ERROR on accept");
                     FD_SET(clientfd, &readfds);
-                }
-                else
-                {
+                } else {
                     bzero(buffer, MAX_BUFFER_SIZE);
                     n = read(i, buffer, MAX_BUFFER_SIZE - 1);
                     if (n < 0)
                         handle_error("ERROR reading from socket");
-                    else if (n == 0)
-                    {
+                    else if (n == 0) {
                         close(i);
                         FD_CLR(i, &readfds);
-                    }
-                    else
-                    {
+                    } else {
                         printf("Here is the message: %s\n", buffer);
                         n = write(i, "I got your message", 18);
                         if (n < 0)
@@ -335,31 +319,28 @@ int main(int argc, char *argv[])
 ```cpp
 // client.c
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define MAX_BUFFER_SIZE 1024
 
-void handle_error(const char *msg)
-{
+void handle_error(const char* msg) {
     perror(msg);
     exit(EXIT_FAILURE);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     char buffer[MAX_BUFFER_SIZE];
 
-    if (argc < 3)
-    {
+    if (argc < 3) {
         fprintf(stderr, "usage %s hostname port\n", argv[0]);
         exit(0);
     }
@@ -368,17 +349,16 @@ int main(int argc, char *argv[])
     if (sockfd < 0)
         handle_error("ERROR opening socket");
 
-    bzero((char *)&serv_addr, sizeof(serv_addr));
+    bzero((char*)&serv_addr, sizeof(serv_addr));
     portno = atoi(argv[2]);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
     serv_addr.sin_port = htons(portno);
 
-    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+    if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
         handle_error("ERROR connecting");
 
-    while (1)
-    {
+    while (1) {
         printf("Please enter the message: ");
         bzero(buffer, MAX_BUFFER_SIZE);
         fgets(buffer, MAX_BUFFER_SIZE - 1, stdin);

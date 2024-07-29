@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     int a = 56789;
     int b = 56789;
     int c = a * b;

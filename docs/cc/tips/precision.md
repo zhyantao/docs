@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     float f1 = 23400000000;
     float f2 = f1 + 10;
 

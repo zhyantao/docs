@@ -1,25 +1,21 @@
 # nothrow
 
 ```cpp
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
-int main()
-{
+int main() {
     size_t length = 80000000000L;
-    int *p = NULL;
+    int* p = NULL;
 
-    try
-    {
+    try {
         cout << "Trying to allocate a big block of memory" << endl;
         p = new int[length];
         // p = new(nothrow) int[length];
         cout << "No exception." << endl;
-    }
-    catch (std::bad_alloc &ba)
-    {
+    } catch (std::bad_alloc& ba) {
         cout << "bad_alloc exception!" << endl;
         cout << ba.what() << endl;
     }

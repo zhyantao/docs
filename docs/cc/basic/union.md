@@ -5,14 +5,12 @@
 
 using namespace std;
 
-union ipv4address
-{
+union ipv4address {
     std::uint32_t address32;
     std::uint8_t address8[4];
 };
 
-int main()
-{
+int main() {
     union ipv4address ip;
 
     cout << "sizeof(ip) = " << sizeof(ip) << endl;

@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     char c1 = 'C';
     char c2 = 80;
     char c3 = 0x50;

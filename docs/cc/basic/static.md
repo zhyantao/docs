@@ -7,15 +7,13 @@
 ```cpp
 #include <iostream>
 
-void exampleFunction()
-{
+void exampleFunction() {
     static int staticVariable = 0;
     staticVariable++;
     std::cout << "Static Variable: " << staticVariable << std::endl;
 }
 
-int main()
-{
+int main() {
     exampleFunction();
     exampleFunction();
     return 0;
@@ -35,8 +33,7 @@ static int globalStaticVariable = 42;
 
 extern int globalStaticVariable; // 声明在其他源文件中定义的全局静态变量
 
-int main()
-{
+int main() {
     std::cout << "Global Static Variable: " << globalStaticVariable << std::endl;
     return 0;
 }
@@ -45,8 +42,7 @@ int main()
 3、在类中使用 `static` 可以创建静态成员变量和静态成员函数。静态成员变量是类的所有实例共享的，而静态成员函数不属于任何实例，可以直接通过类名调用。
 
 ```cpp
-class Example
-{
+class Example {
 public:
     static int staticVariable;    // 静态成员变量
     static void staticFunction(); // 静态成员函数
@@ -56,8 +52,7 @@ public:
 int Example::staticVariable = 0;
 
 // 静态成员函数的实现
-void Example::staticFunction()
-{
+void Example::staticFunction() {
     // 实现代码
 }
 ```

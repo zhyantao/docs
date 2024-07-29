@@ -3,25 +3,23 @@
 ```cpp
 // main.cpp
 
-#include <iostream>
-#include <cstdlib>
-#include <chrono>
 #include "matoperation.hpp"
+#include <chrono>
+#include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
 #define TIME_START start = std::chrono::steady_clock::now();
-#define TIME_END(NAME)                                                                     \
-    end = std::chrono::steady_clock::now();                                                \
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); \
-    cout << (NAME) << ": result=" << result                                                \
-         << ", duration = " << duration << "ms" << endl;
+#define TIME_END(NAME)                                                                                                 \
+    end = std::chrono::steady_clock::now();                                                                            \
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();                             \
+    cout << (NAME) << ": result=" << result << ", duration = " << duration << "ms" << endl;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char** argv) {
     size_t nSize = 200000000;
-    float *p1 = new float[nSize](); // the memory is not aligned
-    float *p2 = new float[nSize](); // the memory is not aligned
+    float* p1 = new float[nSize](); // the memory is not aligned
+    float* p2 = new float[nSize](); // the memory is not aligned
 
     // // 256bits aligned, C++17 standard
     // float * p1 = static_cast<float*>(aligned_alloc(256, nSize*sizeof(float)));
@@ -66,8 +64,8 @@ int main(int argc, char **argv)
 ```cpp
 // matoperation.cpp
 
-#include <iostream>
 #include "matoperation.hpp"
+#include <iostream>
 
 #ifdef WITH_AVX2
 #include <immintrin.h>
@@ -81,25 +79,21 @@ int main(int argc, char **argv)
 #include <omp.h>
 #endif
 
-float dotproduct(const float *p1, const float *p2, size_t n)
-{
+float dotproduct(const float* p1, const float* p2, size_t n) {
     float sum = 0.0f;
     for (size_t i = 0; i < n; i++)
         sum += (p1[i] * p2[i]);
     return sum;
 }
 
-float dotproduct_unloop(const float *p1, const float *p2, size_t n)
-{
-    if (n % 8 != 0)
-    {
+float dotproduct_unloop(const float* p1, const float* p2, size_t n) {
+    if (n % 8 != 0) {
         std::cerr << "The size n must be a multiple of 8." << std::endl;
         return 0.0f;
     }
 
     float sum = 0.0f;
-    for (size_t i = 0; i < n; i += 8)
-    {
+    for (size_t i = 0; i < n; i += 8) {
         sum += (p1[i] * p2[i]);
         sum += (p1[i + 1] * p2[i + 1]);
         sum += (p1[i + 2] * p2[i + 2]);
@@ -112,11 +106,9 @@ float dotproduct_unloop(const float *p1, const float *p2, size_t n)
     return sum;
 }
 
-float dotproduct_avx2(const float *p1, const float *p2, size_t n)
-{
+float dotproduct_avx2(const float* p1, const float* p2, size_t n) {
 #ifdef WITH_AVX2
-    if (n % 8 != 0)
-    {
+    if (n % 8 != 0) {
         std::cerr << "The size n must be a multiple of 8." << std::endl;
         return 0.0f;
     }
@@ -125,8 +117,7 @@ float dotproduct_avx2(const float *p1, const float *p2, size_t n)
     __m256 a, b;
     __m256 c = _mm256_setzero_ps();
 
-    for (size_t i = 0; i < n; i += 8)
-    {
+    for (size_t i = 0; i < n; i += 8) {
         a = _mm256_loadu_ps(p1 + i);
         b = _mm256_loadu_ps(p2 + i);
         c = _mm256_add_ps(c, _mm256_mul_ps(a, b));
@@ -139,11 +130,9 @@ float dotproduct_avx2(const float *p1, const float *p2, size_t n)
 #endif
 }
 
-float dotproduct_avx2_omp(const float *p1, const float *p2, size_t n)
-{
+float dotproduct_avx2_omp(const float* p1, const float* p2, size_t n) {
 #ifdef WITH_AVX2
-    if (n % 8 != 0)
-    {
+    if (n % 8 != 0) {
         std::cerr << "The size n must be a multiple of 8." << std::endl;
         return 0.0f;
     }
@@ -153,8 +142,7 @@ float dotproduct_avx2_omp(const float *p1, const float *p2, size_t n)
     __m256 c = _mm256_setzero_ps();
 
 #pragma omp parallel for
-    for (size_t i = 0; i < n; i += 8)
-    {
+    for (size_t i = 0; i < n; i += 8) {
         a = _mm256_loadu_ps(p1 + i);
         b = _mm256_loadu_ps(p2 + i);
         c = _mm256_add_ps(c, _mm256_mul_ps(a, b));
@@ -167,11 +155,9 @@ float dotproduct_avx2_omp(const float *p1, const float *p2, size_t n)
 #endif
 }
 
-float dotproduct_neon(const float *p1, const float *p2, size_t n)
-{
+float dotproduct_neon(const float* p1, const float* p2, size_t n) {
 #ifdef WITH_NEON
-    if (n % 4 != 0)
-    {
+    if (n % 4 != 0) {
         std::cerr << "The size n must be a multiple of 4." << std::endl;
         return 0.0f;
     }
@@ -180,8 +166,7 @@ float dotproduct_neon(const float *p1, const float *p2, size_t n)
     float32x4_t a, b;
     float32x4_t c = vdupq_n_f32(0);
 
-    for (size_t i = 0; i < n; i += 4)
-    {
+    for (size_t i = 0; i < n; i += 4) {
         a = vld1q_f32(p1 + i);
         b = vld1q_f32(p2 + i);
         c = vaddq_f32(c, vmulq_f32(a, b));
@@ -194,11 +179,9 @@ float dotproduct_neon(const float *p1, const float *p2, size_t n)
 #endif
 }
 
-float dotproduct_neon_omp(const float *p1, const float *p2, size_t n)
-{
+float dotproduct_neon_omp(const float* p1, const float* p2, size_t n) {
 #ifdef WITH_NEON
-    if (n % 4 != 0)
-    {
+    if (n % 4 != 0) {
         std::cerr << "The size n must be a multiple of 4." << std::endl;
         return 0.0f;
     }
@@ -208,8 +191,7 @@ float dotproduct_neon_omp(const float *p1, const float *p2, size_t n)
     float32x4_t c = vdupq_n_f32(0);
 
 #pragma omp parallel for
-    for (size_t i = 0; i < n; i += 4)
-    {
+    for (size_t i = 0; i < n; i += 4) {
         a = vld1q_f32(p1 + i);
         b = vld1q_f32(p2 + i);
         c = vaddq_f32(c, vmulq_f32(a, b));
@@ -228,12 +210,12 @@ float dotproduct_neon_omp(const float *p1, const float *p2, size_t n)
 
 #pragma once
 
-float dotproduct(const float *p1, const float *p2, size_t n);
-float dotproduct_unloop(const float *p1, const float *p2, size_t n);
-float dotproduct_avx2(const float *p1, const float *p2, size_t n);
-float dotproduct_avx2_omp(const float *p1, const float *p2, size_t n);
-float dotproduct_neon(const float *p1, const float *p2, size_t n);
-float dotproduct_neon_omp(const float *p1, const float *p2, size_t n);
+float dotproduct(const float* p1, const float* p2, size_t n);
+float dotproduct_unloop(const float* p1, const float* p2, size_t n);
+float dotproduct_avx2(const float* p1, const float* p2, size_t n);
+float dotproduct_avx2_omp(const float* p1, const float* p2, size_t n);
+float dotproduct_neon(const float* p1, const float* p2, size_t n);
+float dotproduct_neon_omp(const float* p1, const float* p2, size_t n);
 ```
 
 ```cmake

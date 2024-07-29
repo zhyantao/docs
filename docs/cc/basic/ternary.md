@@ -5,8 +5,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     bool isPositive = true;
     int factor = 0;
     // some operations may change isPositive's value

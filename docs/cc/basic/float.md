@@ -1,13 +1,12 @@
 # float
 
 ```cpp
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 
-int main()
-{
+int main() {
     float f1 = 1.2f;
     float f2 = f1 * 1000000000000000;
     cout << std::fixed << std::setprecision(15) << f1 << endl;

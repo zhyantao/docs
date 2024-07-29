@@ -6,8 +6,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     std::string str1 = "Hello";
     std::string str2 = "SUSTech";
     std::string result = str1 + ", " + str2;
@@ -25,13 +24,12 @@ int main()
 ## 字符串操作
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
-int main()
-{
+int main() {
     char str1[] = "Hello, \0CPP";
     char str2[] = "SUSTech";
     char result[128];

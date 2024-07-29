@@ -17,8 +17,7 @@ extern int globalVar;
 
 // 在文件C.cpp中使用该变量
 #include <iostream>
-int main()
-{
+int main() {
     std::cout << globalVar << std::endl;
     return 0;
 }

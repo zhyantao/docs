@@ -56,8 +56,7 @@ LDFLAGS += -Wl,--hash-style=sysv,-Bsymbolic,-rpath=.
 
 ```cpp
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 // TODO: include C header files here
@@ -94,7 +93,7 @@ extern "C"
 ```cpp
 // config.h
 
-//#define malloc rpl_malloc
+// #define malloc rpl_malloc
 ```
 
 ## skipping incompatible

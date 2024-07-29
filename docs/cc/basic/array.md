@@ -7,8 +7,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
     int num_array1[5];                   // uninitialized array, random values
     int num_array2[5] = {0, 1, 2, 3, 4}; // initialization
 
@@ -40,8 +39,7 @@ void init_2d_array(float mat[][4], size_t rows, size_t cols) // error, arrays of
             mat[r][c] = r * c;
 }
 
-int main()
-{
+int main() {
     int mat1[2][3] = {{11, 12, 13}, {14, 15, 16}};
 
     int rows = 5;
@@ -55,8 +53,7 @@ int main()
         for (int c = 0; c < cols; c++)
             mat2[r][c] = r * c;
 
-    for (int r = 0; r < rows; r++)
-    {
+    for (int r = 0; r < rows; r++) {
         for (int c = 0; c < cols; c++)
             cout << mat2[r][c] << " ";
         cout << endl;
@@ -91,14 +88,12 @@ int main()
 
 using namespace std;
 
-int main()
-{
+int main() {
     int num_array1[5] = {0, 1}; // fixed length array, initialized to {0,1,0,0,0}
     cout << "sizeof(num_array1) = " << sizeof(num_array1) << endl;
 
     int len = 0;
-    while (len < 10)
-    {
+    while (len < 10) {
         int num_array2[len]; // variable-length array
         cout << "len = " << len;
         cout << ", sizeof(num_array2)) = " << sizeof(num_array2) << endl;
@@ -110,29 +105,26 @@ int main()
 ## 对象数组
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
-class Student
-{
+class Student {
 private:
-    char *name;
+    char* name;
     int born;
     bool male;
 
 public:
-    Student()
-    {
+    Student() {
         name = new char[1024]{0};
         born = 0;
         male = false;
         cout << "Constructor: Person()" << endl;
     }
 
-    Student(const char *initName, int initBorn, bool isMale)
-    {
+    Student(const char* initName, int initBorn, bool isMale) {
         name = new char[1024];
         setName(initName);
         born = initBorn;
@@ -140,19 +132,16 @@ public:
         cout << "Constructor: Person(const char, int , bool)" << endl;
     }
 
-    ~Student()
-    {
+    ~Student() {
         cout << "To destroy object: " << name << endl;
         delete[] name;
     }
 
-    void setName(const char *s)
-    {
+    void setName(const char* s) {
         strncpy(name, s, 1024);
     }
 
-    void setBorn(int b)
-    {
+    void setBorn(int b) {
         born = b;
     }
 
@@ -161,21 +150,18 @@ public:
     void printInfo();
 };
 
-void Student::setGender(bool isMale)
-{
+void Student::setGender(bool isMale) {
     male = isMale;
 }
 
-void Student::printInfo()
-{
+void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Born in " << born << std::endl;
     std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
 }
 
-int main()
-{
-    Student *class1 = new Student[3]{
+int main() {
+    Student* class1 = new Student[3]{
         {"Tom", 2000, true},
         {"Bob", 2001, true},
         {"Amy", 2002, false},
@@ -198,19 +184,16 @@ using namespace std;
 
 // float array_sum(const float *values, size_t length)
 // float array_sum(const float values[4], size_t length)
-float array_sum(const float values[], size_t length)
-{
+float array_sum(const float values[], size_t length) {
     float sum = 0.0f;
-    for (int i = 0; i < length; i++)
-    {
+    for (int i = 0; i < length; i++) {
         sum += values[i];
         // values[i] = 0; //error
     }
     return sum;
 }
 
-int main()
-{
+int main() {
     // const float PI = 3.1415926f;
     // PI += 1.f; // error
     // const float values[4] = {1.1f, 2.2f, 3.3f, 4.4f};
@@ -227,13 +210,12 @@ int main()
 ## 字符数组
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
-int main()
-{
+int main() {
     char rabbit[16] = {'P', 'e', 't', 'e', 'r'};
     cout << "String length is " << strlen(rabbit) << endl;
     for (int i = 0; i < 16; i++)

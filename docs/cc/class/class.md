@@ -7,35 +7,33 @@
 
 using namespace std;
 
-class Storage
-{
+class Storage {
 public:
-    class Fruit
-    {
+    class Fruit {
         string name;
         int weight;
 
     public:
-        Fruit(string name = "", int weight = 0) : name(name), weight(weight) {}
-        string getInfo() { return name + ", weight " + to_string(weight) + "kg."; }
+        Fruit(string name = "", int weight = 0) : name(name), weight(weight) {
+        }
+        string getInfo() {
+            return name + ", weight " + to_string(weight) + "kg.";
+        }
     };
 
 private:
     Fruit fruit;
 
 public:
-    Storage(Fruit f)
-    {
+    Storage(Fruit f) {
         this->fruit = f;
     }
-    void print()
-    {
+    void print() {
         cout << fruit.getInfo() << endl;
     }
 };
 
-int main()
-{
+int main() {
     Storage::Fruit apple("apple", 100);
     Storage mystorage(apple);
     mystorage.print();
@@ -46,47 +44,41 @@ int main()
 ## 构造函数
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
-class Student
-{
+class Student {
 private:
     char name[4];
     int born;
     bool male;
 
 public:
-    Student()
-    {
+    Student() {
         name[0] = 0;
         born = 0;
         male = false;
         cout << "Constructor: Person()" << endl;
     }
 
-    Student(const char *initName) : born(0), male(true)
-    {
+    Student(const char* initName) : born(0), male(true) {
         setName(initName);
         cout << "Constructor: Person(const char*)" << endl;
     }
 
-    Student(const char *initName, int initBorn, bool isMale)
-    {
+    Student(const char* initName, int initBorn, bool isMale) {
         setName(initName);
         born = initBorn;
         male = isMale;
         cout << "Constructor: Person(const char, int , bool)" << endl;
     }
 
-    void setName(const char *s)
-    {
+    void setName(const char* s) {
         strncpy(name, s, sizeof(name));
     }
-    void setBorn(int b)
-    {
+    void setBorn(int b) {
         born = b;
     }
     // the declarations, the definitions are out of the class
@@ -94,20 +86,17 @@ public:
     void printInfo();
 };
 
-void Student::setGender(bool isMale)
-{
+void Student::setGender(bool isMale) {
     male = isMale;
 }
 
-void Student::printInfo()
-{
+void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Born in " << born << std::endl;
     std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
 }
 
-int main()
-{
+int main() {
     Student yu;
     yu.printInfo();
 
@@ -123,7 +112,7 @@ int main()
     // a question: what will happen since "XueQikun" has 4+ characters?
     xue.printInfo();
 
-    Student *zhou = new Student("Zhou", 1991, false);
+    Student* zhou = new Student("Zhou", 1991, false);
     zhou->printInfo();
     delete zhou;
 
@@ -134,24 +123,21 @@ int main()
 ## 类外定义函数
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
-class Student
-{
+class Student {
 private:
     char name[4];
     int born;
     bool male;
 
 public:
-    void setName(const char *s)
-    {
+    void setName(const char* s) {
         strncpy(name, s, sizeof(name));
     }
 
-    void setBorn(int b)
-    {
+    void setBorn(int b) {
         born = b;
     }
 
@@ -160,20 +146,17 @@ public:
     void printInfo();
 };
 
-void Student::setGender(bool isMale)
-{
+void Student::setGender(bool isMale) {
     male = isMale;
 }
 
-void Student::printInfo()
-{
+void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Born in " << born << std::endl;
     std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
 }
 
-int main()
-{
+int main() {
     Student yu;
     yu.setName("Yu");
     yu.setBorn(2000);
@@ -186,42 +169,36 @@ int main()
 ## 访问控制
 
 ```cpp
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
-class Student
-{
+class Student {
 private:
     char name[4];
     int born;
     bool male;
 
 public:
-    void setName(const char *s)
-    {
+    void setName(const char* s) {
         strncpy(name, s, sizeof(name));
     }
 
-    void setBorn(int b)
-    {
+    void setBorn(int b) {
         born = b;
     }
 
-    void setGender(bool isMale)
-    {
+    void setGender(bool isMale) {
         male = isMale;
     }
 
-    void printInfo()
-    {
+    void printInfo() {
         std::cout << "Name: " << name << std::endl;
         std::cout << "Born in " << born << std::endl;
         std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
     }
 };
 
-int main()
-{
+int main() {
     Student yu;
     yu.setName("Yu");
     yu.setBorn(2000);
@@ -235,23 +212,19 @@ int main()
 ## 继承
 
 ```cpp
-class Base
-{
+class Base {
 protected:
     int n;
 
 private:
-    void foo1(Base &b)
-    {
+    void foo1(Base& b) {
         n++;   // Okay
         b.n++; // Okay
     }
 };
 
-class Derived : public Base
-{
-    void foo2(Base &b, Derived &d)
-    {
+class Derived : public Base {
+    void foo2(Base& b, Derived& d) {
         n++;       // Okay
         this->n++; // Okay
         // b.n++;      //Error. You cannot access a protected member through base
@@ -259,7 +232,7 @@ class Derived : public Base
     }
 };
 
-void compare(Base &b, Derived &d) // a non-member non-friend function
+void compare(Base& b, Derived& d) // a non-member non-friend function
 {
     // b.n++; // Error
     // d.n++; // Error
@@ -273,54 +246,48 @@ void compare(Base &b, Derived &d) // a non-member non-friend function
 ```cpp
 // base.hpp
 
-class Base
-{
+class Base {
 public:
     int a;
     int b;
     Base(int a = 0, int b = 0);
     ~Base();
     int product();
-    friend std::ostream &operator<<(std::ostream &os, const Base &obj);
+    friend std::ostream& operator<<(std::ostream& os, const Base& obj);
 };
 ```
 
 ```cpp
 // derive.hpp
 
-class Derived : public Base
-{
+class Derived : public Base {
 public:
     int c;
     Derived(int c) : Base(c - 2, c - 1), c(c);
     ~Derived();
     int product();
-    friend std::ostream &operator<<(std::ostream &os, const Derived &obj);
+    friend std::ostream& operator<<(std::ostream& os, const Derived& obj);
 };
 ```
 
 ```cpp
 // base.cpp
 
-Base::Base(int a = 0, int b = 0)
-{
+Base::Base(int a = 0, int b = 0) {
     this->a = a;
     this->b = b;
     cout << "Constructor Base::Base(" << a << ", " << b << ")" << endl;
 }
 
-Base::~Base()
-{
+Base::~Base() {
     cout << "Destructor Base::~Base()" << endl;
 }
 
-int Base::product()
-{
+int Base::product() {
     return a * b;
 }
 
-friend std::ostream &Base::operator<<(std::ostream &os, const Base &obj)
-{
+friend std::ostream& Base::operator<<(std::ostream& os, const Base& obj) {
     os << "Base: a = " << obj.a << ", b = " << obj.b;
     return os;
 }
@@ -329,26 +296,22 @@ friend std::ostream &Base::operator<<(std::ostream &os, const Base &obj)
 ```cpp
 // derive.cpp
 
-Derived::Derived(int c) : Base(c - 2, c - 1), c(c)
-{
+Derived::Derived(int c) : Base(c - 2, c - 1), c(c) {
     this->a += 3; // it can be changed after initialization
     cout << "Constructor Derived::Derived(" << c << ")" << endl;
 }
 
-Derived::~Derived()
-{
+Derived::~Derived() {
     cout << "Destructor Derived::~Derived()" << endl;
 }
 
-int Derived::product()
-{
+int Derived::product() {
     return Base::product() * c;
 }
 
-friend std::ostream &Derived::operator<<(std::ostream &os, const Derived &obj)
-{
+friend std::ostream& Derived::operator<<(std::ostream& os, const Derived& obj) {
     // call the friend function in Base class
-    os << static_cast<const Base &>(obj) << endl;
+    os << static_cast<const Base&>(obj) << endl;
     os << "Derived: c = " << obj.c;
     return os;
 }
@@ -357,8 +320,7 @@ friend std::ostream &Derived::operator<<(std::ostream &os, const Derived &obj)
 ```cpp
 // main.cpp
 
-int main()
-{
+int main() {
     {
         Base base(1, 2);
         cout << "Product = " << base.product() << endl;
@@ -383,18 +345,15 @@ int main()
 #include <memory>
 
 // 继承一个特例化的模板类
-class SharedFromThis : public std::enable_shared_from_this<SharedFromThis>
-{
+class SharedFromThis : public std::enable_shared_from_this<SharedFromThis> {
 public:
-    void doSomething()
-    {
+    void doSomething() {
         std::shared_ptr<SharedFromThis> sharedPtr = shared_from_this();
         std::cout << "Shared pointer count: " << sharedPtr.use_count() << std::endl;
     }
 };
 
-int main()
-{
+int main() {
     std::shared_ptr<SharedFromThis> sharedPtr = std::make_shared<SharedFromThis>();
     sharedPtr->doSomething();
 

@@ -5,8 +5,7 @@
 
 using namespace std;
 
-inline float max_function(float a, float b)
-{
+inline float max_function(float a, float b) {
     if (a > b)
         return a;
     else
@@ -17,8 +16,7 @@ inline float max_function(float a, float b)
 
 #define MAX_MACRO(a, b) (a) > (b) ? (a) : (b)
 
-int main()
-{
+int main() {
     int num1 = 20;
     int num2 = 30;
     int maxv = max_function(num1, num2);

@@ -3,8 +3,8 @@
 ## 指定形参默认值
 
 ```cpp
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -12,16 +12,14 @@ float norm(float x, float y, float z);
 float norm(float x, float y, float z = 0);
 float norm(float x, float y = 0, float z);
 
-int main()
-{
+int main() {
     cout << norm(3.0f) << endl;
     cout << norm(3.0f, 4.0f) << endl;
     cout << norm(3.0f, 4.0f, 5.0f) << endl;
     return 0;
 }
 
-float norm(float x, float y, float z)
-{
+float norm(float x, float y, float z) {
     return sqrt(x * x + y * y + z * z);
 }
 ```
@@ -33,26 +31,23 @@ float norm(float x, float y, float z)
 
 using namespace std;
 
-int foo1(int x)
-{
+int foo1(int x) {
     x += 10;
     return x;
 }
 
-int foo2(int *p)
-{
+int foo2(int* p) {
     (*p) += 10;
     return *p;
 }
 
-int main()
-{
+int main() {
     int num1 = 20;
     int num2 = foo1(num1);
     cout << "num1=" << num1 << endl;
     cout << "num2=" << num2 << endl;
 
-    int *p = &num1;
+    int* p = &num1;
     int num3 = foo2(p);
     cout << "num1=" << num1 << endl;
     cout << "*p=" << *p << endl;
@@ -65,31 +60,27 @@ int main()
 ## 引用作为参数
 
 ```cpp
-#include <iostream>
 #include <float.h>
+#include <iostream>
 
-struct Matrix
-{
+struct Matrix {
     int rows;
     int cols;
-    float *pData;
+    float* pData;
 };
 
-float matrix_max(const struct Matrix &mat)
-{
+float matrix_max(const struct Matrix& mat) {
     float max = FLT_MIN;
     // find max value of mat
     for (int r = 0; r < mat.rows; r++)
-        for (int c = 0; c < mat.cols; c++)
-        {
+        for (int c = 0; c < mat.cols; c++) {
             float val = mat.pData[r * mat.cols + c];
             max = (max > val ? max : val);
         }
     return max;
 }
 
-int main()
-{
+int main() {
     using namespace std;
 
     Matrix matA = {3, 4};
@@ -127,8 +118,7 @@ int main()
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     /**
      * struct option
      * {
@@ -145,8 +135,7 @@ int main(int argc, char *argv[])
         {NULL, 0, NULL, 0},
     };
 
-    while (1)
-    {
+    while (1) {
         int option_index = 0, opt;
 
         /**
@@ -208,8 +197,7 @@ g++ -std=c++20 -O2 -Wall -pedantic -pthread main.cpp && ./a.out --reqarg 100 --o
 #include <cstdarg>
 #include <iostream>
 
-void log(char *fmt, ...)
-{
+void log(char* fmt, ...) {
     char buf[512] = {0};
     va_list ap;
 
@@ -220,9 +208,8 @@ void log(char *fmt, ...)
     printf("%s\n", buf);
 }
 
-int main()
-{
-    log((char *)"%s, %d, %s", "hello", 100, "world");
+int main() {
+    log((char*)"%s, %d, %s", "hello", 100, "world");
 }
 ```
 
@@ -230,15 +217,13 @@ int main()
 #include <cstdarg>
 #include <iostream>
 
-double sum(int num, ...)
-{
+double sum(int num, ...) {
     va_list valist; // 创建参数列表
     double ret = 0.0;
 
     va_start(valist, num); // 初始化参数列表
 
-    for (int i = 0; i < num; i++)
-    {
+    for (int i = 0; i < num; i++) {
         ret += va_arg(valist, double); // 访问参数列表中的项
     }
 
@@ -247,8 +232,7 @@ double sum(int num, ...)
     return ret;
 }
 
-int main()
-{
+int main() {
     std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
     std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0) << std::endl;
 }
@@ -282,8 +266,7 @@ void printArgs() {
 }
 
 // 递归步骤
-template<typename T, typename... Args>
-void printArgs(T first, Args... args) {
+template <typename T, typename... Args> void printArgs(T first, Args... args) {
     std::cout << first << " ";
     printArgs(args...); // 递归调用
 }
@@ -302,8 +285,7 @@ int main() {
 ```cpp
 #include <iostream>
 
-template<typename... Args>
-void printArgs(Args... args) {
+template <typename... Args> void printArgs(Args... args) {
     (std::cout << ... << args) << std::endl; // 折叠表达式
 }
 
@@ -324,19 +306,16 @@ int main() {
 *例 1：字面量作为实参*
 
 ```cpp
-template <typename... Us>
-void f(Us... pargs) {}
+template <typename... Us> void f(Us... pargs) {
+}
 
-template <typename... Ts>
-void g(Ts... args)
-{
+template <typename... Ts> void g(Ts... args) {
     // &args... 是包展开
     // &args    是它的模式
     f(&args...);
 }
 
-int main()
-{
+int main() {
     // Ts... args   会展开成 int E1, double E2, const char* E3
     // &args...     会展开成 &E1, &E2, &E3
     // Us...        会展开成 int* E1, double* E2, const char** E3
@@ -348,17 +327,16 @@ int main()
 
 ```cpp
 // 接受任意数量的模板参数（用 Ts... 表示）
-template <typename... Ts>
-void f(Ts...) {}
+template <typename... Ts> void f(Ts...) {
+}
 
 // 接受一个模板参数包 Ts 和一个非类型参数包 N
 // Ts (&...arr)[N] 表示 arr 是一个引用数组，数组元素的类型是 Ts
 // 数组的大小是 N
-template <typename... Ts, int... N>
-void g(Ts (&...arr)[N]) {}
+template <typename... Ts, int... N> void g(Ts (&... arr)[N]) {
+}
 
-int main()
-{
+int main() {
     // Ts... 会展开成 void f(char, int)
     f('a', 1);
 
@@ -376,9 +354,7 @@ int main()
 *例 3：调整可变参数的位置*
 
 ```cpp
-template <typename A, typename B, typename... C>
-void func(A arg1, B arg2, C... arg3)
-{
+template <typename A, typename B, typename... C> void func(A arg1, B arg2, C... arg3) {
     container<A, B, C...> t1; // 展开成 container<A, B, E1, E2, E3>
     container<C..., A, B> t2; // 展开成 container<E1, E2, E3, A, B>
     container<A, C..., B> t3; // 展开成 container<A, E1, E2, E3, B>
