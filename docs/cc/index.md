@@ -18,7 +18,7 @@ examples/index.md
 tips/index.md
 ```
 
-## Google Code Style
+## LLVM C/C++ Code Style
 
 - 尽量不使用宏
 - 不使用异常
@@ -65,7 +65,7 @@ public:
     // 5 成员函数，含静态数据成员
     // 6 成员变量，含静态成员变量
 
-    typedef vector< int > IntVector;
+    typedef vector<int> IntVector;
 
     // 枚举名同类名，大写开头单词
     enum UrlTableErrors {
@@ -89,12 +89,8 @@ public:
     // 取：同变量名
     // 存：值函数名为 set_varname
     // 短小的存取函数可用内联
-    int num_entries() const { /* 尽可能使用 const */
-        return num_entries_;
-    }
-    void set_num_entries(int num_entries) {
-        num_entries_ = num_entries;
-    }
+    int num_entries() const { /* 尽可能使用 const */ return num_entries_; }
+    void set_num_entries(int num_entries) { num_entries_ = num_entries; }
 
     // 仅在需要拷贝对象时，使用拷贝构造函数
 
@@ -140,8 +136,7 @@ using std::string;
 
 namespace mynamespace {
 
-EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {
-}
+EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {}
 
 ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_name2) {
     bool retval = DoSometing(averyveryveryverylongargument1, argument2, argument3);
@@ -166,7 +161,7 @@ ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_na
 
     return x;
 }
-} // namespace mynamespace /* 命名空间结束注释 */
+} // namespace mynamespace
 ```
 
 ## Clang Format
@@ -174,130 +169,252 @@ ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_na
 首先在 VS Code 中安装 Clang Format 扩展，然后在项目根目录下创建 `.clang-format`，文件内容如下：
 
 ```yaml
-# This configuration file can be used to auto-format the code base.
-# Not all guidelines specified in CODING_STYLE are followed, so the
-# result MUST NOT be committed indiscriminately, but each automated
-# change should be reviewed and only the appropriate ones committed.
-#
-# The easiest way to apply the formatting to your changes ONLY,
-# is to use the git-clang-format script (usually installed with clang-format).
-#
-# -  Fix up formatting before committing
-# 1. Edit and stage your files.
-# 2. Run `git clang-format`.
-# 3. Verify + correct + (un)stage changes.
-# 4. Commit.
-#
-# -  Fix up formatting after committing
-# 1. Commit your changes.
-# 2. Run `git clang-format HEAD~` - Refer the commit *before* your changes here.
-# 3. Verify + correct changes, `git difftool -d` can help here.
-# 4. Stage + commit, potentially with `--amend` (means to fixup the last commit).
-#
-# To run clang-format on all sourcefiles, use the following line:
-# $ git ls-files 'src/*.[ch]' 'src/*.cc' | xargs clang-format -i -style=file
-#
-# You can find more information on the different config parameters in this file here:
+# LLVM C/C++ Code Style settings
 # https://clang.llvm.org/docs/ClangFormatStyleOptions.html
----
+# Author: Yantao Zhang, yantao.z (at) outlook.com
+# clang-format -style=LLVM -dump-config > .clang-format
+
+Language:        Cpp
+# BasedOnStyle:  LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: AlwaysBreak
-AlignEscapedNewlines: Left
-AlignOperands: false
-AllowShortFunctionsOnASingleLine: None
-AlwaysBreakBeforeMultilineStrings: true
-AlwaysBreakTemplateDeclarations: Yes
-BinPackArguments: false
-BinPackParameters: false
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: None
+AlignConsecutiveAssignments:
+  Enabled:         false
+  AcrossEmptyLines: false
+  AcrossComments:  false
+  AlignCompound:   false
+  AlignFunctionPointers: false
+  PadOperators:    true
+AlignConsecutiveBitFields:
+  Enabled:         false
+  AcrossEmptyLines: false
+  AcrossComments:  false
+  AlignCompound:   false
+  AlignFunctionPointers: false
+  PadOperators:    false
+AlignConsecutiveDeclarations:
+  Enabled:         false
+  AcrossEmptyLines: false
+  AcrossComments:  false
+  AlignCompound:   false
+  AlignFunctionPointers: false
+  PadOperators:    false
+AlignConsecutiveMacros:
+  Enabled:         false
+  AcrossEmptyLines: false
+  AcrossComments:  false
+  AlignCompound:   false
+  AlignFunctionPointers: false
+  PadOperators:    false
+AlignConsecutiveShortCaseStatements:
+  Enabled:         false
+  AcrossEmptyLines: false
+  AcrossComments:  false
+  AlignCaseColons: false
+AlignEscapedNewlines: Right
+AlignOperands:   Align
+AlignTrailingComments:
+  Kind:            Always
+  OverEmptyLines:  0
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowBreakBeforeNoexceptSpecifier: Never
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakTemplateDeclarations: MultiLine
+AttributeMacros:
+  - __capability
+BinPackArguments: true
+BinPackParameters: true
+BitFieldColonSpacing: Both
 BraceWrapping:
-  AfterEnum: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: false
-  SplitEmptyNamespace: false
-BreakBeforeBraces: Custom
-BreakBeforeTernaryOperators: false
-BreakInheritanceList: BeforeComma
-BreakStringLiterals: false
-ColumnLimit: 109
-CompactNamespaces: true
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-ConstructorInitializerIndentWidth: 8
-ContinuationIndentWidth: 16
-Cpp11BracedListStyle: false
+  AfterCaseLabel:  false
+  AfterClass:      false
+  AfterControlStatement: Never
+  AfterEnum:       false
+  AfterExternBlock: false
+  AfterFunction:   false
+  AfterNamespace:  false
+  AfterObjCDeclaration: false
+  AfterStruct:     false
+  AfterUnion:      false
+  BeforeCatch:     false
+  BeforeElse:      false
+  BeforeLambdaBody: false
+  BeforeWhile:     false
+  IndentBraces:    false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakAdjacentStringLiterals: true
+BreakAfterAttributes: Leave
+BreakAfterJavaFieldAnnotations: false
+BreakArrays:     true
+BreakBeforeBinaryOperators: None
+BreakBeforeConceptDeclarations: Always
+BreakBeforeBraces: Attach
+BreakBeforeInlineASMColon: OnlyMultiline
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
+ColumnLimit:     120
+CommentPragmas:  '^ IWYU pragma:'
+CompactNamespaces: false
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+DisableFormat:   false
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: LogicalBlock
+ExperimentalAutoDetectBinPacking: false
+FixNamespaceComments: true
 ForEachMacros:
-  - BITMAP_FOREACH
-  - CMSG_FOREACH
-  - _DNS_ANSWER_FOREACH
-  - DNS_ANSWER_FOREACH
-  - _DNS_ANSWER_FOREACH_FLAGS
-  - DNS_ANSWER_FOREACH_FLAGS
-  - _DNS_ANSWER_FOREACH_FULL
-  - DNS_ANSWER_FOREACH_FULL
-  - _DNS_ANSWER_FOREACH_IFINDEX
-  - DNS_ANSWER_FOREACH_IFINDEX
-  - _DNS_QUESTION_FOREACH
-  - DNS_QUESTION_FOREACH
-  - FDSET_FOREACH
-  - FOREACH_BTRFS_IOCTL_SEARCH_HEADER
-  - FOREACH_DEVICE
-  - FOREACH_DEVICE_AND_SUBSYSTEM
-  - FOREACH_DEVICE_DEVLINK
-  - FOREACH_DEVICE_PROPERTY
-  - FOREACH_DEVICE_SYSATTR
-  - FOREACH_DEVICE_TAG
-  - FOREACH_DIRENT
-  - FOREACH_DIRENT_ALL
-  - FOREACH_INOTIFY_EVENT
-  - FOREACH_STRING
-  - FOREACH_SUBSYSTEM
-  - HASHMAP_FOREACH
-  - HASHMAP_FOREACH_IDX
-  - HASHMAP_FOREACH_KEY
-  - JOURNAL_FOREACH_DATA_RETVAL
-  - JSON_VARIANT_ARRAY_FOREACH
-  - JSON_VARIANT_OBJECT_FOREACH
-  - LIST_FOREACH
-  - LIST_FOREACH_AFTER
-  - LIST_FOREACH_BEFORE
-  - LIST_FOREACH_OTHERS
-  - LIST_FOREACH_SAFE
-  - MESSAGE_FOREACH_PART
-  - NULSTR_FOREACH
-  - NULSTR_FOREACH_PAIR
-  - OBJECT_PATH_FOREACH_PREFIX
-  - ORDERED_HASHMAP_FOREACH
-  - ORDERED_HASHMAP_FOREACH_KEY
-  - ORDERED_SET_FOREACH
-  - PATH_FOREACH_PREFIX
-  - PATH_FOREACH_PREFIX_MORE
-  - SD_HWDB_FOREACH_PROPERTY
-  - SD_JOURNAL_FOREACH
-  - SD_JOURNAL_FOREACH_BACKWARDS
-  - SD_JOURNAL_FOREACH_DATA
-  - SD_JOURNAL_FOREACH_FIELD
-  - SD_JOURNAL_FOREACH_UNIQUE
-  - SECCOMP_FOREACH_LOCAL_ARCH
-  - SET_FOREACH
-  - SET_FOREACH_MOVE
-  - STRV_FOREACH
-  - STRV_FOREACH_BACKWARDS
-  - STRV_FOREACH_PAIR
-IndentPPDirectives: AfterHash
-IndentWidth: 4
-IndentWrappedFunctionNames: true
-MaxEmptyLinesToKeep: 2
-PenaltyBreakAssignment: 65
-PenaltyBreakBeforeFirstCallParameter: 16
-PenaltyBreakComment: 320
-PenaltyBreakFirstLessLess: 50
-PenaltyBreakString: 0
-PenaltyExcessCharacter: 10
-PenaltyReturnTypeOnItsOwnLine: 100
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+IfMacros:
+  - KJ_IF_MAYBE
+IncludeBlocks:   Preserve
+IncludeCategories:
+  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority:        2
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
+    Priority:        3
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '.*'
+    Priority:        1
+    SortPriority:    0
+    CaseSensitive:   false
+IncludeIsMainRegex: '(Test)?$'
+IncludeIsMainSourceRegex: ''
+IndentAccessModifiers: false
+IndentCaseBlocks: false
+IndentCaseLabels: false
+IndentExternBlock: AfterExternBlock
+IndentGotoLabels: true
+IndentPPDirectives: None
+IndentRequiresClause: true
+IndentWidth:     4
+IndentWrappedFunctionNames: false
+InsertBraces:    false
+InsertNewlineAtEOF: false
+InsertTrailingCommas: None
+IntegerLiteralSeparator:
+  Binary:          0
+  BinaryMinDigits: 0
+  Decimal:         0
+  DecimalMinDigits: 0
+  Hex:             0
+  HexMinDigits:    0
+JavaScriptQuotes: Leave
+JavaScriptWrapImports: true
+KeepEmptyLinesAtTheStartOfBlocks: true
+KeepEmptyLinesAtEOF: false
+LambdaBodyIndentation: Signature
+LineEnding:      DeriveLF
+MacroBlockBegin: ''
+MacroBlockEnd:   ''
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: None
+ObjCBinPackProtocolList: Auto
+ObjCBlockIndentWidth: 2
+ObjCBreakBeforeNestedBlockParam: true
+ObjCSpaceAfterProperty: false
+ObjCSpaceBeforeProtocolList: true
+PackConstructorInitializers: BinPack
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakOpenParenthesis: 0
+PenaltyBreakScopeResolution: 500
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyIndentedWhitespace: 0
+PenaltyReturnTypeOnItsOwnLine: 60
 PointerAlignment: Right
-SpaceAfterCStyleCast: true
-SpaceAroundPointerQualifiers: Both
-SpaceBeforeParens: ControlStatementsExceptForEachMacros
-SpacesInAngles: true
-TabWidth: 4
-UseCRLF: false
+PPIndentWidth:   -1
+QualifierAlignment: Leave
+ReferenceAlignment: Pointer
+ReflowComments:  true
+RemoveBracesLLVM: false
+RemoveParentheses: Leave
+RemoveSemicolon: false
+RequiresClausePosition: OwnLine
+RequiresExpressionIndentation: OuterScope
+SeparateDefinitionBlocks: Leave
+ShortNamespaceLines: 1
+SkipMacroDefinitionBody: false
+SortIncludes:    CaseSensitive
+SortJavaStaticImport: Before
+SortUsingDeclarations: LexicographicNumeric
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeJsonColon: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterForeachMacros: true
+  AfterFunctionDefinitionName: false
+  AfterFunctionDeclarationName: false
+  AfterIfMacros:   true
+  AfterOverloadedOperator: false
+  AfterPlacementOperator: true
+  AfterRequiresInClause: false
+  AfterRequiresInExpression: false
+  BeforeNonEmptyParentheses: false
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpacesBeforeTrailingComments: 1
+SpacesInAngles:  Never
+SpacesInContainerLiterals: true
+SpacesInLineCommentPrefix:
+  Minimum:         1
+  Maximum:         -1
+SpacesInParens:  Never
+SpacesInParensOptions:
+  InCStyleCasts:   false
+  InConditionalStatements: false
+  InEmptyParentheses: false
+  Other:           false
+SpacesInSquareBrackets: false
+Standard:        Latest
+StatementAttributeLikeMacros:
+  - Q_EMIT
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+TabWidth:        8
+UseTab:          Never
+VerilogBreakBetweenInstancePorts: true
+WhitespaceSensitiveMacros:
+  - BOOST_PP_STRINGIZE
+  - CF_SWIFT_NAME
+  - NS_SWIFT_NAME
+  - PP_STRINGIZE
+  - STRINGIZE
 ```
