@@ -78,9 +78,7 @@ appendix/index
 :glob:
 :hidden:
 
-Competitive Programming <https://getstarted.readthedocs.io/_static/cheatsheet/CompetitiveProgramming-Steven&Felix-NUS.pdf>
 Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/CompetitiveProgrammer’sHandbook.pdf>
-Algorithm Design Manual <https://getstarted.readthedocs.io/_static/cheatsheet/SkienaTheAlgorithmDesignManual.pdf>
-ACM 常用算法模板 <https://getstarted.readthedocs.io/_static/cheatsheet/ACMTemplate-kuangbin.pdf>
+Algorithm Design Manual <https://getstarted.readthedocs.io/_static/cheatsheet/AlgorithmDesignManual_Skiena.pdf>
 PlantUML Online Editor <https://pansinm.github.io/plantuml-editor/>
 ```
