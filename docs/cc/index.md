@@ -83,13 +83,13 @@ public:
     // 普通函数命名，大写开头单词
     // 输入参数在前为 const 引用，输出参数在后为指针
     // 不为参数设置缺省值
-    void Add(const std::string &input, Channel *output);
+    void Add(const std::string& input, Channel* output);
 
     // 存取函数命名
     // 取：同变量名
     // 存：值函数名为 set_varname
     // 短小的存取函数可用内联
-    int num_entries() const { /* 尽可能使用 const */ return num_entries_; }
+    int num_entries() const /* 尽可能使用 const */ { return num_entries_; }
     void set_num_entries(int num_entries) { num_entries_ = num_entries; }
 
     // 仅在需要拷贝对象时，使用拷贝构造函数
@@ -102,7 +102,7 @@ private:
     int num_entries_;               // 变量命名：全小写，有意义的单词和下划线
     int num_complated_connections_; // 类成员变量下划线结尾
 
-    Channel *channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
+    Channel* channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
 };
 
 } // namespace mynamespace
@@ -138,7 +138,7 @@ namespace mynamespace {
 
 EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {}
 
-ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_name2) {
+ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_name2) {
     bool retval = DoSometing(averyveryveryverylongargument1, argument2, argument3);
     if (condition) {
         for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
@@ -171,8 +171,7 @@ ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_na
 ```yaml
 # LLVM C/C++ Code Style settings
 # https://clang.llvm.org/docs/ClangFormatStyleOptions.html
-# Author: Yantao Zhang, yantao.z (at) outlook.com
-# clang-format -style=LLVM -dump-config > .clang-format
+# Modified By: Yantao Zhang, yantao.z (at) outlook.com
 
 Language:        Cpp
 # BasedOnStyle:  LLVM
@@ -348,7 +347,7 @@ PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 1000000
 PenaltyIndentedWhitespace: 0
 PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Right
+PointerAlignment: Left
 PPIndentWidth:   -1
 QualifierAlignment: Leave
 ReferenceAlignment: Pointer
@@ -408,7 +407,7 @@ StatementAttributeLikeMacros:
 StatementMacros:
   - Q_UNUSED
   - QT_REQUIRE_VERSION
-TabWidth:        8
+TabWidth:        4
 UseTab:          Never
 VerilogBreakBetweenInstancePorts: true
 WhitespaceSensitiveMacros:
