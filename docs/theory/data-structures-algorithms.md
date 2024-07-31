@@ -163,7 +163,9 @@ A.divide(A);
 
 ```cpp
 sort(v1.begin(), v1.end(), greater<int>());
-sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
+sort(v1.begin(), v1.end(), [](int a, int b) {
+    return a > b;
+});
 reverse(v1.begin(), v1.end());
 binary_search(v1.begin(), v1.end(), target);
 ```

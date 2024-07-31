@@ -22,11 +22,10 @@ int main() {
 }
 ```
 
-```c
+```cpp
 #include <stdio.h>
 
-int main()
-{
+int main() {
     int i, x;
     float f;
     double d;

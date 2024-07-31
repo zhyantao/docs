@@ -64,16 +64,14 @@ int main() {
 
 ## 字符串数组
 
-```c
+```cpp
 #include <stdio.h>
 
-int main()
-{
+int main() {
     // 数组必须有第二个列数
     char city[][10] = {"Beijing", "Shenzhen", "Shanghai", "Guangzhou"};
 
-    for (int i = 0; i < sizeof(city) / sizeof(city[0]); i++)
-    {
+    for (int i = 0; i < sizeof(city) / sizeof(city[0]); i++) {
         printf("%s\n", city[i]);
     }
 

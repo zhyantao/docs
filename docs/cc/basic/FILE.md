@@ -4,44 +4,37 @@
 
 ## 例 1：open / write
 
-```c
-#include <sys/types.h>
-#include <sys/stat.h>
+```cpp
 #include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     int fd_old, fd_new;
     char buf[1024];
     int len;
 
-    if (argc != 3)
-    {
+    if (argc != 3) {
         printf("Usage: %s <old_file> <new_file>\n", argv[0]);
         return -1;
     }
 
     fd_old = open(argv[1], O_RDONLY);
-    if (fd_old == -1)
-    {
+    if (fd_old == -1) {
         printf("Open file error: %s\n", argv[1]);
         return -1;
     }
 
-    fd_new = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
-                  S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-    if (fd_new == -1)
-    {
+    fd_new = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    if (fd_new == -1) {
         printf("Open file error: %s\n", argv[2]);
         return -1;
     }
 
-    while ((len = read(fd_old, buf, 1024)) > 0)
-    {
-        if (write(fd_new, buf, len) != len)
-        {
+    while ((len = read(fd_old, buf, 1024)) > 0) {
+        if (write(fd_new, buf, len) != len) {
             printf("Can not write to file: %s\n", argv[2]);
             return -1;
         }
@@ -56,20 +49,20 @@ int main(int argc, char *argv[])
 
 ## 例 2：fread / fwrite
 
-```c
-#include <sys/types.h>
-#include <sys/stat.h>
+```cpp
 #include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 int main() {
     FILE *fd_old, *fd_new;
     char buf[1024];
     int bytesread;
-    char file_old[256] = { 0 };
+    char file_old[256] = {0};
     sprintf(file_old, "%s", "serial1.log");
-    char file_new[256] = { 0 };
+    char file_new[256] = {0};
     sprintf(file_new, "%s", "serial2.log");
 
     fd_old = fopen(file_old, "rb");
@@ -96,58 +89,50 @@ int main() {
 
 ## 例 3：mmap 共享内存
 
-```c
-#include <sys/types.h>
-#include <sys/stat.h>
+```cpp
 #include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <sys/mman.h> // 共享内存性能更高，但是此功能并非所有机器都支持
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     int fd_old, fd_new;
     struct stat stat;
-    char *buf;
+    char* buf;
 
-    if (argc != 3)
-    {
+    if (argc != 3) {
         printf("Usage: %s <old_file> <new_file>\n", argv[0]);
         return -1;
     }
 
     fd_old = open(argv[1], O_RDONLY);
-    if (fd_old == -1)
-    {
+    if (fd_old == -1) {
         printf("Open file error: %s\n", argv[1]);
         return -1;
     }
 
     // 确定老文件的大小
-    if (fstat(fd_old, &stat) == -1)
-    {
+    if (fstat(fd_old, &stat) == -1) {
         printf("Can not get stat of file: %s\n", argv[1]);
         return -1;
     }
 
     // 映射老文件
     buf = mmap(NULL, stat.st_size, PROT_READ, MAP_SHARED, fd_old, 0);
-    if (buf == MAP_FAILED)
-    {
+    if (buf == MAP_FAILED) {
         printf("Can not mmap file: %s\n", argv[1]);
         return -1;
     }
 
-    fd_new = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
-                  S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
-    if (fd_new == -1)
-    {
+    fd_new = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+    if (fd_new == -1) {
         printf("Open file error: %s\n", argv[2]);
         return -1;
     }
 
-    if (write(fd_new, buf, stat.st_size) != stat.st_size)
-    {
+    if (write(fd_new, buf, stat.st_size) != stat.st_size) {
         printf("Can not write to file: %s\n", argv[2]);
         return -1;
     }

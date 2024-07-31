@@ -117,12 +117,11 @@ r
 
 ## 示例程序
 
-```c
+```cpp
 #include <stdio.h>
 
-int main(void)
-{
-    int *ptr = NULL;      // 创建一个空指针
+int main(void) {
+    int* ptr = NULL;      // 创建一个空指针
     printf("%d\n", *ptr); // 尝试解引用空指针，这将导致段错误
     return 0;
 }
