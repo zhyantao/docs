@@ -1491,7 +1491,7 @@ void solveSudoku(vector<vector<char>>& board) {
 
 现要求选若干物品放入背包，使背包中物品的总价值最大且背包中物品的总重量不超过背包的总容量。
 
-- **状态定义**：设 `dp[i][w]` 表示在前 `i` 个物品中选择一些，装入容量为 `w` 的背包可以获得的最大价值。
+- **状态定义**：设 `dp[i][j]` 表示在前 `i` 个物品中选择一些，装入容量为 `j` 的背包可以获得的最大价值。
 - **状态转移方程**：
 
 假设当前已经处理好了前 `i - 1` 个物品的所有状态，那么对于第 `i` 个物品，
@@ -1499,23 +1499,23 @@ void solveSudoku(vector<vector<char>>& board) {
 case 1: 当其不放入背包时，背包的总容量不变，背包中物品的总价值不变。可以获得的最大价值为：
 
 ```cpp
-dp[i][w] = dp[i - 1][w]
+dp[i][j] = dp[i - 1][j]
 ```
 
 case 2: 当其放入背包时，背包的总容量变小，背包中物品的总价值变大。可以获得的最大价值为：
 
 ```cpp
-dp[i][w] = dp[i - 1][w - weight[i]] + value[i]
+dp[i][j] = dp[i - 1][j - weight[i]] + value[i]
 ```
 
 综合 case 1 和 case 2，可以得到：
 
 ```cpp
-dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i])
+dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])
 ```
 
-- **边界条件**：`dp[0][w] = 0`（没有物品时价值为 0），`dp[i][0] = 0`（背包容量为 0 时价值也为 0）。
-- **计算顺序**：从 `i=1, w=1` 开始，按行或列的顺序依次填充表格。
+- **边界条件**：`dp[0][j] = 0`（没有物品时价值为 0），`dp[i][0] = 0`（背包容量为 0 时价值也为 0）。
+- **计算顺序**：从 `i=1, j=1` 开始，按行或列的顺序依次填充表格。
 - **存储结果**：最终答案位于 `dp[n][W]`，其中 `n` 是物品总数，`W` 是背包的最大承重。
 
 ::::{tab-set}
@@ -1524,22 +1524,23 @@ dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i])
 
 ```cpp
 int knapsack(vector<int>& weight, vector<int>& value, int W) {
+    // 创建一个 (n + 1) * (W + 1) 的二维数组，行：物品索引，列：容量（包括 0）
     int n = weight.size();
     vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
 
-    // 边界条件：背包容量为 0 时，价值为 0
+    // 边界条件：背包容量为 0 或者没有物品时，最大价值为 0
     for (int i = 0; i <= n; i++) {
         dp[i][0] = 0;
     }
-    // 边界条件：没有物品时，价值为 0
     for (int i = 0; i <= W; i++) {
         dp[0][i] = 0;
     }
 
+    // 状态定义：dp[i][j] 表示在前 i 个物品中选择一些，放入容量为 j 的背包中，可获得的最大价值
     // 根据状态转移方程，填充 dp 数组
     for (int i = 1; i <= n; i++) {
-        for (int w = 1; w <= W; w++) {
-            dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i]);
+        for (int j = 1; j <= W; j++) {
+            dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
         }
     }
     return dp[n][W];
