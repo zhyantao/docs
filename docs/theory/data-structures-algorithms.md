@@ -1525,6 +1525,8 @@ dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])
 ```cpp
 int knapsack(vector<int>& weight, vector<int>& value, int W) {
     // 创建一个 (n + 1) * (W + 1) 的二维数组，行：物品索引，列：容量（包括 0）
+    // 第一维通常是物品的数量
+    // 第二维表示中间结果的种类数，由于容量不可能为负数，因此中间结果可能是 0...W
     int n = weight.size();
     vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
 
