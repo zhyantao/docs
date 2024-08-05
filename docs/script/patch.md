@@ -66,11 +66,11 @@ patch -R < patch.diff
 前文提到 **忽略第 n 级目录**，解释一下这句话，以下述为例：
 
 ```text
---- a/src/module/filename.c
-+++ b/src/module/filename.c
+--- a/src/module/test.c
++++ b/src/module/test.c
 ```
 
 在这里，`a` 表示第 1 级目录，`src` 是第 2 级目录，以此类推。
 
-假设你运行了 `patch -p2 ...` （忽略前 2 级目录），那么程序就会从当前目录去找 `./module/filename.c`，并在这个文件上应用补丁。
+假设你运行了 `patch -p2 ...`（忽略前 2 级目录），那么程序就会从当前目录去找 `module/test.c`，并在这个文件上应用补丁。
 ````
