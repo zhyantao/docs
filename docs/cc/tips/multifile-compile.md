@@ -100,10 +100,10 @@ extern "C" {
 
 如果链接时报 skipping incompatible 错误，这主要是因为库版本和平台版本不一致：
 
-- 查看平台版本：`readelf -h main.o | grep "Magic\|Machine"`
-- 查看库版本：`readelf -h HD_CORS_SDK.a | grep "Magic\|Machine"`
+- 查看平台版本：`readelf -h main.o | grep -E "Magic|Machine"`
+- 查看库版本：`readelf -h HD_CORS_SDK.a | grep -E "Magic|Machine"`
 
-注意：用正则表达式匹配字符的时候，不应该随便在 Pattern 中加空格，如果写成 `"Magic \| Machine"` 就匹配不到 `Magic` 字段了。
+注意：用正则表达式匹配字符的时候，不应该随便在 Pattern 中加空格，如果写成 `"Magic | Machine"` 就匹配不到 `Magic` 字段了。
 
 ```{note}
 Magic 字段主要关注前 5 个字节，第 1 个字节都是以 `0x7f` 开头，第 2、3、4 个字节分别是字母 `E`、`L`、`F` 的 ASCII 码，第 5 个字节如果是 `0x01` 表示该文件适用于 32 位平台，如果是 `0x02` 表示适用于 64 位平台。
