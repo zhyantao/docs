@@ -78,6 +78,7 @@ appendix/index
 :glob:
 :hidden:
 
+背包问题九讲 2.0 beta1.2 <https://getstarted.readthedocs.io/_static/cheatsheet/pack.pdf>
 Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/cph.pdf>
 PlantUML Online Editor <https://pansinm.github.io/plantuml-editor/>
 ```
