@@ -6,5 +6,4 @@
 :glob:
 
 *
-swimming/index
 ```
