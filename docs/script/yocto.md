@@ -158,7 +158,16 @@ do_install() {
 | `bitbake-layers layerindex-show-depends <layer_name>`              | 根据 OE index 列出指定 `layer` 的依赖     |
 | `bitbake-layers layerindex-fetch <layer name>`                     | 使用 OE index 拉取和添加 `layer`        |
 
-## 离线构建 meta-clang
+## 添加新的 `layer`/`recipe`
+
+The Yocto Project 维护了一个官方的在线资源库，可用于浏览和检索可直接集成至 Linux 发行版中的层 (`layer`) 和配方 (`recipe`)。相关信息可通过以下链接获取：
+
+- `layer` 索引：<https://layers.openembedded.org/layerindex/branch/master/layers/>
+- `recipe` 索引：<https://layers.openembedded.org/layerindex/branch/master/recipes/>
+
+这些资源提供了详细的列表和信息，帮助开发者选择合适的组件来丰富其基于 Yocto 的构建系统。
+
+## 离线构建 `meta-clang`
 
 ```bash
 # 添加底包合 meta-clang 层
