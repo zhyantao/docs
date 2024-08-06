@@ -11,7 +11,7 @@ project = "Notebook"
 copyright = "2024"
 author = "Yantao Zhang (yantao.z [at] outlook.com)"
 master_doc = "index"
-language = "zh_CN"
+language = "en"
 source_encoding = "utf-8-sig"
 source_suffix = {
     ".rst": "restructuredtext",
