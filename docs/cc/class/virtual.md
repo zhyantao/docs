@@ -1,67 +1,65 @@
 # virtual
 
-虚函数提供了动态绑定的特性，父类指针指向子类对象，调用同名函数时，实际执行的是子类函数。
+在 C++ 中，虚函数（virtual function）和纯虚函数（pure virtual function）是面向对象编程中用于实现多态性的关键概念。它们的主要区别在于定义和使用方式上。
+
+## 虚函数
+
+### 定义
+
+- 虚函数是在基类中声明的成员函数，前面加上了 `virtual` 关键字。
+- 它可以有实际的函数体，即具体的实现。
+
+### 目的
+
+- 虚函数允许派生类重写该函数，从而在运行时通过基类指针调用时，能够调用到正确的重写版本（动态绑定）。
+
+### 示例
 
 ```cpp
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-class Person {
+class Base {
 public:
-    string name;
-    Person(string n) : name(n) {
-    }
-    virtual void print() {
-        cout << "Name: " << name << endl;
+    virtual void func() {
+        /* 实现 */
     }
 };
 
-class Person2 {
+class Derived : public Base {
 public:
-    string name;
-    Person2(string n) : name(n) {
-    }
-    virtual void print() = 0;
-};
-
-class Student : public Person {
-public:
-    string id;
-    Student(string n, string i) : Person(n), id(i) {
-    }
-    void print() {
-        cout << "Name: " << name;
-        cout << ". ID: " << id << endl;
+    void func() override {
+        /* 重写实现 */
     }
 };
-
-void printObjectInfo(Person& p) {
-    p.print();
-}
-
-int main() {
-    {
-        Student stu("yu", "2019");
-        printObjectInfo(stu);
-    }
-
-    {
-        Person* p = new Student("xue", "2020");
-        p->print(); // if print() is not a virtual function, different output
-        delete p;   // if its destructor is not virtual
-    }
-
-    { // if you want to call a function in the base class
-        Student stu("li", "2021");
-        stu.Person::print();
-
-        Person* p = new Student("xue", "2020");
-        p->Person::print();
-        delete p;
-    }
-
-    return 0;
-}
 ```
+
+## 纯虚函数
+
+### 定义
+
+- 纯虚函数也是在基类中声明的成员函数，前面同样加上了 `virtual` 关键字，并且在声明时使用 `= 0` 来表示没有默认实现。
+- 纯虚函数没有具体的实现，它必须在派生类中被重写。
+
+### 目的
+
+- 纯虚函数通常用来定义接口或抽象类，确保所有继承此类的派生类都必须提供一个具体实现。
+- 包含纯虚函数的类不能被实例化，只能作为其他类的基类。
+
+### 示例
+
+```cpp
+class Base {
+public:
+    virtual void func() = 0; // 纯虚函数
+};
+
+class Derived : public Base {
+public:
+    void func() override {
+        /* 必须提供的实现 */
+    }
+};
+```
+
+## 总结
+
+- **虚函数**允许派生类选择性地重写其行为，即使不重写也有默认的行为。
+- **纯虚函数**强制派生类必须提供实现，否则派生类也将成为抽象类。
