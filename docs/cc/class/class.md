@@ -1,362 +1,187 @@
 # class
 
-## 嵌套类
-
-```cpp
-#include <iostream>
-
-using namespace std;
-
-class Storage {
-public:
-    class Fruit {
-        string name;
-        int weight;
-
-    public:
-        Fruit(string name = "", int weight = 0) : name(name), weight(weight) {
-        }
-        string getInfo() {
-            return name + ", weight " + to_string(weight) + "kg.";
-        }
-    };
-
-private:
-    Fruit fruit;
-
-public:
-    Storage(Fruit f) {
-        this->fruit = f;
-    }
-    void print() {
-        cout << fruit.getInfo() << endl;
-    }
-};
-
-int main() {
-    Storage::Fruit apple("apple", 100);
-    Storage mystorage(apple);
-    mystorage.print();
-    return 0;
-}
-```
-
 ## 构造函数
 
+### 定义
+
+构造函数是一种特殊的成员函数，它在创建对象时被自动调用，用于初始化对象的状态。构造函数的名字与类名相同，并且没有返回类型（即使是 `void` 也不行）。
+
+### 注意事项
+
+- 默认构造函数：如果没有显式定义任何构造函数，编译器会自动提供一个默认构造函数。
+- 显式构造函数：可以通过使用 `explicit` 关键字来防止隐式类型转换。
+- 拷贝构造函数：当需要通过已存在的对象来初始化新对象时，需要使用拷贝构造函数。
+- 移动构造函数：用于从临时对象或者右值引用中初始化新对象，以支持高效的资源转移。
+- 初始化列表：建议使用初始化列表来初始化成员变量，尤其是当成员是引用或常量时，它优先于构造函数体内的赋值操作。
+- 构造顺序：如果一个类包含其他类的对象作为成员，则基类和成员对象的构造顺序需要特别注意。
+- 异常安全：在构造过程中要确保异常安全，尤其是在初始化列表中抛出异常时。
+
+### 示例
+
 ```cpp
-#include <cstring>
 #include <iostream>
 
-using namespace std;
-
-class Student {
-private:
-    char name[4];
-    int born;
-    bool male;
-
+class Point {
 public:
-    Student() {
-        name[0] = 0;
-        born = 0;
-        male = false;
-        cout << "Constructor: Person()" << endl;
-    }
+    double x, y;
 
-    Student(const char* initName) : born(0), male(true) {
-        setName(initName);
-        cout << "Constructor: Person(const char*)" << endl;
-    }
+    // 默认构造函数
+    Point() : x(0), y(0) {}
 
-    Student(const char* initName, int initBorn, bool isMale) {
-        setName(initName);
-        born = initBorn;
-        male = isMale;
-        cout << "Constructor: Person(const char, int , bool)" << endl;
-    }
+    // 显式构造函数
+    explicit Point(double x, double y) : x(x), y(y) {}
 
-    void setName(const char* s) {
-        strncpy(name, s, sizeof(name));
-    }
-    void setBorn(int b) {
-        born = b;
-    }
-    // the declarations, the definitions are out of the class
-    void setGender(bool isMale);
-    void printInfo();
+    // 拷贝构造函数
+    Point(const Point& other) : x(other.x), y(other.y) {}
+
+    // 移动构造函数
+    Point(Point&& other) noexcept : x(std::move(other.x)), y(std::move(other.y)) {}
 };
 
-void Student::setGender(bool isMale) {
-    male = isMale;
-}
-
-void Student::printInfo() {
-    std::cout << "Name: " << name << std::endl;
-    std::cout << "Born in " << born << std::endl;
-    std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
-}
-
 int main() {
-    Student yu;
-    yu.printInfo();
-
-    yu.setName("Yu");
-    yu.setBorn(2000);
-    yu.setGender(true);
-    yu.printInfo();
-
-    Student li("li");
-    li.printInfo();
-
-    Student xue = Student("XueQikun", 1962, true);
-    // a question: what will happen since "XueQikun" has 4+ characters?
-    xue.printInfo();
-
-    Student* zhou = new Student("Zhou", 1991, false);
-    zhou->printInfo();
-    delete zhou;
-
+    Point p1;                 // 调用默认构造函数
+    Point p2(1.0, 2.0);       // 调用显式构造函数
+    Point p3(p2);             // 调用拷贝构造函数
+    Point p4 = std::move(p3); // 调用移动构造函数
     return 0;
 }
 ```
 
-## 类外定义函数
+## 2. 嵌套类
+
+### 定义
+
+嵌套类是指在一个类的内部定义的另一个类。它可以是匿名的（即没有名字），也可以是有名字的。
+
+### 使用场景
+
+- 封装：将相关的类组织在一起，提高代码的可读性和可维护性。
+- 命名空间：避免名称冲突，为类提供更具体的上下文。
+- 访问控制：嵌套类可以访问外部类的私有成员，这有助于实现更紧密的耦合。
+
+### 示例
 
 ```cpp
-#include <cstring>
 #include <iostream>
 
-class Student {
-private:
-    char name[4];
-    int born;
-    bool male;
-
+class OuterClass {
 public:
-    void setName(const char* s) {
-        strncpy(name, s, sizeof(name));
-    }
+    class InnerClass {
+    public:
+        void print() const { std::cout << "InnerClass\n"; }
+    };
 
-    void setBorn(int b) {
-        born = b;
-    }
-
-    // the declarations, the definitions are out of the class
-    void setGender(bool isMale);
-    void printInfo();
-};
-
-void Student::setGender(bool isMale) {
-    male = isMale;
-}
-
-void Student::printInfo() {
-    std::cout << "Name: " << name << std::endl;
-    std::cout << "Born in " << born << std::endl;
-    std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
-}
-
-int main() {
-    Student yu;
-    yu.setName("Yu");
-    yu.setBorn(2000);
-    yu.setGender(true);
-    yu.printInfo();
-    return 0;
-}
-```
-
-## 访问控制
-
-```cpp
-#include <cstring>
-#include <iostream>
-
-class Student {
-private:
-    char name[4];
-    int born;
-    bool male;
-
-public:
-    void setName(const char* s) {
-        strncpy(name, s, sizeof(name));
-    }
-
-    void setBorn(int b) {
-        born = b;
-    }
-
-    void setGender(bool isMale) {
-        male = isMale;
-    }
-
-    void printInfo() {
-        std::cout << "Name: " << name << std::endl;
-        std::cout << "Born in " << born << std::endl;
-        std::cout << "Gender: " << (male ? "Male" : "Female") << std::endl;
+    void createInner() {
+        InnerClass inner;
+        inner.print();
     }
 };
 
 int main() {
-    Student yu;
-    yu.setName("Yu");
-    yu.setBorn(2000);
-    yu.setGender(true);
-    yu.born = 2001; // you cannot access a private member
-    yu.printInfo();
+    OuterClass outer;
+    outer.createInner();
+
+    // 外部访问
+    OuterClass::InnerClass inner;
+    inner.print();
     return 0;
 }
 ```
 
-## 继承
+## 3. 继承的特点及访问控制
+
+### 特点
+
+- 代码重用：子类可以直接使用父类的属性和方法。
+- 多态性：通过虚函数实现不同类型的对象对同一消息作出响应的能力。
+- 扩展性：可以轻松地添加新的子类来扩展系统的功能而不需要修改现有的代码。
+
+### 访问控制
+
+- `public`：继承的所有成员都可被访问。
+- `protected`：继承的成员对子类可见，但对外部不可见。
+- `private`：继承的成员只在派生类中可见，对外部和子类都不可见。
+
+### 示例
 
 ```cpp
+#include <iostream>
+
 class Base {
 protected:
-    int n;
+    int data;
 
-private:
-    void foo1(Base& b) {
-        n++;   // Okay
-        b.n++; // Okay
-    }
+public:
+    Base(int d) : data(d) {}
+
+    virtual void print() const { std::cout << "Base: " << data << '\n'; }
 };
 
 class Derived : public Base {
-    void foo2(Base& b, Derived& d) {
-        n++;       // Okay
-        this->n++; // Okay
-        // b.n++;      //Error. You cannot access a protected member through base
-        d.n++; // Okay
-    }
-};
-
-void compare(Base& b, Derived& d) // a non-member non-friend function
-{
-    // b.n++; // Error
-    // d.n++; // Error
-}
-```
-
-## 分文件编写
-
-一个大的项目，通常把数据结构和算法实现分开放置：在 `hpp` 文件中声明类的结构，在 `cpp` 文件中对类中的成员函数做实现。因此，按照这种组织方式，我们有下面的代码示例：
-
-```cpp
-// base.hpp
-
-class Base {
 public:
-    int a;
-    int b;
-    Base(int a = 0, int b = 0);
-    ~Base();
-    int product();
-    friend std::ostream& operator<<(std::ostream& os, const Base& obj);
+    Derived(int d) : Base(d) {}
+
+    void print() const override { std::cout << "Derived: " << data << '\n'; }
 };
-```
-
-```cpp
-// derive.hpp
-
-class Derived : public Base {
-public:
-    int c;
-    Derived(int c) : Base(c - 2, c - 1), c(c);
-    ~Derived();
-    int product();
-    friend std::ostream& operator<<(std::ostream& os, const Derived& obj);
-};
-```
-
-```cpp
-// base.cpp
-
-Base::Base(int a = 0, int b = 0) {
-    this->a = a;
-    this->b = b;
-    cout << "Constructor Base::Base(" << a << ", " << b << ")" << endl;
-}
-
-Base::~Base() {
-    cout << "Destructor Base::~Base()" << endl;
-}
-
-int Base::product() {
-    return a * b;
-}
-
-friend std::ostream& Base::operator<<(std::ostream& os, const Base& obj) {
-    os << "Base: a = " << obj.a << ", b = " << obj.b;
-    return os;
-}
-```
-
-```cpp
-// derive.cpp
-
-Derived::Derived(int c) : Base(c - 2, c - 1), c(c) {
-    this->a += 3; // it can be changed after initialization
-    cout << "Constructor Derived::Derived(" << c << ")" << endl;
-}
-
-Derived::~Derived() {
-    cout << "Destructor Derived::~Derived()" << endl;
-}
-
-int Derived::product() {
-    return Base::product() * c;
-}
-
-friend std::ostream& Derived::operator<<(std::ostream& os, const Derived& obj) {
-    // call the friend function in Base class
-    os << static_cast<const Base&>(obj) << endl;
-    os << "Derived: c = " << obj.c;
-    return os;
-}
-```
-
-```cpp
-// main.cpp
 
 int main() {
-    {
-        Base base(1, 2);
-        cout << "Product = " << base.product() << endl;
-        cout << base << endl;
-    }
-    cout << "----------------------" << endl;
-    {
-        Derived derived(5);
-        cout << derived << endl;
-        cout << "Product = " << derived.product() << endl;
-    }
+    Derived d(42);
+    d.print();
     return 0;
 }
 ```
 
-## 继承特例化的模板类
+## 4. 继承特例化的模板类
 
-在继承的时候，我们可能会见到类似下面的语法，不要被尖括号所迷惑，它是 **继承特例化的模板类** 的一种写法：
+### 示例
+
+假设我们有一个模板类 `BaseTemplate` 和一个特例化版本 `BaseTemplate<int>`，并且想要从它们派生一个新的类 `DerivedTemplate`。
 
 ```cpp
 #include <iostream>
-#include <memory>
 
-// 继承一个特例化的模板类
-class SharedFromThis : public std::enable_shared_from_this<SharedFromThis> {
+template <typename T>
+class BaseTemplate {
 public:
-    void doSomething() {
-        std::shared_ptr<SharedFromThis> sharedPtr = shared_from_this();
-        std::cout << "Shared pointer count: " << sharedPtr.use_count() << std::endl;
-    }
+    T data;
+    BaseTemplate(T d) : data(d) {}
+};
+
+// Specialization for int
+template <>
+class BaseTemplate<int> {
+public:
+    int data;
+    BaseTemplate(int d) : data(d * 2) {} // 注意这里特例化了构造函数
+};
+
+// Derived from the general template
+template <typename T>
+class DerivedTemplate : public BaseTemplate<T> {
+public:
+    DerivedTemplate(T d) : BaseTemplate<T>(d) {}
+};
+
+// Derived from the specialized template
+class DerivedFromSpecialized : public BaseTemplate<int> {
+public:
+    DerivedFromSpecialized(int d) : BaseTemplate<int>(d) {}
 };
 
 int main() {
-    std::shared_ptr<SharedFromThis> sharedPtr = std::make_shared<SharedFromThis>();
-    sharedPtr->doSomething();
+    DerivedTemplate<double> dt(5.0);
+    std::cout << "Data in DerivedTemplate: " << dt.data << std::endl;
+
+    DerivedFromSpecialized dfs(5);
+    std::cout << "Data in DerivedFromSpecialized: " << dfs.data << std::endl;
 
     return 0;
 }
 ```
+
+在这个例子中：
+
+- `BaseTemplate<T>` 是一个通用模板类。
+- `BaseTemplate<int>` 是 `BaseTemplate` 的特例化版本。
+- `DerivedFromSpecialized` 继承自 `BaseTemplate<int>`。
+- `DerivedTemplate<T>` 继承自 `BaseTemplate<T>`。
