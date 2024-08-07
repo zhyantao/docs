@@ -188,8 +188,10 @@ ssize_t recv(int sockfd, void* buf, size_t len, int flags);
 #include <sys/socket.h>
 #include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr,
+               socklen_t addrlen);
+ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr,
+                 socklen_t* addrlen);
 ```
 
 **sendmsg() / recvmsg()**
@@ -208,8 +210,10 @@ ssize_t recvmsg(int sockfd, struct msghdr* msg, int flags);
 #include <sys/socket.h>
 #include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr,
+               socklen_t addrlen);
+ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr,
+                 socklen_t* addrlen);
 ```
 
 推荐使用 `sendmsg()` 和 `recvmsg()` 函数，这两个是最通用的 I/O 函数，实际上可以把其他函数都替换成这两个。

@@ -11,8 +11,7 @@ protected:
 
 public:
     Person(string name = "") : name(name) {};
-    virtual ~Person() {
-    }
+    virtual ~Person() {}
     string getInfo() {
         return name;
     }

@@ -35,10 +35,8 @@ class MyTime {
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0) {
-    }
-    MyTime(int h, int m) : hours(h), minutes(m) {
-    }
+    MyTime() : hours(0), minutes(0) {}
+    MyTime(int h, int m) : hours(h), minutes(m) {}
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
@@ -62,7 +60,8 @@ public:
     }
 
     std::string getTime() const {
-        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
+        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) +
+               " minutes.";
     }
 };
 ```
@@ -131,7 +130,8 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const MyTime& t) {
-        std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
+        std::string str =
+            std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }
@@ -172,10 +172,8 @@ class MyTime {
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0) {
-    }
-    MyTime(int h, int m) : hours(h), minutes(m) {
-    }
+    MyTime() : hours(0), minutes(0) {}
+    MyTime(int h, int m) : hours(h), minutes(m) {}
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
@@ -212,11 +210,13 @@ public:
     }
 
     std::string getTime() const {
-        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
+        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) +
+               " minutes.";
     }
 
     friend std::ostream& operator<<(std::ostream& os, const MyTime& t) {
-        std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
+        std::string str =
+            std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }
@@ -267,10 +267,8 @@ class MyTime {
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0) {
-    }
-    MyTime(int h, int m) : hours(h), minutes(m) {
-    }
+    MyTime() : hours(0), minutes(0) {}
+    MyTime(int h, int m) : hours(h), minutes(m) {}
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
@@ -319,7 +317,8 @@ public:
     }
 
     std::string getTime() const {
-        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
+        return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) +
+               " minutes.";
     }
 };
 ```
@@ -399,7 +398,8 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const MyTime& t) {
-        std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
+        std::string str =
+            std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }

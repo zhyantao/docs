@@ -61,14 +61,12 @@ int main() {
 
 class Base {
 public:
-    Base() {
-    }
+    Base() {}
 };
 
 class Derived : public Base {
 public:
-    Derived() {
-    }
+    Derived() {}
 };
 
 int main() {

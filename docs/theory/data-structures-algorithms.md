@@ -1152,7 +1152,8 @@ vector<vector<int>> combine(int n, int k) {
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& candidates, int target) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& candidates,
+         int target) {
     if (target < 0) {
         return;
     }

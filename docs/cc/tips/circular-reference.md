@@ -14,8 +14,7 @@ class Supplier {
     int storage;
 
 public:
-    Supplier(int storage = 1000) : storage(storage) {
-    }
+    Supplier(int storage = 1000) : storage(storage) {}
     bool provide(Sniper& sniper);
 };
 
@@ -24,8 +23,7 @@ private:
     int bullets;
 
 public:
-    Sniper(int bullets = 0) : bullets(bullets) {
-    }
+    Sniper(int bullets = 0) : bullets(bullets) {}
     friend bool Supplier::provide(Sniper&);
 };
 

@@ -144,8 +144,7 @@ using std::string;
 
 namespace mynamespace {
 
-EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {
-}
+EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {}
 
 ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_name2) {
     bool retval = DoSometing(averyveryveryverylongargument1, argument2, argument3);

@@ -85,14 +85,16 @@ int main() {
     Student stu = {"Yu", 2000, true};
     Student* pStu = &stu;
 
-    cout << stu.name << " was born in " << stu.born << ". Gender: " << (stu.male ? "male" : "female") << endl;
+    cout << stu.name << " was born in " << stu.born
+         << ". Gender: " << (stu.male ? "male" : "female") << endl;
 
     strncpy(pStu->name, "Li", 4);
     pStu->born = 2001;
     (*pStu).born = 2002;
     pStu->male = false;
 
-    cout << stu.name << " was born in " << stu.born << ". Gender: " << (stu.male ? "male" : "female") << endl;
+    cout << stu.name << " was born in " << stu.born
+         << ". Gender: " << (stu.male ? "male" : "female") << endl;
 
     printf("Address of stu: %p\n", pStu);       // C style
     cout << "Address of stu: " << pStu << endl; // C++ style

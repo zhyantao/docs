@@ -34,7 +34,8 @@ public:
         return sum;
     }
     friend std::ostream& operator<<(std::ostream& os, const MyTime& t) {
-        std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
+        std::string str =
+            std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
         os << str;
         return os;
     }

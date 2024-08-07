@@ -83,9 +83,9 @@ int main() {
 #include <iostream>
 
 // 制造函数工厂并使用它
-#define FUNCTION(name, a)                                                                                              \
-    int fun_##name() {                                                                                                 \
-        return a;                                                                                                      \
+#define FUNCTION(name, a) \
+    int fun_##name() {    \
+        return a;         \
     }
 
 FUNCTION(, 100)
@@ -146,12 +146,12 @@ int main() {
 为了解决这个问题，C 语言引入了 `do { ... } while(0)` 结构。这个结构的意思是执行 `{ ... }` 中的代码，然后检查 `while(0)` 的条件是否成立。由于 `while(0)` 的条件永远不成立，所以这个结构可以用来定义一个多行的宏。这样，我们就可以定义一个函数了：
 
 ```cpp
-#define MAX(a, b)                                                                                                      \
-    do {                                                                                                               \
-        if ((a) > (b))                                                                                                 \
-            return (a);                                                                                                \
-        else                                                                                                           \
-            return (b);                                                                                                \
+#define MAX(a, b)       \
+    do {                \
+        if ((a) > (b))  \
+            return (a); \
+        else            \
+            return (b); \
     } while (0)
 ```
 

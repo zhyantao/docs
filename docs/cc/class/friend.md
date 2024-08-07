@@ -37,8 +37,7 @@ private:
     double radius;
 
 public:
-    Circle(double r) : radius(r) {
-    }
+    Circle(double r) : radius(r) {}
 
     friend void printRadius(const Circle& c); // 声明友元函数
 };
@@ -98,8 +97,7 @@ private:
     double balance;
 
 public:
-    Account(double initialBalance) : balance(initialBalance) {
-    }
+    Account(double initialBalance) : balance(initialBalance) {}
 
     friend class BankManager; // 声明 BankManager 为友元类
 };
@@ -149,8 +147,7 @@ private:
     int dataA;
 
 public:
-    A(int d) : dataA(d) {
-    }
+    A(int d) : dataA(d) {}
 
     friend class B; // 声明 B 为友元类
 };
@@ -160,8 +157,7 @@ private:
     int dataB;
 
 public:
-    B(int d) : dataB(d) {
-    }
+    B(int d) : dataB(d) {}
 
     void setAData(A& a, int value) {
         a.dataA = value; // 访问 A 的私有成员

@@ -25,7 +25,8 @@ int main() {
 #include <iostream>
 
 // 定义模板结构体 count
-template <class... Types> struct count {
+template <class... Types>
+struct count {
     static const std::size_t value = sizeof...(Types);
 };
 

@@ -266,7 +266,8 @@ void printArgs() {
 }
 
 // 递归步骤
-template <typename T, typename... Args> void printArgs(T first, Args... args) {
+template <typename T, typename... Args>
+void printArgs(T first, Args... args) {
     std::cout << first << " ";
     printArgs(args...); // 递归调用
 }
@@ -285,7 +286,8 @@ int main() {
 ```cpp
 #include <iostream>
 
-template <typename... Args> void printArgs(Args... args) {
+template <typename... Args>
+void printArgs(Args... args) {
     (std::cout << ... << args) << std::endl; // 折叠表达式
 }
 
@@ -306,10 +308,11 @@ int main() {
 *例 1：字面量作为实参*
 
 ```cpp
-template <typename... Us> void f(Us... pargs) {
-}
+template <typename... Us>
+void f(Us... pargs) {}
 
-template <typename... Ts> void g(Ts... args) {
+template <typename... Ts>
+void g(Ts... args) {
     // &args... 是包展开
     // &args    是它的模式
     f(&args...);
@@ -327,14 +330,14 @@ int main() {
 
 ```cpp
 // 接受任意数量的模板参数（用 Ts... 表示）
-template <typename... Ts> void f(Ts...) {
-}
+template <typename... Ts>
+void f(Ts...) {}
 
 // 接受一个模板参数包 Ts 和一个非类型参数包 N
 // Ts (&...arr)[N] 表示 arr 是一个引用数组，数组元素的类型是 Ts
 // 数组的大小是 N
-template <typename... Ts, int... N> void g(Ts (&... arr)[N]) {
-}
+template <typename... Ts, int... N>
+void g(Ts (&... arr)[N]) {}
 
 int main() {
     // Ts... 会展开成 void f(char, int)
@@ -354,7 +357,8 @@ int main() {
 *例 3：调整可变参数的位置*
 
 ```cpp
-template <typename A, typename B, typename... C> void func(A arg1, B arg2, C... arg3) {
+template <typename A, typename B, typename... C>
+void func(A arg1, B arg2, C... arg3) {
     container<A, B, C...> t1; // 展开成 container<A, B, E1, E2, E3>
     container<C..., A, B> t2; // 展开成 container<E1, E2, E3, A, B>
     container<A, C..., B> t3; // 展开成 container<A, E1, E2, E3, B>

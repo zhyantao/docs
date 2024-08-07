@@ -10,7 +10,8 @@
 
 using namespace std;
 
-template <typename T> T sum(T x, T y) {
+template <typename T>
+T sum(T x, T y) {
     cout << "The input type is " << typeid(T).name() << endl;
     return x + y;
 }
@@ -39,7 +40,8 @@ int main() {
 
 using namespace std;
 
-template <typename T> T sum(T x, T y) {
+template <typename T>
+T sum(T x, T y) {
     cout << "The input type is " << typeid(T).name() << endl;
     return x + y;
 }
@@ -50,7 +52,8 @@ struct Point {
 };
 
 // 特例化函数模板为 Point + Point
-template <> Point sum<Point>(Point pt1, Point pt2) {
+template <>
+Point sum<Point>(Point pt1, Point pt2) {
     cout << "The input type is " << typeid(pt1).name() << endl;
     Point pt;
     pt.x = pt1.x + pt2.x;
@@ -78,7 +81,8 @@ int main() {
 
 using namespace std;
 
-template <typename T> class Mat {
+template <typename T>
+class Mat {
     size_t rows;
     size_t cols;
     T* data;
@@ -98,7 +102,8 @@ public:
     bool setElement(size_t r, size_t c, T value);
 };
 
-template <typename T> T Mat<T>::getElement(size_t r, size_t c) {
+template <typename T>
+T Mat<T>::getElement(size_t r, size_t c) {
     if (r >= this->rows || c >= this->cols) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
@@ -106,7 +111,8 @@ template <typename T> T Mat<T>::getElement(size_t r, size_t c) {
     return data[this->cols * r + c];
 }
 
-template <typename T> bool Mat<T>::setElement(size_t r, size_t c, T value) {
+template <typename T>
+bool Mat<T>::setElement(size_t r, size_t c, T value) {
     if (r >= this->rows || c >= this->cols) {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
@@ -146,7 +152,8 @@ int main() {
 
 using namespace std;
 
-template <typename T> class MyVector {
+template <typename T>
+class MyVector {
     size_t length;
     T* data;
 
@@ -163,7 +170,8 @@ public:
     bool setElement(size_t index, T value);
 };
 
-template <typename T> T MyVector<T>::getElement(size_t index) {
+template <typename T>
+T MyVector<T>::getElement(size_t index) {
     if (index >= this->length) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
@@ -171,7 +179,8 @@ template <typename T> T MyVector<T>::getElement(size_t index) {
     return data[index];
 }
 
-template <typename T> bool MyVector<T>::setElement(size_t index, T value) {
+template <typename T>
+bool MyVector<T>::setElement(size_t index, T value) {
     if (index >= this->length) {
         cerr << "setElement(): Indices are out of range" << endl;
         return false;
@@ -184,7 +193,8 @@ template <typename T> bool MyVector<T>::setElement(size_t index, T value) {
 template class MyVector<int>;
 
 // 特例化类模板
-template <> class MyVector<bool> {
+template <>
+class MyVector<bool> {
     size_t length;
     unsigned char* data;
 
