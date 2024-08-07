@@ -167,6 +167,8 @@ The Yocto Project 维护了一个官方的在线资源库，可用于浏览和�
 
 这些资源提供了详细的列表和信息，帮助开发者选择合适的组件来丰富其基于 Yocto 的构建系统。
 
+以上所有的源代码都可以在 Github 仓库找到：<https://github.com/openembedded/meta-openembedded>
+
 ## 离线构建 `meta-clang`
 
 ```bash
