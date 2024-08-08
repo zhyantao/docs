@@ -8,6 +8,7 @@ def format_markdown_cpp_files(directory):
 
     for filename in markdown_files:
         filepath = os.path.join(directory, filename)
+        print(f"formatting {filepath}")
 
         with open(filepath, "r", encoding="utf-8") as file:
             content = file.read()
@@ -45,7 +46,6 @@ def list_directories_and_files(path, exclude_dirs=None):
         ]
 
         for dir in dirs:
-            print(f"formatting {dir}")
             format_markdown_cpp_files(root + "/" + dir)
 
 
