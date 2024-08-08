@@ -2,113 +2,108 @@
 
 ## 指定形参默认值
 
-```cpp
-#include <cmath>
-#include <iostream>
+在 C++ 中，你可以为函数的形参指定默认值。这样，当你调用该函数时，如果没有提供对应的实参或者提供了少于形参的数量，则会使用这些默认值。默认值应该从右到左依次指定，因为你可以在一个参数列表中同时指定多个默认值。
 
-using namespace std;
-
-float norm(float x, float y, float z);
-float norm(float x, float y, float z = 0);
-float norm(float x, float y = 0, float z);
-
-int main() {
-    cout << norm(3.0f) << endl;
-    cout << norm(3.0f, 4.0f) << endl;
-    cout << norm(3.0f, 4.0f, 5.0f) << endl;
-    return 0;
-}
-
-float norm(float x, float y, float z) {
-    return sqrt(x * x + y * y + z * z);
-}
-```
-
-## 指针作为参数
+这里是一个简单的示例，展示了如何使用默认参数：
 
 ```cpp
 #include <iostream>
 
-using namespace std;
-
-int foo1(int x) {
-    x += 10;
-    return x;
-}
-
-int foo2(int* p) {
-    (*p) += 10;
-    return *p;
-}
+// 函数声明
+void printInfo(std::string name, int age = 30, std::string city = "Unknown");
 
 int main() {
-    int num1 = 20;
-    int num2 = foo1(num1);
-    cout << "num1=" << num1 << endl;
-    cout << "num2=" << num2 << endl;
+    // 调用函数，只提供第一个参数
+    printInfo("Alice");
 
-    int* p = &num1;
-    int num3 = foo2(p);
-    cout << "num1=" << num1 << endl;
-    cout << "*p=" << *p << endl;
-    cout << "num3=" << num3 << endl;
+    // 调用函数，提供前两个参数
+    printInfo("Bob", 25);
+
+    // 调用函数，提供所有参数
+    printInfo("Charlie", 40, "New York");
 
     return 0;
 }
+
+// 函数定义
+void printInfo(std::string name, int age, std::string city) {
+    std::cout << "Name: " << name << ", Age: " << age << ", City: " << city << std::endl;
+}
 ```
 
-## 引用作为参数
+在这个例子中，`printInfo` 函数有三个形参：`name`, `age`, 和 `city`。我们分别为 `age` 和 `city` 指定了默认值。当我们调用 `printInfo` 函数时，可以只提供 `name` 参数，或者提供 `name` 和 `age` 参数，或者提供全部参数。
+
+注意以下几点：
+
+1. 默认参数必须按照从右向左的顺序进行定义。也就是说，在给定默认值之后，所有的参数都必须有默认值。
+2. 默认参数可以是任何合法的表达式，包括常量、其他参数等。
+3. 如果你希望在参数列表中为中间的一个参数指定默认值，那么在其右边的所有参数也必须有默认值。
+
+## 指针/引用作为参数
+
+在 C++ 中，函数参数可以使用指针或引用传递。这两种方式都允许函数修改传入的值。下面分别介绍指针和引用作为函数参数的区别。
+
+### 指针作为函数参数
+
+当使用指针作为函数参数时，你可以修改指针指向的数据，但不会改变原始变量的地址。如果函数内部重新分配了指针，那么原始变量的指针将不再指向新分配的内存。
 
 ```cpp
-#include <float.h>
 #include <iostream>
 
-struct Matrix {
-    int rows;
-    int cols;
-    float* pData;
-};
-
-float matrix_max(const struct Matrix& mat) {
-    float max = FLT_MIN;
-    // find max value of mat
-    for (int r = 0; r < mat.rows; r++)
-        for (int c = 0; c < mat.cols; c++) {
-            float val = mat.pData[r * mat.cols + c];
-            max = (max > val ? max : val);
-        }
-    return max;
+void swapPtr(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int main() {
-    using namespace std;
+    int x = 10;
+    int y = 20;
 
-    Matrix matA = {3, 4};
-    matA.pData = new float[matA.rows * matA.cols]{1.f, 2.f, 3.f};
-
-    Matrix matB = {4, 8};
-    matB.pData = new float[matB.rows * matB.cols]{10.f, 20.f, 30.f};
-
-    Matrix matC = {4, 2};
-    matC.pData = new float[matC.rows * matC.cols]{100.f, 200.f, 300.f};
-
-    // some operations on the matrices
-
-    float maxa = matrix_max(matA);
-    float maxb = matrix_max(matB);
-    float maxc = matrix_max(matC);
-
-    cout << "max(matA) = " << maxa << endl;
-    cout << "max(matB) = " << maxb << endl;
-    cout << "max(matC) = " << maxc << endl;
-
-    delete[] matA.pData;
-    delete[] matB.pData;
-    delete[] matC.pData;
+    std::cout << "Before swap: x = " << x << ", y = " << y << std::endl;
+    swapPtr(&x, &y);
+    std::cout << "After swap: x = " << x << ", y = " << y << std::endl;
 
     return 0;
 }
 ```
+
+### 引用作为函数参数
+
+当使用引用作为函数参数时，实际上是创建了一个别名来直接访问原始变量。这意味着你可以在函数内部修改原始数据。但是，如果函数尝试重新绑定引用（例如通过 `a = b;`），则会导致编译错误。
+
+```cpp
+#include <iostream>
+
+void swapRef(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main() {
+    int x = 10;
+    int y = 20;
+
+    std::cout << "Before swap: x = " << x << ", y = " << y << std::endl;
+    swapRef(x, y);
+    std::cout << "After swap: x = " << x << ", y = " << y << std::endl;
+
+    return 0;
+}
+```
+
+### 比较
+
+- **性能**：传递引用通常比传递指针更高效，因为不需要额外的间接寻址。
+- **安全性**：使用引用可以避免空指针问题，因为引用必须初始化并且不能是 `null`。
+- **可读性**：引用通常被认为更容易理解，因为它们更接近自然语言中的概念（如“别名”）。
+
+### 注意事项
+
+- 如果函数需要修改传入的值，使用引用通常更好。
+- 如果需要传递较大的对象，比如类实例，使用引用（尤其是常量引用）可以避免复制开销。
+- 指针可以用于处理空值，而引用不可以。
 
 ## `getopt_long`
 
@@ -252,11 +247,11 @@ int main() {
 
 ## `<typename... Args>`
 
-
 在 C++ 中，你可以使用递归或者使用 C++17 引入的折叠表达式（fold expression）来访问可变参数列表中的每个参数。
 
 ::::{tab-set}
 :::{tab-item} 递归方式（C++11 及以上）
+
 ```cpp
 #include <iostream>
 
