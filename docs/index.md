@@ -81,4 +81,5 @@ appendix/index
 背包问题九讲 2.0 beta1.2 <https://getstarted.readthedocs.io/_static/cheatsheet/pack.pdf>
 Programmer's Handbook <https://getstarted.readthedocs.io/_static/cheatsheet/cph.pdf>
 中文 Mermaid 在线编辑器 <https://www.min2k.com/tools/mermaid/>
+深入设计模式 <https://refactoringguru.cn/design-patterns>
 ```
