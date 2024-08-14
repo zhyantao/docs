@@ -1940,3 +1940,335 @@ int strStr(String txt, String pat) {
 ```
 
 ::::
+
+## 图论
+
+### 存图方式
+
+#### 邻接表
+
+::::{grid} auto
+:::{grid-item}
+
+无权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 --> node2 --> node3 --> node4
+    node2 --> node4
+    node4 --> node1
+```
+
+```cpp
+vector<int> adj[N];
+
+adj[1].push_back(2);
+adj[2].push_back(3);
+adj[2].push_back(4);
+adj[3].push_back(4);
+adj[4].push_back(1);
+```
+
+:::
+:::{grid-item}
+
+带权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 -- 5 --> node2 -- 7 --> node3 -- 5 --> node4
+    node2 -- 6 --> node4
+    node4 -- 2 --> node1
+```
+
+```cpp
+vector<pair<int, int>> adj[N];
+
+adj[1].push_back({2, 5});
+adj[2].push_back({3, 7});
+adj[2].push_back({4, 6});
+adj[3].push_back({4, 5});
+adj[4].push_back({1, 2});
+```
+
+:::
+::::
+
+遍历从节点 `s` 出发能够到达的所有节点：
+
+```cpp
+for (auto u : adj[s]) {
+    // process node u
+}
+```
+
+#### 邻接矩阵
+
+::::{grid} auto
+:::{grid-item}
+
+无权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 --> node2 --> node3 --> node4
+    node2 --> node4
+    node4 --> node1
+```
+
+:::
+:::{grid-item}
+
+带权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 -- 5 --> node2 -- 7 --> node3 -- 5 --> node4
+    node2 -- 6 --> node4
+    node4 -- 2 --> node1
+```
+
+:::
+::::
+
+不论是无权图还是带权图，都可以用下面的二维数组表示：
+
+```cpp
+int adj[N][N];
+```
+
+#### 边
+
+::::{grid} auto
+:::{grid-item}
+
+无权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 --> node2 --> node3 --> node4
+    node2 --> node4
+    node4 --> node1
+```
+
+```cpp
+vector<pair<int, int>> edges;
+
+edges.push_back({1, 2});
+edges.push_back({2, 3});
+edges.push_back({2, 4});
+edges.push_back({3, 4});
+edges.push_back({4, 1});
+```
+
+:::
+:::{grid-item}
+
+带权图：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+
+    node1 -- 5 --> node2 -- 7 --> node3 -- 5 --> node4
+    node2 -- 6 --> node4
+    node4 -- 2 --> node1
+```
+
+```cpp
+vector<tuple<int, int, int>> edges;
+
+edges.push_back({1, 2, 5});
+edges.push_back({2, 3, 7});
+edges.push_back({2, 4, 6});
+edges.push_back({3, 4, 5});
+edges.push_back({4, 1, 2});
+```
+
+:::
+::::
+
+### 图的遍历
+
+::::{grid} auto
+:::{grid-item}
+
+深度优先遍历：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+    node5((5))
+
+    node1 --- node2 --- node3 --- node5
+    node2 --- node5
+    node1 --- node4
+```
+
+```cpp
+vector<int> adj[N];
+bool visited[N];
+
+void dfs(int s) {
+    if (visited[s])
+        return;
+    visited[s] = true;
+    // process node s
+    for (auto u : adj[s]) {
+        dfs(u);
+    }
+}
+```
+
+:::
+:::{grid-item}
+
+广度优先遍历：
+
+```{mermaid}
+flowchart LR
+    node1((1))
+    node2((2))
+    node3((3))
+    node4((4))
+    node5((5))
+    node6((6))
+
+    node1 --- node2 --- node3 --- node6
+    node2 --- node5
+    node5 --- node6
+    node1 --- node4
+```
+
+```cpp
+queue<int> q;
+bool visited[N];
+int distance[N];
+
+void bfs(queue<int>& q, bool& visited, int& distance) {
+    visited[x] = true;
+    distance[x] = 0;
+    q.push(x);
+    while (!q.empty()) {
+        int s = q.front();
+        q.pop();
+        // process node s
+        for (auto u : adj[s]) {
+            if (visited[u])
+                continue;
+            visited[u] = true;
+            distance[u] = distance[s] + 1;
+            q.push(u);
+        }
+    }
+}
+```
+
+:::
+::::
+
+### 最短路径算法
+
+#### Bellman-Ford 算法
+
+用于解决单源最短路径问题。（不能包含负权边）
+
+```cpp
+for (int i = 1; i <= n; i++)
+    distance[i] = INF;
+distance[x] = 0;
+for (int i = 1; i <= n - 1; i++) {
+    for (auto e : edges) { // 用边存图
+        int a, b, w;
+        tie(a, b, w) = e;
+        distance[b] = min(distance[b], distance[a] + w);
+    }
+}
+```
+
+```{note}
+SPFA 算法是 Bellman-Ford 的优化版本。
+```
+
+#### Dijkstra 算法
+
+Dijsktra 比 Bellman-Ford 更加高效，因为它只遍历每条边一次。
+
+```cpp
+for (int i = 1; i <= n; i++)
+    distance[i] = INF;
+distance[x] = 0;
+q.push({0, x}); // 必须使用优先队列
+while (!q.empty()) {
+    int a = q.top().second;
+    q.pop();
+    if (processed[a])
+        continue;
+    processed[a] = true;
+    for (auto u : adj[a]) { // 邻接表
+        int b = u.first, w = u.second;
+        if (distance[a] + w < distance[b]) {
+            distance[b] = distance[a] + w;
+            q.push({-distance[b], b});
+        }
+    }
+}
+```
+
+#### Floyd-Warshall 算法
+
+多源最短路径算法。（仅适用于小图，因为时间复杂度太高了 $O(n^3)$）
+
+```cpp
+// 初始化 distance 矩阵
+for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+        if (i == j)
+            distance[i][j] = 0;
+        else if (adj[i][j]) // 邻接矩阵
+            distance[i][j] = adj[i][j];
+        else
+            distance[i][j] = INF;
+    }
+}
+
+// 填充 distance 矩阵
+for (int k = 1; k <= n; k++) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j]);
+        }
+    }
+}
+```
