@@ -3,7 +3,6 @@
 
 # Sphinx documentation
 docs/_build/
-!docs/_static/lib/
 !docs/_static/**/*.png
 docs/_tmp/
 
@@ -65,6 +64,7 @@ docs/_tmp/
 *.zip
 *.tar.gz
 *.rar
+!docs/_static/plantuml/plantuml*.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

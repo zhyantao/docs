@@ -96,6 +96,7 @@ extensions = [
     "sphinxcontrib.mermaid",
     "svg2png",
     "sphinx_last_updated_by_git",
+    "sphinxcontrib.plantuml",
 ]
 
 
@@ -166,3 +167,8 @@ myst_footnote_transition = False
 
 # Setting for sphinx-last-updated-by-git
 git_last_updated_timezone = "Asia/Shanghai"
+
+# Setting for PlantUML
+CURRENT_DIR = os.path.abspath(".")
+plantuml = f"java -jar {CURRENT_DIR}/_static/plantuml/plantuml-1.2024.6.jar"
+plantuml_output_format = "svg"
