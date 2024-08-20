@@ -2272,3 +2272,57 @@ for (int k = 1; k <= n; k++) {
     }
 }
 ```
+
+### 多叉树
+
+#### 遍历多叉树
+
+```cpp
+void dfs(int s, int e) {
+    // process node s
+    for (auto u : adj[s]) {
+        if (u != e)
+            dfs(u, s);
+    }
+}
+```
+
+`s` 表示当前节点，`e` 表示前一个节点。`u != e` 表示不能访问已经访问过的节点。初始条件如下：
+
+```cpp
+dfs(x, 0);
+```
+
+#### 动态规划
+
+计算每个节点的子节点数量。
+
+```cpp
+void dfs(int s, int e) {
+    count[s] = 1;
+    for (auto u : adj[s]) {
+        if (u == e)
+            continue;
+        dfs(u, s);
+        count[s] += count[u];
+    }
+}
+```
+
+### 生成树
+
+#### Kruskal 算法
+
+#### 并查集
+
+#### Prim 算法
+
+### 有向图
+
+#### 拓扑排序
+
+### 强连通图
+
+#### Kosaraju 算法
+
+#### 2SAT 问题
