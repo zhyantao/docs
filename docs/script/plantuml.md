@@ -16,16 +16,16 @@ else 某种失败情况
 
     Bob -> Alice: 认证失败
     group 我自己的标签
-    Alice -> Log : 开始记录攻击日志
+        Alice -> Log : 开始记录攻击日志
         loop 1000次
             Alice -> Bob: DNS 攻击
         end
-    Alice -> Log : 结束记录攻击日志
+        Alice -> Log : 结束记录攻击日志
     end
 
 else 另一种失败
 
-   Bob -> Alice: 请重复
+    Bob -> Alice: 请重复
 
 end
 @enduml
@@ -44,16 +44,16 @@ else 某种失败情况
 
     Bob -> Alice: 认证失败
     group 我自己的标签
-    Alice -> Log : 开始记录攻击日志
+        Alice -> Log : 开始记录攻击日志
         loop 1000次
             Alice -> Bob: DNS 攻击
         end
-    Alice -> Log : 结束记录攻击日志
+        Alice -> Log : 结束记录攻击日志
     end
 
 else 另一种失败
 
-   Bob -> Alice: 请重复
+    Bob -> Alice: 请重复
 
 end
 @enduml
@@ -69,10 +69,10 @@ skinparam packageStyle rectangle
 actor customer
 actor clerk
 rectangle checkout {
-  customer -- (checkout)
-  (checkout) .> (payment) : include
-  (help) .> (checkout) : extends
-  (checkout) -- clerk
+    customer -- (checkout)
+    (checkout) .> (payment) : include
+    (help) .> (checkout) : extends
+    (checkout) -- clerk
 }
 @enduml
 ```
@@ -85,10 +85,10 @@ skinparam packageStyle rectangle
 actor customer
 actor clerk
 rectangle checkout {
-  customer -- (checkout)
-  (checkout) .> (payment) : include
-  (help) .> (checkout) : extends
-  (checkout) -- clerk
+    customer -- (checkout)
+    (checkout) .> (payment) : include
+    (help) .> (checkout) : extends
+    (checkout) -- clerk
 }
 @enduml
 ```
@@ -129,31 +129,31 @@ start
 :ClickServlet.handleRequest();
 :new page;
 if (Page.onSecurityCheck) then (true)
-  :Page.onInit();
-  if (isForward?) then (no)
-    :Process controls;
-    if (continue processing?) then (no)
-      stop
-    endif
+    :Page.onInit();
+    if (isForward?) then (no)
+        :Process controls;
+        if (continue processing?) then (no)
+            stop
+        endif
 
-    if (isPost?) then (yes)
-      :Page.onPost();
-    else (no)
-      :Page.onGet();
+        if (isPost?) then (yes)
+            :Page.onPost();
+        else (no)
+            :Page.onGet();
+        endif
+        :Page.onRender();
     endif
-    :Page.onRender();
-  endif
 else (false)
 endif
 
 if (do redirect?) then (yes)
-  :redirect process;
+    :redirect process;
 else
-  if (do forward?) then (yes)
-    :Forward request;
-  else (no)
-    :Render page template;
-  endif
+    if (do forward?) then (yes)
+        :Forward request;
+    else (no)
+        :Render page template;
+    endif
 endif
 
 stop
@@ -169,31 +169,31 @@ start
 :ClickServlet.handleRequest();
 :new page;
 if (Page.onSecurityCheck) then (true)
-  :Page.onInit();
-  if (isForward?) then (no)
-    :Process controls;
-    if (continue processing?) then (no)
-      stop
-    endif
+    :Page.onInit();
+    if (isForward?) then (no)
+        :Process controls;
+        if (continue processing?) then (no)
+            stop
+        endif
 
-    if (isPost?) then (yes)
-      :Page.onPost();
-    else (no)
-      :Page.onGet();
+        if (isPost?) then (yes)
+            :Page.onPost();
+        else (no)
+            :Page.onGet();
+        endif
+        :Page.onRender();
     endif
-    :Page.onRender();
-  endif
 else (false)
 endif
 
 if (do redirect?) then (yes)
-  :redirect process;
+    :redirect process;
 else
-  if (do forward?) then (yes)
-    :Forward request;
-  else (no)
-    :Render page template;
-  endif
+    if (do forward?) then (yes)
+        :Forward request;
+    else (no)
+        :Render page template;
+    endif
 endif
 
 stop
@@ -208,27 +208,27 @@ stop
 @startuml
 
 package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+    HTTP - [First Component]
+    [Another Component]
 }
 
 node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
+    FTP - [Second Component]
+    [First Component] --> FTP
 }
 
 cloud {
-  [Example 1]
+    [Example 1]
 }
 
 
 database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
+    folder "This is my folder" {
+        [Folder 3]
+    }
+    frame "Foo" {
+        [Frame 4]
+    }
 }
 
 
@@ -244,27 +244,27 @@ database "MySql" {
 @startuml
 
 package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+    HTTP - [First Component]
+    [Another Component]
 }
 
 node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
+    FTP - [Second Component]
+    [First Component] --> FTP
 }
 
 cloud {
-  [Example 1]
+    [Example 1]
 }
 
 
 database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
+    folder "This is my folder" {
+        [Folder 3]
+    }
+    frame "Foo" {
+        [Frame 4]
+    }
 }
 
 
@@ -408,13 +408,13 @@ task.4 --> task.5 : Label 4
 @startuml
 [i]
 node node {
-  portin p1
-  portin p2
-  portin p3
-  portout po1
-  portout po2
-  portout po3
-  file f1
+    portin p1
+    portin p2
+    portin p3
+    portout po1
+    portout po2
+    portout po3
+    file f1
 }
 [o]
 
@@ -435,13 +435,13 @@ f1 --> po1
 @startuml
 [i]
 node node {
-  portin p1
-  portin p2
-  portin p3
-  portout po1
-  portout po2
-  portout po3
-  file f1
+    portin p1
+    portin p2
+    portin p3
+    portout po1
+    portout po2
+    portout po3
+    file f1
 }
 [o]
 
@@ -545,7 +545,7 @@ Server -> Client@+25 : 304 Not Modified
 ```{uml}
 @startuml
 skinparam rectangle<<behavior>> {
-	roundCorner 25
+    roundCorner 25
 }
 sprite $bProcess jar:archimate/business-process
 sprite $aService jar:archimate/application-service
@@ -613,7 +613,7 @@ endlegend
 ```bash
 @startuml
 skinparam rectangle<<behavior>> {
-	roundCorner 25
+    roundCorner 25
 }
 sprite $bProcess jar:archimate/business-process
 sprite $aService jar:archimate/application-service
@@ -735,10 +735,10 @@ title Chronology Diagram
 ```{uml}
 @startmindmap
 * root node
-	* some first level node
-		* second level node
-		* another second level node
-	* another first level node
+    * some first level node
+        * second level node
+        * another second level node
+    * another first level node
 @endmindmap
 ```
 
@@ -746,10 +746,10 @@ title Chronology Diagram
 ```bash
 @startmindmap
 * root node
-	* some first level node
-		* second level node
-		* another second level node
-	* another first level node
+    * some first level node
+        * second level node
+        * another second level node
+    * another first level node
 @endmindmap
 ```
 ````
@@ -798,28 +798,30 @@ title Chronology Diagram
 #highlight "address" / "city"
 #highlight "phoneNumbers" / "0" / "number"
 {
-  "firstName": "John",
-  "lastName": "Smith",
-  "isAlive": true,
-  "age": 28,
-  "address": {
-    "streetAddress": "21 2nd Street",
-    "city": "New York",
-    "state": "NY",
-    "postalCode": "10021-3100"
-  },
-  "phoneNumbers": [
-    {
-      "type": "home",
-      "number": "212 555-1234"
-    },
-    {
-      "type": "office",
-      "number": "646 555-4567"
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 28,
+    "address": {
+        "streetAddress": "21 2nd Street",
+        "city": "New York",
+        "state": "NY",
+        "postalCode": "10021-3100"
     }
-  ],
-  "children": [],
-  "spouse": null
+    ,
+    "phoneNumbers": [
+    {
+        "type": "home",
+        "number": "212 555-1234"
+    }
+    ,
+    {
+        "type": "office",
+        "number": "646 555-4567"
+    }
+    ],
+    "children": [],
+    "spouse": null
 }
 @endjson
 ```
@@ -831,28 +833,30 @@ title Chronology Diagram
 #highlight "address" / "city"
 #highlight "phoneNumbers" / "0" / "number"
 {
-  "firstName": "John",
-  "lastName": "Smith",
-  "isAlive": true,
-  "age": 28,
-  "address": {
-    "streetAddress": "21 2nd Street",
-    "city": "New York",
-    "state": "NY",
-    "postalCode": "10021-3100"
-  },
-  "phoneNumbers": [
-    {
-      "type": "home",
-      "number": "212 555-1234"
-    },
-    {
-      "type": "office",
-      "number": "646 555-4567"
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 28,
+    "address": {
+        "streetAddress": "21 2nd Street",
+        "city": "New York",
+        "state": "NY",
+        "postalCode": "10021-3100"
     }
-  ],
-  "children": [],
-  "spouse": null
+    ,
+    "phoneNumbers": [
+    {
+        "type": "home",
+        "number": "212 555-1234"
+    }
+    ,
+    {
+        "type": "office",
+        "number": "646 555-4567"
+    }
+    ],
+    "children": [],
+    "spouse": null
 }
 @endjson
 ```
@@ -871,18 +875,18 @@ pi: 3.14159
 xmas: true
 french-hens: 3
 calling-birds:
-	- huey
-	- dewey
-	- louie
-	- fred
+- huey
+- dewey
+- louie
+- fred
 xmas-fifth-day:
-	calling-birds: four
-	french-hens: 3
-	golden-rings: 5
-	partridges:
-		count: 1
-		location: "a pear tree"
-	turtle-doves: two
+calling-birds: four
+french-hens: 3
+golden-rings: 5
+partridges:
+count: 1
+location: "a pear tree"
+turtle-doves: two
 @endyaml
 ```
 
@@ -898,18 +902,444 @@ pi: 3.14159
 xmas: true
 french-hens: 3
 calling-birds:
-	- huey
-	- dewey
-	- louie
-	- fred
+- huey
+- dewey
+- louie
+- fred
 xmas-fifth-day:
-	calling-birds: four
-	french-hens: 3
-	golden-rings: 5
-	partridges:
-		count: 1
-		location: "a pear tree"
-	turtle-doves: two
+calling-birds: four
+french-hens: 3
+golden-rings: 5
+partridges:
+count: 1
+location: "a pear tree"
+turtle-doves: two
 @endyaml
+```
+````
+
+## EBNF
+
+```{uml}
+@startebnf
+title All EBNF elements managed by PlantUML
+
+(* Nodes *)
+litteral = "a";
+special = ? a ?;
+rule = a;
+
+(* Edges *)
+required = a;
+optional = [a];
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {',', a}];
+one_or_more_with_separator = a, {',', a};
+zero_or_more_with_terminator = {a, ','};
+one_or_more_with_terminator = a, ',', {a, ','};
+one_or_more_with_terminator_ebnf = {a, ','}-;
+
+alternative = a | b;
+group = (a | b) , c;
+without_group = a | b , c;
+@endebnf
+```
+
+````{dropdown} 源代码
+```bash
+@startebnf
+title All EBNF elements managed by PlantUML
+
+(* Nodes *)
+litteral = "a";
+special = ? a ?;
+rule = a;
+
+(* Edges *)
+required = a;
+optional = [a];
+
+zero_or_more = {a};
+one_or_more = a, {a};
+one_or_more_ebnf = {a}-;
+
+zero_or_more_with_separator = [a, {',', a}];
+one_or_more_with_separator = a, {',', a};
+zero_or_more_with_terminator = {a, ','};
+one_or_more_with_terminator = a, ',', {a, ','};
+one_or_more_with_terminator_ebnf = {a, ','}-;
+
+alternative = a | b;
+group = (a | b) , c;
+without_group = a | b , c;
+@endebnf
+```
+````
+
+## Regex
+
+```{uml}
+@startregex
+title repetitionEquivalance
+a{0,1}b{1,} is the same as a?b+
+@endregex
+```
+
+````{dropdown} 源代码
+```bash
+@startregex
+title repetitionEquivalance
+a{0,1}b{1,} is the same as a?b+
+@endregex
+```
+````
+
+## nwdiag
+
+```{uml}
+@startuml
+nwdiag {
+    network dmz {
+        address = "210.x.x.x/24"
+
+        web01 [address = "210.x.x.1"];
+        web02 [address = "210.x.x.2"];
+    }
+    network internal {
+        address = "172.x.x.x/24";
+
+        web01 [address = "172.x.x.1"];
+        web02 [address = "172.x.x.2"];
+        db01;
+        db02;
+    }
+}
+@enduml
+```
+
+````{dropdown} 源代码
+```bash
+@startuml
+nwdiag {
+    network dmz {
+        address = "210.x.x.x/24"
+
+        web01 [address = "210.x.x.1"];
+        web02 [address = "210.x.x.2"];
+    }
+    network internal {
+        address = "172.x.x.x/24";
+
+        web01 [address = "172.x.x.1"];
+        web02 [address = "172.x.x.2"];
+        db01;
+        db02;
+    }
+}
+@enduml
+```
+````
+
+## JLaTeXMath
+
+```{uml}
+@startuml
+Bob -> Alice : Can you solve: <math>ax^2+bx+c=0</math>
+Alice --> Bob: <math>x = (-b+-sqrt(b^2-4ac))/(2a)</math>
+@enduml
+```
+
+````{dropdown} 源代码
+```bash
+@startuml
+Bob -> Alice : Can you solve: <math>ax^2+bx+c=0</math>
+Alice --> Bob: <math>x = (-b+-sqrt(b^2-4ac))/(2a)</math>
+@enduml
+```
+````
+
+## ER 图
+
+```{uml}
+@startchen movies
+<style>
+.red {
+    BackGroundColor Red
+    FontColor White
+}
+.blue {
+    BackGroundColor Blue
+    FontColor White
+}
+</style>
+
+entity "Director" as DIRECTOR {
+    "No." as Number <<key>>
+    Name {
+        Fname
+        Lname
+    }
+    Born : DATE
+    Died<<red>>
+    Age<<blue>>
+}
+
+entity "Customer" as CUSTOMER {
+    Number <<key>>
+    Bonus <<derived>>
+    Name <<multi>>
+}
+
+entity "Movie" as MOVIE {
+    Code
+}
+
+relationship "was-rented-to" as RENTED_TO {
+    Date
+}
+
+RENTED_TO -1- CUSTOMER
+RENTED_TO -N- MOVIE
+RENTED_TO -(N,M)- DIRECTOR
+
+entity "Parent" as PARENT {
+}
+
+entity "Member" as MEMBER {
+}
+
+CUSTOMER ->- PARENT
+MEMBER -<- CUSTOMER
+
+entity "Kid" as CHILD <<weak>> {
+    Name <<key>>
+}
+
+relationship "is-parent-of" as PARENT_OF <<identifying>> {
+}
+
+PARENT_OF -1- PARENT
+PARENT_OF =N= CHILD
+
+entity "Little Kid" as TODDLER {
+    FavoriteToy
+}
+
+entity "Primary-Aged Kid" as PRIMARY_AGE {
+    FavoriteColor
+}
+
+entity "Teenager" as TEEN {
+    Hobby
+}
+
+CHILD =>= d { TODDLER, PRIMARY_AGE, TEEN }
+
+entity "Human" as PERSON {
+}
+
+PERSON ->- U { CUSTOMER, DIRECTOR }
+@endchen
+```
+
+````{dropdown} 源代码
+```bash
+@startchen movies
+<style>
+.red {
+    BackGroundColor Red
+    FontColor White
+}
+.blue {
+    BackGroundColor Blue
+    FontColor White
+}
+</style>
+
+entity "Director" as DIRECTOR {
+    "No." as Number <<key>>
+    Name {
+        Fname
+        Lname
+    }
+    Born : DATE
+    Died<<red>>
+    Age<<blue>>
+}
+
+entity "Customer" as CUSTOMER {
+    Number <<key>>
+    Bonus <<derived>>
+    Name <<multi>>
+}
+
+entity "Movie" as MOVIE {
+    Code
+}
+
+relationship "was-rented-to" as RENTED_TO {
+    Date
+}
+
+RENTED_TO -1- CUSTOMER
+RENTED_TO -N- MOVIE
+RENTED_TO -(N,M)- DIRECTOR
+
+entity "Parent" as PARENT {
+}
+
+entity "Member" as MEMBER {
+}
+
+CUSTOMER ->- PARENT
+MEMBER -<- CUSTOMER
+
+entity "Kid" as CHILD <<weak>> {
+    Name <<key>>
+}
+
+relationship "is-parent-of" as PARENT_OF <<identifying>> {
+}
+
+PARENT_OF -1- PARENT
+PARENT_OF =N= CHILD
+
+entity "Little Kid" as TODDLER {
+    FavoriteToy
+}
+
+entity "Primary-Aged Kid" as PRIMARY_AGE {
+    FavoriteColor
+}
+
+entity "Teenager" as TEEN {
+    Hobby
+}
+
+CHILD =>= d { TODDLER, PRIMARY_AGE, TEEN }
+
+entity "Human" as PERSON {
+}
+
+PERSON ->- U { CUSTOMER, DIRECTOR }
+@endchen
+```
+````
+
+## 箭头样式
+
+```{uml}
+@startuml
+participant Alice as a
+participant Bob   as b
+a ->     b : ""->   ""
+a ->>    b : ""->>  ""
+a -\     b : ""-\   ""
+a -\\    b : ""-\\\\""
+a -/     b : ""-/   ""
+a -//    b : ""-//  ""
+a ->x    b : ""->x  ""
+a x->    b : ""x->  ""
+a o->    b : ""o->  ""
+a ->o    b : ""->o  ""
+a o->o   b : ""o->o ""
+a <->    b : ""<->  ""
+a o<->o  b : ""o<->o""
+a x<->x  b : ""x<->x""
+a ->>o   b : ""->>o ""
+a -\o    b : ""-\o  ""
+a -\\o   b : ""-\\\\o""
+a -/o    b : ""-/o  ""
+a -//o   b : ""-//o ""
+a x->o   b : ""x->o ""
+@enduml
+```
+
+````{dropdown} 源代码
+```bash
+@startuml
+participant Alice as a
+participant Bob   as b
+a ->     b : ""->   ""
+a ->>    b : ""->>  ""
+a -\     b : ""-\   ""
+a -\\    b : ""-\\\\""
+a -/     b : ""-/   ""
+a -//    b : ""-//  ""
+a ->x    b : ""->x  ""
+a x->    b : ""x->  ""
+a o->    b : ""o->  ""
+a ->o    b : ""->o  ""
+a o->o   b : ""o->o ""
+a <->    b : ""<->  ""
+a o<->o  b : ""o<->o""
+a x<->x  b : ""x<->x""
+a ->>o   b : ""->>o ""
+a -\o    b : ""-\o  ""
+a -\\o   b : ""-\\\\o""
+a -/o    b : ""-/o  ""
+a -//o   b : ""-//o ""
+a x->o   b : ""x->o ""
+@enduml
+```
+````
+
+## 箭头颜色
+
+```{uml}
+@startuml
+Bob -[#red]> Alice : hello
+Alice -[#0000FF]->Bob : ok
+@enduml
+```
+
+````{dropdown} 源代码
+```bash
+@startuml
+Bob -[#red]> Alice : hello
+Alice -[#0000FF]->Bob : ok
+@enduml
+```
+````
+
+## 填充色
+
+```{uml}
+@startuml
+agent a
+cloud c #pink;line:red;line.bold;text:red [
+c
+cloud description
+]
+file  f #palegreen;line:green;line.dashed;text:green {
+    [c1]
+    [c2]
+}
+frame frame {
+    node  n #aliceblue;line:blue;line.dotted;text:blue
+}
+@enduml
+```
+
+````{dropdown} 源代码
+```bash
+@startuml
+agent a
+cloud c #pink;line:red;line.bold;text:red [
+c
+cloud description
+]
+file  f #palegreen;line:green;line.dashed;text:green {
+    [c1]
+    [c2]
+}
+frame frame {
+    node  n #aliceblue;line:blue;line.dotted;text:blue
+}
+@enduml
 ```
 ````
