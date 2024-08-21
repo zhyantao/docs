@@ -40,3 +40,241 @@ endif
 stop
 @enduml
 ```
+
+```{uml}
+@startuml
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+
+package kernel.ld {
+    rectangle OUTPUT_ARCH <<$aService>> #Application
+    rectangle ENTRY <<$bProcess>> #Business
+}
+package entry.S {
+    rectangle _entry <<$bProcess>> #Business
+    rectangle spin <<$bProcess>> #Business
+}
+package start.c {
+    rectangle start <<$bProcess>> #Business
+    rectangle timerinit <<$bProcess>> #Business
+}
+package main.c {
+    rectangle main <<$bProcess>> #Business
+}
+package spinlock.c {
+    rectangle initlock <<$bProcess>> #Business
+    rectangle acquire <<$bProcess>> #Business
+    rectangle release <<$bProcess>> #Business
+    rectangle holding <<$bProcess>> #Business
+    rectangle push_off <<$bProcess>> #Business
+    rectangle pop_off <<$bProcess>> #Business
+}
+package printf.c {
+    rectangle printfint <<$bProcess>> #Business
+    rectangle printptr <<$bProcess>> #Business
+    rectangle printf <<$bProcess>> #Business
+    rectangle panic <<$bProcess>> #Business
+    rectangle printfinit <<$bProcess>> #Business
+}
+package uart.c {
+    rectangle uartinit <<$bProcess>> #Business
+    rectangle uartputc <<$bProcess>> #Business
+    rectangle uartputc_sync <<$bProcess>> #Business
+    rectangle uartstart <<$bProcess>> #Business
+    rectangle uartgetc <<$bProcess>> #Business
+    rectangle uartintr <<$bProcess>> #Business
+}
+package console.c {
+    rectangle consputc <<$bProcess>> #Business
+    rectangle consolewrite <<$bProcess>> #Business
+    rectangle consoleread <<$bProcess>> #Business
+    rectangle consoleintr <<$bProcess>> #Business
+    rectangle consoleinit <<$bProcess>> #Business
+}
+package swtch.S {
+    rectangle swtch <<$bProcess>> #Business
+}
+package kernelvec.S {
+    rectangle kernelvec <<$bProcess>> #Business
+    rectangle timervec <<$bProcess>> #Business
+}
+package trampoline.S {
+    rectangle trampoline <<$bProcess>> #Business
+    rectangle uservec <<$bProcess>> #Business
+    rectangle userret <<$bProcess>> #Business
+}
+package kalloc.c {
+    rectangle kinit <<$bProcess>> #Business
+    rectangle freerange <<$bProcess>> #Business
+    rectangle kfree <<$bProcess>> #Business
+    rectangle kalloc <<$bProcess>> #Business
+}
+package vm.c {
+    rectangle kvminit <<$bProcess>> #Business
+    rectangle kvminithart <<$bProcess>> #Business
+    rectangle walk <<$bProcess>> #Business
+    rectangle walkaddr <<$bProcess>> #Business
+    rectangle kvmmap <<$bProcess>> #Business
+    rectangle kvmpa <<$bProcess>> #Business
+    rectangle mappages <<$bProcess>> #Business
+    rectangle kvmcreate <<$bProcess>> #Business
+    rectangle uvmunmap <<$bProcess>> #Business
+    rectangle uvmcreate <<$bProcess>> #Business
+    rectangle uvminit <<$bProcess>> #Business
+    rectangle uvmalloc <<$bProcess>> #Business
+    rectangle uvmdealloc <<$bProcess>> #Business
+    rectangle freewalk <<$bProcess>> #Business
+    rectangle uvmfree <<$bProcess>> #Business
+    rectangle kvmfree <<$bProcess>> #Business
+    rectangle uvmcopy <<$bProcess>> #Business
+    rectangle uvmclear <<$bProcess>> #Business
+    rectangle copyout <<$bProcess>> #Business
+    rectangle coupyin <<$bProcess>> #Business
+    rectangle copyinstr <<$bProcess>> #Business
+    rectangle vmprint2 <<$bProcess>> #Business
+    rectangle vmprint <<$bProcess>> #Business
+}
+package proc.c {
+    rectangle procinit <<$bProcess>> #Business
+    rectangle cpuid <<$bProcess>> #Business
+    rectangle mycpu <<$bProcess>> #Business
+    rectangle myproc <<$bProcess>> #Business
+    rectangle allocpid <<$bProcess>> #Business
+    rectangle allocproc <<$bProcess>> #Business
+    rectangle freeproc <<$bProcess>> #Business
+    rectangle proc_pagetable <<$bProcess>> #Business
+    rectangle proc_freepagetable <<$bProcess>> #Business
+    rectangle userinit <<$bProcess>> #Business
+    rectangle growproc <<$bProcess>> #Business
+    rectangle fork <<$bProcess>> #Business
+    rectangle reparent <<$bProcess>> #Business
+    rectangle exit <<$bProcess>> #Business
+    rectangle wait <<$bProcess>> #Business
+    rectangle scheduler <<$bProcess>> #Business
+    rectangle sched <<$bProcess>> #Business
+    rectangle yield <<$bProcess>> #Business
+    rectangle forkret <<$bProcess>> #Business
+    rectangle sleep <<$bProcess>> #Business
+    rectangle wakeup <<$bProcess>> #Business
+    rectangle kill <<$bProcess>> #Business
+    rectangle either_copyout <<$bProcess>> #Business
+    rectangle either_copyin <<$bProcess>> #Business
+    rectangle procdump <<$bProcess>> #Business
+}
+package trap.c {
+    rectangle trapinit <<$bProcess>> #Business
+    rectangle trapinithart <<$bProcess>> #Business
+    rectangle usertrap <<$bProcess>> #Business
+    rectangle usertrapret <<$bProcess>> #Business
+    rectangle kerneltrap <<$bProcess>> #Business
+    rectangle clockintr <<$bProcess>> #Business
+    rectangle deintr <<$bProcess>> #Business
+}
+package plic.c {
+    rectangle plicinit <<$bProcess>> #Business
+    rectangle plicinithart <<$bProcess>> #Business
+    rectangle plic_claim <<$bProcess>> #Business
+    rectangle plic_complete <<$bProcess>> #Business
+}
+package bio.c {
+    rectangle binit <<$bProcess>> #Business
+    rectangle bget <<$bProcess>> #Business
+    rectangle bread <<$bProcess>> #Business
+    rectangle bwrite <<$bProcess>> #Business
+    rectangle brelse <<$bProcess>> #Business
+    rectangle bpin <<$bProcess>> #Business
+    rectangle bunpin <<$bProcess>> #Business
+}
+package fs.c {
+    rectangle readsb <<$bProcess>> #Business
+    rectangle fsinit <<$bProcess>> #Business
+    rectangle bzero <<$bProcess>> #Business
+    rectangle balloc <<$bProcess>> #Business
+    rectangle bfree <<$bProcess>> #Business
+    rectangle iinit <<$bProcess>> #Business
+    rectangle iget <<$bProcess>> #Business
+    rectangle ialloc <<$bProcess>> #Business
+    rectangle iupdate <<$bProcess>> #Business
+    rectangle idup <<$bProcess>> #Business
+    rectangle ilock <<$bProcess>> #Business
+    rectangle iunlock <<$bProcess>> #Business
+    rectangle iput <<$bProcess>> #Business
+    rectangle iunlockput <<$bProcess>> #Business
+    rectangle bmap <<$bProcess>> #Business
+    rectangle itrunc <<$bProcess>> #Business
+    rectangle stati <<$bProcess>> #Business
+    rectangle readi <<$bProcess>> #Business
+    rectangle writei <<$bProcess>> #Business
+    rectangle namecmp <<$bProcess>> #Business
+    rectangle dirlookup <<$bProcess>> #Business
+    rectangle dirlink <<$bProcess>> #Business
+    rectangle skipelem <<$bProcess>> #Business
+    rectangle namex <<$bProcess>> #Business
+    rectangle namei <<$bProcess>> #Business
+    rectangle nameiparent <<$bProcess>> #Business
+}
+package file.c {
+    rectangle fileinit <<$bProcess>> #Business
+    rectangle filealloc <<$bProcess>> #Business
+    rectangle filedup <<$bProcess>> #Business
+    rectangle fileclose <<$bProcess>> #Business
+    rectangle filestat <<$bProcess>> #Business
+    rectangle fileread <<$bProcess>> #Business
+    rectangle filewrite <<$bProcess>> #Business
+}
+package virtio_disk.c {
+    rectangle virtio_disk_init <<$bProcess>> #Business
+    rectangle alloc_desc <<$bProcess>> #Business
+    rectangle free_desc <<$bProcess>> #Business
+    rectangle free_chain <<$bProcess>> #Business
+    rectangle alloc3_desc <<$bProcess>> #Business
+    rectangle virtio_disk_rw <<$bProcess>> #Business
+    rectangle virtio_disk_intr <<$bProcess>> #Business
+}
+package riscv.h {
+    rectangle w_satp <<$bProcess>> #Business
+    rectangle sfence_vma <<$bProcess>> #Business
+}
+
+OUTPUT_ARCH --> ENTRY
+ENTRY --> _entry
+_entry --> start
+start --> main
+
+/' main.c '/
+main --> consoleinit
+main --> printfinit
+main --> kinit
+main --> kvminit
+main --> procinit
+main --> trapinit
+main --> trapinithart
+main --> plicinit
+main --> plicinithart
+main --> binit
+main --> iinit
+main --> fileinit
+main --> virtio_disk_init
+main --> userinit
+main --> scheduler
+
+/' console.c '/
+' consoleinit --> initlock
+consoleinit --> uartinit
+
+/' printf.c '/
+' printfinit --> initlock
+
+/' kalloc.c '/
+' kinit --> initlock
+kinit --> freerange
+
+/' vm.c '/
+kvminit --> kalloc
+kvminit --> kvmmap
+kvminithart --> w_satp
+kvminithart --> sfence_vma
+
+@enduml
+```
