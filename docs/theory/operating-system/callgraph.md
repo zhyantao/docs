@@ -43,213 +43,213 @@ stop
 
 ```{uml}
 @startuml
-sprite $bFunction jar:archimate/business-process
-sprite $aMacro jar:archimate/application-service
-sprite $aGlobal jar:archimate/application-component
+sprite $function jar:archimate/business-process
+sprite $macro jar:archimate/application-service
+sprite $global jar:archimate/technology-node
 
 package kernel.ld {
-    rectangle OUTPUT_ARCH <<$aMacro>> #Application
-    rectangle ENTRY <<$bFunction>> #Business
-    rectangle etext <<$aGlobal>> #Application
+    rectangle OUTPUT_ARCH <<$macro>>
+    rectangle ENTRY <<$function>>
+    rectangle etext <<$global>>
 }
 package entry.S {
-    rectangle _entry <<$bFunction>> #Business
-    rectangle spin <<$bFunction>> #Business
+    rectangle _entry <<$function>>
+    rectangle spin <<$function>>
 }
 package start.c {
-    rectangle start <<$bFunction>> #Business
-    rectangle timerinit <<$bFunction>> #Business
+    rectangle start <<$function>>
+    rectangle timerinit <<$function>>
 }
 package main.c {
-    rectangle main <<$bFunction>> #Business
+    rectangle main <<$function>>
 }
 package spinlock.c {
-    rectangle initlock <<$bFunction>> #Business
-    rectangle acquire <<$bFunction>> #Business
-    rectangle release <<$bFunction>> #Business
-    rectangle holding <<$bFunction>> #Business
-    rectangle push_off <<$bFunction>> #Business
-    rectangle pop_off <<$bFunction>> #Business
+    rectangle initlock <<$function>>
+    rectangle acquire <<$function>>
+    rectangle release <<$function>>
+    rectangle holding <<$function>>
+    rectangle push_off <<$function>>
+    rectangle pop_off <<$function>>
 }
 package printf.c {
-    rectangle printfint <<$bFunction>> #Business
-    rectangle printptr <<$bFunction>> #Business
-    rectangle printf <<$bFunction>> #Business
-    rectangle panic <<$bFunction>> #Business
-    rectangle printfinit <<$bFunction>> #Business
+    rectangle printfint <<$function>>
+    rectangle printptr <<$function>>
+    rectangle printf <<$function>>
+    rectangle panic <<$function>>
+    rectangle printfinit <<$function>>
 }
 package uart.c {
-    rectangle uartinit <<$bFunction>> #Business
-    rectangle uartputc <<$bFunction>> #Business
-    rectangle uartputc_sync <<$bFunction>> #Business
-    rectangle uartstart <<$bFunction>> #Business
-    rectangle uartgetc <<$bFunction>> #Business
-    rectangle uartintr <<$bFunction>> #Business
+    rectangle uartinit <<$function>>
+    rectangle uartputc <<$function>>
+    rectangle uartputc_sync <<$function>>
+    rectangle uartstart <<$function>>
+    rectangle uartgetc <<$function>>
+    rectangle uartintr <<$function>>
 }
 package console.c {
-    rectangle consputc <<$bFunction>> #Business
-    rectangle consolewrite <<$bFunction>> #Business
-    rectangle consoleread <<$bFunction>> #Business
-    rectangle consoleintr <<$bFunction>> #Business
-    rectangle consoleinit <<$bFunction>> #Business
+    rectangle consputc <<$function>>
+    rectangle consolewrite <<$function>>
+    rectangle consoleread <<$function>>
+    rectangle consoleintr <<$function>>
+    rectangle consoleinit <<$function>>
 }
 package swtch.S {
-    rectangle swtch <<$bFunction>> #Business
+    rectangle swtch <<$function>>
 }
 package kernelvec.S {
-    rectangle kernelvec <<$bFunction>> #Business
-    rectangle timervec <<$bFunction>> #Business
+    rectangle kernelvec <<$function>>
+    rectangle timervec <<$function>>
 }
 package trampoline.S {
-    rectangle uservec <<$bFunction>> #Business
-    rectangle userret <<$bFunction>> #Business
-    rectangle trampoline <<$aGlobal>> #Application
+    rectangle uservec <<$function>>
+    rectangle userret <<$function>>
+    rectangle trampoline <<$global>>
 }
 package kalloc.c {
-    rectangle kinit <<$bFunction>> #Business
-    rectangle freerange <<$bFunction>> #Business
-    rectangle kfree <<$bFunction>> #Business
-    rectangle kalloc <<$bFunction>> #Business
+    rectangle kinit <<$function>>
+    rectangle freerange <<$function>>
+    rectangle kfree <<$function>>
+    rectangle kalloc <<$function>>
 }
 package vm.c {
-    rectangle kvminit <<$bFunction>> #Business
-    rectangle kvminithart <<$bFunction>> #Business
-    rectangle walk <<$bFunction>> #Business
-    rectangle walkaddr <<$bFunction>> #Business
-    rectangle kvmmap <<$bFunction>> #Business
-    rectangle kvmpa <<$bFunction>> #Business
-    rectangle mappages <<$bFunction>> #Business
-    rectangle kvmcreate <<$bFunction>> #Business
-    rectangle uvmunmap <<$bFunction>> #Business
-    rectangle uvmcreate <<$bFunction>> #Business
-    rectangle uvminit <<$bFunction>> #Business
-    rectangle uvmalloc <<$bFunction>> #Business
-    rectangle uvmdealloc <<$bFunction>> #Business
-    rectangle freewalk <<$bFunction>> #Business
-    rectangle uvmfree <<$bFunction>> #Business
-    rectangle kvmfree <<$bFunction>> #Business
-    rectangle uvmcopy <<$bFunction>> #Business
-    rectangle uvmclear <<$bFunction>> #Business
-    rectangle copyout <<$bFunction>> #Business
-    rectangle coupyin <<$bFunction>> #Business
-    rectangle copyinstr <<$bFunction>> #Business
-    rectangle vmprint2 <<$bFunction>> #Business
-    rectangle vmprint <<$bFunction>> #Business
-    rectangle kernel_pagetable <<$aGlobal>> #Application
+    rectangle kvminit <<$function>>
+    rectangle kvminithart <<$function>>
+    rectangle walk <<$function>>
+    rectangle walkaddr <<$function>>
+    rectangle kvmmap <<$function>>
+    rectangle kvmpa <<$function>>
+    rectangle mappages <<$function>>
+    rectangle kvmcreate <<$function>>
+    rectangle uvmunmap <<$function>>
+    rectangle uvmcreate <<$function>>
+    rectangle uvminit <<$function>>
+    rectangle uvmalloc <<$function>>
+    rectangle uvmdealloc <<$function>>
+    rectangle freewalk <<$function>>
+    rectangle uvmfree <<$function>>
+    rectangle kvmfree <<$function>>
+    rectangle uvmcopy <<$function>>
+    rectangle uvmclear <<$function>>
+    rectangle copyout <<$function>>
+    rectangle coupyin <<$function>>
+    rectangle copyinstr <<$function>>
+    rectangle vmprint2 <<$function>>
+    rectangle vmprint <<$function>>
+    rectangle kernel_pagetable <<$global>>
 }
 package proc.c {
-    rectangle procinit <<$bFunction>> #Business
-    rectangle cpuid <<$bFunction>> #Business
-    rectangle mycpu <<$bFunction>> #Business
-    rectangle myproc <<$bFunction>> #Business
-    rectangle allocpid <<$bFunction>> #Business
-    rectangle allocproc <<$bFunction>> #Business
-    rectangle freeproc <<$bFunction>> #Business
-    rectangle proc_pagetable <<$bFunction>> #Business
-    rectangle proc_freepagetable <<$bFunction>> #Business
-    rectangle userinit <<$bFunction>> #Business
-    rectangle growproc <<$bFunction>> #Business
-    rectangle fork <<$bFunction>> #Business
-    rectangle reparent <<$bFunction>> #Business
-    rectangle exit <<$bFunction>> #Business
-    rectangle wait <<$bFunction>> #Business
-    rectangle scheduler <<$bFunction>> #Business
-    rectangle sched <<$bFunction>> #Business
-    rectangle yield <<$bFunction>> #Business
-    rectangle forkret <<$bFunction>> #Business
-    rectangle sleep <<$bFunction>> #Business
-    rectangle wakeup <<$bFunction>> #Business
-    rectangle kill <<$bFunction>> #Business
-    rectangle either_copyout <<$bFunction>> #Business
-    rectangle either_copyin <<$bFunction>> #Business
-    rectangle procdump <<$bFunction>> #Business
-    rectangle cpus <<$aGlobal>> #Application
-    rectangle proc <<$aGlobal>> #Application
-    rectangle initpid <<$aGlobal>> #Application
-    rectangle nextpid <<$aGlobal>> #Application
-    rectangle pid_lock <<$aGlobal>> #Application
+    rectangle procinit <<$function>>
+    rectangle cpuid <<$function>>
+    rectangle mycpu <<$function>>
+    rectangle myproc <<$function>>
+    rectangle allocpid <<$function>>
+    rectangle allocproc <<$function>>
+    rectangle freeproc <<$function>>
+    rectangle proc_pagetable <<$function>>
+    rectangle proc_freepagetable <<$function>>
+    rectangle userinit <<$function>>
+    rectangle growproc <<$function>>
+    rectangle fork <<$function>>
+    rectangle reparent <<$function>>
+    rectangle exit <<$function>>
+    rectangle wait <<$function>>
+    rectangle scheduler <<$function>>
+    rectangle sched <<$function>>
+    rectangle yield <<$function>>
+    rectangle forkret <<$function>>
+    rectangle sleep <<$function>>
+    rectangle wakeup <<$function>>
+    rectangle kill <<$function>>
+    rectangle either_copyout <<$function>>
+    rectangle either_copyin <<$function>>
+    rectangle procdump <<$function>>
+    rectangle cpus <<$global>>
+    rectangle proc <<$global>>
+    rectangle initpid <<$global>>
+    rectangle nextpid <<$global>>
+    rectangle pid_lock <<$global>>
 }
 package trap.c {
-    rectangle trapinit <<$bFunction>> #Business
-    rectangle trapinithart <<$bFunction>> #Business
-    rectangle usertrap <<$bFunction>> #Business
-    rectangle usertrapret <<$bFunction>> #Business
-    rectangle kerneltrap <<$bFunction>> #Business
-    rectangle clockintr <<$bFunction>> #Business
-    rectangle deintr <<$bFunction>> #Business
+    rectangle trapinit <<$function>>
+    rectangle trapinithart <<$function>>
+    rectangle usertrap <<$function>>
+    rectangle usertrapret <<$function>>
+    rectangle kerneltrap <<$function>>
+    rectangle clockintr <<$function>>
+    rectangle deintr <<$function>>
 }
 package plic.c {
-    rectangle plicinit <<$bFunction>> #Business
-    rectangle plicinithart <<$bFunction>> #Business
-    rectangle plic_claim <<$bFunction>> #Business
-    rectangle plic_complete <<$bFunction>> #Business
+    rectangle plicinit <<$function>>
+    rectangle plicinithart <<$function>>
+    rectangle plic_claim <<$function>>
+    rectangle plic_complete <<$function>>
 }
 package bio.c {
-    rectangle binit <<$bFunction>> #Business
-    rectangle bget <<$bFunction>> #Business
-    rectangle bread <<$bFunction>> #Business
-    rectangle bwrite <<$bFunction>> #Business
-    rectangle brelse <<$bFunction>> #Business
-    rectangle bpin <<$bFunction>> #Business
-    rectangle bunpin <<$bFunction>> #Business
+    rectangle binit <<$function>>
+    rectangle bget <<$function>>
+    rectangle bread <<$function>>
+    rectangle bwrite <<$function>>
+    rectangle brelse <<$function>>
+    rectangle bpin <<$function>>
+    rectangle bunpin <<$function>>
     frame bcache {
-        rectangle spinlock <<$aMacro>> #Application
-        rectangle buf <<$aMacro>> #Application
-        rectangle head <<$aMacro>> #Application
+        rectangle spinlock <<$macro>>
+        rectangle buf <<$macro>>
+        rectangle head <<$macro>>
     }
 }
 package fs.c {
-    rectangle readsb <<$bFunction>> #Business
-    rectangle fsinit <<$bFunction>> #Business
-    rectangle bzero <<$bFunction>> #Business
-    rectangle balloc <<$bFunction>> #Business
-    rectangle bfree <<$bFunction>> #Business
-    rectangle iinit <<$bFunction>> #Business
-    rectangle iget <<$bFunction>> #Business
-    rectangle ialloc <<$bFunction>> #Business
-    rectangle iupdate <<$bFunction>> #Business
-    rectangle idup <<$bFunction>> #Business
-    rectangle ilock <<$bFunction>> #Business
-    rectangle iunlock <<$bFunction>> #Business
-    rectangle iput <<$bFunction>> #Business
-    rectangle iunlockput <<$bFunction>> #Business
-    rectangle bmap <<$bFunction>> #Business
-    rectangle itrunc <<$bFunction>> #Business
-    rectangle stati <<$bFunction>> #Business
-    rectangle readi <<$bFunction>> #Business
-    rectangle writei <<$bFunction>> #Business
-    rectangle namecmp <<$bFunction>> #Business
-    rectangle dirlookup <<$bFunction>> #Business
-    rectangle dirlink <<$bFunction>> #Business
-    rectangle skipelem <<$bFunction>> #Business
-    rectangle namex <<$bFunction>> #Business
-    rectangle namei <<$bFunction>> #Business
-    rectangle nameiparent <<$bFunction>> #Business
+    rectangle readsb <<$function>>
+    rectangle fsinit <<$function>>
+    rectangle bzero <<$function>>
+    rectangle balloc <<$function>>
+    rectangle bfree <<$function>>
+    rectangle iinit <<$function>>
+    rectangle iget <<$function>>
+    rectangle ialloc <<$function>>
+    rectangle iupdate <<$function>>
+    rectangle idup <<$function>>
+    rectangle ilock <<$function>>
+    rectangle iunlock <<$function>>
+    rectangle iput <<$function>>
+    rectangle iunlockput <<$function>>
+    rectangle bmap <<$function>>
+    rectangle itrunc <<$function>>
+    rectangle stati <<$function>>
+    rectangle readi <<$function>>
+    rectangle writei <<$function>>
+    rectangle namecmp <<$function>>
+    rectangle dirlookup <<$function>>
+    rectangle dirlink <<$function>>
+    rectangle skipelem <<$function>>
+    rectangle namex <<$function>>
+    rectangle namei <<$function>>
+    rectangle nameiparent <<$function>>
 }
 package file.c {
-    rectangle fileinit <<$bFunction>> #Business
-    rectangle filealloc <<$bFunction>> #Business
-    rectangle filedup <<$bFunction>> #Business
-    rectangle fileclose <<$bFunction>> #Business
-    rectangle filestat <<$bFunction>> #Business
-    rectangle fileread <<$bFunction>> #Business
-    rectangle filewrite <<$bFunction>> #Business
+    rectangle fileinit <<$function>>
+    rectangle filealloc <<$function>>
+    rectangle filedup <<$function>>
+    rectangle fileclose <<$function>>
+    rectangle filestat <<$function>>
+    rectangle fileread <<$function>>
+    rectangle filewrite <<$function>>
 }
 package virtio_disk.c {
-    rectangle virtio_disk_init <<$bFunction>> #Business
-    rectangle alloc_desc <<$bFunction>> #Business
-    rectangle free_desc <<$bFunction>> #Business
-    rectangle free_chain <<$bFunction>> #Business
-    rectangle alloc3_desc <<$bFunction>> #Business
-    rectangle virtio_disk_rw <<$bFunction>> #Business
-    rectangle virtio_disk_intr <<$bFunction>> #Business
+    rectangle virtio_disk_init <<$function>>
+    rectangle alloc_desc <<$function>>
+    rectangle free_desc <<$function>>
+    rectangle free_chain <<$function>>
+    rectangle alloc3_desc <<$function>>
+    rectangle virtio_disk_rw <<$function>>
+    rectangle virtio_disk_intr <<$function>>
 }
 package riscv.h {
-    rectangle w_satp <<$bFunction>> #Business
-    rectangle sfence_vma <<$bFunction>> #Business
+    rectangle w_satp <<$function>>
+    rectangle sfence_vma <<$function>>
 }
 package memlayout.h {
-    rectangle TRAPFRAME <<$aMacro>> #Application
+    rectangle TRAPFRAME <<$macro>>
 }
 
 OUTPUT_ARCH -> ENTRY
