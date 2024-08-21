@@ -1,7 +1,43 @@
 # 调用图
 
+## 初始化流程
+
 ```{uml}
 @startuml
+
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package kernel.ld {
+    rectangle OUTPUT_ARCH <<$aMacro>> #Application
+    rectangle ENTRY <<$bFunction>> #Business
+    rectangle etext <<$tGlobal>> #Technology
+}
+package entry.S {
+    rectangle _entry <<$bFunction>> #Business
+    rectangle spin <<$bFunction>> #Business
+}
+package start.c {
+    rectangle start <<$bFunction>> #Business
+    rectangle timerinit <<$bFunction>> #Business
+}
+package main.c {
+    rectangle main <<$bFunction>> #Business
+}
+
+
+OUTPUT_ARCH -> ENTRY
+ENTRY -down-> _entry
+_entry -down-> start
+start -down-> main
+
+@enduml
+```
+
+```{uml}
+@startuml
+
 start
 if (cpuid()==0) then (yes)
     :kernel.ld: 加载 entry.S 到 0x80000000，指定程序入口 ENTRY;
@@ -38,39 +74,19 @@ else (no)
 endif
 :scheduler() 是一个循环，不断选择一个可运行的进程并切换到它;
 stop
+
 @enduml
 ```
 
+## 输入和输出
+
 ```{uml}
 @startuml
+
 sprite $bFunction jar:archimate/process
 sprite $aMacro jar:archimate/service
 sprite $tGlobal jar:archimate/node
 
-package kernel.ld {
-    rectangle OUTPUT_ARCH <<$aMacro>> #Application
-    rectangle ENTRY <<$bFunction>> #Business
-    rectangle etext <<$tGlobal>> #Technology
-}
-package entry.S {
-    rectangle _entry <<$bFunction>> #Business
-    rectangle spin <<$bFunction>> #Business
-}
-package start.c {
-    rectangle start <<$bFunction>> #Business
-    rectangle timerinit <<$bFunction>> #Business
-}
-package main.c {
-    rectangle main <<$bFunction>> #Business
-}
-package spinlock.c {
-    rectangle initlock <<$bFunction>> #Business
-    rectangle acquire <<$bFunction>> #Business
-    rectangle release <<$bFunction>> #Business
-    rectangle holding <<$bFunction>> #Business
-    rectangle push_off <<$bFunction>> #Business
-    rectangle pop_off <<$bFunction>> #Business
-}
 package printf.c {
     rectangle printfint <<$bFunction>> #Business
     rectangle printptr <<$bFunction>> #Business
@@ -105,18 +121,108 @@ package console.c {
         rectangle e <<$tGlobal>> #Technology
     }
 }
-package swtch.S {
-    rectangle swtch <<$bFunction>> #Business
-}
-package kernelvec.S {
-    rectangle kernelvec <<$bFunction>> #Business
-    rectangle timervec <<$bFunction>> #Business
+
+/' console.c '/
+consoleinit -> initlock
+consoleinit -up-> uartinit
+
+/' printf.c '/
+printfinit -> initlock
+
+@enduml
+```
+
+## 中断
+
+```{uml}
+@startuml
+
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package memlayout.h {
+    rectangle TRAPFRAME <<$aMacro>> #Application
 }
 package trampoline.S {
     rectangle uservec <<$bFunction>> #Business
     rectangle userret <<$bFunction>> #Business
     rectangle trampoline <<$tGlobal>> #Technology
 }
+package kernelvec.S {
+    rectangle kernelvec <<$bFunction>> #Business
+    rectangle timervec <<$bFunction>> #Business
+}
+package trap.c {
+    rectangle trapinit <<$bFunction>> #Business
+    rectangle trapinithart <<$bFunction>> #Business
+    rectangle usertrap <<$bFunction>> #Business
+    rectangle usertrapret <<$bFunction>> #Business
+    rectangle kerneltrap <<$bFunction>> #Business
+    rectangle clockintr <<$bFunction>> #Business
+    rectangle deintr <<$bFunction>> #Business
+    rectangle tickslock <<$tGlobal>> #Technology
+}
+package plic.c {
+    rectangle plicinit <<$bFunction>> #Business
+    rectangle plicinithart <<$bFunction>> #Business
+    rectangle plic_claim <<$bFunction>> #Business
+    rectangle plic_complete <<$bFunction>> #Business
+}
+
+/' trampoline.S '/
+TRAPFRAME -down-> trampoline
+trampoline - uservec
+uservec -down-> usertrap
+
+/' trap.c '/
+usertrapret -up-> userret
+trapinithart -up-> kernelvec
+
+@enduml
+```
+
+## 锁
+
+```{uml}
+@startuml
+
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package spinlock.c {
+    rectangle initlock <<$bFunction>> #Business
+    rectangle acquire <<$bFunction>> #Business
+    rectangle release <<$bFunction>> #Business
+    rectangle holding <<$bFunction>> #Business
+    rectangle push_off <<$bFunction>> #Business
+    rectangle pop_off <<$bFunction>> #Business
+}
+
+/' spinlock.c '/
+' pr.lock -up-> initlock
+' cons.lock -up-> initlock
+' kmem.lock -up-> initlock
+' bcache.lock -up-> initlock
+' icache.lock -up-> initlock
+' ftable.lock -up-> initlock
+' vdisk_lock -up-> initlock
+' pid_lock -up-> initlock
+' tickslock -up-> initlock
+' uart_tx_lock -up-> initlock
+
+@enduml
+```
+
+## 虚拟内存
+
+```{uml}
+@startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
 package kalloc.c {
     rectangle kinit <<$bFunction>> #Business
     rectangle freerange <<$bFunction>> #Business
@@ -153,6 +259,46 @@ package vm.c {
     rectangle vmprint <<$bFunction>> #Business
     rectangle kernel_pagetable <<$tGlobal>> #Technology
 }
+package riscv.h {
+    rectangle w_satp <<$bFunction>> #Business
+    rectangle sfence_vma <<$bFunction>> #Business
+}
+
+/' kalloc.c '/
+' kinit -> initlock
+kinit -> freerange
+
+/' vm.c '/
+kvminit -up-> kalloc
+walk -up-> kalloc
+kvminit -> kvmmap
+kvminithart -up-> w_satp
+kvminithart -up-> sfence_vma
+
+@enduml
+```
+
+## 进程间切换
+
+```{uml}
+@startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package swtch.S {
+    rectangle swtch <<$bFunction>> #Business
+}
+package kalloc.c {
+    rectangle kinit <<$bFunction>> #Business
+    rectangle freerange <<$bFunction>> #Business
+    rectangle kfree <<$bFunction>> #Business
+    rectangle kalloc <<$bFunction>> #Business
+    frame kmem {
+        rectangle lock as kmem.lock <<$tGlobal>> #Technology
+        rectangle freelist <<$tGlobal>> #Technology
+    }
+}
 package proc.c {
     rectangle procinit <<$bFunction>> #Business
     rectangle cpuid <<$bFunction>> #Business
@@ -185,36 +331,29 @@ package proc.c {
     rectangle nextpid <<$tGlobal>> #Technology
     rectangle pid_lock <<$tGlobal>> #Technology
 }
-package trap.c {
-    rectangle trapinit <<$bFunction>> #Business
-    rectangle trapinithart <<$bFunction>> #Business
-    rectangle usertrap <<$bFunction>> #Business
-    rectangle usertrapret <<$bFunction>> #Business
-    rectangle kerneltrap <<$bFunction>> #Business
-    rectangle clockintr <<$bFunction>> #Business
-    rectangle deintr <<$bFunction>> #Business
-    rectangle tickslock <<$tGlobal>> #Technology
-}
-package plic.c {
-    rectangle plicinit <<$bFunction>> #Business
-    rectangle plicinithart <<$bFunction>> #Business
-    rectangle plic_claim <<$bFunction>> #Business
-    rectangle plic_complete <<$bFunction>> #Business
-}
-package bio.c {
-    rectangle binit <<$bFunction>> #Business
-    rectangle bget <<$bFunction>> #Business
-    rectangle bread <<$bFunction>> #Business
-    rectangle bwrite <<$bFunction>> #Business
-    rectangle brelse <<$bFunction>> #Business
-    rectangle bpin <<$bFunction>> #Business
-    rectangle bunpin <<$bFunction>> #Business
-    frame bcache {
-        rectangle lock as bcache.lock <<$tGlobal>> #Technology
-        rectangle buf <<$tGlobal>> #Technology
-        rectangle head <<$tGlobal>> #Technology
-    }
-}
+
+/' kalloc.c '/
+' kinit -> initlock
+kinit -> freerange
+
+/' proc.c '/
+procinit -up-> kalloc
+procinit -up-> kvmmap
+procinit -up-> kvminithart
+scheduler -up-> swtch
+sched -up-> swtch
+
+@enduml
+```
+
+## 文件系统
+
+```{uml}
+@startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
 package fs.c {
     rectangle readsb <<$bFunction>> #Business
     rectangle fsinit <<$bFunction>> #Business
@@ -260,6 +399,18 @@ package file.c {
         rectangle f <<$tGlobal>> #Technology
     }
 }
+
+@enduml
+```
+
+## 磁盘
+
+```{uml}
+@startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
 package virtio_disk.c {
     rectangle virtio_disk_init <<$bFunction>> #Business
     rectangle alloc_desc <<$bFunction>> #Business
@@ -279,66 +430,32 @@ package virtio_disk.c {
         rectangle info <<$tGlobal>> #Technology
     }
 }
-package riscv.h {
-    rectangle w_satp <<$bFunction>> #Business
-    rectangle sfence_vma <<$bFunction>> #Business
+
+@enduml
+```
+
+## 缓存
+
+```{uml}
+@startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package bio.c {
+    rectangle binit <<$bFunction>> #Business
+    rectangle bget <<$bFunction>> #Business
+    rectangle bread <<$bFunction>> #Business
+    rectangle bwrite <<$bFunction>> #Business
+    rectangle brelse <<$bFunction>> #Business
+    rectangle bpin <<$bFunction>> #Business
+    rectangle bunpin <<$bFunction>> #Business
+    frame bcache {
+        rectangle lock as bcache.lock <<$tGlobal>> #Technology
+        rectangle buf <<$tGlobal>> #Technology
+        rectangle head <<$tGlobal>> #Technology
+    }
 }
-package memlayout.h {
-    rectangle TRAPFRAME <<$aMacro>> #Application
-}
-
-OUTPUT_ARCH -> ENTRY
-ENTRY -> _entry
-_entry -> start
-start -> main
-
-/' main.c '/
-main -> consoleinit
-main -> printfinit
-main -> kinit
-main -> kvminit
-main -> procinit
-main -> trapinit
-main -> trapinithart
-main -> plicinit
-main -> plicinithart
-main -> binit
-main -> iinit
-main -> fileinit
-main -> virtio_disk_init
-main -> userinit
-main -> scheduler
-
-/' console.c '/
-' consoleinit -> initlock
-consoleinit -> uartinit
-
-/' printf.c '/
-' printfinit -> initlock
-
-/' kalloc.c '/
-' kinit -> initlock
-kinit -> freerange
-
-/' vm.c '/
-kvminit -> kalloc
-kvminit -> kvmmap
-kvminithart -> w_satp
-kvminithart -> sfence_vma
-walk -> kalloc
-
-/' proc.c '/
-procinit -> kalloc
-procinit -> kvmmap
-procinit -> kvminithart
-
-/' trampoline.S '/
-TRAPFRAME -- trampoline
-trampoline - uservec
-uservec -> usertrap
-
-/' trap.c '/
-usertrapret -> userret
 
 @enduml
 ```
