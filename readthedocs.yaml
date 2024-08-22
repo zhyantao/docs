@@ -21,6 +21,8 @@ build:
     pre_create_environment:
       - mkdir -p docs/_tmp
     post_build:
+      # - python docs/_static/scripts/fix_comments.py $READTHEDOCS_OUTPUT/html
+      - python docs/_static/scripts/custom_secondary_sidebar.py $READTHEDOCS_OUTPUT/html
       - echo "Build finished."
 
 # Build documentation in the docs/ directory with Sphinx
