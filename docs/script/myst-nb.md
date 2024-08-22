@@ -487,6 +487,8 @@
 
 ## 面包板（Pannels）
 
+参考 [Sphinx Design](https://sphinx-design.readthedocs.io/en/sbt-theme/cards.html)。
+
 ````{list-table}
 :header-rows: 1
 :widths: 15 15
@@ -563,6 +565,8 @@
 
 ## Toggle 语法
 
+参考 [Sphinx Design](https://sphinx-design.readthedocs.io/en/sbt-theme/dropdowns.html)。
+
 ````{list-table}
 :header-rows: 1
 :widths: 15 15
@@ -594,6 +598,8 @@
 ````
 
 ## Tabs 语法
+
+参考 [Sphinx Design](https://sphinx-design.readthedocs.io/en/sbt-theme/tabs.html)。
 
 ````{list-table}
 :header-rows: 1
