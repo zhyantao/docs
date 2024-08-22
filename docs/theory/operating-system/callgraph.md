@@ -1,6 +1,8 @@
 # 调用图
 
-## 初始化流程
+## 初始化流程[^init]
+
+[^init]: hide toctree
 
 ```{uml}
 @startuml
@@ -78,7 +80,9 @@ stop
 @enduml
 ```
 
-## 输入和输出
+## 输入和输出[^io]
+
+[^io]: hide toctree
 
 ```{uml}
 @startuml
@@ -132,7 +136,9 @@ printfinit -> initlock
 @enduml
 ```
 
-## 中断
+## 中断[^intr]
+
+[^intr]: hide toctree
 
 ```{uml}
 @startuml
@@ -182,7 +188,9 @@ trapinithart -up-> kernelvec
 @enduml
 ```
 
-## 锁
+## 锁[^lck]
+
+[^lck]: hide toctree
 
 ```{uml}
 @startuml
@@ -215,7 +223,9 @@ package spinlock.c {
 @enduml
 ```
 
-## 虚拟内存
+## 虚拟内存[^mem]
+
+[^mem]: hide toctree
 
 ```{uml}
 @startuml
@@ -278,7 +288,9 @@ kvminithart -up-> sfence_vma
 @enduml
 ```
 
-## 进程间切换
+## 进程间切换[^ps]
+
+[^ps]: hide toctree
 
 ```{uml}
 @startuml
@@ -346,7 +358,9 @@ sched -up-> swtch
 @enduml
 ```
 
-## 文件系统
+## 文件系统[^fs]
+
+[^fs]: hide toctree
 
 ```{uml}
 @startuml
@@ -403,7 +417,9 @@ package file.c {
 @enduml
 ```
 
-## 磁盘
+## 磁盘[^vdisk]
+
+[^vdisk]: hide toctree
 
 ```{uml}
 @startuml
@@ -434,7 +450,9 @@ package virtio_disk.c {
 @enduml
 ```
 
-## 缓存
+## 缓存[^cache]
+
+[^cache]: hide toctree
 
 ```{uml}
 @startuml
