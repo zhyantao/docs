@@ -31,6 +31,7 @@ all: html
 html:
 	@mkdir -p "docs/_tmp"
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@python docs/_static/scripts/custom_secondary_sidebar.py $(BUILDDIR)/html
 	@echo
 	@echo "Build finished."
 

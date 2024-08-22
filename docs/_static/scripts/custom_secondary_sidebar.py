@@ -22,8 +22,6 @@ match_pages = [
     dirhtml + "/" + "theory/operating-system/callgraph.html",
     dirhtml + "/" + "script/plantuml.html",
 ]
-for item in match_pages:
-    print(item)
 
 js_code = """
 document.querySelector("div.bd-sidebar-secondary").classList.add("hide");
@@ -31,7 +29,6 @@ document.querySelector("div.bd-sidebar-secondary").classList.add("hide");
 
 for html_file in html_list:
     if html_file not in match_pages:
-        print("html_file: ", html_file)
         continue
 
     with open(html_file, "r", encoding="UTF-8") as f:
