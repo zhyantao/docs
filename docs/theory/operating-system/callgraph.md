@@ -234,6 +234,9 @@ package uart.c {
     rectangle uartgetc <<$bFunction>> #Business
     rectangle uartintr <<$bFunction>> #Business
     rectangle uart_tx_lock <<$tGlobal>> #Technology
+    rectangle uart_tx_buf <<$tGlobal>> #Technology
+    rectangle uart_tx_w <<$tGlobal>> #Technology
+    rectangle uart_tx_r <<$tGlobal>> #Technology
 }
 package printf.c {
     rectangle printfint <<$bFunction>> #Business
@@ -266,7 +269,7 @@ package spinlock.h {
     frame spinlock {
         rectangle locked as spinlock.locked <<$tGlobal>> #Technology
         rectangle name as spinlock.name <<$tGlobal>> #Technology
-        rectangle cpu as spinlock.pid <<$tGlobal>> #Technology
+        rectangle cpu as spinlock.cpu <<$tGlobal>> #Technology
     }
 }
 package spinlock.c {
@@ -341,7 +344,12 @@ package swtch.S {
 procinit -up-> kalloc
 procinit -up-> kvmmap
 procinit -up-> kvminithart
+procinit ..> pid_lock : initlock
+
+scheduler .> pid_lock : acquire/release
 scheduler -up-> swtch
+
+sched .> pid_lock : holding
 sched -up-> swtch
 
 @enduml
@@ -355,6 +363,14 @@ sprite $bFunction jar:archimate/process
 sprite $aMacro jar:archimate/service
 sprite $tGlobal jar:archimate/node
 
+package sleeplock.h {
+    frame sleeplock {
+        rectangle locked as sleeplock.locked <<$tGlobal>> #Technology
+        rectangle lk as sleeplock.lk <<$tGlobal>> #Technology
+        rectangle name as sleeplock.name <<$tGlobal>> #Technology
+        rectangle pid as sleeplock.pid <<$tGlobal>> #Technology
+    }
+}
 package sleeplock.c {
     rectangle initsleeplock <<$bFunction>> #Business
     rectangle acquiresleep <<$bFunction>> #Business
