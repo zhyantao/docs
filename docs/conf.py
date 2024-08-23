@@ -94,7 +94,6 @@ extensions = [
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
-    "svg2png",
     "sphinx_last_updated_by_git",
     "sphinxcontrib.plantuml",
 ]
