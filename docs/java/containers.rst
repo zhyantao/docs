@@ -23,9 +23,59 @@ Colleciton
     - 实线为继承（extends）
     - 虚线为实现（implements）
 
-.. image:: ../_static/images/java-collections.png
+.. uml::
 
-.. image:: ../_static/images/java-packages.png
+    @startuml
+
+    interface Collection
+    interface List
+    interface Set
+    interface Queue
+    abstract AbstractList
+    class AbstracSequentialtList
+    abstract AbstractSet
+    abstract SortedSet
+    interface Iterator
+    interface ListIterator
+
+    Iterator <|-- ListIterator
+
+    Collection <|-- List
+    Collection <|-- Set
+    Collection <|-- Queue
+    Collection <|.. AbstractCollection
+    
+    AbstractCollection <|-- AbstractList
+    List <|.. AbstractList
+    AbstractCollection <|-- AbstractSet
+
+    AbstractList <|-- ArrayList
+    AbstractList <|-- Vector
+    AbstractList <|-- AbstracSequentialtList
+
+    AbstracSequentialtList <|-- LinkedList
+
+    Vector <|-- Stack
+
+    Set <|-- AbstractSet
+    Set <|-- SortedSet
+    SortedSet <|.. TreeSet
+    AbstractSet <|.. HashSet
+    AbstractSet <|.. TreeSet
+    HashSet <|-- LinkedHashSet
+
+    Queue <|.. LinkedList
+    Queue <|.. PriorityQueue
+
+    @enduml
+
+
+.. uml::
+
+    package java.util <<Folder>> {
+        class Collections
+        class Arrays
+    }
 
 List 和 Set
 ~~~~~~~~~~~~~
@@ -106,7 +156,27 @@ Map
     - 实线为继承（extends）
     - 虚线为实现（implements）
 
-.. image:: ../_static/images/java-hashmap.png
+.. uml::
+
+    @startuml
+
+    interface Map
+    abstract AbstractMap
+    interface SortedMap
+
+    Map <|-- AbstractMap
+    Map <|-- SortedMap
+
+    AbstractMap <|.. HashMap
+    AbstractMap <|.. TreeMap
+    AbstractMap <|.. IdentityHashMap
+    AbstractMap <|.. WeakHashMap
+    AbstractMap <|.. HashTable
+    SortedMap <|.. TreeMap
+    HashMap <|-- LinkedHashMap
+
+    @enduml
+
 
 容器的初始化
 ------------

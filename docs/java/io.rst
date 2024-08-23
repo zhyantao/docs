@@ -18,19 +18,100 @@
 InputStream
 ------------
 
-.. image:: ../_static/images/java-inputstream.png
+.. uml::
+
+    @startuml
+
+    abstract InputStream {
+        abstract int read()
+    }
+
+    class ByteArrayInputStream
+    class FileInputStream
+    class FilterInputStream
+    class ObjectInputStream
+    class PipedInputStream
+    class SequenceInputStream
+    class StringBufferInputStream
+    class DataInputStream
+    class BufferedInputStream
+
+    InputStream <|-- ByteArrayInputStream
+    InputStream <|-- FileInputStream
+    InputStream <|-- FilterInputStream
+    InputStream <|-- ObjectInputStream
+    PipedInputStream --|> InputStream
+    SequenceInputStream --|> InputStream
+    StringBufferInputStream --|> InputStream
+    FilterInputStream <|-- DataInputStream
+    FilterInputStream <|-- BufferedInputStream
+
+    @enduml
 
 
 OutputStream
 -------------
 
-.. image:: ../_static/images/java-outputstream.png
+.. uml::
+
+    @startuml
+
+    abstract OutputStream {
+        abstract void write()
+    }
+
+    class ByteArrayOutputStream
+    class FileOutputStream
+    class FilterOutputStream
+    class ObjectOutputStream
+    class PipedOutputStream
+    class DataOutputStream
+    class BufferedOutputStream
+    class PrintStream
+
+    ByteArrayOutputStream --|> OutputStream
+    OutputStream <|-- FileOutputStream
+    OutputStream <|-- FilterOutputStream
+    OutputStream <|-- ObjectOutputStream
+    PipedOutputStream --|> OutputStream
+    FilterOutputStream <|-- DataOutputStream
+    FilterOutputStream <|-- BufferedOutputStream
+    FilterOutputStream <|-- PrintStream
+
+    @enduml
 
 
 Reader
 ------
 
-.. image:: ../_static/images/java-reader.png
+.. uml::
+
+    @startuml
+
+    abstract Reader {
+        abstract int read()
+        abstract void close()
+    }
+
+    class BufferedReader
+    class CharArrayReader
+    class FilterReader
+    class InputStreamReader
+    class PipedReader
+    class StringReader
+    class URLReader
+    class FileReader
+
+    Reader <|-- BufferedReader
+    Reader <|-- CharArrayReader
+    Reader <|-- FilterReader
+    Reader <|-- InputStreamReader
+    PipedReader --|> Reader
+    StringReader --|> Reader
+    URLReader --|> Reader
+    InputStreamReader <|-- FileReader
+
+    @enduml
 
 .. hint:: InputStreamReader 可以把 InputStream 转化为 Reader
 
@@ -38,7 +119,31 @@ Reader
 Writer
 ------
 
-.. image:: ../_static/images/java-writer.png
+.. uml::
+
+    @startuml
+
+    abstract Writer {
+        abstract int write()
+        abstract void flush()
+        abstract void close()
+    }
+
+    class BufferedWriter
+    class CharArrayWriter
+    class FilterWriter
+    class OutputStreamWriter
+    class PipedWriter
+    class StringWriter
+
+    Writer <|-- BufferedWriter
+    Writer <|-- CharArrayWriter
+    Writer <|-- FilterWriter
+    Writer <|-- OutputStreamWriter
+    PipedWriter --|> Writer
+    StringWriter --|> Writer
+
+    @enduml
 
 .. hint:: OutputStreamWriter 可以把 OutputStream 转化为 Writer
 
