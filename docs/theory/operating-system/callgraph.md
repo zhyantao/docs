@@ -345,12 +345,13 @@ procinit -up-> kalloc
 procinit -up-> kvmmap
 procinit -up-> kvminithart
 procinit ..> pid_lock : initlock
-
 scheduler .> pid_lock : acquire/release
 scheduler -up-> swtch
-
-sched .> pid_lock : holding
 sched -up-> swtch
+swtch .> pid_lock : release
+sleep .down.> pid_lock : acquire
+sleep -> sched
+wakeup .> pid_lock : acquire/release
 
 @enduml
 ```
