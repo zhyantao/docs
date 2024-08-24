@@ -414,6 +414,40 @@ package proc.c {
 @enduml
 ```
 
+**Lost wakeup 的过程解析**
+
+```{uml}
+@startuml
+autonumber
+"sleep (Runnign on core 1)" -> "sleep lock" : acquire
+"sleep (Runnign on core 1)" -> "sleep lock" : release
+"wakeup (Runnign on core 2)" -> "sleep lock" : acquire
+"wakeup (Runnign on core 2)" -[#red]> "sleep (Runnign on core 1)" : set to RUNNABLE (lost wakeup)
+"sleep (Runnign on core 1)" -> "sleep (Runnign on core 1)" : set to SLEEPING
+@enduml
+```
+
+运行在 `core 1` 上的 `sleep` 函数将当前进程设置为 `SLEEPING` 状态前，被运行在 `core 2` 上的 `wakeup` 函数抢先设置成了 `RUNNABLE` 状态，并因此丢失了 `wakeup` 操作。
+
+因为按照正常的顺序，调度器必须发现有一个 `SLEEPING` 状态的函数，才可以将其设置为 `RUNNABLE` 状态，而现在的顺序是颠倒的。
+
+根本原因在于 `sleep` 函数将进程设置为 `SLEEPING` 和 `release sleep lock` 不是原子性的，这给了其他进程（在两个操作的时隙间）有了趁虚而入的机会。我们需要加一个 `condition lock` 将 `sleep` 的 `relase lock` 和 `SLEEPING` 包装成原子性的操作。进而控制多线程的执行顺序。
+
+修复后的结果应该是如下所示：
+
+```{uml}
+@startuml
+autonumber
+"sleep (Runnign on core 1)" -> "sleep lock" : acquire
+group condition lock
+    "sleep (Runnign on core 1)" -> "sleep lock" : release
+    "sleep (Runnign on core 1)" -> "sleep (Runnign on core 1)" : set to SLEEPING
+end
+"wakeup (Runnign on core 2)" -> "sleep lock" : acquire
+"wakeup (Runnign on core 2)" -> "sleep (Runnign on core 1)" : set to RUNNABLE
+@enduml
+```
+
 ## 文件系统
 
 ```{uml}
