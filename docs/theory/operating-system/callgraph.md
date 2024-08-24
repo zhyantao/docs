@@ -164,7 +164,7 @@ package riscv.h {
 package trampoline.S {
     rectangle uservec <<$bFunction>> #Business
     rectangle userret <<$bFunction>> #Business
-    rectangle trampoline <<$tGlobal>> #Technology
+    rectangle trampoline <<$bFunction>> #Business
 }
 package kernelvec.S {
     rectangle kernelvec <<$bFunction>> #Business
@@ -180,6 +180,7 @@ package trap.c {
     rectangle deintr <<$bFunction>> #Business
     rectangle tickslock <<$tGlobal>> #Technology
 }
+rectangle TRAPFRAME <<$tGlobal>> #Technology
 
 /' trampoline.S '/
 TRAPFRAME -down-> trampoline
@@ -304,7 +305,31 @@ sprite $bFunction jar:archimate/process
 sprite $aMacro jar:archimate/service
 sprite $tGlobal jar:archimate/node
 
+package proc.h {
+    frame proc {
+        rectangle lock as proc.lock <<$tGlobal>> #Technology
+        rectangle state as proc.state <<$tGlobal>> #Technology
+        rectangle chan as proc.chan <<$tGlobal>> #Technology
+        rectangle parent as proc.parent <<$tGlobal>> #Technology
+        rectangle killed as proc.killed <<$tGlobal>> #Technology
+        rectangle xstate as proc.xstate <<$tGlobal>> #Technology
+        rectangle pid as proc.pid <<$tGlobal>> #Technology
+        rectangle kstack as proc.kstack <<$tGlobal>> #Technology
+        rectangle sz as proc.sz <<$tGlobal>> #Technology
+        rectangle pagetable as proc.pagetable <<$tGlobal>> #Technology
+        rectangle trapframe as proc.trapframe <<$tGlobal>> #Technology
+        rectangle context as proc.context <<$tGlobal>> #Technology
+        rectangle ofile as proc.ofile <<$tGlobal>> #Technology
+        rectangle cmd as proc.cmd <<$tGlobal>> #Technology
+        rectangle name as proc.name <<$tGlobal>> #Technology
+    }
+}
 package proc.c {
+    rectangle cpus <<$tGlobal>> #Technology
+    rectangle proc as proc.c.proc <<$tGlobal>> #Technology
+    rectangle initpid <<$tGlobal>> #Technology
+    rectangle nextpid <<$tGlobal>> #Technology
+    rectangle pid_lock <<$tGlobal>> #Technology
     rectangle procinit <<$bFunction>> #Business
     rectangle cpuid <<$bFunction>> #Business
     rectangle mycpu <<$bFunction>> #Business
@@ -330,17 +355,13 @@ package proc.c {
     rectangle either_copyout <<$bFunction>> #Business
     rectangle either_copyin <<$bFunction>> #Business
     rectangle procdump <<$bFunction>> #Business
-    rectangle cpus <<$tGlobal>> #Technology
-    rectangle proc <<$tGlobal>> #Technology
-    rectangle initpid <<$tGlobal>> #Technology
-    rectangle nextpid <<$tGlobal>> #Technology
-    rectangle pid_lock <<$tGlobal>> #Technology
 }
 package swtch.S {
     rectangle swtch <<$bFunction>> #Business
 }
 
 /' proc.c '/
+proc.c.proc .up.> proc
 procinit -up-> kalloc
 procinit -up-> kvmmap
 procinit -up-> kvminithart
@@ -378,7 +399,31 @@ package sleeplock.c {
     rectangle releasesleep <<$bFunction>> #Business
     rectangle holdingsleep <<$bFunction>> #Business
 }
+package proc.h {
+    frame proc {
+        rectangle lock as proc.lock <<$tGlobal>> #Technology
+        rectangle state as proc.state <<$tGlobal>> #Technology
+        rectangle chan as proc.chan <<$tGlobal>> #Technology
+        rectangle parent as proc.parent <<$tGlobal>> #Technology
+        rectangle killed as proc.killed <<$tGlobal>> #Technology
+        rectangle xstate as proc.xstate <<$tGlobal>> #Technology
+        rectangle pid as proc.pid <<$tGlobal>> #Technology
+        rectangle kstack as proc.kstack <<$tGlobal>> #Technology
+        rectangle sz as proc.sz <<$tGlobal>> #Technology
+        rectangle pagetable as proc.pagetable <<$tGlobal>> #Technology
+        rectangle trapframe as proc.trapframe <<$tGlobal>> #Technology
+        rectangle context as proc.context <<$tGlobal>> #Technology
+        rectangle ofile as proc.ofile <<$tGlobal>> #Technology
+        rectangle cmd as proc.cmd <<$tGlobal>> #Technology
+        rectangle name as proc.name <<$tGlobal>> #Technology
+    }
+}
 package proc.c {
+    rectangle cpus <<$tGlobal>> #Technology
+    rectangle proc as proc.c.proc <<$tGlobal>> #Technology
+    rectangle initpid <<$tGlobal>> #Technology
+    rectangle nextpid <<$tGlobal>> #Technology
+    rectangle pid_lock <<$tGlobal>> #Technology
     rectangle procinit <<$bFunction>> #Business
     rectangle cpuid <<$bFunction>> #Business
     rectangle mycpu <<$bFunction>> #Business
@@ -404,12 +449,10 @@ package proc.c {
     rectangle either_copyout <<$bFunction>> #Business
     rectangle either_copyin <<$bFunction>> #Business
     rectangle procdump <<$bFunction>> #Business
-    rectangle cpus <<$tGlobal>> #Technology
-    rectangle proc <<$tGlobal>> #Technology
-    rectangle initpid <<$tGlobal>> #Technology
-    rectangle nextpid <<$tGlobal>> #Technology
-    rectangle pid_lock <<$tGlobal>> #Technology
 }
+
+/' proc.c '/
+proc.c.proc .up.> proc
 
 @enduml
 ```
