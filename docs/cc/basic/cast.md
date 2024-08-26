@@ -41,3 +41,52 @@ char* pc = reinterpret_cast<char*>(pv);
 - **转换规则**：`static_cast` 会遵循一些转换规则，比如从派生类到基类的转换；`const_cast` 只能改变常量性；`reinterpret_cast` 则几乎不遵循任何规则，只是简单地重新解释位模式。
 
 总的来说，选择哪种转换取决于具体的需求和上下文。在可能的情况下，应该优先使用 `static_cast`，因为它提供了更多的类型安全保证。
+
+## dynamic_cast
+
+`dynamic_cast` 是 C++ 中另一种重要的类型转换运算符，主要用于多态上下文中，特别是涉及到继承层次结构的时候。
+
+`dynamic_cast` 主要用于实现运行时类型识别（RTTI, Run-Time Type Information）和安全的向下转型（downcasting）。它可以在运行时检查一个对象是否是某个类的实例，并根据结果进行安全的类型转换。如果转换成功，则返回转换后的指针或引用；如果失败，则对于指针转换返回 `nullptr`，对于引用转换则抛出 `bad_cast` 异常。
+
+**使用场景**
+
+1. **安全的向下转型**：当你有一个基类的指针或引用，并想要将其转换为派生类的指针或引用时，使用 `dynamic_cast` 可以确保转换的安全性。如果实际的对象不是期望的派生类类型，`dynamic_cast` 会返回 `nullptr` 或抛出异常。
+2. **类型识别**：在运行时确定一个对象的实际类型。这在需要处理多态对象时非常有用，尤其是在需要根据不同子类的行为来决定如何处理对象的情况下。
+
+**示例**
+
+```cpp
+class Base {
+public:
+    virtual ~Base() {}
+};
+
+class Derived : public Base {
+public:
+    void doSomething() { /* ... */ }
+};
+
+int main() {
+    Base* basePtr = new Derived();
+    Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
+
+    if (derivedPtr != nullptr) {
+        derivedPtr->doSomething(); // 安全调用 Derived 类的方法
+    } else {
+        std::cout << "Conversion failed." << std::endl;
+    }
+
+    delete basePtr;
+    return 0;
+}
+```
+
+在这个例子中，`dynamic_cast` 用来安全地将指向 `Base` 的指针转换为指向 `Derived` 的指针。如果 `basePtr` 实际上指向的是 `Derived` 的实例，那么 `derivedPtr` 将被赋值为转换后的指针；否则，`derivedPtr` 将被赋值为 `nullptr`。
+
+**注意事项**
+
+- `dynamic_cast` 要求参与转换的类必须具有虚函数表（vtable），这意味着基类必须至少声明一个虚函数，通常是虚析构函数。
+- `dynamic_cast` 对于非多态类型的转换无效，即使类型正确也会返回 `nullptr` 或抛出异常。
+- `dynamic_cast` 的性能开销相对较大，因为它涉及到运行时类型检查。
+
+在实际开发中，`dynamic_cast` 通常用于需要运行时类型检查的地方，特别是在需要处理继承层次结构中的多态对象时。
