@@ -13,7 +13,6 @@
 
 basic/index.md
 class/index.md
-pointer/index.md
 exception/index.md
 concurrent/index.md
 examples/index.md
