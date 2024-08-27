@@ -13,7 +13,7 @@ git clone https://github.com/<your_github_username>/notebook.git
 
 2、将 [源代码压缩包](https://github.com/zhyantao/getstarted/archive/refs/heads/master.zip) 解压后，把压缩包中的内容全部复制到 `notebook` 文件夹中。
 
-3、安装 Cairo 依赖（Windows 用户需提前下载 [MSYS2](./docs/script/msys2.md)）。
+3、安装 Cairo 依赖（Windows 用户需提前下载 [MSYS2](./docs/cli/msys2.md)）。
 
 ```bash
 # For Windows

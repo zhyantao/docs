@@ -542,7 +542,7 @@ package fs.c {
     rectangle nameiparent <<$bFunction>> #Business
     frame icache {
         rectangle lock as icache.lock <<$tGlobal>> #Technology
-        rectangle inode <<$tGlobal>> #Technology
+        rectangle inode as fs.c.inode <<$tGlobal>> #Technology
     }
     rectangle sb <<$tGlobal>> #Technology
 }
@@ -597,10 +597,25 @@ package virtio_disk.c {
         rectangle info <<$tGlobal>> #Technology
     }
 }
+package file.h {
+    frame inode as file.h.inode {
+        rectangle dev <<$tGlobal>> #Technology
+        rectangle inum <<$tGlobal>> #Technology
+        rectangle ref <<$tGlobal>> #Technology
+        rectangle lock as inode.lock <<$tGlobal>> #Technology
+        rectangle valid <<$tGlobal>> #Technology
+        rectangle type <<$tGlobal>> #Technology
+        rectangle major <<$tGlobal>> #Technology
+        rectangle minor <<$tGlobal>> #Technology
+        rectangle nlink <<$tGlobal>> #Technology
+        rectangle size as inode.size <<$tGlobal>> #Technology
+    }
+}
 
 /' bio.c '/
 bread -> bget
 bwrite -> virtio_disk_rw
+fs.c.inode .up.> file.h.inode
 
 @enduml
 ```
