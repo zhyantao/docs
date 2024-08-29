@@ -652,6 +652,68 @@ package log.c {
 @enduml
 ```
 
+## 制作文件系统
+
+```{uml}
+@startuml
+
+package mkfs.c {
+    rectangle xshort <<$bFunction>> #Business
+    rectangle xint <<$bFunction>> #Business
+    rectangle main <<$bFunction>> #Business
+    rectangle wsect <<$bFunction>> #Business
+    rectangle winode <<$bFunction>> #Business
+    rectangle rinode <<$bFunction>> #Business
+    rectangle rsect <<$bFunction>> #Business
+    rectangle ialloc <<$bFunction>> #Business
+    rectangle balloc <<$bFunction>> #Business
+    rectangle iappend <<$bFunction>> #Business
+    rectangle nbitmap <<$tGlobal>> #Technology
+    rectangle ninodeblocks <<$tGlobal>> #Technology
+    rectangle nlog <<$tGlobal>> #Technology
+    rectangle nmeta <<$tGlobal>> #Technology
+    rectangle fsfd <<$tGlobal>> #Technology
+    rectangle sb <<$tGlobal>> #Technology
+    rectangle zeroes <<$tGlobal>> #Technology
+    rectangle freeinodes <<$tGlobal>> #Technology
+    rectangle freeblock <<$tGlobal>> #Technology
+}
+
+@enduml
+```
+
+```{uml}
+@startuml
+
+start
+:检查命令行参数;
+if (参数数量正确?) then (yes)
+    :打开/创建 fs.img 文件;
+    if (文件打开成功?) then (yes)
+        :初始化变量和数据结构;
+        :分配根目录 inode;
+        :添加 '.' 和 '..' 条目;
+        :遍历输入文件列表;
+        while (有更多文件?)
+            :为文件分配 inode;
+            :写入文件内容到 inode;
+        endwhile (yes)
+        :更新根目录 inode 大小;
+        :写入超级块到正确位置;
+        :关闭 fs.img 文件;
+        stop
+    else (no)
+        :打印错误信息;
+        stop
+    endif
+else (no)
+    :打印错误信息;
+    stop
+endif
+
+@enduml
+```
+
 ## Makefile
 
 首先分析 Makefile 文件，查看它会编译哪些文件，程序入口在哪里：
@@ -1030,3 +1092,27 @@ package log.c {
 12. `log_write` 函数用于记录缓冲区中的更改，并将其添加到日志中。
 
 这个日志系统的主要功能是确保文件系统的更改是原子的，即使在系统崩溃的情况下也能保持一致性。它通过将更改记录到日志中，并在需要时将这些更改应用到磁盘上来实现这一目标。
+
+### mkfs.c
+
+这段代码是一个简单的文件系统创建工具，它接受一个或多个文件作为输入，并将这些文件的内容写入到一个新的文件系统镜像中。这个文件系统镜像可以被操作系统加载和使用。
+
+代码首先检查命令行参数的数量，如果没有提供足够的参数，则打印出错误信息并退出程序。然后，代码尝试打开一个名为 fs.img 的文件，用于存储文件系统镜像。如果打开失败，则打印出错误信息并退出程序。
+
+接下来，代码初始化了一些变量和数据结构，包括超级块、空白数据块等。然后，代码遍历所有的磁盘块，并将它们写入到文件系统镜像中。
+
+在主函数中，代码首先分配了一个 inode 给根目录，并为其添加了 "." 和 ".." 两个条目。然后，代码遍历所有输入的文件，为每个文件分配一个 inode，并将文件内容写入到对应的 inode 中。最后，代码更新根目录的 inode 大小，并将超级块写入到文件系统镜像的正确位置。
+
+整个过程中，代码通过调用一系列函数来实现文件系统的创建和写入操作。这些函数包括读写磁盘块、分配和释放磁盘块、读写 inode 等。
+
+以下是按照函数功能对代码进行的分解：
+
+1. `xshort` 和 `xint` 函数：这两个函数用于将主机字节序转换为小端字节序，以便在不同的平台之间传输数据时保持一致性。
+2. `main` 函数：这是程序的入口点。它首先检查命令行参数的数量，然后打开或创建一个文件系统镜像文件。接着，它初始化超级块和其他必要的数据结构，并将它们写入到磁盘中。然后，它遍历输入的文件列表，为每个文件分配一个 inode，并将其内容写入到磁盘中。最后，它更新根目录的 inode 大小，并将超级块写入到磁盘的正确位置。
+3. `wsect` 函数：这个函数用于将一个磁盘块的内容写入到文件系统镜像中。它接受一个块号和一个指向数据的指针作为参数。
+4. `winode` 函数：这个函数用于将一个 inode 的内容写入到文件系统镜像中。它接受一个 inode 号和一个指向 inode 数据的指针作为参数。
+5. `rinode` 函数：这个函数用于从文件系统镜像中读取一个 inode 的内容。它接受一个 inode 号和一个指向 inode 数据的指针作为参数。
+6. `rsect` 函数：这个函数用于从文件系统镜像中读取一个磁盘块的内容。它接受一个块号和一个指向数据的指针作为参数。
+7. `ialloc` 函数：这个函数用于分配一个新的 inode。它接受一个 inode 类型作为参数，并返回新分配的 inode 号。
+8. `balloc` 函数：这个函数用于分配一个新的磁盘块。它接受一个整数作为参数，表示已经使用的磁盘块数量。
+9. `iappend` 函数：这个函数用于将数据追加到一个 inode 中。它接受一个 inode 号、一个指向数据的指针和数据长度作为参数。
