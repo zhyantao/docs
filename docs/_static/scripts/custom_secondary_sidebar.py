@@ -19,8 +19,8 @@ def collect_html(path):
 print("Enter directory", dirhtml)
 collect_html(dirhtml)
 match_pages = [
-    dirhtml + "/" + "theory/operating-system/callgraph.html",
-    dirhtml + "/" + "script/plantuml.html",
+    dirhtml + "/" + "theory/os/callgraph.html",
+    dirhtml + "/" + "cli/plantuml.html",
 ]
 
 js_code = """
