@@ -913,7 +913,7 @@ $$
 :glob:
 :hidden:
 
-database-system/*
+dbs/*
 ```
 
 ---

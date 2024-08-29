@@ -545,7 +545,7 @@ Example 3
 
 多数人工神经元都符合下图所示的样子，即一个仿射函数，外加一个激活函数。
 
-.. image:: ../_static/images/artificial-neuron.png
+.. image:: ../../_static/images/artificial-neuron.png
     :width: 300px
     :height: 200px
     :align: center

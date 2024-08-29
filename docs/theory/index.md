@@ -5,4 +5,6 @@
 :glob:
 
 *
+probs/*
+papers/*
 ```
