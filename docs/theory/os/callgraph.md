@@ -656,6 +656,32 @@ package log.c {
 
 ```{uml}
 @startuml
+sprite $bFunction jar:archimate/process
+sprite $aMacro jar:archimate/service
+sprite $tGlobal jar:archimate/node
+
+package PC {
+    frame CPU {
+        rectangle register <<$tGlobal>> #Technology
+        frame memory {
+            rectangle "buffer cache" <<$tGlobal>> #Technology
+        }
+    }
+    frame disk {
+        rectangle "root block" <<$tGlobal>> #Technology
+        rectangle "super block" <<$tGlobal>> #Technology
+        rectangle "log block" <<$tGlobal>> #Technology
+        rectangle "inode blocks" <<$tGlobal>> #Technology
+        rectangle "bitmap block" <<$tGlobal>> #Technology
+        rectangle "data blocks" <<$tGlobal>> #Technology
+    }
+}
+
+@enduml
+```
+
+```{uml}
+@startuml
 
 package mkfs.c {
     rectangle xshort <<$bFunction>> #Business
