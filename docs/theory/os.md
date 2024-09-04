@@ -49,6 +49,14 @@ CPU 在执行指令时会自动检查是否有异常发生，由程序自动触�
 宏内核性能高，但是内核代码庞大，结构混乱，难以维护。微内核功能少，但是需要频繁地变态，性能差。
 **在我们后续的实验中，使用的是宏内核设计。**
 
+### 操作系统的架构设计
+
+参考 Deepin 的架构设计：<https://www.deepin.org/zh/developer-community/architectural-design/>
+
+```{figure} ../_static/images/deepin-arch.drawio.jpeg
+Deepin 操作系统的架构设计
+```
+
 ## 进程管理
 
 ### 进程的概念
