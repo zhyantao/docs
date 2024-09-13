@@ -489,8 +489,67 @@ PriorityQueue<Integer> pq = new PriorityQueue<>(
 :::{tab-item} C++
 :sync: cpp
 
+初始化
+
 ```cpp
 unordered_map<string, int> map;
+```
+
+插入
+
+```cpp
+map["hello"] = 1; // 最简单，常用
+map.insert({"hello", 1});
+map.emplace("hello", 1);
+map.insert(std::make_pair("hello", 1));
+```
+
+修改值
+
+```cpp
+map["hello"] = 2;
+```
+
+查找
+
+```cpp
+if (map.find("hello") != map.end()) {
+    cout << "Key exists." << endl;
+}
+
+if (map.count("hello")) {
+    cout << "Key exists." << endl;
+}
+
+int val = map.at("hello");       // 抛出异常如果键不存在
+int valOrDefault = map["hello"]; // 如果键不存在，将插入默认值 0 并返回 0
+```
+
+删除一个键
+
+```cpp
+map.erase("hello");
+```
+
+清空哈希表
+
+```cpp
+map.clear();
+```
+
+获取哈希表的大小
+
+```cpp
+size_t size = map.size();
+```
+
+遍历
+
+```cpp
+for (const auto& entry : map) {
+    const string& key = entry.first;
+    int value = entry.second;
+}
 ```
 
 :::
@@ -523,8 +582,55 @@ for (Map.Entry<String, String> entry : map.entrySet()) {
 :::{tab-item} C++
 :sync: cpp
 
+初始化
+
 ```cpp
 unordered_set<string> set;
+```
+
+插入
+
+```cpp
+set.insert("hello");
+```
+
+删除一个键
+
+```cpp
+set.erase("hello");
+```
+
+查找
+
+```cpp
+if (set.find("hello") != set.end()) {
+    cout << "Key exists." << endl;
+}
+
+// 或者使用 count 方法
+if (set.count("hello")) {
+    cout << "Key exists." << endl;
+}
+```
+
+清空哈希集合
+
+```cpp
+set.clear();
+```
+
+获取哈希集合的大小
+
+```cpp
+size_t size = set.size();
+```
+
+遍历
+
+```cpp
+for (const auto& element : set) {
+    cout << element << endl;
+}
 ```
 
 :::
