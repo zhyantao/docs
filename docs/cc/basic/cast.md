@@ -9,7 +9,7 @@
 **示例：**
 ```cpp
 const int ci = 5;
-int *pi = const_cast<int*>(&ci); // pi 指向非 const 的 int
+int* pi = const_cast<int*>(&ci); // pi 指向非 const 的 int
 ```
 
 ## static_cast

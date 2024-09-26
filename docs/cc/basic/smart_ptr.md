@@ -43,7 +43,7 @@ int main() {
 
 int main() {
     auto sptr = std::make_shared<int>(42);
-    auto sptr2 = sptr;  // sptr2 也指向同一个 int 对象
+    auto sptr2 = sptr; // sptr2 也指向同一个 int 对象
     // 当 sptr 和 sptr2 都销毁时，int 对象才会被删除
     return 0;
 }
