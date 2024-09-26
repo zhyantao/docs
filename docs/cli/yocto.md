@@ -10,7 +10,7 @@
 4. **板级支持包(BSP)**：为特定硬件平台提供必要的驱动和配置。
 5. **应用开发工具**：了解如何使用 Extensible SDK 或 Legacy SDK 进行应用开发。
 
-本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习《嵌入式Linux系统开发：基于 Yocto Project》。
+本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习 [yocto-slides.pdf](https://bootlin.com/doc/training/yocto/yocto-slides.pdf)。
 
 ## BitBake 文件简介
 
