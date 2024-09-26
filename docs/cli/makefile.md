@@ -78,8 +78,8 @@ EOF
 cd $(SRC_DIR) && ./configure \
 --prefix=$(DESTDIR) \
 --build=i686-pc-linux-gnu \
---target=aarch64-linux \
 --host=aarch64-linux \
+--target=aarch64-linux \
 --disable-test-modules \
 --enable-optimizations \
 --with-openssl=$(SYSROOT_DIR)/usr \
@@ -113,8 +113,8 @@ make install
 cd $(SRC_DIR) && autoreconf -vi
 cd $(SRC_DIR) && ./configure \
 --build=x86_64-pc-linux-gnu \
---target=aarch64-linux \
---host=aarch64-linux
+--host=aarch64-linux \
+--target=aarch64-linux
 make -C $(SRC_DIR)
 make -C $(SRC_DIR) install
 ```
