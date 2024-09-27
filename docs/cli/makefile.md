@@ -241,6 +241,9 @@ help:
 
 ```makefile
 CURR_DIR := $(shell pwd)
+DIR_NAME := $(notdir $(shell pwd))
+TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
+BUILD_DIR := $(CURR_DIR)/build
 
 sub_dir := example1 example2 example3
 
@@ -258,6 +261,12 @@ clean:
 			make -C $$dir clean || exit 1; \
 		fi \
 	done
+
+tarball:
+	cp -r $(BUILD_DIR)/usr/local/* $(BUILD_DIR)/usr
+	rm -rf $(BUILD_DIR)/usr/local
+	cd $(BUILD_DIR) && tar czf build-$(DIR_NAME)_$(TIMESTAMP).tar.gz usr
+	mv $(BUILD_DIR)/build-*.tar.gz ..
 ```
 
 ## 赋值操作
