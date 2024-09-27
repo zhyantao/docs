@@ -239,6 +239,27 @@ help:
 	@echo ""
 ```
 
+```makefile
+CURR_DIR := $(shell pwd)
+
+sub_dir := example1 example2 example3
+
+all:
+	@for dir in $(sub_dir); do \
+		if [ -d $$dir ]; then \
+			make patch -C $$dir $@ || exit 1; \
+			make -C $$dir $@ || exit 1; \
+		fi \
+	done
+
+clean:
+	@for dir in $(sub_dir); do \
+		if [ -d $$dir ]; then \
+			make -C $$dir clean || exit 1; \
+		fi \
+	done
+```
+
 ## 赋值操作
 
 |运算符|行为描述|
