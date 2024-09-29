@@ -383,7 +383,7 @@ $iniContent | Add-Content -Path ($HOME + "\.condarc") -PassThru | Out-Host
 
 ## Python 源
 
-使用这个源，可以在 Linux 上轻松地安装多个 Python 版本：
+使用 [deadsnakes](https://github.com/deadsnakes)，可以在 Linux 上轻松地安装多个 Python 版本：
 
 ```bash
 # 添加 PPA (Personal Package Archives) 源，此源可安装多个 Python 版本
@@ -393,7 +393,10 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 PYTHON_VERSION=python3.13
 
 # 安装另一个版本的 Python
-sudo apt install $PYTHON_VERSION $PYTHON_VERSION-dev
+sudo apt install $PYTHON_VERSION $PYTHON_VERSION-dev \
+    $PYTHON_VERSION-venv $PYTHON_VERSION-distutils \
+    $PYTHON_VERSION-lib2to3 $PYTHON_VERSION-gdbm \
+    $PYTHON_VERSION-tk
 
 # 使用新版本的 Python
 $PYTHON_VERSION -m venv $PYTHON_VERSION --without-pip
