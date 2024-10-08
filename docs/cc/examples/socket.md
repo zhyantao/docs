@@ -37,25 +37,26 @@ int socket(int domain, int type, int protocol);
 
 **domain：协议族（family）决定了 socket 的地址类型**
 
-- `AF_INET`（必须用 32 位的 IPv4 地址和 16 位的端口号）
-- `AF_INET6`（必须使用 IPv6 协议）
-- `AF_UNIX` 或 `AF_LOCAL`（本地通信，必须用绝对路径作为地址）
-- `AF_ROUTE`
+- `AF_INET`：IPv4 地址类型，使用 32 位的 IPv4 地址和 16 位的端口号。
+- `AF_INET6`：IPv6 地址类型，使用 128 位的 IPv6 地址和 16 位的端口号。
+- `AF_UNIX` 或 `AF_LOCAL`：本地通信，使用绝对路径作为地址。
+- `AF_ROUTE`：路由套接字，用于路由表管理。
+- `AF_PACKET`：低级别的包接口，用于捕获和发送原始网络包。
 
 **type：指定了 socket 的类型**
 
-- `SOCK_STREAM`（流格式套接字，使用面向连接的 TCP 协议，可靠性高）
-- `SOCK_DGRAM`（数据报格式套接字，使用无连接的 UDP 协议，速度快）
-- `SOCK_RAW`
-- `SOCK_PACKET`
-- `SOCK_SEQPACKET`
+- `SOCK_STREAM`：流格式套接字，使用面向连接的 TCP 协议，可靠性高。
+- `SOCK_DGRAM`：数据报格式套接字，使用无连接的 UDP 协议，速度快。
+- `SOCK_RAW`：原始套接字，允许直接访问网络层协议。
+- `SOCK_PACKET`：过时的原始套接字类型，用于捕获和发送原始网络包（已由 `AF_PACKET` 取代）。
+- `SOCK_SEQPACKET`：有序的、可靠的、基于数据报的套接字，类似于 `SOCK_STREAM`，但以数据报形式传输数据。
 
 **protocol：指定了传输协议**
 
-- `IPPROTO_TCP`
-- `IPPROTO_UDP`
-- `IPPROTO_SCTP`
-- `IPPROTO_TIPC`
+- `IPPROTO_TCP`：TCP 协议，用于 `SOCK_STREAM` 类型的套接字。
+- `IPPROTO_UDP`：UDP 协议，用于 `SOCK_DGRAM` 类型的套接字。
+- `IPPROTO_SCTP`：SCTP 协议，用于 `SOCK_STREAM` 或 `SOCK_SEQPACKET` 类型的套接字。
+- `IPPROTO_TIPC`：TIPC 协议，用于集群通信。
 
 注意，type 和 protocol 并不是随意组合的。比如 `SOCK_STREAM` 不可以跟 `IPPROTO_UDP` 组合，当 protocol 为 0 时，会自动选择 type 类型对应的默认协议。
 
