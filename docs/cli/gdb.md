@@ -2,25 +2,13 @@
 
 ## 如何使用 GDB
 
-首先，将程序编译并包含调试信息，然后运行 GDB：
+首先，将程序编译并包含调试信息，然后在启动 GDB 时使用 `--args` 选项直接传递参数：
 
 ```bash
-# 切换到项目目录
-cd project_dir
-
-# 打开 gdb
-gdb
-
-# 加载可执行程序
-file path/to/file
+gdb --args myprogram arg1 arg2
 ```
 
-**示例：**
-```bash
-cd /home/user/project
-gdb
-file ./myprogram
-```
+进入 GDB 后，直接使用 `run` 命令即可。
 
 ## 调试过程中修改源代码
 
@@ -31,25 +19,6 @@ file ./myprogram
 3. 使用命令 `jobs` 查看后台进程；
 4. 使用 `fg proc_num` 恢复；
 5. 使用 `run (args)` 重新定位到上次离开的地方。
-
-**示例：**
-
-```bash
-# 暂停 GDB
-Ctrl+z
-
-# 修改源代码
-nano myprogram.c
-
-# 查看后台进程
-jobs
-
-# 恢复 GDB
-fg 1
-
-# 重新运行程序
-run
-```
 
 ## 运行和调试程序
 
