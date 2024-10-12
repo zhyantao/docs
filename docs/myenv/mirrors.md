@@ -468,9 +468,7 @@ npm --registry http://registry.cnpmjs.org info express
 - 腾讯云：<https://mirrors.cloud.tencent.com/>
 - 网易 163：<http://uni.mirrors.163.com/>
 
-IDEA 默认的 Maven 配置文件在 `C:\Users\%USERNAME%\.m2` 目录下，如果你能够在找到 `settings.xml`
-文件的话，那直接修改配置文件就可以了。
-如果找不到这个文件的话，自己新建一个 `settings.xml`，然后在文件中写入下面的内容（以阿里镜像源为例）：
+编辑或新建 `C:\Users\%USERNAME%\.m2\settings.xml`，文件内容如下（使用阿里云镜像）：
 
 ````{admonition} settings.xml
 :class: dropdown, full-width
@@ -767,12 +765,3 @@ under the License.
 </settings>
 ```
 ````
-
-当然，你也可以自己从 Maven
-[官方仓库](https://maven.apache.org/download.html) 下载 `apache-maven-3.8.5-bin.zip`。
-然后，1）配置环境变量 `MAVEN_HOME` 或 `M2_HOME` [^cite_ref-1]，
-2）修改 `apache-maven-3.8.5/conf/settings.xml`。
-
-修改完成后，在 IDEA 中记得勾选 `文件` > `设置` > `构建、执行、部署` > `构建工具` > `Maven` > `使用 Maven 包装器` > `重写`。
-
-[^cite_ref-1]: Maven 安装与配置 <https://www.cnblogs.com/seve/p/10903679.html>
