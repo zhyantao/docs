@@ -1,0 +1,9 @@
+/* hide the readthedocs ads */
+#readthedocs-ea {
+    display: none;
+}
+
+/* hide the banner */
+.container.bottom-right {
+    display: none;
+}
