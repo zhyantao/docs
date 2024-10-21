@@ -27,6 +27,7 @@ sudo apt install libcairo2 libcairo2-dev
 4、安装项目所需依赖，预览效果。
 
 ```bash
+# Python 版本号：3.12.6
 cd notebook
 pip install -r requirements.txt
 # export PATH=~/.local/bin:$PATH

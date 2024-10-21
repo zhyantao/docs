@@ -100,7 +100,7 @@ FUNCTION(qqq, 23)
 #define OUTPUT(a) std::cout << "output: " #a << '\n'
 
 // 在后面的宏定义中使用之前的宏
-#define WORD "Hello "
+#define WORD       "Hello "
 #define OUTER(...) WORD #__VA_ARGS__
 
 int main() {

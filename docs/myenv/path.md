@@ -1,10 +1,14 @@
 # Windows Path
 
+```{note}
+推荐将常用的环境装在 C 盘下，方便软件工具自动识别。
+```
+
 ## Java
 
 | 变量名      | 变量值                                  |
 | ----------- | --------------------------------------- |
-| `JAVA_HOME` | `D:\Program Files\Java\jdk-1.8`         |
+| `JAVA_HOME` | `C:\Program Files\Java\jdk-1.8`         |
 | `JDK_HOME`  | `%JAVA_HOME%`                           |
 | `JRE_HOME`  | `%JAVA_HOME%\jre`                       |
 | `CLASSPATH` | `.;%JAVA_HOME%\lib;%JAVA_HOME%\jre\lib` |
@@ -18,7 +22,7 @@
 
 | 变量名       | 变量值                                            |
 | ------------ | ------------------------------------------------- |
-| `PYTHONHOME` | `D:\Program Files\Python38`                       |
+| `PYTHONHOME` | `C:\Program Files\Python312`                      |
 | `PYTHONPATH` | `%PYTHONHOME%\Lib;%PYTHONHOME%\Lib\site-packages` |
 | `PATH`       | `%PYTHONHOME%\Scripts;%PYTHONHOME%`               |
 
