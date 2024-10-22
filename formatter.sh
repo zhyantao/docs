@@ -1,5 +1,5 @@
-pip install clang-format==18.1.8
-SITE_PACKAGES_DIR=$(python -c "import site; print('\n'.join(site.getsitepackages()));")
+pip install -r requirements.txt
+SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0]);")
 find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
 -not -path "./.git/*" \
 -not -path "./.svn/*" \
