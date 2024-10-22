@@ -399,9 +399,9 @@ sudo apt install $PYTHON_VERSION $PYTHON_VERSION-dev \
     $PYTHON_VERSION-tk
 
 # 使用新版本的 Python
-mkdir -p ~/venv && cd ~/venv
-$PYTHON_VERSION -m venv $PYTHON_VERSION --without-pip
-source $PYTHON_VERSION/bin/activate
+mkdir -p ~/venv
+$PYTHON_VERSION -m venv ~/venv/$PYTHON_VERSION --without-pip
+source ~/venv/$PYTHON_VERSION/bin/activate
 curl https://bootstrap.pypa.io/get-pip.py | $PYTHON_VERSION
 ```
 
