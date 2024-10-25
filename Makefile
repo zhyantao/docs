@@ -1,5 +1,6 @@
 # Makefile for Sphinx documentation
 #
+SITE_PACKAGES_DIR = $(shell python -c "import site; print(site.getsitepackages()[0]);")
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -39,3 +40,11 @@ clean:
 	@rm -rf $(BUILDDIR)/*
 	@rm -rf docs/_tmp
 	@echo "Clean finished."
+
+format:
+	@python formatter.py
+	@find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
+	-not -path "./.git/*" \
+	-not -path "./.svn/*" \
+	-not -path "./.github/*" \
+	-exec $SITE_PACKAGES_DIR/clang_format/data/bin/clang-format -i {} +
