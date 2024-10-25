@@ -43,7 +43,7 @@ clean:
 
 format:
 	@python formatter.py
-	@find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
+	find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
 	-not -path "./.git/*" \
 	-not -path "./.svn/*" \
 	-not -path "./.github/*" \
