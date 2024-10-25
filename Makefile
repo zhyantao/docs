@@ -47,4 +47,4 @@ format:
 	-not -path "./.git/*" \
 	-not -path "./.svn/*" \
 	-not -path "./.github/*" \
-	-exec $SITE_PACKAGES_DIR/clang_format/data/bin/clang-format -i {} +
+	-exec $(SITE_PACKAGES_DIR)/clang_format/data/bin/clang-format -i {} +
