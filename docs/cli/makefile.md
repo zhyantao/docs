@@ -8,6 +8,7 @@
 CXX := g++
 CXXFLAGS := -c -Wall
 LDFLAGS :=
+CROSS_COMPILE :=
 
 TARGET := hello
 SRCS := $(wildcard *.cpp)
@@ -245,6 +246,8 @@ DIR_NAME := $(notdir $(shell pwd))
 TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
 BUILD_DIR := $(CURR_DIR)/build
 
+SITE_PACKAGES_DIR = $(shell python -c "import site; print(site.getsitepackages()[0]);")
+
 sub_dir := example1 example2 example3
 
 all:
@@ -267,6 +270,13 @@ tarball:
 	rm -rf $(BUILD_DIR)/usr/local
 	cd $(BUILD_DIR) && tar czf build-$(DIR_NAME)_$(TIMESTAMP).tar.gz usr
 	mv $(BUILD_DIR)/build-*.tar.gz ..
+
+format:
+	find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
+	-not -path "./.git/*" \
+	-not -path "./.svn/*" \
+	-not -path "./.github/*" \
+	-exec $(SITE_PACKAGES_DIR)/clang_format/data/bin/clang-format -i {} +
 ```
 
 ## 赋值操作
