@@ -1,6 +1,19 @@
-# WSL2 访问外网的配置方法
+# WSL2 配置方案
 
-## 推荐方案
+## 解决 WSL2 常见路径错误
+
+第 1 步：右击 `此电脑`，选择 `映射网络驱动器...`
+
+第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost\Ubuntu-20.04`
+
+```{figure} ../_static/images/wsl2-mapping-to-vdisk.png
+:name: wsl2-mapping-to-vdisk
+```
+
+
+## WSL2 访问外网的配置方法
+
+### 推荐方案
 
 WSL2 可以使用 Windows 的代理来访问外网。在 PowerShell 中运行下面的命令，升级 WSL 到最新版本：
 
@@ -28,7 +41,7 @@ autoProxy=true
 curl -o test_google.html google.com
 ```
 
-## 备选方案
+### 备选方案
 
 首先打开代理工具（比如 Clash）的局域网访问权限：
 
