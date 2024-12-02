@@ -6,12 +6,11 @@
 
 第 1 步：右击 `此电脑`，选择 `映射网络驱动器...`
 
-第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost\Ubuntu-20.04`
+第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost`（不要带 Ubuntu-20.04 子目录，下图有问题）
 
 ```{figure} ../_static/images/wsl2-mapping-to-vdisk.png
 :name: wsl2-mapping-to-vdisk
 ```
-
 
 ## WSL2 访问外网的配置方法
 
