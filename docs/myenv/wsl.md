@@ -2,11 +2,13 @@
 
 ## 解决 WSL2 常见路径错误
 
-在用 Windows 上的应用程序对 WSL2 上的项目进行修改时，会遇到一些路径问题，这是因为 WSL2 在 Windows 上的访问路径是 `\\wsl.localhost` 开头的，而标准的 Windows 访问路径则是以盘符开头，比如 `C:\`，这种不一致会导致错误发生。比如，我在使用 STM32CubeIDE 编译位于 WSL2 上的项目时，会遇到 No such file or directory 的错误。解决方案如下：
+在 Windows 上使用应用程序访问位于 WSL2 (Windows Subsystem for Linux 2) 中的项目时，可能会遇到路径兼容性的问题。这是因为 WSL2 内的文件路径与 Windows 系统中的路径格式不同：WSL2 使用 `\\wsl.localhost` 作为其路径的开头部分，而传统的 Windows 路径是以盘符（如 `C:\`）开始的。这种路径表示法上的差异，有时会导致程序无法正确识别或访问文件，进而产生错误。
+
+例如，在尝试用 STM32CubeIDE 编译一个位于 WSL2 环境下的项目时，您可能会碰到 "No such file or directory" 的错误提示。为了解决这一问题，可以采取以下方案：
 
 第 1 步：右击 `此电脑`，选择 `映射网络驱动器...`
 
-第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost`（不要带 Ubuntu-20.04 子目录，下图有问题）
+第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost\Ubuntu-20.04`
 
 ```{figure} ../_static/images/wsl2-mapping-to-vdisk.png
 :name: wsl2-mapping-to-vdisk
