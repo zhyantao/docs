@@ -2,74 +2,19 @@
 
 ## 使用方法
 
-1、编写 Makefile（参考 <https://seisman.github.io/how-to-write-makefile>）
+| 描述                           | 参考链接                                                                                             |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| 针对单个文件编写 Makefile      | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/tests/Makefile>`     |
+| 对 `.tar.gz` 文件编写 Makefile | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/Makefile>`      |
+| 使用一条命令编译多个子目录     | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/Makefile>`           |
+| 配置交叉编译环境               | {download}`查看 sdk.mk 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/sdk.mk>`          |
+| 使用 buildroot 构建 toolchain  | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/buildroot/Makefile>` |
 
-```makefile
-CXX := g++
-CXXFLAGS := -c -Wall
-LDFLAGS :=
-CROSS_COMPILE :=
+出于跨平台的目的，你可能会用到一些比 Makefile 更自动化的构建工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
 
-TARGET := hello
-SRCS := $(wildcard *.cpp)
-OBJS := $(patsubst %.cpp, %.o, $(SRCS))
+::::{tab-set}
+:::{tab-item} ./configure
 
-# 声明 `all` 为伪目标，防止与系统中的同名目标冲突
-.PHONY: all
-all: $(TARGET)
-
-# 目标规则: 生成可执行文件
-$(TARGET): $(OBJS)
-	$(CXX) -o $@ $^ $(LDFLAGS)
-
-# 编译规则: 生成目标文件
-$(OBJS): %.o: %.cpp
-	$(CXX) -o $@ -c $< $(CXXFLAGS)
-
-.PHONY: clean
-clean:
-	rm -f *.o $(TARGET)
-```
-
-2、配置编译选项
-
-```bash
-cat <<\EOF | tee sdk.mk
-CURR_DIR := $(shell pwd)
-
-BUILDROOT_DIR := $(CURR_DIR)/../buildroot-2023.02.9/output/host
-SYSROOT_DIR := $(BUILDROOT_DIR)/arm-buildroot-linux-gnueabihf/sysroot
-TOOLCHAIN_DIR := $(BUILDROOT_DIR)/bin
-export PATH := $(TOOLCHAIN_DIR):$(PATH)
-
-# cross compile options
-export ARCH := arm
-export CROSS_COMPILE := arm-buildroot-linux-gnueabihf-
-
-export CC := $(CROSS_COMPILE)gcc
-# export CXX := $(CROSS_COMPILE)g++
-export AS := $(CROSS_COMPILE)as
-export LD := $(CROSS_COMPILE)ld
-export STRIP := $(CROSS_COMPILE)strip
-export RANLIB := $(CROSS_COMPILE)ranlib
-export OBJCOPY := $(CROSS_COMPILE)objcopy
-export OBJDUMP := $(CROSS_COMPILE)objdump
-export AR := $(CROSS_COMPILE)ar
-export NM := $(CROSS_COMPILE)nm
-
-export CFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
-# export CXXFLAGS := --sysroot=$(SYSROOT_DIR) -I$(SYSROOT_DIR)/usr/include -g -Wall
-export LDFLAGS := -L$(SYSROOT_DIR)/lib -L$(SYSROOT_DIR)/usr/lib
-
-export PKG_CONFIG_DIR := "$(SYSROOT_DIR)/usr/lib/pkgconfig"
-export PKG_CONFIG_PATH := "$(PKG_CONFIG_DIR):$(SYSROOT_DIR)/usr/share/pkgconfig"
-export PKG_CONFIG_LIBDIR := "$(PKG_CONFIG_DIR)"
-export PKG_CONFIG_SYSROOT_DIR := "$(SYSROOT_DIR)"
-export PKG_CONFIG_DISABLE_UNINSTALLED := "yes"
-EOF
-```
-
-````{dropdown} 编译 Python 需要的选项
 ```bash
 cat <<EOF | tee config.site
 ac_cv_file__dev_ptmx=no
@@ -87,15 +32,15 @@ cd $(SRC_DIR) && ./configure \
 --with-openssl-rpath=auto \
 --disable-ipv6 \
 --with-config-site=CONFIG_SITE
+
+# {x86,amd64,arm32,arm64,ppc32,ppc64le,ppc64be,s390x,mips32,mips64}-linux,
+# {arm32,arm64,x86,mips32}-android, {x86,amd64}-solaris,
+# {x86,amd64,arm64}-FreeBSD and {x86,amd64}-darwin
 ```
-````
 
-3、开始编译
-
-出于跨平台的目的，你可能会用到一些比 Makefile 更自动化的构建工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
-
-::::{tab-set}
+:::
 :::{tab-item} CMakeLists
+
 ```bash
 cat <<EOF | tee CMakeLists.txt
 cmake_minimum_required(VERSION 3.12)
@@ -108,8 +53,10 @@ cd build && cmake ..
 make
 make install
 ```
+
 :::
 :::{tab-item} Autoconf
+
 ```bash
 cd $(SRC_DIR) && autoreconf -vi
 cd $(SRC_DIR) && ./configure \
@@ -119,8 +66,10 @@ cd $(SRC_DIR) && ./configure \
 make -C $(SRC_DIR)
 make -C $(SRC_DIR) install
 ```
+
 :::
 :::{tab-item} Meson
+
 ```bash
 cat <<EOF | tee aarch64-linux.ini
 [constants]
@@ -158,135 +107,18 @@ meson build_dir \
 cd build_dir && meson compile -C output_dir
 meson install -C output_dir
 ```
+
 :::
 ::::
 
-这些工具本质上还是会生成 Makefile，因此，不管你用的什么构建工具，下面的步骤是通用的：
-
-```makefile
-CURR_DIR := $(shell pwd)
--include sdk.mk
-
-# where is source code?
-PROJECT_NAME := valgrind
-VERSION := 3.23.0
-TAR_BALL := $(PROJECT_NAME)-$(VERSION).tar.bz2
-SRC_DIR := $(CURR_DIR)/$(PROJECT_NAME)-$(VERSION)
-
-# where is the build results?
-export DESTDIR := $(CURR_DIR)/build
-
-# make
-.PHONY: all
-all:
-	@echo "SYSROOT=$(SYSROOT_DIR)"
-	@echo "$(CC) --print-file-name=include"
-	@echo "CC=`which $(CC)`"
-	@echo "CXX=`which $(CXX)`"
-	@echo "CMake=`which cmake`"
-	@echo "Clang=`which clang`"
-	@cd $(SRC_DIR) && ./configure \
-	--prefix=$(DESTDIR) \
-	--build=x86_64-pc-linux-gnu \
-	--target=aarch64-linux \
-	--host=aarch64-linux
-	# {x86,amd64,arm32,arm64,ppc32,ppc64le,ppc64be,s390x,mips32,mips64}-linux, 
-	# {arm32,arm64,x86,mips32}-android, {x86,amd64}-solaris, 
-	# {x86,amd64,arm64}-FreeBSD and {x86,amd64}-darwin
-	@cd $(SRC_DIR) && make -C $(SRC_DIR) -j8
-	@cd $(SRC_DIR) && make -C $(SRC_DIR) install
-
-# make clean
-.PHONY: clean
-clean:
-	rm -rf $(SRC_DIR)
-	rm -rf $(DESTDIR)
-
-# make patch
-.PHONY: patch
-patch:
-	tar xf $(TAR_BALL)
-	@if [ ! -d "patches" ]; then mkdir -p $(CURR_DIR)/patches; fi
-	@rm -rf $(DESTDIR) && mkdir -p $(DESTDIR)
-
-# make repo
-.PHONY: repo
-repo:
-	@cd $(SRC_DIR) && if [ ! -d ".git" ]; then git init; fi
-	@cd $(SRC_DIR) && git config --add core.filemode false
-	@cd $(SRC_DIR) && git config --global core.autocrlf false
-	@cd $(SRC_DIR) && git add .
-	@cd $(SRC_DIR) && git commit -m "commit before make patch"
-	@echo "$(SRC_DIR) is already up to date"
-
-# make diff
-.PHONY: diff
-diff:
-	@cd $(SRC_DIR) && git config --add core.filemode false
-	@cd $(SRC_DIR) && git config --global core.autocrlf false
-	@cd $(SRC_DIR) && git add .
-	@cd $(SRC_DIR) && git diff --cached > $(CURR_DIR)/patches/0000-undefined.patch
-	@echo "patch file is saved to $(CURR_DIR)/patches/0000-undefined.patch"
-
-# make help
-.PHONY: help
-help:
-	@echo ""
-	@echo "Step 1:\033[35m make patch \033[0m  Apply patches"
-	@echo "Step 2:\033[35m make repo  \033[0m  Initilize git repository and commit"
-	@echo "Step 3:\033[35m make       \033[0m  Check if the modifications are valid"
-	@echo "Step 4:\033[35m TODO: edit \033[0m  Create, edit and save modifications"
-	@echo "Step 5:\033[35m make diff  \033[0m  Generate a patch file"
-	@echo ""
-```
-
-```makefile
-CURR_DIR := $(shell pwd)
-DIR_NAME := $(notdir $(shell pwd))
-TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
-BUILD_DIR := $(CURR_DIR)/build
-
-SITE_PACKAGES_DIR = $(shell python -c "import site; print(site.getsitepackages()[0]);")
-
-sub_dir := example1 example2 example3
-
-all:
-	@for dir in $(sub_dir); do \
-		if [ -d $$dir ]; then \
-			make patch -C $$dir $@ || exit 1; \
-			make -C $$dir $@ || exit 1; \
-		fi \
-	done
-
-clean:
-	@for dir in $(sub_dir); do \
-		if [ -d $$dir ]; then \
-			make -C $$dir clean || exit 1; \
-		fi \
-	done
-
-tarball:
-	cp -r $(BUILD_DIR)/usr/local/* $(BUILD_DIR)/usr
-	rm -rf $(BUILD_DIR)/usr/local
-	cd $(BUILD_DIR) && tar czf build-$(DIR_NAME)_$(TIMESTAMP).tar.gz usr
-	mv $(BUILD_DIR)/build-*.tar.gz ..
-
-format:
-	find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) \
-	-not -path "./.git/*" \
-	-not -path "./.svn/*" \
-	-not -path "./.github/*" \
-	-exec $(SITE_PACKAGES_DIR)/clang_format/data/bin/clang-format -i {} +
-```
-
 ## 赋值操作
 
-|运算符|行为描述|
-|---|---|
-|`=`|定义变量 |
-|`:=`|重新定义变量，覆盖之前的值 |
-|`?=`|如果变量未定义，则赋予默认值 |
-|`+=`|在变量后追加值 |
+| 运算符 | 行为描述                     |
+| ------ | ---------------------------- |
+| `=`    | 定义变量                     |
+| `:=`   | 重新定义变量，覆盖之前的值   |
+| `?=`   | 如果变量未定义，则赋予默认值 |
+| `+=`   | 在变量后追加值               |
 
 ```makefile
 var = "hello world"
@@ -302,7 +134,7 @@ var := "always update"
 $(info $(var))  # "always update"
 
 # 默认目标
-all: 
+all:
 	@echo "All done"  # All done
 
 # 空目标，确保每个语句都会执行
