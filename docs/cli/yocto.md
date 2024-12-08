@@ -185,7 +185,7 @@ source ./oe-init-build-env
 bitbake-layers add-layer ../meta-clang
 
 # 允许 bitbake 检查本地缓存
-echo BB_NO_NETWORK=1
+export BB_NO_NETWORK=1
 
 # 将提前下载好的 git2_github.com.llvm.llvm-project.tar.gz 放到 DL_DIR 目录下
 cp git2_github.com.llvm.llvm-project.tar.gz <build-dir>/downloads
