@@ -61,3 +61,38 @@ cat <<EOF | tee -a ~/.bashrc
 export ALL_PROXY="http://$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):7890"
 EOF
 ```
+
+## 压缩 WSL2 占用的 C 盘空间
+
+WSL2 只会自动扩容，无法自动缩容。因此，如果 WSL2 占用的磁盘空间过大，可以尝试以下方法来压缩：
+
+1、关闭 WSL
+
+```bash
+wsl --shutdown
+```
+
+````{note}
+确保 WSL2 是关闭状态的，因为在 Windows 11 上，WSL2 有可能会自动重启。
+
+```bash
+> wsl --list --verbose
+  NAME            STATE           VERSION
+* Ubuntu-20.04    Stopped         2
+```
+````
+
+2、启动 diskpart
+
+```bash
+diskpart
+```
+
+2、选择 `ext4.vhdx` 文件，并压缩
+
+```bash
+select vdisk file="C:\Users\yanta\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx"
+list disk
+compact vdisk
+list disk
+```
