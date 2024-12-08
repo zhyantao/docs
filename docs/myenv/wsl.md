@@ -72,6 +72,21 @@ WSL2 只会自动扩容，无法自动缩容。因此，如果 WSL2 占用的磁
 wsl --shutdown
 ```
 
+2、启动 diskpart
+
+```bash
+diskpart
+```
+
+3、选择 `ext4.vhdx` 文件，并压缩
+
+```bash
+select vdisk file="C:\Users\yanta\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx"
+list disk
+compact vdisk
+list disk
+```
+
 ````{note}
 确保 WSL2 是关闭状态的，因为在 Windows 11 上，WSL2 有可能会自动重启。
 
@@ -81,18 +96,3 @@ wsl --shutdown
 * Ubuntu-20.04    Stopped         2
 ```
 ````
-
-2、启动 diskpart
-
-```bash
-diskpart
-```
-
-2、选择 `ext4.vhdx` 文件，并压缩
-
-```bash
-select vdisk file="C:\Users\yanta\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx"
-list disk
-compact vdisk
-list disk
-```
