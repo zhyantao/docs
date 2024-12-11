@@ -55,6 +55,26 @@ html_theme_options = {
     # "announcement": (
     #     "WHEN YOU PRAY, MOVE YOUR FEET!"
     # ),
+    "icon_links": [
+        {
+            "name": "Documentation Status",
+            "url": "https://readthedocs.org/projects/getstarted/builds",
+            "icon": "https://readthedocs.org/projects/getstarted/badge",
+            "type": "url",
+        },
+        {
+            "name": "GitHub Release",
+            "url": "https://github.com/zhyantao/getstarted/releases",
+            "icon": "https://img.shields.io/github/v/release/zhyantao/getstarted",
+            "type": "url",
+        },
+        # {
+        #     "name": "Curriculum Vitae",
+        #     "url": "https://zhyantao.github.io/cv/",
+        #     "icon": "https://img.shields.io/badge/cv-ongoing-blue",
+        #     "type": "url",
+        # },
+    ],
 }
 
 
@@ -155,6 +175,7 @@ myst_enable_extensions = [
     "deflist",
     "dollarmath",
     "html_image",
+    "tasklist",
 ]
 panels_add_bootstrap_css = False
 
