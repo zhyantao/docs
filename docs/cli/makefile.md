@@ -2,18 +2,20 @@
 
 ## 使用方法
 
-| 描述                           | 参考链接                                                                                             |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| 针对单个文件编写 Makefile      | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/tests/Makefile>`     |
-| 对 `.tar.gz` 文件编写 Makefile | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/Makefile>`      |
-| 使用一条命令编译多个子目录     | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/Makefile>`           |
-| 配置交叉编译环境               | {download}`查看 sdk.mk 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/sdk.mk>`          |
-| 使用 buildroot 构建 toolchain  | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/buildroot/Makefile>` |
+| 描述                           | 参考链接                                                                                                 |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| 针对单个文件编写 Makefile      | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/tests/Makefile>`         |
+| 对 `.tar.gz` 文件编写 Makefile | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/Makefile>`          |
+| 使用一条命令编译多个子目录     | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/Makefile>`               |
+| 配置交叉编译环境               | {download}`查看 sdk.mk 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/sdk.mk>`              |
+| 使用 buildroot 构建 toolchain  | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/buildroot/Makefile>`     |
+| 使用 yocto 构建 toolchain      | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/yocto/Makefile>`         |
+| 使用 `bitbake` 编译和打包模块  | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/yocto/bitbake/Makefile>` |
 
 出于跨平台的目的，你可能会用到一些比 Makefile 更自动化的构建工具，比如 CMake、Autoconf、Meson 等等。为此，我们不得不做一些相关的配置信息，如下所示：
 
 ::::{tab-set}
-:::{tab-item} ./configure
+:::{tab-item} configure
 
 ```bash
 cat <<EOF | tee config.site
