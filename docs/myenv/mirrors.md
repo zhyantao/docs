@@ -445,21 +445,11 @@ pacman -Syu
 `npm` 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。
 通过 `npm` 可以安装、共享、分发代码，管理项目依赖关系。默认源是 <https://www.npmjs.com/>。
 
-（1）**临时改变镜像源**
-
 ```bash
-# 方法一：通过 config 命令
-npm config set registry http://registry.cnpmjs.org
-npm info express
-
-# 方法二：通过 npm 命令
-npm --registry http://registry.cnpmjs.org info express
+cat <<EOF | tee ~/.npmrc
+registry=https://registry.npmmirror.com
+EOF
 ```
-
-（2）**永久修改镜像源**
-
-1. 打开配置文件：`~/.npmrc`
-2. 写入配置：`registry=https://registry.npm.taobao.org`
 
 ## Maven 源
 
