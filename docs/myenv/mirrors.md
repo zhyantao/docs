@@ -451,6 +451,14 @@ registry=https://registry.npmmirror.com
 EOF
 ```
 
+安装指定版本的 `npm` 和 `nodejs`
+
+```bash
+sudo npm install npm@8.1.2 -g
+sudo npm install n -g
+sudo n v16.13.2
+```
+
 ## Maven 源
 
 如果使用 IDEA 默认的国外镜像源比较慢（会导致下载 Maven Wrapper 失败），可尝试使用国内镜像源：
