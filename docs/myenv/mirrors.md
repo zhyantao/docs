@@ -446,16 +446,22 @@ pacman -Syu
 通过 `npm` 可以安装、共享、分发代码，管理项目依赖关系。默认源是 <https://www.npmjs.com/>。
 
 ```bash
-cat <<EOF | tee ~/.npmrc
-registry=https://registry.npmmirror.com
-EOF
+sudo apt install npm
+sudo npm install n -g
+
+# 设置淘宝镜像源
+npm config set registry https://registry.npmmirror.com
 ```
 
-安装指定版本的 `npm` 和 `nodejs`
+升级或降级到指定版本的 `npm` 和 `nodejs`
 
 ```bash
+# 升级到最新版本
+sudo npm install -g npm@latest
+sudo n latest
+
+# 降级到指定版本
 sudo npm install npm@8.1.2 -g
-sudo npm install n -g
 sudo n v16.13.2
 ```
 
