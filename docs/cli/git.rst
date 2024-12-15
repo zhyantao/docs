@@ -43,6 +43,8 @@ Git
     # (可选) 添加子仓库
     git submodule add https://github.com/username/subrepo.git path/to/subrepo
     git submodule update --init --recursive
+    # update submodule
+    #git submodule update --remote --merge
 
     # (可选) 更新子仓库
     cd path/to/subrepo
