@@ -5,32 +5,25 @@
 以下是示例：
 
 ```cpp
-/////////////////////////////  ONLY FOR DEBUG USE  /////////////////////////////
+///////////////////  ONLY FOR DEBUG USE  ///////////////////
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#define DEBUG 1
-
-#if DEBUG
-
-// 统一日志格式
-#define LOG_FORMAT_PREFIX "LEVEL:"
+#define LOG_PREFIX "LEVEL:"
 
 // Case 1: 带额外参数的日志宏
 #ifdef LOG_WITH_EXTRA_ARGS
 #undef LOG_WITH_EXTRA_ARGS
 #endif
 #define LOG_WITH_EXTRA_ARGS(level, fmt, ...) \
-    printf(LOG_FORMAT_PREFIX "%d " fmt "\n", level, ##__VA_ARGS__)
+    printf(LOG_PREFIX "%d " fmt "\n", level, ##__VA_ARGS__)
 
 // Case 2: 不带额外参数的日志宏
 #ifdef LOG_WITHOUT_EXTRA_ARGS
 #undef LOG_WITHOUT_EXTRA_ARGS
 #endif
 #define LOG_WITHOUT_EXTRA_ARGS(fmt, ...) \
-    printf(LOG_FORMAT_PREFIX fmt "\n", ##__VA_ARGS__)
-
-#endif // DEBUG
+    printf(LOG_PREFIX fmt "\n", ##__VA_ARGS__)
 
 #endif // DEBUG_H
 ```
