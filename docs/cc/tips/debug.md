@@ -14,24 +14,21 @@
 #if DEBUG
 
 // 统一日志格式
-#define LOG_FORMAT_PREFIX "DEBUG: "
+#define LOG_FORMAT_PREFIX "LEVEL:"
 
 // Case 1: 带额外参数的日志宏
-#if !defined(LOG_WITH_EXTRA_ARGS)
-#define LOG_WITH_EXTRA_ARGS(level, fmt, ...) \
-    printf(LOG_FORMAT_PREFIX "%s " fmt "\n", level, ##__VA_ARGS__)
+#ifdef LOG_WITH_EXTRA_ARGS
+#undef LOG_WITH_EXTRA_ARGS
 #endif
+#define LOG_WITH_EXTRA_ARGS(level, fmt, ...) \
+    printf(LOG_FORMAT_PREFIX "%d " fmt "\n", level, ##__VA_ARGS__)
 
 // Case 2: 不带额外参数的日志宏
-#if !defined(LOG_WITHOUT_EXTRA_ARGS)
-#define LOG_WITHOUT_EXTRA_ARGS(fmt, ...) printf(LOG_FORMAT_PREFIX fmt "\n", ##__VA_ARGS__)
+#ifdef LOG_WITHOUT_EXTRA_ARGS
+#undef LOG_WITHOUT_EXTRA_ARGS
 #endif
-
-#else // DEBUG
-
-// 如果不启用DEBUG，定义为空操作
-#define LOG_WITH_EXTRA_ARGS(level, fmt, ...)
-#define LOG_WITHOUT_EXTRA_ARGS(fmt, ...)
+#define LOG_WITHOUT_EXTRA_ARGS(fmt, ...) \
+    printf(LOG_FORMAT_PREFIX fmt "\n", ##__VA_ARGS__)
 
 #endif // DEBUG
 
