@@ -10,8 +10,6 @@
 4. **板级支持包(BSP)**：为特定硬件平台提供必要的驱动和配置。
 5. **应用开发工具**：了解如何使用 Extensible SDK 或 Legacy SDK 进行应用开发。
 
-本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习 [yocto-slides.pdf](https://bootlin.com/doc/training/yocto/yocto-slides.pdf)。
-
 ## BitBake 文件简介
 
 Bitbake 的构建流程可以分为四个步骤：
@@ -23,7 +21,23 @@ Bitbake 的构建流程可以分为四个步骤：
 
 其中，第四步是工作中最常遇到的，因此展开来讲：
 
-当我们运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个文件，`.bb` 文件包含了一系列的任务（[Tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)）：`do_fetch`、`do_patch`、`do_compile`、`do_install` 及 `do_package` 等等。
+当运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个文件，默认情况下，Tasks 会按照如下工作流进行：
+
+- `do_fetch`
+- `do_unpack`
+- `do_patch`
+- `do_configure`
+- `do_compile`
+- `do_install`
+- `do_package`
+- `do_rootfs`
+
+```{note}
+- 通过 `bitbake <recipe> -c listtasks` 查看某个 recipe 已经存在的 tasks
+- 通过修改 `<recipe>.bb`，自定义 [tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)
+
+本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习 [yocto-slides.pdf](https://bootlin.com/doc/training/yocto/yocto-slides.pdf)。
+```
 
 Bitbake 的执行流程：
 
