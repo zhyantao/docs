@@ -12,16 +12,7 @@
 
 ## BitBake 文件简介
 
-Bitbake 的构建流程可以分为四个步骤：
-
-1. **解析层配置**：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
-2. **配置解析**：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
-3. **依赖解析**：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
-4. **任务执行**：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
-
-其中，第四步是工作中最常遇到的，因此展开来讲：
-
-当运行 `bitbake <recipe>` 时，它会自动地去找 `<recipe>.bb` 这个文件，默认情况下，Tasks 会按照如下工作流进行：
+运行 `bitbake <recipe>` 时，会自动匹配 `<recipe>.bb`，默认情况下 task 按照如下工作流进行：
 
 - `do_fetch`
 - `do_unpack`
@@ -39,7 +30,14 @@ Bitbake 的构建流程可以分为四个步骤：
 本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习 [yocto-slides.pdf](https://bootlin.com/doc/training/yocto/yocto-slides.pdf)。
 ```
 
-Bitbake 的执行流程：
+具体来讲，bitbake 的构建流程可以分为四个步骤：
+
+1. 解析层配置：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
+2. 配置解析：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
+3. 依赖解析：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
+4. 任务执行：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
+
+其中，第四步是工作中最常遇到的，因此展开来讲：
 
 1. `do_fetch`：此阶段默认负责从网络源（根据 [`SRC_URI`](https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI) 变量指定）下载源代码，并将其保存至默认的下载目录 `${DL_DIR}`，该目录通常位于 `${TOPDIR}/downloads`，但实际位置可由用户在 `build/conf/local.conf` 文件中配置。下载完成后，还会验证源码完整性，生成一个 `.done` 文件。
 2. `源代码解压与准备`：下载后的源代码会被解压缩并准备到一个工作目录下，通常是 `${WORKDIR}`，路径类似 `build/tmp/work/<archname>/<recipe>-<version>/`，其中 `<archname>` 是目标体系结构，`<recipe>-<version>` 对应于具体的配方及其版本。这个步骤确保了源代码在一个干净、独立的环境中准备就绪，以便后续构建过程使用。
