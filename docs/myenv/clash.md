@@ -1,5 +1,9 @@
 # Clash 科学上网方法
 
+```{note}
+若开启 Clash 后，Edge 无法上网，请点击 `...` > `设置` > `将设置还原为其默认值`。
+```
+
 1、下载 Clash for Windows: <https://github.com/clashdownload/Clash_for_Windows/releases>
 
 2、购买 VPN: <https://ghelper.net/>
