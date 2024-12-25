@@ -1,49 +1,65 @@
 # Yocto
 
-**Yocto 用于构建**针对嵌入式设备**定制 Linux 发行版的**一套综合的**工具套件、模板和资源**。
+```{note}
+学习 Yocto 请参考 <https://gitee.com/zhyantao/pdf/raw/master/yocto/yocto-slides.pdf>。
+```
 
-探索 Yocto Project，建议从以下几个核心领域开始：
+## bitbake 常用命令
 
-1. **Poky 工作流程**：作为 Yocto 的基础参考发行版，Poky 提供了定制发行版的实践范例。
-2. **OpenEmbedded 构建系统**：利用 BitBake 构建引擎来驱动整个构建过程。
-3. **定制操作系统组件**：学习如何根据需求选择和调整软件包。
-4. **板级支持包(BSP)**：为特定硬件平台提供必要的驱动和配置。
-5. **应用开发工具**：了解如何使用 Extensible SDK 或 Legacy SDK 进行应用开发。
+| 命令                                                              | 作用                                            |
+| ----------------------------------------------------------------- | ----------------------------------------------- |
+| `source oe-init-build-env`                                        | 将  `bitbake`  添加到环境变量中                 |
+| `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                        | 清除所有 `recipe` 的构建缓存                    |
+| `bitbake <recipe>`                                                | 构建指定 `recipe`                               |
+| `bitbake -c clean <recipe>` <br>`bitbake -c cleansstate <recipe>` | 清理指定 `recipe` 的构建产物                    |
+| `bitbake -e <recipe> \| grep ^S=`                                 | 定位 `recipe` 源代码所在目录                    |
+| `bitbake -e <recipe> \| grep ^WORKDIR=`                           | 查看  `${WORKDIR}` 变量的值                     |
+| `bitbake-layers show-recipes "gdb*"`                              | 搜索指定的  `recipe`                            |
+| `bitbake -c devshell <recipe>`                                    | 进入命令行交互界面进行编译                      |
+| `bitbake -c devpyshell <recipe>`                                  | 进入 Python 交互界面进行编译                    |
+| `bitbake -c listtasks <recipe>`                                   | 列出构建   `recipe`   所需执行的任务            |
+| `bitbake -f <recipe>`                                             | 强制重新构建                                    |
+| `bitbake -v <recipe>`                                             | 详细输出构建过程                                |
+| `bitbake -DDD <recipe>`                                           | 显示详细的 Debug 信息                           |
+| `yocto-layer create <layer_name>`                                 | 新建一个 `layer`                                |
+| `bitbake-layers add-layer /path/to/your_meta-layer`               | 新建一个自定义的 `layer`                        |
+| `bitbake-layers remove-layer /path/to/your_meta-layer`            | 删除自定义的 `layer`                            |
+| `bitbake-layers show-recipes`                                     | 列出所有的   `recipe`                           |
+| `bitbake-layers show-overlayed`                                   | 列出所有冲突的   `recipe`                       |
+| `bitbake-layers show-appends`                                     | 列出所有的  `.bbappend`  文件                   |
+| `bitbake-layers flatten <output_dir>`                             | 将所有的  `.bb`  文件抽离出来放到  `output_dir` |
+| `bitbake-layers show-cross-depends`                               | 列出所有 `layer` 的交叉依赖关系                 |
+| `bitbake-layers layerindex-show-depends <layer_name>`             | 根据 OE index 列出指定 `layer` 的依赖           |
+| `bitbake-layers layerindex-fetch <layer name>`                    | 使用 OE index 拉取和添加 `layer`                |
 
 ## BitBake 文件简介
 
-运行 `bitbake <recipe>` 时，会自动匹配 `<recipe>.bb`，默认情况下 task 按照如下工作流进行：
-
-- `do_fetch`
-- `do_unpack`
-- `do_patch`
-- `do_configure`
-- `do_compile`
-- `do_install`
-- `do_package`
-- `do_rootfs`
+运行 `bitbake <recipe>` 时，会自动匹配 `<recipe>.bb`，默认情况下 [Task](https://docs.yoctoproject.org/ref-manual/tasks.html) 按照如下工作流进行：
 
 ```{note}
-- 通过 `bitbake <recipe> -c listtasks` 查看某个 recipe 已经存在的 tasks
-- 通过修改 `<recipe>.bb`，自定义 [tasks](https://docs.yoctoproject.org/ref-manual/tasks.html)
-
-本文聚焦于 BitBake 基础语法和操作命令，更深入的请学习 [yocto-slides.pdf](https://bootlin.com/doc/training/yocto/yocto-slides.pdf)。
+The [TOPDIR](https://docs.yoctoproject.org/ref-manual/variables.html#term-TOPDIR) variable points to the [Build Directory](https://docs.yoctoproject.org/ref-manual/terms.html#term-Build-Directory).
 ```
 
-具体来讲，bitbake 的构建流程可以分为四个步骤：
-
-1. 解析层配置：读取 `build` 目录下的 `conf/bblayers.conf` 以确定使用的层。
-2. 配置解析：遍历各层中的 `layer.conf` 和 `bitbake.conf`。
-3. 依赖解析：建立依赖图，并生成缓存信息（生成 `cache` 目录）。
-4. 任务执行：依据 `.bb` 和 `.bbappend` 文件执行构建任务。
-
-其中，第四步是工作中最常遇到的，因此展开来讲：
-
-1. `do_fetch`：此阶段默认负责从网络源（根据 [`SRC_URI`](https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI) 变量指定）下载源代码，并将其保存至默认的下载目录 `${DL_DIR}`，该目录通常位于 `${TOPDIR}/downloads`，但实际位置可由用户在 `build/conf/local.conf` 文件中配置。下载完成后，还会验证源码完整性，生成一个 `.done` 文件。
-2. `源代码解压与准备`：下载后的源代码会被解压缩并准备到一个工作目录下，通常是 `${WORKDIR}`，路径类似 `build/tmp/work/<archname>/<recipe>-<version>/`，其中 `<archname>` 是目标体系结构，`<recipe>-<version>` 对应于具体的配方及其版本。这个步骤确保了源代码在一个干净、独立的环境中准备就绪，以便后续构建过程使用。
-3. `do_compile`：接着，Bitbake 调用 `do_compile` 任务来编译源代码。此阶段通常在 `${B}`（即编译目录）下设置当前工作目录，并默认尝试运行 `oe_runmake` 函数来执行 Makefile 中定义的编译指令。这一步骤利用了由 `oe-init-build-env` 脚本初始化的环境，支持交叉编译，确保生成的目标代码适用于目标架构。
-4. `do_install`：编译完成后，`do_install` 任务将指定的编译输出（如库文件、可执行文件等）安装到一个临时的安装目录 `${D}`。这个目录作为打包前的暂存区，用于收集所有将被包含进最终包或根文件系统（`ROOTFS`）的文件。此过程在 `${B}` 目录下执行，并通常在 `fakeroot` 环境下操作，以模拟包的安装者权限。
-5. `do_package`：最后，`do_package` 任务负责将 `${D}` 目录下的文件打包成合适的软件包格式（如 `.ipk`, `.deb`, `.rpm` 等），具体格式由配方和构建配置确定。这一阶段涉及文件归档、元数据生成以及可能的包管理数据库更新，为软件分发和部署做准备。
+```{uml}
+@startuml
+start
+:read ${TOPDIR}/conf/bblayers.conf;
+:read ${TOPDIR}/conf/local.conf;
+:read [[https://layers.openembedded.org/layerindex/branch/master/layers layer]]/meta/conf/layer.conf;
+:read [[https://layers.openembedded.org/layerindex/branch/master/layers layer]]/meta/conf/bitbake.conf;
+:<color:green>select target recipe</color>;
+:generate cache directory;
+:execute <color:red>do_fetch</color>, download from [[https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI SRC_URI]], save to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L842 DL_DIR]];
+:execute <color:red>do_unpack</color>, unpack the source code to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L404 ${WORKDIR}]];
+:execute <color:red>do_patch</color>;
+:execute <color:red>do_configure</color>;
+:execute <color:red>do_compile</color>, firstly cd to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L409 ${B}]], then run [[https://docs.yoctoproject.org/dev/ref-manual/tasks.html#do-compile oe_runmake]];
+:execute <color:red>do_install</color>, install the compiled files to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L407 ${D}]];
+:execute <color:red>do_package</color>, package data to [[https://docs.yoctoproject.org/dev/ref-manual/variables.html#term-PKGDATA_DIR PKGDATA_DIR]];
+:execute <color:red>do_rootfs</color>, see [[https://docs.yoctoproject.org/dev/ref-manual/tasks.html#do-rootfs docs.yoctoproject.org]];
+stop
+@enduml
+```
 
 例：假设你有三个脚本需要加入发行版：`startup-script`、`run-script` 和 `support-script`，以下是如何通过 `.bb` 文件实现这一过程的简要指南 [^ref-cite-1]。
 
@@ -139,36 +155,6 @@ do_install() {
     ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc5.d/S90run-script
 }
 ```
-
-注意：`.bb` 文件中好多全局变量都是在 [`poky/meta/conf/bitbake.conf`](https://git.openembedded.org/bitbake/tree/conf/bitbake.conf) 中声明的，关于这些全局变量的解释可以参考 [Variables Glossary](https://docs.yoctoproject.org/bitbake/2.6/bitbake-user-manual/bitbake-user-manual-ref-variables.html)，比如 [`SRC_URI`](https://docs.yoctoproject.org/bitbake/2.6/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI)。重点理解 [`Build Directory`](https://docs.yoctoproject.org/ref-manual/terms.html#term-Build-Directory) 它和 `${TOPDIR}` 以及 `${TMPDIR}` 都有关系。
-
-## BitBake 常用命令
-
-| 命令                                                               | 作用                                         |
-| ------------------------------------------------------------------ | -------------------------------------------- |
-| `source oe-init-build-env`                                         | 将 `bitbake` 添加到环境变量中                |
-| `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                         | 清除所有 `recipe` 的构建缓存                 |
-| `bitbake <recipe>`                                                 | 构建指定 `recipe`                            |
-| `bitbake -c clean <recipe>`  <br>`bitbake -c cleansstate <recipe>` | 清理指定 `recipe` 的构建产物                 |
-| `bitbake -e <recipe> \| grep ^S=`                                  | 定位 `recipe` 源代码所在目录                 |
-| `bitbake -e <recipe> \| grep ^WORKDIR=`                            | 查看 `${WORKDIR}` 变量的值                   |
-| `bitbake-layers show-recipes "gdb*"`                               | 搜索指定的 `recipe`                          |
-| `bitbake -c devshell <recipe>`                                     | 进入命令行交互界面进行编译                   |
-| `bitbake -c devpyshell <recipe>`                                   | 进入 Python 交互界面进行编译                 |
-| `bitbake -c listtasks <recipe>`                                    | 列出构建  `recipe`  所需执行的任务           |
-| `bitbake -f <recipe>`                                              | 强制重新构建                                 |
-| `bitbake -v <recipe>`                                              | 详细输出构建过程                             |
-| `bitbake -DDD <recipe>`                                            | 显示详细的 Debug 信息                        |
-| `yocto-layer create <layer_name>`                                  | 新建一个 `layer`                             |
-| `bitbake-layers add-layer /path/to/your_meta-layer`                | 新建一个自定义的 `layer`                     |
-| `bitbake-layers remove-layer /path/to/your_meta-layer`             | 删除自定义的 `layer`                         |
-| `bitbake-layers show-recipes`                                      | 列出所有的  `recipe`                         |
-| `bitbake-layers show-overlayed`                                    | 列出所有冲突的  `recipe`                     |
-| `bitbake-layers show-appends`                                      | 列出所有的 `.bbappend` 文件                  |
-| `bitbake-layers flatten <output_dir>`                              | 将所有的 `.bb` 文件抽离出来放到 `output_dir` |
-| `bitbake-layers show-cross-depends`                                | 列出所有 `layer` 的交叉依赖关系              |
-| `bitbake-layers layerindex-show-depends <layer_name>`              | 根据 OE index 列出指定 `layer` 的依赖        |
-| `bitbake-layers layerindex-fetch <layer name>`                     | 使用 OE index 拉取和添加 `layer`             |
 
 ## 添加新的 `layer`/`recipe`
 
