@@ -13,7 +13,7 @@ myst-nb==1.1.2
 myst-parser==4.0.0
 nbclient==0.10.1
 nbformat==5.10.4
-numpy==2.2.0
+numpy==2.2.1
 openpyxl==3.1.5
 pandas==2.2.3
 pillow==11.0.0
