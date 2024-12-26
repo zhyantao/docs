@@ -43,11 +43,11 @@ The [TOPDIR](https://docs.yoctoproject.org/ref-manual/variables.html#term-TOPDIR
 ```{uml}
 @startuml
 start
-:read ${TOPDIR}/conf/bblayers.conf;
-:read ${TOPDIR}/conf/local.conf;
+:read <color:blue>${TOPDIR}</color>/conf/bblayers.conf;
+:read <color:blue>${TOPDIR}</color>/conf/local.conf;
 :read [[https://layers.openembedded.org/layerindex/branch/master/layers layer]]/meta/conf/layer.conf;
 :read [[https://layers.openembedded.org/layerindex/branch/master/layers layer]]/meta/conf/bitbake.conf;
-:<color:green>select target recipe</color>;
+:<color:green>select a target recipe</color>;
 :generate cache directory;
 :execute <color:red>do_fetch</color>, download from [[https://docs.yoctoproject.org/bitbake/bitbake-user-manual/bitbake-user-manual-ref-variables.html#term-SRC_URI SRC_URI]], save to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L842 DL_DIR]];
 :execute <color:red>do_unpack</color>, unpack the source code to [[https://github.com/openembedded/openembedded-core/blob/yocto-5.1.1/meta/conf/bitbake.conf#L404 ${WORKDIR}]];
