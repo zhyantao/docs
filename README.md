@@ -17,10 +17,12 @@ git clone https://github.com/<your_github_username>/notebook.git
 
 ```bash
 # For Windows
+pacman -Syu
 pacman -S mingw-w64-x86_64-gtk2
 
 # For Linux
-sudo apt install libcairo2 libcairo2-dev
+sudo apt update
+sudo apt install libcairo2 libcairo2-dev chinese*
 ```
 
 4、安装项目所需依赖，预览效果。
