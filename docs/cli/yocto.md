@@ -220,6 +220,19 @@ LICENSE = "CLOSED"
 如果你不知道 LICENSE 应该取什么值，可以在这里搜：<https://opensource.org/licenses>
 ````
 
+## `do_unpack`
+
+当下载的开源代码压缩包含有下划线（这是不标准的）时，编译过程中会碰到很多问题。比如有个压缩包名为：`example_xx-master.zip`，那么我们应该新建一个名为 `example_xx-master.bb` 的 `bb` 文件，然后重写 `do_unpack` 函数：
+
+```bash
+# ${BPN} = example, ${PV} = xx-master
+do_unpack() {
+	unzip -o ${DL_DIR}/${BPN}-${PV}
+	cp -r ${BPN}_${PV}/* ${BPN}-${PV}
+	rm -rf ${BPN}_${PV}
+}
+```
+
 ## Q & A
 
 **ERROR: No space left on device or exceeds fs.inotify.max_user_watches?**
