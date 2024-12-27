@@ -222,12 +222,12 @@ LICENSE = "CLOSED"
 
 ## `do_unpack`
 
-当下载的开源代码压缩包含有下划线（这是不标准的）时，编译过程中会碰到很多问题。比如有个压缩包名为：`example_xx-master.zip`，那么我们应该新建一个名为 `example_xx-master.bb` 的 `bb` 文件，然后重写 `do_unpack` 函数：
+当下载的开源代码压缩包含有下划线（这是不标准的）时，编译过程中会碰到很多问题。比如有个压缩包名为：`example_xx-master.zip`，那么我们应该新建一个 `bb` 文件，将其命名为 `example_xx-master.bb`，然后重写 `do_unpack` 函数：
 
 ```bash
 # ${BPN} = example, ${PV} = xx-master
 do_unpack() {
-	unzip -o ${DL_DIR}/${BPN}-${PV}
+	unzip -o ${DL_DIR}/${BPN}_${PV}
 	cp -r ${BPN}_${PV}/* ${BPN}-${PV}
 	rm -rf ${BPN}_${PV}
 }
