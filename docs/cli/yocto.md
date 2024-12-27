@@ -211,7 +211,7 @@ touch git2_github.com.llvm.llvm-project.tar.gz.done
 - 重新运行 `bitbake` 错误提示解开 `LIC_FILES_CHKSUM` 的注释，照做即可
 - 重新运行 `bitbake` 生成 `LIC_FILES_CHKSUM` 的 `md5`，赋值给对应变量，并解开注释
 
-若开源项目不含 `License`，可以将 `LICENSE` 变量设置为 `CLOSED`，这样便不再检查 `LIC_FILES_CHKSUM` 字段：
+若开源项目不含 [LICENSE](https://docs.yoctoproject.org/ref-manual/variables.html#term-LICENSE)，可以将 `LICENSE` 设置为 `CLOSED`，这样便不再检查 `LIC_FILES_CHKSUM`：
 
 ```bash
 LICENSE = "CLOSED"
