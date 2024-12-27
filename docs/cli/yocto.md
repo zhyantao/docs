@@ -45,18 +45,18 @@ start
 :Read [[https://git.openembedded.org/openembedded-core/tree/?h=styhead openembedded-core]]/meta/conf/bitbake.conf;
 :<color:purple>Parse <recipe>.bb</color>;
 :Generate [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]]/cache directory;
-:Execute <color:red>do_fetch</color>: download source code from [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-SRC_URI ${SRC_URI}]], save to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]];
-:Execute <color:red>do_unpack</color>: unpack [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]]/example-version.tar.gz to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]];
-:Execute <color:red>do_patch</color>;
-:Execute <color:red>do_configure</color>;
-:Execute <color:red>do_compile_prepend</color>;
-:Execute <color:red>do_compile</color>: firstly cd to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n409 ${B}]], then run [[https://git.openembedded.org/openembedded-core/tree/meta/classes-global/base.bbclass?h=styhead#n41 oe_runmake]];
-:Execute <color:red>do_compile_append</color>;
-:Execute <color:red>do_install_prepend</color>;
-:Execute <color:red>do_install</color>: install compiled files to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n407 ${D}]];
-:Execute <color:red>do_install_append</color>;
-:Execute <color:red>do_package</color>: package data to [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-PKGDATA_DIR ${PKGDATA_DIR}]];
-:Execute <color:red>do_rootfs</color>: see more on [[https://docs.yoctoproject.org/5.1.1/ref-manual/tasks.html#ref-tasks-rootfs docs.yoctoproject.org]];
+:<color:red>do_fetch</color>: download source code from [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-SRC_URI ${SRC_URI}]], save to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]];
+:<color:red>do_unpack</color>: unpack [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]]/example-version.tar.gz to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]];
+:<color:red>do_patch</color>;
+:<color:red>do_configure</color>;
+:<color:red>do_compile_prepend</color>;
+:<color:red>do_compile</color>: firstly cd to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n409 ${B}]], then run [[https://git.openembedded.org/openembedded-core/tree/meta/classes-global/base.bbclass?h=styhead#n41 oe_runmake]];
+:<color:red>do_compile_append</color>;
+:<color:red>do_install_prepend</color>;
+:<color:red>do_install</color>: install compiled files to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n407 ${D}]];
+:<color:red>do_install_append</color>;
+:<color:red>do_package</color>: package data to [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-PKGDATA_DIR ${PKGDATA_DIR}]];
+:<color:red>do_rootfs</color>: see more on [[https://docs.yoctoproject.org/5.1.1/ref-manual/tasks.html#ref-tasks-rootfs docs.yoctoproject.org]];
 stop
 @enduml
 ```
