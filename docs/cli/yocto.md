@@ -1,7 +1,7 @@
 # Yocto
 
 ```{note}
-学习 Yocto 请参考 <https://gitee.com/zhyantao/pdf/raw/master/yocto/yocto-slides.pdf>。
+Yocto 学习资料请参考：<https://gitee.com/zhyantao/pdf/raw/master/yocto/yocto-slides.pdf>
 ```
 
 ## bitbake 常用命令
@@ -32,31 +32,31 @@
 | `bitbake-layers layerindex-show-depends <layer_name>`             | 根据 OE index 列出指定 `layer` 的依赖           |
 | `bitbake-layers layerindex-fetch <layer name>`                    | 使用 OE index 拉取和添加 `layer`                |
 
-## BitBake 文件简介
+## bitbake 原理详解
 
 运行 `bitbake <recipe>` 时，会自动匹配 `<recipe>.bb`，默认情况下 [Task](https://docs.yoctoproject.org/ref-manual/tasks.html) 按照如下工作流进行：
-
-```{note}
-The [TOPDIR](https://docs.yoctoproject.org/ref-manual/variables.html#term-TOPDIR) variable points to the [Build Directory](https://docs.yoctoproject.org/ref-manual/terms.html#term-Build-Directory).
-```
 
 ```{uml}
 @startuml
 start
-:read <color:blue>${TOPDIR}</color>/conf/bblayers.conf;
-:read <color:blue>${TOPDIR}</color>/conf/local.conf;
-:read [[https://git.openembedded.org/openembedded-core/tree/?h=styhead openembedded-core]]/meta/conf/layer.conf;
-:read [[https://git.openembedded.org/openembedded-core/tree/?h=styhead openembedded-core]]/meta/conf/bitbake.conf;
-:<color:green>select a target recipe</color>;
-:generate cache directory;
-:execute <color:red>do_fetch</color>, download from [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-SRC_URI SRC_URI]], save to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 DL_DIR]];
-:execute <color:red>do_unpack</color>, unpack the source code to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]];
-:execute <color:red>do_patch</color>;
-:execute <color:red>do_configure</color>;
-:execute <color:red>do_compile</color>, firstly cd to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n409 ${B}]], then run [[https://git.openembedded.org/openembedded-core/tree/meta/classes-global/base.bbclass?h=styhead#n41 oe_runmake]];
-:execute <color:red>do_install</color>, install the compiled files to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n407 ${D}]];
-:execute <color:red>do_package</color>, package data to [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-PKGDATA_DIR PKGDATA_DIR]];
-:execute <color:red>do_rootfs</color>, see [[https://docs.yoctoproject.org/5.1.1/ref-manual/tasks.html#ref-tasks-rootfs docs.yoctoproject.org]];
+:Read [[https://docs.yoctoproject.org/ref-manual/variables.html#term-TOPDIR ${TOPDIR}]]/conf/bblayers.conf;
+:Read [[https://docs.yoctoproject.org/ref-manual/variables.html#term-TOPDIR ${TOPDIR}]]/conf/local.conf;
+:Read [[https://git.openembedded.org/openembedded-core/tree/?h=styhead openembedded-core]]/meta/conf/layer.conf;
+:Read [[https://git.openembedded.org/openembedded-core/tree/?h=styhead openembedded-core]]/meta/conf/bitbake.conf;
+:<color:purple>Parse <recipe>.bb</color>;
+:Generate [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]]/cache directory;
+:Execute <color:red>do_fetch</color>: download source code from [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-SRC_URI ${SRC_URI}]], save to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]];
+:Execute <color:red>do_unpack</color>: unpack [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n842 ${DL_DIR}]]/example-version.tar.gz to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n404 ${WORKDIR}]];
+:Execute <color:red>do_patch</color>;
+:Execute <color:red>do_configure</color>;
+:Execute <color:red>do_compile_prepend</color>;
+:Execute <color:red>do_compile</color>: firstly cd to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n409 ${B}]], then run [[https://git.openembedded.org/openembedded-core/tree/meta/classes-global/base.bbclass?h=styhead#n41 oe_runmake]];
+:Execute <color:red>do_compile_append</color>;
+:Execute <color:red>do_install_prepend</color>;
+:Execute <color:red>do_install</color>: install compiled files to [[https://git.openembedded.org/openembedded-core/tree/meta/conf/bitbake.conf?h=styhead#n407 ${D}]];
+:Execute <color:red>do_install_append</color>;
+:Execute <color:red>do_package</color>: package data to [[https://docs.yoctoproject.org/5.1.1/ref-manual/variables.html#term-PKGDATA_DIR ${PKGDATA_DIR}]];
+:Execute <color:red>do_rootfs</color>: see more on [[https://docs.yoctoproject.org/5.1.1/ref-manual/tasks.html#ref-tasks-rootfs docs.yoctoproject.org]];
 stop
 @enduml
 ```
@@ -156,7 +156,7 @@ do_install() {
 }
 ```
 
-## 添加新的 `layer`/`recipe`
+## 添加新的 layer/recipe
 
 The Yocto Project 维护了一个官方的在线资源库，可用于浏览和检索可直接集成至 Linux 发行版中的层 (`layer`) 和配方 (`recipe`)。相关信息可通过以下链接获取：
 
@@ -167,7 +167,7 @@ The Yocto Project 维护了一个官方的在线资源库，可用于浏览和�
 
 以上所有的源代码都可以在 Github 仓库找到：<https://github.com/openembedded/meta-openembedded>
 
-## 离线构建 `meta-clang`
+## 离线构建 meta-clang
 
 ```bash
 # 添加底包合 meta-clang 层
@@ -220,9 +220,9 @@ LICENSE = "CLOSED"
 如果你不知道 LICENSE 应该取什么值，可以在这里搜：<https://opensource.org/licenses>
 ````
 
-## `do_unpack`
+## unpack 非标准压缩包
 
-当下载的开源代码压缩包含有下划线（这是不标准的）时，编译过程中会碰到很多问题。比如有个压缩包名为：`example_xx-master.zip`，那么我们应该新建一个 `bb` 文件，将其命名为 `example_xx-master.bb`，然后重写 `do_unpack` 函数：
+当下载的开源代码压缩包含有下划线时（文件名是不标准的），编译过程中会碰到很多问题。比如有个压缩包名为：`example_xx-master.zip`，那么我们应该新建一个 `bb` 文件，将其命名为 `example_xx-master.bb`，然后重写 `do_unpack` 函数：
 
 ```bash
 # ${BPN} = example, ${PV} = xx-master
