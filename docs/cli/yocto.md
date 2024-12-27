@@ -216,6 +216,8 @@ touch git2_github.com.llvm.llvm-project.tar.gz.done
 ```bash
 LICENSE = "CLOSED"
 ```
+
+如果你不知道 LICENSE 应该取什么值，可以在这里搜：<https://opensource.org/licenses>
 ````
 
 ## Q & A
