@@ -21,8 +21,8 @@ pacman -Syu
 pacman -S mingw-w64-x86_64-gtk2
 
 # For Linux
-sudo apt update
-sudo apt install libcairo2 libcairo2-dev chinese*
+sudo apt-get update
+sudo apt-get install libcairo2 libcairo2-dev chinese* language-pack-zh* woff2
 ```
 
 4、安装项目所需依赖，预览效果。

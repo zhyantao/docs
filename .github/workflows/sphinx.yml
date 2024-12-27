@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y default-jdk graphviz libcairo2 libcairo2-dev chinese*
+          sudo apt-get install -y default-jdk graphviz libcairo2 libcairo2-dev chinese* language-pack-zh* woff2
           pip install -r requirements.txt
       - name: Build with Sphinx
         run: make html
