@@ -18,7 +18,7 @@ openpyxl==3.1.5
 pandas==2.2.3
 pillow==11.0.0
 pybtex-docutils==1.0.3
-pydata-sphinx-theme==0.16.1
+pydata-sphinx-theme==0.15.4
 scikit-learn==1.6.0
 scipy==1.14.1
 seaborn==0.13.2
