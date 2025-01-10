@@ -1,5 +1,37 @@
 # 软件包及镜像源管理
 
+## 升级软件
+
+以 `automake` 为例，升级到 1.16.5。
+
+```bash
+#!/bin/bash
+
+# run as root only
+if [[ $EUID -ne 0 ]] ; then
+    echo -e "\e[1;39m[   \e[31mError\e[39m   ] need root access to run this script\e[0;39m"
+    exit 1
+fi
+
+function install_automake() {
+    [ $# -eq 0 ] && { run_error "Usage: install_automake <version>"; exit; }
+    local VERSION=${1}
+    wget ftp://ftp.gnu.org/gnu/automake/automake-${VERSION}.tar.gz &> /dev/null
+    if [ -f "automake-${VERSION}.tar.gz" ]; then
+            tar -xzf automake-${VERSION}.tar.gz
+            cd automake-${VERSION}/
+            ./configure
+            make && make install
+            echo -e "\e[1;39m[   \e[1;32mOK\e[39m   ] automake-${VERSION} installed\e[0;39m"
+
+        else
+            echo -e "\e[1;39m[   \e[31mError\e[39m   ] cannot fetch file from ftp://ftp.gnu.org/gnu/automake/ \e[0;39m"
+            exit 1
+    fi
+}
+install_automake 1.16.5
+```
+
 ## apt/yum 源
 
 软件包管理器 apt 和 yum 可以自动地下载、配置、安装、卸载自家的软件包，分别对应 `.deb` 和 `.rpm`。软件包管理器会自动地处理软件包之间的依赖关系，给用户提供了极大方便。
@@ -8,6 +40,7 @@
 
 ::::{tab-set}
 :::{tab-item} 阿里云源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -27,8 +60,10 @@ deb https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe 
 deb-src https://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
+
 :::
 :::{tab-item} 清华源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -48,8 +83,10 @@ deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe m
 # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
+
 :::
 :::{tab-item} 腾讯源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -65,8 +102,10 @@ deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-updates main restricted u
 #deb-src http://mirrors.cloud.tencent.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
+
 :::
 :::{tab-item} 中科大源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -88,8 +127,10 @@ deb https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
+
 :::
 :::{tab-item} 浙大源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -107,8 +148,10 @@ deb https://mirrors.zju.edu.cn/ubuntu/ focal-security main restricted universe m
 # deb-src https://mirrors.zju.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 ```
+
 :::
 :::{tab-item} 网易源
+
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -124,6 +167,7 @@ deb-src http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe m
 deb-src http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 ```
+
 :::
 ::::
 
@@ -141,6 +185,7 @@ EOF
 make
 sudo make install
 ```
+
 :::
 
 **(2) 更新缓存**
@@ -154,27 +199,34 @@ sudo apt-get update
 
 如果使用 `apt` 命令安装了软件，卸载软件的方式如下：
 
-
 ::::{tab-set}
 :::{tab-item} 卸载 APP
+
 ```bash
 sudo apt-get remove <package_name>
 ```
+
 :::
 :::{tab-item} 卸载 APP 和依赖
+
 ```bash
 sudo apt-get -y autoremove <package_name>
 ```
+
 :::
 :::{tab-item} 删除用户数据
+
 ```bash
 sudo apt-get -y purge <package_name>
 ```
+
 :::
 :::{tab-item} 卸载 APP 和依赖并删除用户数据
+
 ```bash
 sudo apt-get -y autoremove --purge <package_name>
 ```
+
 :::
 ::::
 
@@ -188,6 +240,7 @@ sudo apt-get -y autoremove --purge <package_name>
 :::::{tab-item} Linux
 ::::{tab-set}
 :::{tab-item} 阿里云源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -197,8 +250,10 @@ index-url=http://mirrors.aliyun.com/pypi/simple/
 trusted-host=mirrors.aliyun.com
 EOF
 ```
+
 :::
 :::{tab-item} 清华源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -208,8 +263,10 @@ index-url=https://pypi.tuna.tsinghua.edu.cn/simple/
 trusted-host=pypi.tuna.tsinghua.edu.cn
 EOF
 ```
+
 :::
 :::{tab-item} 百度源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -219,8 +276,10 @@ index-url=https://mirror.baidu.com/pypi/simple
 trusted-host=mirror.baidu.com
 EOF
 ```
+
 :::
 :::{tab-item} 中科大源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -230,8 +289,10 @@ index-url=https://mirrors.ustc.edu.cn/pypi/web/simple/
 trusted-host=mirrors.ustc.edu.cn
 EOF
 ```
+
 :::
 :::{tab-item} 豆瓣源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -241,8 +302,10 @@ index-url=https://pypi.doubanio.com/simple/
 trusted-host=pypi.doubanio.com
 EOF
 ```
+
 :::
 :::{tab-item} 官方源
+
 ```bash
 mkdir -p ~/.config/pip
 cat <<EOF | tee ~/.config/pip/pip.conf
@@ -252,12 +315,14 @@ index-url=https://pypi.python.org/pypi
 trusted-host=pypi.python.org
 EOF
 ```
+
 :::
 ::::
 :::::
 :::::{tab-item} Windows
 ::::{tab-set}
 :::{tab-item} 阿里云源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -268,8 +333,10 @@ trusted-host=mirrors.aliyun.com
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 :::{tab-item} 清华源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -280,8 +347,10 @@ trusted-host=pypi.tuna.tsinghua.edu.cn
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 :::{tab-item} 百度源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -292,8 +361,10 @@ trusted-host=mirror.baidu.com
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 :::{tab-item} 中科大源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -304,8 +375,10 @@ trusted-host=mirrors.ustc.edu.cn
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 :::{tab-item} 豆瓣源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -316,8 +389,10 @@ trusted-host=pypi.doubanio.com
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 :::{tab-item} 官方源
+
 ```powershell
 New-Item -ItemType Directory -Path $HOME\pip -Force
 $iniContent = @"
@@ -328,6 +403,7 @@ trusted-host=pypi.python.org
 "@
 $iniContent | Add-Content -Path ($HOME + "\pip\pip.ini") -PassThru | Out-Host
 ```
+
 :::
 ::::
 :::::
@@ -409,6 +485,7 @@ curl https://bootstrap.pypa.io/get-pip.py | $PYTHON_VERSION
 
 ::::{tab-set}
 :::{tab-item} 中科大源
+
 ```bash
 # modify config files
 sed -i "s#mirror.msys2.org/#mirrors.ustc.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
@@ -422,8 +499,10 @@ pacman -Scc
 # update mirrors
 pacman -Sy
 ```
+
 :::
 :::{tab-item} 清华源
+
 ```bash
 # modify config files
 sed -i "s#mirror.msys2.org/#mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
@@ -437,6 +516,7 @@ pacman -Scc
 # update mirrors
 pacman -Syu
 ```
+
 :::
 ::::
 
