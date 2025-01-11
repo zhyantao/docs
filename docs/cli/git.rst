@@ -657,12 +657,12 @@ Git
 .. code-block:: bash
 
     # 添加 submodule 到现有项目
-    git submodule add <remote> <submodule-dir>
+    git submodule add <remote> <submodule-path>
 
     # 从当前项目移除 submodule
-    git submodule deinit -f <submodule-dir> # 删除 .git/config 中的相关条目
-    rm -rf .git/modules/<submodule-dir>     # 删除 .git/modules 中的 submodule 文件夹
-    git rm -f <submodule-dir>               # 删除 submodule 文件夹和 .gitmodules 中的相关条目
+    git submodule deinit -f <submodule-path>
+    rm -rf .git/modules/<submodule-path>
+    git rm -f <submodule-path>
 
     # 更新 submodule 的 URL
     # 首先修改 .gitmodules 文件中的 url 属性
@@ -677,7 +677,7 @@ Git
     git submodule update --remote
 
     # 更新指定的 submodule 为远程的最新版本
-    git submodule update --remote <submodule-dir>
+    git submodule update --remote <submodule-path>
 
     # 检查 submodule 是否有提交未推送，如果有，则使本次提交失败
     git push --recurse-submodules=check
