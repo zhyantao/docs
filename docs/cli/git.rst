@@ -100,8 +100,8 @@ Git
     如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 ``~/.gitconfig`` 可解决问题。
 
 
-远程同步：pull/fetch
-~~~~~~~~~~~~~~~~~~~~~
+更新本地仓库 pull/fetch
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -133,8 +133,8 @@ Git
     git push <remote> --all
 
 
-检查变更：status/diff
-~~~~~~~~~~~~~~~~~~~~~~
+比较文件差异 status/diff
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -162,8 +162,8 @@ Git
 .. figure:: ../_static/images/diff.*
 
 
-添加/删除变更：add/rm
-~~~~~~~~~~~~~~~~~~~~~~
+管理文件变更 add/rm
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -190,8 +190,8 @@ Git
     git mv <file-original> <file-renamed>
 
 
-提交变更：commit
-~~~~~~~~~~~~~~~~~
+创建快照并撰写日志 commit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -354,8 +354,8 @@ Git
 .. figure:: ../_static/images/commit-detached.*
 
 
-检查/切换分支：branch
-~~~~~~~~~~~~~~~~~~~~~~
+检查与切换分支 branch
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -423,8 +423,8 @@ Git
     解决完冲突后，继续使用命令 ``git add`` 和 ``git commit`` 命令即可完成后续开发工作。
 
 
-标签：tag
-~~~~~~~~~~~
+标记重要提交 tag
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -467,7 +467,7 @@ Git
     - 架构变化，接口变更：主版本号 + 1。
 
 
-查看历史提交：log
+审查提交历史 log
 ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
@@ -516,8 +516,8 @@ Git
     git reflog
 
 
-撤销变更：checkout
-~~~~~~~~~~~~~~~~~~~
+恢复文件与撤销更改 checkout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -551,8 +551,8 @@ Git
 .. figure:: ../_static/images/checkout-b-detached.*
 
 
-撤销变更：reset
-~~~~~~~~~~~~~~~~
+撤销提交和未提交的更改 reset
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -578,39 +578,39 @@ Git
 .. figure:: ../_static/images/reset-files.*
 
 
-撤销变更：revert
-~~~~~~~~~~~~~~~~~
+撤销特定的历史更改 revert
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    # 新建一个 commit，用来撤销对指定文件的修改，但保留文件修改内容
+    # 撤销对指定文件在最近一次提交中的修改，但保留文件的修改内容
     git revert filename
 
-    # 新建一个 commit，用来撤销对当前分支指定 commit 的修改，但保留 commit 内容
+    # 新建一个提交，用来撤销对当前分支指定提交的修改，但保留该提交的内容
     git revert <commit>
 
-    # 新建一个 commit，用来撤销对当前分支指定 commit 的修改，并改写 commit 信息
-    git revert <commit>-m <n>
+    # 新建一个提交，用来撤销对当前分支指定合并提交的修改，并改写提交信息
+    git revert -m <n> <merge-commit>
 
 
-合并分支：cherry-pick
-~~~~~~~~~~~~~~~~~~~~~~~
+应用提交到当前分支 cherry-pick
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    # 撤销对当前分支指定 commit 的修改，但保留 commit 内容
+    # 将其他分支上的某个提交应用到当前分支
     git cherry-pick <commit>
 
-    # 撤销对当前分支指定 commit 的修改，并改写 commit 信息
-    git cherry-pick <commit>-m <n>
+    # 将一系列连续的提交应用到当前分支
+    git cherry-pick <first-commit>^..<last-commit>
 
-    # 撤销对当前分支指定 commit 的修改，并改写 commit 信息
-    git cherry-pick <commit>^!
+    # 解决冲突时选择性的应用父提交：<n> 是指在三路合并中使用的父提交编号（1 或 2）
+    git cherry-pick -m <n> <commit>
 
 .. figure:: ../_static/images/cherry-pick.*
 
 
-合并分支：merge
+合并分支 merge
 ~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
@@ -632,8 +632,8 @@ Git
 .. figure:: ../_static/images/merge.*
 
 
-合并分支：rebase
-~~~~~~~~~~~~~~~~~
+更新分支历史 rebase
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -651,8 +651,8 @@ Git
 .. figure:: ../_static/images/rebase-onto.*
 
 
-子库：submodule
-~~~~~~~~~~~~~~~~~
+管理子库 submodule
+~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -701,8 +701,8 @@ Git
     # 对所有 submodule 执行命令，非常有用。如 git submodule foreach 'git checkout main'
     git submodule foreach <arbitrary-command-to-run>
 
-gitignore
-~~~~~~~~~~~
+忽略规则 gitignore
+~~~~~~~~~~~~~~~~~~~
 
 .. dropdown:: 匹配规则
     
@@ -738,8 +738,8 @@ gitignore
     !Model/Portal/PortalTemplates/?/SupportFiles/[Bb]in
 
 
-显示 git 分支
-~~~~~~~~~~~~~~
+在 shell 中显示 git 分支
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. tab-set::
 
