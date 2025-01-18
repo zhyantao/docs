@@ -25,7 +25,10 @@ Git
 - ``git commit files`` 将工作目录中文件的快照同时提交到暂存区域和仓库中。
 - ``git checkout HEAD -- files`` 回滚到最后一次提交。
 
-上文摘自 `图解 Git <https://marklodato.github.io/visual-git-guide/index-zh-cn.html>`__，你也可以在 `Learn Git Branching <https://oschina.gitee.io/learn-git-branching/>`__ 上更直观地体验 Git 流程。
+注：
+
+1. 本文图片均摘自 `图解 Git <https://marklodato.github.io/visual-git-guide/index-zh-cn.html>`__。
+2. 在 `Learn Git Branching <https://learngitbranching.js.org/?locale=zh_CN>`__ 可以直观地体验 Git 流程。
 
 
 快速上手
