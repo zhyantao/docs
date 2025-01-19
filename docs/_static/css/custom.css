@@ -1,9 +1,14 @@
 /* hide the readthedocs ads */
 #readthedocs-ea {
-    display: none;
+  display: none;
 }
 
 /* hide the banner */
 .container.bottom-right {
-    display: none;
+  display: none;
+}
+
+/* highlight table rows */
+table tbody tr:hover {
+  background-color: rgb(156, 243, 208) !important;
 }
