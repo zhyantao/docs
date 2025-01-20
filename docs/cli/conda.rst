@@ -2,6 +2,8 @@
 Conda
 ======
 
+`Conda Cheatsheet <https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html>`_
+
 快速开始
 --------
 
@@ -54,7 +56,3 @@ Conda
 - 更新一个工作环境中的所有 Packages ：\ ``conda update --all --name ENVNAME``
 - 使用脚本文件运行命令： ``conda install --yes PKG1 PKG2``
 - 测试 Conda 配置和服务： ``conda config --show 、conda config --show-sources``
-
-
-[1] `[金山文档] conda-cheatsheet.pdf <https://kdocs.cn/l/cpfKQN7jodro>`_
-
