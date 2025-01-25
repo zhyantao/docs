@@ -33,5 +33,7 @@
 ---
 
 [^cite_ref-1]: <https://german.stackexchange.com/questions/11027/>
+
 [^cite_ref-2]: <https://physnotes.jp/foundations/b_al/>
+
 [^cite_ref-3]: <http://livingwaterbiblegames.com/greek-alphabet-handwriting.html>

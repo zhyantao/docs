@@ -26,6 +26,7 @@
 ```bash
 %eax
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -34,6 +35,7 @@
 ```bash
 eax
 ```
+
 :::
 ::::
 
@@ -50,6 +52,7 @@ AT&T 语法始终将 `src` 放在左侧，`dest` 放在右侧。
 ```bash
 movl %eax, %ebx
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -58,6 +61,7 @@ movl %eax, %ebx
 ```bash
 mov ebx, eax
 ```
+
 :::
 ::::
 
@@ -74,6 +78,7 @@ mov ebx, eax
 ```bash
 movl $_booga, %eax
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -82,6 +87,7 @@ movl $_booga, %eax
 ```bash
 mov eax, _booga
 ```
+
 :::
 ::::
 
@@ -94,6 +100,7 @@ mov eax, _booga
 ```bash
 movl $0xd00d, %ebx
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -102,6 +109,7 @@ movl $0xd00d, %ebx
 ```bash
 mov ebx, d00dh
 ```
+
 :::
 ::::
 
@@ -117,6 +125,7 @@ mov ebx, d00dh
 ```bash
 movw %ax, %bx
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -125,6 +134,7 @@ movw %ax, %bx
 ```bash
 mov bx, ax
 ```
+
 :::
 ::::
 
@@ -141,6 +151,7 @@ DJGPP 使用 386 保护模式，所以你不用在乎实模式下寻址方式（
 ```bash
 immed32(basepointer, indexpointer, indexscale)
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -149,6 +160,7 @@ immed32(basepointer, indexpointer, indexscale)
 ```bash
 [basepointer + indexpointer * indexscale + immed32]
 ```
+
 :::
 ::::
 
@@ -168,6 +180,7 @@ immed32(basepointer, indexpointer, indexscale)
 ```bash
 _booga
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -176,11 +189,12 @@ _booga
 ```bash
 [_booga]
 ```
+
 :::
 ::::
 
 通过使用下划线可以拿到一个 `static` (global) C 变量。
-*这种取数据的方式仅对全局变量起作用。*
+_这种取数据的方式仅对全局变量起作用。_
 另外，你可以使用扩展的 asm 语法把需要用到的变量预加载到寄存器中，下面将介绍这种方式。
 
 直接以寄存器中的值作为目标地址，进行寻址：
@@ -192,6 +206,7 @@ _booga
 ```bash
 (%eax)
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -200,6 +215,7 @@ _booga
 ```bash
 [eax]
 ```
+
 :::
 ::::
 
@@ -212,6 +228,7 @@ _booga
 ```bash
 _variable(%eax)
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -220,6 +237,7 @@ _variable(%eax)
 ```bash
 [eax + _variable]
 ```
+
 :::
 ::::
 
@@ -232,6 +250,7 @@ _variable(%eax)
 ```bash
 _array(, %eax, 4)
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -240,6 +259,7 @@ _array(, %eax, 4)
 ```bash
 [eax * 4 + array]
 ```
+
 :::
 ::::
 
@@ -254,6 +274,7 @@ C code：`*(p+1)` where `p` is a `char *`
 ```bash
 1(%eax) # where `eax` has the value of `p`
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -262,6 +283,7 @@ C code：`*(p+1)` where `p` is a `char *`
 ```bash
 [eax + 1]
 ```
+
 :::
 ::::
 
@@ -274,6 +296,7 @@ C code：`*(p+1)` where `p` is a `char *`
 ```bash
 _struct_pointer + 8
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -282,6 +305,7 @@ _struct_pointer + 8
 ```bash
 
 ```
+
 :::
 ::::
 
@@ -296,6 +320,7 @@ eax 保存的是数组元素的数量（这里是 8 个），ebx 保存的是字
 ```bash
 _array(%ebx, %eax, 8)
 ```
+
 :::
 
 :::{tab-item} Intel
@@ -304,6 +329,7 @@ _array(%ebx, %eax, 8)
 ```bash
 [ebx + eax * 8 + _array]
 ```
+
 :::
 ::::
 

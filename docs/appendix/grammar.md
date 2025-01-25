@@ -7,8 +7,8 @@
 在一个句子中，会有修饰成分和主干成分。修饰成分有时候很重要，有时候忽略这部分并不影响我们理解句子大意。
 那么如何才能识别出句子中的修饰成分呢？（需要继续整理）
 
-**A key difference** *between a traditional MVC controller and the RESTful web service controller*
-*shown earlier* **is the way** *that the HTTP response body is created*.
+**A key difference** _between a traditional MVC controller and the RESTful web service controller_
+_shown earlier_ **is the way** _that the HTTP response body is created_.
 
 按照我的理解，我将上面句子中的修饰成分标注为斜体，主干为粗体。
 

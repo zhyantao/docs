@@ -172,12 +172,16 @@
 ---
 
 以上是常用的汇编指令，如果想要查看更多详细的介绍，可以参考
-*[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)* 的 *附录A 80x86 指令*。
+_[PC 汇编语言](https://kdocs.cn/l/cq5FqOlocImF)_ 的 _附录A 80x86 指令_。
 
 ---
 
 [^cite_ref-1]: <https://bochs.sourceforge.io/techspec/PORTS.LST>
+
 [^cite_ref-2]: <http://wiki.osdev.org/Interrupt_Descriptor_Table>
+
 [^cite_ref-3]: <http://adam8157.info/blog/2011/01/interesting-opcode-lea>
+
 [^cite_ref-4]: <https://www.cnblogs.com/fatsheep9146/p/5115086.html>
+
 [^cite_ref-5]: <https://binhack.readthedocs.io/zh/latest/assembly/diff.html>

@@ -1354,7 +1354,9 @@ I/O 任务完成后，I/O 控制器发送中断信号给 CPU（CPU 还是总线�
 ---
 
 [^cite_ref-1]: <https://hliangzhao.cn/articles/000001632804098b0d15f52e2794eba809f483763f603b1000>
+
 [^cite_ref-2]: <https://draveness.me/system-design-scheduler>
+
 [^cite_ref-3]: <https://www.zhihu.com/question/42962803/answer/120217624>
 
 ```{toctree}

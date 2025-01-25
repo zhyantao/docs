@@ -93,6 +93,9 @@ mysql -u root -p
 ---
 
 [^cite_ref-1]: Database <https://en.wikipedia.org/wiki/Database>
+
 [^cite_ref-2]: 基础架构：一条SQL查询语句是如何执行的？丁奇 <https://time.geekbang.org/column/article/68319>
+
 [^cite_ref-3]: MySQL 实战 45 讲，丁奇 <https://time.geekbang.org/column/intro/139>
+
 [^cite_ref-4]: 凤凰架构，周志华 <https://icyfenix.cn/>

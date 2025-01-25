@@ -40,7 +40,7 @@ make all -j4
 make menuconfig
 
 # buildroot 下单独编译内核
-make linux-rebuild 
+make linux-rebuild
 
 # buildroot 下进入内核 make menuconfig 配置选项界面
 make linux-menuconfig

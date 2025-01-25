@@ -21,9 +21,9 @@ sudo apt install gfortran gcc
 - 将第 5 步产生的 `.a` 文件拷贝到当前目录：`cp ~/prepare/BLAS-3.8.0/blas_LINUX.a ./`
 - 修改 `Makefile.in` 文件中的 `BLLIB`：`vim Makefile.in`：
 
-    ```{code-block} bash
-    BLLIB = ~/prepare/BLAS-3.8.0/blas_LINUX.a
-    ```
+  ```{code-block} bash
+  BLLIB = ~/prepare/BLAS-3.8.0/blas_LINUX.a
+  ```
 
 - 编译：`make`
 - 测试运行：`./testing/xzcblat1`
@@ -53,33 +53,33 @@ sudo apt install gfortran gcc
 - 复制文件：`sudo cp include/* /usr/local/include`
 - 打开 `Make.top` 文件：`vim Make.top`，做如下修改：
 
-    ```{code-block} bash
-    arch = Linux_PII_CBLAS
-    ```
+  ```{code-block} bash
+  arch = Linux_PII_CBLAS
+  ```
 
 - 打开 `Makefile` 文件：`vim Makefile`，做如下修改：
 
-    ```{code-block} bash
-    arch = Linux_PII_CBLAS
-    ```
+  ```{code-block} bash
+  arch = Linux_PII_CBLAS
+  ```
 
 - 打开 `Make.Linux_PII_CBLAS` 文件：`vim Make.Linux_PII_CBLAS`，做如下修改：
 
-    ```{code-block} bash
-    ARCH         = Linux_PII_CBLAS
+  ```{code-block} bash
+  ARCH         = Linux_PII_CBLAS
 
-    TOPdir       = ~/prepare/hpl-2.3
+  TOPdir       = ~/prepare/hpl-2.3
 
-    MPdir        = /usr/local
-    MPlib        = $(MPdir)/lib/libmpich.so
+  MPdir        = /usr/local
+  MPlib        = $(MPdir)/lib/libmpich.so
 
-    LAdir        = /usr/local/lib
-    LAlib        = $(LAdir)/cblas_LINUX.a $(LAdir)/blas_LINUX.a
+  LAdir        = /usr/local/lib
+  LAlib        = $(LAdir)/cblas_LINUX.a $(LAdir)/blas_LINUX.a
 
-    CC           = /usr/local/bin/mpicc
+  CC           = /usr/local/bin/mpicc
 
-    LINKER       = /usr/local/bin/mpif77
-    ```
+  LINKER       = /usr/local/bin/mpif77
+  ```
 
 - 编译：`make arch=Linux_PII_CBLAS`
 - 运行测试：`cd bin/Linux_PII_CBLAS && mpirun -np 4 ./xhpl > HPL-Benchmark.txt`
@@ -91,11 +91,11 @@ sudo apt install gfortran gcc
 - `cd` 到 `setup`：`cd hpcg/setup`
 - 修改 `Make.Linux_MPI`：`vim Make.Linux_MPI`：
 
-    ```{code-block} bash
-    MPdir        = /usr/local
+  ```{code-block} bash
+  MPdir        = /usr/local
 
-    CXX          = /usr/local/bin/mpicxx
-    ```
+  CXX          = /usr/local/bin/mpicxx
+  ```
 
 - 创建 `build` 文件夹：`mkdir build && cd build`
 - 设置安装环境：`../../configure Linux_MPI`

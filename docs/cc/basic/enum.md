@@ -66,7 +66,6 @@ int main() {
 }
 ```
 
-
 ```cpp
 // enum.c
 

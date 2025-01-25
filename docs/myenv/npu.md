@@ -33,4 +33,5 @@ device = widgets.Dropdown(
 ## 观察实验结果
 
 ```{figure} ../_static/images/intel-ai-boost.png
+
 ```

@@ -11,6 +11,7 @@ gdb --args myprogram arg1 arg2
 进入 GDB 后，直接使用 `run` 命令即可。
 
 (gdb_tips)=
+
 ## 设置断点、单步调试、打印调用栈
 
 | 命令                          | 描述                                        | 示例                 |

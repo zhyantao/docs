@@ -1,4 +1,4 @@
-# __thread
+# \_\_thread
 
 `__thread` 是 GCC 提供的一个线程局部存储 (TLS) 的修饰符。
 

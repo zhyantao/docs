@@ -46,10 +46,10 @@ target_link_libraries(MyProject Boost::headers)
 ```
 
 ```bash
-mkdir build 
-cd build 
+mkdir build
+cd build
 cmake ..
-cmake --build . 
+cmake --build .
 ```
 
 ```bash

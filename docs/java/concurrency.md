@@ -29,7 +29,7 @@
 - 可见性（Visibility）：一个线程修改了值之后，其他线程能否立马看到结果。
 - 有序性（Ordering）：编译器可能对代码重新排序，导致多线程运算结果出错。
 
-``````{admonition} 一个不符合原子性的例子
+````{admonition} 一个不符合原子性的例子
 :class: dropdown
 
 ```{code-block} java
@@ -81,7 +81,7 @@ public class MultiThreadLong {
     }
 }
 ```
-``````
+````
 
 ### 不能指令重排的指令
 

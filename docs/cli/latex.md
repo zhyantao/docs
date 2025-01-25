@@ -540,7 +540,11 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 ```
 
 [^cite_ref-1]: [一份（不太）简短的 LATEX 2ε 介绍](https://kdocs.cn/l/cvhLkILXI6Ti)
+
 [^cite_ref-2]: [LaTeX Cheat Sheet September 2020](https://kdocs.cn/l/ccMezohdXTt2)
+
 [^cite_ref-3]: [使用 VS Code 编写 LaTeX](https://zhuanlan.zhihu.com/p/38178015)
+
 [^cite_ref-4]: [自然科学引文和参考文献](https://kdocs.cn/l/cjIIyloNFX6U)
+
 [^cite_ref-5]: [LaTeX 学习小结](https://rgb-24bit.github.io/blog/2020/latex-summary.html)

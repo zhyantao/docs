@@ -14,6 +14,7 @@ done
 ::::{tab-set}
 :::{tab-item} 中科大源
 :sync: ustc
+
 ```bash
 # 设置 GPG 公钥
 sudo apt-get update
@@ -31,9 +32,11 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+
 :::
 :::{tab-item} 阿里云源
 :sync: aliyun
+
 ```bash
 # 设置 GPG 公钥
 sudo apt-get update
@@ -51,9 +54,11 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+
 :::
 :::{tab-item} 清华源
 :sync: tuna
+
 ```bash
 # 设置 GPG 公钥
 sudo apt-get update
@@ -71,6 +76,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+
 :::
 ::::
 
@@ -93,17 +99,21 @@ sudo apt-get install apt-transport-https \
 ::::::{tab-set}
 :::::{tab-item} 中科大源
 :sync: ustc
+
 ```{error}
 科大 Docker Hub 不对校外开放，因此无法使用科大源。
 ```
 
 ::::{tab-set}
 :::{tab-item} Docker v2
+
 ```bash
 sudo docker login docker.mirrors.ustc.edu.cn
 ```
+
 :::
 :::{tab-item} Docker v1
+
 ```bash
 sudo mkdir -p ~/.docker
 cat <<EOF | sudo tee ~/.docker/config.json
@@ -117,6 +127,7 @@ cat <<EOF | sudo tee ~/.docker/config.json
 }
 EOF
 ```
+
 :::
 ::::
 
@@ -136,21 +147,26 @@ fi
 sudo systemctl restart docker
 sudo docker info
 ```
+
 :::::
 :::::{tab-item} 阿里云源
 :sync: aliyun
+
 ```{error}
 阿里云 Docker Hub 下架了，因此无法使用阿里云源。
 ```
 
 ::::{tab-set}
 :::{tab-item} Docker v2
+
 ```bash
 username=
 sudo docker login $username.mirror.aliyuncs.com
 ```
+
 :::
 :::{tab-item} Docker v1
+
 ```bash
 sudo mkdir -p ~/.docker
 username=
@@ -165,6 +181,7 @@ cat <<EOF | sudo tee ~/.docker/config.json
 }
 EOF
 ```
+
 :::
 ::::
 
@@ -184,20 +201,25 @@ fi
 sudo systemctl restart docker
 sudo docker info
 ```
+
 :::::
 :::::{tab-item} 清华源
 :sync: tuna
+
 ```{error}
 清华 Docker Hub 不对校外开放，因此无法使用清华源。
 ```
 
 ::::{tab-set}
 :::{tab-item} Docker v2
+
 ```bash
 sudo docker login docker.mirrors.tuna.tsinghua.edu.cn
 ```
+
 :::
 :::{tab-item} Docker v1
+
 ```bash
 sudo mkdir -p ~/.docker
 cat <<EOF | sudo tee ~/.docker/config.json
@@ -211,6 +233,7 @@ cat <<EOF | sudo tee ~/.docker/config.json
 }
 EOF
 ```
+
 :::
 ::::
 
@@ -230,6 +253,7 @@ fi
 sudo systemctl restart docker
 sudo docker info
 ```
+
 :::::
 ::::::
 

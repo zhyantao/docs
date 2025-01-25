@@ -48,4 +48,3 @@ int main() {
     // cout << "str1 = " << str1 << endl;
 }
 ```
-

@@ -96,9 +96,28 @@ $2^{32} = 4 GB$。
 1. 删除 `%localappdata%/localcache.db`（这是个隐藏文件）；
 2. 打开 `任务管理器` > 重启 `Windows 资源管理器`。
 
+### 声卡播放问题
+
+**问题描述**
+
+播放音频时，无声或声音断断续续。
+
+**解决方法**
+
+下载[联想驱动管理器](https://newsupport.lenovo.com.cn/driveDownloads_index.html)，检查主机编号：
+
+```{figure} ../_static/images/windows-serialnumber.png
+:name: LenovoSerialNumber
+
+查找主机编号
+```
+
+访问[联想官网](https://newsupport.lenovo.com.cn/driveList.html?fromsource=driveList&selname=BH00QDHR)，下载对应驱动，安装即可。
 
 ---
 
 [^cite_ref-1]: Windows 预先安装环境 <https://en.wikipedia.org/wiki/Windows_Preinstallation_Environment>
+
 [^cite_ref-2]: File Allocation Table <https://en.wikipedia.org/wiki/File_Allocation_Table>
+
 [^cite_ref-3]: NTFS，FAT32 和 exFAT 文件系统有什么区别？ <https://zhuanlan.zhihu.com/p/32364955>

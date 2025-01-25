@@ -26,7 +26,6 @@ int main() {
 }
 ```
 
-
 ```cpp
 #include <stdio.h>
 

@@ -7,6 +7,7 @@ VS Code 搭配 PlatformIO 可以很方便地进行嵌入式代码开发。
 首先，我是远程连接的 Linux 虚拟机，扩展插件如下所示：
 
 ```{figure} ../_static/images/pio-install-guide-1.png
+
 ```
 
 从上图可以看到，PlatformIO 被安装到了远程机上，而不是本地机。因此接下来的配置针对的是 Linux 环境中的配置。

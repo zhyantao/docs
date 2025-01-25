@@ -29,7 +29,7 @@ echo '[[ $commands[kubectl] ]] && source <(kubectl completion zsh)' >> ~/.zshrc 
 
 我们经常用到 `--all-namespaces` 参数，你应该要知道它的简写：
 
-```kubectl -A```
+`kubectl -A`
 
 ## Kubectl 上下文和配置
 
@@ -97,10 +97,10 @@ kubectl apply -f https://git.io/vPieo         # 从 URL 中创建资源
 kubectl create deployment nginx --image=nginx # 启动单实例 nginx
 
 # 创建一个打印 “Hello World” 的 Job
-kubectl create job hello --image=busybox:1.28 -- echo "Hello World" 
+kubectl create job hello --image=busybox:1.28 -- echo "Hello World"
 
 # 创建一个打印 “Hello World” 间隔1分钟的 CronJob
-kubectl create cronjob hello --image=busybox:1.28   --schedule="*/1 * * * *" -- echo "Hello World"    
+kubectl create cronjob hello --image=busybox:1.28   --schedule="*/1 * * * *" -- echo "Hello World"
 
 kubectl explain pods                          # 获取 pod 清单的文档说明
 
@@ -224,7 +224,7 @@ kubectl get nodes -o json | jq -c 'paths|join(".")'
 kubectl get pods -o json | jq -c 'paths|join(".")'
 
 # 假设你的 Pods 有默认的容器和默认的名字空间，并且支持 'env' 命令，可以使用以下脚本为所有 Pods 生成 ENV 变量。
-# 该脚本也可用于在所有的 Pods 里运行任何受支持的命令，而不仅仅是 'env'。 
+# 该脚本也可用于在所有的 Pods 里运行任何受支持的命令，而不仅仅是 'env'。
 for pod in $(kubectl get po --output=jsonpath={.items..metadata.name}); do echo $pod && kubectl exec -it $pod -- env; done
 
 # 获取一个 Deployment 的 status 子资源
@@ -408,16 +408,16 @@ kubectl api-resources --api-group=extensions # "extensions" API 组中的所有�
 
 要以特定格式将详细信息输出到终端窗口，将 `-o`（或者 `--output`）参数添加到支持的 `kubectl` 命令中。
 
-输出格式      | 描述
---------------| -----------
-`-o=custom-columns=<spec>` | 使用逗号分隔的自定义列来打印表格
-`-o=custom-columns-file=<filename>` | 使用 `<filename>` 文件中的自定义列模板打印表格
-`-o=json`     | 输出 JSON 格式的 API 对象
-`-o=jsonpath=<template>` | 打印 [jsonpath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath) 表达式中定义的字段
-`-o=jsonpath-file=<filename>` | 打印在 `<filename>` 文件中定义的 [jsonpath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath) 表达式所指定的字段。
-`-o=name`     | 仅打印资源名称而不打印其他内容
-`-o=wide`     | 以纯文本格式输出额外信息，对于 Pod 来说，输出中包含了节点名称
-`-o=yaml`     | 输出 YAML 格式的 API 对象
+| 输出格式                            | 描述                                                                                                                          |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `-o=custom-columns=<spec>`          | 使用逗号分隔的自定义列来打印表格                                                                                              |
+| `-o=custom-columns-file=<filename>` | 使用 `<filename>` 文件中的自定义列模板打印表格                                                                                |
+| `-o=json`                           | 输出 JSON 格式的 API 对象                                                                                                     |
+| `-o=jsonpath=<template>`            | 打印 [jsonpath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath) 表达式中定义的字段                               |
+| `-o=jsonpath-file=<filename>`       | 打印在 `<filename>` 文件中定义的 [jsonpath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath) 表达式所指定的字段。 |
+| `-o=name`                           | 仅打印资源名称而不打印其他内容                                                                                                |
+| `-o=wide`                           | 以纯文本格式输出额外信息，对于 Pod 来说，输出中包含了节点名称                                                                 |
+| `-o=yaml`                           | 输出 YAML 格式的 API 对象                                                                                                     |
 
 使用 `-o=custom-columns` 的示例：
 
@@ -443,22 +443,22 @@ Kubectl 日志输出详细程度是通过 `-v` 或者 `--v` 来控制的，参�
 Kubernetes 通用的日志习惯和相关的日志级别在
 [这里](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-instrumentation/logging.md)有相应的描述。
 
-详细程度      | 描述
---------------| -----------
-`--v=0` | 用于那些应该 *始终* 对运维人员可见的信息，因为这些信息一般很有用。
-`--v=1` | 如果你不想要看到冗余信息，此值是一个合理的默认日志级别。
-`--v=2` | 输出有关服务的稳定状态的信息以及重要的日志消息，这些信息可能与系统中的重大变化有关。这是建议大多数系统设置的默认日志级别。
-`--v=3` | 包含有关系统状态变化的扩展信息。
-`--v=4` | 包含调试级别的冗余信息。
-`--v=5` | 跟踪级别的详细程度。
-`--v=6` | 显示所请求的资源。
-`--v=7` | 显示 HTTP 请求头。
-`--v=8` | 显示 HTTP 请求内容。
-`--v=9` | 显示 HTTP 请求内容而且不截断内容。
+| 详细程度 | 描述                                                                                                                       |
+| -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `--v=0`  | 用于那些应该 _始终_ 对运维人员可见的信息，因为这些信息一般很有用。                                                         |
+| `--v=1`  | 如果你不想要看到冗余信息，此值是一个合理的默认日志级别。                                                                   |
+| `--v=2`  | 输出有关服务的稳定状态的信息以及重要的日志消息，这些信息可能与系统中的重大变化有关。这是建议大多数系统设置的默认日志级别。 |
+| `--v=3`  | 包含有关系统状态变化的扩展信息。                                                                                           |
+| `--v=4`  | 包含调试级别的冗余信息。                                                                                                   |
+| `--v=5`  | 跟踪级别的详细程度。                                                                                                       |
+| `--v=6`  | 显示所请求的资源。                                                                                                         |
+| `--v=7`  | 显示 HTTP 请求头。                                                                                                         |
+| `--v=8`  | 显示 HTTP 请求内容。                                                                                                       |
+| `--v=9`  | 显示 HTTP 请求内容而且不截断内容。                                                                                         |
 
 ## 接下来去看
 
-* 参阅 [kubectl 概述](https://kubernetes.io/zh-cn/docs/reference/kubectl/)，进一步了解 [JsonPath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath)。
-* 参阅 [kubectl](https://kubernetes.io/zh-cn/docs/reference/kubectl/kubectl/) 选项。
-* 参阅 [kubectl 使用约定](https://kubernetes.io/zh-cn/docs/reference/kubectl/conventions/)来理解如何在可复用的脚本中使用它。
-* 查看社区中其他的 [kubectl 备忘单](https://github.com/dennyzhang/cheatsheet-kubernetes-A4)。
+- 参阅 [kubectl 概述](https://kubernetes.io/zh-cn/docs/reference/kubectl/)，进一步了解 [JsonPath](https://kubernetes.io/zh-cn/docs/reference/kubectl/jsonpath)。
+- 参阅 [kubectl](https://kubernetes.io/zh-cn/docs/reference/kubectl/kubectl/) 选项。
+- 参阅 [kubectl 使用约定](https://kubernetes.io/zh-cn/docs/reference/kubectl/conventions/)来理解如何在可复用的脚本中使用它。
+- 查看社区中其他的 [kubectl 备忘单](https://github.com/dennyzhang/cheatsheet-kubernetes-A4)。

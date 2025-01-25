@@ -7,17 +7,21 @@ MSYS2 可以用来在 Windows 上配置编译工具链，包括 `make`、`cmake`
 ::::{tab-set}
 :::{tab-item} 64 位
 :sync: 64
+
 ```text
 D:\msys64\usr\bin
 D:\msys64\mingw64\bin
 ```
+
 :::
 :::{tab-item} 32 位
 :sync: 32
+
 ```text
 D:\msys64\usr\bin
 D:\msys64\mingw32\bin
 ```
+
 :::
 ::::
 
@@ -29,20 +33,24 @@ D:\msys64\mingw32\bin
 
 ::::{tab-set}
 :::{tab-item} 中科大源
+
 ```bash
 sed -i "s#mirror.msys2.org/#mirrors.ustc.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
 
 # 查看更改是否生效
 head -n 6 /etc/pacman.d/mirrorlist.msys
 ```
+
 :::
 :::{tab-item} 清华源
+
 ```bash
 sed -i "s#mirror.msys2.org/#mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
 
 # 查看更改是否生效
 head -n 6 /etc/pacman.d/mirrorlist.msys
 ```
+
 :::
 ::::
 
@@ -67,17 +75,21 @@ pacman -S base-devel
 ::::{tab-set}
 :::{tab-item} 64 位
 :sync: 64
+
 ```bash
 pacman -S mingw-w64-x86_64-toolchain
 pacman -S mingw-w64-x86_64-autotools
 ```
+
 :::
 :::{tab-item} 32 位
 :sync: 32
+
 ```bash
 pacman -S mingw-w64-i686-toolchain
 pacman -S mingw-w64-i686-autotools
 ```
+
 :::
 ::::
 
@@ -86,15 +98,19 @@ pacman -S mingw-w64-i686-autotools
 ::::{tab-set}
 :::{tab-item} 64 位
 :sync: 64
+
 ```bash
 pacman -S mingw-w64-x86_64-gcc
 ```
+
 :::
 :::{tab-item} 32 位
 :sync: 32
+
 ```bash
 pacman -S mingw-w64-i686-gcc
 ```
+
 :::
 ::::
 
@@ -103,14 +119,18 @@ pacman -S mingw-w64-i686-gcc
 ::::{tab-set}
 :::{tab-item} 64 位
 :sync: 64
+
 ```bash
 pacman -S mingw-w64-x86_64-clang
 ```
+
 :::
 :::{tab-item} 32 位
 :sync: 32
+
 ```bash
 pacman -S mingw-w64-i686-clang
 ```
+
 :::
 ::::

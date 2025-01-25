@@ -263,10 +263,10 @@ $\theta$ some 如果有一个值满足 $\theta$ 关系，返回值就是真，$\
 另一种方式则是内外层相互独立的查询，不涉及相关参数的传递，那么这种方式称为 **非相关子查询**。
 根据 **变量的作用域原则**，子查询用到的变量可以是父查询传递过来的，反过来则不行。
 
-例题（**难点**）求 *至少* 使用了工程 S1 供应的 *全部* 零件的工程号 [^cite_ref-5]。
+例题（**难点**）求 _至少_ 使用了工程 S1 供应的 _全部_ 零件的工程号 [^cite_ref-5]。
 
 要想回答这个问题，如果我们直接用正常的思路，将很难理解解题过程。
-根据语义的转化，我们可以描述为：在 S1 生产的 *全部零件* 中，**不存在有一个** 零件它 **不** 使用。
+根据语义的转化，我们可以描述为：在 S1 生产的 _全部零件_ 中，**不存在有一个** 零件它 **不** 使用。
 因为这个语义中，含有两个否定，因此，需要两个 `not exist` 来完成从自然语言到 SQL 语言的转化。
 
 ```{code-block} mysql
@@ -552,6 +552,7 @@ $\Pi_{BD}(F) = \{ D \rightarrow B \}$
   * $\times$
   * 不能接受（丢失数据）
 ```
+
 :::
 
 ## 物理存储
@@ -633,15 +634,19 @@ RAID 0 的缺点是不提供数据冗余，因此一旦用户数据损坏，损�
 4、RAID 10（RAID 0 和 RAID 1 的折衷方案）
 
 :::{card}
+
 ```{figure} ../_static/images/RAID_10.*
 :height: 200px
 ```
+
 :::
 
 :::{card}
+
 ```{figure} ../_static/images/RAID_01.*
 :height: 200px
 ```
+
 :::
 
 RAID 10 也被称为镜象阵列条带。RAID 10 提供最好的性能、更好的可靠性。
@@ -729,6 +734,7 @@ MySQL 支持建立的索引类型有四种：
 B+ 树索引：一种以树形结构来组织索引项的多级索引。对于一个 B+ 树结点，它的数据结构如下所示：
 
 ```{figure} ../_static/images/b-plus-tree.*
+
 ```
 
 在 B+ 树的基本数据结构中，一个索引项指的是一个 `(Ki, Pi)` 对。
@@ -738,11 +744,13 @@ B+ 树索引：一种以树形结构来组织索引项的多级索引。对于�
 以 `n = 3` 为例，B+ 树的非叶结点和叶结点的数据结构如下所示：
 
 ```{figure} ../_static/images/b-plus-tree-node.*
+
 ```
 
 我们把一个叶结点和非叶结点完整地串起来，那么它们看起来会像下图所示（`n = 3`）：
 
 ```{figure} ../_static/images/b-plus-tree-demo.*
+
 ```
 
 每个索引块实际使用的索引指针的个数 $d$ 满足下式（根结点除外）：
@@ -756,6 +764,7 @@ $$
 B 树的数据结构和 B+ 树略有不同，具体表现如下：
 
 ```{figure} ../_static/images/b-tree-node.*
+
 ```
 
 以上是数据库的存储结构的介绍，那么在具体的实现中，我们是如何进行操作的呢？
@@ -840,6 +849,7 @@ $$
 - 检查有向图，若没有环，则冲突是可串行化的
 
 ```{figure} ../_static/images/db-serialize-schedule.*
+
 ```
 
 封锁协议之锁的类型：
@@ -852,6 +862,7 @@ $$
 有了以上的几把锁，我们可以选择一个合适的加锁和解锁时机，因此出现了以下几个等级的协议：
 
 ```{figure} ../_static/images/db-lock-grade.*
+
 ```
 
 而在有了这几个等级的协议之后，程序员可以自主选择 SQL 的隔离级别（应该可以配置）：
@@ -869,7 +880,7 @@ $$
 :header-rows: 1
 :name: 数据库的隔离级别
 
-* - 
+* -
   - 脏读
   - 不可重复读
   - 幻读
@@ -906,7 +917,7 @@ $$
 - 如果使用 MyISM 引擎，可以找见 `.frm`（表结构）`.MYD`（数据文件）`.MYI`（索引文件）文件。
 - 如果使用 InnoDB 引擎，可以找见 `.frm` 和 `ibdata` 文件夹。
 
-因此，其中一种转储方式就是直接复制这些文件，而另一种方式就是使用 ``mysqldump`` 命令。
+因此，其中一种转储方式就是直接复制这些文件，而另一种方式就是使用 `mysqldump` 命令。
 
 ```{toctree}
 :titlesonly:
@@ -919,13 +930,23 @@ dbs/*
 ---
 
 [^cite_ref-1]: 关系数据库是什么 | Oracle 中国 <https://www.oracle.com/cn/database/what-is-a-relational-database/>
+
 [^cite_ref-2]: NoSQL 是什么 - MongoDB <https://www.mongodb.com/zh-cn/nosql-explained>
-[^cite_ref-3]: Database design basics. (n.d.). Database design basics. Retrieved May 1, 2010, from
-<https://support.office.com/en-US/article/Database-design-basics-EB2159CF-1E30-401A-8084-BD4F9C9CA1F5>
+
+[^cite_ref-3]:
+    Database design basics. (n.d.). Database design basics. Retrieved May 1, 2010, from
+    <https://support.office.com/en-US/article/Database-design-basics-EB2159CF-1E30-401A-8084-BD4F9C9CA1F5>
+
 [^cite_ref-4]: SQL 四种语言 <https://www.cnblogs.com/henryhappier/archive/2010/07/05/1771295.html>
+
 [^cite_ref-5]: 王珊, 张俊. 数据库系统概论 (第5版) 习题解析与实验指导[M]. 高等教育出版社, 2015.
+
 [^cite_ref-6]: 国立联合大学, 磁盘管理, 幻灯片 <http://debussy.im.nuu.edu.tw/sjchen/OS/97Spring/Ch_10.pdf>
+
 [^cite_ref-7]: 数据库系统原理习题与解析 <https://kdocs.cn/l/cnw25Tq3UVuU>
+
 [^cite_ref-8]: 如何理解数据库的三级模式 <https://www.zhihu.com/question/38737183/answer/93294527>
+
 [^cite_ref-9]: 维基百科, 独立硬盘冗余阵列 <https://zh.wikipedia.org/wiki/RAID>
+
 [^cite_ref-10]: 保持函数依赖的分解 <https://kdocs.cn/l/cltqjwG6HTLW>

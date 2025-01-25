@@ -43,7 +43,7 @@ perf stat -e dTLB-loads,dTLB-load-misses,dTLB-prefetch-misses command
 perf stat -e LLC-loads,LLC-load-misses,LLC-stores,LLC-prefetches command
 
 # Using raw PMC counters, eg, counting unhalted core cycles:
-perf stat -e r003c -a sleep 5 
+perf stat -e r003c -a sleep 5
 
 # PMCs: counting cycles and frontend stalls via raw specification:
 perf stat -e cycles -e cpu/event=0x0e,umask=0x01,inv,cmask=0x01/ -a sleep 5
@@ -113,16 +113,16 @@ perf record -F 99 -a --call-graph lbr sleep 10
 perf record -e L1-dcache-load-misses -c 10000 -ag -- sleep 5
 
 # Sample CPU stack traces, once every 100 last level cache misses, for 5 seconds:
-perf record -e LLC-load-misses -c 100 -ag -- sleep 5 
+perf record -e LLC-load-misses -c 100 -ag -- sleep 5
 
 # Sample on-CPU kernel instructions, for 5 seconds:
-perf record -e cycles:k -a -- sleep 5 
+perf record -e cycles:k -a -- sleep 5
 
 # Sample on-CPU user instructions, for 5 seconds:
-perf record -e cycles:u -a -- sleep 5 
+perf record -e cycles:u -a -- sleep 5
 
 # Sample on-CPU user instructions precisely (using PEBS), for 5 seconds:
-perf record -e cycles:up -a -- sleep 5 
+perf record -e cycles:up -a -- sleep 5
 
 # Perform branch tracing (needs HW support), for 1 second:
 perf record -b -a sleep 1
@@ -198,7 +198,7 @@ perf record -e minor-faults -c 1 -ag
 perf record -e page-faults -ag
 
 # Trace all ext4 calls, and write to a non-ext4 location, until Ctrl-C:
-perf record -e 'ext4:*' -o /tmp/perf.data -a 
+perf record -e 'ext4:*' -o /tmp/perf.data -a
 
 # Trace kswapd wakeup events, until Ctrl-C:
 perf record -e vmscan:mm_vmscan_wakeup_kswapd -ag
@@ -287,10 +287,10 @@ perf top -e raw_syscalls:sys_enter -ns comm
 stdbuf -oL perf top -e net:net_dev_xmit -ns comm | strings
 
 # Sample stacks at 99 Hertz, and, context switches:
-perf record -F99 -e cpu-clock -e cs -a -g 
+perf record -F99 -e cpu-clock -e cs -a -g
 
 # Sample stacks to 2 levels deep, and, context switch stacks to 5 levels (needs 4.8):
-perf record -F99 -e cpu-clock/max-stack=2/ -e cs/max-stack=5/ -a -g 
+perf record -F99 -e cpu-clock/max-stack=2/ -e cs/max-stack=5/ -a -g
 ```
 
 ## Special
@@ -331,7 +331,7 @@ perf script -f time,event,trace
 perf script -F time,event,trace
 
 # List all perf.data events, with my recommended fields (needs record -a; newer kernels):
-perf script --header -F comm,pid,tid,cpu,time,event,ip,sym,dso 
+perf script --header -F comm,pid,tid,cpu,time,event,ip,sym,dso
 
 # List all perf.data events, with my recommended fields (needs record -a; older kernels):
 perf script -f comm,pid,tid,cpu,time,event,ip,sym,dso

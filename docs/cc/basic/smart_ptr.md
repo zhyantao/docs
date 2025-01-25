@@ -101,7 +101,7 @@ int main() {
 
 当你有一个类，它希望能够在内部生成一个指向自己的 `std::shared_ptr`，以便能够安全地将自己传递给其他对象或者在其他地方使用，这时就可以使用 `shared_from_this`。
 
-*1. 类的定义*
+_1. 类的定义_
 
 首先，你的类需要从 `enable_shared_from_this` 模板类派生，或者直接包含 `enable_shared_from_this` 的模板特化。
 
@@ -119,7 +119,7 @@ public:
 
 这里的关键是 `std::enable_shared_from_this`。这个模板类提供了 `shared_from_this` 成员函数，该函数返回一个指向当前对象的 `std::shared_ptr`。
 
-*2. 使用 shared_from_this*
+_2. 使用 shared_from_this_
 
 接下来，你可以通过 `getSharedThis` 函数返回一个指向当前对象的 `std::shared_ptr`。
 
@@ -132,7 +132,7 @@ std::shared_ptr<MyClass> createSharedPtr() {
 
 在这个例子中，`createSharedPtr` 函数返回一个指向 `MyClass` 的 `std::shared_ptr`。
 
-*shared_from_this 的注意事项*
+_shared_from_this 的注意事项_
 
 - **循环引用**：使用 `shared_from_this` 时要小心，因为它可能导致循环引用。如果一个对象持有指向自身的一个 `std::shared_ptr`，并且还有其他对象也持有指向该对象的 `std::shared_ptr`，那么这些对象可能会相互持有对方的 `shared_ptr`，导致引用计数永远不会下降到零，从而导致内存泄漏。
 - **成员函数**：`shared_from_this` 必须在一个成员函数内部调用，不能在构造函数或析构函数中使用。

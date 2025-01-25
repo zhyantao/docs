@@ -4,7 +4,7 @@
 
 如需详细了解 `repo` 命令，请参阅 <https://source.android.com/docs/setup/create/repo?hl=zh-cn>。
 
-##  init
+## init
 
 ```bash
 # 初始化仓库，-u 指定要使用的清单文件（manifest）所在位置

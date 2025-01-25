@@ -25,7 +25,7 @@ def code2prompt(filename):
         string: Prompt that can be used by GPT.
     """
     """
-    
+
     """
     with open(filename, "r", encoding="utf-8") as f:
         content = f.read()
@@ -39,11 +39,11 @@ def code2prompt(filename):
     # 输出格式定义各种约束
     output_format = """
     以 JSON 格式输出。
-    
+
     1. 在 json 中 main 函数始终作为一级目录；
     2. 如果有多个 main 函数，应该有多个一级目录；
     3. 被 main 函数调用的其他函数是二级目录，以此类推，直到在当前目录下找不到更深层的调用关系。
-    
+
     只输出包含用户提及的字段，不要猜测任何用户未直接提及的字段。
     DO NOT OUTPUT NULL-VALUED FILED! 确保输出能被 json.loads 加载。
     """
@@ -89,7 +89,7 @@ def code2prompt(filename):
             }
         }
     ]
-    
+
     含有 2 个 main 函数的项目：
     客服：有什么可以帮助你吗？
     用户：在这个项目中包含了几个 main 函数？

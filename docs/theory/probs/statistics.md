@@ -190,4 +190,5 @@ P(\text{检验统计量} \geq Z_{\alpha/2}) \leq \alpha
 ---
 
 [^cite_ref-1]: [统计学假设检验中 p 值的含义具体是什么？](https://www.zhihu.com/question/23149768/answer/2239802323)
+
 [^cite_ref-2]: [检验统计量是什么？](https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-test-statistic/)

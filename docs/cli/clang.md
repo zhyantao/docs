@@ -18,6 +18,7 @@
 sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu \
     gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 ```
+
 :::
 :::{tab-item} LLVM (AArch64)
 使用 Yocto 安装 Clang（<https://github.com/kraj/meta-clang>）：
@@ -36,5 +37,6 @@ bitbake-layers add-layer ../meta-clang
 # Cross compile Clang
 bitbake clang
 ```
+
 :::
 ::::
