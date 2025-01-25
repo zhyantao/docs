@@ -19,12 +19,12 @@ git clone https://github.com/<your_github_username>/notebook.git
 # For Windows
 pacman -Syu
 pacman -S mingw-w64-x86_64-gtk2
-npm install --save-dev --save-exact prettier
+npm install
 
 # For Linux
 sudo apt-get update
 sudo apt-get install libcairo2 libcairo2-dev chinese* language-pack-zh* woff2
-npm install --save-dev --save-exact prettier
+npm install
 ```
 
 4、安装项目所需依赖，预览效果。
