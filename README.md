@@ -19,12 +19,10 @@ git clone https://github.com/<your_github_username>/notebook.git
 # For Windows
 pacman -Syu
 pacman -S mingw-w64-x86_64-gtk2
-npm install
 
 # For Linux
 sudo apt-get update
 sudo apt-get install libcairo2 libcairo2-dev chinese* language-pack-zh* woff2
-npm install
 ```
 
 4、安装项目所需依赖，预览效果。
@@ -32,6 +30,7 @@ npm install
 ```bash
 # Python 版本号：3.12.6
 cd notebook
+npm install
 pip install -r requirements.txt
 # export PATH=~/.local/bin:$PATH
 make html
