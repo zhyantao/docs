@@ -6,11 +6,11 @@
 
 1、下载 Clash for Windows: <https://github.com/clashdownload/Clash_for_Windows/releases>
 
-2、购买 VPN: <https://ghelper.net/>
+2、购买 VPN: <https://www.xflash.pro>
 
-3、登录 Ghelper 网站，复制订阅：
+3、登录 XFlash 官网，复制订阅地址：
 
-```{figure} ../_static/images/ghelper-subscribe-address.png
+```{figure} ../_static/images/xflash-subscribe-address.png
 
 ```
 
