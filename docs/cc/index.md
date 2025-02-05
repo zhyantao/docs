@@ -23,6 +23,8 @@ tips/index.md
 
 无需安装 Clang Format 扩展，只需要在项目根目录下创建 `.clang-format`，文件内容参考 [.clang-format](../../.clang-format)。
 
+Linux 风格的 C/C++ 代码风格，可参考 [.clang-format](https://github.com/zhyantao/MIT6.S081-2020/blob/master/.clang-format)。
+
 ## C/C++ Code Style
 
 - 尽量不使用宏
