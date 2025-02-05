@@ -25,6 +25,14 @@ tips/index.md
 
 Linux 风格的 C/C++ 代码风格，可参考 [.clang-format](https://github.com/zhyantao/MIT6.S081-2020/blob/master/.clang-format)。
 
+运行下面的指令，批量格式化文档：
+
+```bash
+source ~/venv/python3.12/bin/activate
+SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0]);")
+find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" -o -name "*.h" -o -name "*.hpp" \) -exec $SITE_PACKAGES_DIR/clang_format/data/bin/clang-format -i {} +
+```
+
 ## C/C++ Code Style
 
 - 尽量不使用宏
