@@ -55,11 +55,19 @@ git pull origin master
 
 # 配置用户名和邮箱
 git config --global user.name "zhyantao"
-git config --global user.email "zh6tao@gmail.com"
+git config --global user.email "yantao.z@outlook.com"
 
 # 解决 VSCode 未修改代码，但显示变更的问题
-git config --add core.filemode false
+# 1) 修改全局配置
+git config --global --unset-all core.filemode
+git config --global --unset-all core.autocrlf
+git config --global core.filemode false
 git config --global core.autocrlf false
+# 2) 修改当前仓库的本地配置
+git config --unset-all core.filemode
+git config --unset-all core.autocrlf
+git config core.filemode false
+git config core.autocrlf false
 
 # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
 git remote add origin git@gitee.com:username/repository.git
