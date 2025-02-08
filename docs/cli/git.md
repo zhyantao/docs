@@ -64,6 +64,9 @@ git config --global --replace-all core.autocrlf false
 # 2) 修改当前仓库的本地配置
 git config --replace-all core.filemode false
 git config --replace-all core.autocrlf false
+# 3) 清除 Git 的索引（或称为缓存）
+git rm --cached -r .
+git reset HEAD .
 
 # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
 git remote add origin git@gitee.com:username/repository.git
