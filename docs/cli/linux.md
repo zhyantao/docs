@@ -11,12 +11,17 @@
 
 ## 系统信息
 
-| 命令                                            | 说明                       |
-| ----------------------------------------------- | -------------------------- |
-| `cat /proc/version`<br>`uname -a`<br>`uname -r` | 查看内核版本信息           |
-| `lsb_release -a`<br>`cat /etc/issue`            | 查看 Linux 发行版版本信息  |
-| `getconf LONG_BIT`<br>`file /bin/ls`            | 判断系统是 32 位还是 64 位 |
-| `uname -m`                                      | 正确命令来查看系统架构     |
+|命令|说明|
+|---|---|
+|`cat /proc/version`|显示内核版本、编译器版本及构建时间等详细信息|
+|`uname -a`|显示系统信息（包括内核名称、版本、主机名、处理器类型、硬件架构等）|
+|`uname -r`|仅显示当前内核版本号|
+|`lsb_release -a`|显示LSB（Linux标准库）兼容的发行版信息（需要安装lsb-release包）|
+|`cat /etc/os-release`|查看发行版版本及ID信息（适用于大多数现代系统）|
+|`cat /etc/issue`|查看发行版版本信息（简短信息，可能不含详细信息）|
+|`getconf LONG_BIT`|显示系统位数（32或64位）|
+|`file /bin/ls`|通过分析/bin/ls可执行文件判断系统位数|
+|`uname -m`|显示系统硬件架构（如x86_64、armv7l等）|
 
 ## 目录结构
 
