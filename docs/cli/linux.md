@@ -1,5 +1,9 @@
 # Linux
 
+```{note}
+Linux 内核和驱动开发：<https://gitee.com/zhyantao/pdf/raw/master/linux/linux-kernel-slides.pdf>
+```
+
 ## 系统信息
 
 | 命令                                            | 说明                       |
