@@ -6,31 +6,31 @@ Yocto 学习资料请参考：<https://gitee.com/zhyantao/pdf/raw/master/yocto/y
 
 ## bitbake 常用命令
 
-| 命令                                                              | 作用                                            |
-| ----------------------------------------------------------------- | ----------------------------------------------- |
-| `source oe-init-build-env`                                        | 将  `bitbake`  添加到环境变量中                 |
-| `cd $BUILD_DIR && rm -Rf tmp sstate-cache`                        | 清除所有 `recipe` 的构建缓存                    |
-| `bitbake <recipe>`                                                | 构建指定 `recipe`                               |
-| `bitbake -c clean <recipe>` <br>`bitbake -c cleansstate <recipe>` | 清理指定 `recipe` 的构建产物                    |
-| `bitbake -e <recipe> \| grep ^S=`                                 | 定位 `recipe` 源代码所在目录                    |
-| `bitbake -e <recipe> \| grep ^WORKDIR=`                           | 查看  `${WORKDIR}` 变量的值                     |
-| `bitbake-layers show-recipes "gdb*"`                              | 搜索指定的  `recipe`                            |
-| `bitbake -c devshell <recipe>`                                    | 进入命令行交互界面进行编译                      |
-| `bitbake -c devpyshell <recipe>`                                  | 进入 Python 交互界面进行编译                    |
-| `bitbake -c listtasks <recipe>`                                   | 列出构建   `recipe`   所需执行的任务            |
-| `bitbake -f <recipe>`                                             | 强制重新构建                                    |
-| `bitbake -v <recipe>`                                             | 详细输出构建过程                                |
-| `bitbake -DDD <recipe>`                                           | 显示详细的 Debug 信息                           |
-| `yocto-layer create <layer_name>`                                 | 新建一个 `layer`                                |
-| `bitbake-layers add-layer /path/to/your_meta-layer`               | 新建一个自定义的 `layer`                        |
-| `bitbake-layers remove-layer /path/to/your_meta-layer`            | 删除自定义的 `layer`                            |
-| `bitbake-layers show-recipes`                                     | 列出所有的   `recipe`                           |
-| `bitbake-layers show-overlayed`                                   | 列出所有冲突的   `recipe`                       |
-| `bitbake-layers show-appends`                                     | 列出所有的  `.bbappend`  文件                   |
-| `bitbake-layers flatten <output_dir>`                             | 将所有的  `.bb`  文件抽离出来放到  `output_dir` |
-| `bitbake-layers show-cross-depends`                               | 列出所有 `layer` 的交叉依赖关系                 |
-| `bitbake-layers layerindex-show-depends <layer_name>`             | 根据 OE index 列出指定 `layer` 的依赖           |
-| `bitbake-layers layerindex-fetch <layer name>`                    | 使用 OE index 拉取和添加 `layer`                |
+| 命令                                                   | 作用                                            |
+| ------------------------------------------------------ | ----------------------------------------------- |
+| `source oe-init-build-env`                             | 将  `bitbake`  添加到环境变量中                 |
+| `cd $BUILD_DIR && rm -Rf tmp sstate-cache`             | 清除所有 `recipe` 的构建缓存                    |
+| `bitbake <recipe>`                                     | 构建指定 `recipe`                               |
+| `bitbake -c cleanall <recipe>`                         | 清理指定 `recipe` 的构建产物                    |
+| `bitbake -e <recipe> \| grep ^S=`                      | 定位 `recipe` 源代码所在目录                    |
+| `bitbake -e <recipe> \| grep ^WORKDIR=`                | 查看  `${WORKDIR}` 变量的值                     |
+| `bitbake-layers show-recipes "gdb*"`                   | 搜索指定的  `recipe`                            |
+| `bitbake -c devshell <recipe>`                         | 进入命令行交互界面进行编译                      |
+| `bitbake -c devpyshell <recipe>`                       | 进入 Python 交互界面进行编译                    |
+| `bitbake -c listtasks <recipe>`                        | 列出构建   `recipe`   所需执行的任务            |
+| `bitbake -f <recipe>`                                  | 强制重新构建                                    |
+| `bitbake -v <recipe>`                                  | 详细输出构建过程                                |
+| `bitbake -DDD <recipe>`                                | 显示详细的 Debug 信息                           |
+| `yocto-layer create <layer_name>`                      | 新建一个 `layer`                                |
+| `bitbake-layers add-layer /path/to/your_meta-layer`    | 新建一个自定义的 `layer`                        |
+| `bitbake-layers remove-layer /path/to/your_meta-layer` | 删除自定义的 `layer`                            |
+| `bitbake-layers show-recipes`                          | 列出所有的   `recipe`                           |
+| `bitbake-layers show-overlayed`                        | 列出所有冲突的   `recipe`                       |
+| `bitbake-layers show-appends`                          | 列出所有的  `.bbappend`  文件                   |
+| `bitbake-layers flatten <output_dir>`                  | 将所有的  `.bb`  文件抽离出来放到  `output_dir` |
+| `bitbake-layers show-cross-depends`                    | 列出所有 `layer` 的交叉依赖关系                 |
+| `bitbake-layers layerindex-show-depends <layer_name>`  | 根据 OE index 列出指定 `layer` 的依赖           |
+| `bitbake-layers layerindex-fetch <layer name>`         | 使用 OE index 拉取和添加 `layer`                |
 
 ## bitbake 原理详解
 
