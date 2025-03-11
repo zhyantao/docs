@@ -53,21 +53,6 @@ cd path/to/subrepo
 git checkout -b master
 git pull origin master
 
-# 配置用户名和邮箱
-git config --global user.name "zhyantao"
-git config --global user.email "yantao.z@outlook.com"
-
-# 解决 VSCode 未修改代码，但显示变更的问题
-# 1) 修改全局配置
-git config --global --replace-all core.filemode false
-git config --global --replace-all core.autocrlf false
-# 2) 修改当前仓库的本地配置
-git config --replace-all core.filemode false
-git config --replace-all core.autocrlf false
-# 3) 清除 Git 的索引（或称为缓存）
-git rm --cached -r .
-git reset HEAD .
-
 # 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
 git remote add origin git@gitee.com:username/repository.git
 
@@ -103,6 +88,25 @@ git push [-u] $(git remote) HEAD:refs/for/$(git branch --show-current)
 
 # 查看 <commit>
 git log --graph
+```
+
+## 配置仓库 config
+
+```bash
+# 配置用户名和邮箱
+git config --global user.name "zhyantao"
+git config --global user.email "yantao.z@outlook.com"
+
+# 解决 VSCode 未修改代码，但显示变更的问题
+# 1) 修改全局配置
+git config --global --replace-all core.filemode false
+git config --global --replace-all core.autocrlf false
+# 2) 修改当前仓库的本地配置
+git config --replace-all core.filemode false
+git config --replace-all core.autocrlf false
+# 3) 清除 Git 的索引（或称为缓存）
+git rm --cached -r .
+git reset HEAD .
 ```
 
 :::{dropdown} GitHub 不显示头像
