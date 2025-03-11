@@ -4,6 +4,7 @@
 
 | 描述                                 | 参考链接                                                                                                    |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| 项目型 Makefile 编写规则（最常用）   | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/project/Makefile>`           |
 | 针对多个独立 `.cc` 文件编写 Makefile | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/tests/Makefile>`            |
 | 对 `.tar.gz` 文件编写 Makefile       | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/gptp/Makefile>`             |
 | 使用一条命令编译多个子目录           | {download}`查看 Makefile 示例 <https://github.com/zhyantao/makefile/blob/master/Makefile>`                  |
