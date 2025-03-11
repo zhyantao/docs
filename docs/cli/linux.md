@@ -1,7 +1,8 @@
 # Linux
 
 ```{note}
-Linux 内核和驱动开发：<https://gitee.com/zhyantao/pdf/raw/master/linux/linux-kernel-slides.pdf>
+内核和驱动开发：<https://gitee.com/zhyantao/pdf/raw/master/linux/linux-kernel-slides.pdf>
+应用开发与调试：<https://gitee.com/zhyantao/pdf/raw/master/linux/debugging-slides.pdf>
 ```
 
 ## 系统信息
