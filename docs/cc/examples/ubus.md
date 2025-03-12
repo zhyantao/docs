@@ -74,6 +74,20 @@ int main() {
 - `exampleMethod` 的处理函数 `example_method_handler` 会被编译进 `mydaemon` 的可执行文件中，并在守护进程启动时加载到内存中。
 - 但是，`example_method_handler` 函数只有在其他进程通过 ubus 调用 `exampleMethod` 时才会被执行。
 
+## 常用指令
+
+### 查看已注册的 ubus objects
+
+```bash
+ubus list
+```
+
+### 查看 object 包含的 functions
+
+```bash
+ubus -v list system
+```
+
 ## 总结
 
 - **加载到内存**：方法的代码和数据结构在守护进程启动时会被加载到内存中。
