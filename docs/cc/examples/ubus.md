@@ -88,6 +88,16 @@ ubus list
 ubus -v list system
 ```
 
+### 调用 function
+
+```bash
+# 无参调用
+ubus call system info
+
+# 带参数调用
+ubus call system signal '{"pid": 5089, "signum": 9}'
+```
+
 ## 总结
 
 - **加载到内存**：方法的代码和数据结构在守护进程启动时会被加载到内存中。
