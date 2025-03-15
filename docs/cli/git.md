@@ -917,3 +917,11 @@ Post Git 提供了自动补全的功能，安装 Posh Git，请执行以下步�
 :::
 
 ::::
+
+## 冲突解决 Conflicts
+
+**error: The following untracked working tree files would be overwritten by checkout**
+
+```bash
+git clean -fd
+```
