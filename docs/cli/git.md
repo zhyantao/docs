@@ -428,6 +428,13 @@ git branch -dr <remote/branch>
 
 因此，我们的目标就是对冲突开始和结束之间的部分进行删减。
 解决完冲突后，继续使用命令 `git add` 和 `git commit` 命令即可完成后续开发工作。
+
+**error: The following untracked working tree files would be overwritten by checkout**
+
+```bash
+git clean -fd
+```
+
 :::
 
 ## 标记重要提交 tag
@@ -917,11 +924,3 @@ Post Git 提供了自动补全的功能，安装 Posh Git，请执行以下步�
 :::
 
 ::::
-
-## 冲突解决 Conflicts
-
-**error: The following untracked working tree files would be overwritten by checkout**
-
-```bash
-git clean -fd
-```
