@@ -1593,8 +1593,7 @@ void solveSudoku(vector<vector<char>>& board) {
 ### 背包 DP
 
 #### 0-1 背包问题
-
-已知第 `i` 件物品的重量是 `weight[i - 1]`，价值是 `value[i - 1]`，背包的总容量为 `W`。
+已知第 `i` 件物品的重量是 `weight[i - 1]`，价值是 `value[i - 1]`，背包的总容量为 `capacity`。
 
 现要求选若干物品放入背包（**物品只能被选 1 次**），使背包中物品的总价值最大且背包中物品的总重量不超过背包的总容量。
 
@@ -1617,26 +1616,26 @@ dp[i][j] = dp[i - 1][j - weight[i - 1]] + value[i - 1]
 
 - **边界条件**：如果没有物品或者背包容量为 0，则最大价值为 0，即 `dp[0][j] = 0` 和 `dp[i][0] = 0`。
 - **计算顺序**：从 `i=1, j=1` 开始，按行或列的顺序依次填充表格。
-- **存储结果**：最终答案位于 `dp[n][W]`，其中 `n` 是物品总数，`W` 是背包的最大承重。
+- **存储结果**：最终答案位于 `dp[n][capacity]`，其中 `n` 是物品总数，`capacity` 是背包的最大承重。
 
 ::::{tab-set}
 :::{tab-item} C++
 :sync: cpp
 
 ```cpp
-int zeroOneKnapsack(vector<int>& weight, vector<int>& value, int W) {
-    // 创建一个 (n + 1) * (W + 1) 的二维数组，行：物品索引，列：容量（包括 0）
+int zeroOneKnapsack(vector<int>& weight, vector<int>& value, int capacity) {
+    // 创建一个 (n + 1) * (capacity + 1) 的二维数组，行：物品索引，列：容量（包括 0）
     // 第一维通常是物品的数量
-    // 第二维表示中间结果的种类数，由于容量不可能为负数，因此中间结果可能是 0...W
+    // 第二维表示中间结果的种类数，由于容量不可能为负数，因此中间结果可能是 0...capacity
     int n = weight.size();
-    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
 
     // 边界条件：如果没有物品或者背包容量为 0，则最大价值为 0
 
     // 状态定义：dp[i][j] 表示在前 i 个物品中选择一些，放入容量为 j 的背包中，可获得的最大价值
     // 根据状态转移方程，填充 dp 数组
     for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= W; j++) {
+        for (int j = 1; j <= capacity; j++) {
             if (j - weight[i - 1] >= 0) {
                 // 当前物品的重量小于等于背包容量时，可以放，也可以不放
                 dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i - 1]] + value[i - 1]);
@@ -1647,7 +1646,7 @@ int zeroOneKnapsack(vector<int>& weight, vector<int>& value, int W) {
         }
     }
 
-    return dp[n][W];
+    return dp[n][capacity];
 }
 ```
 
@@ -1655,9 +1654,26 @@ int zeroOneKnapsack(vector<int>& weight, vector<int>& value, int W) {
 
 空间优化请参考：<https://www.hello-algo.com/chapter_dynamic_programming/knapsack_problem/#4>
 
+```cpp
+int zeroOneKnapsack2(vector<int>& weight, vector<int>& value, int capacity) {
+    int n = weight.size();
+    vector<int> dp(capacity + 1, 0);
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = capacity; j >= 1; j--) {
+            if (j >= weight[i - 1]) {
+                dp[j] = max(dp[j], dp[j - weight[i - 1]] + value[i - 1]);
+            }
+        }
+    }
+
+    return dp[capacity];
+}
+```
+
 #### 完全背包问题
 
-已知第 `i` 件物品的重量是 `weight[i - 1]`，价值是 `value[i - 1]`，背包的总容量为 `W`。
+已知第 `i` 件物品的重量是 `weight[i - 1]`，价值是 `value[i - 1]`，背包的总容量为 `capacity`。
 
 现要求选若干物品放入背包（**物品可以无限次使用**），使背包中物品的总价值最大且背包中物品的总重量不超过背包的总容量。
 
@@ -1680,22 +1696,22 @@ dp[i][j] = dp[i, j - weight[i - 1]] + value[i - 1]
 
 - **边界条件**：如果没有物品或者背包容量为 0，则最大价值为 0，即 `dp[0][j] = 0` 和 `dp[i][0] = 0`。
 - **计算顺序**：从 `i=1, j=1` 开始，按行或按列的顺序依次填充表格。
-- **存储结果**：最终结果存储在 `dp[n][W]` 中，其中 `n` 是物品总数，`W` 是背包的最大承重。
+- **存储结果**：最终结果存储在 `dp[n][capacity]` 中，其中 `n` 是物品总数，`capacity` 是背包的最大承重。
 
 ```cpp
-int unboundedKnapsack(vector<int>& weight, vector<int>& value, int W) {
-    // 创建一个 (n + 1) * (W + 1) 的二维数组，行：物品索引，列：容量（包括 0）
+int unboundedKnapsack(vector<int>& weight, vector<int>& value, int capacity) {
+    // 创建一个 (n + 1) * (capacity + 1) 的二维数组，行：物品索引，列：容量（包括 0）
     // 第一维通常是物品的数量
-    // 第二维表示中间结果的种类数，由于容量不可能为负数，因此中间结果可能是 0...W
+    // 第二维表示中间结果的种类数，由于容量不可能为负数，因此中间结果可能是 0...capacity
     int n = weight.size();
-    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
 
     // 边界条件：如果没有物品或者背包容量为 0，则最大价值为 0
 
     // 状态定义：dp[i][j] 表示在前 i 个物品中选择一些，放入容量为 j 的背包中，可获得的最大价值
     // 根据状态转移方程，填充 dp 数组
     for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= W; ++j) {
+        for (int j = 1; j <= capacity; ++j) {
             if (j - weight[i - 1] >= 0) {
                 // 当前物品的重量小于等于背包容量时，可以放，也可以不放
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - weight[i - 1]] + value[i - 1]);
@@ -1706,7 +1722,7 @@ int unboundedKnapsack(vector<int>& weight, vector<int>& value, int W) {
         }
     }
 
-    return dp[n][W];
+    return dp[n][capacity];
 }
 ```
 
