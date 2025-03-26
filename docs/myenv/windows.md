@@ -1,4 +1,4 @@
-# Windows 备份和修复
+# Windows Troubleshooting
 
 ## 备份 Windows 系统
 
@@ -113,16 +113,6 @@ $2^{32} = 4 GB$。
 ```
 
 访问[联想官网](https://newsupport.lenovo.com.cn/driveList.html?fromsource=driveList&selname=BH00QDHR)，下载对应驱动，安装即可。
-
-### LeetCode for vscode
-
-```bash
-VsCode Error: EACCES: permission denied
-```
-
-参考链接：<https://github.com/LeetCode-OpenSource/vscode-leetcode/issues/770>
-
-注释掉 `%appdata%/Code/User/settings.json` 中的 `"leetcode.workspaceFolder"` 字段。
 
 ---
 
