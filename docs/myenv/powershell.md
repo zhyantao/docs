@@ -1,4 +1,4 @@
-# Windows Terminal
+# PowerShell
 
 ## 分栏快捷键
 
