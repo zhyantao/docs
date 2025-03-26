@@ -168,7 +168,7 @@ ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_na
         for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
             if (this_one_thing > this_other_thing && a_third_thing == a_forth_thing) {
                 // 临时方案使用 TODO 注释，后面括号里加上你的大名，邮件地址
-                // TODO (zh6tao@gmail.com): zh6tao
+                // TODO (zhangsan@gmail.com): Zhang San
             }
         }
     } else {
