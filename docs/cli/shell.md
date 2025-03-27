@@ -822,69 +822,14 @@ scp -r <local_dirname> <root>@<remote_ip>:/path/to/<remote_dirname>
 
 解压时，仍然需要跟上 `z`、`j` 或者 `J` 选项，才能正常解压。
 
-### grep/fgrep/egrep
+### grep
 
-| 命令    | 等价形式  | 正则支持         | 适用场景                     |
-| ------- | --------- | ---------------- | ---------------------------- |
-| `grep`  | -         | 基本正则（BRE）  | 简单正则匹配                 |
-| `egrep` | `grep -E` | 扩展正则（ERE）  | 需要复杂逻辑（如 `\|`、`+`） |
-| `fgrep` | `grep -F` | 无（固定字符串） | 搜索字面值或特殊字符         |
-
-**通用技巧**：
-
-- 结合管道使用：`cat file.txt | grep "pattern"`  
-- 输出高亮：`grep --color=auto "pattern" file.txt`  
-- 统计匹配行数：`grep -c "pattern" file.txt`  
-
-根据需求选择合适的工具：需要复杂正则用 `egrep`，简单文本用 `fgrep`，默认情况用 `grep`。
-
----
-
-**1. grep（基础正则表达式搜索）**
-
-**功能**：使用基本正则表达式（Basic Regular Expression, BRE）匹配文本。  
-
-**常用选项**： 
-
-- `-i`：忽略大小写  
-- `-v`：反向匹配（显示不包含模式的行）  
-- `-n`：显示匹配行的行号  
-- `-r` 或 `-R`：递归搜索目录  
-- `-l`：仅显示包含匹配的文件名  
-
-**示例**：  
-
-```bash
-grep "pattern" file.txt          # 搜索文件中匹配的行
-grep -i "hello" file.txt         # 忽略大小写搜索 "hello"
-grep -r "error" /var/log/        # 递归搜索目录中的 "error"
-```
-
----
-
-**2. egrep（扩展正则表达式搜索）**
-
-**功能**：等同于 `grep -E`，支持扩展正则表达式（Extended Regular Expression, ERE），语法更灵活（如支持 `|`、`+`、`?` 等元字符）。  
-
-**常用选项**：与 `grep` 相同。  
-
-**示例**：  
-
-```bash
-egrep "pattern1|pattern2" file.txt   # 匹配 "pattern1" 或 "pattern2"
-egrep "[0-9]{3}" file.txt            # 匹配 3 位数字
-```
-
----
-
-**3. fgrep（固定字符串搜索）**
-
-**功能**：等同于 `grep -F`，将模式视为固定字符串（不解析正则表达式），适合搜索纯文本或特殊字符（如 `$`、`*`）。  
-
-**常用选项**：与 `grep` 相同。  
-
-**示例**：  
-```bash
-fgrep "$100" file.txt      # 直接搜索 "$100"（避免被解释为正则）
-fgrep -F "*.log" file.txt  # 搜索字面值 "*.log"
-```
+| 命令    | 等价形式  | 示例说明                                                           |
+| ------- | --------- | ------------------------------------------------------------------ |
+| `grep`  | -         | `grep "error" file.txt`（搜索文件中的 `"error"`）                  |
+|         |           | `grep -i "hello" file.txt`（忽略大小写搜索 `"hello"`）             |
+|         |           | `grep -r "pattern" /path/to/dir/`（递归搜索目录）                  |
+| `egrep` | `grep -E` | `egrep "error\|warning" file.txt`（匹配 `"error"` 或 `"warning"`） |
+|         |           | `egrep "[0-9]{3}" file.txt`（匹配 3 位数字）                       |
+| `fgrep` | `grep -F` | `fgrep "$100" file.txt`（直接搜索 `"$100"`，避免 `$` 被当作正则）  |
+|         |           | `fgrep "*.log" file.txt`（搜索字面值 `"*.log"`，不解析为通配符）   |
