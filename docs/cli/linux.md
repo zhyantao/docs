@@ -93,7 +93,7 @@
 
 ## 命令行高亮
 
-在线生成：<https://zhyantao.github.io/bash-prompt-generator/>
+在线生成：<https://zhyantao.github.io/PS1-generator/>
 
 ## 快捷键
 
