@@ -1,4 +1,4 @@
-# 多文件编译
+# 编译和链接问题
 
 ## 指定链接时 `.a` 文件的搜索路径
 
@@ -67,7 +67,7 @@ readelf -d libpthread.so.0
 extern "C" {
 #endif
 
-// TODO: include C header files here
+// Here is C header file contents
 
 #ifdef __cplusplus
 }
@@ -85,7 +85,7 @@ extern "C" {
 extern "C" {
 #endif
 
-// TODO: include C header files here
+// Here is C header file contents
 
 #ifdef __cplusplus
 }
