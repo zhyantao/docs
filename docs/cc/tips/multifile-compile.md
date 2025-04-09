@@ -78,7 +78,19 @@ extern "C" {
 
 ## DWARF error: could not find variable specification at offset
 
-出现这个问题，可能的原因有：（1）非 `static` 函数，调用了 `static` 函数。（2）忘记了在 Makefile 中链接 undefined reference 指向函数所在的文件。
+这是因为在 C++ 源代码文件中引用了 C 头文件，需要在 C 头文件中添加 `extern "C"`。
+
+```cpp
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// TODO: include C header files here
+
+#ifdef __cplusplus
+}
+#endif
+```
 
 ## line 1: can't open: no such file
 
