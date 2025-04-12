@@ -9,10 +9,10 @@
 git format-patch -1 <commit_id>
 
 # （推荐）对已被 git track 的文件（夹）制作补丁
-git diff > diff.patch
+git diff > patch.diff
 
 # （推荐）对未被 git track 的文件（夹）制作补丁
-git diff <old_file> <new_file> > diff.patch
+git diff <old_file> <new_file> > patch.diff
 
 # 对比 <old_file> 和 <new_file>，将差异输出到屏幕
 diff <old_file> <new_file>
@@ -33,7 +33,7 @@ diff --recursive <old_dir> <new_dir>
 diff --recursive --brief <old_dir> <new_dir>
 
 # 将 <old_file> 和 <new_file> 的差异写入文件（不存在的文件当做空文件处理）
-diff --text --unified --new-file <old_file> <new_file> > diff.patch
+diff --text --unified --new-file <old_file> <new_file> > patch.diff
 ```
 
 ## 应用补丁
@@ -65,7 +65,7 @@ patch -R < patch.diff
 ````{note}
 前文提到 **忽略第 n 级目录**，解释一下这句话，以下述为例：
 
-```text
+```diff
 --- a/src/module/test.c
 +++ b/src/module/test.c
 ```
