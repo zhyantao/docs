@@ -31,6 +31,7 @@ tensorflow.md
 pytorch.md
 paddle.md
 llm.md
+progressbar.ipynb
 ```
 
 ## Python 命名规范
