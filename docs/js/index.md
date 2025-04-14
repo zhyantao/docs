@@ -1,4 +1,4 @@
-# JavaScript 语法
+# JavaScript
 
 ## 目录
 
