@@ -1,6 +1,6 @@
 (git-syntax)=
 
-# Git-2
+# Git
 
 ## 工作流程
 
