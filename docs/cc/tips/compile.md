@@ -78,7 +78,10 @@ extern "C" {
 
 ## DWARF error: could not find variable specification at offset
 
-这是因为在 C++ 源代码文件中引用了 C 头文件，需要在 C 头文件中添加 `extern "C"`。
+两个原因综合导致：
+
+1. 没有链接正确的库。
+2. 在 C++ 源代码文件中引用了 C 头文件，需要在 C 头文件中添加 `extern "C"`。
 
 ```cpp
 #ifdef __cplusplus
