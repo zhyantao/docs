@@ -1,4 +1,4 @@
-# DEBUG
+# Debug
 
 在 Linux 系统中，除了 `nm` 之外，还有许多常用的调试和分析工具，用于检查二进制文件、调试程序、分析性能等。以下是一些常见的工具及其用途：
 
@@ -124,3 +124,9 @@
   ```bash
   ldd ./my_program
   ```
+
+## 查看 gpio 占用情况
+
+```bash
+cat /sys/kernel/debug/gpio
+```
