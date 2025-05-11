@@ -10,7 +10,7 @@ long test_bignum() {
 ```
 
 ```cpp
-// int test_bignum(); // warning: implicit declaration of function
+// int test_bignum(); // GCC 编译器隐式声明将改变返回值类型
 
 int main(int argc, char* argv[]) {
     long num = test_bignum();
