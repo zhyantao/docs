@@ -375,6 +375,17 @@ docker pull myregistry.com/ubuntu:20.04
 ## 将 git 离线添加到现有镜像
 
 ```bash
+# 确保 apt 源与 Docker 容器中的 Ubuntu 版本保持一致
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<EOF | sudo tee /etc/apt/sources.list
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+EOF
+sudo apt-get clean all
+sudo apt-get update
+
 # 下载 deb 文件
 PKGNAME="build-essential git"
 apt-get download $(apt-cache depends --recurse --no-recommends \
