@@ -371,3 +371,23 @@ docker pull <Registry-URL>/<Repository>:<Tag>
 # 示例
 docker pull myregistry.com/ubuntu:20.04
 ```
+
+## 将 git 离线添加到现有镜像
+
+```bash
+# 下载 deb 文件
+PKGNAME="build-essential git"
+apt-get download $(apt-cache depends --recurse --no-recommends \
+  --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances \
+  $PKGNAME | grep "^\w" | sort -u)
+
+# 将 Git 安装包目录（绝对路径）挂载到 /mnt 目录
+docker run -v $PWD:/mnt -it ubuntu:20.04 /bin/bash
+
+# 在容器内，进入挂载点并开始安装
+cd /mnt
+dpkg -i *.deb
+
+# 如果遇到未解决的依赖关系，可以尝试使用以下命令修复（假设有本地 deb 包可满足这些依赖）
+apt-get install -f
+```
