@@ -408,3 +408,12 @@ docker ps
 docker commit <容器 ID> <新镜像名称>
 docker tag <新镜像名称>:latest <新镜像名称>:<标签名>
 ```
+
+离线安装时，一些常见的错误：
+
+```bash
+# dpkg: error: duplicate file trigger interest for filename
+mv /var/lib/dpkg/triggers/File /var/lib/dpkg/triggers/File.bak
+apt-get --fix-broken install
+dpkg -i *.deb
+```
