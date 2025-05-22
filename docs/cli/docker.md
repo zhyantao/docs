@@ -361,3 +361,13 @@ docker build -t my-image:latest .
 docker tag my-image:latest registry.example.com/my-image:latest
 docker push registry.example.com/my-image:latest
 ```
+
+## 下载镜像
+
+```bash
+# 从制定 Docker Registry 拉取镜像
+docker pull <Registry-URL>/<Repository>:<Tag>
+
+# 示例
+docker pull myregistry.com/ubuntu:20.04
+```
