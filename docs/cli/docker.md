@@ -275,23 +275,89 @@ sudo rm -rf /var/lib/containerd
 ## 删除无效的镜像
 
 ```bash
-# 清理 <none> 容器
-docker image prune -f
+# 清理 <none> 标签的悬空镜像（推荐方式）
+docker image prune -a -f
+
+# 只删除 <none> 标签的镜像
 docker rmi -f $(docker images | grep '<none>' | awk '{print $3}')
 
-# 清理异常退出的容器
+# 删除状态为 Exited 的容器
 docker rm $(docker ps -a | grep Exited | awk '{print $1}')
+
+# 强制删除正在运行的容器（慎用）
+docker rm -f $(docker ps -a | grep Exited | awk '{print $1}')
 ```
 
 ## 列出所有镜像
 
 ```bash
+# 列出本地已有的所有镜像
 docker images
+
+# 查看更详细的镜像信息（如创建时间、大小等）
+docker images --no-trunc
+
+# 格式化输出
+docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}"
 ```
 
 ## 删除指定镜像
 
 ```bash
+# 删除一个或多个特定镜像
 docker image rm 192.168.163.146:5000/python3action:1.0.0
 docker image rm openwhisk/action-python-v3.7:1.17.0
+```
+
+如果该镜像已被某个容器使用，则需先删除相关容器才能成功删除镜像。你可以通过以下命令查找使用该镜像的容器：
+
+```bash
+docker ps -a --filter "ancestor=镜像名" --format "{{.ID}}"
+```
+
+然后删除这些容器：
+
+```bash
+docker rm -f <container_id>
+```
+
+## 交互式启动镜像
+
+以交互模式启动一个容器并进入其 shell 环境：
+
+```bash
+docker run -it ubuntu:20.04 /bin/bash
+```
+
+对于没有安装 bash 的镜像（如 Alpine）：
+
+```bash
+docker run -it alpine sh
+```
+
+## 查看运行中的容器
+
+```bash
+docker ps
+```
+
+查看所有容器（包括停止的）：
+
+```bash
+docker ps -a
+```
+
+## 构建镜像
+
+从当前目录下的 `Dockerfile` 构建镜像：
+
+```bash
+docker build -t my-image:latest .
+```
+
+## 推送镜像到私有仓库
+
+```bash
+docker tag my-image:latest registry.example.com/my-image:latest
+docker push registry.example.com/my-image:latest
 ```
