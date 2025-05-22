@@ -399,6 +399,7 @@ docker run -v $PWD:/mnt -it ubuntu:20.04 /bin/bash
 cd /mnt
 dpkg -i *.deb
 
-# 如果遇到未解决的依赖关系，可以尝试使用以下命令修复（假设有本地 deb 包可满足这些依赖）
-apt-get install -f
+# 强制重新配置未正确配置的软件包
+dpkg --configure -a
+dpkg -i *.deb
 ```
