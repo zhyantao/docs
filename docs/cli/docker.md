@@ -372,7 +372,7 @@ docker pull <Registry-URL>/<Repository>:<Tag>
 docker pull myregistry.com/ubuntu:20.04
 ```
 
-## 将 git 离线添加到现有镜像
+## 离线安装 Git 到现有镜像
 
 ```bash
 # 确保 apt 源与 Docker 容器中的 Ubuntu 版本保持一致
