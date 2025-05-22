@@ -97,6 +97,53 @@ sudo apt-get install apt-transport-https \
 ```
 
 ::::::{tab-set}
+:::::{tab-item} 轩辕镜像
+:sync: xuanyuan
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]
+then
+echo "/etc/docker/daemon.json already exists, please modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.xuanyuan.me"
+  ]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+:::::{tab-item} DaoCloud
+:sync: daocloud
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]
+then
+echo "/etc/docker/daemon.json already exists, please modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io"
+  ]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
 :::::{tab-item} 中科大源
 :sync: ustc
 
@@ -256,6 +303,34 @@ sudo docker info
 
 :::::
 ::::::
+
+## containerd 加速服务
+
+```bash
+sudo tee /etc/containerd/config.toml <<EOF
+[plugins."io.containerd.grpc.v1.cri".registry]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+      endpoint = [
+        "https://docker.1ms.run",
+        "https://docker.mybacc.com",
+        "https://dytt.online",
+        "https://lispy.org",
+        "https://docker.xiaogenban1993.com",
+        "https://docker.yomansunter.com",
+        "https://aicarbon.xyz",
+        "https://666860.xyz",
+        "https://docker.zhai.cm",
+        "https://a.ussh.net",
+        "https://hub.littlediary.cn",
+        "https://hub.rat.dev",
+        "https://docker.m.daocloud.io"
+      ]
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart containerd
+```
 
 ## 验证 Docker 是否安装成功
 
