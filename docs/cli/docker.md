@@ -405,8 +405,7 @@ dpkg -i *.deb
 
 # 保存当前容器的状态（假设容器正在运行），并制作新的镜像
 docker ps
-docker commit <容器 ID> <新镜像名称>
-docker tag <新镜像名称>:latest <新镜像名称>:<标签名>
+docker commit <容器 ID> <新镜像名称>:<标签名>
 ```
 
 离线安装时，一些常见的错误：
