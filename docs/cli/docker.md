@@ -402,4 +402,9 @@ dpkg -i *.deb
 # 强制重新配置未正确配置的软件包
 dpkg --configure -a
 dpkg -i *.deb
+
+# 保存当前容器的状态（假设容器正在运行），并制作新的镜像
+docker ps
+docker commit <容器 ID> <新镜像名称>
+docker tag <新镜像名称>:latest <新镜像名称>:<标签名>
 ```
