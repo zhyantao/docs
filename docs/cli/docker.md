@@ -101,9 +101,8 @@ sudo apt-get install apt-transport-https \
 :sync: xuanyuan
 
 ```bash
-if [ -f "/etc/docker/daemon.json" ]
-then
-echo "/etc/docker/daemon.json already exists, please modify it manually."
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
 sudo vim /etc/docker/daemon.json <<EOF
@@ -125,9 +124,8 @@ sudo docker info
 :sync: daocloud
 
 ```bash
-if [ -f "/etc/docker/daemon.json" ]
-then
-echo "/etc/docker/daemon.json already exists, please modify it manually."
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
 sudo vim /etc/docker/daemon.json <<EOF
@@ -163,7 +161,7 @@ sudo docker login docker.mirrors.ustc.edu.cn
 
 ```bash
 sudo mkdir -p ~/.docker
-cat <<EOF | sudo tee ~/.docker/config.json
+sudo vim ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://docker.mirrors.ustc.edu.cn" : {
@@ -179,12 +177,11 @@ EOF
 ::::
 
 ```bash
-if [ -f "/etc/docker/daemon.json" ]
-then
-echo "/etc/docker/daemon.json already exists, please modify it manually."
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-cat <<EOF | sudo tee /etc/docker/daemon.json
+sudo vim /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
@@ -217,7 +214,7 @@ sudo docker login $username.mirror.aliyuncs.com
 ```bash
 sudo mkdir -p ~/.docker
 username=
-cat <<EOF | sudo tee ~/.docker/config.json
+sudo vim ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://$username.mirror.aliyuncs.com" : {
@@ -233,12 +230,11 @@ EOF
 ::::
 
 ```bash
-if [ -f "/etc/docker/daemon.json" ]
-then
-echo "/etc/docker/daemon.json already exists, please modify it manually."
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-cat <<EOF | sudo tee /etc/docker/daemon.json
+sudo vim /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://$username.mirror.aliyuncs.com"]
 }
@@ -269,7 +265,7 @@ sudo docker login docker.mirrors.tuna.tsinghua.edu.cn
 
 ```bash
 sudo mkdir -p ~/.docker
-cat <<EOF | sudo tee ~/.docker/config.json
+sudo vim ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://docker.mirrors.tuna.tsinghua.edu.cn" : {
@@ -285,12 +281,11 @@ EOF
 ::::
 
 ```bash
-if [ -f "/etc/docker/daemon.json" ]
-then
-echo "/etc/docker/daemon.json already exists, please modify it manually."
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-cat <<EOF | sudo tee /etc/docker/daemon.json
+sudo vim /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://docker.mirrors.tuna.tsinghua.edu.cn"]
 }
@@ -452,11 +447,11 @@ docker pull myregistry.com/ubuntu:20.04
 ```bash
 # 确保 apt 源与 Docker 容器中的 Ubuntu 版本保持一致
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+sudo vim /etc/apt/sources.list <<EOF
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
 EOF
 sudo apt-get clean all
 sudo apt-get update
@@ -486,7 +481,9 @@ docker commit <容器 ID> <新镜像名称>:<标签名>
 离线安装时，一些常见的错误：
 
 ```bash
+#
 # dpkg: error: duplicate file trigger interest for filename
+#
 mv /var/lib/dpkg/triggers/File /var/lib/dpkg/triggers/File.bak
 apt-get --fix-broken install
 dpkg -i *.deb
