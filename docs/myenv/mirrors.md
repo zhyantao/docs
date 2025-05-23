@@ -43,7 +43,7 @@ install_automake 1.16.5
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 deb https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src https://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 
@@ -66,7 +66,7 @@ EOF
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
@@ -89,7 +89,7 @@ EOF
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 deb http://mirrors.cloud.tencent.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.cloud.tencent.com/ubuntu/ focal-updates main restricted universe multiverse
@@ -108,7 +108,7 @@ EOF
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 # 默认注释了源码仓库，如有需要可自行取消注释
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
@@ -133,7 +133,7 @@ EOF
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.zju.edu.cn/ubuntu/ focal main restricted universe multiverse
 # deb-src https://mirrors.zju.edu.cn/ubuntu/ focal main restricted universe multiverse
@@ -154,7 +154,7 @@ EOF
 
 ```bash
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat <<EOF | sudo tee /etc/apt/sources.list
+sudo tee /etc/apt/sources.list <<EOF
 deb http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
@@ -243,7 +243,7 @@ sudo apt-get -y autoremove --purge <package_name>
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=http://mirrors.aliyun.com/pypi/simple/
 [install]
@@ -256,7 +256,7 @@ EOF
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=https://pypi.tuna.tsinghua.edu.cn/simple/
 [install]
@@ -269,7 +269,7 @@ EOF
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=https://mirror.baidu.com/pypi/simple
 [install]
@@ -282,7 +282,7 @@ EOF
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=https://mirrors.ustc.edu.cn/pypi/web/simple/
 [install]
@@ -295,7 +295,7 @@ EOF
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=https://pypi.doubanio.com/simple/
 [install]
@@ -308,7 +308,7 @@ EOF
 
 ```bash
 mkdir -p ~/.config/pip
-cat <<EOF | tee ~/.config/pip/pip.conf
+tee ~/.config/pip/pip.conf <<EOF
 [global]
 index-url=https://pypi.python.org/pypi
 [install]
@@ -919,6 +919,9 @@ echo \
 sudo apt-get update
 ```
 
+:::
+::::
+
 ## Docker Registry (DockerHub)
 
 ```{warning}
@@ -934,7 +937,7 @@ if [ -f "/etc/docker/daemon.json" ]; then
 echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
     "https://docker.1ms.run",
@@ -957,7 +960,7 @@ if [ -f "/etc/docker/daemon.json" ]; then
 echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
     "https://docker.m.daocloud.io"
@@ -990,7 +993,7 @@ sudo docker login docker.mirrors.ustc.edu.cn
 
 ```bash
 sudo mkdir -p ~/.docker
-sudo vim ~/.docker/config.json <<EOF
+sudo tee ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://docker.mirrors.ustc.edu.cn" : {
@@ -1010,7 +1013,7 @@ if [ -f "/etc/docker/daemon.json" ]; then
 echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
@@ -1043,7 +1046,7 @@ sudo docker login $username.mirror.aliyuncs.com
 ```bash
 sudo mkdir -p ~/.docker
 username=
-sudo vim ~/.docker/config.json <<EOF
+sudo tee ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://$username.mirror.aliyuncs.com" : {
@@ -1063,7 +1066,7 @@ if [ -f "/etc/docker/daemon.json" ]; then
 echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://$username.mirror.aliyuncs.com"]
 }
@@ -1094,7 +1097,7 @@ sudo docker login docker.mirrors.tuna.tsinghua.edu.cn
 
 ```bash
 sudo mkdir -p ~/.docker
-sudo vim ~/.docker/config.json <<EOF
+sudo tee ~/.docker/config.json <<EOF
 {
   "auths": {
     "https://docker.mirrors.tuna.tsinghua.edu.cn" : {
@@ -1114,7 +1117,7 @@ if [ -f "/etc/docker/daemon.json" ]; then
 echo "/etc/docker/daemon.json exists, modify it manually."
 else
 sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://docker.mirrors.tuna.tsinghua.edu.cn"]
 }

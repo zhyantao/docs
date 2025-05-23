@@ -9,9 +9,6 @@ do
 done
 ```
 
-:::
-::::
-
 ## 安装 Docker
 
 ```bash
@@ -125,7 +122,7 @@ docker pull myregistry.com/ubuntu:20.04
 ```bash
 # 确保 apt 源与 Docker 容器中的 Ubuntu 版本保持一致
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo vim /etc/apt/sources.list <<EOF
+sudo tee /etc/apt/sources.list <<EOF
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
