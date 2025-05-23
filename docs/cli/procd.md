@@ -9,7 +9,7 @@ USE_PROCD=1
 
 start_service() {
          procd_open_instance [instance_name]
-         
+
          # 设置服务的主命令和参数，确保服务以前台模式运行。
          procd_set_param command /sbin/your_service_daemon -b -a --foo
          # 追加额外的命令行参数到服务启动命令中。
