@@ -110,8 +110,11 @@ docker push <Registry-URL>/<镜像名称>:<标签名>
 ## 下载镜像
 
 ```bash
-# 从制定 Docker Registry 拉取镜像
+# 从指定 Docker Registry 拉取镜像
 docker pull <Registry-URL>/<镜像名称>:<标签名>
+
+# 从默认的 Docker Registry 拉取镜像
+docker pull <镜像名称>:<标签名>
 
 # 示例
 docker pull myregistry.com/ubuntu:20.04
