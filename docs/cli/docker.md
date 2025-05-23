@@ -9,74 +9,6 @@ do
 done
 ```
 
-## 设置 Docker 源
-
-::::{tab-set}
-:::{tab-item} 中科大源
-:sync: ustc
-
-```bash
-# 设置 GPG 公钥
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg \
-  -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# 设置 Docker 仓库
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-  https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-```
-
-:::
-:::{tab-item} 阿里云源
-:sync: aliyun
-
-```bash
-# 设置 GPG 公钥
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg \
-  -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# 设置 Docker 仓库
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-  https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-```
-
-:::
-:::{tab-item} 清华源
-:sync: tuna
-
-```bash
-# 设置 GPG 公钥
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg \
-  -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# 设置 Docker 仓库
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-  https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-```
-
 :::
 ::::
 
@@ -88,243 +20,6 @@ sudo apt-get install apt-transport-https \
   curl \
   software-properties-common \
   docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-## Docker Registry 加速服务
-
-```{warning}
-使用国内的 Docker Hub 镜像前，必须准备一个该镜像站对应的账号和密码，否则将无法通过该源加速。因此，使用无效源时，会被重定向到 [`https://registry-1.docker.io/v2/`](https://registry-1.docker.io/v2/)。
-```
-
-::::::{tab-set}
-:::::{tab-item} 轩辕镜像
-:sync: xuanyuan
-
-```bash
-if [ -f "/etc/docker/daemon.json" ]; then
-echo "/etc/docker/daemon.json exists, modify it manually."
-else
-sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
-{
-  "registry-mirrors": [
-    "https://docker.1ms.run",
-    "https://docker.xuanyuan.me"
-  ]
-}
-EOF
-fi
-
-sudo systemctl restart docker
-sudo docker info
-```
-
-:::::
-:::::{tab-item} DaoCloud
-:sync: daocloud
-
-```bash
-if [ -f "/etc/docker/daemon.json" ]; then
-echo "/etc/docker/daemon.json exists, modify it manually."
-else
-sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
-{
-  "registry-mirrors": [
-    "https://docker.m.daocloud.io"
-  ]
-}
-EOF
-fi
-
-sudo systemctl restart docker
-sudo docker info
-```
-
-:::::
-:::::{tab-item} 中科大源
-:sync: ustc
-
-```{error}
-科大 Docker Hub 不对校外开放，因此无法使用科大源。
-```
-
-::::{tab-set}
-:::{tab-item} Docker v2
-
-```bash
-sudo docker login docker.mirrors.ustc.edu.cn
-```
-
-:::
-:::{tab-item} Docker v1
-
-```bash
-sudo mkdir -p ~/.docker
-sudo vim ~/.docker/config.json <<EOF
-{
-  "auths": {
-    "https://docker.mirrors.ustc.edu.cn" : {
-      "auth": "put-your-auth-code-here",
-      "email": "put-your-email-here"
-    }
-  }
-}
-EOF
-```
-
-:::
-::::
-
-```bash
-if [ -f "/etc/docker/daemon.json" ]; then
-echo "/etc/docker/daemon.json exists, modify it manually."
-else
-sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
-{
-  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
-}
-EOF
-fi
-
-sudo systemctl restart docker
-sudo docker info
-```
-
-:::::
-:::::{tab-item} 阿里云源
-:sync: aliyun
-
-```{error}
-阿里云 Docker Hub 下架了，因此无法使用阿里云源。
-```
-
-::::{tab-set}
-:::{tab-item} Docker v2
-
-```bash
-username=
-sudo docker login $username.mirror.aliyuncs.com
-```
-
-:::
-:::{tab-item} Docker v1
-
-```bash
-sudo mkdir -p ~/.docker
-username=
-sudo vim ~/.docker/config.json <<EOF
-{
-  "auths": {
-    "https://$username.mirror.aliyuncs.com" : {
-      "auth": "put-your-auth-code-here",
-      "email": "put-your-email-here"
-    }
-  }
-}
-EOF
-```
-
-:::
-::::
-
-```bash
-if [ -f "/etc/docker/daemon.json" ]; then
-echo "/etc/docker/daemon.json exists, modify it manually."
-else
-sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
-{
-  "registry-mirrors": ["https://$username.mirror.aliyuncs.com"]
-}
-EOF
-fi
-
-sudo systemctl restart docker
-sudo docker info
-```
-
-:::::
-:::::{tab-item} 清华源
-:sync: tuna
-
-```{error}
-清华 Docker Hub 不对校外开放，因此无法使用清华源。
-```
-
-::::{tab-set}
-:::{tab-item} Docker v2
-
-```bash
-sudo docker login docker.mirrors.tuna.tsinghua.edu.cn
-```
-
-:::
-:::{tab-item} Docker v1
-
-```bash
-sudo mkdir -p ~/.docker
-sudo vim ~/.docker/config.json <<EOF
-{
-  "auths": {
-    "https://docker.mirrors.tuna.tsinghua.edu.cn" : {
-      "auth": "put-your-auth-code-here",
-      "email": "put-your-email-here"
-    }
-  }
-}
-EOF
-```
-
-:::
-::::
-
-```bash
-if [ -f "/etc/docker/daemon.json" ]; then
-echo "/etc/docker/daemon.json exists, modify it manually."
-else
-sudo mkdir -p /etc/docker
-sudo vim /etc/docker/daemon.json <<EOF
-{
-  "registry-mirrors": ["https://docker.mirrors.tuna.tsinghua.edu.cn"]
-}
-EOF
-fi
-
-sudo systemctl restart docker
-sudo docker info
-```
-
-:::::
-::::::
-
-## containerd 加速服务
-
-```bash
-sudo tee /etc/containerd/config.toml <<EOF
-[plugins."io.containerd.grpc.v1.cri".registry]
-  [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-      endpoint = [
-        "https://docker.1ms.run",
-        "https://docker.mybacc.com",
-        "https://dytt.online",
-        "https://lispy.org",
-        "https://docker.xiaogenban1993.com",
-        "https://docker.yomansunter.com",
-        "https://aicarbon.xyz",
-        "https://666860.xyz",
-        "https://docker.zhai.cm",
-        "https://a.ussh.net",
-        "https://hub.littlediary.cn",
-        "https://hub.rat.dev",
-        "https://docker.m.daocloud.io"
-      ]
-EOF
-
-sudo systemctl daemon-reload
-sudo systemctl restart containerd
 ```
 
 ## 验证 Docker 是否安装成功
@@ -342,14 +37,30 @@ sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 ```
 
-## 删除无效的镜像
+## 列出本地所有镜像
 
 ```bash
-# 清理 <none> 标签的悬空镜像（推荐方式）
-docker image prune -a -f
+docker images
+```
+
+## 删除镜像
+
+```bash
+# 删除指定镜像
+docker image rm <镜像名称>:<标签名>
 
 # 只删除 <none> 标签的镜像
-docker rmi -f $(docker images | grep '<none>' | awk '{print $3}')
+docker image rm -f $(docker images | grep '<none>' | awk '{print $3}')
+
+# 无提示地删除所有没有被至少一个容器使用的镜像（慎用）
+docker image prune -a -f
+```
+
+## 删除容器
+
+```bash
+# 删除指定容器
+docker rm -f <容器 ID>
 
 # 删除状态为 Exited 的容器
 docker rm $(docker ps -a | grep Exited | awk '{print $1}')
@@ -358,40 +69,7 @@ docker rm $(docker ps -a | grep Exited | awk '{print $1}')
 docker rm -f $(docker ps -a | grep Exited | awk '{print $1}')
 ```
 
-## 列出所有镜像
-
-```bash
-# 列出本地已有的所有镜像
-docker images
-
-# 查看更详细的镜像信息（如创建时间、大小等）
-docker images --no-trunc
-
-# 格式化输出
-docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}"
-```
-
-## 删除指定镜像
-
-```bash
-# 删除一个或多个特定镜像
-docker image rm 192.168.163.146:5000/python3action:1.0.0
-docker image rm openwhisk/action-python-v3.7:1.17.0
-```
-
-如果该镜像已被某个容器使用，则需先删除相关容器才能成功删除镜像。你可以通过以下命令查找使用该镜像的容器：
-
-```bash
-docker ps -a --filter "ancestor=镜像名" --format "{{.ID}}"
-```
-
-然后删除这些容器：
-
-```bash
-docker rm -f <container_id>
-```
-
-## 交互式启动镜像
+## 交互式启动容器
 
 以交互模式启动一个容器并进入其 shell 环境：
 
@@ -422,21 +100,21 @@ docker ps -a
 从当前目录下的 `Dockerfile` 构建镜像：
 
 ```bash
-docker build -t my-image:latest .
+docker build -t <镜像名称>:<标签名> .
 ```
 
 ## 推送镜像到私有仓库
 
 ```bash
-docker tag my-image:latest registry.example.com/my-image:latest
-docker push registry.example.com/my-image:latest
+docker tag <镜像名称>:<标签名> <Registry-URL>/<镜像名称>:<标签名>
+docker push <Registry-URL>/<镜像名称>:<标签名>
 ```
 
 ## 下载镜像
 
 ```bash
 # 从制定 Docker Registry 拉取镜像
-docker pull <Registry-URL>/<Repository>:<Tag>
+docker pull <Registry-URL>/<镜像名称>:<标签名>
 
 # 示例
 docker pull myregistry.com/ubuntu:20.04

@@ -850,3 +850,308 @@ under the License.
 </settings>
 ```
 ````
+
+## Docker CE (Community Edition)
+
+::::{tab-set}
+:::{tab-item} 中科大源
+:sync: ustc
+
+```bash
+# 设置 GPG 公钥
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg \
+  -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 设置 Docker 仓库
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+  https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+:::
+:::{tab-item} 阿里云源
+:sync: aliyun
+
+```bash
+# 设置 GPG 公钥
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg \
+  -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 设置 Docker 仓库
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+  https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+:::
+:::{tab-item} 清华源
+:sync: tuna
+
+```bash
+# 设置 GPG 公钥
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg \
+  -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 设置 Docker 仓库
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+  https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+## Docker Registry (DockerHub)
+
+```{warning}
+使用国内的 Docker Hub 镜像前，必须准备一个该镜像站对应的账号和密码，否则将无法通过该源加速。因此，使用无效源时，会被重定向到 [`https://registry-1.docker.io/v2/`](https://registry-1.docker.io/v2/)。
+```
+
+::::::{tab-set}
+:::::{tab-item} 轩辕镜像
+:sync: xuanyuan
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.xuanyuan.me"
+  ]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+:::::{tab-item} DaoCloud
+:sync: daocloud
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io"
+  ]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+:::::{tab-item} 中科大源
+:sync: ustc
+
+```{error}
+科大 Docker Hub 不对校外开放，因此无法使用科大源。
+```
+
+::::{tab-set}
+:::{tab-item} Docker v2
+
+```bash
+sudo docker login docker.mirrors.ustc.edu.cn
+```
+
+:::
+:::{tab-item} Docker v1
+
+```bash
+sudo mkdir -p ~/.docker
+sudo vim ~/.docker/config.json <<EOF
+{
+  "auths": {
+    "https://docker.mirrors.ustc.edu.cn" : {
+      "auth": "put-your-auth-code-here",
+      "email": "put-your-email-here"
+    }
+  }
+}
+EOF
+```
+
+:::
+::::
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+:::::{tab-item} 阿里云源
+:sync: aliyun
+
+```{error}
+阿里云 Docker Hub 下架了，因此无法使用阿里云源。
+```
+
+::::{tab-set}
+:::{tab-item} Docker v2
+
+```bash
+username=
+sudo docker login $username.mirror.aliyuncs.com
+```
+
+:::
+:::{tab-item} Docker v1
+
+```bash
+sudo mkdir -p ~/.docker
+username=
+sudo vim ~/.docker/config.json <<EOF
+{
+  "auths": {
+    "https://$username.mirror.aliyuncs.com" : {
+      "auth": "put-your-auth-code-here",
+      "email": "put-your-email-here"
+    }
+  }
+}
+EOF
+```
+
+:::
+::::
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": ["https://$username.mirror.aliyuncs.com"]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+:::::{tab-item} 清华源
+:sync: tuna
+
+```{error}
+清华 Docker Hub 不对校外开放，因此无法使用清华源。
+```
+
+::::{tab-set}
+:::{tab-item} Docker v2
+
+```bash
+sudo docker login docker.mirrors.tuna.tsinghua.edu.cn
+```
+
+:::
+:::{tab-item} Docker v1
+
+```bash
+sudo mkdir -p ~/.docker
+sudo vim ~/.docker/config.json <<EOF
+{
+  "auths": {
+    "https://docker.mirrors.tuna.tsinghua.edu.cn" : {
+      "auth": "put-your-auth-code-here",
+      "email": "put-your-email-here"
+    }
+  }
+}
+EOF
+```
+
+:::
+::::
+
+```bash
+if [ -f "/etc/docker/daemon.json" ]; then
+echo "/etc/docker/daemon.json exists, modify it manually."
+else
+sudo mkdir -p /etc/docker
+sudo vim /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": ["https://docker.mirrors.tuna.tsinghua.edu.cn"]
+}
+EOF
+fi
+
+sudo systemctl restart docker
+sudo docker info
+```
+
+:::::
+::::::
+
+## Docker containerd
+
+```bash
+sudo tee /etc/containerd/config.toml <<EOF
+[plugins."io.containerd.grpc.v1.cri".registry]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+      endpoint = [
+        "https://docker.1ms.run",
+        "https://docker.mybacc.com",
+        "https://dytt.online",
+        "https://lispy.org",
+        "https://docker.xiaogenban1993.com",
+        "https://docker.yomansunter.com",
+        "https://aicarbon.xyz",
+        "https://666860.xyz",
+        "https://docker.zhai.cm",
+        "https://a.ussh.net",
+        "https://hub.littlediary.cn",
+        "https://hub.rat.dev",
+        "https://docker.m.daocloud.io"
+      ]
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart containerd
+```
