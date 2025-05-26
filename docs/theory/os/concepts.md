@@ -12,3 +12,21 @@
 ```{figure} ../../_static/images/illustration-of-stack-and-heap.svg
 
 ```
+
+## 内存映射
+
+```{figure} ../../_static/images/uvmmapping.png
+
+```
+
+## 地址翻译
+
+```{figure} ../../_static/images/address-translation.png
+
+```
+
+## 系统调用流程
+
+```{figure} ../../_static/images/syscall-flow.png
+
+```
