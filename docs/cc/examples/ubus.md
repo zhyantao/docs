@@ -104,6 +104,29 @@ ubus call system signal '{"pid": 5089, "signum": 9}'
 ubus send button.event '{"name":"reset","pushed":true,"time":5}'
 ```
 
+### help
+
+```text
+Usage: ubus [<options>] <command> [arguments...]
+Options:
+ -s <socket>:           Set the unix domain socket to connect to
+ -t <timeout>:          Set the timeout (in seconds) for a command to complete
+ -S:                    Use simplified output (for scripts)
+ -v:                    More verbose output
+ -m <type>:             (for monitor): include a specific message type
+                        (can be used more than once)
+ -M <r|t>               (for monitor): only capture received or transmitted traffic
+
+Commands:
+ - list [<path>]                        List objects
+ - call <path> <method> [<message>]     Call an object method
+ - subscribe <path> [<path>...] Subscribe to object(s) notifications
+ - listen [<path>...]                   Listen for events
+ - send <type> [<message>]              Send an event
+ - wait_for <object> [<object>...]      Wait for multiple objects to appear on ubus
+ - monitor                              Monitor ubus traffic
+```
+
 ## 总结
 
 - **加载到内存**：方法的代码和数据结构在守护进程启动时会被加载到内存中。
