@@ -98,10 +98,11 @@ ubus call system info
 ubus call system signal '{"pid": 5089, "signum": 9}'
 ```
 
-### 通过 object 广播 event
+### 监听和广播事件
 
 ```bash
-ubus send button.event '{"name":"reset","pushed":true,"time":5}'
+ubus listen &
+ubus send foo '{ "bar": "baz" }'
 ```
 
 ### help
@@ -120,7 +121,7 @@ Options:
 Commands:
  - list [<path>]                        List objects
  - call <path> <method> [<message>]     Call an object method
- - subscribe <path> [<path>...] Subscribe to object(s) notifications
+ - subscribe <path> [<path>...]         Subscribe to object(s) notifications
  - listen [<path>...]                   Listen for events
  - send <type> [<message>]              Send an event
  - wait_for <object> [<object>...]      Wait for multiple objects to appear on ubus
