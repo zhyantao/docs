@@ -88,7 +88,7 @@ ubus list
 ubus -v list system
 ```
 
-### 调用 function
+### 调用 object 的 method
 
 ```bash
 # 无参调用
@@ -96,6 +96,12 @@ ubus call system info
 
 # 带参数调用
 ubus call system signal '{"pid": 5089, "signum": 9}'
+```
+
+### 通过 object 广播 event
+
+```bash
+ubus send button.event '{"name":"reset","pushed":true,"time":5}'
 ```
 
 ## 总结
