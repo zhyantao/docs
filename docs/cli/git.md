@@ -677,6 +677,7 @@ git rebase -i HEAD~<n>
 git submodule add https://github.com/username/subrepo.git path/to/subrepo
 
 # 从当前项目移除 submodule
+cat .gitmodules | grep path
 git submodule deinit -f <submodule-path>
 rm -rf .git/modules/<submodule-path>
 git rm -f <submodule-path>
