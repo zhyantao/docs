@@ -42,12 +42,6 @@ mkdir repository
 cd repository
 git init
 
-# (可选) 添加子仓库
-git submodule add https://github.com/username/subrepo.git path/to/subrepo
-git submodule update --init --recursive
-# To update submodule, `cd` to the folder of your repository, run:
-git submodule update --remote --merge
-
 # (可选) 更新子仓库
 cd path/to/subrepo
 git checkout -b master
@@ -680,7 +674,7 @@ git rebase -i HEAD~<n>
 
 ```bash
 # 添加 submodule 到现有项目
-git submodule add <remote> <submodule-path>
+git submodule add https://github.com/username/subrepo.git path/to/subrepo
 
 # 从当前项目移除 submodule
 git submodule deinit -f <submodule-path>
