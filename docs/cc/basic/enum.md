@@ -7,8 +7,21 @@
 
 using namespace std;
 
-enum color { WHITE, BLACK, RED, GREEN, BLUE, YELLOW, NUM_COLORS };
-enum datatype { TYPE_INT8 = 1, TYPE_INT16 = 2, TYPE_INT32 = 4, TYPE_INT64 = 8 };
+enum color {
+    WHITE,
+    BLACK,
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    NUM_COLORS
+};
+enum datatype {
+    TYPE_INT8 = 1,
+    TYPE_INT16 = 2,
+    TYPE_INT32 = 4,
+    TYPE_INT64 = 8
+};
 
 struct Point {
     enum datatype type;
@@ -72,8 +85,12 @@ int main() {
 #include <stdio.h>
 
 int main() {
-    enum day { Monday = 1, Tuesday, Wednesday }; // 初始化
-    enum day today = Tuesday;                    // 变量的使用
+    enum day {
+        Monday = 1,
+        Tuesday,
+        Wednesday
+    }; // 初始化
+    enum day today = Tuesday; // 变量的使用
     printf("%d\n", Wednesday);
     return 0;
 }
@@ -86,7 +103,12 @@ int main() {
 
 class Mat {
 public:
-    enum DataType { TYPE8U, TYPE8S, TYPE32F, TYPE64F };
+    enum DataType {
+        TYPE8U,
+        TYPE8S,
+        TYPE32F,
+        TYPE64F
+    };
 
 private:
     DataType type;

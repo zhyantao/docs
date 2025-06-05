@@ -1,89 +1,168 @@
 # 可变参数列表
 
-## `pr_info(x...)`
+## 可变参数宏
+
+::::{tab-set}
+:::{tab-item} `__VA_ARGS__`
+
+`__VA_ARGS__` 原样替换传入的参数列表。
+
+宏写法示例
 
 ```cpp
-// https://github.com/nwtime/linuxptp/blob/master/print.h#L69
-#define pr_info(x...)    PRINT_CL(LOG_INFO, x)
+#define PRINTF(...) printf(__VA_ARGS__)
 ```
 
-- 定义一个宏 `pr_info`，它可以接收任意数量的参数（就像 `printf` 那样）。
-- 所有传入的参数都会被当作一个整体，称为 `x`，然后在宏展开时插入到 `PRINT_CL(LOG_INFO, x)` 中。
+展开前调用
 
 ```cpp
-/////////////////////////////////////  ONLY FOR DEBUG USE  /////////////////////////////////////
-#ifndef DEBUG_H
-#define DEBUG_H
+PRINTF("a + b = %d", a + b);
+```
 
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
+宏展开结果
 
-// 日志级别
-typedef enum {
-    LOG_LEVEL_DEBUG = 0,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARN,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_FATAL
-} LogLevel;
+```cpp
+printf("a + b = %d", a + b);
+```
 
-// 默认日志级别
-#ifndef LOG_LEVEL
-#define LOG_LEVEL LOG_LEVEL_DEBUG
-#endif
+:::
 
-// 将日志级别转为字符串
-static inline const char* log_level_to_str(LogLevel level) {
-    switch (level) {
-    case LOG_LEVEL_DEBUG: return "DEBUG";
-    case LOG_LEVEL_INFO: return "INFO ";
-    case LOG_LEVEL_WARN: return "WARN ";
-    case LOG_LEVEL_ERROR: return "ERROR";
-    case LOG_LEVEL_FATAL: return "FATAL";
-    default: return "UNKWN";
+:::{tab-item} `#__VA_ARGS__`
+
+`#__VA_ARGS__` 将整个参数列表转换为字符串。注意参数本身也会被引号包裹。
+
+宏写法示例
+
+```cpp
+#define PRINTF(...) printf(#__VA_ARGS__)
+```
+
+展开前调用
+
+```cpp
+PRINTF(1, "x", int);
+```
+
+宏展开结果
+
+```cpp
+printf("1, \"x\", int");
+```
+
+:::
+
+:::{tab-item} `##__VA_ARGS__`
+
+`##__VA_ARGS__` 如果没有额外参数，则会移除前面多余的逗号；有参数则保留。
+
+宏写法示例
+
+```cpp
+#define PRINTF(fmt, ...) printf(fmt, ##__VA_ARGS__)
+```
+
+展开前调用
+
+```cpp
+PRINTF("a = %d", a);
+```
+
+宏展开结果
+
+```cpp
+printf("a = %d", a);
+```
+
+:::
+
+:::{tab-item} `x...`
+
+GCC 扩展语法（非标准），等同于 `__VA_ARGS__`，不推荐使用。
+
+宏写法示例
+
+```cpp
+#define PRINTF(x...) printf(x)
+```
+
+展开前调用
+
+```cpp
+PRINTF("a + b = %d", a + b);
+```
+
+宏展开结果
+
+```cpp
+printf("a + b = %d", a + b);
+```
+
+:::
+::::
+
+实战案例：<https://gitee.com/zhyantao/misc/blob/master/leetcode/cpp/include/debug.h>
+
+## 可变参数函数展开（C风格）
+
+在上一节中，我们通过宏将可变参数直接传递给已有函数（如 `printf`）。这一节介绍如何在自定义函数中访问和处理可变参数列表。
+
+**关键概念**
+
+| 术语        | 含义                                                      |
+| ----------- | --------------------------------------------------------- |
+| `va_list`   | 类型，用于保存可变参数列表。                              |
+| `va_start`  | 宏，初始化 `va_list`，使其指向第一个可变参数。            |
+| `va_arg`    | 宏，从参数列表中提取下一个参数（需指定类型）。            |
+| `va_end`    | 宏，清理 `va_list` 占用的资源。                           |
+| `vsnprintf` | 函数，用于将格式化字符串写入缓冲区，支持 `va_list` 参数。 |
+
+**示例 1：日志函数 `log`**
+
+```cpp
+#include <cstdarg>
+#include <iostream>
+
+void log(char* fmt, ...) {
+    char buf[512] = {0};
+    va_list ap;
+
+    va_start(ap, fmt);                              // 初始化参数列表
+    (void)vsnprintf(buf, sizeof(buf) - 2, fmt, ap); // 使用 vsnprintf 格式化输出
+    va_end(ap);                                     // 清理参数列表
+
+    printf("%s\n", buf);
+}
+
+int main() {
+    log((char*)"%s, %d, %s", "hello", 100, "world");
+}
+```
+
+**示例 2：求和函数 `sum`**
+
+```cpp
+#include <cstdarg>
+#include <iostream>
+
+double sum(int num, ...) {
+    va_list ap; // 定义参数列表
+    double ret = 0.0;
+
+    va_start(ap, num); // 初始化参数列表
+
+    for (int i = 0; i < num; i++) {
+        ret += va_arg(ap, double); // 按类型依次取出参数
     }
+
+    va_end(ap); // 清理参数列表
+
+    return ret;
 }
 
-// 获取时间戳
-static inline void get_timestamp(char* buffer, size_t size) {
-    time_t t = time(NULL);
-    struct tm tm;
-    localtime_r(&t, &tm); // 线程安全版本
-    strftime(buffer, size, "%Y-%m-%d %H:%M:%S", &tm);
+int main() {
+    std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
+    std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0) << std::endl;
 }
-
-// 带日志级别的日志宏（使用字符串表示级别）
-#define LOG_WITH_LVL(level, fmt, ...)                                                         \
-    do {                                                                                      \
-        if (level >= LOG_LEVEL) {                                                             \
-            char timestamp[64];                                                               \
-            get_timestamp(timestamp, sizeof(timestamp));                                      \
-            printf("[%s] %-5s %s:%d " fmt "\n", timestamp, log_level_to_str(level), __FILE__, \
-                   __LINE__, ##__VA_ARGS__);                                                  \
-        }                                                                                     \
-    } while (0)
-
-// 默认日志宏
-#define LOG(fmt, ...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__)
-
-// https://gitlab.com/gpsd/gpsd/-/blob/release-3.25/include/gpsd.h?ref_type=tags#L1128
-// 重写 GPSD_LOG(lvl, eo, ...), 将日志打印到控制台
-#ifdef GPSD_LOG
-#undef GPSD_LOG
-#define GPSD_LOG(lvl, eo, fmt, ...) LOG_WITH_LVL(lvl, fmt, ##__VA_ARGS__)
-#endif
-
-// https://github.com/nwtime/linuxptp/blob/master/print.h#L70
-// 重写 pr_debug(x...)，将日志打印到控制台
-#ifdef pr_debug
-#undef pr_debug
-// #define pr_debug(x...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, x)                   /* GCC 扩展语法 (非标准) */
-// #define pr_debug(...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, __VA_ARGS__)          /* C99 语法 (标准) */
-#define pr_debug(fmt, ...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__) /* 比 pr_debug(...) 更安全 */
-#endif
-
-#endif // DEBUG_H
 ```
 
 ## `getopt_long`
@@ -166,65 +245,6 @@ g++ -std=c++20 -O2 -Wall -pedantic -pthread main.cpp && ./a.out --reqarg 100 --o
 这条指令表示使用 C++20 标准，进行优化，启用所有警告，使用多线程，编译 `main.cpp` 文件，然后运行生成的可执行文件 `a.out` 并传递一些命令行参数。
 
 在不同的命令行调用中，通过使用 `--reqarg`、`--optarg`、`--noarg` 等选项来测试程序的输出。程序会解析这些选项，并打印相关的信息。
-
-## `va_list` 和 `va_arg`
-
-```cpp
-#include <cstdarg>
-#include <iostream>
-
-void log(char* fmt, ...) {
-    char buf[512] = {0};
-    va_list ap;
-
-    va_start(ap, fmt);
-    (void)vsnprintf(buf, sizeof(buf) - 2, fmt, ap);
-    va_end(ap);
-
-    printf("%s\n", buf);
-}
-
-int main() {
-    log((char*)"%s, %d, %s", "hello", 100, "world");
-}
-```
-
-```cpp
-#include <cstdarg>
-#include <iostream>
-
-double sum(int num, ...) {
-    va_list valist; // 创建参数列表
-    double ret = 0.0;
-
-    va_start(valist, num); // 初始化参数列表
-
-    for (int i = 0; i < num; i++) {
-        ret += va_arg(valist, double); // 访问参数列表中的项
-    }
-
-    va_end(valist); // 清理参数列表占用的内存
-
-    return ret;
-}
-
-int main() {
-    std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
-    std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0) << std::endl;
-}
-```
-
-- `sum` 函数接受一个整数参数 `num`，表示后面可变参数的数量。
-- `va_list` 是用于存储可变参数的类型，它是一个指向参数列表的对象。
-- `va_start` 宏用于初始化 `valist`，将其指向参数列表的起始位置。
-- 使用 `va_arg` 宏可以依次访问参数列表中的项，本例中假设参数都是 `double` 类型。
-- `va_end` 宏用于清理参数列表占用的内存。
-
-在 `main` 函数中分别调用了 `sum` 函数两次，每次传递不同数量的参数。这展示了可变参数函数的灵活性。
-
-当程序运行时，`sum` 函数通过可变参数的方式计算传递给它的数字的总和，然后 `printf` 语句输出这个总和。在第一个调用中，传递了两个参数（2 和 3），在第二个调用中，传递了四个参数（2、3、4、5）。
-
-使用 C 风格的可变参数函数，需要在运行时做类型转换，可能存在类型安全的隐患。
 
 ## `<typename... Args>`
 

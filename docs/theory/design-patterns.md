@@ -481,7 +481,10 @@ using std::string;
 // Intent: Lets you copy existing objects without making your code dependent on
 // their classes.
 
-enum Type { PROTOTYPE_1 = 0, PROTOTYPE_2 };
+enum Type {
+    PROTOTYPE_1 = 0,
+    PROTOTYPE_2
+};
 
 /**
  * The example class that has cloning ability. We'll see how the values of field
