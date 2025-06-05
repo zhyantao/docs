@@ -27,6 +27,18 @@ typedef enum {
 #define LOG_LEVEL LOG_LEVEL_DEBUG
 #endif
 
+// 将日志级别转为字符串
+static inline const char* log_level_to_str(LogLevel level) {
+    switch (level) {
+    case LOG_LEVEL_DEBUG: return "DEBUG";
+    case LOG_LEVEL_INFO: return "INFO ";
+    case LOG_LEVEL_WARN: return "WARN ";
+    case LOG_LEVEL_ERROR: return "ERROR";
+    case LOG_LEVEL_FATAL: return "FATAL";
+    default: return "UNKWN";
+    }
+}
+
 // 获取时间戳
 static inline void get_timestamp(char* buffer, size_t size) {
     time_t t = time(NULL);
@@ -35,24 +47,32 @@ static inline void get_timestamp(char* buffer, size_t size) {
     strftime(buffer, size, "%Y-%m-%d %H:%M:%S", &tm);
 }
 
-// 带日志级别的日志宏
-#define LOG_WITH_LVL(level, fmt, ...)                                                        \
-    do {                                                                                     \
-        if (level >= LOG_LEVEL) {                                                            \
-            char timestamp[64];                                                              \
-            get_timestamp(timestamp, sizeof(timestamp));                                     \
-            printf("[%s] LEVEL=%d %s:%d:%s " fmt "\n", timestamp, level, __FILE__, __LINE__, \
-                   __func__, ##__VA_ARGS__);                                                 \
-        }                                                                                    \
+// 带日志级别的日志宏（使用字符串表示级别）
+#define LOG_WITH_LVL(level, fmt, ...)                                                         \
+    do {                                                                                      \
+        if (level >= LOG_LEVEL) {                                                             \
+            char timestamp[64];                                                               \
+            get_timestamp(timestamp, sizeof(timestamp));                                      \
+            printf("[%s] %-5s %s:%d " fmt "\n", timestamp, log_level_to_str(level), __FILE__, \
+                   __LINE__, ##__VA_ARGS__);                                                  \
+        }                                                                                     \
     } while (0)
 
 // 默认日志宏
 #define LOG(fmt, ...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__)
 
+// https://gitlab.com/gpsd/gpsd/-/blob/release-3.25/include/gpsd.h?ref_type=tags#L1128
 // 重写 GPSD_LOG(lvl, eo, ...), 将日志打印到控制台
 #ifdef GPSD_LOG
 #undef GPSD_LOG
 #define GPSD_LOG(lvl, eo, fmt, ...) LOG_WITH_LVL(lvl, fmt, ##__VA_ARGS__)
+#endif
+
+// https://github.com/nwtime/linuxptp/blob/master/print.h#L70
+// 重写 pr_debug(x...)，将日志打印到控制台
+#ifdef pr_debug
+#undef pr_debug
+#define pr_debug(...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, __VA_ARGS__)
 #endif
 
 #endif // DEBUG_H
