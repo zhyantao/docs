@@ -49,3 +49,8 @@ format:
 	-not -path "./.github/*" \
 	-exec $(SITE_PACKAGES_DIR)/clang_format/data/bin/clang-format -i {} +
 	npx prettier . --write
+
+resume:
+	@mkdir -p "docs/_static/pdf"
+	@cd docs/_static/resume && latexmk -pdf cv.tex
+	@echo "Build finished."
