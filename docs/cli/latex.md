@@ -27,6 +27,8 @@
     echo 'export MANPATH=/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH' >> ~/.bashrc
     echo 'export INFOPATH=/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH' >> ~/.bashrc
     source ~/.bashrc
+
+    sudo cpan -i File::HomeDir
     ```
    
 3. 下载并安装编辑器：[VS Code](https://code.visualstudio.com/)；
