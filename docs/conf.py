@@ -8,7 +8,7 @@ import os
 # -- Project information -----------------------------------------------------
 
 project = "Notebook"
-copyright = "2024"
+copyright = "2025"
 author = "Yantao Zhang (yantao.z [at] outlook.com)"
 master_doc = "index"
 language = "en"
