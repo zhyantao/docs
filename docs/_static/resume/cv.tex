@@ -26,12 +26,10 @@
 \usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.1in]{geometry} % Document margins
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
-\name{Yantao Zhang} % Your name
-\address{Xi'an, 710049 \\ Shaanxi, China} % Your address
-%\address{123 Pleasant Lane \\ City, State 12345} % Your secondary addess (optional)
-\address{Github: \href{https://github.com/zhyantao}{zhyantao} \\ Blog: \href{https://getstarted.readthedocs.io}{getstarted.rtfd.io}}
-\address{(+86)156-3285-5317 \\ \href{mailto:yantao.z@outlook.com}{yantao.z@outlook.com}} % Your phone number and email
-
+\name{张延涛} % Your name
+\address{陕西省\ 西安市, 710049}
+\address{Github: \href{https://github.com/zhyantao}{zhyantao} \\ Blog: \href{https://zhyantao.github.io/docs}{zhyantao.github.io/docs}}
+\address{(+86)156-3285-5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
 
 \renewenvironment{rSection}[1]{
 \sectionskip
@@ -53,76 +51,58 @@
 %----------------------------------------------------------------------------------------
 %	EDUCATION SECTION
 %----------------------------------------------------------------------------------------
+\begin{rSection}{教育背景}
 
-\begin{rSection}{Education}
+  {\bf \href{https://www.xjtu.edu.cn}{西安交通大学}} (硕士) \hfill {\em 2020 - 2023}
+  \smallskip \\ 软件工程, 软件学院, 电信学部 \hfill
 
-
-  {\bf \href{https://www.xjtu.edu.cn}{Xi'an Jiaotong University}} \hfill {\em 2020 - 2023}
-  \\ MA in Software Engineering, 2023 \hfill
-  \\ School of Software Engineering, 2020 \hfill
-
-  {\bf \href{https://www.ncst.edu.cn}{North China University of Science and Technology}} \hfill {\em 2016 - 2020}
-  \\ BA in Electronic Information Engineering, 2020 \hfill
-  \\ College of Artificial Intelligence, 2016 \hfill
-
-  %Minor in Linguistics \smallskip \\
-  %Member of Eta Kappa Nu \\
-  %Member of Upsilon Pi Epsilon \\
-
-
-\end{rSection}
-%----------------------------------------------------------------------------------------
-%	TECHNICAL STRENGTHS SECTION
-%----------------------------------------------------------------------------------------
-
-\begin{rSection}{Coding Skills }
-
-  \begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
-    Programming Languages & C/C++, Python, Java, MySQL                          \\
-    C++ Libaries          & pthread\_*, mutex, condition\_variable, socket, shm \\
-    Python Packages       & PyTorch, Matplotlib, NumPy, Pandas                  \\
-    Java Packages         & SpringBoot, JNI, JPA                                \\
-    Software \& Tools     & Git, Shell, GCC, Makefile                           \\
-  \end{tabular}
+  {\bf \href{https://www.ncst.edu.cn}{华北理工大学}} (本科) \hfill {\em 2016 - 2020}
+  \smallskip \\ 电子信息工程, 人工智能学院 \hfill
 
 \end{rSection}
 
 %----------------------------------------------------------------------------------------
 %	WORK EXPERIENCE SECTION
 %----------------------------------------------------------------------------------------
+\begin{rSection}{项目经历}
 
-\begin{rSection}{Experience}
-
-  \begin{rSubsection}{Zhongxing Telecommunication Equipment (ZTE) Corporation}{July 2023 - Now}{Embedded Software Engineer}{}
-    \item Maintain GPSD source code and make some changes to meet the requirements.
-    \item Wrote an API to transfer raw data to upper-layer application.
-    \item Fix some known bugs, such as GPSD cannot catch all binary data from serial port.
+  \begin{rSubsection}{中兴通讯股份有限公司}{2023年7月 - 至今}{嵌入式软件开发}{陕西西安}
+    \item 主导ZM9300国产化项目中的定位与授时业务, 基于中兴自研S1芯片深度定制gPTP协议, 弥补国产芯片设计短板, 外场测试offset指标由于高通和华为平台.
+    \item 承接GNSS业务的SDK的开发工作, 基于HD8040D和BG1101芯片维护已有功能及业务扩展, 适配gpsd实现RTK和DR功能的开发和验证, 累计修复故障161项.
+    \item 攻克比亚迪授时难题, 通过修改chrony实现, 优化中兴模组时间同步慢的问题,将时间同步从1分钟优化至5s内, 速度提升92\%, 显著提升了系统的实时性.
+    \item 深度定制bootchard功能, 首次在S1平台实现开机流程可视化, 为后续系统启动性能优化提供了数据基础和技术手段.
   \end{rSubsection}
 
   %------------------------------------------------
 
-  \begin{rSubsection}{Code Analyzer - Github (Ongoing)}{April 2024 - Now}{LLM Application Developer}{}
-    \item Using Clang and Llama2 to analyze C/C++ code.
-  \end{rSubsection}
-
-  %------------------------------------------------
-
-  \begin{rSubsection}{MIT 6.828 Operating System - Github (Ongoing)}{April 2024 - Now}{Student}{}
-    \item Pass all the exam.
+  \begin{rSubsection}{中国重型机械研究院股份公司}{2021年9月 - 2022年5月}{后端开发工程师}{陕西西安}
+    \item 设计并实现基于Spring Boot的连铸智能工艺仿真软件包, 有效模拟连铸生产过程中的关键工艺流程, 为工艺优化与决策支持提供了可视化、可配置的仿真平台.
+    \item 负责系统后端架构设计与功能开发, 采用Spring Boot框架结合MySQL数据库, 完成了业务流程管理模块的增删改查功能, 并通过JPA实现数据持久化操作.
+    \item 集成JMatPro工具完成核心工艺参数的计算与分析, 对计算结果进行整理与封装, 为前端数据可视化模块提供结构化数据支撑.
+    \item 参与前端页面开发与维护, 使用Vue.js实现部分前端界面的展示与交互功能, 保障前后端数据联动的准确性与响应效率.
   \end{rSubsection}
 
 \end{rSection}
 
+%----------------------------------------------------------------------------------------
+%	TECHNICAL STRENGTHS SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{专业技能}
+  \begin{rSubsection}{}{}{}{}
+    \item 掌握操作系统基础知识, 熟悉进程调度、内存管理、文件系统等核心概念.
+    \item 熟练掌握 C/C++, 具备良好的面向对象设计与编程能力, 代码风格规范, 注释清晰.
+    \item 熟悉 Java 开发, 熟练使用 Spring Boot 构建 Web 应用, 掌握 JPA 进行数据持久化.
+    \item 了解前端开发技术, 熟悉 HTML、CSS 与 JavaScript, 可基于 Vue.js 开发单页面应用.
+    \item 熟悉 Git、Shell 脚本、GCC 编译器、 Makefile 及 Yocto 等常用开发与构建工具.
+  \end{rSubsection}
+\end{rSection}
 
 %	EXAMPLE SECTION
 %----------------------------------------------------------------------------------------
 
-\begin{rSection}{Achievements} \itemsep -2pt
-  {Kaggle Competition}\hfill {\em 2024} \\
-  {Codeforces Orange}\hfill {\em 2024}
+\begin{rSection}{获奖情况} \itemsep -2pt
+  {大学生数学建模竞赛}\hfill {\it 省部级二等奖}\hfill {\em 2017年9月} \\
+  {ASC超级计算机竞赛}\hfill {\it 国家级二等奖}\hfill {\em 2019年4月}
 \end{rSection}
-
-
-
 
 \end{document}

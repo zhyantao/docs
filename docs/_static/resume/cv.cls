@@ -26,6 +26,7 @@
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
 \usepackage{ifthen} % Required for ifthenelse statements
 \usepackage{hyperref} % Required for hyperlink
+\usepackage{xeCJK} % Required for Chinese characters
 
 \pagestyle{empty} % Suppress page numbers
 
