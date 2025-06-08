@@ -26,7 +26,6 @@
     echo 'export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH' >> ~/.bashrc
     echo 'export MANPATH=/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH' >> ~/.bashrc
     echo 'export INFOPATH=/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH' >> ~/.bashrc
-    echo 'export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH' >> ~/.bashrc
     source ~/.bashrc
     ```
    
