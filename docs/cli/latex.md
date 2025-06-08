@@ -14,74 +14,90 @@
 ## 环境配置
 
 1. 下载并安装宏包：CTeX 由于长期不更新，推荐使用 [TeXLive](https://www.tug.org/texlive/)；
-2. 下载并安装编辑器：[VS Code](https://code.visualstudio.com/)；
-3. 适配中文：安装插件 LaTeX Workshop，按 `F1` 搜索 `setjson` 将下面内容添加到配置中 [^cite_ref-3]。
 
-```{code-block} javascript
-"latex-workshop.latex.tools": [
-    {
-        // 编译工具和命令
-        "name": "xelatex",
-        "command": "xelatex",
-        "args": [
-            "-synctex=1",
-            "-interaction=nonstopmode",
-            "-file-line-error",
-            "-pdf",
-            "%DOCFILE%"
-        ]
-    },
-    {
-        "name": "pdflatex",
-        "command": "pdflatex",
-        "args": [
-            "-synctex=1",
-            "-interaction=nonstopmode",
-            "-file-line-error",
-            "%DOCFILE%"
-        ]
-    },
-    {
-        "name": "bibtex",
-        "command": "bibtex",
-        "args": [
-            "%DOCFILE%"
-        ]
-    }
-],
-"latex-workshop.latex.recipes": [
-    {
-        "name": "xelatex",
-        "tools": [
-            "xelatex"
-        ],
-    },
-    {
-        "name": "pdflatex",
-        "tools": [
-            "pdflatex"
-        ]
-    },
-    {
-        "name": "xe->bib->xe->xe",
-        "tools": [
-            "xelatex",
-            "bibtex",
-            "xelatex",
-            "xelatex"
-        ]
-    },
-    {
-        "name": "pdf->bib->pdf->pdf",
-        "tools": [
-            "pdflatex",
-            "bibtex",
-            "pdflatex",
-            "pdflatex"
-        ]
-    }
-],
-```
+    ```bash
+    wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+    tar -xvzf install-tl-unx.tar.gz
+    cd install-tl-*
+    
+    sudo ./install-tl
+    # <Enter Command>: I
+    
+    echo 'export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH' >> ~/.bashrc
+    echo 'export MANPATH=/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH' >> ~/.bashrc
+    echo 'export INFOPATH=/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH' >> ~/.bashrc
+    echo 'export PATH=/usr/local/texlive/2025/bin/x86_64-linux:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+   
+3. 下载并安装编辑器：[VS Code](https://code.visualstudio.com/)；
+4. 适配中文：安装插件 LaTeX Workshop，按 `F1` 搜索 `setjson` 将下面内容添加到配置中 [^cite_ref-3]。
+
+    ```{code-block} javascript
+    "latex-workshop.latex.tools": [
+        {
+            // 编译工具和命令
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": [
+                "xelatex"
+            ],
+        },
+        {
+            "name": "pdflatex",
+            "tools": [
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "xe->bib->xe->xe",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+                "xelatex"
+            ]
+        },
+        {
+            "name": "pdf->bib->pdf->pdf",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        }
+    ],
+    ```
 
 ## Hello World
 
