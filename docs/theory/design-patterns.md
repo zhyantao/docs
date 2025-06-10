@@ -39,20 +39,20 @@
 #include <cstdio>
 using namespace std;
 
-class Log {
+class ILog {
 public:
-    virtual ~Log() {}; // Fix compile warning
+    virtual ~ILog() {}; // Fix compile warning
     virtual void print_log() = 0;
 };
 
-class DatabaseLog : public Log {
+class DatabaseLog : public ILog {
 public:
     void print_log() override {
         printf("DatabaseLog");
     }
 };
 
-class FileLog : public Log {
+class FileLog : public ILog {
 public:
     void print_log() override {
         printf("FileLog");
@@ -61,7 +61,7 @@ public:
 
 class LogFactory {
 public:
-    Log* createLog(string type) {
+    ILog* createLog(string type) {
         if (type == "database") {
             return new DatabaseLog{};
         } else if (type == "file") {
@@ -73,7 +73,7 @@ public:
 
 int main() {
     LogFactory factory;
-    Log* log = factory.createLog("database");
+    ILog* log = factory.createLog("database");
     if (log) {
         log->print_log();
         delete log;
@@ -90,20 +90,20 @@ int main() {
 #include <memory> // 智能指针防止内存泄漏
 using namespace std;
 
-class Log {
+class ILog {
 public:
     virtual void print_log() = 0;
-    virtual ~Log() {}; // Fix compile warning
+    virtual ~ILog() {}; // Fix compile warning
 };
 
-class DatabaseLog : public Log {
+class DatabaseLog : public ILog {
 public:
     void print_log() override {
         printf("DatabaseLog");
     }
 };
 
-class FileLog : public Log {
+class FileLog : public ILog {
 public:
     void print_log() override {
         printf("FileLog");
@@ -112,7 +112,7 @@ public:
 
 class LogFactory {
 public:
-    unique_ptr<Log> createLog(const string& type) {
+    unique_ptr<ILog> createLog(const string& type) {
         if (type == "database") {
             return make_unique<DatabaseLog>();
         } else if (type == "file") {
@@ -144,27 +144,27 @@ int main() {
 using namespace std;
 
 // =================== 抽象产品类 ===================
-class Button {
+class IButton {
 public:
     virtual void render() = 0;
-    virtual ~Button() = default;
+    virtual ~IButton() = default;
 };
 
-class Text {
+class IText {
 public:
     virtual void display() = 0;
-    virtual ~Text() = default;
+    virtual ~IText() = default;
 };
 
 // =================== 具体产品类 - Windows 风格 ======
-class WinButton : public Button {
+class WinButton : public IButton {
 public:
     void render() override {
         printf("Windows Button\n");
     }
 };
 
-class WinText : public Text {
+class WinText : public IText {
 public:
     void display() override {
         printf("Windows Text\n");
@@ -172,14 +172,14 @@ public:
 };
 
 // =================== 具体产品类 - Mac 风格 ==========
-class MacButton : public Button {
+class MacButton : public IButton {
 public:
     void render() override {
         printf("Mac Button\n");
     }
 };
 
-class MacText : public Text {
+class MacText : public IText {
 public:
     void display() override {
         printf("Mac Text\n");
@@ -187,38 +187,38 @@ public:
 };
 
 // =================== 抽象工厂类 ===================
-class UIFactory {
+class IUIFactory {
 public:
-    virtual unique_ptr<Button> createButton() = 0;
-    virtual unique_ptr<Text> createText() = 0;
-    virtual ~UIFactory() = default;
+    virtual unique_ptr<IButton> createButton() = 0;
+    virtual unique_ptr<IText> createText() = 0;
+    virtual ~IUIFactory() = default;
 };
 
 // =================== 具体工厂类 ===================
-class WinUIFactory : public UIFactory {
+class WinUIFactory : public IUIFactory {
 public:
-    unique_ptr<Button> createButton() override {
+    unique_ptr<IButton> createButton() override {
         return make_unique<WinButton>();
     }
 
-    unique_ptr<Text> createText() override {
+    unique_ptr<IText> createText() override {
         return make_unique<WinText>();
     }
 };
 
-class MacUIFactory : public UIFactory {
+class MacUIFactory : public IUIFactory {
 public:
-    unique_ptr<Button> createButton() override {
+    unique_ptr<IButton> createButton() override {
         return make_unique<MacButton>();
     }
 
-    unique_ptr<Text> createText() override {
+    unique_ptr<IText> createText() override {
         return make_unique<MacText>();
     }
 };
 
 // =================== 客户端使用 ===================
-void renderUI(UIFactory& factory) {
+void renderUI(IUIFactory& factory) {
     auto button = factory.createButton();
     auto text = factory.createText();
 
