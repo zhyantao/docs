@@ -523,147 +523,52 @@ int main() {
 
 ### 适配器模式
 
-#### 对象适配器
+将旧支付接口适配为支持新支付网关调用。
 
 ```cpp
-/**
- * The Target defines the domain-specific interface used by the client code.
- */
-class Target {
-public:
-    virtual ~Target() = default;
+#include <cstdio>
+using namespace std;
 
-    virtual std::string Request() const {
-        return "Target: The default target's behavior.";
+// ================== 老支付接口（旧系统）==================
+class LegacyPayment {
+public:
+    void makeOldPayment(double amount) {
+        printf("旧系统支付 %.2f 元\n", amount);
     }
 };
 
-/**
- * The Adaptee contains some useful behavior, but its interface is incompatible
- * with the existing client code. The Adaptee needs some adaptation before the
- * client code can use it.
- */
-class Adaptee {
+// ================== 新支付网关接口（新系统期望的格式）==================
+class INewPaymentGateway {
 public:
-    std::string SpecificRequest() const {
-        return ".eetpadA eht fo roivaheb laicepS";
-    }
+    virtual void pay(double amount) = 0;
+    virtual ~INewPaymentGateway() = default;
 };
 
-/**
- * The Adapter makes the Adaptee's interface compatible with the Target's
- * interface.
- */
-class Adapter : public Target {
+// ===== 适配器类：将 LegacyPayment 包装成 INewPaymentGateway 格式 =====
+class PaymentAdapter : public INewPaymentGateway {
 private:
-    Adaptee* adaptee_;
+    LegacyPayment* legacyPayment; // 适配的对象
 
 public:
-    Adapter(Adaptee* adaptee) : adaptee_(adaptee) {}
-    std::string Request() const override {
-        std::string to_reverse = this->adaptee_->SpecificRequest();
-        std::reverse(to_reverse.begin(), to_reverse.end());
-        return "Adapter: (TRANSLATED) " + to_reverse;
+    PaymentAdapter(LegacyPayment* payment) : legacyPayment(payment) {}
+
+    // 实现新接口中的支付方法
+    void pay(double amount) override {
+        printf("通过适配器调用新接口，准备使用旧系统支付...\n");
+        legacyPayment->makeOldPayment(amount); // 调用旧接口
     }
 };
 
-/**
- * The client code supports all classes that follow the Target interface.
- */
-void ClientCode(const Target* target) {
-    std::cout << target->Request();
-}
-
+// ================== 主函数示例 ==================
 int main() {
-    std::cout << "Client: I can work just fine with the Target objects:\n";
-    Target* target = new Target;
-    ClientCode(target);
-    std::cout << "\n\n";
-    Adaptee* adaptee = new Adaptee;
-    std::cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
-    std::cout << "Adaptee: " << adaptee->SpecificRequest();
-    std::cout << "\n\n";
-    std::cout << "Client: But I can work with it via the Adapter:\n";
-    Adapter* adapter = new Adapter(adaptee);
-    ClientCode(adapter);
-    std::cout << "\n";
+    // 创建旧系统的支付对象
+    LegacyPayment oldPaymentSystem;
 
-    delete target;
-    delete adaptee;
-    delete adapter;
+    // 创建适配器，将旧系统包装成新接口格式
+    PaymentAdapter adapter(&oldPaymentSystem);
 
-    return 0;
-}
-```
-
-#### 类适配器
-
-```cpp
-/**
- * The Target defines the domain-specific interface used by the client code.
- */
-class Target {
-public:
-    virtual ~Target() = default;
-
-    virtual std::string Request() const {
-        return "Target: The default target's behavior.";
-    }
-};
-
-/**
- * The Adaptee contains some useful behavior, but its interface is incompatible
- * with the existing client code. The Adaptee needs some adaptation before the
- * client code can use it.
- */
-class Adaptee {
-public:
-    std::string SpecificRequest() const {
-        return ".eetpadA eht fo roivaheb laicepS";
-    }
-};
-
-/**
- * The Adapter makes the Adaptee's interface compatible with the Target's
- * interface.
- */
-class Adapter : public Target {
-private:
-    Adaptee* adaptee_;
-
-public:
-    Adapter(Adaptee* adaptee) : adaptee_(adaptee) {}
-    std::string Request() const override {
-        std::string to_reverse = this->adaptee_->SpecificRequest();
-        std::reverse(to_reverse.begin(), to_reverse.end());
-        return "Adapter: (TRANSLATED) " + to_reverse;
-    }
-};
-
-/**
- * The client code supports all classes that follow the Target interface.
- */
-void ClientCode(const Target* target) {
-    std::cout << target->Request();
-}
-
-int main() {
-    std::cout << "Client: I can work just fine with the Target objects:\n";
-    Target* target = new Target;
-    ClientCode(target);
-    std::cout << "\n\n";
-    Adaptee* adaptee = new Adaptee;
-    std::cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
-    std::cout << "Adaptee: " << adaptee->SpecificRequest();
-    std::cout << "\n\n";
-    std::cout << "Client: But I can work with it via the Adapter:\n";
-    Adapter* adapter = new Adapter(adaptee);
-    ClientCode(adapter);
-    std::cout << "\n";
-
-    delete target;
-    delete adaptee;
-    delete adapter;
+    // 使用统一的新接口进行支付
+    adapter.pay(199.5);
 
     return 0;
 }
@@ -671,185 +576,88 @@ int main() {
 
 ### 组合模式
 
+文件系统管理，处理文件夹包含文件的结构。
+
 ```cpp
-#include <algorithm>
-#include <iostream>
-#include <list>
+#include <cstdio>
 #include <string>
-/**
- * The base Component class declares common operations for both simple and
- * complex objects of a composition.
- */
-class Component {
-    /**
-     * @var Component
-     */
-protected:
-    Component* parent_;
-    /**
-     * Optionally, the base Component can declare an interface for setting and
-     * accessing a parent of the component in a tree structure. It can also
-     * provide some default implementation for these methods.
-     */
+#include <vector>
+using namespace std;
+
+// ================== 抽象组件：文件系统组件 ==================
+class IFileSystemComponent {
 public:
-    virtual ~Component() {}
-    void SetParent(Component* parent) {
-        this->parent_ = parent;
-    }
-    Component* GetParent() const {
-        return this->parent_;
-    }
-    /**
-     * In some cases, it would be beneficial to define the child-management
-     * operations right in the base Component class. This way, you won't need to
-     * expose any concrete component classes to the client code, even during the
-     * object tree assembly. The downside is that these methods will be empty for
-     * the leaf-level components.
-     */
-    virtual void Add(Component* component) {}
-    virtual void Remove(Component* component) {}
-    /**
-     * You can provide a method that lets the client code figure out whether a
-     * component can bear children.
-     */
-    virtual bool IsComposite() const {
-        return false;
-    }
-    /**
-     * The base Component may implement some default behavior or leave it to
-     * concrete classes (by declaring the method containing the behavior as
-     * "abstract").
-     */
-    virtual std::string Operation() const = 0;
+    virtual void showDetail(int depth = 0) const = 0;
+    virtual ~IFileSystemComponent() = default;
 };
-/**
- * The Leaf class represents the end objects of a composition. A leaf can't have
- * any children.
- *
- * Usually, it's the Leaf objects that do the actual work, whereas Composite
- * objects only delegate to their sub-components.
- */
-class Leaf : public Component {
-public:
-    std::string Operation() const override {
-        return "Leaf";
-    }
-};
-/**
- * The Composite class represents the complex components that may have children.
- * Usually, the Composite objects delegate the actual work to their children and
- * then "sum-up" the result.
- */
-class Composite : public Component {
-    /**
-     * @var \SplObjectStorage
-     */
-protected:
-    std::list<Component*> children_;
+
+// ================== 叶子组件：文件 ==================
+class File : public IFileSystemComponent {
+private:
+    string name;
 
 public:
-    /**
-     * A composite object can add or remove other components (both simple or
-     * complex) to or from its child list.
-     */
-    void Add(Component* component) override {
-        this->children_.push_back(component);
-        component->SetParent(this);
+    explicit File(const string& fileName) : name(fileName) {}
+
+    void showDetail(int depth = 0) const override {
+        for (int i = 0; i < depth; ++i) printf("  ");
+        printf("📄 文件: %s\n", name.c_str());
     }
-    /**
-     * Have in mind that this method removes the pointer to the list but doesn't
-     * frees the
-     *     memory, you should do it manually or better use smart pointers.
-     */
-    void Remove(Component* component) override {
-        children_.remove(component);
-        component->SetParent(nullptr);
+};
+
+// ================== 复合组件：文件夹 ==================
+class Directory : public IFileSystemComponent {
+private:
+    string name;
+    vector<IFileSystemComponent*> components;
+
+public:
+    explicit Directory(const string& dirName) : name(dirName) {}
+
+    void add(IFileSystemComponent* component) {
+        components.push_back(component);
     }
-    bool IsComposite() const override {
-        return true;
-    }
-    /**
-     * The Composite executes its primary logic in a particular way. It traverses
-     * recursively through all its children, collecting and summing their results.
-     * Since the composite's children pass these calls to their children and so
-     * forth, the whole object tree is traversed as a result.
-     */
-    std::string Operation() const override {
-        std::string result;
-        for (const Component* c : children_) {
-            if (c == children_.back()) {
-                result += c->Operation();
-            } else {
-                result += c->Operation() + "+";
-            }
+
+    void showDetail(int depth = 0) const override {
+        for (int i = 0; i < depth; ++i) printf("  ");
+        printf("📁 文件夹: %s\n", name.c_str());
+
+        for (const auto& comp : components) {
+            comp->showDetail(depth + 1);
         }
-        return "Branch(" + result + ")";
+    }
+
+    ~Directory() override {
+        for (auto comp : components) {
+            delete comp;
+        }
     }
 };
-/**
- * The client code works with all of the components via the base interface.
- */
-void ClientCode(Component* component) {
-    // ...
-    std::cout << "RESULT: " << component->Operation();
-    // ...
-}
 
-/**
- * Thanks to the fact that the child-management operations are declared in the
- * base Component class, the client code can work with any component, simple or
- * complex, without depending on their concrete classes.
- */
-void ClientCode2(Component* component1, Component* component2) {
-    // ...
-    if (component1->IsComposite()) {
-        component1->Add(component2);
-    }
-    std::cout << "RESULT: " << component1->Operation();
-    // ...
-}
-
-/**
- * This way the client code can support the simple leaf components...
- */
-
+// ================== 主函数示例 ==================
 int main() {
-    Component* simple = new Leaf;
-    std::cout << "Client: I've got a simple component:\n";
-    ClientCode(simple);
-    std::cout << "\n\n";
-    /**
-     * ...as well as the complex composites.
-     */
+    // 所有组件都用 new 分配在堆上
+    Directory* root = new Directory("根目录");
+    Directory* documents = new Directory("文档");
+    Directory* pictures = new Directory("图片");
 
-    Component* tree = new Composite;
-    Component* branch1 = new Composite;
+    File* file1 = new File("report.docx");
+    File* file2 = new File("photo.jpg");
+    File* file3 = new File("notes.txt");
 
-    Component* leaf_1 = new Leaf;
-    Component* leaf_2 = new Leaf;
-    Component* leaf_3 = new Leaf;
-    branch1->Add(leaf_1);
-    branch1->Add(leaf_2);
-    Component* branch2 = new Composite;
-    branch2->Add(leaf_3);
-    tree->Add(branch1);
-    tree->Add(branch2);
-    std::cout << "Client: Now I've got a composite tree:\n";
-    ClientCode(tree);
-    std::cout << "\n\n";
+    // 添加组件
+    documents->add(file1);
+    pictures->add(file2);
 
-    std::cout
-        << "Client: I don't need to check the components classes even when managing the tree:\n";
-    ClientCode2(tree, simple);
-    std::cout << "\n";
+    root->add(documents);
+    root->add(pictures);
+    root->add(file3);
 
-    delete simple;
-    delete tree;
-    delete branch1;
-    delete branch2;
-    delete leaf_1;
-    delete leaf_2;
-    delete leaf_3;
+    // 显示结构
+    root->showDetail();
+
+    // 最后统一释放根节点即可（递归释放所有子节点）
+    delete root;
 
     return 0;
 }
@@ -857,107 +665,89 @@ int main() {
 
 ### 外观模式
 
-外观模式是一种结构型设计模式， 能为程序库、 框架或其他复杂类提供一个简单的接口。
+简化下单流程，统一调用库存、支付、物流接口。
 
 ```cpp
-/**
- * The Subsystem can accept requests either from the facade or client directly.
- * In any case, to the Subsystem, the Facade is yet another client, and it's not
- * a part of the Subsystem.
- */
-class Subsystem1 {
+#include <cstdio>
+#include <string>
+using namespace std;
+
+// 子系统类：库存服务
+class InventoryService {
 public:
-    std::string Operation1() const {
-        return "Subsystem1: Ready!\n";
+    bool checkStock(int productId) {
+        printf("检查商品 %d 的库存...\n", productId);
+        // 模拟库存充足
+        return true;
     }
-    // ...
-    std::string OperationN() const {
-        return "Subsystem1: Go!\n";
-    }
-};
-/**
- * Some facades can work with multiple subsystems at the same time.
- */
-class Subsystem2 {
-public:
-    std::string Operation1() const {
-        return "Subsystem2: Get ready!\n";
-    }
-    // ...
-    std::string OperationZ() const {
-        return "Subsystem2: Fire!\n";
+
+    void reduceStock(int productId) {
+        printf("减少商品 %d 的库存\n", productId);
     }
 };
 
-/**
- * The Facade class provides a simple interface to the complex logic of one or
- * several subsystems. The Facade delegates the client requests to the
- * appropriate objects within the subsystem. The Facade is also responsible for
- * managing their lifecycle. All of this shields the client from the undesired
- * complexity of the subsystem.
- */
-class Facade {
-protected:
-    Subsystem1* subsystem1_;
-    Subsystem2* subsystem2_;
-    /**
-     * Depending on your application's needs, you can provide the Facade with
-     * existing subsystem objects or force the Facade to create them on its own.
-     */
+// 子系统类：支付服务
+class PaymentService {
 public:
-    /**
-     * In this case we will delegate the memory ownership to Facade Class
-     */
-    Facade(
-        Subsystem1* subsystem1 = nullptr,
-        Subsystem2* subsystem2 = nullptr) {
-        this->subsystem1_ = subsystem1 ?: new Subsystem1;
-        this->subsystem2_ = subsystem2 ?: new Subsystem2;
-    }
-    ~Facade() {
-        delete subsystem1_;
-        delete subsystem2_;
-    }
-    /**
-     * The Facade's methods are convenient shortcuts to the sophisticated
-     * functionality of the subsystems. However, clients get only to a fraction of
-     * a subsystem's capabilities.
-     */
-    std::string Operation() {
-        std::string result = "Facade initializes subsystems:\n";
-        result += this->subsystem1_->Operation1();
-        result += this->subsystem2_->Operation1();
-        result += "Facade orders subsystems to perform the action:\n";
-        result += this->subsystem1_->OperationN();
-        result += this->subsystem2_->OperationZ();
-        return result;
+    bool processPayment(double amount) {
+        printf("处理支付金额 %.2f 元...\n", amount);
+        // 模拟支付成功
+        return true;
     }
 };
 
-/**
- * The client code works with complex subsystems through a simple interface
- * provided by the Facade. When a facade manages the lifecycle of the subsystem,
- * the client might not even know about the existence of the subsystem. This
- * approach lets you keep the complexity under control.
- */
-void ClientCode(Facade* facade) {
-    // ...
-    std::cout << facade->Operation();
-    // ...
-}
-/**
- * The client code may have some of the subsystem's objects already created. In
- * this case, it might be worthwhile to initialize the Facade with these objects
- * instead of letting the Facade create new instances.
- */
+// 子系统类：物流服务
+class ShippingService {
+public:
+    void shipOrder(const string& address) {
+        printf("订单已发货，地址：%s\n", address.c_str());
+    }
+};
 
+// 外观类：统一下单接口
+class OrderFacade {
+private:
+    InventoryService inventory;
+    PaymentService payment;
+    ShippingService shipping;
+
+public:
+    bool placeOrder(int productId, double amount, const string& address) {
+        printf("开始下单流程...\n");
+
+        if (!inventory.checkStock(productId)) {
+            printf("库存不足，无法下单。\n");
+            return false;
+        }
+
+        if (!payment.processPayment(amount)) {
+            printf("支付失败。\n");
+            return false;
+        }
+
+        inventory.reduceStock(productId);
+        shipping.shipOrder(address);
+
+        printf("下单成功！\n");
+        return true;
+    }
+};
+
+// 客户端代码
 int main() {
-    Subsystem1* subsystem1 = new Subsystem1;
-    Subsystem2* subsystem2 = new Subsystem2;
-    Facade* facade = new Facade(subsystem1, subsystem2);
-    ClientCode(facade);
+    OrderFacade orderSystem;
 
-    delete facade;
+    int productId = 101;
+    double amount = 99.9;
+    string address = "北京市朝阳区某某街道";
+
+    bool success = orderSystem.placeOrder(productId, amount, address);
+
+    if (success) {
+        printf("订单已完成。\n");
+    } else {
+        printf("订单失败。\n");
+    }
 
     return 0;
 }
@@ -965,108 +755,85 @@ int main() {
 
 ### 桥接模式
 
-桥接模式是一种结构型设计模式， 可将一个大类或一系列紧密相关的类拆分为抽象和实现两个独立的层次结构， 从而能在开发时分别使用。
+不同形状（圆形、方形）与颜色（红、蓝）组合。
 
 ```cpp
-/**
- * The Implementation defines the interface for all implementation classes. It
- * doesn't have to match the Abstraction's interface. In fact, the two
- * interfaces can be entirely different. Typically the Implementation interface
- * provides only primitive operations, while the Abstraction defines higher-
- * level operations based on those primitives.
- */
+#include <cstdio>
+#include <string>
+using namespace std;
 
-class Implementation {
+// 实现接口：颜色
+class IColor {
 public:
-    virtual ~Implementation() {}
-    virtual std::string OperationImplementation() const = 0;
+    virtual string applyColor() const = 0;
 };
 
-/**
- * Each Concrete Implementation corresponds to a specific platform and
- * implements the Implementation interface using that platform's API.
- */
-class ConcreteImplementationA : public Implementation {
+// 具体实现类：红色
+class RedColor : public IColor {
 public:
-    std::string OperationImplementation() const override {
-        return "ConcreteImplementationA: Here's the result on the platform A.\n";
-    }
-};
-class ConcreteImplementationB : public Implementation {
-public:
-    std::string OperationImplementation() const override {
-        return "ConcreteImplementationB: Here's the result on the platform B.\n";
+    string applyColor() const override {
+        return "红色";
     }
 };
 
-/**
- * The Abstraction defines the interface for the "control" part of the two class
- * hierarchies. It maintains a reference to an object of the Implementation
- * hierarchy and delegates all of the real work to this object.
- */
+// 具体实现类：蓝色
+class BlueColor : public IColor {
+public:
+    string applyColor() const override {
+        return "蓝色";
+    }
+};
 
-class Abstraction {
-    /**
-     * @var Implementation
-     */
+// 抽象类：形状
+class IShape {
 protected:
-    Implementation* implementation_;
+    IColor& color; // 桥接到颜色
 
 public:
-    Abstraction(Implementation* implementation) : implementation_(implementation) {
-    }
-
-    virtual ~Abstraction() {
-    }
-
-    virtual std::string Operation() const {
-        return "Abstraction: Base operation with:\n" +
-               this->implementation_->OperationImplementation();
-    }
+    IShape(IColor& c) : color(c) {}
+    virtual string draw() const = 0;
 };
-/**
- * You can extend the Abstraction without changing the Implementation classes.
- */
-class ExtendedAbstraction : public Abstraction {
+
+// 扩展抽象类：圆形
+class Circle : public IShape {
 public:
-    ExtendedAbstraction(Implementation* implementation) : Abstraction(implementation) {
-    }
-    std::string Operation() const override {
-        return "ExtendedAbstraction: Extended operation with:\n" +
-               this->implementation_->OperationImplementation();
+    Circle(IColor& c) : IShape(c) {}
+
+    string draw() const override {
+        return "圆形，填充为" + color.applyColor();
     }
 };
 
-/**
- * Except for the initialization phase, where an Abstraction object gets linked
- * with a specific Implementation object, the client code should only depend on
- * the Abstraction class. This way the client code can support any abstraction-
- * implementation combination.
- */
-void ClientCode(const Abstraction& abstraction) {
-    // ...
-    std::cout << abstraction.Operation();
-    // ...
-}
-/**
- * The client code should be able to work with any pre-configured abstraction-
- * implementation combination.
- */
+// 扩展抽象类：方形
+class Square : public IShape {
+public:
+    Square(IColor& c) : IShape(c) {}
 
+    string draw() const override {
+        return "方形，填充为" + color.applyColor();
+    }
+};
+
+// 客户端代码
 int main() {
-    Implementation* implementation = new ConcreteImplementationA;
-    Abstraction* abstraction = new Abstraction(implementation);
-    ClientCode(*abstraction);
-    std::cout << std::endl;
-    delete implementation;
-    delete abstraction;
+    RedColor red;
+    BlueColor blue;
 
-    implementation = new ConcreteImplementationB;
-    abstraction = new ExtendedAbstraction(implementation);
-    ClientCode(*abstraction);
+    // 组合1：红色圆形
+    Circle redCircle(red);
+    printf("%s\n", redCircle.draw().c_str());
 
-    delete implementation;
-    delete abstraction;
+    // 组合2：蓝色圆形
+    Circle blueCircle(blue);
+    printf("%s\n", blueCircle.draw().c_str());
+
+    // 组合3：红色方形
+    Square redSquare(red);
+    printf("%s\n", redSquare.draw().c_str());
+
+    // 组合4：蓝色方形
+    Square blueSquare(blue);
+    printf("%s\n", blueSquare.draw().c_str());
 
     return 0;
 }
@@ -1074,115 +841,98 @@ int main() {
 
 ### 装饰模式
 
-装饰模式是一种结构型设计模式， 允许你通过将对象放入包含行为的特殊封装对象中来为原对象绑定新的行为。
+给文本添加滚动条或边框等附加功能。
 
 ```cpp
-/**
- * The base Component interface defines operations that can be altered by
- * decorators.
- */
-class Component {
+#include <cstdio>
+#include <string>
+using namespace std;
+
+// 组件接口：所有具体组件和装饰器都实现这个接口
+class ITextDisplay {
 public:
-    virtual ~Component() {}
-    virtual std::string Operation() const = 0;
+    virtual string getContent() const = 0;
+    virtual void show() const {
+        printf("%s\n", getContent().c_str());
+    };
+    virtual ~ITextDisplay() = default;
 };
-/**
- * Concrete Components provide default implementations of the operations. There
- * might be several variations of these classes.
- */
-class ConcreteComponent : public Component {
+
+// 具体组件：基础文本显示
+class PlainTextDisplay : public ITextDisplay {
+private:
+    string text;
+
 public:
-    std::string Operation() const override {
-        return "ConcreteComponent";
+    PlainTextDisplay(const string& t) : text(t) {}
+
+    string getContent() const override {
+        return text;
     }
 };
-/**
- * The base Decorator class follows the same interface as the other components.
- * The primary purpose of this class is to define the wrapping interface for all
- * concrete decorators. The default implementation of the wrapping code might
- * include a field for storing a wrapped component and the means to initialize
- * it.
- */
-class Decorator : public Component {
-    /**
-     * @var Component
-     */
+
+// 装饰器基类：保持对组件的引用
+class TextDisplayDecorator : public ITextDisplay {
 protected:
-    Component* component_;
+    ITextDisplay* decoratedText;
 
 public:
-    Decorator(Component* component) : component_(component) {
-    }
-    /**
-     * The Decorator delegates all work to the wrapped component.
-     */
-    std::string Operation() const override {
-        return this->component_->Operation();
-    }
-};
-/**
- * Concrete Decorators call the wrapped object and alter its result in some way.
- */
-class ConcreteDecoratorA : public Decorator {
-    /**
-     * Decorators may call parent implementation of the operation, instead of
-     * calling the wrapped object directly. This approach simplifies extension of
-     * decorator classes.
-     */
-public:
-    ConcreteDecoratorA(Component* component) : Decorator(component) {
-    }
-    std::string Operation() const override {
-        return "ConcreteDecoratorA(" + Decorator::Operation() + ")";
-    }
-};
-/**
- * Decorators can execute their behavior either before or after the call to a
- * wrapped object.
- */
-class ConcreteDecoratorB : public Decorator {
-public:
-    ConcreteDecoratorB(Component* component) : Decorator(component) {
+    TextDisplayDecorator(ITextDisplay* decorated) : decoratedText(decorated) {}
+
+    string getContent() const override {
+        return decoratedText->getContent();
     }
 
-    std::string Operation() const override {
-        return "ConcreteDecoratorB(" + Decorator::Operation() + ")";
+    void show() const override {
+        printf("%s\n", getContent().c_str());
     }
 };
-/**
- * The client code works with all objects using the Component interface. This
- * way it can stay independent of the concrete classes of components it works
- * with.
- */
-void ClientCode(Component* component) {
-    // ...
-    std::cout << "RESULT: " << component->Operation();
-    // ...
-}
 
+// 具体装饰器1：添加滚动条
+class ScrollBarDecorator : public TextDisplayDecorator {
+public:
+    ScrollBarDecorator(ITextDisplay* decorated)
+        : TextDisplayDecorator(decorated) {}
+
+    string getContent() const override {
+        return "[滚动条开始]" + decoratedText->getContent() + "[滚动条结束]";
+    }
+};
+
+// 具体装饰器2：添加边框
+class BorderDecorator : public TextDisplayDecorator {
+public:
+    BorderDecorator(ITextDisplay* decorated)
+        : TextDisplayDecorator(decorated) {}
+
+    string getContent() const override {
+        return "[边框开始]" + decoratedText->getContent() + "[边框结束]";
+    }
+};
+
+// 客户端代码
 int main() {
-    /**
-     * This way the client code can support both simple components...
-     */
-    Component* simple = new ConcreteComponent;
-    std::cout << "Client: I've got a simple component:\n";
-    ClientCode(simple);
-    std::cout << "\n\n";
-    /**
-     * ...as well as decorated ones.
-     *
-     * Note how decorators can wrap not only simple components but the other
-     * decorators as well.
-     */
-    Component* decorator1 = new ConcreteDecoratorA(simple);
-    Component* decorator2 = new ConcreteDecoratorB(decorator1);
-    std::cout << "Client: Now I've got a decorated component:\n";
-    ClientCode(decorator2);
-    std::cout << "\n";
+    // 基础文本
+    ITextDisplay* basicText = new PlainTextDisplay("这是一个普通文本内容");
+    basicText->show();
 
-    delete simple;
-    delete decorator1;
-    delete decorator2;
+    // 加边框的文本
+    ITextDisplay* borderedText = new BorderDecorator(basicText);
+    borderedText->show();
+
+    // 加滚动条的文本
+    ITextDisplay* scrollText = new ScrollBarDecorator(basicText);
+    scrollText->show();
+
+    // 加滚动条和边框的文本（嵌套装饰）
+    ITextDisplay* fullFeaturedText = new BorderDecorator(new ScrollBarDecorator(basicText));
+    fullFeaturedText->show();
+
+    // 清理资源
+    delete basicText;
+    delete borderedText;
+    delete scrollText;
+    delete fullFeaturedText;
 
     return 0;
 }
@@ -1190,154 +940,99 @@ int main() {
 
 ### 享元模式
 
-享元模式是一种结构型设计模式， 它摒弃了在每个对象中保存所有数据的方式， 通过共享多个对象所共有的相同状态， 让你能在有限的内存容量中载入更多对象。
+文字编辑器中共享相同字体格式的对象。
 
 ```cpp
-/**
- * Flyweight Design Pattern
- *
- * Intent: Lets you fit more objects into the available amount of RAM by sharing
- * common parts of state between multiple objects, instead of keeping all of the
- * data in each object.
- */
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <memory>
 
-struct SharedState {
-    std::string brand_;
-    std::string model_;
-    std::string color_;
+using namespace std;
 
-    SharedState(const std::string& brand, const std::string& model,
-                const std::string& color)
-        : brand_(brand), model_(model), color_(color) {}
-
-    friend std::ostream& operator<<(std::ostream& os, const SharedState& ss) {
-        return os << "[ " << ss.brand_ << " , " << ss.model_ << " , "
-                  << ss.color_ << " ]";
-    }
-};
-
-struct UniqueState {
-    std::string owner_;
-    std::string plates_;
-
-    UniqueState(const std::string& owner, const std::string& plates)
-        : owner_(owner), plates_(plates) {}
-
-    friend std::ostream& operator<<(std::ostream& os, const UniqueState& us) {
-        return os << "[ " << us.owner_ << " , " << us.plates_ << " ]";
-    }
-};
-
-/**
- * The Flyweight stores a common portion of the state (also called intrinsic
- * state) that belongs to multiple real business entities. The Flyweight accepts
- * the rest of the state (extrinsic state, unique for each entity) via its
- * method parameters.
- */
-class Flyweight {
-private:
-    SharedState* shared_state_;
-
+// =============================
+// 1. 享元类（共享的字体格式）
+// =============================
+class FontFormat {
 public:
-    Flyweight(const SharedState* shared_state)
-        : shared_state_(new SharedState(*shared_state)) {}
-    Flyweight(const Flyweight& other)
-        : shared_state_(new SharedState(*other.shared_state_)) {}
-    ~Flyweight() {
-        delete shared_state_;
-    }
-    SharedState* shared_state() const {
-        return shared_state_;
-    }
-    void Operation(const UniqueState& unique_state) const {
-        std::cout << "Flyweight: Displaying shared (" << *shared_state_
-                  << ") and unique (" << unique_state << ") state.\n";
+    string fontName;
+    int fontSize;
+    string color;
+
+    FontFormat(const string& name, int size, const string& color)
+        : fontName(name), fontSize(size), color(color) {}
+
+    void applyFormat() const {
+        printf("应用格式: 字体=%s, 大小=%d, 颜色=%s\n", fontName.c_str(), fontSize, color.c_str());
     }
 };
-/**
- * The Flyweight Factory creates and manages the Flyweight objects. It ensures
- * that flyweights are shared correctly. When the client requests a flyweight,
- * the factory either returns an existing instance or creates a new one, if it
- * doesn't exist yet.
- */
-class FlyweightFactory {
-    /**
-     * @var Flyweight[]
-     */
+
+// =============================
+// 2. 享元工厂类
+// =============================
+class FontFormatFactory {
 private:
-    std::unordered_map<std::string, Flyweight> flyweights_;
-    /**
-     * Returns a Flyweight's string hash for a given state.
-     */
-    std::string GetKey(const SharedState& ss) const {
-        return ss.brand_ + "_" + ss.model_ + "_" + ss.color_;
+    unordered_map<string, shared_ptr<FontFormat>> pool;
+
+    // 构造 key 的辅助函数
+    string getKey(const string& fontName, int fontSize, const string& color) {
+        return fontName + "-" + to_string(fontSize) + "-" + color;
     }
 
 public:
-    FlyweightFactory(std::initializer_list<SharedState> share_states) {
-        for (const SharedState& ss : share_states) {
-            this->flyweights_.insert(std::make_pair<std::string, Flyweight>(
-                this->GetKey(ss), Flyweight(&ss)));
-        }
-    }
-
-    /**
-     * Returns an existing Flyweight with a given state or creates a new one.
-     */
-    Flyweight GetFlyweight(const SharedState& shared_state) {
-        std::string key = this->GetKey(shared_state);
-        if (this->flyweights_.find(key) == this->flyweights_.end()) {
-            std::cout
-                << "FlyweightFactory: Can't find a flyweight, creating new one.\n";
-            this->flyweights_.insert(
-                std::make_pair(key, Flyweight(&shared_state)));
+    shared_ptr<FontFormat> getFontFormat(const string& fontName, int fontSize, const string& color) {
+        string key = getKey(fontName, fontSize, color);
+        if (pool.find(key) == pool.end()) {
+            // 如果没有就创建一个新的
+            pool[key] = make_shared<FontFormat>(fontName, fontSize, color);
+            cout << "新建格式: " << key << endl;
         } else {
-            std::cout << "FlyweightFactory: Reusing existing flyweight.\n";
+            cout << "复用已有格式: " << key << endl;
         }
-        return this->flyweights_.at(key);
-    }
-    void ListFlyweights() const {
-        size_t count = this->flyweights_.size();
-        std::cout << "\nFlyweightFactory: I have " << count << " flyweights:\n";
-        for (std::pair<std::string, Flyweight> pair : this->flyweights_) {
-            std::cout << pair.first << "\n";
-        }
+        return pool[key];
     }
 };
 
-// ...
-void AddCarToPoliceDatabase(FlyweightFactory& ff, const std::string& plates,
-                            const std::string& owner, const std::string& brand,
-                            const std::string& model,
-                            const std::string& color) {
-    std::cout << "\nClient: Adding a car to database.\n";
-    const Flyweight& flyweight = ff.GetFlyweight({brand, model, color});
-    // The client code either stores or calculates extrinsic state and passes it
-    // to the flyweight's methods.
-    flyweight.Operation({owner, plates});
-}
+// =============================
+// 3. 字符类（使用享元）
+// =============================
+class Character {
+private:
+    char value;                        // 内容（内部状态）
+    shared_ptr<FontFormat> fontFormat; // 格式（外部状态，由享元提供）
 
-/**
- * The client code usually creates a bunch of pre-populated flyweights in the
- * initialization stage of the application.
- */
+public:
+    Character(char c, shared_ptr<FontFormat> format)
+        : value(c), fontFormat(format) {}
 
+    void render(int position) const {
+        cout << "字符 '" << value << "' 在位置 " << position << " 渲染，";
+        fontFormat->applyFormat();
+    }
+};
+
+// =============================
+// 4. 客户端代码
+// =============================
 int main() {
-    FlyweightFactory* factory =
-        new FlyweightFactory({{"Chevrolet", "Camaro2018", "pink"},
-                              {"Mercedes Benz", "C300", "black"},
-                              {"Mercedes Benz", "C500", "red"},
-                              {"BMW", "M5", "red"},
-                              {"BMW", "X6", "white"}});
-    factory->ListFlyweights();
+    FontFormatFactory factory;
 
-    AddCarToPoliceDatabase(*factory, "CL234IR", "James Doe", "BMW", "M5",
-                           "red");
+    // 创建一些字符，部分格式重复
+    auto format1 = factory.getFontFormat("宋体", 12, "黑色");
+    auto format2 = factory.getFontFormat("微软雅黑", 14, "红色");
+    auto format3 = factory.getFontFormat("宋体", 12, "黑色"); // 应该复用 format1
 
-    AddCarToPoliceDatabase(*factory, "CL234IR", "James Doe", "BMW", "X1",
-                           "red");
-    factory->ListFlyweights();
-    delete factory;
+    Character c1('H', format1);
+    Character c2('e', format1);
+    Character c3('l', format2);
+    Character c4('l', format2);
+    Character c5('o', format3);
+
+    c1.render(0);
+    c2.render(1);
+    c3.render(2);
+    c4.render(3);
+    c5.render(4);
 
     return 0;
 }
