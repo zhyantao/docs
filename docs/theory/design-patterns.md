@@ -32,6 +32,8 @@
 
 根据不同参数创建不同类型日志记录对象。
 
+::::{tab-set}
+:::{tab-item} 基础版本
 ```cpp
 #include <string>
 #include <cstdio>
@@ -79,6 +81,58 @@ int main() {
     return 0;
 }
 ```
+:::
+
+:::{tab-item} 语法优化
+```cpp
+#include <string>
+#include <cstdio>
+#include <memory> // 智能指针防止内存泄漏
+using namespace std;
+
+class Log {
+public:
+    virtual void print_log() = 0;
+    virtual ~Log() {}; // Fix compile warning
+};
+
+class DatabaseLog : public Log {
+public:
+    void print_log() override {
+        printf("DatabaseLog");
+    }
+};
+
+class FileLog : public Log {
+public:
+    void print_log() override {
+        printf("FileLog");
+    }
+};
+
+class LogFactory {
+public:
+    unique_ptr<Log> createLog(const string& type) {
+        if (type == "database") {
+            return make_unique<DatabaseLog>();
+        } else if (type == "file") {
+            return make_unique<FileLog>();
+        }
+        return NULL;
+    }
+};
+
+int main() {
+    LogFactory factory;
+    auto log = factory.createLog("database");
+    if (log) {
+        log->print_log();
+    }
+    return 0;
+}
+```
+:::
+::::
 
 ### 抽象工厂模式
 
