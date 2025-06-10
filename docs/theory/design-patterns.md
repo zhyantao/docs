@@ -1,6 +1,34 @@
 # 设计模式
 
+```{dropdown} 逆序析构过程（多态析构）
+
+当基类的析构函数被声明为 `virtual` 时，通过基类指针或引用删除派生类对象时，C++ 会根据实际对象类型调用对应的析构函数，确保析构顺序为：
+
+1. **首先执行派生类的析构函数**
+2. 然后**自动调用其直接基类的析构函数**
+3. 继续向上回溯，直到最顶层的基类
+
+这个机制称为**多态析构（Polymorphic Destruction）**。它保证了对象生命周期结束时资源能正确释放，避免内存泄漏和未定义行为。
+
+---
+
+手动析构 vs 自动析构 对比表
+
+| 手动析构                               | 自动析构（多态析构）                              |
+| -------------------------------------- | ------------------------------------------------- |
+| 显式调用 `delete` 或析构函数           | 通过基类指针调用 `delete`，且基类析构为 `virtual` |
+| 只析构指针类型对应的对象（可能不完整） | 按照继承层次从派生类到基类依次析构                |
+| 不安全（若用于多态类型）               | 安全（推荐用于多态基类）                          |
+| `delete obj;`（obj 是具体类型）        | `Base* ptr = new Derived(); delete ptr;`          |
+
+---
+
+在面向对象设计中，尤其是使用继承和接口时，务必在基类中将析构函数设为 `virtual`。
+```
+
 学习设计模式一定要跟具体的场景联系起来，知道什么时候用什么设计模式才是最重要的。
+
+一个运行代码的网址：<https://coliru.stacked-crooked.com/>
 
 | 模式名称     | 使用场景                        | 例子                                         |
 | ------------ | ------------------------------- | -------------------------------------------- |
@@ -34,6 +62,7 @@
 
 ::::{tab-set}
 :::{tab-item} 基础版本
+
 ```cpp
 #include <string>
 #include <cstdio>
@@ -81,9 +110,11 @@ int main() {
     return 0;
 }
 ```
+
 :::
 
 :::{tab-item} 语法优化
+
 ```cpp
 #include <string>
 #include <cstdio>
@@ -131,12 +162,13 @@ int main() {
     return 0;
 }
 ```
+
 :::
 ::::
 
 ### 抽象工厂模式
 
- 跨平台 UI 库，创建按钮、文本框等组件族。
+跨平台 UI 库，创建按钮、文本框等组件族。
 
 ```cpp
 #include <cstdio>
@@ -573,7 +605,11 @@ int main() {
 
 ### 单例模式
 
-#### 基础单例
+数据库连接池，确保全局唯一访问。
+
+::::{tab-set}
+
+:::{tab-item} 基础单例
 
 ```cpp
 /**
@@ -668,7 +704,9 @@ int main() {
 }
 ```
 
-#### 线程安全单例
+:::
+
+:::{tab-item} 线程安全单例
 
 ```cpp
 /**
@@ -768,6 +806,9 @@ int main() {
     return 0;
 }
 ```
+
+:::
+::::
 
 ## 结构型模式
 
@@ -1456,12 +1497,13 @@ struct SharedState {
     std::string model_;
     std::string color_;
 
-    SharedState(const std::string& brand, const std::string& model, const std::string& color)
-        : brand_(brand), model_(model), color_(color) {
-    }
+    SharedState(const std::string& brand, const std::string& model,
+                const std::string& color)
+        : brand_(brand), model_(model), color_(color) {}
 
     friend std::ostream& operator<<(std::ostream& os, const SharedState& ss) {
-        return os << "[ " << ss.brand_ << " , " << ss.model_ << " , " << ss.color_ << " ]";
+        return os << "[ " << ss.brand_ << " , " << ss.model_ << " , "
+                  << ss.color_ << " ]";
     }
 };
 
@@ -1470,8 +1512,7 @@ struct UniqueState {
     std::string plates_;
 
     UniqueState(const std::string& owner, const std::string& plates)
-        : owner_(owner), plates_(plates) {
-    }
+        : owner_(owner), plates_(plates) {}
 
     friend std::ostream& operator<<(std::ostream& os, const UniqueState& us) {
         return os << "[ " << us.owner_ << " , " << us.plates_ << " ]";
@@ -1489,10 +1530,10 @@ private:
     SharedState* shared_state_;
 
 public:
-    Flyweight(const SharedState* shared_state) : shared_state_(new SharedState(*shared_state)) {
-    }
-    Flyweight(const Flyweight& other) : shared_state_(new SharedState(*other.shared_state_)) {
-    }
+    Flyweight(const SharedState* shared_state)
+        : shared_state_(new SharedState(*shared_state)) {}
+    Flyweight(const Flyweight& other)
+        : shared_state_(new SharedState(*other.shared_state_)) {}
     ~Flyweight() {
         delete shared_state_;
     }
@@ -1500,7 +1541,8 @@ public:
         return shared_state_;
     }
     void Operation(const UniqueState& unique_state) const {
-        std::cout << "Flyweight: Displaying shared (" << *shared_state_ << ") and unique (" << unique_state << ") state.\n";
+        std::cout << "Flyweight: Displaying shared (" << *shared_state_
+                  << ") and unique (" << unique_state << ") state.\n";
     }
 };
 /**
@@ -1525,7 +1567,8 @@ private:
 public:
     FlyweightFactory(std::initializer_list<SharedState> share_states) {
         for (const SharedState& ss : share_states) {
-            this->flyweights_.insert(std::make_pair<std::string, Flyweight>(this->GetKey(ss), Flyweight(&ss)));
+            this->flyweights_.insert(std::make_pair<std::string, Flyweight>(
+                this->GetKey(ss), Flyweight(&ss)));
         }
     }
 
@@ -1535,8 +1578,10 @@ public:
     Flyweight GetFlyweight(const SharedState& shared_state) {
         std::string key = this->GetKey(shared_state);
         if (this->flyweights_.find(key) == this->flyweights_.end()) {
-            std::cout << "FlyweightFactory: Can't find a flyweight, creating new one.\n";
-            this->flyweights_.insert(std::make_pair(key, Flyweight(&shared_state)));
+            std::cout
+                << "FlyweightFactory: Can't find a flyweight, creating new one.\n";
+            this->flyweights_.insert(
+                std::make_pair(key, Flyweight(&shared_state)));
         } else {
             std::cout << "FlyweightFactory: Reusing existing flyweight.\n";
         }
@@ -1552,9 +1597,10 @@ public:
 };
 
 // ...
-void AddCarToPoliceDatabase(
-    FlyweightFactory& ff, const std::string& plates, const std::string& owner,
-    const std::string& brand, const std::string& model, const std::string& color) {
+void AddCarToPoliceDatabase(FlyweightFactory& ff, const std::string& plates,
+                            const std::string& owner, const std::string& brand,
+                            const std::string& model,
+                            const std::string& color) {
     std::cout << "\nClient: Adding a car to database.\n";
     const Flyweight& flyweight = ff.GetFlyweight({brand, model, color});
     // The client code either stores or calculates extrinsic state and passes it
@@ -1568,21 +1614,18 @@ void AddCarToPoliceDatabase(
  */
 
 int main() {
-    FlyweightFactory* factory = new FlyweightFactory({{"Chevrolet", "Camaro2018", "pink"}, {"Mercedes Benz", "C300", "black"}, {"Mercedes Benz", "C500", "red"}, {"BMW", "M5", "red"}, {"BMW", "X6", "white"}});
+    FlyweightFactory* factory =
+        new FlyweightFactory({{"Chevrolet", "Camaro2018", "pink"},
+                              {"Mercedes Benz", "C300", "black"},
+                              {"Mercedes Benz", "C500", "red"},
+                              {"BMW", "M5", "red"},
+                              {"BMW", "X6", "white"}});
     factory->ListFlyweights();
 
-    AddCarToPoliceDatabase(*factory,
-                           "CL234IR",
-                           "James Doe",
-                           "BMW",
-                           "M5",
+    AddCarToPoliceDatabase(*factory, "CL234IR", "James Doe", "BMW", "M5",
                            "red");
 
-    AddCarToPoliceDatabase(*factory,
-                           "CL234IR",
-                           "James Doe",
-                           "BMW",
-                           "X1",
+    AddCarToPoliceDatabase(*factory, "CL234IR", "James Doe", "BMW", "X1",
                            "red");
     factory->ListFlyweights();
     delete factory;
@@ -1593,98 +1636,60 @@ int main() {
 
 ### 代理模式
 
-代理模式是一种结构型设计模式， 让你能够提供对象的替代品或其占位符。 代理控制着对于原对象的访问， 并允许在将请求提交给对象前后进行一些处理。
+远程调用服务代理，隐藏网络通信细节。
 
 ```cpp
 #include <iostream>
-/**
- * The Subject interface declares common operations for both RealSubject and the
- * Proxy. As long as the client works with RealSubject using this interface,
- * you'll be able to pass it a proxy instead of a real subject.
- */
-class Subject {
+#include <cstdio>
+using namespace std;
+
+class IService {
 public:
-    virtual void Request() const = 0;
+    virtual void doCall() = 0;
+    virtual ~IService() = default;
 };
-/**
- * The RealSubject contains some core business logic. Usually, RealSubjects are
- * capable of doing some useful work which may also be very slow or sensitive -
- * e.g. correcting input data. A Proxy can solve these issues without any
- * changes to the RealSubject's code.
- */
-class RealSubject : public Subject {
+
+class RealService : public IService {
 public:
-    void Request() const override {
-        std::cout << "RealSubject: Handling request.\n";
+    void doCall() override {
+        printf("Calling Real Service\n");
+    }
+    ~RealService() override {
+        printf("Destroying Real Service\n");
     }
 };
-/**
- * The Proxy has an interface identical to the RealSubject.
- */
-class Proxy : public Subject {
-    /**
-     * @var RealSubject
-     */
+
+class ServiceProxy : public IService {
 private:
-    RealSubject* real_subject_;
+    RealService* realService; // 持有真实服务对象的引用
+    bool hasBeenCalled;       // 示例；用于演示代理控制逻辑
 
-    bool CheckAccess() const {
-        // Some real checks should go here.
-        std::cout << "Proxy: Checking access prior to firing a real request.\n";
-        return true;
-    }
-    void LogAccess() const {
-        std::cout << "Proxy: Logging the time of request.\n";
-    }
-
-    /**
-     * The Proxy maintains a reference to an object of the RealSubject class. It
-     * can be either lazy-loaded or passed to the Proxy by the client.
-     */
 public:
-    Proxy(RealSubject* real_subject) : real_subject_(new RealSubject(*real_subject)) {
+    ServiceProxy() : realService(nullptr), hasBeenCalled(false) {}
+
+    void doCall(void) override {
+        if (!hasBeenCalled) {
+            printf("Creating Real Service\n");
+            realService = new RealService(); // 延迟加载
+            hasBeenCalled = true;
+        }
+        realService->doCall();
     }
 
-    ~Proxy() {
-        delete real_subject_;
-    }
-    /**
-     * The most common applications of the Proxy pattern are lazy loading,
-     * caching, controlling the access, logging, etc. A Proxy can perform one of
-     * these things and then, depending on the result, pass the execution to the
-     * same method in a linked RealSubject object.
-     */
-    void Request() const override {
-        if (this->CheckAccess()) {
-            this->real_subject_->Request();
-            this->LogAccess();
-        }
+    ~ServiceProxy() override {
+        printf("Calling ~ServcieProxy\n");
+        delete realService;
     }
 };
-/**
- * The client code is supposed to work with all objects (both subjects and
- * proxies) via the Subject interface in order to support both real subjects and
- * proxies. In real life, however, clients mostly work with their real subjects
- * directly. In this case, to implement the pattern more easily, you can extend
- * your proxy from the real subject's class.
- */
-void ClientCode(const Subject& subject) {
-    // ...
-    subject.Request();
-    // ...
-}
 
 int main() {
-    std::cout << "Client: Executing the client code with a real subject:\n";
-    RealSubject* real_subject = new RealSubject;
-    ClientCode(*real_subject);
-    std::cout << "\n";
-    std::cout << "Client: Executing the same client code with a proxy:\n";
-    Proxy* proxy = new Proxy(real_subject);
-    ClientCode(*proxy);
+    IService* proxy = new ServiceProxy();
 
-    delete real_subject;
+    proxy->doCall(); // 第一次调用，触发初始化
+    proxy->doCall(); // 第多次调用，无需重复初始化
+
     delete proxy;
+
     return 0;
 }
 ```
@@ -1693,98 +1698,80 @@ int main() {
 
 ### 策略模式
 
+支付方式选择，如支付宝、微信、银联策略切换。
+
 ```cpp
-/**
- * The Strategy interface declares operations common to all supported versions
- * of some algorithm.
- *
- * The Context uses this interface to call the algorithm defined by Concrete
- * Strategies.
- */
-class Strategy {
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+// ================== 策略接口 ==================
+class IPaymentStrategy {
 public:
-    virtual ~Strategy() = default;
-    virtual std::string doAlgorithm(std::string_view data) const = 0;
+    virtual void payAmount(int amount) = 0; // 支付指定金额
+    virtual ~IPaymentStrategy() = default;
 };
 
-/**
- * The Context defines the interface of interest to clients.
- */
-
-class Context {
-    /**
-     * @var Strategy The Context maintains a reference to one of the Strategy
-     * objects. The Context does not know the concrete class of a strategy. It
-     * should work with all strategies via the Strategy interface.
-     */
-private:
-    std::unique_ptr<Strategy> strategy_;
-    /**
-     * Usually, the Context accepts a strategy through the constructor, but also
-     * provides a setter to change it at runtime.
-     */
+// ================== 具体策略类 ==================
+class AlipayStrategy : public IPaymentStrategy {
 public:
-    explicit Context(std::unique_ptr<Strategy>&& strategy = {}) : strategy_(std::move(strategy)) {}
-    /**
-     * Usually, the Context allows replacing a Strategy object at runtime.
-     */
-    void set_strategy(std::unique_ptr<Strategy>&& strategy) {
-        strategy_ = std::move(strategy);
+    void payAmount(int amount) override {
+        printf("通过支付宝支付: %d 元\n", amount);
     }
-    /**
-     * The Context delegates some work to the Strategy object instead of
-     * implementing +multiple versions of the algorithm on its own.
-     */
-    void doSomeBusinessLogic() const {
-        if (strategy_) {
-            std::cout << "Context: Sorting data using the strategy (not sure how it'll do it)\n";
-            std::string result = strategy_->doAlgorithm("aecbd");
-            std::cout << result << "\n";
+};
+
+class WechatPayStrategy : public IPaymentStrategy {
+public:
+    void payAmount(int amount) override {
+        printf("通过微信支付: %d 元\n", amount);
+    }
+};
+
+class UnionPayStrategy : public IPaymentStrategy {
+public:
+    void payAmount(int amount) override {
+        printf("通过银联支付: %d 元\n", amount);
+    }
+};
+
+// ================== 上下文 Context ==================
+class PaymentContext {
+private:
+    IPaymentStrategy* currentStrategy;
+
+public:
+    PaymentContext(IPaymentStrategy* strategy) : currentStrategy(strategy) {}
+
+    void setStrategy(IPaymentStrategy* strategy) {
+        currentStrategy = strategy;
+    }
+
+    void executePayment(int amount) {
+        if (currentStrategy) {
+            currentStrategy->payAmount(amount);
         } else {
-            std::cout << "Context: Strategy isn't set\n";
+            fprintf(stderr, "未设置支付策略！\n");
         }
     }
 };
 
-/**
- * Concrete Strategies implement the algorithm while following the base Strategy
- * interface. The interface makes them interchangeable in the Context.
- */
-class ConcreteStrategyA : public Strategy {
-public:
-    std::string doAlgorithm(std::string_view data) const override {
-        std::string result(data);
-        std::sort(std::begin(result), std::end(result));
-
-        return result;
-    }
-};
-class ConcreteStrategyB : public Strategy {
-    std::string doAlgorithm(std::string_view data) const override {
-        std::string result(data);
-        std::sort(std::begin(result), std::end(result), std::greater<>());
-
-        return result;
-    }
-};
-/**
- * The client code picks a concrete strategy and passes it to the context. The
- * client should be aware of the differences between strategies in order to make
- * the right choice.
- */
-
-void clientCode() {
-    Context context(std::make_unique<ConcreteStrategyA>());
-    std::cout << "Client: Strategy is set to normal sorting.\n";
-    context.doSomeBusinessLogic();
-    std::cout << "\n";
-    std::cout << "Client: Strategy is set to reverse sorting.\n";
-    context.set_strategy(std::make_unique<ConcreteStrategyB>());
-    context.doSomeBusinessLogic();
-}
-
+// ================== 主函数示例 ==================
 int main() {
-    clientCode();
+    // 创建具体策略
+    AlipayStrategy alipay;
+    WechatPayStrategy wechatpay;
+    UnionPayStrategy unionpay;
+
+    // 创建上下文并切换策略
+    PaymentContext context(&alipay);
+    context.executePayment(100);
+
+    context.setStrategy(&wechatpay);
+    context.executePayment(200);
+
+    context.setStrategy(&unionpay);
+    context.executePayment(300);
+
     return 0;
 }
 ```
@@ -1875,237 +1862,153 @@ int main() {
 
 ### 状态模式
 
-状态模式是一种行为设计模式， 让你能在一个对象的内部状态变化时改变其行为， 使其看上去就像改变了自身所属的类一样。
+订单状态变更，如待付款、已发货、已完成。
 
 ```cpp
 #include <iostream>
-#include <typeinfo>
-/**
- * The base State class declares methods that all Concrete State should
- * implement and also provides a backreference to the Context object, associated
- * with the State. This backreference can be used by States to transition the
- * Context to another State.
- */
+#include <cstdio>
+using namespace std;
 
-class Context;
+// 前向声明 Order 类，供状态接口使用
+class Order;
 
-class State {
-    /**
-     * @var Context
-     */
-protected:
-    Context* context_;
-
+// =============== 状态接口 ===============
+class OrderState {
 public:
-    virtual ~State() {
-    }
-
-    void set_context(Context* context) {
-        this->context_ = context;
-    }
-
-    virtual void Handle1() = 0;
-    virtual void Handle2() = 0;
+    virtual void process(Order& order) = 0; // 处理订单状态
+    virtual ~OrderState() = default;
 };
 
-/**
- * The Context defines the interface of interest to clients. It also maintains a
- * reference to an instance of a State subclass, which represents the current
- * state of the Context.
- */
-class Context {
-    /**
-     * @var State A reference to the current state of the Context.
-     */
+// =============== 具体状态类 ===============
+class InitializedState : public OrderState {
+public:
+    void process(Order& order) override;
+};
+
+class PaidState : public OrderState {
+public:
+    void process(Order& order) override;
+};
+
+class ShippedState : public OrderState {
+public:
+    void process(Order& order) override;
+};
+
+class CompletedState : public OrderState {
+public:
+    void process(Order& order) override;
+};
+
+// =============== 订单类 ===============
+class Order {
 private:
-    State* state_;
+    OrderState* currentState;
 
 public:
-    Context(State* state) : state_(nullptr) {
-        this->TransitionTo(state);
+    Order(OrderState* initialState) : currentState(initialState) {}
+
+    void setState(OrderState* newState) {
+        currentState = newState;
     }
-    ~Context() {
-        delete state_;
+
+    void process() {
+        if (currentState) {
+            currentState->process(*this);
+        }
     }
-    /**
-     * The Context allows changing the State object at runtime.
-     */
-    void TransitionTo(State* state) {
-        std::cout << "Context: Transition to " << typeid(*state).name() << ".\n";
-        if (this->state_ != nullptr)
-            delete this->state_;
-        this->state_ = state;
-        this->state_->set_context(this);
-    }
-    /**
-     * The Context delegates part of its behavior to the current State object.
-     */
-    void Request1() {
-        this->state_->Handle1();
-    }
-    void Request2() {
-        this->state_->Handle2();
-    }
+
+    friend class InitializedState;
+    friend class PaidState;
+    friend class ShippedState;
+    friend class CompletedState;
 };
 
-/**
- * Concrete States implement various behaviors, associated with a state of the
- * Context.
- */
-
-class ConcreteStateA : public State {
-public:
-    void Handle1() override;
-
-    void Handle2() override {
-        std::cout << "ConcreteStateA handles request2.\n";
-    }
-};
-
-class ConcreteStateB : public State {
-public:
-    void Handle1() override {
-        std::cout << "ConcreteStateB handles request1.\n";
-    }
-    void Handle2() override {
-        std::cout << "ConcreteStateB handles request2.\n";
-        std::cout << "ConcreteStateB wants to change the state of the context.\n";
-        this->context_->TransitionTo(new ConcreteStateA);
-    }
-};
-
-void ConcreteStateA::Handle1() {
-    {
-        std::cout << "ConcreteStateA handles request1.\n";
-        std::cout << "ConcreteStateA wants to change the state of the context.\n";
-
-        this->context_->TransitionTo(new ConcreteStateB);
-    }
+// =============== 具体状态实现 ===============
+void InitializedState::process(Order& order) {
+    printf("订单已付款...\n");
+    order.setState(new PaidState());
 }
 
-/**
- * The client code.
- */
-void ClientCode() {
-    Context* context = new Context(new ConcreteStateA);
-    context->Request1();
-    context->Request2();
-    delete context;
+void PaidState::process(Order& order) {
+    printf("订单已发货...\n");
+    order.setState(new ShippedState());
 }
 
+void ShippedState::process(Order& order) {
+    printf("订单已完成...\n");
+    order.setState(new CompletedState());
+}
+
+void CompletedState::process(Order& order) {
+    printf("订单已是完成状态，无法继续处理。\n");
+}
+
+// =============== 主函数示例 ===============
 int main() {
-    ClientCode();
+    Order order(new InitializedState());
+
+    order.process(); // 初始化 -> 已付款
+    order.process(); // 已付款 -> 已发货
+    order.process(); // 已发货 -> 已完成
+    order.process(); // 已完成 -> 不可再操作
+
     return 0;
 }
 ```
 
 ### 模板方法模式
 
-模板方法模式是一种行为设计模式， 它在超类中定义了一个算法的框架， 允许子类在不修改结构的情况下重写算法的特定步骤。
-
-- 抽象步骤必须由各个子类来实现
-- 可选步骤已有一些默认实现， 但仍可在需要时进行重写
-
-还有另一种名为钩子的步骤。 钩子是内容为空的可选步骤。 即使不重写钩子， 模板方法也能工作。 钩子通常放置在算法重要步骤的前后， 为子类提供额外的算法扩展点。
+单元测试框架定义测试执行流程，子类实现用例。
 
 ```cpp
-/**
- * The Abstract Class defines a template method that contains a skeleton of some
- * algorithm, composed of calls to (usually) abstract primitive operations.
- *
- * Concrete subclasses should implement these operations, but leave the template
- * method itself intact.
- */
-class AbstractClass {
-    /**
-     * The template method defines the skeleton of an algorithm.
-     */
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+// 基类定义算法框架（模板方法）
+class IUTest {
 public:
-    void TemplateMethod() const {
-        this->BaseOperation1();
-        this->RequiredOperations1();
-        this->BaseOperation2();
-        this->Hook1();
-        this->RequiredOperation2();
-        this->BaseOperation3();
-        this->Hook2();
+    // 模板方法：定义算法骨架
+    void runTestCase() {
+        setup();
+        executeTest();
+        teardown();
     }
-    /**
-     * These operations already have implementations.
-     */
-protected:
-    void BaseOperation1() const {
-        std::cout << "AbstractClass says: I am doing the bulk of the work\n";
+
+    virtual void setup() {
+        printf("IUTest: Setup resources.\n");
     }
-    void BaseOperation2() const {
-        std::cout << "AbstractClass says: But I let subclasses override some operations\n";
+
+    virtual void executeTest() = 0; // 子类必须实现
+
+    virtual void teardown() {
+        printf("IUTest: Teardown resources.\n");
     }
-    void BaseOperation3() const {
-        std::cout << "AbstractClass says: But I am doing the bulk of the work anyway\n";
-    }
-    /**
-     * These operations have to be implemented in subclasses.
-     */
-    virtual void RequiredOperations1() const = 0;
-    virtual void RequiredOperation2() const = 0;
-    /**
-     * These are "hooks." Subclasses may override them, but it's not mandatory
-     * since the hooks already have default (but empty) implementation. Hooks
-     * provide additional extension points in some crucial places of the
-     * algorithm.
-     */
-    virtual void Hook1() const {}
-    virtual void Hook2() const {}
+
+    virtual ~IUTest() = default;
 };
-/**
- * Concrete classes have to implement all abstract operations of the base class.
- * They can also override some operations with a default implementation.
- */
-class ConcreteClass1 : public AbstractClass {
-protected:
-    void RequiredOperations1() const override {
-        std::cout << "ConcreteClass1 says: Implemented Operation1\n";
+
+// 子类实现具体步骤
+class AppTest : public IUTest {
+public:
+    void executeTest() override {
+        printf("Running test in AppTest.\n");
     }
-    void RequiredOperation2() const override {
-        std::cout << "ConcreteClass1 says: Implemented Operation2\n";
+
+    void setup() override {
+        printf("AppTest: Custom setup.\n");
+    }
+
+    void teardown() override {
+        printf("AppTest: Custom teardown.\n");
     }
 };
-/**
- * Usually, concrete classes override only a fraction of base class' operations.
- */
-class ConcreteClass2 : public AbstractClass {
-protected:
-    void RequiredOperations1() const override {
-        std::cout << "ConcreteClass2 says: Implemented Operation1\n";
-    }
-    void RequiredOperation2() const override {
-        std::cout << "ConcreteClass2 says: Implemented Operation2\n";
-    }
-    void Hook1() const override {
-        std::cout << "ConcreteClass2 says: Overridden Hook1\n";
-    }
-};
-/**
- * The client code calls the template method to execute the algorithm. Client
- * code does not have to know the concrete class of an object it works with, as
- * long as it works with objects through the interface of their base class.
- */
-void ClientCode(AbstractClass* class_) {
-    // ...
-    class_->TemplateMethod();
-    // ...
-}
 
 int main() {
-    std::cout << "Same client code can work with different subclasses:\n";
-    ConcreteClass1* concreteClass1 = new ConcreteClass1;
-    ClientCode(concreteClass1);
-    std::cout << "\n";
-    std::cout << "Same client code can work with different subclasses:\n";
-    ConcreteClass2* concreteClass2 = new ConcreteClass2;
-    ClientCode(concreteClass2);
-    delete concreteClass1;
-    delete concreteClass2;
+    AppTest test;
+    test.runTestCase(); // 调用模板方法，执行完整流程
+
     return 0;
 }
 ```
