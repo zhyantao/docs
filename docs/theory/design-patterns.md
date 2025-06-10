@@ -58,7 +58,9 @@
 
 ### 工厂模式
 
-根据不同参数创建不同类型日志记录对象。
+| 模式名称 | 使用场景           | 例子                                 |
+| -------- | ------------------ | ------------------------------------ |
+| 工厂模式 | 统一管理类的实例化 | 根据不同参数创建不同类型日志记录对象 |
 
 ::::{tab-set}
 :::{tab-item} 基础版本
@@ -166,9 +168,17 @@ int main() {
 :::
 ::::
 
+执行结果：
+
+```text
+DatabaseLog
+```
+
 ### 抽象工厂模式
 
-跨平台 UI 库，创建按钮、文本框等组件族。
+| 模式名称     | 使用场景                 | 例子                                   |
+| ------------ | ------------------------ | -------------------------------------- |
+| 抽象工厂模式 | 创建一组相关或依赖对象族 | 跨平台 UI 库，创建按钮、文本框等组件族 |
 
 ```cpp
 #include <cstdio>
@@ -254,7 +264,7 @@ void renderUI(IUIFactory& factory) {
     auto button = factory.createButton();
     auto text = factory.createText();
 
-    button->render();  // 根据平台调用不同的实现
+    button->render(); // 根据平台调用不同的实现
     text->display();
 }
 
@@ -272,9 +282,23 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+Rendering Windows UI:
+Windows Button
+Windows Text
+
+Rendering Mac UI:
+Mac Button
+Mac Text
+```
+
 ### 生成器模式
 
-构建不同配置的计算机，如 CPU、内存、硬盘组合。
+| 模式名称   | 使用场景           | 例子                                         |
+| ---------- | ------------------ | -------------------------------------------- |
+| 生成器模式 | 分步骤构建复杂对象 | 构建不同配置的计算机，如 CPU、内存、硬盘组合 |
 
 ```cpp
 #include <iostream>
@@ -418,9 +442,25 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+电脑配置：
+CPU: Intel i9-13900K
+内存: 64GB DDR5
+硬盘: 2TB NVMe SSD
+-------------------------
+电脑配置：
+CPU: Intel i5-13400
+内存: 16GB DDR4
+硬盘: 512GB SSD
+```
+
 ### 原型模式
 
-复制已有用户配置生成新用户默认设置。
+| 模式名称 | 使用场景                   | 例子                               |
+| -------- | -------------------------- | ---------------------------------- |
+| 原型模式 | 通过复制已有对象创建新对象 | 复制已有用户配置生成新用户默认设置 |
 
 ```cpp
 #include <iostream>
@@ -469,9 +509,18 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+当前 IP 配置: 26.10.128.0/20
+当前 IP 配置: 26.10.128.0/20
+```
+
 ### 单例模式
 
-数据库连接池，确保全局唯一访问。
+| 模式名称 | 使用场景               | 例子                           |
+| -------- | ---------------------- | ------------------------------ |
+| 单例模式 | 确保一个类只有一个实例 | 数据库连接池，确保全局唯一访问 |
 
 ```cpp
 #include <iostream>
@@ -519,11 +568,21 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+数据库连接池已初始化
+连接到数据库...
+pool 和 pool2 是同一个实例。
+```
+
 ## 结构型模式
 
 ### 适配器模式
 
-将旧支付接口适配为支持新支付网关调用。
+| 模式名称   | 使用场景       | 例子                                 |
+| ---------- | -------------- | ------------------------------------ |
+| 适配器模式 | 兼容不兼容接口 | 将旧支付接口适配为支持新支付网关调用 |
 
 ```cpp
 #include <cstdio>
@@ -574,9 +633,18 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+通过适配器调用新接口，准备使用旧系统支付...
+旧系统支付 199.50 元
+```
+
 ### 组合模式
 
-文件系统管理，处理文件夹包含文件的结构。
+| 模式名称 | 使用场景                 | 例子                                   |
+| -------- | ------------------------ | -------------------------------------- |
+| 组合模式 | 树形结构处理，如文件系统 | 文件系统管理，处理文件夹包含文件的结构 |
 
 ```cpp
 #include <cstdio>
@@ -663,9 +731,22 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+📁 文件夹: 根目录
+  📁 文件夹: 文档
+    📄 文件: report.docx
+  📁 文件夹: 图片
+    📄 文件: photo.jpg
+  📄 文件: notes.txt
+```
+
 ### 外观模式
 
-简化下单流程，统一调用库存、支付、物流接口。
+| 模式名称 | 使用场景             | 例子                                       |
+| -------- | -------------------- | ------------------------------------------ |
+| 外观模式 | 简化子系统的调用入口 | 简化下单流程，统一调用库存、支付、物流接口 |
 
 ```cpp
 #include <cstdio>
@@ -753,9 +834,23 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+开始下单流程...
+检查商品 101 的库存...
+处理支付金额 99.90 元...
+减少商品 101 的库存
+订单已发货，地址：北京市朝阳区某某街道
+下单成功！
+订单已完成。
+```
+
 ### 桥接模式
 
-不同形状（圆形、方形）与颜色（红、蓝）组合。
+| 模式名称 | 使用场景                 | 例子                                       |
+| -------- | ------------------------ | ------------------------------------------ |
+| 桥接模式 | 抽象与实现分离，独立变化 | 不同形状（圆形、方形）与颜色（红、蓝）组合 |
 
 ```cpp
 #include <cstdio>
@@ -839,9 +934,20 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+圆形，填充为红色
+圆形，填充为蓝色
+方形，填充为红色
+方形，填充为蓝色
+```
+
 ### 装饰模式
 
-给文本添加滚动条或边框等附加功能。
+| 模式名称 | 使用场景                   | 例子                             |
+| -------- | -------------------------- | -------------------------------- |
+| 装饰模式 | 动态添加功能，比继承更灵活 | 给文本添加滚动条或边框等附加功能 |
 
 ```cpp
 #include <cstdio>
@@ -938,9 +1044,20 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+这是一个普通文本内容
+[边框开始]这是一个普通文本内容[边框结束]
+[滚动条开始]这是一个普通文本内容[滚动条结束]
+[边框开始][滚动条开始]这是一个普通文本内容[滚动条结束][边框结束]
+```
+
 ### 享元模式
 
-文字编辑器中共享相同字体格式的对象。
+| 模式名称 | 使用场景             | 例子                               |
+| -------- | -------------------- | ---------------------------------- |
+| 享元模式 | 共享对象减少内存开销 | 文字编辑器中共享相同字体格式的对象 |
 
 ```cpp
 #include <iostream>
@@ -1038,9 +1155,24 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+新建格式: 宋体-12-黑色
+新建格式: 微软雅黑-14-红色
+复用已有格式: 宋体-12-黑色
+字符 'H' 在位置 0 渲染，应用格式: 字体=宋体, 大小=12, 颜色=黑色
+字符 'e' 在位置 1 渲染，应用格式: 字体=宋体, 大小=12, 颜色=黑色
+字符 'l' 在位置 2 渲染，应用格式: 字体=微软雅黑, 大小=14, 颜色=红色
+字符 'l' 在位置 3 渲染，应用格式: 字体=微软雅黑, 大小=14, 颜色=红色
+字符 'o' 在位置 4 渲染，应用格式: 字体=宋体, 大小=12, 颜色=黑色
+```
+
 ### 代理模式
 
-远程调用服务代理，隐藏网络通信细节。
+| 模式名称 | 使用场景               | 例子                               |
+| -------- | ---------------------- | ---------------------------------- |
+| 代理模式 | 代理控制对原对象的访问 | 远程调用服务代理，隐藏网络通信细节 |
 
 ```cpp
 #include <iostream>
@@ -1098,11 +1230,23 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+Creating Real Service
+Calling Real Service
+Calling Real Service
+Calling ~ServcieProxy
+Destroying Real Service
+```
+
 ## 行为模式
 
 ### 策略模式
 
-支付方式选择，如支付宝、微信、银联策略切换。
+| 模式名称 | 使用场景             | 例子                                       |
+| -------- | -------------------- | ------------------------------------------ |
+| 策略模式 | 封装可互换的算法逻辑 | 支付方式选择，如支付宝、微信、银联策略切换 |
 
 ```cpp
 #include <iostream>
@@ -1180,9 +1324,19 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+通过支付宝支付: 100 元
+通过微信支付: 200 元
+通过银联支付: 300 元
+```
+
 ### 观察者模式
 
-天气预报系统，多个设备自动更新天气数据。
+| 模式名称   | 使用场景         | 例子                                   |
+| ---------- | ---------------- | -------------------------------------- |
+| 观察者模式 | 实现事件通知机制 | 天气预报系统，多个设备自动更新天气数据 |
 
 ```cpp
 #include <vector>
@@ -1264,9 +1418,21 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+Device registered
+Device registered
+Notifying all devices:
+Device updated
+Device updated
+```
+
 ### 状态模式
 
-订单状态变更，如待付款、已发货、已完成。
+| 模式名称 | 使用场景                   | 例子                                   |
+| -------- | -------------------------- | -------------------------------------- |
+| 状态模式 | 对象状态变化时行为随之变化 | 订单状态变更，如待付款、已发货、已完成 |
 
 ```cpp
 #include <iostream>
@@ -1361,9 +1527,20 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+订单已付款...
+订单已发货...
+订单已完成...
+订单已是完成状态，无法继续处理。
+```
+
 ### 模板方法模式
 
-单元测试框架定义测试执行流程，子类实现用例。
+| 模式名称     | 使用场景                       | 例子                                       |
+| ------------ | ------------------------------ | ------------------------------------------ |
+| 模板方法模式 | 定义算法骨架，子类实现具体步骤 | 单元测试框架定义测试执行流程，子类实现用例 |
 
 ```cpp
 #include <iostream>
@@ -1417,689 +1594,661 @@ int main() {
 }
 ```
 
+执行结果：
+
+```text
+AppTest: Custom setup.
+Running test in AppTest.
+AppTest: Custom teardown.
+```
+
 ### 备忘录模式
 
-备忘录模式是一种行为设计模式， 允许在不暴露对象实现细节的情况下保存和恢复对象之前的状态。
+| 模式名称   | 使用场景               | 例子                                 |
+| ---------- | ---------------------- | ------------------------------------ |
+| 备忘录模式 | 保存和恢复对象内部状态 | 游戏存档功能，保存和恢复角色当前状态 |
 
 ```cpp
-/**
- * The Memento interface provides a way to retrieve the memento's metadata, such
- * as creation date or name. However, it doesn't expose the Originator's state.
- */
-class Memento {
+#include <cstdio>
+#include <vector>
+#include <memory>
+
+using namespace std;
+
+// 角色类
+class GameRole {
 public:
-    virtual ~Memento() {}
-    virtual std::string GetName() const = 0;
-    virtual std::string date() const = 0;
-    virtual std::string state() const = 0;
+    int hp;
+    int mp;
+    int level;
+
+    GameRole() : hp(100), mp(50), level(1) {}
+
+    void showStatus() const {
+        printf("当前角色状态：\n");
+        printf("HP: %d, MP: %d, Level: %d\n", hp, mp, level);
+    }
+
+    unique_ptr<class RoleMemento> save() const;
+    void restore(const class RoleMemento& memento);
 };
 
-/**
- * The Concrete Memento contains the infrastructure for storing the Originator's
- * state.
- */
-class ConcreteMemento : public Memento {
+// 备忘录类
+class RoleMemento {
 private:
-    std::string state_;
-    std::string date_;
+    int hp;
+    int mp;
+    int level;
 
 public:
-    ConcreteMemento(std::string state) : state_(state) {
-        this->state_ = state;
-        std::time_t now = std::time(0);
-        this->date_ = std::ctime(&now);
-    }
-    /**
-     * The Originator uses this method when restoring its state.
-     */
-    std::string state() const override {
-        return this->state_;
-    }
-    /**
-     * The rest of the methods are used by the Caretaker to display metadata.
-     */
-    std::string GetName() const override {
-        return this->date_ + " / (" + this->state_.substr(0, 9) + "...)";
-    }
-    std::string date() const override {
-        return this->date_;
+    RoleMemento(int h, int m, int l) : hp(h), mp(m), level(l) {}
+
+    friend class GameRole;
+
+    void showMemento() const {
+        printf("存档状态：HP: %d, MP: %d, Level: %d\n", hp, mp, level);
     }
 };
 
-/**
- * The Originator holds some important state that may change over time. It also
- * defines a method for saving the state inside a memento and another method for
- * restoring the state from it.
- */
-class Originator {
-    /**
-     * @var string For the sake of simplicity, the originator's state is stored
-     * inside a single variable.
-     */
-private:
-    std::string state_;
-
-    std::string GenerateRandomString(int length = 10) {
-        const char alphanum[] =
-            "0123456789"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "abcdefghijklmnopqrstuvwxyz";
-        int stringLength = sizeof(alphanum) - 1;
-
-        std::string random_string;
-        for (int i = 0; i < length; i++) {
-            random_string += alphanum[std::rand() % stringLength];
-        }
-        return random_string;
-    }
-
-public:
-    Originator(std::string state) : state_(state) {
-        std::cout << "Originator: My initial state is: " << this->state_ << "\n";
-    }
-    /**
-     * The Originator's business logic may affect its internal state. Therefore,
-     * the client should backup the state before launching methods of the business
-     * logic via the save() method.
-     */
-    void DoSomething() {
-        std::cout << "Originator: I'm doing something important.\n";
-        this->state_ = this->GenerateRandomString(30);
-        std::cout << "Originator: and my state has changed to: " << this->state_ << "\n";
-    }
-
-    /**
-     * Saves the current state inside a memento.
-     */
-    Memento* Save() {
-        return new ConcreteMemento(this->state_);
-    }
-    /**
-     * Restores the Originator's state from a memento object.
-     */
-    void Restore(Memento* memento) {
-        this->state_ = memento->state();
-        std::cout << "Originator: My state has changed to: " << this->state_ << "\n";
-    }
-};
-
-/**
- * The Caretaker doesn't depend on the Concrete Memento class. Therefore, it
- * doesn't have access to the originator's state, stored inside the memento. It
- * works with all mementos via the base Memento interface.
- */
-class Caretaker {
-    /**
-     * @var Memento[]
-     */
-private:
-    std::vector<Memento*> mementos_;
-
-    /**
-     * @var Originator
-     */
-    Originator* originator_;
-
-public:
-    Caretaker(Originator* originator) : originator_(originator) {
-    }
-
-    ~Caretaker() {
-        for (auto m : mementos_) delete m;
-    }
-
-    void Backup() {
-        std::cout << "\nCaretaker: Saving Originator's state...\n";
-        this->mementos_.push_back(this->originator_->Save());
-    }
-    void Undo() {
-        if (!this->mementos_.size()) {
-            return;
-        }
-        Memento* memento = this->mementos_.back();
-        this->mementos_.pop_back();
-        std::cout << "Caretaker: Restoring state to: " << memento->GetName() << "\n";
-        try {
-            this->originator_->Restore(memento);
-        } catch (...) {
-            this->Undo();
-        }
-    }
-    void ShowHistory() const {
-        std::cout << "Caretaker: Here's the list of mementos:\n";
-        for (Memento* memento : this->mementos_) {
-            std::cout << memento->GetName() << "\n";
-        }
-    }
-};
-/**
- * Client code.
- */
-
-void ClientCode() {
-    Originator* originator = new Originator("Super-duper-super-puper-super.");
-    Caretaker* caretaker = new Caretaker(originator);
-    caretaker->Backup();
-    originator->DoSomething();
-    caretaker->Backup();
-    originator->DoSomething();
-    caretaker->Backup();
-    originator->DoSomething();
-    std::cout << "\n";
-    caretaker->ShowHistory();
-    std::cout << "\nClient: Now, let's rollback!\n\n";
-    caretaker->Undo();
-    std::cout << "\nClient: Once more!\n\n";
-    caretaker->Undo();
-
-    delete originator;
-    delete caretaker;
+unique_ptr<RoleMemento> GameRole::save() const {
+    return make_unique<RoleMemento>(hp, mp, level);
 }
+
+void GameRole::restore(const RoleMemento& m) {
+    hp = m.hp;
+    mp = m.mp;
+    level = m.level;
+}
+
+// 存档管理类
+class ArchiveManager {
+private:
+    vector<unique_ptr<RoleMemento>> archives;
+
+public:
+    void addArchive(unique_ptr<RoleMemento> memento) {
+        archives.push_back(move(memento));
+    }
+
+    RoleMemento* getArchive(size_t index) const {
+        return (index < archives.size()) ? archives[index].get() : nullptr;
+    }
+
+    void showArchives() const {
+        for (size_t i = 0; i < archives.size(); ++i) {
+            printf("存档 %zu: ", i);
+            archives[i]->showMemento();
+        }
+    }
+};
 
 int main() {
-    std::srand(static_cast<unsigned int>(std::time(NULL)));
-    ClientCode();
+    GameRole role;
+    ArchiveManager manager;
+
+    printf("--- 初始状态 ---\n");
+    role.showStatus();
+
+    manager.addArchive(role.save());
+
+    // 修改状态
+    role.hp = 80;
+    role.mp = 40;
+    role.level = 2;
+    printf("\n--- 升级后状态 ---\n");
+    role.showStatus();
+
+    manager.addArchive(role.save());
+
+    role.hp = 30;
+    role.mp = 10;
+    role.level = 3;
+    printf("\n--- 受伤后状态 ---\n");
+    role.showStatus();
+
+    // 恢复第一个存档
+    printf("\n--- 恢复到初始存档 ---\n");
+    role.restore(*manager.getArchive(0));
+    role.showStatus();
+
+    printf("\n--- 所有存档列表 ---\n");
+    manager.showArchives();
+
     return 0;
 }
+```
+
+执行结果：
+
+```text
+--- 初始状态 ---
+当前角色状态：
+HP: 100, MP: 50, Level: 1
+
+--- 升级后状态 ---
+当前角色状态：
+HP: 80, MP: 40, Level: 2
+
+--- 受伤后状态 ---
+当前角色状态：
+HP: 30, MP: 10, Level: 3
+
+--- 恢复到初始存档 ---
+当前角色状态：
+HP: 100, MP: 50, Level: 1
+
+--- 所有存档列表 ---
+存档 0: 存档状态：HP: 100, MP: 50, Level: 1
+存档 1: 存档状态：HP: 80, MP: 40, Level: 2
 ```
 
 ### 中介者模式
 
-中介者模式是一种行为设计模式， 能让你减少对象之间混乱无序的依赖关系。 该模式会限制对象之间的直接交互， 迫使它们通过一个中介者对象进行合作。
+| 模式名称   | 使用场景         | 例子                                     |
+| ---------- | ---------------- | ---------------------------------------- |
+| 中介者模式 | 集中管理对象交互 | 聊天室服务器协调多个客户端之间的消息发送 |
 
 ```cpp
-#include <iostream>
+#include <cstdio>
+#include <vector>
 #include <string>
-/**
- * The Mediator interface declares a method used by components to notify the
- * mediator about various events. The Mediator may react to these events and
- * pass the execution to other components.
- */
-class BaseComponent;
-class Mediator {
-public:
-    virtual void Notify(BaseComponent* sender, std::string event) const = 0;
-};
+#include <memory>
+#include <iostream>
 
-/**
- * The Base Component provides the basic functionality of storing a mediator's
- * instance inside component objects.
- */
-class BaseComponent {
-protected:
-    Mediator* mediator_;
+using namespace std;
 
-public:
-    BaseComponent(Mediator* mediator = nullptr) : mediator_(mediator) {
-    }
-    void set_mediator(Mediator* mediator) {
-        this->mediator_ = mediator;
-    }
-};
+// 前向声明
+class ChatMediator;
 
-/**
- * Concrete Components implement various functionality. They don't depend on
- * other components. They also don't depend on any concrete mediator classes.
- */
-class Component1 : public BaseComponent {
-public:
-    void DoA() {
-        std::cout << "Component 1 does A.\n";
-        this->mediator_->Notify(this, "A");
-    }
-    void DoB() {
-        std::cout << "Component 1 does B.\n";
-        this->mediator_->Notify(this, "B");
-    }
-};
-
-class Component2 : public BaseComponent {
-public:
-    void DoC() {
-        std::cout << "Component 2 does C.\n";
-        this->mediator_->Notify(this, "C");
-    }
-    void DoD() {
-        std::cout << "Component 2 does D.\n";
-        this->mediator_->Notify(this, "D");
-    }
-};
-
-/**
- * Concrete Mediators implement cooperative behavior by coordinating several
- * components.
- */
-class ConcreteMediator : public Mediator {
+// 用户类（同事类 Colleague）
+class User : public enable_shared_from_this<User> {
 private:
-    Component1* component1_;
-    Component2* component2_;
+    string name;
+    shared_ptr<ChatMediator> mediator;
 
 public:
-    ConcreteMediator(Component1* c1, Component2* c2) : component1_(c1), component2_(c2) {
-        this->component1_->set_mediator(this);
-        this->component2_->set_mediator(this);
+    User(const string& name, const shared_ptr<ChatMediator>& mediator)
+        : name(name), mediator(mediator) {}
+
+    void send(const string& message);
+    void receive(const string& from, const string& message);
+
+    const string& getName() const { return name; }
+};
+
+// 聊天室中介者类（Mediator）
+class ChatMediator {
+private:
+    vector<shared_ptr<User>> users;
+
+public:
+    void addUser(const shared_ptr<User>& user) {
+        users.push_back(user);
     }
-    void Notify(BaseComponent* sender, std::string event) const override {
-        if (event == "A") {
-            std::cout << "Mediator reacts on A and triggers following operations:\n";
-            this->component2_->DoC();
-        }
-        if (event == "D") {
-            std::cout << "Mediator reacts on D and triggers following operations:\n";
-            this->component1_->DoB();
-            this->component2_->DoC();
+
+    void sendMessage(const string& from, const string& message, const shared_ptr<User>& excludeUser = nullptr) {
+        for (const auto& user : users) {
+            if (user != excludeUser) {
+                user->receive(from, message);
+            }
         }
     }
 };
 
-/**
- * The client code.
- */
+void User::send(const string& message) {
+    printf("[%s] 发送消息: %s\n", name.c_str(), message.c_str());
+    mediator->sendMessage(name, message, shared_from_this());
+}
 
-void ClientCode() {
-    Component1* c1 = new Component1;
-    Component2* c2 = new Component2;
-    ConcreteMediator* mediator = new ConcreteMediator(c1, c2);
-    std::cout << "Client triggers operation A.\n";
-    c1->DoA();
-    std::cout << "\n";
-    std::cout << "Client triggers operation D.\n";
-    c2->DoD();
-
-    delete c1;
-    delete c2;
-    delete mediator;
+void User::receive(const string& from, const string& message) {
+    printf("[%s] 收到来自 [%s] 的消息: %s\n", name.c_str(), from.c_str(), message.c_str());
 }
 
 int main() {
-    ClientCode();
+    // 创建中介者
+    auto mediator = make_shared<ChatMediator>();
+
+    // 创建用户并加入聊天室
+    auto alice = make_shared<User>("Alice", mediator);
+    auto bob = make_shared<User>("Bob", mediator);
+    auto charlie = make_shared<User>("Charlie", mediator);
+
+    mediator->addUser(alice);
+    mediator->addUser(bob);
+    mediator->addUser(charlie);
+
+    // Alice 发送消息
+    alice->send("大家好！这是测试消息。");
+
+    // Bob 回复
+    bob->send("Hi Alice，收到你的消息了。");
+
     return 0;
 }
+```
+
+执行结果：
+
+```text
+[Alice] 发送消息: 大家好！这是测试消息。
+[Bob] 收到来自 [Alice] 的消息: 大家好！这是测试消息。
+[Charlie] 收到来自 [Alice] 的消息: 大家好！这是测试消息。
+[Bob] 发送消息: Hi Alice，收到你的消息了。
+[Alice] 收到来自 [Bob] 的消息: Hi Alice，收到你的消息了。
+[Charlie] 收到来自 [Bob] 的消息: Hi Alice，收到你的消息了。
 ```
 
 ### 迭代器模式
 
-迭代器模式是一种行为设计模式， 让你能在不暴露集合底层表现形式 （列表、 栈和树等） 的情况下遍历集合中所有的元素。
+| 模式名称   | 使用场景                   | 例子                                 |
+| ---------- | -------------------------- | ------------------------------------ |
+| 迭代器模式 | 遍历聚合对象，不暴露其结构 | 遍历树形结构菜单项而不暴露其内部实现 |
 
 ```cpp
-/**
- * Iterator Design Pattern
- *
- * Intent: Lets you traverse elements of a collection without exposing its
- * underlying representation (list, stack, tree, etc.).
- */
-
-#include <iostream>
-#include <string>
+#include <cstdio>
 #include <vector>
+#include <string>
+#include <memory>
 
-/**
- * C++ has its own implementation of iterator that works with a different
- * generics containers defined by the standard library.
- */
+using namespace std;
 
-template <typename T, typename U>
+// 菜单项类
+class MenuItem {
+private:
+    string name;
+    string description;
+    bool isVegetarian;
+    double price;
+
+public:
+    MenuItem(const string& name, const string& description, bool isVegetarian, double price)
+        : name(name), description(description), isVegetarian(isVegetarian), price(price) {}
+
+    const string& getName() const { return name; }
+    const string& getDescription() const { return description; }
+    bool getIsVegetarian() const { return isVegetarian; }
+    double getPrice() const { return price; }
+
+    void print() const {
+        printf("%s, %.2f元 -- %s\n", name.c_str(), price, description.c_str());
+        if (isVegetarian) {
+            printf("  (素食)\n");
+        }
+    }
+};
+
+// 迭代器接口
+template <typename T>
 class Iterator {
 public:
-    typedef typename std::vector<T>::iterator iter_type;
-    Iterator(U* p_data, bool reverse = false) : m_p_data_(p_data) {
-        m_it_ = m_p_data_->m_data_.begin();
-    }
-
-    void First() {
-        m_it_ = m_p_data_->m_data_.begin();
-    }
-
-    void Next() {
-        m_it_++;
-    }
-
-    bool IsDone() {
-        return (m_it_ == m_p_data_->m_data_.end());
-    }
-
-    iter_type Current() {
-        return m_it_;
-    }
-
-private:
-    U* m_p_data_;
-    iter_type m_it_;
+    virtual bool hasNext() const = 0;
+    virtual T next() = 0;
+    virtual ~Iterator() = default;
 };
 
-/**
- * Generic Collections/Containers provides one or several methods for retrieving
- * fresh iterator instances, compatible with the collection class.
- */
+// 聚合接口
+template <typename T>
+class Aggregate {
+public:
+    virtual unique_ptr<Iterator<T>> createIterator() const = 0;
+    virtual ~Aggregate() = default;
+};
 
-template <class T>
-class Container {
-    friend class Iterator<T, Container>;
+// 具体迭代器：基于 vector 的 Menu 迭代器
+class MenuIterator : public Iterator<MenuItem> {
+private:
+    const vector<MenuItem>& items;
+    size_t position;
 
 public:
-    void Add(T a) {
-        m_data_.push_back(a);
+    MenuIterator(const vector<MenuItem>& items) : items(items), position(0) {}
+
+    bool hasNext() const override {
+        return position < items.size();
     }
 
-    Iterator<T, Container>* CreateIterator() {
-        return new Iterator<T, Container>(this);
+    MenuItem next() override {
+        if (hasNext()) {
+            return items[position++];
+        }
+        throw out_of_range("迭代器已到末尾");
     }
-
-private:
-    std::vector<T> m_data_;
 };
 
-class Data {
+// 菜单类（聚合类）
+class Menu : public Aggregate<MenuItem> {
+private:
+    vector<MenuItem> menuItems;
+
 public:
-    Data(int a = 0) : m_data_(a) {}
-
-    void set_data(int a) {
-        m_data_ = a;
+    void addItem(const MenuItem& item) {
+        menuItems.push_back(item);
     }
 
-    int data() {
-        return m_data_;
+    unique_ptr<Iterator<MenuItem>> createIterator() const override {
+        return make_unique<MenuIterator>(this->menuItems);
     }
-
-private:
-    int m_data_;
 };
-
-/**
- * The client code may or may not know about the Concrete Iterator or Collection
- * classes, for this implementation the container is generic so you can used
- * with an int or with a custom class.
- */
-void ClientCode() {
-    std::cout << "________________Iterator with int______________________________________" << std::endl;
-    Container<int> cont;
-
-    for (int i = 0; i < 10; i++) {
-        cont.Add(i);
-    }
-
-    Iterator<int, Container<int>>* it = cont.CreateIterator();
-    for (it->First(); !it->IsDone(); it->Next()) {
-        std::cout << *it->Current() << std::endl;
-    }
-
-    Container<Data> cont2;
-    Data a(100), b(1000), c(10000);
-    cont2.Add(a);
-    cont2.Add(b);
-    cont2.Add(c);
-
-    std::cout << "________________Iterator with custom Class______________________________" << std::endl;
-    Iterator<Data, Container<Data>>* it2 = cont2.CreateIterator();
-    for (it2->First(); !it2->IsDone(); it2->Next()) {
-        std::cout << it2->Current()->data() << std::endl;
-    }
-    delete it;
-    delete it2;
-}
 
 int main() {
-    ClientCode();
+    // 创建菜单
+    Menu menu;
+
+    // 添加菜单项
+    menu.addItem(MenuItem("汉堡", "新鲜牛肉汉堡", false, 18.5));
+    menu.addItem(MenuItem("沙拉", "蔬菜沙拉配酸奶酱", true, 12.0));
+    menu.addItem(MenuItem("披萨", "意大利香肠披萨", false, 22.0));
+    menu.addItem(MenuItem("水果汁", "鲜榨橙汁", true, 8.0));
+
+    // 使用迭代器遍历菜单
+    auto iterator = menu.createIterator();
+
+    printf("菜单列表：\n");
+    while (iterator->hasNext()) {
+        MenuItem item = iterator->next();
+        item.print();
+    }
+
     return 0;
 }
+```
+
+执行结果：
+
+```text
+菜单列表：
+汉堡, 18.50元 -- 新鲜牛肉汉堡
+沙拉, 12.00元 -- 蔬菜沙拉配酸奶酱
+  (素食)
+披萨, 22.00元 -- 意大利香肠披萨
+水果汁, 8.00元 -- 鲜榨橙汁
+  (素食)
 ```
 
 ### 命令模式
 
-命令模式是一种行为设计模式， 它可将请求转换为一个包含与请求相关的所有信息的独立对象。 该转换让你能根据不同的请求将方法参数化、 延迟请求执行或将其放入队列中， 且能实现可撤销操作。
+| 模式名称 | 使用场景                        | 例子                                   |
+| -------- | ------------------------------- | -------------------------------------- |
+| 命令模式 | 将请求封装为对象，支持撤销/重做 | 实现操作回退功能，如撤销上一步编辑操作 |
 
 ```cpp
-/**
- * The Command interface declares a method for executing a command.
- */
+#include <cstdio>
+#include <vector>
+#include <string>
+#include <memory>
+#include <stack>
+
+using namespace std;
+
+// 接收者类：实际执行操作的对象
+class TextEditor {
+private:
+    string content;
+
+public:
+    void write(const string& text) {
+        content += text;
+        printf("当前内容: %s\n", content.c_str());
+    }
+
+    void deleteContent(int length) {
+        if (length > (int)content.size()) length = content.size();
+        content.erase(content.size() - length, length);
+        printf("当前内容: %s\n", content.c_str());
+    }
+
+    string getContent() const {
+        return content;
+    }
+};
+
+// 命令接口
 class Command {
 public:
-    virtual ~Command() {
-    }
-    virtual void Execute() const = 0;
+    virtual ~Command() = default;
+    virtual void execute() = 0;
+    virtual void undo() = 0;
 };
-/**
- * Some commands can implement simple operations on their own.
- */
-class SimpleCommand : public Command {
+
+// 具体命令类：写入操作
+class WriteCommand : public Command {
 private:
-    std::string pay_load_;
+    TextEditor& editor;
+    string text;
 
 public:
-    explicit SimpleCommand(std::string pay_load) : pay_load_(pay_load) {
+    WriteCommand(TextEditor& editor, const string& text)
+        : editor(editor), text(text) {}
+
+    void execute() override {
+        editor.write(text);
     }
-    void Execute() const override {
-        std::cout << "SimpleCommand: See, I can do simple things like printing (" << this->pay_load_ << ")\n";
+
+    void undo() override {
+        editor.deleteContent(text.size());
     }
 };
 
-/**
- * The Receiver classes contain some important business logic. They know how to
- * perform all kinds of operations, associated with carrying out a request. In
- * fact, any class may serve as a Receiver.
- */
-class Receiver {
-public:
-    void DoSomething(const std::string& a) {
-        std::cout << "Receiver: Working on (" << a << ".)\n";
-    }
-    void DoSomethingElse(const std::string& b) {
-        std::cout << "Receiver: Also working on (" << b << ".)\n";
-    }
-};
-
-/**
- * However, some commands can delegate more complex operations to other objects,
- * called "receivers."
- */
-class ComplexCommand : public Command {
-    /**
-     * @var Receiver
-     */
+// 调用者类：管理命令的执行与撤销
+class CommandInvoker {
 private:
-    Receiver* receiver_;
-    /**
-     * Context data, required for launching the receiver's methods.
-     */
-    std::string a_;
-    std::string b_;
-    /**
-     * Complex commands can accept one or several receiver objects along with any
-     * context data via the constructor.
-     */
-public:
-    ComplexCommand(Receiver* receiver, std::string a, std::string b) : receiver_(receiver), a_(a), b_(b) {
-    }
-    /**
-     * Commands can delegate to any methods of a receiver.
-     */
-    void Execute() const override {
-        std::cout << "ComplexCommand: Complex stuff should be done by a receiver object.\n";
-        this->receiver_->DoSomething(this->a_);
-        this->receiver_->DoSomethingElse(this->b_);
-    }
-};
+    stack<shared_ptr<Command>> history;
 
-/**
- * The Invoker is associated with one or several commands. It sends a request to
- * the command.
- */
-class Invoker {
-    /**
-     * @var Command
-     */
-private:
-    Command* on_start_;
-    /**
-     * @var Command
-     */
-    Command* on_finish_;
-    /**
-     * Initialize commands.
-     */
 public:
-    ~Invoker() {
-        delete on_start_;
-        delete on_finish_;
+    void executeCommand(shared_ptr<Command> command) {
+        command->execute();
+        history.push(command);
     }
 
-    void SetOnStart(Command* command) {
-        this->on_start_ = command;
-    }
-    void SetOnFinish(Command* command) {
-        this->on_finish_ = command;
-    }
-    /**
-     * The Invoker does not depend on concrete command or receiver classes. The
-     * Invoker passes a request to a receiver indirectly, by executing a command.
-     */
-    void DoSomethingImportant() {
-        std::cout << "Invoker: Does anybody want something done before I begin?\n";
-        if (this->on_start_) {
-            this->on_start_->Execute();
-        }
-        std::cout << "Invoker: ...doing something really important...\n";
-        std::cout << "Invoker: Does anybody want something done after I finish?\n";
-        if (this->on_finish_) {
-            this->on_finish_->Execute();
+    void undo() {
+        if (!history.empty()) {
+            shared_ptr<Command> command = history.top();
+            command->undo();
+            history.pop();
+        } else {
+            printf("没有可撤销的操作。\n");
         }
     }
 };
-/**
- * The client code can parameterize an invoker with any commands.
- */
 
 int main() {
-    Invoker* invoker = new Invoker;
-    invoker->SetOnStart(new SimpleCommand("Say Hi!"));
-    Receiver* receiver = new Receiver;
-    invoker->SetOnFinish(new ComplexCommand(receiver, "Send email", "Save report"));
-    invoker->DoSomethingImportant();
+    TextEditor editor;
+    CommandInvoker invoker;
 
-    delete invoker;
-    delete receiver;
+    // 执行写入操作
+    invoker.executeCommand(make_shared<WriteCommand>(editor, "Hello "));
+    invoker.executeCommand(make_shared<WriteCommand>(editor, "World!"));
+    invoker.executeCommand(make_shared<WriteCommand>(editor, " How are you?"));
+
+    // 撤销操作
+    printf("\n--- 开始撤销 ---\n");
+    invoker.undo();
+    invoker.undo();
+    invoker.undo();
+    invoker.undo(); // 没有更多可撤销的内容
 
     return 0;
 }
 ```
 
+执行结果：
+
+```text
+当前内容: Hello
+当前内容: Hello World!
+当前内容: Hello World! How are you?
+
+--- 开始撤销 ---
+当前内容: Hello World!
+当前内容: Hello
+当前内容:
+没有可撤销的操作。
+```
+
 ### 访问者模式
 
-责任链模式是一种行为设计模式， 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。
+| 模式名称   | 使用场景                       | 例子                                       |
+| ---------- | ------------------------------ | ------------------------------------------ |
+| 访问者模式 | 在不修改结构的前提下增加新操作 | 对文档元素（如段落、图片）进行不同格式导出 |
 
 ```cpp
-/**
- * The Handler interface declares a method for building the chain of handlers.
- * It also declares a method for executing a request.
- */
-class Handler {
+#include <cstdio>
+#include <vector>
+#include <string>
+#include <memory>
+#include <iostream>
+
+using namespace std;
+
+// 前向声明
+class Paragraph;
+class Image;
+class ExporterVisitor;
+
+// 元素接口
+class DocumentElement {
 public:
-    virtual Handler* SetNext(Handler* handler) = 0;
-    virtual std::string Handle(std::string request) = 0;
+    virtual ~DocumentElement() = default;
+    virtual void accept(ExporterVisitor& visitor) = 0;
 };
-/**
- * The default chaining behavior can be implemented inside a base handler class.
- */
-class AbstractHandler : public Handler {
-    /**
-     * @var Handler
-     */
+
+// 段落类
+class Paragraph : public DocumentElement {
 private:
-    Handler* next_handler_;
+    string text;
 
 public:
-    AbstractHandler() : next_handler_(nullptr) {
-    }
-    Handler* SetNext(Handler* handler) override {
-        this->next_handler_ = handler;
-        // Returning a handler from here will let us link handlers in a convenient
-        // way like this:
-        // $monkey->setNext($squirrel)->setNext($dog);
-        return handler;
-    }
-    std::string Handle(std::string request) override {
-        if (this->next_handler_) {
-            return this->next_handler_->Handle(request);
-        }
+    Paragraph(const string& text) : text(text) {}
 
-        return {};
-    }
+    const string& getText() const { return text; }
+
+    void accept(ExporterVisitor& visitor) override;
 };
-/**
- * All Concrete Handlers either handle a request or pass it to the next handler
- * in the chain.
- */
-class MonkeyHandler : public AbstractHandler {
+
+// 图片类
+class Image : public DocumentElement {
+private:
+    string url;
+
 public:
-    std::string Handle(std::string request) override {
-        if (request == "Banana") {
-            return "Monkey: I'll eat the " + request + ".\n";
-        } else {
-            return AbstractHandler::Handle(request);
-        }
-    }
+    Image(const string& url) : url(url) {}
+
+    const string& getUrl() const { return url; }
+
+    void accept(ExporterVisitor& visitor) override;
 };
-class SquirrelHandler : public AbstractHandler {
+
+// 访问者接口（导出器）
+class ExporterVisitor {
 public:
-    std::string Handle(std::string request) override {
-        if (request == "Nut") {
-            return "Squirrel: I'll eat the " + request + ".\n";
-        } else {
-            return AbstractHandler::Handle(request);
-        }
-    }
+    virtual ~ExporterVisitor() = default;
+    virtual void visit(const Paragraph& paragraph) = 0;
+    virtual void visit(const Image& image) = 0;
 };
-class DogHandler : public AbstractHandler {
+
+// HTML 导出器
+class HtmlExporter : public ExporterVisitor {
 public:
-    std::string Handle(std::string request) override {
-        if (request == "MeatBall") {
-            return "Dog: I'll eat the " + request + ".\n";
-        } else {
-            return AbstractHandler::Handle(request);
-        }
+    void visit(const Paragraph& paragraph) override {
+        printf("<p>%s</p>\n", paragraph.getText().c_str());
+    }
+
+    void visit(const Image& image) override {
+        printf("<img src=\"%s\" />\n", image.getUrl().c_str());
     }
 };
-/**
- * The client code is usually suited to work with a single handler. In most
- * cases, it is not even aware that the handler is part of a chain.
- */
-void ClientCode(Handler& handler) {
-    std::vector<std::string> food = {"Nut", "Banana", "Cup of coffee"};
-    for (const std::string& f : food) {
-        std::cout << "Client: Who wants a " << f << "?\n";
-        const std::string result = handler.Handle(f);
-        if (!result.empty()) {
-            std::cout << "  " << result;
-        } else {
-            std::cout << "  " << f << " was left untouched.\n";
-        }
+
+// 纯文本导出器
+class PlainTextExporter : public ExporterVisitor {
+public:
+    void visit(const Paragraph& paragraph) override {
+        printf("%s\n", paragraph.getText().c_str());
     }
+
+    void visit(const Image& image) override {
+        printf("[图片: %s]\n", image.getUrl().c_str());
+    }
+};
+
+// Markdown 导出器
+class MarkdownExporter : public ExporterVisitor {
+public:
+    void visit(const Paragraph& paragraph) override {
+        printf("%s\n\n", paragraph.getText().c_str());
+    }
+
+    void visit(const Image& image) override {
+        printf("![图片](%s)\n", image.getUrl().c_str());
+    }
+};
+
+// 为了能调用 accept 方法，需要在类外实现
+void Paragraph::accept(ExporterVisitor& visitor) {
+    visitor.visit(*this);
 }
-/**
- * The other part of the client code constructs the actual chain.
- */
+
+void Image::accept(ExporterVisitor& visitor) {
+    visitor.visit(*this);
+}
+
+// 文档类，包含多个文档元素
+class Document {
+private:
+    vector<shared_ptr<DocumentElement>> elements;
+
+public:
+    void addElement(const shared_ptr<DocumentElement>& element) {
+        elements.push_back(element);
+    }
+
+    void exportWith(ExporterVisitor& visitor) {
+        for (const auto& element : elements) {
+            element->accept(visitor);
+        }
+    }
+};
+
 int main() {
-    MonkeyHandler* monkey = new MonkeyHandler;
-    SquirrelHandler* squirrel = new SquirrelHandler;
-    DogHandler* dog = new DogHandler;
-    monkey->SetNext(squirrel)->SetNext(dog);
+    // 创建文档并添加内容
+    Document doc;
+    doc.addElement(make_shared<Paragraph>("欢迎使用文档导出系统"));
+    doc.addElement(make_shared<Image>("https://example.com/logo.png"));
+    doc.addElement(make_shared<Paragraph>("这是第二段文字"));
 
-    /**
-     * The client should be able to send a request to any handler, not just the
-     * first one in the chain.
-     */
-    std::cout << "Chain: Monkey > Squirrel > Dog\n\n";
-    ClientCode(*monkey);
-    std::cout << "\n";
-    std::cout << "Subchain: Squirrel > Dog\n\n";
-    ClientCode(*squirrel);
+    printf("=== 导出为 HTML ===\n");
+    HtmlExporter htmlExporter;
+    doc.exportWith(htmlExporter);
 
-    delete monkey;
-    delete squirrel;
-    delete dog;
+    printf("\n=== 导出为纯文本 ===\n");
+    PlainTextExporter plainExporter;
+    doc.exportWith(plainExporter);
+
+    printf("\n=== 导出为 Markdown ===\n");
+    MarkdownExporter markdownExporter;
+    doc.exportWith(markdownExporter);
 
     return 0;
 }
+```
+
+执行结果：
+
+```text
+=== 导出为 HTML ===
+<p>欢迎使用文档导出系统</p>
+<img src="https://example.com/logo.png" />
+<p>这是第二段文字</p>
+
+=== 导出为纯文本 ===
+欢迎使用文档导出系统
+[图片: https://example.com/logo.png]
+这是第二段文字
+
+=== 导出为 Markdown ===
+欢迎使用文档导出系统
+
+![图片](https://example.com/logo.png)
+这是第二段文字
 ```
 
 ```{toctree}
