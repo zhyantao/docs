@@ -274,330 +274,196 @@ int main() {
 
 ### 生成器模式
 
+构建不同配置的计算机，如 CPU、内存、硬盘组合。
+
 ```cpp
-/**
- * It makes sense to use the Builder pattern only when your products are quite
- * complex and require extensive configuration.
- *
- * Unlike in other creational patterns, different concrete builders can produce
- * unrelated products. In other words, results of various builders may not
- * always follow the same interface.
- */
+#include <iostream>
+#include <string>
+using namespace std;
 
-class Product1 {
-public:
-    std::vector<std::string> parts_;
-    void ListParts() const {
-        std::cout << "Product parts: ";
-        for (size_t i = 0; i < parts_.size(); i++) {
-            if (parts_[i] == parts_.back()) {
-                std::cout << parts_[i];
-            } else {
-                std::cout << parts_[i] << ", ";
-            }
-        }
-        std::cout << "\n\n";
-    }
-};
-
-/**
- * The Builder interface specifies methods for creating the different parts of
- * the Product objects.
- */
-class Builder {
-public:
-    virtual ~Builder() {}
-    virtual void ProducePartA() const = 0;
-    virtual void ProducePartB() const = 0;
-    virtual void ProducePartC() const = 0;
-};
-/**
- * The Concrete Builder classes follow the Builder interface and provide
- * specific implementations of the building steps. Your program may have several
- * variations of Builders, implemented differently.
- */
-class ConcreteBuilder1 : public Builder {
+// ================== 产品类：计算机 ==================
+class Computer {
 private:
-    Product1* product;
+    string cpu;
+    string ram;
+    string storage;
 
-    /**
-     * A fresh builder instance should contain a blank product object, which is
-     * used in further assembly.
-     */
 public:
-    ConcreteBuilder1() {
-        this->Reset();
+    void setCPU(const string& cpuType) {
+        cpu = cpuType;
     }
 
-    ~ConcreteBuilder1() {
-        delete product;
+    void setRAM(const string& ramSize) {
+        ram = ramSize;
     }
 
-    void Reset() {
-        this->product = new Product1();
-    }
-    /**
-     * All production steps work with the same product instance.
-     */
-
-    void ProducePartA() const override {
-        this->product->parts_.push_back("PartA1");
+    void setStorage(const string& storageSize) {
+        storage = storageSize;
     }
 
-    void ProducePartB() const override {
-        this->product->parts_.push_back("PartB1");
-    }
-
-    void ProducePartC() const override {
-        this->product->parts_.push_back("PartC1");
-    }
-
-    /**
-     * Concrete Builders are supposed to provide their own methods for
-     * retrieving results. That's because various types of builders may create
-     * entirely different products that don't follow the same interface.
-     * Therefore, such methods cannot be declared in the base Builder interface
-     * (at least in a statically typed programming language). Note that PHP is a
-     * dynamically typed language and this method CAN be in the base interface.
-     * However, we won't declare it there for the sake of clarity.
-     *
-     * Usually, after returning the end result to the client, a builder instance
-     * is expected to be ready to start producing another product. That's why
-     * it's a usual practice to call the reset method at the end of the
-     * `getProduct` method body. However, this behavior is not mandatory, and
-     * you can make your builders wait for an explicit reset call from the
-     * client code before disposing of the previous result.
-     */
-
-    /**
-     * Please be careful here with the memory ownership. Once you call
-     * GetProduct the user of this function is responsable to release this
-     * memory. Here could be a better option to use smart pointers to avoid
-     * memory leaks
-     */
-
-    Product1* GetProduct() {
-        Product1* result = this->product;
-        this->Reset();
-        return result;
+    void showSpecs() const {
+        cout << "电脑配置：" << endl;
+        cout << "CPU: " << cpu << endl;
+        cout << "内存: " << ram << endl;
+        cout << "硬盘: " << storage << endl;
     }
 };
 
-/**
- * The Director is only responsible for executing the building steps in a
- * particular sequence. It is helpful when producing products according to a
- * specific order or configuration. Strictly speaking, the Director class is
- * optional, since the client can control builders directly.
- */
+// ================== 构建器接口 ==================
+class IComputerBuilder {
+public:
+    virtual void buildCPU() = 0;
+    virtual void buildRAM() = 0;
+    virtual void buildStorage() = 0;
+    virtual Computer* getComputer() = 0;
+    virtual ~IComputerBuilder() = default;
+};
+
+// ================== 具体构建器：游戏电脑 ==================
+class GamingComputerBuilder : public IComputerBuilder {
+private:
+    Computer* computer;
+
+public:
+    GamingComputerBuilder() {
+        computer = new Computer();
+    }
+
+    void buildCPU() override {
+        computer->setCPU("Intel i9-13900K");
+    }
+
+    void buildRAM() override {
+        computer->setRAM("64GB DDR5");
+    }
+
+    void buildStorage() override {
+        computer->setStorage("2TB NVMe SSD");
+    }
+
+    Computer* getComputer() override {
+        return computer;
+    }
+};
+
+// ================== 具体构建器：办公电脑 ==================
+class OfficeComputerBuilder : public IComputerBuilder {
+private:
+    Computer* computer;
+
+public:
+    OfficeComputerBuilder() {
+        computer = new Computer();
+    }
+
+    void buildCPU() override {
+        computer->setCPU("Intel i5-13400");
+    }
+
+    void buildRAM() override {
+        computer->setRAM("16GB DDR4");
+    }
+
+    void buildStorage() override {
+        computer->setStorage("512GB SSD");
+    }
+
+    Computer* getComputer() override {
+        return computer;
+    }
+};
+
+// ================== 指挥者类 ==================
 class Director {
-    /**
-     * @var Builder
-     */
 private:
-    Builder* builder;
-    /**
-     * The Director works with any builder instance that the client code passes
-     * to it. This way, the client code may alter the final type of the newly
-     * assembled product.
-     */
+    IComputerBuilder* builder;
 
 public:
-    void set_builder(Builder* builder) {
-        this->builder = builder;
+    void setBuilder(IComputerBuilder* newBuilder) {
+        builder = newBuilder;
     }
 
-    /**
-     * The Director can construct several product variations using the same
-     * building steps.
-     */
-
-    void BuildMinimalViableProduct() {
-        this->builder->ProducePartA();
-    }
-
-    void BuildFullFeaturedProduct() {
-        this->builder->ProducePartA();
-        this->builder->ProducePartB();
-        this->builder->ProducePartC();
+    void constructComputer() {
+        builder->buildCPU();
+        builder->buildRAM();
+        builder->buildStorage();
     }
 };
-/**
- * The client code creates a builder object, passes it to the director and then
- * initiates the construction process. The end result is retrieved from the
- * builder object.
- */
-/**
- * I used raw pointers for simplicity however you may prefer to use smart
- * pointers here
- */
-void ClientCode(Director& director) {
-    ConcreteBuilder1* builder = new ConcreteBuilder1();
-    director.set_builder(builder);
-    std::cout << "Standard basic product:\n";
-    director.BuildMinimalViableProduct();
 
-    Product1* p = builder->GetProduct();
-    p->ListParts();
-    delete p;
-
-    std::cout << "Standard full featured product:\n";
-    director.BuildFullFeaturedProduct();
-
-    p = builder->GetProduct();
-    p->ListParts();
-    delete p;
-
-    // Remember, the Builder pattern can be used without a Director class.
-    std::cout << "Custom product:\n";
-    builder->ProducePartA();
-    builder->ProducePartC();
-    p = builder->GetProduct();
-    p->ListParts();
-    delete p;
-
-    delete builder;
-}
-
+// ================== 主函数示例 ==================
 int main() {
-    Director* director = new Director();
-    ClientCode(*director);
-    delete director;
+    Director director;
+
+    // 构建游戏电脑
+    GamingComputerBuilder gamingBuilder;
+    director.setBuilder(&gamingBuilder);
+    director.constructComputer();
+    Computer* gamingPC = gamingBuilder.getComputer();
+    gamingPC->showSpecs();
+
+    cout << "-------------------------" << endl;
+
+    // 构建办公电脑
+    OfficeComputerBuilder officeBuilder;
+    director.setBuilder(&officeBuilder);
+    director.constructComputer();
+    Computer* officePC = officeBuilder.getComputer();
+    officePC->showSpecs();
+
+    // 手动释放内存（可考虑使用智能指针）
+    delete gamingPC;
+    delete officePC;
+
     return 0;
 }
 ```
 
 ### 原型模式
 
+复制已有用户配置生成新用户默认设置。
+
 ```cpp
-using std::string;
+#include <iostream>
+#include <string>
+using namespace std;
 
-// Prototype Design Pattern
-//
-// Intent: Lets you copy existing objects without making your code dependent on
-// their classes.
-
-enum Type {
-    PROTOTYPE_1 = 0,
-    PROTOTYPE_2
-};
-
-/**
- * The example class that has cloning ability. We'll see how the values of field
- * with different types will be cloned.
- */
-
-class Prototype {
-protected:
-    string prototype_name_;
-    float prototype_field_;
-
+// ================== 原型接口 ==================
+class UserConfigPrototype {
 public:
-    Prototype() {}
-    Prototype(string prototype_name) : prototype_name_(prototype_name) {}
-    virtual ~Prototype() {}
-    virtual Prototype* Clone() const = 0;
-    virtual void Method(float prototype_field) {
-        this->prototype_field_ = prototype_field;
-        std::cout << "Call Method from " << prototype_name_ << " with field : " << prototype_field
-                  << std::endl;
-    }
+    virtual UserConfigPrototype* clone() const = 0; // 克隆接口
+    virtual void print() const = 0;
+    virtual ~UserConfigPrototype() = default;
 };
 
-/**
- * ConcretePrototype1 is a Sub-Class of Prototype and implement the Clone Method
- * In this example all data members of Prototype Class are in the Stack. If you
- * have pointers in your properties for ex: String* name_ ,you will need to
- * implement the Copy-Constructor to make sure you have a deep copy from the
- * clone method
- */
-
-class ConcretePrototype1 : public Prototype {
+// ================== 具体原型类 ==================
+class UserConfig : public UserConfigPrototype {
 private:
-    float concrete_prototype_field1_;
+    string ipAddress;
 
 public:
-    ConcretePrototype1(string prototype_name, float concrete_prototype_field)
-        : Prototype(prototype_name), concrete_prototype_field1_(concrete_prototype_field) {}
+    explicit UserConfig(const string& ip) : ipAddress(ip) {}
 
-    /**
-     * Notice that Clone method return a Pointer to a new ConcretePrototype1
-     * replica. so, the client (who call the clone method) has the responsability
-     * to free that memory. If you have smart pointer knowledge you may prefer to
-     * use unique_pointer here.
-     */
-    Prototype* Clone() const override {
-        return new ConcretePrototype1(*this);
+    // 深拷贝实现（因为 string 和 vector 本身已实现深拷贝）
+    UserConfigPrototype* clone() const override {
+        return new UserConfig(*this); // 调用拷贝构造函数
+    }
+
+    void print() const override {
+        cout << "当前 IP 配置: " << ipAddress << endl;
     }
 };
 
-class ConcretePrototype2 : public Prototype {
-private:
-    float concrete_prototype_field2_;
-
-public:
-    ConcretePrototype2(string prototype_name, float concrete_prototype_field)
-        : Prototype(prototype_name), concrete_prototype_field2_(concrete_prototype_field) {}
-    Prototype* Clone() const override {
-        return new ConcretePrototype2(*this);
-    }
-};
-
-/**
- * In PrototypeFactory you have two concrete prototypes, one for each concrete
- * prototype class, so each time you want to create a bullet , you can use the
- * existing ones and clone those.
- */
-
-class PrototypeFactory {
-private:
-    std::unordered_map<Type, Prototype*, std::hash<int>> prototypes_;
-
-public:
-    PrototypeFactory() {
-        prototypes_[Type::PROTOTYPE_1] = new ConcretePrototype1("PROTOTYPE_1 ", 50.f);
-        prototypes_[Type::PROTOTYPE_2] = new ConcretePrototype2("PROTOTYPE_2 ", 60.f);
-    }
-
-    /**
-     * Be carefull of free all memory allocated. Again, if you have smart pointers
-     * knowelege will be better to use it here.
-     */
-
-    ~PrototypeFactory() {
-        delete prototypes_[Type::PROTOTYPE_1];
-        delete prototypes_[Type::PROTOTYPE_2];
-    }
-
-    /**
-     * Notice here that you just need to specify the type of the prototype you
-     * want and the method will create from the object with this type.
-     */
-    Prototype* CreatePrototype(Type type) {
-        return prototypes_[type]->Clone();
-    }
-};
-
-void Client(PrototypeFactory& prototype_factory) {
-    std::cout << "Let's create a Prototype 1\n";
-
-    Prototype* prototype = prototype_factory.CreatePrototype(Type::PROTOTYPE_1);
-    prototype->Method(90);
-    delete prototype;
-
-    std::cout << "\n";
-
-    std::cout << "Let's create a Prototype 2 \n";
-
-    prototype = prototype_factory.CreatePrototype(Type::PROTOTYPE_2);
-    prototype->Method(10);
-
-    delete prototype;
-}
-
+// ================== 主函数示例 ==================
 int main() {
-    PrototypeFactory* prototype_factory = new PrototypeFactory();
-    Client(*prototype_factory);
-    delete prototype_factory;
+    // 创建原型对象
+    UserConfig original("26.10.128.0/20");
+    original.print();
+
+    // 克隆新对象
+    UserConfigPrototype* copy = original.clone();
+    copy->print();
+
+    delete copy; // 手动释放内存（如未使用智能指针）
 
     return 0;
 }
@@ -607,208 +473,51 @@ int main() {
 
 数据库连接池，确保全局唯一访问。
 
-::::{tab-set}
-
-:::{tab-item} 基础单例
-
 ```cpp
-/**
- * The Singleton class defines the `GetInstance` method that serves as an
- * alternative to constructor and lets clients access the same instance of this
- * class over and over.
- */
-class Singleton {
+#include <iostream>
+#include <cstdio>
+using namespace std;
 
-    /**
-     * The Singleton's constructor should always be private to prevent direct
-     * construction calls with the `new` operator.
-     */
-
-protected:
-    Singleton(const std::string value) : value_(value) {}
-
-    static Singleton* singleton_;
-
-    std::string value_;
-
-public:
-    /**
-     * Singletons should not be cloneable.
-     */
-    Singleton(Singleton& other) = delete;
-    /**
-     * Singletons should not be assignable.
-     */
-    void operator=(const Singleton&) = delete;
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     */
-
-    static Singleton* GetInstance(const std::string& value);
-    /**
-     * Finally, any singleton should define some business logic, which can be
-     * executed on its instance.
-     */
-    void SomeBusinessLogic() {
-        // ...
-    }
-
-    std::string value() const {
-        return value_;
-    }
-};
-
-Singleton* Singleton::singleton_ = nullptr;
-
-/**
- * Static methods should be defined outside the class.
- */
-Singleton* Singleton::GetInstance(const std::string& value) {
-    /**
-     * This is a safer way to create an instance. instance = new Singleton is
-     * dangeruous in case two instance threads wants to access at the same time
-     */
-    if (singleton_ == nullptr) {
-        singleton_ = new Singleton(value);
-    }
-    return singleton_;
-}
-
-void ThreadFoo() {
-    // Following code emulates slow initialization.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    Singleton* singleton = Singleton::GetInstance("FOO");
-    std::cout << singleton->value() << "\n";
-}
-
-void ThreadBar() {
-    // Following code emulates slow initialization.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    Singleton* singleton = Singleton::GetInstance("BAR");
-    std::cout << singleton->value() << "\n";
-}
-
-int main() {
-    std::cout << "If you see the same value, then singleton was reused (yay!\n"
-              << "If you see different values, then 2 singletons were created (booo!!)\n\n"
-              << "RESULT:\n";
-    std::thread t1(ThreadFoo);
-    std::thread t2(ThreadBar);
-    t1.join();
-    t2.join();
-
-    return 0;
-}
-```
-
-:::
-
-:::{tab-item} 线程安全单例
-
-```cpp
-/**
- * The Singleton class defines the `GetInstance` method that serves as an
- * alternative to constructor and lets clients access the same instance of this
- * class over and over.
- */
-class Singleton {
-
-    /**
-     * The Singleton's constructor/destructor should always be private to
-     * prevent direct construction/desctruction calls with the `new`/`delete`
-     * operator.
-     */
+// ================== 单例类：数据库连接池 ==================
+class DatabaseConnectionPool {
 private:
-    static Singleton* pinstance_;
-    static std::mutex mutex_;
-
-protected:
-    Singleton(const std::string value) : value_(value) {}
-    ~Singleton() {}
-    std::string value_;
-
-public:
-    /**
-     * Singletons should not be cloneable.
-     */
-    Singleton(Singleton& other) = delete;
-    /**
-     * Singletons should not be assignable.
-     */
-    void operator=(const Singleton&) = delete;
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     */
-
-    static Singleton* GetInstance(const std::string& value);
-    /**
-     * Finally, any singleton should define some business logic, which can be
-     * executed on its instance.
-     */
-    void SomeBusinessLogic() {
-        // ...
+    // 私有构造函数，防止外部创建实例
+    DatabaseConnectionPool() {
+        printf("数据库连接池已初始化\n");
     }
 
-    std::string value() const {
-        return value_;
+    // 删除拷贝构造函数和赋值操作符，防止复制
+    DatabaseConnectionPool(const DatabaseConnectionPool&) = delete;
+    DatabaseConnectionPool& operator=(const DatabaseConnectionPool&) = delete;
+
+public:
+    // 静态方法，提供全局访问点（C++11 起保证线程安全）
+    static DatabaseConnectionPool& getInstance() {
+        static DatabaseConnectionPool instance; // 局部静态变量，延迟加载
+        return instance;
+    }
+
+    // 示例方法：显示连接池状态
+    void connect() {
+        printf("连接到数据库...\n");
     }
 };
 
-/**
- * Static methods should be defined outside the class.
- */
-
-Singleton* Singleton::pinstance_{nullptr};
-std::mutex Singleton::mutex_;
-
-/**
- * The first time we call GetInstance we will lock the storage location
- *      and then we make sure again that the variable is null and then we
- *      set the value. RU:
- */
-Singleton* Singleton::GetInstance(const std::string& value) {
-    std::lock_guard<std::mutex> lock(mutex_);
-    if (pinstance_ == nullptr) {
-        pinstance_ = new Singleton(value);
-    }
-    return pinstance_;
-}
-
-void ThreadFoo() {
-    // Following code emulates slow initialization.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    Singleton* singleton = Singleton::GetInstance("FOO");
-    std::cout << singleton->value() << "\n";
-}
-
-void ThreadBar() {
-    // Following code emulates slow initialization.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    Singleton* singleton = Singleton::GetInstance("BAR");
-    std::cout << singleton->value() << "\n";
-}
-
+// ================== 主函数示例 ==================
 int main() {
-    std::cout << "If you see the same value, then singleton was reused (yay!\n"
-              << "If you see different values, then 2 singletons were created (booo!!)\n\n"
-              << "RESULT:\n";
-    std::thread t1(ThreadFoo);
-    std::thread t2(ThreadBar);
-    t1.join();
-    t2.join();
+    // 获取单例实例并调用方法
+    DatabaseConnectionPool& pool = DatabaseConnectionPool::getInstance();
+    pool.connect();
+
+    // 再次获取实例，验证是否为同一个对象
+    DatabaseConnectionPool& pool2 = DatabaseConnectionPool::getInstance();
+    if (&pool == &pool2) {
+        printf("pool 和 pool2 是同一个实例。\n");
+    }
 
     return 0;
 }
 ```
-
-:::
-::::
 
 ## 结构型模式
 
