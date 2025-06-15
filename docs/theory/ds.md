@@ -1211,7 +1211,102 @@ TreeNode* trimBST(TreeNode* root, int low, int high) {
 
 ### 树状数组
 
-### 线段树
+### 字典树
+
+字典树模板：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class TrieNode {
+public:
+    unordered_map<char, TrieNode*> children;
+    string word = ""; // 如果该节点是一个完整单词结尾，则保存该单词
+};
+
+class Trie {
+public:
+    TrieNode* root = new TrieNode();
+
+    // 插入单词到 Trie 中
+    void insertWord(string& word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            if (!node->children.count(c)) {
+                node->children[c] = new TrieNode();
+            }
+            node = node->children[c];
+        }
+        node->word = word;
+    }
+};
+
+int main() {
+    string words[] = {"oath", "pea", "eat", "rain"};
+
+    Trie trie;
+
+    // 构建 Trie
+    for (string& word : words) {
+        trie.insertWord(word);
+    }
+
+    return 0;
+}
+```
+
+```{uml}
+@startuml
+digraph Trie {
+    graph [rankdir = TD, nodesep = 0.3, ranksep = 0.5];
+    node [shape = circle, height = 0.6, width = 0.6, fontsize = 12];
+
+    // 根节点
+    root [label = "root", shape = plaintext];
+
+    // Trie 节点
+    node0 [label = ""];
+    node1 [label = "o"];
+    node2 [label = "a"];
+    node3 [label = "t"];
+    node4 [label = "h\n(word: oath)"];
+    node5 [label = "p"];
+    node6 [label = "e"];
+    node7 [label = "a"];
+    node8 [label = "a\n(word: pea)"];
+    node15 [label = "e"];
+    node9 [label = "a"];
+    node10 [label = "t\n(word: eat)"];
+    node11 [label = "r"];
+    node12 [label = "a"];
+    node13 [label = "i"];
+    node14 [label = "n\n(word: rain)"];
+
+    // 边连接
+    root -> node0;
+
+    node0 -> node1;
+    node1 -> node2;
+    node2 -> node3;
+    node3 -> node4;
+
+    node0 -> node5;
+    node5 -> node6;
+    node6 -> node7;
+    node7 -> node8;
+
+    node0 -> node15;
+    node15 -> node9;
+    node9 -> node10;
+
+    node0 -> node11;
+    node11 -> node12;
+    node12 -> node13;
+    node13 -> node14;
+}
+@enduml
+```
 
 ## 回溯算法
 
