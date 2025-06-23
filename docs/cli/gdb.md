@@ -1,4 +1,4 @@
-# GDB 调试指南
+# GDB
 
 (gdb_tips)=
 
