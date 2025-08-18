@@ -62,13 +62,15 @@ genhtml coverage_filtered.info -o coverage_report
 firefox coverage_report/index.html
 ```
 
-```{dropdown} lcov 常用参数
+````{dropdown} lcov 常用参数
+```
 # 只收集特定目录的数据
 lcov -c -d src/ -o coverage.info
 
 # 合并多个覆盖率数据
 lcov -a coverage1.info -a coverage2.info -o total.info
 ```
+````
 
 方法二：使用 gcovr (推荐)
 
@@ -83,7 +85,8 @@ gcovr -r . --html --html-details -o coverage_report.html
 firefox coverage_report.html
 ```
 
-```{dropdown} gcovr 常用参数
+````{dropdown} gcovr 常用参数
+```
 # 生成简洁的 HTML 报告
 gcovr -r . --html -o coverage.html
 
@@ -96,6 +99,7 @@ gcovr -r . --html --html-details --fail-under-line 90 -o coverage.html
 # 排除特定目录
 gcovr -r . --exclude 'test/*' --html -o coverage.html
 ```
+````
 
 ## 结果解读
 
