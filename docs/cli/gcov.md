@@ -115,3 +115,68 @@ gcovr -r . --exclude 'test/*' --html -o coverage.html
 - 行覆盖率（Line Coverage）
 - 函数覆盖率（Function Coverage）
 - 分支覆盖率（Branch Coverage）
+
+## 桩函数示例
+
+```cpp
+#include <cstdlib>
+#include <cstring>
+#include <uci.h>
+
+// 分配上下文失败桩函数
+struct uci_context* uci_alloc_context_stub_fail() {
+    return nullptr;
+}
+
+// 查找指针成功桩函数
+int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, char* str, bool extended) {
+    ptr->last = (struct uci_element*)malloc(sizeof(struct uci_element));
+    if (ptr->last) {
+        ptr->last->type = UCI_TYPE_OPTION;
+    }
+
+    ptr->p = (struct uci_package*)malloc(sizeof(struct uci_package));
+
+    ptr->value = NULL;
+
+    ptr->flags = uci_ptr::UCI_LOOKUP_COMPLETE;
+
+    ptr->o = (struct uci_option*)malloc(sizeof(struct uci_option));
+    if (ptr->o) {
+        ptr->o->type = UCI_TYPE_STRING;
+        ptr->o->v.string = strdup("test_value");
+    }
+
+    return UCI_OK;
+}
+
+// 设置成功桩函数
+int uci_set_stub_success(struct uci_context* ctx, struct uci_ptr* ptr) {
+    return UCI_OK;
+}
+
+// 保存成功桩函数
+int uci_save_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
+
+// 提交成功桩函数
+int uci_commit_stub_success(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
+    return UCI_OK;
+}
+
+// 提交失败桩函数
+int uci_commit_stub_fail(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
+    return UCI_FRR_UNKNOWN;
+}
+
+// 卸载成功桩函数
+int uci_unload_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
+
+// 释放上下文成功桩函数
+void uci_free_context_stub_success(struct uci_context* ctx) {
+    // 空实现，用于成功情况的桩函数
+}
+```
