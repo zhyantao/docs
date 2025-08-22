@@ -5,7 +5,7 @@
 示例请参考：<https://gitee.com/zhyantao/misc/blob/master/leetcode/cpp/include/debug.h>
 
 ```cpp
-/////////////////////////////////////  ONLY FOR DEBUG USE /////////////////////////////////////
+///////////////////////////  ONLY FOR DEBUG USE  ///////////////////////////
 #ifndef DEBUG_H
 #define DEBUG_H
 
@@ -72,11 +72,9 @@ static inline void get_timestamp(char* buffer, size_t size) {
 // 重写 pr_debug(x...)，将日志打印到控制台
 #ifdef pr_debug
 #undef pr_debug
-// #define pr_debug(x...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, x)                   /* GCC 扩展语法
-// (非标准) */ #define pr_debug(...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, __VA_ARGS__)          /* C99
-// 语法 (标准) */
-#define pr_debug(fmt, ...) \
-    LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__) /* 比 pr_debug(...) 更安全 */
+// #define pr_debug(x...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, x)     /* GCC 扩展语法 (非标准) */
+// #define pr_debug(...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, __VA_ARGS__) /* C99 语法 (标准) */
+#define pr_debug(fmt, ...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__)
 #endif
 
 #endif // DEBUG_H
