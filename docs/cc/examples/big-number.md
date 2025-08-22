@@ -11,38 +11,25 @@
 int char2int(char ch) {
     if (!(('0' <= ch && ch <= '9') || ('a' <= ch && ch <= 'f') || ('A' <= ch && ch <= 'F'))) {
         std::cout << __FILE__ << ":" << __LINE__ << ":"
-                  << "invalid character: " << ch << ", it should between '0' ~ 'F'" << std::endl;
+                  << "invalid character: " << ch << ", it should between '0' ~ 'F'"
+                  << std::endl;
         return -1;
     }
     int ret = 0;
     switch (ch) {
     case 'F':
-    case 'f':
-        ret = 15;
-        break;
+    case 'f': ret = 15; break;
     case 'E':
-    case 'e':
-        ret = 14;
-        break;
+    case 'e': ret = 14; break;
     case 'D':
-    case 'd':
-        ret = 13;
-        break;
+    case 'd': ret = 13; break;
     case 'C':
-    case 'c':
-        ret = 12;
-        break;
+    case 'c': ret = 12; break;
     case 'B':
-    case 'b':
-        ret = 11;
-        break;
+    case 'b': ret = 11; break;
     case 'A':
-    case 'a':
-        ret = 10;
-        break;
-    default:
-        ret = (ch - '0');
-        break;
+    case 'a': ret = 10; break;
+    default: ret = (ch - '0'); break;
     }
     return ret;
 }
@@ -56,27 +43,13 @@ char int2char(int num) {
     }
     char ret = '0';
     switch (num) {
-    case 15:
-        ret = 'F';
-        break;
-    case 14:
-        ret = 'E';
-        break;
-    case 13:
-        ret = 'D';
-        break;
-    case 12:
-        ret = 'C';
-        break;
-    case 11:
-        ret = 'B';
-        break;
-    case 10:
-        ret = 'A';
-        break;
-    default:
-        ret = static_cast<char>(num + '0');
-        break;
+    case 15: ret = 'F'; break;
+    case 14: ret = 'E'; break;
+    case 13: ret = 'D'; break;
+    case 12: ret = 'C'; break;
+    case 11: ret = 'B'; break;
+    case 10: ret = 'A'; break;
+    default: ret = static_cast<char>(num + '0'); break;
     }
     return ret;
 }
@@ -157,8 +130,7 @@ std::string add(std::string num1, std::string num2, int base) {
         str.push_back(tmp);
     }
 
-    if (carry > 0)
-        str.push_back(int2char(carry));
+    if (carry > 0) str.push_back(int2char(carry));
 
     std::string ret(str.rbegin(), str.rend());
 
@@ -201,15 +173,13 @@ std::string multiply(std::string num1, std::string num2, int base) {
         }
 
         std::string rev(str.rbegin(), str.rend());
-        for (int k = 0; k < i; k++)
-            rev.push_back(int2char(0));
+        for (int k = 0; k < i; k++) rev.push_back(int2char(0));
         ret = add(ret, rev, base);
 
         std::string tmp3;
         if (char2int(carry) > 0) {
             tmp3.push_back(carry);
-            for (size_t k = 0; k < rev.length(); k++)
-                tmp3.push_back(int2char(0));
+            for (size_t k = 0; k < rev.length(); k++) tmp3.push_back(int2char(0));
         }
         ret = add(tmp3, ret, base);
     }
@@ -220,9 +190,7 @@ std::string multiply(std::string num1, std::string num2, int base) {
 // 计算 base 的 n 次幂，即 base^n
 std::string power(std::string base, int n) {
     std::string ret = "1";
-    for (int i = 0; i < n; i++) {
-        ret = multiply(ret, base, 10);
-    }
+    for (int i = 0; i < n; i++) { ret = multiply(ret, base, 10); }
     return ret;
 }
 

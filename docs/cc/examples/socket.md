@@ -189,8 +189,8 @@ ssize_t recv(int sockfd, void* buf, size_t len, int flags);
 #include <sys/socket.h>
 #include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr,
-               socklen_t addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags,
+               const struct sockaddr* dest_addr, socklen_t addrlen);
 ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr,
                  socklen_t* addrlen);
 ```
@@ -211,8 +211,8 @@ ssize_t recvmsg(int sockfd, struct msghdr* msg, int flags);
 #include <sys/socket.h>
 #include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void* buf, size_t len, int flags, const struct sockaddr* dest_addr,
-               socklen_t addrlen);
+ssize_t sendto(int sockfd, const void* buf, size_t len, int flags,
+               const struct sockaddr* dest_addr, socklen_t addrlen);
 ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr,
                  socklen_t* addrlen);
 ```
@@ -267,8 +267,7 @@ int main(int argc, char* argv[]) {
     }
 
     serverfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverfd < 0)
-        handle_error("ERROR opening socket");
+    if (serverfd < 0) handle_error("ERROR opening socket");
 
     bzero((char*)&serveraddr, sizeof(serveraddr));
     portno = atoi(argv[1]);
@@ -288,15 +287,13 @@ int main(int argc, char* argv[]) {
     while (1) {
         fd_set tempfds = readfds;
         int retval = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
-        if (retval < 0)
-            handle_error("ERROR in pselect");
+        if (retval < 0) handle_error("ERROR in pselect");
 
         for (int i = 0; i < FD_SETSIZE; i++) {
             if (FD_ISSET(i, &tempfds)) {
                 if (i == serverfd) {
                     clientfd = accept(serverfd, (struct sockaddr*)&clientaddr, &clilen);
-                    if (clientfd < 0)
-                        handle_error("ERROR on accept");
+                    if (clientfd < 0) handle_error("ERROR on accept");
                     FD_SET(clientfd, &readfds);
                 } else {
                     bzero(buffer, MAX_BUFFER_SIZE);
@@ -309,8 +306,7 @@ int main(int argc, char* argv[]) {
                     } else {
                         printf("Here is the message: %s\n", buffer);
                         n = write(i, "I got your message", 18);
-                        if (n < 0)
-                            handle_error("ERROR writing to socket");
+                        if (n < 0) handle_error("ERROR writing to socket");
                     }
                 }
             }
@@ -351,8 +347,7 @@ int main(int argc, char* argv[]) {
     }
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-        handle_error("ERROR opening socket");
+    if (sockfd < 0) handle_error("ERROR opening socket");
 
     bzero((char*)&serv_addr, sizeof(serv_addr));
     portno = atoi(argv[2]);
@@ -368,13 +363,11 @@ int main(int argc, char* argv[]) {
         bzero(buffer, MAX_BUFFER_SIZE);
         fgets(buffer, MAX_BUFFER_SIZE - 1, stdin);
         n = write(sockfd, buffer, strlen(buffer));
-        if (n < 0)
-            handle_error("ERROR writing to socket");
+        if (n < 0) handle_error("ERROR writing to socket");
 
         bzero(buffer, MAX_BUFFER_SIZE);
         n = read(sockfd, buffer, MAX_BUFFER_SIZE - 1);
-        if (n < 0)
-            handle_error("ERROR reading from socket");
+        if (n < 0) handle_error("ERROR reading from socket");
         printf("%s\n", buffer);
     }
 

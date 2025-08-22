@@ -7,21 +7,8 @@
 
 using namespace std;
 
-enum color {
-    WHITE,
-    BLACK,
-    RED,
-    GREEN,
-    BLUE,
-    YELLOW,
-    NUM_COLORS
-};
-enum datatype {
-    TYPE_INT8 = 1,
-    TYPE_INT16 = 2,
-    TYPE_INT32 = 4,
-    TYPE_INT64 = 8
-};
+enum color { WHITE, BLACK, RED, GREEN, BLUE, YELLOW, NUM_COLORS };
+enum datatype { TYPE_INT8 = 1, TYPE_INT16 = 2, TYPE_INT32 = 4, TYPE_INT64 = 8 };
 
 struct Point {
     enum datatype type;
@@ -33,16 +20,12 @@ struct Point {
     };
 };
 
-size_t datawidth(struct Point pt) {
-    return size_t(pt.type) * 3;
-}
+size_t datawidth(struct Point pt) { return size_t(pt.type) * 3; }
 
 int64_t l1norm(struct Point pt) {
     int64_t result = 0;
     switch (pt.type) {
-    case (TYPE_INT8):
-        result = abs(pt.data8[0]) + abs(pt.data8[1]) + abs(pt.data8[2]);
-        break;
+    case (TYPE_INT8): result = abs(pt.data8[0]) + abs(pt.data8[1]) + abs(pt.data8[2]); break;
     case (TYPE_INT16):
         result = abs(pt.data16[0]) + abs(pt.data16[1]) + abs(pt.data16[2]);
         break;
@@ -85,11 +68,7 @@ int main() {
 #include <stdio.h>
 
 int main() {
-    enum day {
-        Monday = 1,
-        Tuesday,
-        Wednesday
-    }; // 初始化
+    enum day { Monday = 1, Tuesday, Wednesday }; // 初始化
     enum day today = Tuesday; // 变量的使用
     printf("%d\n", Wednesday);
     return 0;
@@ -103,12 +82,7 @@ int main() {
 
 class Mat {
 public:
-    enum DataType {
-        TYPE8U,
-        TYPE8S,
-        TYPE32F,
-        TYPE64F
-    };
+    enum DataType { TYPE8U, TYPE8S, TYPE32F, TYPE64F };
 
 private:
     DataType type;
@@ -117,9 +91,7 @@ private:
 public:
     Mat(DataType type) : type(type), data(NULL) {}
 
-    DataType getType() const {
-        return type;
-    }
+    DataType getType() const { return type; }
 };
 
 int main() {

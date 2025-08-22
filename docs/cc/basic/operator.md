@@ -100,9 +100,7 @@ class MyTime {
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0) {
-        std::cout << "Constructor MyTime()" << std::endl;
-    }
+    MyTime() : hours(0), minutes(0) { std::cout << "Constructor MyTime()" << std::endl; }
 
     MyTime(int m) : hours(0), minutes(m) {
         std::cout << "Constructor MyTime(int)" << std::endl;
@@ -205,9 +203,7 @@ public:
         return sum;
     }
 
-    friend MyTime operator+(int m, const MyTime& t) {
-        return t + m;
-    }
+    friend MyTime operator+(int m, const MyTime& t) { return t + m; }
 
     std::string getTime() const {
         return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) +
@@ -362,9 +358,7 @@ class MyTime {
     int minutes;
 
 public:
-    MyTime() : hours(0), minutes(0) {
-        std::cout << "Constructor MyTime()" << std::endl;
-    }
+    MyTime() : hours(0), minutes(0) { std::cout << "Constructor MyTime()" << std::endl; }
 
     MyTime(int m) : hours(0), minutes(m) {
         std::cout << "Constructor MyTime(int)" << std::endl;

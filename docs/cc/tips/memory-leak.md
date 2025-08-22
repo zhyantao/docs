@@ -27,9 +27,7 @@ int main() {
     free(p);
     // the first memory will not be freed
 
-    for (int i = 0; i < 1024; i++) {
-        p = (int*)malloc(1024 * 1024 * 1024);
-    }
+    for (int i = 0; i < 1024; i++) { p = (int*)malloc(1024 * 1024 * 1024); }
     printf("End\n");
 
     return 0;
@@ -84,17 +82,14 @@ public:
         create(buf_len, data);
     }
 
-    ~MyString() {
-        delete[] this->characters;
-    }
+    ~MyString() { delete[] this->characters; }
 
     bool create(int buf_len, const char* data) {
         this->buf_len = buf_len;
 
         if (this->buf_len != 0) {
             this->characters = new char[this->buf_len]{};
-            if (data)
-                strncpy(this->characters, data, this->buf_len);
+            if (data) strncpy(this->characters, data, this->buf_len);
         }
 
         return true;

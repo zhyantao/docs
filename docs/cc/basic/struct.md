@@ -24,7 +24,8 @@ int main() {
     // stu.born = 2000;
     // stu.male = true;
 
-    printf("Student %s, born in %d, gender %s\n", stu.name, stu.born, stu.male ? "male" : "female");
+    printf("Student %s, born in %d, gender %s\n", stu.name, stu.born,
+           stu.male ? "male" : "female");
 
     struct Student students[100];
     students[50].born = 2002;

@@ -27,8 +27,7 @@ int main() {
 
     float result = mysquare(value);
 
-    if (result > 0)
-        cout << "The square is " << result << "." << endl;
+    if (result > 0) cout << "The square is " << result << "." << endl;
 
     return 0;
 }

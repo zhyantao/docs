@@ -14,8 +14,7 @@ void div(int n) {
 }
 
 int main() {
-    for (int n = -5; n <= 5; n++)
-        div(n);
+    for (int n = -5; n <= 5; n++) div(n);
     return 0;
 }
 ```

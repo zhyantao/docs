@@ -15,9 +15,7 @@ public:
     IntMat(size_t rows, size_t cols) : rows(rows), cols(cols) {
         data = new int[rows * cols]{};
     }
-    ~IntMat() {
-        delete[] data;
-    }
+    ~IntMat() { delete[] data; }
     IntMat(const IntMat&) = delete;
     IntMat& operator=(const IntMat&) = delete;
     int getElement(size_t r, size_t c);
@@ -33,8 +31,7 @@ int IntMat::getElement(size_t r, size_t c) {
 }
 
 bool IntMat::setElement(size_t r, size_t c, int value) {
-    if (r >= this->rows || c >= this->cols)
-        return false;
+    if (r >= this->rows || c >= this->cols) return false;
 
     data[this->cols * r + c] = value;
     return true;
@@ -50,9 +47,7 @@ public:
     FloatMat(size_t rows, size_t cols) : rows(rows), cols(cols) {
         data = new float[rows * cols]{};
     }
-    ~FloatMat() {
-        delete[] data;
-    }
+    ~FloatMat() { delete[] data; }
     FloatMat(const FloatMat&) = delete;
     FloatMat& operator=(const FloatMat&) = delete;
     float getElement(size_t r, size_t c);

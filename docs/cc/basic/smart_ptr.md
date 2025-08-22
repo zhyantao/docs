@@ -111,9 +111,7 @@ _1. 类的定义_
 class MyClass : public std::enable_shared_from_this<MyClass> {
 public:
     // ...
-    std::shared_ptr<MyClass> getSharedThis() {
-        return shared_from_this();
-    }
+    std::shared_ptr<MyClass> getSharedThis() { return shared_from_this(); }
 };
 ```
 
@@ -150,21 +148,15 @@ class MyClass : public std::enable_shared_from_this<MyClass> {
 public:
     MyClass(int value) : value_(value) {}
 
-    void printValue() const {
-        std::cout << "Value: " << value_ << std::endl;
-    }
+    void printValue() const { std::cout << "Value: " << value_ << std::endl; }
 
-    std::shared_ptr<MyClass> getSharedThis() const {
-        return shared_from_this();
-    }
+    std::shared_ptr<MyClass> getSharedThis() const { return shared_from_this(); }
 
 private:
     int value_;
 };
 
-void useSharedPtr(const std::shared_ptr<MyClass>& ptr) {
-    ptr->printValue();
-}
+void useSharedPtr(const std::shared_ptr<MyClass>& ptr) { ptr->printValue(); }
 
 int main() {
     auto obj = std::make_shared<MyClass>(42);

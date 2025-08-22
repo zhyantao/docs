@@ -11,12 +11,10 @@ int main() {
     int num_array1[5];                   // uninitialized array, random values
     int num_array2[5] = {0, 1, 2, 3, 4}; // initialization
 
-    for (int idx = 0; idx < 5; idx++)
-        cout << num_array1[idx] << " ";
+    for (int idx = 0; idx < 5; idx++) cout << num_array1[idx] << " ";
     cout << endl;
 
-    for (int idx = 0; idx < 5; idx++)
-        cout << num_array2[idx] << " ";
+    for (int idx = 0; idx < 5; idx++) cout << num_array2[idx] << " ";
     cout << endl;
 
     return 0;
@@ -35,8 +33,7 @@ using namespace std;
 void init_2d_array(float mat[][4], size_t rows, size_t cols) // error, arrays of unknown bound
 {
     for (int r = 0; r < rows; r++)
-        for (int c = 0; c < cols; c++)
-            mat[r][c] = r * c;
+        for (int c = 0; c < cols; c++) mat[r][c] = r * c;
 }
 
 int main() {
@@ -50,12 +47,10 @@ int main() {
     // init_2d_array(mat2, rows, cols);
 
     for (int r = 0; r < rows; r++)
-        for (int c = 0; c < cols; c++)
-            mat2[r][c] = r * c;
+        for (int c = 0; c < cols; c++) mat2[r][c] = r * c;
 
     for (int r = 0; r < rows; r++) {
-        for (int c = 0; c < cols; c++)
-            cout << mat2[r][c] << " ";
+        for (int c = 0; c < cols; c++) cout << mat2[r][c] << " ";
         cout << endl;
     }
     return 0;
@@ -71,9 +66,7 @@ int main() {
     // 数组必须有第二个列数
     char city[][10] = {"Beijing", "Shenzhen", "Shanghai", "Guangzhou"};
 
-    for (int i = 0; i < sizeof(city) / sizeof(city[0]); i++) {
-        printf("%s\n", city[i]);
-    }
+    for (int i = 0; i < sizeof(city) / sizeof(city[0]); i++) { printf("%s\n", city[i]); }
 
     return 0;
 }
@@ -135,22 +128,16 @@ public:
         delete[] name;
     }
 
-    void setName(const char* s) {
-        strncpy(name, s, 1024);
-    }
+    void setName(const char* s) { strncpy(name, s, 1024); }
 
-    void setBorn(int b) {
-        born = b;
-    }
+    void setBorn(int b) { born = b; }
 
     // the declarations, the definitions are out of the class
     void setGender(bool isMale);
     void printInfo();
 };
 
-void Student::setGender(bool isMale) {
-    male = isMale;
-}
+void Student::setGender(bool isMale) { male = isMale; }
 
 void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;

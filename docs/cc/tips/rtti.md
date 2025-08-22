@@ -12,9 +12,7 @@ protected:
 public:
     Person(string name = "") : name(name) {};
     virtual ~Person() {}
-    string getInfo() {
-        return name;
-    }
+    string getInfo() { return name; }
 };
 
 class Student : public Person {
@@ -22,9 +20,7 @@ class Student : public Person {
 
 public:
     Student(string name = "", string sid = "") : Person(name), studentid(sid) {};
-    string getInfo() {
-        return name + ":(" + studentid + ")";
-    }
+    string getInfo() { return name + ":(" + studentid + ")"; }
 };
 
 int main() {

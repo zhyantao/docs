@@ -29,9 +29,7 @@ int main(int argc, char* argv[]) {
     // 将 Ctrl + \ 信号与 sighandler_exit 函数关联
     sigaction(SIGQUIT, &sigact, NULL);
 
-    while (!quit) {
-        sleep(1);
-    }
+    while (!quit) { sleep(1); }
 
     return 0;
 }

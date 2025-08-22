@@ -17,9 +17,7 @@ int main() {
     int fd = -1; // file descriptor for the serial port
 
     fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY);
-    if (fd == -1) {
-        perror("open_port: Unable to open /dev/ttyUSB0 - ");
-    }
+    if (fd == -1) { perror("open_port: Unable to open /dev/ttyUSB0 - "); }
 
     struct termios options;
     tcgetattr(fd, &options);

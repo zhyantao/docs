@@ -109,17 +109,14 @@ public:
     // 取：同变量名
     // 存：值函数名为 set_varname
     // 短小的存取函数可用内联
-    int num_entries() const /* 尽可能使用 const */ {
-        return num_entries_;
-    }
-    void set_num_entries(int num_entries) {
-        num_entries_ = num_entries;
-    }
+    int num_entries() const /* 尽可能使用 const */ { return num_entries_; }
+    void set_num_entries(int num_entries) { num_entries_ = num_entries; }
 
     // 仅在需要拷贝对象时，使用拷贝构造函数
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
+    DISALLOW_COPY_AND_ASSIGN(
+        EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
 
     // 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
     const int kDaysInWeek = 7;      // const 变量用 k 开头，后跟大写开头单词
@@ -176,11 +173,9 @@ ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_na
     }
 
     switch (var) {
-    case 0:
-        break;
+    case 0: break;
 
-    default:
-        assert(false); /* 若 default 永不执行可使用 assert */
+    default: assert(false); /* 若 default 永不执行可使用 assert */
     }
 
     return x;

@@ -68,9 +68,7 @@ class OuterClass {
 public:
     class InnerClass {
     public:
-        void print() const {
-            std::cout << "InnerClass\n";
-        }
+        void print() const { std::cout << "InnerClass\n"; }
     };
 
     void createInner() {
@@ -116,18 +114,14 @@ protected:
 public:
     Base(int d) : data(d) {}
 
-    virtual void print() const {
-        std::cout << "Base: " << data << '\n';
-    }
+    virtual void print() const { std::cout << "Base: " << data << '\n'; }
 };
 
 class Derived : public Base {
 public:
     Derived(int d) : Base(d) {}
 
-    void print() const override {
-        std::cout << "Derived: " << data << '\n';
-    }
+    void print() const override { std::cout << "Derived: " << data << '\n'; }
 };
 
 int main() {

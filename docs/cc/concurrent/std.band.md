@@ -16,9 +16,7 @@ std::bind(函数, 参数1, 参数2, ...);
 #include <functional>
 #include <iostream>
 
-void myFunction(int a, int b, int c) {
-    std::cout << a << ", " << b << ", " << c << std::endl;
-}
+void myFunction(int a, int b, int c) { std::cout << a << ", " << b << ", " << c << std::endl; }
 
 int main() {
     auto f = std::bind(myFunction, 1, std::placeholders::_2, 3);

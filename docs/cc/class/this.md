@@ -33,22 +33,16 @@ public:
         delete[] name;
     }
 
-    void setName(const char* name) {
-        strncpy(this->name, name, 1024);
-    }
+    void setName(const char* name) { strncpy(this->name, name, 1024); }
 
-    void setBorn(int born) {
-        this->born = born;
-    }
+    void setBorn(int born) { this->born = born; }
 
     // the declarations, the definitions are out of the class
     void setGender(bool isMale);
     void printInfo();
 };
 
-void Student::setGender(bool isMale) {
-    male = isMale;
-}
+void Student::setGender(bool isMale) { male = isMale; }
 
 void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;

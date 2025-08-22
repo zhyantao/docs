@@ -29,9 +29,7 @@ int main() {
         cout << nl; // 使用 endl 会导致 tie 失效
     };
 
-    while (t--) {
-        solve();
-    }
+    while (t--) { solve(); }
     return 0;
 }
 ```
@@ -123,9 +121,7 @@ Complex Complex::operator+(const Complex& a) const {
 作为全局函数时，重载二元运算符需要两个参数，一元运算符需要一个参数。
 
 ```cpp
-Complex operator+(const Complex& a, int b) {
-    return Complex(a.real + b, a.img);
-}
+Complex operator+(const Complex& a, int b) { return Complex(a.real + b, a.img); }
 ```
 
 ```cpp
@@ -163,9 +159,7 @@ A.divide(A);
 
 ```cpp
 sort(v1.begin(), v1.end(), greater<int>());
-sort(v1.begin(), v1.end(), [](int a, int b) {
-    return a > b;
-});
+sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
 reverse(v1.begin(), v1.end());
 binary_search(v1.begin(), v1.end(), target);
 ```
@@ -429,9 +423,7 @@ priority_queue<int, vector<int>, greater<int>> PQ;
 ```cpp
 // 假设：我们想将 hashMap 中的 {key, value} 对存储到 priority queue 中
 unordered_map<int, int> hashMap;
-for (int num : nums) {
-    hashMap[num]++;
-}
+for (int num : nums) { hashMap[num]++; }
 
 // 创建一个根据哈希表的值升序排列的小根堆，并且只保存 k 个元素
 struct HashEntry {
@@ -439,18 +431,14 @@ struct HashEntry {
     int value;
 
     // 重载 > 运算符
-    bool operator>(const HashEntry& other) const {
-        return value > other.value;
-    }
+    bool operator>(const HashEntry& other) const { return value > other.value; }
 };
 
 priority_queue<HashEntry, vector<HashEntry>, greater<HashEntry>> minHeap;
 
 for (const auto& entry : hashMap) {
     minHeap.push({entry.first, entry.second});
-    if (minHeap.size() > k) {
-        minHeap.pop();
-    }
+    if (minHeap.size() > k) { minHeap.pop(); }
 }
 
 // 取出小根堆中的元素
@@ -513,13 +501,9 @@ map["hello"] = 2;
 查找
 
 ```cpp
-if (map.find("hello") != map.end()) {
-    cout << "Key exists." << endl;
-}
+if (map.find("hello") != map.end()) { cout << "Key exists." << endl; }
 
-if (map.count("hello")) {
-    cout << "Key exists." << endl;
-}
+if (map.count("hello")) { cout << "Key exists." << endl; }
 
 int val = map.at("hello");       // 抛出异常如果键不存在
 int valOrDefault = map["hello"]; // 如果键不存在，将插入默认值 0 并返回 0
@@ -603,14 +587,10 @@ set.erase("hello");
 查找
 
 ```cpp
-if (set.find("hello") != set.end()) {
-    cout << "Key exists." << endl;
-}
+if (set.find("hello") != set.end()) { cout << "Key exists." << endl; }
 
 // 或者使用 count 方法
-if (set.count("hello")) {
-    cout << "Key exists." << endl;
-}
+if (set.count("hello")) { cout << "Key exists." << endl; }
 ```
 
 清空哈希集合
@@ -628,9 +608,7 @@ size_t size = set.size();
 遍历
 
 ```cpp
-for (const auto& element : set) {
-    cout << element << endl;
-}
+for (const auto& element : set) { cout << element << endl; }
 ```
 
 :::
@@ -660,9 +638,7 @@ Map<String> map = new TreeSet<>();
 ```cpp
 vector<int> ans;
 vector<int> traverse(TreeNode* root) {
-    if (root == nullptr) {
-        return;
-    }
+    if (root == nullptr) { return; }
 
     // ans.push_back(root->val); // 前序遍历
     traverse(root->left);
@@ -704,9 +680,7 @@ void traverse(TreeNode root) {
 
 ```cpp
 vector<int> preorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+    if (root == nullptr) { return {}; }
 
     vector<int> ans;
     stack<TreeNode*> stk;
@@ -721,9 +695,7 @@ vector<int> preorderTraversal(TreeNode* root) {
         if (curr->right != nullptr) { // 先右后左
             stk.push(curr->right);
         }
-        if (curr->left != nullptr) {
-            stk.push(curr->left);
-        }
+        if (curr->left != nullptr) { stk.push(curr->left); }
     }
 
     return ans;
@@ -767,9 +739,7 @@ void preorder(TreeNode root) {
 
 ```cpp
 vector<int> inorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+    if (root == nullptr) { return {}; }
 
     vector<int> ans;
     stack<TreeNode*> stk;
@@ -827,9 +797,7 @@ void inorder(TreeNode root) {
 ```cpp
 // 后序遍历代码和前序遍历代码几乎一样，有 2 点区别
 vector<int> postorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+    if (root == nullptr) { return {}; }
 
     vector<int> ans;
     stack<TreeNode*> stk;
@@ -844,9 +812,7 @@ vector<int> postorderTraversal(TreeNode* root) {
         if (curr->left != nullptr) { // 区别 1：先左后右
             stk.push(curr->left);
         }
-        if (curr->right != nullptr) {
-            stk.push(curr->right);
-        }
+        if (curr->right != nullptr) { stk.push(curr->right); }
     }
 
     reverse(ans.begin(), ans.end()); // 区别 2：reverse
@@ -895,9 +861,7 @@ void postorder(TreeNode root) {
 
 ```cpp
 vector<vector<int>> levelOrder(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+    if (root == nullptr) { return {}; }
 
     vector<vector<int>> ans;
     deque<TreeNode*> dq;
@@ -912,12 +876,8 @@ vector<vector<int>> levelOrder(TreeNode* root) {
 
             lvl.push_back(curr->val);
 
-            if (curr->left != nullptr) {
-                dq.push_back(curr->left);
-            }
-            if (curr->right != nullptr) {
-                dq.push_back(curr->right);
-            }
+            if (curr->left != nullptr) { dq.push_back(curr->left); }
+            if (curr->right != nullptr) { dq.push_back(curr->right); }
         }
         ans.push_back(lvl);
     }
@@ -964,9 +924,7 @@ void traverse(TreeNode root) {
 
 ```cpp
 int maxDepth(TreeNode* root) {
-    if (root == nullptr) {
-        return 0;
-    }
+    if (root == nullptr) { return 0; }
 
     int left = maxDepth(root->left) + 1;
     int right = maxDepth(root->right) + 1;
@@ -1019,9 +977,7 @@ bool compare(TreeNode* left, TreeNode* right) {
 }
 
 bool isSymmetric(TreeNode* root) {
-    if (root == nullptr) {
-        return true;
-    }
+    if (root == nullptr) { return true; }
     return compare(root->left, root->right);
 }
 ```
@@ -1073,15 +1029,11 @@ public boolean compare(TreeNode left, TreeNode right) {
 // path 变量的值，系统栈会自动帮我们维护，不管是压栈还是出栈
 // paths 必须是引用，这个变量是需要我们手工维护的
 void dfs(TreeNode* root, string path, vector<string>& paths) {
-    if (root == nullptr) {
-        return;
-    }
+    if (root == nullptr) { return; }
 
     // 构造路径
     path += to_string(root->val);
-    if (root->left == nullptr && root->right == nullptr) {
-        paths.push_back(path);
-    }
+    if (root->left == nullptr && root->right == nullptr) { paths.push_back(path); }
     path += "->";
 
     dfs(root->left, path, paths);
@@ -1107,9 +1059,7 @@ vector<string> binaryTreePaths(TreeNode* root) {
 ```cpp
 TreeNode* insertIntoBST(TreeNode* root, int val) {
     // 一定会到叶子结点上，因为树上的所有的值都不相等，而连接两个节点的值又是邻值
-    if (root == nullptr) {
-        return new TreeNode(val);
-    }
+    if (root == nullptr) { return new TreeNode(val); }
 
     if (root->val > val) {
         root->left = insertIntoBST(root->left, val);
@@ -1133,39 +1083,27 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
 ```cpp
 TreeNode* deleteNode(TreeNode* root, int key) {
     // 递归终止条件 1
-    if (root == nullptr) {
-        return nullptr;
-    }
+    if (root == nullptr) { return nullptr; }
 
     // 递归：将其转为更小的问题（将递归放在递归终止条件 2 前面会提高效率）
-    if (root->val < key) {
-        root->right = deleteNode(root->right, key);
-    }
+    if (root->val < key) { root->right = deleteNode(root->right, key); }
 
-    if (root->val > key) {
-        root->left = deleteNode(root->left, key);
-    }
+    if (root->val > key) { root->left = deleteNode(root->left, key); }
 
     // 递归终止条件 2：考虑删除节点相等的情况，如何调整树的结构
     if (root->val == key) {
         // case 1: 左子树为空
-        if (root->left == nullptr) {
-            return root->right;
-        }
+        if (root->left == nullptr) { return root->right; }
 
         // case 2: 右子树为空
-        if (root->right == nullptr) {
-            return root->left;
-        }
+        if (root->right == nullptr) { return root->left; }
 
         // case3: 左子树和右子树都为空的情况，包含在 case1 或 case2 了
 
         // case4: 若左子树和右子树都不为空
         // 那么，将要删除的节点的左子树挂在右子树的最左子节点的左子树上
         TreeNode* p = root->right; // 找到右子树的最左子节点
-        while (p->left != nullptr) {
-            p = p->left;
-        }
+        while (p->left != nullptr) { p = p->left; }
         p->left = root->left; // 重新挂载左子树
         root = root->right;
         return root;
@@ -1186,9 +1124,7 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 
 ```cpp
 TreeNode* trimBST(TreeNode* root, int low, int high) {
-    if (root == nullptr) {
-        return nullptr;
-    }
+    if (root == nullptr) { return nullptr; }
 
     if (root->val < low) { // 裁剪右子树
         return trimBST(root->right, low, high);
@@ -1233,9 +1169,7 @@ public:
     void insertWord(string& word) {
         TrieNode* node = root;
         for (char c : word) {
-            if (!node->children.count(c)) {
-                node->children[c] = new TrieNode();
-            }
+            if (!node->children.count(c)) { node->children[c] = new TrieNode(); }
             node = node->children[c];
         }
         node->word = word;
@@ -1248,9 +1182,7 @@ int main() {
     Trie trie;
 
     // 构建 Trie
-    for (string& word : words) {
-        trie.insertWord(word);
-    }
+    for (string& word : words) { trie.insertWord(word); }
 
     return 0;
 }
@@ -1355,9 +1287,7 @@ vector<vector<int>> combine(int n, int k) {
 ```cpp
 void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& candidates,
          int target) {
-    if (target < 0) {
-        return;
-    }
+    if (target < 0) { return; }
 
     if (target == 0) {
         paths.push_back(path);
@@ -1392,18 +1322,14 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 // 判断是否为递增序列
 bool isValid(vector<int>& path) {
     for (int i = 1; i < path.size(); i++) {
-        if (path[i] < path[i - 1]) {
-            return false;
-        }
+        if (path[i] < path[i - 1]) { return false; }
     }
     return true;
 }
 
 void dfs(vector<vector<int>>& paths, vector<int>& path, int start, vector<int>& nums) {
     if (path.size() > 1) {
-        if (isValid(path)) {
-            paths.push_back(path);
-        }
+        if (isValid(path)) { paths.push_back(path); }
     }
 
     unordered_set<int> used_set; // 对本层应用去重
@@ -1438,16 +1364,15 @@ vector<vector<int>> findSubsequences(vector<int>& nums) {
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums, vector<bool>& used) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums,
+         vector<bool>& used) {
     if (path.size() == nums.size()) {
         paths.push_back(path);
         return;
     }
 
     for (int i = 0; i < nums.size(); i++) {
-        if (used[i]) {
-            continue;
-        }
+        if (used[i]) { continue; }
         path.push_back(nums[i]);
         used[i] = true;
         dfs(paths, path, nums, used);
@@ -1506,16 +1431,15 @@ void dfs(int[] arr, boolean[] used, int i) {
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums, vector<bool>& used) {
+void dfs(vector<vector<int>>& paths, vector<int>& path, vector<int>& nums,
+         vector<bool>& used) {
     if (path.size() == nums.size()) {
         paths.push_back(path);
         return;
     }
 
     for (int i = 0; i < nums.size(); i++) {
-        if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {
-            continue;
-        }
+        if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) { continue; }
 
         path.push_back(nums[i]);
         used[i] = true;
@@ -1614,18 +1538,14 @@ vector<vector<string>> solveNQueens(int n) {
 bool isValid(vector<vector<char>>& board, int row, int col, char num) {
     // 检查当前行或列是否有重复的数字
     for (int i = 0; i < 9; i++) {
-        if (board[row][i] == num || board[i][col] == num) {
-            return false;
-        }
+        if (board[row][i] == num || board[i][col] == num) { return false; }
     }
 
     // 检查 3 x 3 宫格内是否有重复的数字
     int startRow = row - row % 3, startCol = col - col % 3;
     for (int i = startRow; i < startRow + 3; i++) {
         for (int j = startCol; j < startCol + 3; j++) {
-            if (board[i][j] == num) {
-                return false;
-            }
+            if (board[i][j] == num) { return false; }
         }
     }
 
@@ -2077,13 +1997,9 @@ void getNext(vector<int>& next, string pat) {
 
     for (int i = 1; i < pat.size(); i++) {
         // 当前字符不匹配时，回退 j 到 next[j-1] 的位置
-        while (j > 0 && pat[i] != pat[j]) {
-            j = next[j - 1];
-        }
+        while (j > 0 && pat[i] != pat[j]) { j = next[j - 1]; }
         // 当前字符匹配时，则 j 自增
-        if (pat[i] == pat[j]) {
-            j++;
-        }
+        if (pat[i] == pat[j]) { j++; }
         // next[i] 表示当前位置与模式串匹配的起始位置
         next[i] = j;
     }
@@ -2098,17 +2014,11 @@ int kmp(string pat, string txt) {
     int j = 0;
     for (int i = 0; i < n; i++) {
         // 当当前字符不匹配且 j 大于 0 时，调整 j 的位置
-        while (j > 0 && txt[i] != pat[j]) {
-            j = next[j - 1];
-        }
+        while (j > 0 && txt[i] != pat[j]) { j = next[j - 1]; }
         // 当前字符匹配时，j 自增
-        if (txt[i] == pat[j]) {
-            j++;
-        }
+        if (txt[i] == pat[j]) { j++; }
         // 匹配成功，返回匹配的起始位置
-        if (j == m) {
-            return i - m + 1;
-        }
+        if (j == m) { return i - m + 1; }
     }
     // 匹配失败，返回 -1
     return -1;
@@ -2359,13 +2269,10 @@ vector<int> adj[N];
 bool visited[N];
 
 void dfs(int s) {
-    if (visited[s])
-        return;
+    if (visited[s]) return;
     visited[s] = true;
     // process node s
-    for (auto u : adj[s]) {
-        dfs(u);
-    }
+    for (auto u : adj[s]) { dfs(u); }
 }
 ```
 
@@ -2403,8 +2310,7 @@ void bfs(queue<int>& q, bool& visited, int& distance) {
         q.pop();
         // process node s
         for (auto u : adj[s]) {
-            if (visited[u])
-                continue;
+            if (visited[u]) continue;
             visited[u] = true;
             distance[u] = distance[s] + 1;
             q.push(u);
@@ -2423,8 +2329,7 @@ void bfs(queue<int>& q, bool& visited, int& distance) {
 用于解决单源最短路径问题。（不能包含负权边）
 
 ```cpp
-for (int i = 1; i <= n; i++)
-    distance[i] = INF;
+for (int i = 1; i <= n; i++) distance[i] = INF;
 distance[x] = 0;
 for (int i = 1; i <= n - 1; i++) {
     for (auto e : edges) { // 用边存图
@@ -2444,15 +2349,13 @@ SPFA 算法是 Bellman-Ford 的优化版本。
 Dijsktra 比 Bellman-Ford 更加高效，因为它只遍历每条边一次。
 
 ```cpp
-for (int i = 1; i <= n; i++)
-    distance[i] = INF;
+for (int i = 1; i <= n; i++) distance[i] = INF;
 distance[x] = 0;
 q.push({0, x}); // 必须使用优先队列
 while (!q.empty()) {
     int a = q.top().second;
     q.pop();
-    if (processed[a])
-        continue;
+    if (processed[a]) continue;
     processed[a] = true;
     for (auto u : adj[a]) { // 邻接表
         int b = u.first, w = u.second;
@@ -2499,8 +2402,7 @@ for (int k = 1; k <= n; k++) {
 void dfs(int s, int e) {
     // process node s
     for (auto u : adj[s]) {
-        if (u != e)
-            dfs(u, s);
+        if (u != e) dfs(u, s);
     }
 }
 ```
@@ -2519,8 +2421,7 @@ dfs(x, 0);
 void dfs(int s, int e) {
     count[s] = 1;
     for (auto u : adj[s]) {
-        if (u == e)
-            continue;
+        if (u == e) continue;
         dfs(u, s);
         count[s] += count[u];
     }

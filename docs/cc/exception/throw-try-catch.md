@@ -8,12 +8,9 @@
 #include <iostream>
 
 float ratio(float a, float b) {
-    if (a < 0)
-        throw 1;
-    if (b < 0)
-        throw 2;
-    if (fabs(a + b) < FLT_EPSILON)
-        throw "The sum of the two arguments is close to zero.";
+    if (a < 0) throw 1;
+    if (b < 0) throw 2;
+    if (fabs(a + b) < FLT_EPSILON) throw "The sum of the two arguments is close to zero.";
 
     return (a - b) / (a + b);
 }
@@ -23,9 +20,11 @@ float ratio_wrapper(float a, float b) {
         return ratio(a, b);
     } catch (int eid) {
         if (eid == 1)
-            std::cerr << "Call ratio() failed: the 1st argument should be positive." << std::endl;
+            std::cerr << "Call ratio() failed: the 1st argument should be positive."
+                      << std::endl;
         else if (eid == 2)
-            std::cerr << "Call ratio() failed: the 2nd argument should be positive." << std::endl;
+            std::cerr << "Call ratio() failed: the 2nd argument should be positive."
+                      << std::endl;
         else
             std::cerr << "Call ratio() failed: unrecognized error code." << std::endl;
     }
@@ -91,16 +90,12 @@ int main() {
 // 自定义异常类
 class except1 : public std::exception {
 public:
-    const char* what() const noexcept override {
-        return "Exception 1";
-    }
+    const char* what() const noexcept override { return "Exception 1"; }
 };
 
 class except2 : public std::exception {
 public:
-    const char* what() const noexcept override {
-        return "Exception 2";
-    }
+    const char* what() const noexcept override { return "Exception 2"; }
 };
 
 void func(int arg) {

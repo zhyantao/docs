@@ -81,8 +81,7 @@ int main(int argc, char** argv) {
 
 float dotproduct(const float* p1, const float* p2, size_t n) {
     float sum = 0.0f;
-    for (size_t i = 0; i < n; i++)
-        sum += (p1[i] * p2[i]);
+    for (size_t i = 0; i < n; i++) sum += (p1[i] * p2[i]);
     return sum;
 }
 

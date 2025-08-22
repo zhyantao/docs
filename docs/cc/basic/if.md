@@ -7,8 +7,7 @@ using namespace std;
 
 int main() {
     int num = 10;
-    if (num < 5)
-        cout << "The number is less than 5. " << endl;
+    if (num < 5) cout << "The number is less than 5. " << endl;
 
     if (num == 5) {
         cout << "The number is 5." << endl;
@@ -30,8 +29,7 @@ int main() {
             cout << "Where I'm?" << endl;
 
     int* p = new int[1024];
-    if (p)
-        cout << "Memory has been allocated." << endl;
+    if (p) cout << "Memory has been allocated." << endl;
 
     return 0;
 }

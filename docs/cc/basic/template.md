@@ -88,13 +88,9 @@ class Mat {
     T* data;
 
 public:
-    Mat(size_t rows, size_t cols) : rows(rows), cols(cols) {
-        data = new T[rows * cols]{};
-    }
+    Mat(size_t rows, size_t cols) : rows(rows), cols(cols) { data = new T[rows * cols]{}; }
 
-    ~Mat() {
-        delete[] data;
-    }
+    ~Mat() { delete[] data; }
 
     Mat(const Mat&) = delete;            // 不允许拷贝构造
     Mat& operator=(const Mat&) = delete; // 不允许赋值构造
@@ -158,12 +154,8 @@ class MyVector {
     T* data;
 
 public:
-    MyVector(size_t length) : length(length) {
-        data = new T[length]{};
-    }
-    ~MyVector() {
-        delete[] data;
-    }
+    MyVector(size_t length) : length(length) { data = new T[length]{}; }
+    ~MyVector() { delete[] data; }
     MyVector(const MyVector&) = delete;
     MyVector& operator=(const MyVector&) = delete;
     T getElement(size_t index);
@@ -204,9 +196,7 @@ public:
         data = new unsigned char[num_bytes]{};
     }
 
-    ~MyVector() {
-        delete[] data;
-    }
+    ~MyVector() { delete[] data; }
 
     MyVector(const MyVector&) = delete;
     MyVector& operator=(const MyVector&) = delete;
@@ -269,9 +259,7 @@ int main() {
 #include <iostream>
 
 // 定义一个普通的函数
-int add(int a, int b) {
-    return a + b;
-}
+int add(int a, int b) { return a + b; }
 
 int main() {
     // 使用 std::function 包装普通函数

@@ -13,16 +13,10 @@ int main() {
     while (input_char != 'q') {
         switch (input_char) {
         case 'a':
-        case 'A':
-            cout << "Move left. Input 'q' to quit." << endl;
-            break;
+        case 'A': cout << "Move left. Input 'q' to quit." << endl; break;
         case 'd':
-        case 'D':
-            cout << "Move right. Input 'q' to quit." << endl;
-            break;
-        default:
-            cout << "Undefined key. Input 'q' to quit." << endl;
-            break;
+        case 'D': cout << "Move right. Input 'q' to quit." << endl; break;
+        default: cout << "Undefined key. Input 'q' to quit." << endl; break;
         }
         cin >> input_char;
     }

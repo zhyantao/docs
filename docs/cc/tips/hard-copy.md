@@ -52,9 +52,7 @@ public:
         create(ms.buf_len, ms.characters);
     }
 
-    ~MyString() {
-        release();
-    }
+    ~MyString() { release(); }
 
     MyString& operator=(const MyString& ms) {
         create(ms.buf_len, ms.characters);
@@ -66,11 +64,8 @@ public:
 
         this->buf_len = buf_len;
 
-        if (this->buf_len != 0) {
-            this->characters = new char[this->buf_len]{};
-        }
-        if (data)
-            strncpy(this->characters, data, this->buf_len);
+        if (this->buf_len != 0) { this->characters = new char[this->buf_len]{}; }
+        if (data) strncpy(this->characters, data, this->buf_len);
 
         return true;
     }

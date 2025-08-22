@@ -78,16 +78,12 @@ public:
 
 class DatabaseLog : public ILog {
 public:
-    void print_log() override {
-        printf("DatabaseLog");
-    }
+    void print_log() override { printf("DatabaseLog"); }
 };
 
 class FileLog : public ILog {
 public:
-    void print_log() override {
-        printf("FileLog");
-    }
+    void print_log() override { printf("FileLog"); }
 };
 
 class LogFactory {
@@ -131,16 +127,12 @@ public:
 
 class DatabaseLog : public ILog {
 public:
-    void print_log() override {
-        printf("DatabaseLog");
-    }
+    void print_log() override { printf("DatabaseLog"); }
 };
 
 class FileLog : public ILog {
 public:
-    void print_log() override {
-        printf("FileLog");
-    }
+    void print_log() override { printf("FileLog"); }
 };
 
 class LogFactory {
@@ -158,9 +150,7 @@ public:
 int main() {
     LogFactory factory;
     auto log = factory.createLog("database");
-    if (log) {
-        log->print_log();
-    }
+    if (log) { log->print_log(); }
     return 0;
 }
 ```
@@ -201,31 +191,23 @@ public:
 // =================== 具体产品类 - Windows 风格 ======
 class WinButton : public IButton {
 public:
-    void render() override {
-        printf("Windows Button\n");
-    }
+    void render() override { printf("Windows Button\n"); }
 };
 
 class WinText : public IText {
 public:
-    void display() override {
-        printf("Windows Text\n");
-    }
+    void display() override { printf("Windows Text\n"); }
 };
 
 // =================== 具体产品类 - Mac 风格 ==========
 class MacButton : public IButton {
 public:
-    void render() override {
-        printf("Mac Button\n");
-    }
+    void render() override { printf("Mac Button\n"); }
 };
 
 class MacText : public IText {
 public:
-    void display() override {
-        printf("Mac Text\n");
-    }
+    void display() override { printf("Mac Text\n"); }
 };
 
 // =================== 抽象工厂类 ===================
@@ -239,24 +221,16 @@ public:
 // =================== 具体工厂类 ===================
 class WinUIFactory : public IUIFactory {
 public:
-    unique_ptr<IButton> createButton() override {
-        return make_unique<WinButton>();
-    }
+    unique_ptr<IButton> createButton() override { return make_unique<WinButton>(); }
 
-    unique_ptr<IText> createText() override {
-        return make_unique<WinText>();
-    }
+    unique_ptr<IText> createText() override { return make_unique<WinText>(); }
 };
 
 class MacUIFactory : public IUIFactory {
 public:
-    unique_ptr<IButton> createButton() override {
-        return make_unique<MacButton>();
-    }
+    unique_ptr<IButton> createButton() override { return make_unique<MacButton>(); }
 
-    unique_ptr<IText> createText() override {
-        return make_unique<MacText>();
-    }
+    unique_ptr<IText> createText() override { return make_unique<MacText>(); }
 };
 
 // =================== 客户端使用 ===================
@@ -313,17 +287,11 @@ private:
     string storage;
 
 public:
-    void setCPU(const string& cpuType) {
-        cpu = cpuType;
-    }
+    void setCPU(const string& cpuType) { cpu = cpuType; }
 
-    void setRAM(const string& ramSize) {
-        ram = ramSize;
-    }
+    void setRAM(const string& ramSize) { ram = ramSize; }
 
-    void setStorage(const string& storageSize) {
-        storage = storageSize;
-    }
+    void setStorage(const string& storageSize) { storage = storageSize; }
 
     void showSpecs() const {
         cout << "电脑配置：" << endl;
@@ -349,25 +317,15 @@ private:
     Computer* computer;
 
 public:
-    GamingComputerBuilder() {
-        computer = new Computer();
-    }
+    GamingComputerBuilder() { computer = new Computer(); }
 
-    void buildCPU() override {
-        computer->setCPU("Intel i9-13900K");
-    }
+    void buildCPU() override { computer->setCPU("Intel i9-13900K"); }
 
-    void buildRAM() override {
-        computer->setRAM("64GB DDR5");
-    }
+    void buildRAM() override { computer->setRAM("64GB DDR5"); }
 
-    void buildStorage() override {
-        computer->setStorage("2TB NVMe SSD");
-    }
+    void buildStorage() override { computer->setStorage("2TB NVMe SSD"); }
 
-    Computer* getComputer() override {
-        return computer;
-    }
+    Computer* getComputer() override { return computer; }
 };
 
 // ================== 具体构建器：办公电脑 ==================
@@ -376,25 +334,15 @@ private:
     Computer* computer;
 
 public:
-    OfficeComputerBuilder() {
-        computer = new Computer();
-    }
+    OfficeComputerBuilder() { computer = new Computer(); }
 
-    void buildCPU() override {
-        computer->setCPU("Intel i5-13400");
-    }
+    void buildCPU() override { computer->setCPU("Intel i5-13400"); }
 
-    void buildRAM() override {
-        computer->setRAM("16GB DDR4");
-    }
+    void buildRAM() override { computer->setRAM("16GB DDR4"); }
 
-    void buildStorage() override {
-        computer->setStorage("512GB SSD");
-    }
+    void buildStorage() override { computer->setStorage("512GB SSD"); }
 
-    Computer* getComputer() override {
-        return computer;
-    }
+    Computer* getComputer() override { return computer; }
 };
 
 // ================== 指挥者类 ==================
@@ -403,9 +351,7 @@ private:
     IComputerBuilder* builder;
 
 public:
-    void setBuilder(IComputerBuilder* newBuilder) {
-        builder = newBuilder;
-    }
+    void setBuilder(IComputerBuilder* newBuilder) { builder = newBuilder; }
 
     void constructComputer() {
         builder->buildCPU();
@@ -488,9 +434,7 @@ public:
         return new UserConfig(*this); // 调用拷贝构造函数
     }
 
-    void print() const override {
-        cout << "当前 IP 配置: " << ipAddress << endl;
-    }
+    void print() const override { cout << "当前 IP 配置: " << ipAddress << endl; }
 };
 
 // ================== 主函数示例 ==================
@@ -531,9 +475,7 @@ using namespace std;
 class DatabaseConnectionPool {
 private:
     // 私有构造函数，防止外部创建实例
-    DatabaseConnectionPool() {
-        printf("数据库连接池已初始化\n");
-    }
+    DatabaseConnectionPool() { printf("数据库连接池已初始化\n"); }
 
     // 删除拷贝构造函数和赋值操作符，防止复制
     DatabaseConnectionPool(const DatabaseConnectionPool&) = delete;
@@ -547,9 +489,7 @@ public:
     }
 
     // 示例方法：显示连接池状态
-    void connect() {
-        printf("连接到数据库...\n");
-    }
+    void connect() { printf("连接到数据库...\n"); }
 };
 
 // ================== 主函数示例 ==================
@@ -560,9 +500,7 @@ int main() {
 
     // 再次获取实例，验证是否为同一个对象
     DatabaseConnectionPool& pool2 = DatabaseConnectionPool::getInstance();
-    if (&pool == &pool2) {
-        printf("pool 和 pool2 是同一个实例。\n");
-    }
+    if (&pool == &pool2) { printf("pool 和 pool2 是同一个实例。\n"); }
 
     return 0;
 }
@@ -591,9 +529,7 @@ using namespace std;
 // ================== 老支付接口（旧系统）==================
 class LegacyPayment {
 public:
-    void makeOldPayment(double amount) {
-        printf("旧系统支付 %.2f 元\n", amount);
-    }
+    void makeOldPayment(double amount) { printf("旧系统支付 %.2f 元\n", amount); }
 };
 
 // ================== 新支付网关接口（新系统期望的格式）==================
@@ -682,23 +618,17 @@ private:
 public:
     explicit Directory(const string& dirName) : name(dirName) {}
 
-    void add(IFileSystemComponent* component) {
-        components.push_back(component);
-    }
+    void add(IFileSystemComponent* component) { components.push_back(component); }
 
     void showDetail(int depth = 0) const override {
         for (int i = 0; i < depth; ++i) printf("  ");
         printf("📁 文件夹: %s\n", name.c_str());
 
-        for (const auto& comp : components) {
-            comp->showDetail(depth + 1);
-        }
+        for (const auto& comp : components) { comp->showDetail(depth + 1); }
     }
 
     ~Directory() override {
-        for (auto comp : components) {
-            delete comp;
-        }
+        for (auto comp : components) { delete comp; }
     }
 };
 
@@ -762,9 +692,7 @@ public:
         return true;
     }
 
-    void reduceStock(int productId) {
-        printf("减少商品 %d 的库存\n", productId);
-    }
+    void reduceStock(int productId) { printf("减少商品 %d 的库存\n", productId); }
 };
 
 // 子系统类：支付服务
@@ -866,17 +794,13 @@ public:
 // 具体实现类：红色
 class RedColor : public IColor {
 public:
-    string applyColor() const override {
-        return "红色";
-    }
+    string applyColor() const override { return "红色"; }
 };
 
 // 具体实现类：蓝色
 class BlueColor : public IColor {
 public:
-    string applyColor() const override {
-        return "蓝色";
-    }
+    string applyColor() const override { return "蓝色"; }
 };
 
 // 抽象类：形状
@@ -894,9 +818,7 @@ class Circle : public IShape {
 public:
     Circle(IColor& c) : IShape(c) {}
 
-    string draw() const override {
-        return "圆形，填充为" + color.applyColor();
-    }
+    string draw() const override { return "圆形，填充为" + color.applyColor(); }
 };
 
 // 扩展抽象类：方形
@@ -904,9 +826,7 @@ class Square : public IShape {
 public:
     Square(IColor& c) : IShape(c) {}
 
-    string draw() const override {
-        return "方形，填充为" + color.applyColor();
-    }
+    string draw() const override { return "方形，填充为" + color.applyColor(); }
 };
 
 // 客户端代码
@@ -958,9 +878,7 @@ using namespace std;
 class ITextDisplay {
 public:
     virtual string getContent() const = 0;
-    virtual void show() const {
-        printf("%s\n", getContent().c_str());
-    };
+    virtual void show() const { printf("%s\n", getContent().c_str()); };
     virtual ~ITextDisplay() = default;
 };
 
@@ -972,9 +890,7 @@ private:
 public:
     PlainTextDisplay(const string& t) : text(t) {}
 
-    string getContent() const override {
-        return text;
-    }
+    string getContent() const override { return text; }
 };
 
 // 装饰器基类：保持对组件的引用
@@ -985,20 +901,15 @@ protected:
 public:
     TextDisplayDecorator(ITextDisplay* decorated) : decoratedText(decorated) {}
 
-    string getContent() const override {
-        return decoratedText->getContent();
-    }
+    string getContent() const override { return decoratedText->getContent(); }
 
-    void show() const override {
-        printf("%s\n", getContent().c_str());
-    }
+    void show() const override { printf("%s\n", getContent().c_str()); }
 };
 
 // 具体装饰器1：添加滚动条
 class ScrollBarDecorator : public TextDisplayDecorator {
 public:
-    ScrollBarDecorator(ITextDisplay* decorated)
-        : TextDisplayDecorator(decorated) {}
+    ScrollBarDecorator(ITextDisplay* decorated) : TextDisplayDecorator(decorated) {}
 
     string getContent() const override {
         return "[滚动条开始]" + decoratedText->getContent() + "[滚动条结束]";
@@ -1008,8 +919,7 @@ public:
 // 具体装饰器2：添加边框
 class BorderDecorator : public TextDisplayDecorator {
 public:
-    BorderDecorator(ITextDisplay* decorated)
-        : TextDisplayDecorator(decorated) {}
+    BorderDecorator(ITextDisplay* decorated) : TextDisplayDecorator(decorated) {}
 
     string getContent() const override {
         return "[边框开始]" + decoratedText->getContent() + "[边框结束]";
@@ -1080,7 +990,8 @@ public:
         : fontName(name), fontSize(size), color(color) {}
 
     void applyFormat() const {
-        printf("应用格式: 字体=%s, 大小=%d, 颜色=%s\n", fontName.c_str(), fontSize, color.c_str());
+        printf("应用格式: 字体=%s, 大小=%d, 颜色=%s\n", fontName.c_str(), fontSize,
+               color.c_str());
     }
 };
 
@@ -1097,7 +1008,8 @@ private:
     }
 
 public:
-    shared_ptr<FontFormat> getFontFormat(const string& fontName, int fontSize, const string& color) {
+    shared_ptr<FontFormat> getFontFormat(const string& fontName, int fontSize,
+                                         const string& color) {
         string key = getKey(fontName, fontSize, color);
         if (pool.find(key) == pool.end()) {
             // 如果没有就创建一个新的
@@ -1119,8 +1031,7 @@ private:
     shared_ptr<FontFormat> fontFormat; // 格式（外部状态，由享元提供）
 
 public:
-    Character(char c, shared_ptr<FontFormat> format)
-        : value(c), fontFormat(format) {}
+    Character(char c, shared_ptr<FontFormat> format) : value(c), fontFormat(format) {}
 
     void render(int position) const {
         cout << "字符 '" << value << "' 在位置 " << position << " 渲染，";
@@ -1187,12 +1098,8 @@ public:
 
 class RealService : public IService {
 public:
-    void doCall() override {
-        printf("Calling Real Service\n");
-    }
-    ~RealService() override {
-        printf("Destroying Real Service\n");
-    }
+    void doCall() override { printf("Calling Real Service\n"); }
+    ~RealService() override { printf("Destroying Real Service\n"); }
 };
 
 class ServiceProxy : public IService {
@@ -1263,23 +1170,17 @@ public:
 // ================== 具体策略类 ==================
 class AlipayStrategy : public IPaymentStrategy {
 public:
-    void payAmount(int amount) override {
-        printf("通过支付宝支付: %d 元\n", amount);
-    }
+    void payAmount(int amount) override { printf("通过支付宝支付: %d 元\n", amount); }
 };
 
 class WechatPayStrategy : public IPaymentStrategy {
 public:
-    void payAmount(int amount) override {
-        printf("通过微信支付: %d 元\n", amount);
-    }
+    void payAmount(int amount) override { printf("通过微信支付: %d 元\n", amount); }
 };
 
 class UnionPayStrategy : public IPaymentStrategy {
 public:
-    void payAmount(int amount) override {
-        printf("通过银联支付: %d 元\n", amount);
-    }
+    void payAmount(int amount) override { printf("通过银联支付: %d 元\n", amount); }
 };
 
 // ================== 上下文 Context ==================
@@ -1290,9 +1191,7 @@ private:
 public:
     PaymentContext(IPaymentStrategy* strategy) : currentStrategy(strategy) {}
 
-    void setStrategy(IPaymentStrategy* strategy) {
-        currentStrategy = strategy;
-    }
+    void setStrategy(IPaymentStrategy* strategy) { currentStrategy = strategy; }
 
     void executePayment(int amount) {
         if (currentStrategy) {
@@ -1360,9 +1259,7 @@ public:
 
 class Subscriber : public ISubscriber {
 public:
-    void update() override {
-        printf("Device updated\n");
-    }
+    void update() override { printf("Device updated\n"); }
 };
 
 class Publisher : public IPublisher {
@@ -1376,22 +1273,16 @@ public:
 
     void removeObserver(ISubscriber* subscriber) override {
         auto it = remove(subscribers.begin(), subscribers.end(), subscriber);
-        if (it != subscribers.end()) {
-            subscribers.erase(it, subscribers.end());
-        }
+        if (it != subscribers.end()) { subscribers.erase(it, subscribers.end()); }
         printf("Device removed\n");
     }
 
     void notifyObservers() override {
         printf("Notifying all devices:\n");
-        for (auto* subscriber : subscribers) {
-            subscriber->update();
-        }
+        for (auto* subscriber : subscribers) { subscriber->update(); }
     }
 
-    ~Publisher() override {
-        subscribers.clear();
-    }
+    ~Publisher() override { subscribers.clear(); }
 };
 
 int main() {
@@ -1478,14 +1369,10 @@ private:
 public:
     Order(OrderState* initialState) : currentState(initialState) {}
 
-    void setState(OrderState* newState) {
-        currentState = newState;
-    }
+    void setState(OrderState* newState) { currentState = newState; }
 
     void process() {
-        if (currentState) {
-            currentState->process(*this);
-        }
+        if (currentState) { currentState->process(*this); }
     }
 
     friend class InitializedState;
@@ -1510,9 +1397,7 @@ void ShippedState::process(Order& order) {
     order.setState(new CompletedState());
 }
 
-void CompletedState::process(Order& order) {
-    printf("订单已是完成状态，无法继续处理。\n");
-}
+void CompletedState::process(Order& order) { printf("订单已是完成状态，无法继续处理。\n"); }
 
 // =============== 主函数示例 ===============
 int main() {
@@ -1557,15 +1442,11 @@ public:
         teardown();
     }
 
-    virtual void setup() {
-        printf("IUTest: Setup resources.\n");
-    }
+    virtual void setup() { printf("IUTest: Setup resources.\n"); }
 
     virtual void executeTest() = 0; // 子类必须实现
 
-    virtual void teardown() {
-        printf("IUTest: Teardown resources.\n");
-    }
+    virtual void teardown() { printf("IUTest: Teardown resources.\n"); }
 
     virtual ~IUTest() = default;
 };
@@ -1573,17 +1454,11 @@ public:
 // 子类实现具体步骤
 class AppTest : public IUTest {
 public:
-    void executeTest() override {
-        printf("Running test in AppTest.\n");
-    }
+    void executeTest() override { printf("Running test in AppTest.\n"); }
 
-    void setup() override {
-        printf("AppTest: Custom setup.\n");
-    }
+    void setup() override { printf("AppTest: Custom setup.\n"); }
 
-    void teardown() override {
-        printf("AppTest: Custom teardown.\n");
-    }
+    void teardown() override { printf("AppTest: Custom teardown.\n"); }
 };
 
 int main() {
@@ -1666,9 +1541,7 @@ private:
     vector<unique_ptr<RoleMemento>> archives;
 
 public:
-    void addArchive(unique_ptr<RoleMemento> memento) {
-        archives.push_back(move(memento));
-    }
+    void addArchive(unique_ptr<RoleMemento> memento) { archives.push_back(move(memento)); }
 
     RoleMemento* getArchive(size_t index) const {
         return (index < archives.size()) ? archives[index].get() : nullptr;
@@ -1782,15 +1655,12 @@ private:
     vector<shared_ptr<User>> users;
 
 public:
-    void addUser(const shared_ptr<User>& user) {
-        users.push_back(user);
-    }
+    void addUser(const shared_ptr<User>& user) { users.push_back(user); }
 
-    void sendMessage(const string& from, const string& message, const shared_ptr<User>& excludeUser = nullptr) {
+    void sendMessage(const string& from, const string& message,
+                     const shared_ptr<User>& excludeUser = nullptr) {
         for (const auto& user : users) {
-            if (user != excludeUser) {
-                user->receive(from, message);
-            }
+            if (user != excludeUser) { user->receive(from, message); }
         }
     }
 };
@@ -1871,9 +1741,7 @@ public:
 
     void print() const {
         printf("%s, %.2f元 -- %s\n", name.c_str(), price, description.c_str());
-        if (isVegetarian) {
-            printf("  (素食)\n");
-        }
+        if (isVegetarian) { printf("  (素食)\n"); }
     }
 };
 
@@ -1903,14 +1771,10 @@ private:
 public:
     MenuIterator(const vector<MenuItem>& items) : items(items), position(0) {}
 
-    bool hasNext() const override {
-        return position < items.size();
-    }
+    bool hasNext() const override { return position < items.size(); }
 
     MenuItem next() override {
-        if (hasNext()) {
-            return items[position++];
-        }
+        if (hasNext()) { return items[position++]; }
         throw out_of_range("迭代器已到末尾");
     }
 };
@@ -1921,9 +1785,7 @@ private:
     vector<MenuItem> menuItems;
 
 public:
-    void addItem(const MenuItem& item) {
-        menuItems.push_back(item);
-    }
+    void addItem(const MenuItem& item) { menuItems.push_back(item); }
 
     unique_ptr<Iterator<MenuItem>> createIterator() const override {
         return make_unique<MenuIterator>(this->menuItems);
@@ -1997,9 +1859,7 @@ public:
         printf("当前内容: %s\n", content.c_str());
     }
 
-    string getContent() const {
-        return content;
-    }
+    string getContent() const { return content; }
 };
 
 // 命令接口
@@ -2017,16 +1877,11 @@ private:
     string text;
 
 public:
-    WriteCommand(TextEditor& editor, const string& text)
-        : editor(editor), text(text) {}
+    WriteCommand(TextEditor& editor, const string& text) : editor(editor), text(text) {}
 
-    void execute() override {
-        editor.write(text);
-    }
+    void execute() override { editor.write(text); }
 
-    void undo() override {
-        editor.deleteContent(text.size());
-    }
+    void undo() override { editor.deleteContent(text.size()); }
 };
 
 // 调用者类：管理命令的执行与撤销
@@ -2165,9 +2020,7 @@ public:
         printf("%s\n", paragraph.getText().c_str());
     }
 
-    void visit(const Image& image) override {
-        printf("[图片: %s]\n", image.getUrl().c_str());
-    }
+    void visit(const Image& image) override { printf("[图片: %s]\n", image.getUrl().c_str()); }
 };
 
 // Markdown 导出器
@@ -2183,13 +2036,9 @@ public:
 };
 
 // 为了能调用 accept 方法，需要在类外实现
-void Paragraph::accept(ExporterVisitor& visitor) {
-    visitor.visit(*this);
-}
+void Paragraph::accept(ExporterVisitor& visitor) { visitor.visit(*this); }
 
-void Image::accept(ExporterVisitor& visitor) {
-    visitor.visit(*this);
-}
+void Image::accept(ExporterVisitor& visitor) { visitor.visit(*this); }
 
 // 文档类，包含多个文档元素
 class Document {
@@ -2202,9 +2051,7 @@ public:
     }
 
     void exportWith(ExporterVisitor& visitor) {
-        for (const auto& element : elements) {
-            element->accept(visitor);
-        }
+        for (const auto& element : elements) { element->accept(visitor); }
     }
 };
 

@@ -31,8 +31,7 @@ int main() {
     // for(size_t i = 0; i < length; i++)
     //     sum += p[i];
     // cout << "Sum = " << sum << endl;
-    if (p)
-        delete[] p;
+    if (p) delete[] p;
     return 0;
 }
 ```
