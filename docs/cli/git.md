@@ -107,7 +107,7 @@ git reset HEAD .
 如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 `~/.gitconfig` 可解决问题。
 :::
 
-## 更新本地仓库 pull/fetch
+## 更新仓库 pull/fetch/push
 
 ```bash
 # 下载远程仓库的所有变动
@@ -131,7 +131,7 @@ git pull <remote> <branch>
 # 上传本地指定分支到远程仓库
 git push <remote> <branch>
 
-# 强行推送当前分支到远程仓库，即使有冲突
+# 强行推送当前分支到远程仓库，即使有冲突（reset 后可强制推送）
 git push <remote> --force
 
 # 推送所有分支到远程仓库
