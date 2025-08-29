@@ -43,7 +43,7 @@ int main() {
     // 持续读取数据
     while (1) {
         bytes_read = read(master_fd, buffer, sizeof(buffer) - 1);
-        
+
         if (bytes_read == -1) {
             perror("Read error");
             break;
@@ -54,7 +54,7 @@ int main() {
         } else {
             buffer[bytes_read] = '\0';
             printf("Received: %s", buffer);
-            
+
             // 这里可以添加数据处理逻辑
             // 例如：解析数据、响应等
         }

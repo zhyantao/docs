@@ -2,97 +2,20 @@
 
 # Git
 
-## 工作流程
+## 配置仓库
 
-```{figure} ../_static/images/basic-usage.*
-
-```
-
-上面的四条命令在工作目录、暂存目录（也叫做索引）和仓库之间复制文件。
-
-- `git add files` 把当前文件放入暂存区域。
-- `git commit` 给暂存区域生成快照并提交。
-- `git reset -- files` 用来撤销最后一次 `git add files`，你也可以用 `git reset` 撤销所有暂存区域文件。
-- `git checkout -- files` 把文件从暂存区域复制到工作目录，用来丢弃本地修改。
-
-你可以用 `git reset -p`, `git checkout -p`, `git add -p` 进入交互模式。
-
-也可以跳过暂存区域直接从仓库取出文件或者直接提交代码。
-
-```{figure} ../_static/images/basic-usage-2.*
-
-```
-
-- `git commit -a` 相当于先运行 `git add` 把所有当前目录下的文件加入暂存区域，再运行 `git commit`。
-- `git commit files` 将工作目录中文件的快照同时提交到暂存区域和仓库中。
-- `git checkout HEAD -- files` 回滚到最后一次提交。
-
-注：
-
-1. 本文图片均摘自 [图解 Git](https://marklodato.github.io/visual-git-guide/index-zh-cn.html)。
-2. 在 [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_CN) 可以直观地体验 Git 流程。
-
-## 快速上手
-
-本节介绍典型的 Git 工作流程：`创建仓库` > `编辑源代码` > `提交源代码`。
+:::{dropdown} 配置用户名和邮箱
 
 ```bash
-# 本地创建空仓库
-mkdir repository
-cd repository
-git init
-
-# (可选) 更新子仓库
-cd path/to/subrepo
-git checkout -b master
-git pull origin master
-
-# 设置远程仓库地址（如果 git remote -v 已经有结果，无需设置这一步）
-git remote add origin git@gitee.com:username/repository.git
-
-# 查看 <remote> 及其 URL
-git remote -v
-
-# 查看远程分支 <branch>
-git fetch
-git branch -r
-
-# 切换到分支
-git checkout <branch>
-
-# 编辑源代码
-code <directory>
-
-# 查看文件变更
-git status
-
-# 查看文件内容变更
-git diff path/to/file
-
-# 将代码添加到暂存区
-git add .
-
-# 将代码添加到本地仓库
-git commit -m "commit message"
-
-# 将代码添加到远程仓库
-# -u (set upstream)：设置本地仓库与远程仓库的关联关系（仅在创建仓库后的首次 push 时需要）
-# HEAD 表示本地分支，refs/for 表示提交后的代码需要 Code Review
-git push [-u] $(git remote) HEAD:refs/for/$(git branch --show-current)
-
-# 查看 <commit>
-git log --graph
-```
-
-## 配置仓库 config
-
-```bash
-# 配置用户名和邮箱
 git config --global user.name "zhyantao"
 git config --global user.email "yantao.z@outlook.com"
+```
 
-# 解决 VSCode 未修改代码，但显示变更的问题
+:::
 
+:::{dropdown} 解决 VSCode 未修改代码，但显示变更的问题
+
+```bash
 # 1) 修改全局配置
 git config --global --replace-all core.filemode false
 git config --global --replace-all core.autocrlf false
@@ -106,161 +29,176 @@ git rm --cached -r .
 git reset HEAD .
 ```
 
+:::
+
 :::{dropdown} GitHub 不显示头像
 如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 `~/.gitconfig` 可解决问题。
 :::
 
-## 提交代码
+## 典型工作流程
 
-工作目录 (Working Directory)：你正在编辑的文件。
+- 工作目录 (Working Directory)：你正在编辑的文件。
+- 暂存区 (Staging Area / Index)：通过 `git add` 添加的文件，准备下次提交。
+- 版本库 (Repository / HEAD)：通过 `git commit` 提交后的历史记录。
 
-暂存区 (Staging Area / Index)：通过 git add 添加的文件，准备下次提交。
+```{uml}
+@startuml
+start
 
-版本库 (Repository / HEAD)：通过 git commit 提交后的历史记录。
+:git pull;
+note right:同步远程更改
 
+repeat
+  :编辑文件;
+  repeat
+  repeat
+    :git add <file>...;
+    note right:添加到暂存区
+    backward:git restore --staged <file>...;
+  repeat while (撤销暂存?) is (Yes) not (No)
 
-```bash
-# add
-git add <file>...
+  repeat
+    :git commit;
+    note right:创建新提交
+    backward:git reset --soft HEAD~1;
+  repeat while (撤销提交(保留暂存)?) is (Yes) not (No)
 
-# 撤销 add
-git restore --staged <file>...
+  backward:git reset --mixed HEAD~1;
+  repeat while (撤销提交和暂存?) is (Yes) not (No)
 
-# commit
-git commit
+  backward:git reset --hard HEAD~1;
+repeat while (彻底丢弃更改?) is (Yes) not (No)
 
-# 撤销 commit
-git reset --soft HEAD~1
+repeat
+  :git push [--force] <remote> <branch>;
+  note right:推送到远程
+  backward:git revert HEAD;
+repeat while (安全撤销提交?) is (Yes) not (No)
 
-# 撤销 commit 和 add
-git reset --mixed HEAD~1
-
-# 撤销 commit，add 和编辑器修改
-git reset --hard HEAD
-
-# push
-git push [--force] <remote> <branch>
-
-# 撤销 push
-git revert HEAD
+stop
+@enduml
 ```
 
-## 拉取代码
-
 ```bash
-# 下载代码
-git pull
-
-
-```
-
-## 更新仓库 pull/fetch/push
-
-```bash
-# 下载远程仓库的所有变动
-git fetch <remote>
-
-# 显示所有远程仓库
+# 列出所有已配置的远程仓库及其对应的 URL
 git remote -v
 
-# 更新远程仓库链接
+# 显示所有远程跟踪分支
+git branch -r
+
+# 更新指定远程仓库的 URL 地址
 git remote set-url <remote> <url>
 
-# 显示某个远程仓库的信息
-git remote show <remote>
-
-# 增加一个新的远程仓库，并命名
-git remote add <shortname> <url>
-
-# 上传本地指定分支到远程仓库
-git push <remote> <branch>
-
-# 强行推送当前分支到远程仓库，即使有冲突（reset 后可强制推送）
-git push <remote> --force
-
-# 推送所有分支到远程仓库
-git push <remote> --all
-```
-
-## 比较文件差异 status/diff
-
-```bash
-# 显示有变更的文件
+# 显示工作目录和暂存区的状态 (变更文件列表)
 git status
 
-# 显示有变更的文件，包括被删除的文件
-git status -u
-
-# 显示暂存区和工作区的差异
+# 显示工作目录与暂存区之间的差异
 git diff
 
-# 显示暂存区和上一个 commit 的差异
-git diff --cached <filename>
+# 显示两次特定提交之间的差异对比
+git diff HEAD~1 HEAD~2
 
-# 显示工作区与当前分支最新 commit 之间的差异
-git diff HEAD
-
-# 显示两次提交之间的差异
-git diff <first-branch> <second-branch>
-
-# 显示今天你写了多少行代码
-git diff --shortstat "@{0 day ago}"
-```
-
-```{figure} ../_static/images/diff.*
-
-```
-
-## 管理文件变更 add/rm
-
-```bash
-# 添加指定文件到暂存区
-git add <file1> <file2> ...
-
-# 添加指定目录到暂存区，包括子目录
-git add <dir>
-
-# 添加当前目录的所有文件到暂存区
-git add .
-
-# 添加每个变化前，都会要求确认
-# 对于同一个文件的多处变化，可以实现分次提交
-git add -p
-
-# 删除工作区文件，并且将这次删除放入暂存区
-git rm <file1> <file2> ...
-
-# add 文件后，不想提交了，用下面的命令移除
-git rm --cached <filename>
-
-# 改名文件，并且将这个改名放入暂存区
-git mv <file-original> <file-renamed>
-```
-
-## 创建快照并撰写日志 commit
-
-```bash
-# 提交暂存区到仓库区
-git commit -m "<message>"
-
-# 提交暂存区的指定文件到仓库区
-git commit <file1> <file2> ... -m "<message>"
-
-# 提交工作区自上次 commit 之后的变化，直接到仓库区
-git commit -a
-
-# 提交时显示所有 diff 信息
-git commit -v
-
-# 使用一次新的 commit，替代上一次提交
-# 如果代码没有任何新变化，则用来改写上一次 commit 的提交信息
+# 修改最近一次提交的提交信息 (不会创建新的提交)
 git commit --amend -m "<message>"
 
-# 重做上一次 commit，并包括指定文件的新变化
-git commit --amend <file1> <file2> ...
+# 基于当前提交创建新分支
+git branch <branch>
+
+# 重命名本地分支
+git branch -m <old-name> <new-name>
+
+# 安全删除已合并的本地分支
+git branch -d <branch>
+
+# 删除远程分支
+git push origin --delete <branch>
+
+# 显示当前分支的提交历史 (按时间倒序)
+git log
+
+# 逐行显示文件的修改历史 (作者、时间、提交信息)
+git blame <filename>
+
+# 将指定提交的更改应用到当前分支
+git cherry-pick <commit>
+
+# 将连续多个提交应用到当前分支 (包含首尾提交)
+git cherry-pick <first-commit>^..<last-commit>
+
+# 将指定提交合并到当前分支
+git merge <commit>
+
+# 将指定分支的所有更改合并到当前分支
+git merge <branch>
+
+# 将当前分支的提交在目标分支上重新应用 (变基操作)
+git rebase <branch>
+
+# 在当前提交上创建一个新标签
+git tag <tag>
+
+# 删除本地标签
+git tag -d <tag>
+
+# 将标签推送到远程仓库
+git push <remote> <tag>
 ```
 
-:::{dropdown} 代码提交规范
+## submodule
+
+:::{dropdown} 管理子库
+
+```bash
+# 添加 submodule 到现有项目
+git submodule add https://github.com/username/subrepo.git path/to/subrepo
+
+# 从当前项目移除 submodule
+cat .gitmodules | grep path
+git submodule deinit -f <submodule-path>
+rm -rf .git/modules/<submodule-path>
+git rm -f <submodule-path>
+
+# 更新 submodule 的 URL
+# 首先修改 .gitmodules 文件中的 url 属性
+# 如果已经初始化了，先删除 submodule 在本地相应的文件夹
+git submodule sync
+git submodule update --init --recursive
+
+# 把依赖的 submodule 全部拉取到本地并更新为最新版本
+git submodule update --init --recursive
+
+# 更新 submodule 为远程项目的最新版本
+git submodule update --remote
+
+# 更新指定的 submodule 为远程的最新版本
+git submodule update --remote <submodule-path>
+
+# 检查 submodule 是否有提交未推送，如果有，则使本次提交失败
+git push --recurse-submodules=check
+
+# 先推送 submodule 的更新，然后推送主项目的更新
+# 如果 submodule 推送失败，那么推送任务直接终止
+git push --recurse-submodules=on-demand
+
+# 所有的 submodule 会被依次推送到远端，但是 superproject 将不会被推送
+git push --recurse-submodules=while
+
+# 与 while 相反，只推送 superproject，不推送其他 submodule
+git push --recurse-submodules=no
+
+# 拉取所有子仓库（fetch）并 merge 到所跟踪的分支上
+git pull --recurse-submodules
+
+# 查看 submodule 所有改变
+git diff --submodule
+
+# 对所有 submodule 执行命令，非常有用。如 git submodule foreach 'git checkout main'
+git submodule foreach <arbitrary-command-to-run>
+```
+
+:::
+
+## 代码提交规范
 
 | 类型       | 说明                         |
 | ---------- | ---------------------------- |
@@ -276,8 +214,6 @@ git commit --amend <file1> <file2> ...
 | `merge`    | 代码合并                     |
 | `sync`     | 同步主线或分支的变动         |
 | `typo`     | 更改一些拼写错误             |
-
-:::
 
 :::::{dropdown} 修改 Git Commit 历史
 
@@ -383,61 +319,7 @@ git push origin --force --tags
 
 :::::
 
-```{figure} ../_static/images/commit-main.*
-
-```
-
-```{figure} ../_static/images/commit-stable.*
-
-```
-
-```{figure} ../_static/images/commit-amend.*
-
-```
-
-```{figure} ../_static/images/commit-detached.*
-
-```
-
-## 检查与切换分支 branch
-
-```bash
-# 列出所有本地分支
-git branch
-
-# 列出所有远程分支
-git branch -r
-
-# 列出所有本地分支和远程分支
-git branch -a
-
-# 新建一个分支，但依然停留在当前分支
-git branch <branch>
-
-# 新建一个分支，并切换到该分支
-git checkout -b <branch>
-
-# 新建一个分支，指向指定 commit
-git branch <branch> <commit>
-
-# 新建一个分支，与指定的远程分支建立追踪关系
-git branch --track <local-branch> <remote-branch>
-
-# 建立追踪关系，在现有分支与指定的远程分支之间
-git branch --set-upstream <local-branch> <remote-branch>
-
-# 重命名分支
-git branch -m <old-name> <new-name>
-
-# 删除分支
-git branch -d <branch>
-
-# 删除远程分支
-git push origin --delete <branch>
-git branch -dr <remote/branch>
-```
-
-:::{dropdown} 分支命名规范
+## 分支命名规范
 
 | 分支             | 命名               | 说明                             |
 | ---------------- | ------------------ | -------------------------------- |
@@ -447,8 +329,6 @@ git branch -dr <remote/branch>
 | 发布版本         | `release-*`        | 发布定期要上线的功能             |
 | 发布版本修复分支 | `bugfix-release-*` | 修复测试 BUG                     |
 | 紧急修复分支     | `bugfix-master-*`  | 紧急修复线上代码的 BUG           |
-
-:::
 
 :::{dropdown} 冲突处理
 
@@ -475,296 +355,15 @@ git clean -fd
 
 :::
 
-## 标记重要提交 tag
+## 标签命名规范
 
-```bash
-# 列出所有 tag
-git tag
-
-# 新建一个 tag 在当前 commit
-git tag <tag>
-
-# 新建一个 tag 在指定 commit
-git tag <tag> <commit>
-
-# 删除本地 tag
-git tag -d <tag>
-
-# 删除远程 tag
-git push origin :refs/tags/<tag-name>
-
-# 查看 tag 信息
-git show <tag>
-
-# 提交指定 tag
-git push <remote> <tag>
-
-# 提交所有 tag
-git push <remote> --tags
-
-# 新建一个分支，指向某个 tag
-git checkout -b <branch> <tag>
-
-# 生成一个可供发布的压缩包
-git archive
-```
-
-:::{dropdown} 标签命名规范
 标签命名遵循 `主版本号.次版本号.修订号` 的规则，例如 `v1.2.3` 是版本 1.2 的第 4 次修订。以下是版本号的升级规则：
 
-- 优化已经存在的功能，或者修复 BUG：修订号 + 1；
-- 新增功能：次版本号 + 1；
-- 架构变化，接口变更：主版本号 + 1。
-
-:::
-
-## 审查提交历史 log
-
-```bash
-# 显示当前分支的版本历史
-git log
-
-# 显示 commit 历史，以及每次 commit 发生变更的文件
-git log --stat
-
-# 搜索提交历史，根据关键词
-git log -S <keyword>
-
-# 显示某个 commit 之后的所有变动，每个 commit 占据一行
-git log <tag> HEAD --pretty=format:%s
-
-# 显示某个 commit 之后的所有变动，其"提交说明"必须符合搜索条件
-git log <tag> HEAD --grep feature
-
-# 显示某个文件的版本历史，包括文件改名
-git log --follow <filename>
-git whatchanged <filename>
-
-# 显示指定文件相关的每一次 diff
-git log -p <filename>
-
-# 显示过去 5 次提交
-git log -5 --pretty --oneline
-
-# 显示所有提交过的用户，按提交次数排序
-git shortlog -sn
-
-# 显示指定文件是什么人在什么时间修改过
-git blame <filename>
-
-# 显示某次提交的元数据和内容变化
-git show <commit>
-
-# 显示某次提交发生变化的文件
-git show --name-only <commit>
-
-# 显示某次提交时，某个文件的内容
-git show <commit>:<filename>
-
-# 显示当前分支的最近几次提交
-git reflog
-```
-
-## 恢复文件与撤销更改 checkout
-
-```bash
-# 切换到指定分支，并更新工作区
-git checkout <branch>
-
-# 切换到上一个分支
-git checkout -
-
-# 恢复暂存区的指定文件到工作区
-git checkout <filename>
-
-# 恢复某个 commit 的指定文件到暂存区和工作区
-git checkout <commit> <filename>
-
-# 恢复暂存区的所有文件到工作区
-git checkout .
-
-# 暂时将未提交的变化移除，稍后再移入
-git stash
-git stash pop
-```
-
-```{figure} ../_static/images/checkout-files.*
-
-```
-
-```{figure} ../_static/images/checkout-branch.*
-
-```
-
-```{figure} ../_static/images/checkout-detached.*
-
-```
-
-```{figure} ../_static/images/checkout-after-detached.*
-
-```
-
-```{figure} ../_static/images/checkout-b-detached.*
-
-```
-
-## 撤销提交和未提交的更改 reset
-
-```bash
-# 重置暂存区的指定文件，与上一次 commit 保持一致，但工作区不变
-git reset -- <filename>
-
-# 重置暂存区与工作区，与上一次 commit 保持一致
-git reset --hard
-
-# 重置当前分支的指针为指定 commit，同时重置暂存区，但工作区不变
-git reset <commit>
-
-# 重置当前分支的 HEAD 为指定 commit，同时重置暂存区和工作区，与指定 commit 一致
-git reset --hard <commit>
-
-# 重置当前 HEAD 为指定 commit，但保持暂存区和工作区不变
-git reset --keep <commit>
-```
-
-```{figure} ../_static/images/reset-commit.*
-
-```
-
-```{figure} ../_static/images/reset.*
-
-```
-
-```{figure} ../_static/images/reset-files.*
-
-```
-
-## 撤销特定的历史更改 revert
-
-```bash
-# 撤销对指定文件在最近一次提交中的修改，但保留文件的修改内容
-git revert filename
-
-# 新建一个提交，用来撤销对当前分支指定提交的修改，但保留该提交的内容
-git revert <commit>
-
-# 新建一个提交，用来撤销对当前分支指定合并提交的修改，并改写提交信息
-git revert -m <n> <merge-commit>
-```
-
-## 应用提交到当前分支 cherry-pick
-
-```bash
-# 将其他分支上的某个提交应用到当前分支
-git cherry-pick <commit>
-
-# 将一系列连续的提交应用到当前分支
-git cherry-pick <first-commit>^..<last-commit>
-
-# 解决冲突时选择性的应用父提交：<n> 是指在三路合并中使用的父提交编号（1 或 2）
-git cherry-pick -m <n> <commit>
-```
-
-```{figure} ../_static/images/cherry-pick.*
-
-```
-
-## 合并分支 merge
-
-```bash
-# 合并指定 commit 到当前分支
-git merge <commit>
-
-# 合并指定分支到当前分支
-git merge <branch>
-
-# 合并指定分支到当前分支，并提交合并记录
-git merge --no-ff <branch>
-
-# 合并指定分支到当前分支，并提交合并记录，同时改写提交信息
-git merge--no-ff <branch> -m <message>
-```
-
-```{figure} ../_static/images/merge-ff.*
-
-```
-
-```{figure} ../_static/images/merge.*
-
-```
-
-## 更新分支历史 rebase
-
-```bash
-# 将当前分支的提交历史，重新应用到另一个分支
-git rebase <branch>
-
-# 将当前分支的提交历史，重新应用到另一个分支，但保留提交信息
-git rebase -i <branch>
-
-# 将当前分支的提交历史，重新应用到另一个分支，但保留提交信息
-git rebase -i HEAD~<n>
-```
-
-```{figure} ../_static/images/rebase.*
-
-```
-
-```{figure} ../_static/images/rebase-onto.*
-
-```
-
-## 管理子库 submodule
-
-```bash
-# 添加 submodule 到现有项目
-git submodule add https://github.com/username/subrepo.git path/to/subrepo
-
-# 从当前项目移除 submodule
-cat .gitmodules | grep path
-git submodule deinit -f <submodule-path>
-rm -rf .git/modules/<submodule-path>
-git rm -f <submodule-path>
-
-# 更新 submodule 的 URL
-# 首先修改 .gitmodules 文件中的 url 属性
-# 如果已经初始化了，先删除 submodule 在本地相应的文件夹
-git submodule sync
-git submodule update --init --recursive
-
-# 把依赖的 submodule 全部拉取到本地并更新为最新版本
-git submodule update --init --recursive
-
-# 更新 submodule 为远程项目的最新版本
-git submodule update --remote
-
-# 更新指定的 submodule 为远程的最新版本
-git submodule update --remote <submodule-path>
-
-# 检查 submodule 是否有提交未推送，如果有，则使本次提交失败
-git push --recurse-submodules=check
-
-# 先推送 submodule 的更新，然后推送主项目的更新
-# 如果 submodule 推送失败，那么推送任务直接终止
-git push --recurse-submodules=on-demand
-
-# 所有的 submodule 会被依次推送到远端，但是 superproject 将不会被推送
-git push --recurse-submodules=while
-
-# 与 while 相反，只推送 superproject，不推送其他 submodule
-git push --recurse-submodules=no
-
-# 拉取所有子仓库（fetch）并 merge 到所跟踪的分支上
-git pull --recurse-submodules
-
-# 查看 submodule 所有改变
-git diff --submodule
-
-# 对所有 submodule 执行命令，非常有用。如 git submodule foreach 'git checkout main'
-git submodule foreach <arbitrary-command-to-run>
-```
-
-## 忽略规则 gitignore
+- 优化已经存在的功能，或者修复 BUG：修订号 +1；
+- 新增功能：次版本号 +1；
+- 架构变化，接口变更：主版本号 +1。
+
+## gitignore
 
 :::{dropdown} 匹配规则
 

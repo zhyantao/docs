@@ -119,8 +119,8 @@ private:
         EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
 
     // 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
-    const int kDaysInWeek = 7; // const 变量用 k 开头，后跟大写开头单词
-    int num_entries_;          // 变量命名：全小写，有意义的单词和下划线
+    const int kDaysInWeek = 7;      // const 变量用 k 开头，后跟大写开头单词
+    int num_entries_;               // 变量命名：全小写，有意义的单词和下划线
     int num_complated_connections_; // 类成员变量下划线结尾
 
     Channel* channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
