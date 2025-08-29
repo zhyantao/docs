@@ -92,12 +92,15 @@ git config --global user.name "zhyantao"
 git config --global user.email "yantao.z@outlook.com"
 
 # 解决 VSCode 未修改代码，但显示变更的问题
+
 # 1) 修改全局配置
 git config --global --replace-all core.filemode false
 git config --global --replace-all core.autocrlf false
+
 # 2) 修改当前仓库的本地配置
 git config --replace-all core.filemode false
 git config --replace-all core.autocrlf false
+
 # 3) 清除 Git 的索引（或称为缓存）
 git rm --cached -r .
 git reset HEAD .
@@ -106,6 +109,50 @@ git reset HEAD .
 :::{dropdown} GitHub 不显示头像
 如果你在 Github 上修改了提交邮箱，而没有修改本地提交邮箱的话，会发现你的头像在提交记录上无法显示。因此，本地的提交邮箱应当与远程仓库保持一致。修改 `~/.gitconfig` 可解决问题。
 :::
+
+## 提交代码
+
+工作目录 (Working Directory)：你正在编辑的文件。
+
+暂存区 (Staging Area / Index)：通过 git add 添加的文件，准备下次提交。
+
+版本库 (Repository / HEAD)：通过 git commit 提交后的历史记录。
+
+
+```bash
+# add
+git add <file>...
+
+# 撤销 add
+git restore --staged <file>...
+
+# commit
+git commit
+
+# 撤销 commit
+git reset --soft HEAD~1
+
+# 撤销 commit 和 add
+git reset --mixed HEAD~1
+
+# 撤销 commit，add 和编辑器修改
+git reset --hard HEAD
+
+# push
+git push [--force] <remote> <branch>
+
+# 撤销 push
+git revert HEAD
+```
+
+## 拉取代码
+
+```bash
+# 下载代码
+git pull
+
+
+```
 
 ## 更新仓库 pull/fetch/push
 
@@ -124,9 +171,6 @@ git remote show <remote>
 
 # 增加一个新的远程仓库，并命名
 git remote add <shortname> <url>
-
-# 取回远程仓库的变化，并与本地分支合并
-git pull <remote> <branch>
 
 # 上传本地指定分支到远程仓库
 git push <remote> <branch>
@@ -186,7 +230,7 @@ git add -p
 # 删除工作区文件，并且将这次删除放入暂存区
 git rm <file1> <file2> ...
 
-# 停止追踪指定文件，但该文件会保留在工作区
+# add 文件后，不想提交了，用下面的命令移除
 git rm --cached <filename>
 
 # 改名文件，并且将这个改名放入暂存区
