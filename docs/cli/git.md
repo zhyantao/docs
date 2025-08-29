@@ -53,11 +53,13 @@ repeat
   repeat
   repeat
     :git add <file>...;
+    note right:添加到暂存区
     backward:git restore --staged <file>...;
   repeat while (撤销暂存?) is (Yes) not (No)
 
   repeat
     :git commit;
+    note right:创建新提交
     backward:git reset --soft HEAD~1;
   repeat while (撤销提交(保留暂存)?) is (Yes) not (No)
 
