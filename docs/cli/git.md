@@ -13,7 +13,7 @@ git config --global user.email "yantao.z@outlook.com"
 
 :::
 
-:::{dropdown} 解决 VSCode 未修改代码，但显示变更的问题
+:::{dropdown} VSCode 未修改代码，但显示变更
 
 ```bash
 # 1) 修改全局配置
