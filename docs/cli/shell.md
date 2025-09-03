@@ -608,142 +608,36 @@ sh -x test.sh
 
 ## 8. 常用命令
 
-### find
+### grep
 
-语法：`find [路径] [选项] [操作]`
-
-#### 选项
-
-| 选项              | 说明                    | 选项                               | 说明                                         |
-| ----------------- | ----------------------- | ---------------------------------- | -------------------------------------------- |
-| `-name`           | 文件名                  | `-iname`                           | 文件名（忽略大小写）                         |
-| `-perm 777`       | 文件权限                | `-type f \| d \| l \| c \| b \| p` | 文件类型                                     |
-| `-user`           | 文件属主                | `-nouser`                          | 无有效属主                                   |
-| `-group`          | 文件属组                | `-nogroup`                         | 无有效属组                                   |
-| `-size -n \| +n`  | 文件大小                | `-prune`                           | 排除某些查找目录<br/>通常与 `-path` 一同使用 |
-| `-mindepth n`     | 从 n 级子目录开始查找   | `-maxdepth n`                      | 最多搜索到 n 级子目录                        |
-| `-mtime -n \| +n` | 文件修改时间（天）      | `-mmin -n \| +n`                   | 文件修改时间（分钟）                         |
-| `-newer file1`    | 文件修改时间比 file1 早 |                                    |                                              |
-
-示例：
-
-```bash
-# 文件名
-find /etc/ -name '*.conf'
-
-# 文件类型
-# f 文件；d 目录；c 字符设备文件；
-# b 块设备文件；l 链接文件；p 管道文件
-find /etc/ -type f
-
-# 文件大小
-# -n 小于等于；+n 大于等于
-find . -size +100M
-find . -size -10k
-
-# 文件修改时间
-# -n < n天以内修改过的文件；
-# n = n 天修改过得文件；
-# +n > n天以外修改过的文件；
-find . -mtime -3
-find . -mtime 3
-find . -mtime +3
-
-# 排除目录
-# -path ./test1 -prune 排除 test1 目录
-# -path ./test2 -prune 排除 test2 目录
-# -o type f 固定结尾写法
-find . -path ./test1 -prune -o -path ./test2 -prune -o type f
-```
-
-#### 操作
-
-- `-print` 打印输出
-- `-exec 'command' {} \;` 其中 `{}` 是前面查找匹配到的结果
-- `-ok` 与 `exec` 功能一样，但每次操作都给用户提示，由用户决定是否执行对应的操作。
-
-示例：
-
-```bash
-# 查找 30 天以前的日志文件并删除
-find /var/log -name '*.log' -mtime +30 -exec rm -f {} \;
-
-# 查找所有 .conf 文件，并移动到指定目录
-find /etc/apache -name '*.conf' -exec cp {} /home/user1/backup \;
-```
+| 命令    | 等价形式  | 示例说明                                                           |
+| ------- | --------- | ------------------------------------------------------------------ |
+| `grep`  | -         | `grep "error" file.txt`（搜索文件中的 `"error"`）                  |
+|         |           | `grep -i "hello" file.txt`（忽略大小写搜索 `"hello"`）             |
+|         |           | `grep -r "pattern" /path/to/dir/`（递归搜索目录）                  |
+| `egrep` | `grep -E` | `egrep "error\|warning" file.txt`（匹配 `"error"` 或 `"warning"`） |
+|         |           | `egrep "[0-9]{3}" file.txt`（匹配 3 位数字）                       |
+| `fgrep` | `grep -F` | `fgrep "$100" file.txt`（直接搜索 `"$100"`，避免 `$` 被当作正则）  |
+|         |           | `fgrep "*.log" file.txt`（搜索字面值 `"*.log"`，不解析为通配符）   |
 
 ### netstat
 
-主要用于查看和网络相关的信息。
-
 ```bash
-# 查看端口被哪个进程占用
-netstat -tulpn | grep :<port_number>
-
-# 查看进程正在使用哪个端口
-netstat -tulpn | grep <process_name>
+# 显示 gpsd 进程的所有网络资源（TCP/UDP/UNIX）
+netstat -ap | grep gpsd
 ```
 
-### printf
-
-模仿 C 程序库（library）里的 `printf()` 程序，主要用于格式化输出。
-
-默认 `printf` 不会像 `echo` 自动添加换行符，我们可以手动添加 `\n`。
-
-其基本语法格式为：
+### tcpdump
 
 ```bash
-printf  format-string  [arguments...]
-```
+# 捕获 53494 端口的流量
+tcpdump -i any port 53494
 
-说明：
+# 显示时间戳和数据内容
+tcpdump -i any port 53494 -tttt -A
 
-- `format-string` 为格式控制字符串
-- `arguments` 为参数列表。
-
-示例：
-
-```bash
-printf "%-10s %-8s %-4s\n" 姓名 性别 体重kg
-printf "%-10s %-8s %-4.2f\n" 郭靖 男 66.1234
-printf "%-10s %-8s %-4.2f\n" 杨过 男 48.6543
-printf "%-10s %-8s %-4.2f\n" 郭芙 女 47.9876
-```
-
-其中：
-
-- `%s` `%c` `%d` `%f` 都是格式替代符；
-- `%-10s` 指一个宽度为 10 个字符（`-` 表示左对齐，没有则表示右对齐），任何字符都会被显示在 10 个字符宽的字符内，如果不足则自动以空格填充，超过也会将内容全部显示出来。
-- `%-4.2f` 指格式化为小数，其中 `.2` 指保留 2 位小数。
-
-更多使用示例：
-
-```bash
-# 没有引号也可以输出
-printf %s abcdef
-
-# 格式只指定了一个参数，但多出的参数仍然会按照该格式输出，format-string 被重用
-printf %s abc def
-printf "%s\n" abc def
-
-# 如果没有 arguments，那么 %s 用NULL代替，%d 用 0 代替
-printf "%s and %d \n"
-```
-
-### test
-
-用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试（详见第 3 节运算符部分）。
-
-基本使用示例：
-
-```bash
-cd /bin
-if test -e ./bash
-then
-    echo '文件已存在!'
-else
-    echo '文件不存在!'
-fi
+# 保存原始数据包供后续分析
+tcpdump -i any port 53494 -w save.pcap
 ```
 
 ### xargs
@@ -790,26 +684,6 @@ CURR_DIR := $(shell pwd)
 EOF
 ```
 
-### source
-
-`source <file_name>` 表示读取并执行 `file_name` 中的命令。
-
-习惯上，用 `.` 代替 `source`，也就是说 `source <file_name>` 等价于 `. <file_name>`。
-
-### scp
-
-`scp` 命令主要用于在本地机器和远端机器之间复制文件。
-
-```bash
-# 将远端文件（或文件夹）复制到本地
-scp <root>@<remote_ip>:/path/to/<target_filename> <local_filename>
-scp -r <root>@<remote_ip>:/path/to/<remote_dirname> <local_dirname>
-
-# 将本地文件（或文件夹）复制到远端
-scp <local_filename> <root>@<remote_ip>:/path/to/<target_filename>
-scp -r <local_dirname> <root>@<remote_ip>:/path/to/<remote_dirname>
-```
-
 ### tar
 
 `tar` 命令主要用于打包文件和目录，并不直接进行压缩。
@@ -821,15 +695,3 @@ scp -r <local_dirname> <root>@<remote_ip>:/path/to/<remote_dirname>
 - 使用 `xz` 压缩：`tar cJf archive_name.tar.xz file_or_directory_to_compress`
 
 解压时，仍然需要跟上 `z`、`j` 或者 `J` 选项，才能正常解压。
-
-### grep
-
-| 命令    | 等价形式  | 示例说明                                                           |
-| ------- | --------- | ------------------------------------------------------------------ |
-| `grep`  | -         | `grep "error" file.txt`（搜索文件中的 `"error"`）                  |
-|         |           | `grep -i "hello" file.txt`（忽略大小写搜索 `"hello"`）             |
-|         |           | `grep -r "pattern" /path/to/dir/`（递归搜索目录）                  |
-| `egrep` | `grep -E` | `egrep "error\|warning" file.txt`（匹配 `"error"` 或 `"warning"`） |
-|         |           | `egrep "[0-9]{3}" file.txt`（匹配 3 位数字）                       |
-| `fgrep` | `grep -F` | `fgrep "$100" file.txt`（直接搜索 `"$100"`，避免 `$` 被当作正则）  |
-|         |           | `fgrep "*.log" file.txt`（搜索字面值 `"*.log"`，不解析为通配符）   |
