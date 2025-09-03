@@ -640,28 +640,30 @@ tcpdump -i any port 53494 -tttt -A
 tcpdump -i any port 53494 -w save.pcap
 ```
 
-### xargs
-
-用于将第一个命令的结果当做参数传递给第二个命令。
-
-示例：
+### lsof
 
 ```bash
-find -name "*.c" | xargs ls -l
+# 查看 gpsd 所有打开的文件
+lsof | grep gpsd
+```
+
+### strace
+
+strace 可以跟踪进程所有的系统调用，包括 sendto 和 recvfrom 这些用于 socket 通信的函数。
+
+```bash
+# 附加到正在运行的 gpsd 进程上，跟踪所有网络相关的系统调用
+strace -p 7497 -e trace=network -s 100
 ```
 
 ### sed
-
-`sed` 命令主要用于替换文本中的字符串。
-
-示例：
 
 ```bash
 # 将 filename.txt 中的 abc def 替换为 def abc
 sed -i 's@abc def@def abc@' filename.txt
 ```
 
-在前面的例子中，`@` 可以是其他符号，它的主要作用在于区分需要替换的字符串和原始字符串。
+注：`@` 可以是其他符号，它的主要作用在于区分需要替换的字符串和原始字符串。
 
 ### tee
 
