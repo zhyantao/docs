@@ -54,7 +54,7 @@ repeat
   repeat
     :git add <file>...;
     note right:添加到暂存区
-    backward:git restore --staged <file>...;
+    backward:git reset HEAD <file>...;
   repeat while (撤销暂存?) is (Yes) not (No)
 
   repeat
