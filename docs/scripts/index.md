@@ -1,4 +1,4 @@
-# JavaScript
+# Scripts
 
 ## 目录
 

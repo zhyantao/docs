@@ -244,7 +244,7 @@ cc/index
 assembly/index
 java/index
 python/index
-js/index
+scripts/index
 cli/index
 myenv/index
 appendix/index
