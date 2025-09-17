@@ -118,6 +118,15 @@ gcovr -r . --exclude 'test/*' --html -o coverage.html
 
 ## 桩函数示例
 
+````{admonition} 桩函数不生效？
+
+编译器将函数优化为内联函数，导致桩函数失效。解决方案是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性。例如：
+
+```cpp
+__attribute__((noinline)) bool stop_while_1_stub() { return true; }
+```
+````
+
 ```cpp
 #include <cstdlib>
 #include <cstring>

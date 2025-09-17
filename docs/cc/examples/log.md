@@ -18,7 +18,7 @@
 #include <time.h>
 #include <libgen.h>
 
-#define MAX_SIZE (10 * 1024)  // 10KB
+#define MAX_SIZE    (10 * 1024) // 10KB
 #define MAX_BACKUPS 5
 
 // 比较函数，用于排序文件时间
@@ -83,18 +83,14 @@ int check_and_backup_file(const char* path) {
 
         // 提取编号
         char* num_start = strrchr(oldest, '_') + 1;
-        if (num_start) {
-            next_number = atoi(num_start);
-        }
+        if (num_start) { next_number = atoi(num_start); }
 
         // 删除最老的备份文件
         remove(oldest);
         free(oldest);
 
         // 重新组织备份文件数组
-        for (int i = 1; i < backup_count; i++) {
-            backup_files[i - 1] = backup_files[i];
-        }
+        for (int i = 1; i < backup_count; i++) { backup_files[i - 1] = backup_files[i]; }
         backup_count--;
     } else {
         // 查找最大的现有编号
@@ -103,9 +99,7 @@ int check_and_backup_file(const char* path) {
             char* num_start = strrchr(backup_files[i], '_') + 1;
             if (num_start) {
                 int num = atoi(num_start);
-                if (num > max_number) {
-                    max_number = num;
-                }
+                if (num > max_number) { max_number = num; }
             }
             free(backup_files[i]);
         }
@@ -133,8 +127,8 @@ int check_and_backup_file(const char* path) {
     }
 
     // 打包压缩（这里使用 tar.gz 作为示例）
-    snprintf(cmd, sizeof(cmd), "tar -czf %s.tar.gz -C %s %s && rm %s",
-             new_name, dirname(strdup(new_name)), basename(strdup(new_name)), new_name);
+    snprintf(cmd, sizeof(cmd), "tar -czf %s.tar.gz -C %s %s && rm %s", new_name,
+             dirname(strdup(new_name)), basename(strdup(new_name)), new_name);
     if (system(cmd) != 0) {
         fprintf(stderr, "tar -czf failed\n");
         return -1;
@@ -146,9 +140,9 @@ int check_and_backup_file(const char* path) {
 
 // 使用示例
 int main() {
-    const char *filename = "test.log";
+    const char* filename = "test.log";
     int result = check_and_backup_file(filename);
-    
+
     if (result == 1) {
         printf("backup success\n");
     } else if (result == 0) {
@@ -156,7 +150,7 @@ int main() {
     } else {
         printf("backup failed\n");
     }
-    
+
     return 0;
 }
 ```
