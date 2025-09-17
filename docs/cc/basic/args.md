@@ -133,7 +133,9 @@ void log(char* fmt, ...) {
     printf("%s\n", buf);
 }
 
-int main() { log((char*)"%s, %d, %s", "hello", 100, "world"); }
+int main() {
+    log((char*)"%s, %d, %s", "hello", 100, "world");
+}
 ```
 
 **示例 2：求和函数 `sum`**
@@ -255,7 +257,9 @@ g++ -std=c++20 -O2 -Wall -pedantic -pthread main.cpp && ./a.out --reqarg 100 --o
 #include <iostream>
 
 // 递归终止条件
-void printArgs() { std::cout << std::endl; }
+void printArgs() {
+    std::cout << std::endl;
+}
 
 // 递归步骤
 template <typename T, typename... Args>

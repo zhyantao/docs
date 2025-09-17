@@ -259,7 +259,9 @@ int main() {
 #include <iostream>
 
 // 定义一个普通的函数
-int add(int a, int b) { return a + b; }
+int add(int a, int b) {
+    return a + b;
+}
 
 int main() {
     // 使用 std::function 包装普通函数

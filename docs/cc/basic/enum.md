@@ -20,7 +20,9 @@ struct Point {
     };
 };
 
-size_t datawidth(struct Point pt) { return size_t(pt.type) * 3; }
+size_t datawidth(struct Point pt) {
+    return size_t(pt.type) * 3;
+}
 
 int64_t l1norm(struct Point pt) {
     int64_t result = 0;

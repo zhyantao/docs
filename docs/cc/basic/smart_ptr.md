@@ -156,7 +156,9 @@ private:
     int value_;
 };
 
-void useSharedPtr(const std::shared_ptr<MyClass>& ptr) { ptr->printValue(); }
+void useSharedPtr(const std::shared_ptr<MyClass>& ptr) {
+    ptr->printValue();
+}
 
 int main() {
     auto obj = std::make_shared<MyClass>(42);

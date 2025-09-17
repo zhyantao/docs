@@ -42,7 +42,9 @@ public:
     void printInfo();
 };
 
-void Student::setGender(bool isMale) { male = isMale; }
+void Student::setGender(bool isMale) {
+    male = isMale;
+}
 
 void Student::printInfo() {
     std::cout << "Name: " << name << std::endl;

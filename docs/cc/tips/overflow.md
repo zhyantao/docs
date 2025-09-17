@@ -4,7 +4,9 @@
 
 ```cpp
 // libbignum.so
-long test_bignum() { return 366969859824; }
+long test_bignum() {
+    return 366969859824;
+}
 ```
 
 ```cpp

@@ -121,7 +121,9 @@ Complex Complex::operator+(const Complex& a) const {
 作为全局函数时，重载二元运算符需要两个参数，一元运算符需要一个参数。
 
 ```cpp
-Complex operator+(const Complex& a, int b) { return Complex(a.real + b, a.img); }
+Complex operator+(const Complex& a, int b) {
+    return Complex(a.real + b, a.img);
+}
 ```
 
 ```cpp

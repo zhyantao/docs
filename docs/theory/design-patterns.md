@@ -1397,7 +1397,9 @@ void ShippedState::process(Order& order) {
     order.setState(new CompletedState());
 }
 
-void CompletedState::process(Order& order) { printf("订单已是完成状态，无法继续处理。\n"); }
+void CompletedState::process(Order& order) {
+    printf("订单已是完成状态，无法继续处理。\n");
+}
 
 // =============== 主函数示例 ===============
 int main() {
@@ -2036,9 +2038,13 @@ public:
 };
 
 // 为了能调用 accept 方法，需要在类外实现
-void Paragraph::accept(ExporterVisitor& visitor) { visitor.visit(*this); }
+void Paragraph::accept(ExporterVisitor& visitor) {
+    visitor.visit(*this);
+}
 
-void Image::accept(ExporterVisitor& visitor) { visitor.visit(*this); }
+void Image::accept(ExporterVisitor& visitor) {
+    visitor.visit(*this);
+}
 
 // 文档类，包含多个文档元素
 class Document {

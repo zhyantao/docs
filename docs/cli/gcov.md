@@ -123,7 +123,9 @@ gcovr -r . --exclude 'test/*' --html -o coverage.html
 编译器将函数优化为内联函数，导致桩函数失效。解决方案是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性。例如：
 
 ```cpp
-__attribute__((noinline)) bool stop_while_1_stub() { return true; }
+__attribute__((noinline)) bool stop_while_1_stub() {
+    return true;
+}
 ```
 ````
 
@@ -133,7 +135,9 @@ __attribute__((noinline)) bool stop_while_1_stub() { return true; }
 #include <uci.h>
 
 // 分配上下文失败桩函数
-struct uci_context* uci_alloc_context_stub_fail() { return nullptr; }
+struct uci_context* uci_alloc_context_stub_fail() {
+    return nullptr;
+}
 
 // 查找指针成功桩函数
 int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, char* str,
@@ -157,10 +161,14 @@ int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, ch
 }
 
 // 设置成功桩函数
-int uci_set_stub_success(struct uci_context* ctx, struct uci_ptr* ptr) { return UCI_OK; }
+int uci_set_stub_success(struct uci_context* ctx, struct uci_ptr* ptr) {
+    return UCI_OK;
+}
 
 // 保存成功桩函数
-int uci_save_stub_success(struct uci_context* ctx, struct uci_package* p) { return UCI_OK; }
+int uci_save_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
 
 // 提交成功桩函数
 int uci_commit_stub_success(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
@@ -173,7 +181,9 @@ int uci_commit_stub_fail(struct uci_context* ctx, struct uci_package** p, bool o
 }
 
 // 卸载成功桩函数
-int uci_unload_stub_success(struct uci_context* ctx, struct uci_package* p) { return UCI_OK; }
+int uci_unload_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
 
 // 释放上下文成功桩函数
 void uci_free_context_stub_success(struct uci_context* ctx) {}
