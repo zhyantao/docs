@@ -51,19 +51,21 @@ note right:同步远程更改
 repeat
   :编辑文件;
   repeat
-  repeat
-    :git add <file>...;
-    note right:添加到暂存区
-    backward:git reset HEAD <file>...;
-  repeat while (撤销暂存?) is (Yes) not (No)
+    repeat
+      :git add <file>...;
+      note right:添加到暂存区
 
-  repeat
-    :git commit;
-    note right:创建新提交
-    backward:git reset --soft HEAD~1;
-  repeat while (撤销提交(保留暂存)?) is (Yes) not (No)
+      backward:git reset HEAD <file>...;
+    repeat while (撤销暂存?) is (Yes) not (No)
 
-  backward:git reset --mixed HEAD~1;
+    repeat
+      :git commit;
+      note right:创建新提交
+
+      backward:git reset --soft HEAD~1;
+    repeat while (撤销提交(保留暂存)?) is (Yes) not (No)
+
+    backward:git reset --mixed HEAD~1;
   repeat while (撤销提交和暂存?) is (Yes) not (No)
 
   backward:git reset --hard HEAD~1;
@@ -72,6 +74,7 @@ repeat while (彻底丢弃更改?) is (Yes) not (No)
 repeat
   :git push [--force] <remote> <branch>;
   note right:推送到远程
+
   backward:git revert HEAD;
 repeat while (安全撤销提交?) is (Yes) not (No)
 
