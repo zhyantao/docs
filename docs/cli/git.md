@@ -45,11 +45,22 @@ git config --global --replace-all core.autocrlf false
 @startuml
 start
 
-:git pull;
-note right:同步远程更改
+:git clone <repo url>;
+note right:下载远程仓库代码
 
 repeat
   :编辑文件;
+
+  if (拉取别人的代码?) then (否)
+  else (是)
+    :git stash;
+    note right:临时保存工作目录的修改
+    :git pull;
+    note right:同步别人的修改
+    :git stash pop;
+    note right:恢复最近保存的 stash 并删除 stash 记录
+  endif
+
   repeat
     repeat
       :git add <file>...;
