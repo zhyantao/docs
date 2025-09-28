@@ -143,6 +143,26 @@ __attribute__((noinline)) bool stop_while_1_stub() {
 ```
 ````
 
+````{admonition} qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+当被测试函数需要指针类型的参数时，必须确保传入有效的内存地址。正确做法是：
+
+1. **声明变量**：先定义一个具体类型的变量
+2. **获取地址**：使用取地址运算符 `&` 获取该变量的内存地址
+3. **传入函数**：将地址传递给需要指针参数的函数
+
+```cpp
+// 正确示例
+int actual_variable;           // 1. 声明实际变量
+test_func(&actual_variable);   // 2. 获取地址并传入函数
+
+// 错误示例：传入未初始化的野指针
+int* wild_pointer;            // 未初始化的指针
+test_func(wild_pointer);      // 可能导致段错误或未定义行为
+```
+
+**核心原则**：永远不要将未初始化的指针传递给函数，这会导致程序崩溃或不可预测的行为。
+````
+
 ### 桩函数代码示例
 
 ```cpp
