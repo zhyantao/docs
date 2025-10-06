@@ -100,6 +100,13 @@ strace -p 7497 -e trace=network -s 100
 |                    | `watch <表达式>`     | 设置数据观察点             | `watch *0x12345678`    |
 | **寄存器与汇编**   | `info registers`     | 查看寄存器值               | `info registers`       |
 |                    | `disassemble <函数>` | 反汇编函数                 | `disassemble main`     |
+| **布局与界面**     | `layout src`         | 显示源代码窗口             | `layout src`           |
+|                    | `layout asm`         | 显示汇编窗口               | `layout asm`           |
+|                    | `layout split`       | 同时显示源码和汇编         | `layout split`         |
+|                    | `layout regs`        | 显示寄存器窗口             | `layout regs`          |
+|                    | `focus <窗口>`       | 切换焦点窗口               | `focus cmd`            |
+|                    | `refresh`            | 刷新布局显示               | `refresh`              |
+|                    | `tui reg <寄存器组>` | 显示特定寄存器组           | `tui reg general`      |
 
 ## grep
 

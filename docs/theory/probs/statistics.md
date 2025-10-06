@@ -146,7 +146,6 @@ P(\text{检验统计量} \geq Z_{\alpha/2}) \leq \alpha
 ## $\mathcal{X}^2$ 拟合优度检验
 
 - 分布中不含未知参数的 $\mathcal{X}^2$ 检验法
-
   - 总体为离散分布时的 $\mathcal{X}^2$ 检验法
   - 总体为连续分布时的 $\mathcal{X}^2$ 检验法
 
