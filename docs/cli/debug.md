@@ -95,7 +95,8 @@ strace -p 7497 -e trace=network -s 100
 | **调用栈与上下文** | `backtrace`          | 打印调用栈                 | `backtrace`            |
 |                    | `frame <编号>`       | 切换栈帧                   | `frame 2`              |
 |                    | `info locals`        | 查看当前帧局部变量         | `info locals`          |
-| **变量与内存查看** | `print <表达式>`     | 打印表达式值               | `print x`              |
+| **变量与内存查看** | `print <表达式>`     | 打印表达式的十进制值       | `print x`              |
+|                    | `print /x <表达式>`  | 打印表达式的十六进制值     | `print /x x`           |
 |                    | `x/<格式> <地址>`    | 检查内存                   | `x/4wx 0x7fffffffe000` |
 |                    | `watch <表达式>`     | 设置数据观察点             | `watch *0x12345678`    |
 | **寄存器与汇编**   | `info registers`     | 查看寄存器值               | `info registers`       |
