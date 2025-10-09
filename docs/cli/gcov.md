@@ -107,91 +107,9 @@ gcovr -r . --exclude 'test/*' --html -o coverage.html
 ```
 ````
 
-## 结果解读
-
-### HTML 报告内容
-
-- **文件列表视图**：显示每个文件的总体覆盖率百分比
-- **行级覆盖详情**：点击文件名可查看每行代码的执行情况
-- **颜色标识**：
-  - 绿色：已覆盖的代码
-  - 红色：未覆盖的代码
-  - 黄色：部分覆盖（分支覆盖率）
-
-### 覆盖率指标
-
-- **行覆盖率**（Line Coverage）：已执行代码行占总代码行的比例
-- **函数覆盖率**（Function Coverage）：已调用函数占全部函数的比例
-- **分支覆盖率**（Branch Coverage）：已执行分支占全部控制流分支的比例
-
 ## 桩函数使用示例
 
-```{admonition} 如何对 static 函数或变量进行打桩？
-
-对于 `static` 函数，由于作用域限制无法直接打桩，但可以通过间接方式模拟。考虑到 `static` 函数必然在同一文件的其他位置被调用，可以针对调用点进行测试。对于 `static` 变量，通常会在非 `static` 函数中被赋值，因此只需对这些函数进行打桩，即可控制 `static` 变量的值，使其符合测试预期。
-
-```
-
-````{admonition} 桩函数不生效的解决方案
-
-当编译器将函数优化为内联函数时，会导致桩函数失效。解决方法是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性，例如：
-
-```cpp
-__attribute__((noinline)) bool stop_while_1_stub() {
-    return true;
-}
-```
-````
-
-````{admonition} qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-当被测试函数需要指针类型的参数时，必须确保传入有效的内存地址。正确做法是：
-
-1. 声明变量：先定义一个具体类型的变量
-2. 获取地址：使用取地址运算符 `&` 获取该变量的内存地址
-3. 传入函数：将地址传递给需要指针参数的函数
-
-```cpp
-// 正确示例
-int actual_variable;         // 1. 声明实际变量
-test_func(&actual_variable); // 2. 获取地址并传入函数
-
-// 错误示例：传入未初始化的野指针
-int* wild_pointer;       // 未初始化的指针
-test_func(wild_pointer); // 可能导致段错误或未定义行为
-```
-
-**核心原则**：永远不要将未初始化的指针传递给函数，这会导致程序崩溃或不可预测的行为。
-````
-
-````{admonition} 屏蔽相关代码的统计
-
-如需从覆盖率统计中排除特定代码，请在源代码中添加对应的屏蔽注释并重新编译。重新生成的库文件在运行时将忽略被标记的代码，使其不参与覆盖率统计。
-
-支持以下屏蔽方式：
-
-- **多行屏蔽**：在目标代码段起始处添加 `// LCOV_EXCL_START`，在结束处添加 `// LCOV_EXCL_STOP`
-- **单行屏蔽**：在代码行末尾添加 `// LCOV_EXCL_LINE`
-- **分支屏蔽**：仅排除分支统计，保留代码执行统计，在分支判断语句后添加 `// LCOV_EXCL_BR_LINE`
-
-示例：
-
-```cpp
-// LCOV_EXCL_START
-void unused_function() {
-    // 此函数不会被统计
-}
-// LCOV_EXCL_STOP
-
-void active_function() {
-    log("running"); // LCOV_EXCL_LINE
-    if (condition) { // LCOV_EXCL_BR_LINE
-        // 此分支不纳入分支统计
-    }
-}
-```
-````
-### 桩函数代码示例
-
+:::{dropdown} 桩函数代码示例
 ```cpp
 #include <cstdlib>
 #include <cstring>
@@ -251,3 +169,86 @@ void uci_free_context_stub_success(struct uci_context* ctx) {
     // 桩函数实现为空
 }
 ```
+:::
+
+:::{admonition} 如何对 static 函数或变量进行打桩？
+
+对于 `static` 函数，由于作用域限制无法直接打桩，但可以通过间接方式模拟。考虑到 `static` 函数必然在同一文件的其他位置被调用，可以针对调用点进行测试。对于 `static` 变量，通常会在非 `static` 函数中被赋值，因此只需对这些函数进行打桩，即可控制 `static` 变量的值，使其符合测试预期。
+
+```
+
+````{admonition} 桩函数不生效的解决方案
+
+当编译器将函数优化为内联函数时，会导致桩函数失效。解决方法是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性，例如：
+
+```cpp
+__attribute__((noinline)) bool stop_while_1_stub() {
+    return true;
+}
+```
+:::
+
+:::{admonition} qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+当被测试函数需要指针类型的参数时，必须确保传入有效的内存地址。正确做法是：
+
+1. 声明变量：先定义一个具体类型的变量
+2. 获取地址：使用取地址运算符 `&` 获取该变量的内存地址
+3. 传入函数：将地址传递给需要指针参数的函数
+
+```cpp
+// 正确示例
+int actual_variable;         // 1. 声明实际变量
+test_func(&actual_variable); // 2. 获取地址并传入函数
+
+// 错误示例：传入未初始化的野指针
+int* wild_pointer;       // 未初始化的指针
+test_func(wild_pointer); // 可能导致段错误或未定义行为
+```
+
+**核心原则**：永远不要将未初始化的指针传递给函数，这会导致程序崩溃或不可预测的行为。
+:::
+
+:::{admonition} 屏蔽相关代码的统计
+
+如需从覆盖率统计中排除特定代码，请在源代码中添加对应的屏蔽注释并重新编译。重新生成的库文件在运行时将忽略被标记的代码，使其不参与覆盖率统计。
+
+支持以下屏蔽方式：
+
+- **多行屏蔽**：在目标代码段起始处添加 `// LCOV_EXCL_START`，在结束处添加 `// LCOV_EXCL_STOP`
+- **单行屏蔽**：在代码行末尾添加 `// LCOV_EXCL_LINE`
+- **分支屏蔽**：仅排除分支统计，保留代码执行统计，在分支判断语句后添加 `// LCOV_EXCL_BR_LINE`
+
+示例：
+
+```cpp
+// LCOV_EXCL_START
+void unused_function() {
+    // 此函数不会被统计
+}
+// LCOV_EXCL_STOP
+
+void active_function() {
+    log("running"); // LCOV_EXCL_LINE
+    if (condition) { // LCOV_EXCL_BR_LINE
+        // 此分支不纳入分支统计
+    }
+}
+```
+:::
+
+## 结果解读
+
+### HTML 报告内容
+
+- **文件列表视图**：显示每个文件的总体覆盖率百分比
+- **行级覆盖详情**：点击文件名可查看每行代码的执行情况
+- **颜色标识**：
+  - 绿色：已覆盖的代码
+  - 红色：未覆盖的代码
+  - 黄色：部分覆盖（分支覆盖率）
+
+### 覆盖率指标
+
+- **行覆盖率**（Line Coverage）：已执行代码行占总代码行的比例
+- **函数覆盖率**（Function Coverage）：已调用函数占全部函数的比例
+- **分支覆盖率**（Branch Coverage）：已执行分支占全部控制流分支的比例
