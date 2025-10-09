@@ -163,6 +163,33 @@ test_func(wild_pointer); // 可能导致段错误或未定义行为
 **核心原则**：永远不要将未初始化的指针传递给函数，这会导致程序崩溃或不可预测的行为。
 ````
 
+````{admonition} 屏蔽相关代码的统计
+
+如需从覆盖率统计中排除特定代码，请在源代码中添加对应的屏蔽注释并重新编译。重新生成的库文件在运行时将忽略被标记的代码，使其不参与覆盖率统计。
+
+支持以下屏蔽方式：
+
+- **多行屏蔽**：在目标代码段起始处添加 `// LCOV_EXCL_START`，在结束处添加 `// LCOV_EXCL_STOP`
+- **单行屏蔽**：在代码行末尾添加 `// LCOV_EXCL_LINE`
+- **分支屏蔽**：仅排除分支统计，保留代码执行统计，在分支判断语句后添加 `// LCOV_EXCL_BR_LINE`
+
+示例：
+
+```cpp
+// LCOV_EXCL_START
+void unused_function() {
+    // 此函数不会被统计
+}
+// LCOV_EXCL_STOP
+
+void active_function() {
+    log("running"); // LCOV_EXCL_LINE
+    if (condition) { // LCOV_EXCL_BR_LINE
+        // 此分支不纳入分支统计
+    }
+}
+```
+````
 ### 桩函数代码示例
 
 ```cpp
