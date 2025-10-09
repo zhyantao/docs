@@ -74,11 +74,11 @@ lcov -a coverage1.info -a coverage2.info -o total.info
 
 双击 lcov 生成的 index.html 文件，即可在浏览器中查看覆盖率报告。报告主要包含以下三列数据：
 
-| 列名 | 说明 |
-|------|------|
+| 列名        | 说明                                                                  |
+| ----------- | --------------------------------------------------------------------- |
 | Branch data | 分支覆盖率，显示代码中每个分支（如 `if/else`、`switch` 等）的执行情况 |
-| Line Data | 行覆盖率，显示每行代码是否被执行过 |
-| Source code | 对应的源代码，通过颜色高亮显示覆盖情况 |
+| Line Data   | 行覆盖率，显示每行代码是否被执行过                                    |
+| Source code | 对应的源代码，通过颜色高亮显示覆盖情况                                |
 
 ## 桩函数使用示例
 
@@ -156,6 +156,7 @@ __attribute__((noinline)) bool stop_while_1_stub() {
     return true;
 }
 ```
+
 :::
 
 :::{admonition} qemu: uncaught target signal 11 (Segmentation fault) - core dumped
@@ -199,10 +200,11 @@ void unused_function() {
 // LCOV_EXCL_STOP
 
 void active_function() {
-    log("running"); // LCOV_EXCL_LINE
+    log("running");  // LCOV_EXCL_LINE
     if (condition) { // LCOV_EXCL_BR_LINE
         // 此分支不纳入分支统计
     }
 }
 ```
+
 :::
