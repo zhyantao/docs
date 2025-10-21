@@ -1,4 +1,4 @@
-# Debug
+# Troubleshooting
 
 ```{admonition} 重要提示！
 先在 tldr 上搜索：<https://tldr.inbrowser.app/>
