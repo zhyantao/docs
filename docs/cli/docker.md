@@ -89,8 +89,9 @@ docker ps -a
 ## 构建镜像
 
 ```bash
-# 从当前目录下的 `Dockerfile` 构建镜像
+# 根据当前目录下的 Dockerfile 构建镜像
 docker build -t <镜像名称>:<标签名> .
+docker images
 ```
 
 ## 推送镜像到私有仓库
@@ -133,7 +134,7 @@ apt-get download $(apt-cache depends --recurse --no-recommends \
   --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances \
   $PKGNAME | grep "^\w" | sort -u)
 
-# 将 Git 安装包目录（绝对路径）挂载到 /mnt 目录
+# 将本地的 Git 安装包目录（绝对路径）挂载到容器的 /mnt 目录
 docker run -v $PWD:/mnt -it ubuntu:20.04 /bin/bash
 
 # 在容器内，进入挂载点并开始安装
@@ -143,10 +144,6 @@ dpkg -i *.deb
 # 强制重新配置未正确配置的软件包
 dpkg --configure -a
 dpkg -i *.deb
-
-# 保存当前容器的状态（假设容器正在运行），并制作新的镜像
-docker ps
-docker commit <容器 ID> <新镜像名称>:<标签名>
 ```
 
 离线安装时，一些常见的错误：
@@ -158,4 +155,12 @@ docker commit <容器 ID> <新镜像名称>:<标签名>
 mv /var/lib/dpkg/triggers/File /var/lib/dpkg/triggers/File.bak
 apt-get --fix-broken install
 dpkg -i *.deb
+```
+
+## 制作新镜像
+
+```bash
+# 保存当前容器的状态（假设容器正在运行），并制作新的镜像
+docker ps
+docker commit <容器 ID> <新镜像名称>:<标签名>
 ```
