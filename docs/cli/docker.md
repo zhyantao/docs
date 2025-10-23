@@ -68,35 +68,28 @@ docker rm -f $(docker ps -a | grep Exited | awk '{print $1}')
 
 ## 交互式启动容器
 
-以交互模式启动一个容器并进入其 shell 环境：
-
 ```bash
+# 以交互模式启动一个容器并进入其 shell 环境
 docker run -it ubuntu:20.04 /bin/bash
-```
 
-对于没有安装 bash 的镜像（如 Alpine）：
-
-```bash
+# 对于没有安装 bash 的镜像（如 Alpine）
 docker run -it alpine sh
 ```
 
 ## 查看运行中的容器
 
 ```bash
+# 查看运行中的容器
 docker ps
-```
 
-查看所有容器（包括停止的）：
-
-```bash
+# 查看所有容器（包括停止的）
 docker ps -a
 ```
 
 ## 构建镜像
 
-从当前目录下的 `Dockerfile` 构建镜像：
-
 ```bash
+# 从当前目录下的 `Dockerfile` 构建镜像
 docker build -t <镜像名称>:<标签名> .
 ```
 
