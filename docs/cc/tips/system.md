@@ -6,7 +6,7 @@
 int my_system(char* cmd) {
     int result = system(cmd);
     if (result != 0) {
-        printf("%s\n", strerror(errno)); // 注意：这里应为
+        printf("%s\n", strerror(errno));
     }
     return result;
 }
