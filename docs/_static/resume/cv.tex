@@ -27,9 +27,9 @@
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 \name{张延涛}
-\address{(+86)156-3285-5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@outlook.com}}
+\address{(+86)156-3285-5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
 \address{Github: \href{https://github.com/zhyantao}{zhyantao} \\ Blog: \href{https://zhyantao.github.io/docs}{zhyantao.github.io/docs}}
-\address{现居地: 陕西省\ 西安市 \\ 意向城市: 北京\ 西安\ 苏州}
+\address{现居地: 陕西省\ 西安市 \\ 意向城市: 北京}
 
 \renewenvironment{rSection}[1]{
 \sectionskip
@@ -61,10 +61,11 @@
 %----------------------------------------------------------------------------------------
 \begin{rSection}{项目经历}
 	\begin{rSubsection}{中兴通讯股份有限公司}{2023 年 7 月 - 至今}{嵌入式软件开发}{陕西西安}
-		\item 主导 ZM9300 国产化项目中的定位与授时业务, 基于中兴自研 S1 芯片深度定制 gPTP 协议, 弥补国产芯片设计短板, 外场测试 offset 指标优于高通和华为平台.
-		\item 承接 GNSS 业务的 SDK 的开发工作, 基于 HD8040D 和 BG1101 芯片维护已有功能及业务扩展, 适配 gpsd 实现 RTK 和 DR 功能的开发和验证, 累计修复故障 161 项.
-		\item 攻克比亚迪授时难题, 通过修改 chrony 实现, 优化中兴模组时间同步慢的问题,将时间同步从 1 分钟优化至 5s 内, 速度提升 92\%, 显著提升了系统的实时性.
-		\item 深度定制 bootchard 功能, 首次在 S1 平台实现开机流程可视化, 为后续系统启动性能优化提供了数据基础和技术手段.
+		\item 负责 ZM9300 国产化项目中的定位业务, 基于 HD8040D 和 BG1101 芯片定制 GPSD 开源代码.
+		\item 负责 GNSS 模块的 SDK 功能开发, 累计修复故障 200+ 项.
+		\item 负责 ZM9300 国产化项目中的时间同步业务, 基于中兴自研芯片适配 gPTP 协议栈, 弥补国产芯片设计短板, 外场测试 offset 指标优于高通和华为平台.
+		\item 基于中兴自研芯片定制 bootchard 功能, 首次在 S1 平台实现开机流程可视化, 为后续系统启动性能优化提供了数据基础和技术手段.
+		\item 负责 ZM9300 国产化项目中的授时业务, 解决 ZM9300 授时慢的问题, 修改 chrony 实现, 将时间同步从 1 分钟优化至 5s 内, 速度提升 92\%.
 	\end{rSubsection}
 	%------------------------------------------------
 	\begin{rSubsection}{中国重型机械研究院股份公司}{2021 年 9 月 - 2022 年 5 月}{后端开发工程师}{陕西西安}
@@ -82,7 +83,7 @@
 	\begin{rSubsection}{}{}{}{}
 		\item 掌握操作系统基础知识, 熟悉进程调度、内存管理、文件系统等核心概念.
 		\item 熟练掌握 C/C++, 具备良好的面向对象设计与编程能力, 代码风格规范, 注释清晰.
-		\item 熟悉 Java 开发, 熟练使用 Spring Boot 构建 Web 应用, 掌握 JPA 进行数据持久化.
+		\item 掌握 Java 开发, 能够使用 Spring Boot 构建 Web 应用, 掌握 JPA 进行数据持久化.
 		\item 了解前端开发技术, 熟悉 HTML、CSS 与 JavaScript, 可基于 Vue.js 开发单页面应用.
 		\item 熟悉 Git、Shell 脚本、GCC 编译器、 Makefile 及 Yocto 等常用开发与构建工具.
 	\end{rSubsection}
