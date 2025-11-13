@@ -1,71 +1,77 @@
-# SELinux
+# SELinux 概述
 
-SELinux 是一种安全访问控制的软件实现，它主要回答类似这样的问题：网站管理员是否有权限访问用户目录？
+SELinux（Security-Enhanced Linux）是一种基于安全策略的强制访问控制（MAC）系统，作为 Linux 内核安全模块实现。它能够明确界定进程与文件之间的访问权限，例如：是否允许 Web 服务器进程访问用户主目录中的文件。
 
-SELinux 对所有的进程和文件都做了标记（Context），然后根据这些标记（Context）规定进程和文件之间的访问规则，以及进程和进程之间的访问规则。
+SELinux 为所有进程与文件分配安全上下文标签，并依据预定义的安全策略，管理进程对文件的访问以及进程间的交互行为。
 
-我们在本文主要学习如何手动调整这些访问规则。
+本文主要介绍如何查看与调整 SELinux 安全策略及上下文设置。
 
-## SELinux Status
+## SELinux 状态管理
 
 ```bash
 # 查看 SELinux 配置
 cat /etc/selinux/config
 
-# 检查 SELinux 是否开启
+# 检查 SELinux 运行状态
 getenforce
 sestatus
 
-# 打开/关闭 SELinux
+# 临时切换 SELinux 运行模式
 setenforce [Enforcing|Permissive|1|0]
 ```
 
-## SELinux Context
+## SELinux 安全上下文
 
-进程和文件都被标记为 SELinux 上下文（也包括额外的信息：`user:role:type:level`）。
+每个进程与文件都被赋予一个 SELinux 安全上下文，格式通常为：`user:role:type:level`。
 
 ```bash
-# 查看文件的 SELinux 上下文
+# 查看文件的安全上下文
 ls -Z /etc/adjtime
 stat -c "%C" /etc/adjtime
 
-# 查看进程的 SELinux 上下文
+# 查看进程的安全上下文
 ps -eZ | grep passwd
 
-# 信息来源 /etc/selinux/targeted/contexts/files/
-# 查看文件的目标上下文
+# 查看文件系统的默认上下文设置
+# 策略文件位置：/etc/selinux/targeted/contexts/files/
 restorecon -R -v /var/lib/isulad/storage/overlay2
 
-# 修改 SELinux 上下文
+# 修改文件或目录的安全上下文
 chcon -R -t container_ro_file_t /var/lib/isulad/storage/overlay2
 ```
 
-## SELinux Boolearn
+## SELinux 布尔值
+
+SELinux 布尔值是一组可动态调整的策略开关，用于灵活控制特定功能或服务的访问权限。
 
 ```bash
-# 查看 SELinux 布尔值
+# 查看所有布尔值及其状态
 getsebool -a
 getsebool allow_cvs_read_shadow
 
-# 修改 SELinux 布尔值
-# SELinux 布尔值可以在程序运行期间修改
-setsebool allow_cvs_read_shadow [on/off]
+# 启用或禁用布尔值（运行时生效）
+setsebool allow_cvs_read_shadow [on|off]
 ```
 
-## 查看违规记录
+## 查看 SELinux 违规日志
 
 ```bash
+# 筛选访问向量缓存（AVC）拒绝记录
 cat /var/log/audit/audit.log | grep avc
 ```
 
-## 添加规则
+## 自定义 SELinux 策略模块
 
-简单来讲，需要手动创建或修改三个文件：`.te`、`.fc`、`.if`。
+用户可通过编写策略模块扩展 SELinux 策略，通常涉及以下文件类型：
 
-参考文献：
+- `.te`：类型强制规则文件
+- `.fc`：文件上下文定义文件
+- `.if`：策略接口文件
 
-[1] <https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted>
+## 参考文献
 
-[2] <https://l.github.io/debian-handbook/html/zh-CN/sect.selinux.html>
+[1] SELinux Project. *Getting Started with the Reference Policy*. https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted
 
-[3] <https://wiki.gentoo.org/wiki/SELinux/Tutorials>
+[2] *Debian Handbook: SELinux*. https://l.github.io/debian-handbook/html/zh-CN/sect.selinux.html
+
+[3] Gentoo Wiki. *SELinux Tutorials*. https://wiki.gentoo.org/wiki/SELinux/Tutorials
