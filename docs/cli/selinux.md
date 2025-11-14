@@ -139,38 +139,228 @@ systemctl restart gpsd
 ```
 
 #### 方法二：手动创建精细策略（推荐高级用户）
+#### 优化后的 SELinux 策略创建流程
 
-**步骤 1：创建策略文件**
+##### 准备工作
+
+```bash
+# 安装 SELinux 开发工具（如未安装）
+sudo dnf install selinux-policy-devel    # RHEL/CentOS/Fedora
+sudo apt-get install selinux-policy-dev  # Debian/Ubuntu
+
+# 确认 audit.log 中有 gpsd 相关的拒绝记录
+sudo grep "gpsd.*denied" /var/log/audit/audit.log
+```
+
+##### 步骤 1：创建策略源文件
 
 创建 `gpsd_fix.te`：
 ```selinux
 policy_module(gpsd_fix, 1.0)
 
-# 允许 gpsd 创建和管理 socket 文件
-allow gpsd_t tmpfs_t:sock_file { create write unlink };
+###########################################
+# 依赖类型声明
+###########################################
+gen_require(`
+    type gpsd_t;
+    type tmpfs_t;
+    class sock_file { create write setattr unlink link rename getattr };
+    class dir { search write add_name remove_name };
+')
+
+###########################################
+# 新类型定义
+###########################################
+type gpsd_socket_t;
+files_type(gpsd_socket_t)
+
+###########################################
+# 核心权限规则
+###########################################
+
+# 允许在 tmpfs 目录中操作
 allow gpsd_t tmpfs_t:dir { search write add_name remove_name };
+
+# 允许在 tmpfs 中创建和管理 socket 文件
+allow gpsd_t tmpfs_t:sock_file { create write setattr unlink link rename };
+
+# 允许管理专用类型的 socket 文件
+allow gpsd_t gpsd_socket_t:sock_file { create write setattr unlink link rename getattr };
+
+###########################################
+# 可选：增强安全性的规则
+###########################################
+# 禁止 gpsd 访问其他敏感文件
+dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
+# 注意：dontaudit 在现代策略中已被 tunable_policy 替代
 ```
 
-**步骤 2：编译安装**
+##### 步骤 2：创建文件上下文文件
+
+创建 `gpsd_fix.fc`：
 ```bash
-# 编译策略
+# ==========================================
+# gpsd Socket 文件安全上下文定义
+# ==========================================
+
+# 精确匹配特定 socket 文件
+/var/run/gpsd/gpsd\.unix\.sock    --  gen_context(system_u:object_r:gpsd_socket_t,s0)
+/var/run/gpsd/gpsd\.rawdata\.sock --  gen_context(system_u:object_r:gpsd_socket_t,s0)
+
+# 通配符匹配所有 gpsd socket 文件
+/var/run/gpsd/.*\.sock            --  gen_context(system_u:object_r:gpsd_socket_t,s0)
+
+# 可选：确保 gpsd 运行时目录的上下文
+/var/run/gpsd(/.*)?               gen_context(system_u:object_r:gpsd_var_run_t,s0)
+```
+
+##### 步骤 3：创建接口文件（可选）
+
+创建 `gpsd_fix.if`：
+```selinux
+###########################################
+# gpsd_fix 策略模块接口定义
+###########################################
+
+#### <summary>gpsd socket 文件管理策略</summary>
+#### <desc>
+#### 此策略为 gpsd 服务提供创建和管理 socket 文件所需的权限
+#### </desc>
+
+###########################################
+# gpsd_socket_file 接口
+###########################################
+interface(`gpsd_socket_file',`
+    gen_require(`
+        type gpsd_socket_t;
+    ')
+
+    # 允许域类型管理 gpsd socket 文件
+    allow $1 gpsd_socket_t:sock_file { create write setattr unlink link rename getattr };
+    
+    # 允许域类型在 gpsd 目录中操作
+    allow $1 gpsd_var_run_t:dir { search write add_name remove_name };
+')
+```
+
+##### 步骤 4：编译策略模块
+
+**方法一：使用 Makefile（推荐）**
+```bash
+# 确保在包含 .te、.fc、.if 文件的目录中执行
+sudo make -f /usr/share/selinux/devel/Makefile gpsd_fix.pp
+
+# 或者使用绝对路径
+sudo make -f /usr/share/selinux/devel/Makefile
+```
+
+**方法二：手动编译**
+```bash
+# 1. 编译模块
 checkmodule -M -m -o gpsd_fix.mod gpsd_fix.te
-semodule_package -o gpsd_fix.pp -m gpsd_fix.mod
 
-# 安装策略
-semodule -i gpsd_fix.pp
+# 2. 打包策略模块（包含文件上下文）
+semodule_package -o gpsd_fix.pp -m gpsd_fix.mod -f gpsd_fix.fc
+
+# 验证生成的 .pp 文件
+sesearch -A -s gpsd_t -c sock_file -p create -C gpsd_fix.pp
 ```
 
-**步骤 3：验证修复**
+##### 步骤 5：安装并激活策略
+
 ```bash
-# 检查策略是否加载
+# 安装策略模块
+sudo semodule -i gpsd_fix.pp
+
+# 验证模块加载
+sudo semodule -l | grep gpsd_fix
+
+# 应用文件上下文
+sudo restorecon -R -v /var/run/gpsd/
+
+# 如果目录不存在，先创建并设置永久上下文
+sudo mkdir -p /var/run/gpsd
+sudo semanage fcontext -a -t gpsd_var_run_t "/var/run/gpsd(/.*)?"
+sudo restorecon -R -v /var/run/gpsd
+```
+
+##### 步骤 6：全面验证
+
+```bash
+# 1. 检查策略模块状态
+echo "=== 检查策略模块 ==="
+sudo semodule -l | grep gpsd_fix
+
+# 2. 检查文件上下文
+echo "=== 检查文件上下文 ==="
+ls -Z /var/run/gpsd/ 2>/dev/null || echo "目录尚未创建"
+
+# 3. 重启服务测试
+echo "=== 重启 gpsd 服务 ==="
+sudo systemctl restart gpsd
+
+# 4. 检查服务状态
+echo "=== 检查服务状态 ==="
+sudo systemctl status gpsd --no-pager -l
+
+# 5. 检查 SELinux 拒绝记录
+echo "=== 检查 SELinux 日志 ==="
+sudo ausearch -m avc -c gpsd --start recent
+
+# 6. 检查 socket 文件创建
+echo "=== 检查 socket 文件 ==="
+ls -la /var/run/gpsd/*.sock 2>/dev/null && ls -Z /var/run/gpsd/*.sock
+
+# 7. 验证权限规则
+echo "=== 验证策略规则 ==="
+sudo sesearch -A -s gpsd_t -c sock_file -p create
+```
+
+##### 步骤 7：故障排查
+
+如果问题仍然存在：
+
+```bash
+# 1. 临时切换到宽容模式进行测试
+sudo setenforce 0
+sudo systemctl restart gpsd
+sudo setenforce 1
+
+# 2. 详细分析审计日志
+sudo grep "gpsd" /var/log/audit/audit.log | audit2allow -a
+
+# 3. 检查是否有其他权限问题
+sudo sealert -a /var/log/audit/audit.log
+
+# 4. 查看完整的策略规则
+sudo sesearch -A -s gpsd_t
+```
+
+##### 步骤 8：维护和管理
+
+```bash
+# 查看模块详情
 semodule -l | grep gpsd_fix
 
-# 重启服务测试
-systemctl restart gpsd
+# 更新策略（先删除后安装）
+semodule -r gpsd_fix
+semodule -i gpsd_fix.pp
 
-# 检查是否还有错误
-ausearch -m avc -c gpsd
+# 完全移除策略
+semodule -r gpsd_fix
+
+# 导出策略源码（如果需要备份）
+semodule -E gpsd_fix
+```
+
+##### 完整的工作目录结构
+
+```
+gpsd_fix/
+├── gpsd_fix.te          # 主策略文件
+├── gpsd_fix.fc          # 文件上下文
+├── gpsd_fix.if          # 接口文件（可选）
+└── gpsd_fix.pp          # 编译后的策略模块
 ```
 
 #### 方法三：检查现有解决方案
