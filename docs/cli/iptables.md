@@ -1,4 +1,4 @@
-# iptables 详解
+# iptables
 
 ## 概述
 
@@ -14,7 +14,7 @@
 
 - **ipfirewall**（内核 1.x）：功能有限，规则需全部放入内核
 - **ipchains**（内核 2.x）：支持规则串联
-- **iptables**（现代）：规则列表形式，提供精细访问控制
+- **iptables/ip6tables**（现代）：规则列表形式，提供精细访问控制
 
 > iptables 是用户空间的规则定义工具，实际防火墙功能由内核空间的 netfilter 实现。
 
@@ -22,7 +22,7 @@
 
 ### 五个规则链
 
-```mermaid
+```{mermaid}
 graph TB
     A[数据包进入] --> B[PREROUTING]
     B --> C{路由判断}
@@ -68,7 +68,7 @@ graph TB
 
 ### 表的概念层次
 
-```mermaid
+```{mermaid}
 flowchart TD
     A[数据包进入] --> B[表处理优先级]
 
@@ -138,7 +138,7 @@ iptables -A INPUT -i lo -j ACCEPT
 
 ### 表链关系总览
 
-```mermaid
+```{mermaid}
 flowchart TD
     subgraph 表链映射
         A[raw表] --> A1[PREROUTING]
@@ -167,7 +167,7 @@ flowchart TD
 
 ### 完整处理流程
 
-```mermaid
+```{mermaid}
 flowchart LR
     A[数据包进入] --> B[PREROUTING]
 
