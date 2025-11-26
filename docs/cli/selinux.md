@@ -158,10 +158,10 @@ sudo grep "gpsd.*denied" /var/log/audit/audit.log
 
 ##### 步骤 1：创建策略源文件
 
-创建 `gpsd_fix.te`：
+创建 `gpsd.te`：
 
 ```selinux
-policy_module(gpsd_fix, 1.0)
+policy_module(gpsd, 1.0)
 
 ###########################################
 # 依赖类型声明
@@ -202,7 +202,7 @@ dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
 
 ##### 步骤 2：创建文件上下文文件
 
-创建 `gpsd_fix.fc`：
+创建 `gpsd.fc`：
 
 ```bash
 # ==========================================
@@ -222,11 +222,11 @@ dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
 
 ##### 步骤 3：创建接口文件（可选）
 
-创建 `gpsd_fix.if`：
+创建 `gpsd.if`：
 
 ```selinux
 ###########################################
-# gpsd_fix 策略模块接口定义
+# gpsd 策略模块接口定义
 ###########################################
 
 #### <summary>gpsd socket 文件管理策略</summary>
@@ -256,7 +256,7 @@ interface(`gpsd_socket_file',`
 
 ```bash
 # 确保在包含 .te、.fc、.if 文件的目录中执行
-sudo make -f /usr/share/selinux/devel/Makefile gpsd_fix.pp
+sudo make -f /usr/share/selinux/devel/Makefile gpsd.pp
 
 # 或者使用绝对路径
 sudo make -f /usr/share/selinux/devel/Makefile
@@ -266,23 +266,23 @@ sudo make -f /usr/share/selinux/devel/Makefile
 
 ```bash
 # 1. 编译模块
-checkmodule -M -m -o gpsd_fix.mod gpsd_fix.te
+checkmodule -M -m -o gpsd.mod gpsd.te
 
 # 2. 打包策略模块（包含文件上下文）
-semodule_package -o gpsd_fix.pp -m gpsd_fix.mod -f gpsd_fix.fc
+semodule_package -o gpsd.pp -m gpsd.mod -f gpsd.fc
 
 # 验证生成的 .pp 文件
-sesearch -A -s gpsd_t -c sock_file -p create -C gpsd_fix.pp
+sesearch -A -s gpsd_t -c sock_file -p create -C gpsd.pp
 ```
 
 ##### 步骤 5：安装并激活策略
 
 ```bash
 # 安装策略模块
-sudo semodule -i gpsd_fix.pp
+sudo semodule -i gpsd.pp
 
 # 验证模块加载
-sudo semodule -l | grep gpsd_fix
+sudo semodule -l | grep gpsd
 
 # 应用文件上下文
 sudo restorecon -R -v /var/run/gpsd/
@@ -298,7 +298,7 @@ sudo restorecon -R -v /var/run/gpsd
 ```bash
 # 1. 检查策略模块状态
 echo "=== 检查策略模块 ==="
-sudo semodule -l | grep gpsd_fix
+sudo semodule -l | grep gpsd
 
 # 2. 检查文件上下文
 echo "=== 检查文件上下文 ==="
@@ -349,27 +349,27 @@ sudo sesearch -A -s gpsd_t
 
 ```bash
 # 查看模块详情
-semodule -l | grep gpsd_fix
+semodule -l | grep gpsd
 
 # 更新策略（先删除后安装）
-semodule -r gpsd_fix
-semodule -i gpsd_fix.pp
+semodule -r gpsd
+semodule -i gpsd.pp
 
 # 完全移除策略
-semodule -r gpsd_fix
+semodule -r gpsd
 
 # 导出策略源码（如果需要备份）
-semodule -E gpsd_fix
+semodule -E gpsd
 ```
 
 ##### 完整的工作目录结构
 
 ```
-gpsd_fix/
-├── gpsd_fix.te          # 主策略文件
-├── gpsd_fix.fc          # 文件上下文
-├── gpsd_fix.if          # 接口文件（可选）
-└── gpsd_fix.pp          # 编译后的策略模块
+gpsd/
+├── gpsd.te          # 主策略文件
+├── gpsd.fc          # 文件上下文
+├── gpsd.if          # 接口文件（可选）
+└── gpsd.pp          # 编译后的策略模块
 ```
 
 #### 方法三：检查现有解决方案
