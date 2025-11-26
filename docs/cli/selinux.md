@@ -160,7 +160,7 @@ sudo grep "gpsd.*denied" /var/log/audit/audit.log
 
 创建 `gpsd.te`：
 
-```selinux
+```text
 policy_module(gpsd, 1.0)
 
 ###########################################
@@ -224,7 +224,7 @@ dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
 
 创建 `gpsd.if`：
 
-```selinux
+```text
 ###########################################
 # gpsd 策略模块接口定义
 ###########################################
