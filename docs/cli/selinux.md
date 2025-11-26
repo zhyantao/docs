@@ -11,6 +11,7 @@
 每个文件和进程都有一个安全标签，格式为：`用户:角色:类型:级别`
 
 例如：
+
 - `system_u:system_r:httpd_t:s0` - Web 服务器进程
 - `system_u:object_r:httpd_content_t:s0` - 网站文件
 
@@ -110,15 +111,17 @@ grep "gpsd" /var/log/audit/audit.log | grep denied
 ```
 
 **错误信息示例**：
+
 ```
-avc: denied { create } for pid=5323 comm="gpsd" 
-name="gpsd.unix.sock" 
-scontext=system_u:system_r:gpsd_t:s0 
-tcontext=system_u:object_r:tmpfs_t:s0 
+avc: denied { create } for pid=5323 comm="gpsd"
+name="gpsd.unix.sock"
+scontext=system_u:system_r:gpsd_t:s0
+tcontext=system_u:object_r:tmpfs_t:s0
 tclass=sock_file
 ```
 
 **解读**：
+
 - `gpsd_t` 进程想要在 `tmpfs_t` 目录中创建 socket 文件
 - SELinux 拒绝了这次创建操作
 
@@ -139,6 +142,7 @@ systemctl restart gpsd
 ```
 
 #### 方法二：手动创建精细策略（推荐高级用户）
+
 #### 优化后的 SELinux 策略创建流程
 
 ##### 准备工作
@@ -155,6 +159,7 @@ sudo grep "gpsd.*denied" /var/log/audit/audit.log
 ##### 步骤 1：创建策略源文件
 
 创建 `gpsd_fix.te`：
+
 ```selinux
 policy_module(gpsd_fix, 1.0)
 
@@ -198,6 +203,7 @@ dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
 ##### 步骤 2：创建文件上下文文件
 
 创建 `gpsd_fix.fc`：
+
 ```bash
 # ==========================================
 # gpsd Socket 文件安全上下文定义
@@ -217,6 +223,7 @@ dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
 ##### 步骤 3：创建接口文件（可选）
 
 创建 `gpsd_fix.if`：
+
 ```selinux
 ###########################################
 # gpsd_fix 策略模块接口定义
@@ -237,7 +244,7 @@ interface(`gpsd_socket_file',`
 
     # 允许域类型管理 gpsd socket 文件
     allow $1 gpsd_socket_t:sock_file { create write setattr unlink link rename getattr };
-    
+
     # 允许域类型在 gpsd 目录中操作
     allow $1 gpsd_var_run_t:dir { search write add_name remove_name };
 ')
@@ -246,6 +253,7 @@ interface(`gpsd_socket_file',`
 ##### 步骤 4：编译策略模块
 
 **方法一：使用 Makefile（推荐）**
+
 ```bash
 # 确保在包含 .te、.fc、.if 文件的目录中执行
 sudo make -f /usr/share/selinux/devel/Makefile gpsd_fix.pp
@@ -255,6 +263,7 @@ sudo make -f /usr/share/selinux/devel/Makefile
 ```
 
 **方法二：手动编译**
+
 ```bash
 # 1. 编译模块
 checkmodule -M -m -o gpsd_fix.mod gpsd_fix.te

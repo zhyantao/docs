@@ -5,9 +5,7 @@
 ```cpp
 int my_system(char* cmd) {
     int result = system(cmd);
-    if (result != 0) {
-        printf("%s\n", strerror(errno));
-    }
+    if (result != 0) { printf("%s\n", strerror(errno)); }
     return result;
 }
 ```
@@ -28,7 +26,7 @@ int my_system(char* cmd) {
 ## 解决方案代码
 
 ```cpp
-int fixed_system(const char *cmd) {
+int fixed_system(const char* cmd) {
     // 保存原信号处理
     struct sigaction old_sa, new_sa;
     sigaction(SIGCHLD, NULL, &old_sa);
