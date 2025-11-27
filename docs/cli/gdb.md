@@ -44,35 +44,44 @@ echo "kernel.core_pattern=/cache/core.%e.%p.%t" >> /etc/sysctl.conf
 sysctl -p
 ```
 
-**命名格式说明**
+```bash
+# 命名格式说明：
 
-- `%%` - 转义 % 字符
-- `%p` - 进程 ID
-- `%u` - 用户 ID
-- `%g` - 组 ID
-- `%s` - 触发信号
-- `%t` - 时间戳（秒）
-- `%h` - 主机名
-- `%e` - 可执行文件名
+# %% - 转义 % 字符    %p - 进程 ID          %u - 用户 ID
+# %g - 组 ID          %s - 触发信号         %t - 时间戳（秒）
+# %h - 主机名         %e - 可执行文件名
+```
 
 ## 2. 核心概念解析
 
 ### 2.1 Segmentation Fault（段错误）
 
-**定义**：程序试图访问未被授权的内存区域
+- **触发条件**：程序试图访问未被授权的内存区域
+- **信号**：SIGSEGV (11)
 
-**触发条件**：
+```bash
+$ kill -l
 
-- 访问**未分配**的内存空间
-- 以**无效方式**访问合法内存
-
-**信号**：SIGSEGV
+#  1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP
+#  6) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1
+# 11) SIGSEGV     12) SIGUSR2     13) SIGPIPE     14) SIGALRM     15) SIGTERM
+# 16) SIGSTKFLT   17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+# 21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU     25) SIGXFSZ
+# 26) SIGVTALRM   27) SIGPROF     28) SIGWINCH    29) SIGIO       30) SIGPWR
+# 31) SIGSYS      34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3
+# 38) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+# 43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+# 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+# 53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7
+# 58) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+# 63) SIGRTMAX-1  64) SIGRTMAX
+```
 
 ### 2.2 Core Dump（核心转储）
 
-**作用**：程序异常终止时的内存快照
-**内容**：崩溃时的完整状态（内存、寄存器、堆栈等）
-**用途**：事后分析程序崩溃原因
+- **作用**：程序异常终止时的内存快照
+- **内容**：崩溃时的完整状态（内存、寄存器、堆栈等）
+- **用途**：事后分析程序崩溃原因
 
 ### 2.3 常见段错误原因
 
