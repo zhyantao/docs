@@ -485,7 +485,7 @@ int main() {
 7. **内存验证**：对可疑指针使用 `x` 命令验证内存可访问性
 8. **模式识别**：熟悉常见错误模式的寄存器特征
 
-## 调试优化代码
+## 16. 调试优化代码
 
 ```bash
 # 禁用优化影响调试
@@ -498,12 +498,14 @@ set print inline on
 info address function_name
 ```
 
-## 16. 实用命令速查
+## 17. 实用命令速查
 
 ```bash
+# 列出进程的所有子线程
+ps -T | grep <进程名>
+
 # 实时监控
 strace -p <PID>
-ps aux | grep <进程名>
 
 # Core 文件管理
 ls -la /cache/core.*
