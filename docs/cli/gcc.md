@@ -64,7 +64,7 @@ strip --strip-debug program
 
 ### GDB 常用调试技巧
 
-```gdb
+```bash
 # 启动调试
 gdb ./program
 

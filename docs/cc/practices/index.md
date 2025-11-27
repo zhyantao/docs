@@ -1,4 +1,4 @@
-# 小技巧
+# 实战练习
 
 ```{toctree}
 :titlesonly:

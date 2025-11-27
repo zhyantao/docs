@@ -15,8 +15,7 @@ basic/index.md
 class/index.md
 exception/index.md
 concurrent/index.md
-examples/index.md
-tips/index.md
+practices/index.md
 ```
 
 ## Clang Format

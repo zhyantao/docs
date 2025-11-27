@@ -6,6 +6,8 @@
 > - [ML-Glossary](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
 > - [人工智能术语表 - Wikipedia](https://en.wikipedia.org/wiki/Glossary_of_artificial_intelligence)
 
+(machine-learning-glossary)=
+
 ## 基础数学
 
 | 术语                                          | 定义与说明                                                                                                                                                                                                                                                                     |

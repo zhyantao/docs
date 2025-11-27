@@ -14,6 +14,8 @@
 > - 表达式 $\alpha = \arg \min_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W$ 表示：函数取最小值时，将 $\omega$ 的值赋给 $\alpha$
 > - 表达式 $\alpha = \min_{\omega \in W} d(\beta, \omega), \ \forall \omega \in W$ 表示：函数取最小值时，将该最小值赋给 $\alpha$
 
+(symbol-definition)=
+
 ## 通用符号
 
 | 符号            | 含义               | LaTeX 语法      | 备注                                  |
@@ -25,6 +27,8 @@
 | $\mathrm{d}$    | 求导数             | `\mathrm{d}`    | 直立的 $\mathrm{d}$                   |
 | $\partial$      | 求偏导             | `\partial`      | 求导符号 $\mathrm{d}$ 的变体          |
 | $\nabla_\theta$ | 对 $\theta$ 求梯度 | `\nabla_\theta` | 向量微分算子                          |
+
+(probability-statistics-symbols)=
 
 ## 概率和统计
 
@@ -54,6 +58,8 @@
 | $\subseteq$ | 包含（子集）     | `\subseteq` | 高中课本记作 $\subset$，存在歧义，[需注意约定](https://zh.wikipedia.org/wiki/%E5%AD%90%E9%9B%86) |
 | $\in$       | 属于             | `\in`       | $a \in A$                                                                                        |
 | $\notin$    | 不属于           | `\notin`    | $a \notin A$                                                                                     |
+
+(Meta-FSL-symbols)=
 
 ## 机器学习
 
