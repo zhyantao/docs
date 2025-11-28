@@ -25,7 +25,7 @@
 \usepackage[parfill]{parskip} % Remove paragraph indentation
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
 \usepackage{ifthen} % Required for ifthenelse statements
-\usepackage{hyperref} % Required for hyperlink
+\usepackage[pdfborder={0 0 0}]{hyperref} % Required for hyperlink without borders
 \usepackage{xeCJK} % Required for Chinese characters
 
 \pagestyle{empty} % Suppress page numbers
@@ -80,26 +80,27 @@
 % \printname is used to print the name as a page header - 优化布局
 \def \printname {
     \begingroup
-    \begin{minipage}{0.30\textwidth} % 左侧信息区域占30%
+    \begin{minipage}{0.3\textwidth} % 左侧信息区域占30%
         \centering
         \vspace{0.5em}
         {\MakeUppercase{\namesize\bf \@name}}
     \end{minipage}%
     \hfill % 填充空间
-    \begin{minipage}{0.7\textwidth} % 右侧信息区域占70%
-        \centering
-        \vspace{0em} % 上方留白
-        \addressskip % 减少行间距
-        \@ifundefined{@addressone}{}{ % Print the first address if specified
-            \printaddress{\@addressone}}
-        \@ifundefined{@addresstwo}{}{ % Print the second address if specified
-            \printaddress{\@addresstwo}}
-        \@ifundefined{@addressthree}{}{ % Print the third address if specified
-            \printaddress{\@addressthree}}
-        \@ifundefined{@addressfour}{}{ % Print the fourth address if specified
-            \printaddress{\@addressfour}}
+    \begin{minipage}{0.6\textwidth} % 右侧信息区域占70%
+        % 将地址分成两栏显示
+        \begin{minipage}[t]{0.48\textwidth} % 左栏地址
+            \raggedright % 左对齐
+            \@ifundefined{@addressone}{}{\@addressone\par}
+            \@ifundefined{@addresstwo}{}{\@addresstwo\par}
+        \end{minipage}%
+        % \hfill % 两栏之间的间隔
+        \begin{minipage}[t]{0.48\textwidth} % 右栏地址  
+            \raggedright % 左对齐
+            \@ifundefined{@addressthree}{}{\@addressthree\par}
+            \@ifundefined{@addressfour}{}{\@addressfour\par}
+        \end{minipage}
     \end{minipage}
-    % \nameskip\break
+    \nameskip\break
     \endgroup
 }
 
