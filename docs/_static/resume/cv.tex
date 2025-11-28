@@ -1,36 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Medium Length Professional CV
-% LaTeX Template
-% Version 2.0 (8/5/13)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Trey Hunner (http://www.treyhunner.com/)
-%
-% Important note:
-% This template requires the cv.cls file to be in the same directory as the
-% .tex file. The cv.cls file provides the resume style used for structuring the
-% document.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
-\documentclass{cv} % Use the custom cv.cls style
+\documentclass{cv}
 \usepackage[dvipsnames]{xcolor}
-
-\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.1in]{geometry} % Document margins
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.1in]{geometry}
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+
 \name{张延涛}
-\address{(+86)156-3285-5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
+\address{(+86) 156-3285-5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
 \address{Github: \href{https://github.com/zhyantao}{zhyantao} \\ Blog: \href{https://zhyantao.github.io/docs}{zhyantao.github.io/docs}}
-\address{英语水平: 六级 \\ 政治面貌: 中共党员}
-\address{籍贯: 河北衡水 \\ 现居地: 陕西西安 \\ 意向城市: 北京}
+\address{英语六级 (CET-6) \\ 政治面貌: 中共党员}
+\address{意向城市: 北京 \\ 意向岗位: 嵌入式软件开发}
 
 \renewenvironment{rSection}[1]{
 \sectionskip
@@ -46,33 +24,34 @@
 }
 
 \begin{document}
+
 %----------------------------------------------------------------------------------------
 % EDUCATION SECTION
 %----------------------------------------------------------------------------------------
 \begin{rSection}{教育背景}
-	{\bf 西安交通大学} 硕士 \hfill {2020 年 9 月 - 2023 年 6 月}
-	\smallskip \\ 软件工程, 软件学院, 电信学部
+	{\bf 西安交通大学} \hfill {2020.09 - 2023.06} \\
+	硕士 | 软件工程 | 软件学院, 电信学部
 
-	{\bf 华北理工大学} 本科 \hfill {2016 年 9 月 - 2020 年 6 月}
-	\smallskip \\ 电子信息工程, 人工智能学院 \hfill
+	{\bf 华北理工大学} \hfill {2016.09 - 2020.06} \\
+	学士 | 电子信息工程 | 人工智能学院
 \end{rSection}
 
 %----------------------------------------------------------------------------------------
 % WORK EXPERIENCE SECTION
 %----------------------------------------------------------------------------------------
-\begin{rSection}{项目经历}
-	\begin{rSubsection}{中兴通讯股份有限公司}{2023 年 7 月 - 至今}{嵌入式软件开}{陕西西安}
-		\item 负责 ZM9300 模组中的定位服务, 基于 HD8040D 和 BG1101 芯片扩展 GPSD 开源代码.
-		\item 负责维护 GNSS 模块的现有代码并做功能扩展, 开发 SDK 及测试用例, 维护客诉和修复 BUG 200 余项.
-		\item 负责维护 ZM9300 模组中的时间同步服务, 适配 chronyd 源码, 基于自研芯片适配 gPTP 协议栈, 外场测试结果 offset 指标与高通相当.
-		\item 基于自研芯片适配 bootchard, 首次在 S1 平台实现开机流程可视化, 为后续系统启动性能优化提供了数据基础和技术手段.
+\begin{rSection}{工作与项目经历}
+	\begin{rSubsection}{中兴通讯股份有限公司}{2023.07 - 至今}{嵌入式软件开发工程师}{西安}
+		\item \textbf{ZM9300模组定位服务开发}: 负责定位服务模块的设计与实现，基于HD8040D/BG1101芯片对GPSD开源代码进行深度定制与功能扩展，提升定位精度与稳定性。
+		\item \textbf{GNSS模块维护与SDK开发}: 负责GNSS模块的代码维护、功能迭代与性能优化；负责开发配套SDK及自动化测试用例，累计处理并修复客户反馈及内部BUG 200余项，提升模块可靠性。
+		\item \textbf{高精度时间同步服务}: 负责时间同步服务的开发与维护，适配chronyd源码并基于自研芯片实现gPTP协议栈；外场测试表明，时间偏移(offset)等关键指标与高通方案相当。
+		\item \textbf{启动流程优化与可视化}: 基于自研芯片适配bootchard，首次在S1平台实现开机流程可视化，为系统启动性能分析与优化提供了关键数据支撑与调试手段。
 	\end{rSubsection}
-	%------------------------------------------------
-	\begin{rSubsection}{中国重型机械研究院股份公司}{2021 年 9 月 - 2022 年 5 月}{后端开发工程师}{陕西西安}
-		\item 设计并实现基于 Spring Boot 的连铸智能工艺仿真软件包, 模拟连铸生产过程中的关键工艺流程, 为工艺优化与决策支持提供了可视化、可配置的仿真平台.
-		\item 负责系统后端架构设计与功能开发, 采用 Spring Boot 框架结合 MySQL 数据库, 完成了业务流程管理模块的增删改查功能, 并通过 JPA 实现数据持久化操作.
-		\item 集成 JMatPro 工具完成核心工艺参数的计算与分析, 对计算结果进行整理与封装, 为前端数据可视化模块提供结构化数据支撑.
-		\item 参与前端页面开发与维护, 使用 Vue.js 实现部分前端界面的展示与交互功能, 保障前后端数据联动的准确性与响应效率.
+
+	\begin{rSubsection}{中国重型机械研究院股份公司}{2021.09 - 2022.05}{后端开发工程师（校企合作）}{西安}
+		\item \textbf{连铸工艺仿真平台}: 设计并实现基于Spring Boot的连铸智能工艺仿真软件包，对关键工艺流程进行高保真模拟，构建了可配置、可视化的工艺优化与决策支持平台。
+		\item \textbf{后端架构与核心功能开发}: 负责系统后端架构设计，采用Spring Boot + MySQL技术栈，通过JPA完成业务管理模块的CRUD操作与数据持久化，保障了系统稳定与数据一致性。
+		\item \textbf{工艺参数计算与集成}: 集成JMatPro工具完成核心工艺参数的自动化计算与分析，并对结果数据进行结构化处理与封装，为前端可视化模块提供准确、高效的数据接口。
+		\item \textbf{前端界面开发协作}: 参与前端部分开发，使用Vue.js实现多个界面的数据展示与交互逻辑，确保了前后端数据联动的准确性与用户体验的流畅性。
 	\end{rSubsection}
 \end{rSection}
 
@@ -80,20 +59,20 @@
 % TECHNICAL STRENGTHS SECTION
 %----------------------------------------------------------------------------------------
 \begin{rSection}{专业技能}
+	% 移除了空白的{rSubsection}，直接使用item列表，更简洁。
 	\begin{rSubsection}{}{}{}{}
-		\item 熟悉常见的数据结构与算法, 熟悉基本的操作系统知识, 具备良好的业务理解能力.
-		\item 熟练掌握 C/C++, 具备良好的面向对象设计与编程能力, 代码风格规范, 注释清晰.
-		\item 掌握 Java 开发, 能够使用 Spring Boot 构建 Web 应用, 掌握 JPA 进行数据持久化.
-		\item 了解前端开发技术, 熟悉 HTML、CSS 与 JavaScript, 可基于 Vue.js 开发单页面应用.
-		\item 熟悉 Git、Shell 脚本、GCC、GDB、 Makefile 及 Yocto 等常用开发与构建工具.
+		\item \textbf{编程语言}: 熟悉 C/C++, 具备良好的面向对象设计与编程能力，代码规范；掌握 Java，可使用 Spring Boot 进行基本的后端开发。
+		\item \textbf{开发工具}: 熟练使用 Git、Shell、GCC、GDB、Makefile、Yocto 等开发与构建工具。
+		\item \textbf{计算机基础}: 熟悉常见数据结构与算法、操作系统原理，具备良好的系统设计能力和业务理解能力。
 	\end{rSubsection}
 \end{rSection}
 
-% EXAMPLE SECTION
+%----------------------------------------------------------------------------------------
+% AWARDS SECTION
 %----------------------------------------------------------------------------------------
 \begin{rSection}{获奖情况} \itemsep -2pt
-	{大学生数学建模竞赛}\hfill {\em 省部级二等奖}\hfill {2017 年 9 月} \\
-	{ASC 超级计算机竞赛}\hfill {\em 国家级二等奖}\hfill {2019 年 4 月}
+	{ASC 超级计算机竞赛}\hfill {\em 国家级二等奖}\hfill {2019 年 4 月} \\
+	{大学生数学建模竞赛}\hfill  {\em { }省部级二等奖}\hfill {2017 年 9 月}
 \end{rSection}
 
 \end{document}

@@ -39,39 +39,68 @@
 
 \def \addressSep {$\diamond$} % Set default address separator to a diamond
 
-% One, two or three address lines can be specified 
+% One, two, three or four address lines can be specified 
 \let \@addressone \relax
 \let \@addresstwo \relax
 \let \@addressthree \relax
+\let \@addressfour \relax  % 新增第四行地址变量
 
-% \address command can be used to set the first, second, and third address (last 2 optional)
+% \address command can be used to set the first, second, third and fourth address (last 3 optional)
 \def \address #1{
-  \@ifundefined{@addresstwo}{
-    \def \@addresstwo {#1}
-  }{
-  \@ifundefined{@addressthree}{
-  \def \@addressthree {#1}
-  }{
-     \def \@addressone {#1}
-  }}
+    \@ifundefined{@addressone}{
+        \def \@addressone {#1}
+    }{
+        \@ifundefined{@addresstwo}{
+            \def \@addresstwo {#1}
+        }{
+            \@ifundefined{@addressthree}{
+                \def \@addressthree {#1}
+            }{
+                \@ifundefined{@addressfour}{
+                    \def \@addressfour {#1}  % 设置第四行地址
+                }{
+                    % 如果已经有四行地址，这里可以处理溢出情况
+                    % 目前简单地忽略后续地址
+                }
+            }
+        }
+    }
 }
 
 % \printaddress is used to style an address line (given as input)
 \def \printaddress #1{
-  \begingroup
-    \def \\ {\addressSep\ }
-    \centerline{#1}
-  \endgroup
-  \par
-  \addressskip
+\begingroup
+\def \\ {\addressSep\ }
+\centerline{#1}
+\endgroup
+\par
+\addressskip
 }
 
-% \printname is used to print the name as a page header
+% \printname is used to print the name as a page header - 优化布局
 \def \printname {
-  \begingroup
-    \hfil{\MakeUppercase{\namesize\bf \@name}}\hfil
-    \nameskip\break
-  \endgroup
+    \begingroup
+    \begin{minipage}{0.30\textwidth} % 左侧信息区域占30%
+        \centering
+        \vspace{0.5em}
+        {\MakeUppercase{\namesize\bf \@name}}
+    \end{minipage}%
+    \hfill % 填充空间
+    \begin{minipage}{0.7\textwidth} % 右侧信息区域占70%
+        \centering
+        \vspace{0em} % 上方留白
+        \addressskip % 减少行间距
+        \@ifundefined{@addressone}{}{ % Print the first address if specified
+            \printaddress{\@addressone}}
+        \@ifundefined{@addresstwo}{}{ % Print the second address if specified
+            \printaddress{\@addresstwo}}
+        \@ifundefined{@addressthree}{}{ % Print the third address if specified
+            \printaddress{\@addressthree}}
+        \@ifundefined{@addressfour}{}{ % Print the fourth address if specified
+            \printaddress{\@addressfour}}
+    \end{minipage}
+    % \nameskip\break
+    \endgroup
 }
 
 %----------------------------------------------------------------------------------------
@@ -80,14 +109,8 @@
 
 \let\ori@document=\document
 \renewcommand{\document}{
-  \ori@document  % Begin document
-  \printname % Print the name specified with \name
-  \@ifundefined{@addressone}{}{ % Print the first address if specified
-    \printaddress{\@addressone}}
-  \@ifundefined{@addresstwo}{}{ % Print the second address if specified
-    \printaddress{\@addresstwo}}
-     \@ifundefined{@addressthree}{}{ % Print the third address if specified
-    \printaddress{\@addressthree}}
+    \ori@document  % Begin document
+    \printname % Print the name and addresses in new layout
 }
 
 %----------------------------------------------------------------------------------------
@@ -96,16 +119,16 @@
 
 % Defines the rSection environment for the large sections within the CV
 \newenvironment{rSection}[1]{ % 1 input argument - section name
-  \sectionskip
-  \MakeUppercase{\bf #1} % Section title
-  \sectionlineskip
-  \hrule % Horizontal line
-  \begin{list}{}{ % List for each individual item in the section
-    \setlength{\leftmargin}{1.5em} % Margin within the section
-  }
-  \item[]
-}{
-  \end{list}
+    \sectionskip
+    \MakeUppercase{\bf #1} % Section title
+    \sectionlineskip
+    \hrule % Horizontal line
+    \begin{list}{}{ % List for each individual item in the section
+            \setlength{\leftmargin}{1.5em} % Margin within the section
+        }
+        \item[]
+              }{
+    \end{list}
 }
 
 %----------------------------------------------------------------------------------------
@@ -113,16 +136,16 @@
 %----------------------------------------------------------------------------------------
 
 \newenvironment{rSubsection}[4]{ % 4 input arguments - company name, year(s) employed, job title and location
- {\bf #1} \hfill {#2} % Bold company name and date on the right
- \ifthenelse{\equal{#3}{}}{}{ % If the third argument is not specified, don't print the job title and location line
-  \\
-  {\em #3} \hfill {\em #4} % Italic job title and location
-  }\smallskip
-  \begin{list}{$\cdot$}{\leftmargin=0em} % \cdot used for bullets, no indentation
-   \itemsep -0.5em \vspace{-0.5em} % Compress items in list together for aesthetics
-  }{
-  \end{list}
-  \vspace{0.5em} % Some space after the list of bullet points
+{\bf #1} \hfill {#2} % Bold company name and date on the right
+\ifthenelse{\equal{#3}{}}{}{ % If the third argument is not specified, don't print the job title and location line
+\\
+{\em #3} \hfill {\em #4} % Italic job title and location
+}\smallskip
+\begin{list}{$\cdot$}{\leftmargin=0em} % \cdot used for bullets, no indentation
+    \itemsep -0.5em \vspace{-0.5em} % Compress items in list together for aesthetics
+    }{
+\end{list}
+\vspace{0.5em} % Some space after the list of bullet points
 }
 
 % The below commands define the whitespace after certain things in the document - they can be \smallskip, \medskip or \bigskip
