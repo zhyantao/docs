@@ -374,6 +374,7 @@ if (++counter % 500 == 0) {
 #include <errno.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define MAX_CLIENTS            10
 #define BUFFER_SIZE            4096
