@@ -42,8 +42,8 @@ typedef struct {
     int blocked;                    // 是否被阻塞（缓冲区满）
     int pending_errors;             // 连续错误计数
     int reconnect_attempts;         // 重连尝试次数
-    char name[128];                 // 符号链接路径（如/tmp/virtual1）
-    char slave_name[64];            // PTY从设备名
+    char name[128];                 // 符号链接路径（如 /tmp/virtual1）
+    char slave_name[64];            // PTY 从设备名
     struct timeval last_write_time; // 上次成功写入时间
     struct timeval block_time;      // 阻塞开始时间
 } client_t;
@@ -72,10 +72,10 @@ void set_nonblocking(int fd) {
     if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) { perror("fcntl F_SETFL O_NONBLOCK"); }
 }
 
-// 使用select监控串口数据
+// 使用 select 监控串口数据
 FD_ZERO(&read_fds);
 FD_SET(dist->source_fd, &read_fds);
-timeout.tv_sec = 1; // 1秒超时
+timeout.tv_sec = 1; // 1 秒超时
 int ready = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 ```
 
@@ -107,7 +107,7 @@ void handle_blocked_clients(distributor_t* dist) {
             struct timeval block_duration;
             timersub(&now, &dist->clients[i].block_time, &block_duration);
 
-            // 如果阻塞超过5秒，尝试重新创建
+            // 如果阻塞超过 5 秒，尝试重新创建
             if (block_duration.tv_sec >= 5) {
                 if (dist->clients[i].reconnect_attempts < MAX_RECONNECT_ATTEMPTS) {
                     printf("Client %s blocked for %ld seconds, attempting to recreate...\n",
@@ -132,7 +132,7 @@ int recreate_client(distributor_t* dist, int client_index) {
     // 2. 创建新的伪终端
     int master_fd = posix_openpt(O_RDWR | O_NOCTTY);
 
-    // 3. 配置新PTY
+    // 3. 配置新 PTY
     grantpt(master_fd);
     unlockpt(master_fd);
 
@@ -232,11 +232,11 @@ gcc -o serial_distributor serial_distributor.c -lpthread
 ```cpp
 // 根据不同的错误类型采用不同的休眠时间
 if (bytes_read == 0) {
-    usleep(1000); // 无数据时休眠1ms
+    usleep(1000); // 无数据时休眠 1ms
 } else if (errno == EAGAIN) {
-    usleep(10000); // 临时错误时休眠10ms
+    usleep(10000); // 临时错误时休眠 10ms
 } else {
-    usleep(100000); // 严重错误时休眠100ms
+    usleep(100000); // 严重错误时休眠 100ms
 }
 ```
 
@@ -390,7 +390,7 @@ typedef struct {
     int pending_errors;             // 连续写错误计数
     int reconnect_attempts;         // 重连尝试次数
     char name[128];                 // Full symlink path (e.g., /tmp/virtual1)
-    char slave_name[64];            // PTY slave设备名
+    char slave_name[64];            // PTY slave 设备名
     struct timeval last_write_time; // 上次成功写入的时间
     struct timeval block_time;      // 阻塞开始时间
 } client_t;
@@ -401,7 +401,7 @@ typedef struct {
     int client_count;
     pthread_mutex_t mutex;
     int baudrate;             // 保存波特率的数字值
-    speed_t termios_baudrate; // termios的波特率常量
+    speed_t termios_baudrate; // termios 的波特率常量
     volatile int running;     // 控制线程运行标志
     long total_bytes_read;    // 总共读取的字节数
     long total_bytes_written; // 总共写入的字节数
