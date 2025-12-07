@@ -112,6 +112,9 @@ gcc -Wall -Werror -o program program.c
 
 # 特定警告控制
 gcc -Wall -Wno-unused-parameter -o program program.c
+
+# 作用域变量冲突检查
+gcc -Wall -Wextra -Werror -Wconversion -Wshadow -o program program.c
 ```
 
 ### 静态分析工具
