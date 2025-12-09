@@ -43,7 +43,7 @@
     I could try to add a list of ideas to talk about.
     I suppose I could just keep going on forever,
     but I'll stop here.
-    
+
     -- Jo the Jovyan, *[the jupyter book docs](https://jupyterbook.org)*
     ```
     ````
@@ -54,7 +54,7 @@
     I could try to add a list of ideas to talk about.
     I suppose I could just keep going on forever,
     but I'll stop here.
-    
+
     -- Jo the Jovyan, *[the jupyter book docs](https://jupyterbook.org)*
     ```
 `````
