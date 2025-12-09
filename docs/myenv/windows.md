@@ -114,6 +114,16 @@ $2^{32} = 4 GB$。
 
 访问[联想官网](https://newsupport.lenovo.com.cn/driveList.html?fromsource=driveList&selname=BH00QDHR)，下载对应驱动，安装即可。
 
+### 关闭资源管理器中的工具栏
+
+Win + R 打开 `regedit`，在地址栏输入：
+
+```text
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+```
+
+将 `AlwaysShowMenus` 的值改为 `0`。
+
 ---
 
 [^cite_ref-1]: Windows 预先安装环境 <https://en.wikipedia.org/wiki/Windows_Preinstallation_Environment>
