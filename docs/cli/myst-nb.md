@@ -6,7 +6,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 15
 
 * - Syntax
   - Example
@@ -27,7 +26,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 10
 
 * - Example
   - Result
@@ -63,7 +61,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 10
 
 * - Example
   - Result
@@ -87,7 +84,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -113,7 +109,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -143,7 +138,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -209,7 +203,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -233,7 +226,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -297,7 +289,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -311,7 +302,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -335,7 +325,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -349,7 +338,6 @@
 
 `````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -439,7 +427,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 10
 
 * - Example
   - Result
@@ -457,7 +444,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -475,7 +461,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Note
@@ -493,7 +478,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -513,7 +497,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -551,7 +534,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -591,7 +573,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -625,7 +606,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 15
 
 * - Example
   - Result
@@ -705,7 +685,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 15 15
 
 * - Syntax
   - Example
@@ -744,7 +723,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -770,7 +748,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
@@ -792,7 +769,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 15
 
 * - Example
   - Result
@@ -806,7 +782,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 15 20
 
 * - Example
   - Result
@@ -832,7 +807,6 @@
 
 ````{list-table}
 :header-rows: 1
-:widths: 20 20
 
 * - Example
   - Result
