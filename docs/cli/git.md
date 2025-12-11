@@ -20,9 +20,42 @@ git config --global user.email "yantao.z@outlook.com"
 git config --replace-all core.filemode false
 git config --replace-all core.autocrlf false
 
-# 清除 Git 的索引（或称为缓存）
+# 清除 Git 的索引（或称为缓存）-- 慎用
 git rm --cached -r .
 git reset HEAD .
+```
+
+也可以在拉取仓库代码段时候，自动配置 Git 仓库（非必要，不要使用下面这种方法）：
+
+```bash
+# 创建全局模板目录
+git config --global init.templateDir ~/.git-template
+
+# 创建钩子目录
+mkdir -p ~/.git-template/hooks
+
+# 创建 post-checkout 钩子
+cat > ~/.git-template/hooks/post-checkout << 'EOF'
+#!/bin/sh
+# 只在初始克隆时执行一次
+if [ "$1" = "0000000000000000000000000000000000000000" ]; then
+    echo "Initializing Git repository configuration..."
+    
+    git config --replace-all core.filemode false
+    echo "  core.filemode set to false"
+    
+    git config --replace-all core.autocrlf false
+    echo "  core.autocrlf set to false"
+    
+    echo "Git configuration initialized."
+fi
+EOF
+
+# 使钩子可执行
+chmod +x ~/.git-template/hooks/post-checkout
+
+# 设置新仓库使用模板
+git config --global init.templatedir '~/.git-template'
 ```
 
 :::
