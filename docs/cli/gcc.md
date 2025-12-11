@@ -9,10 +9,10 @@
 GCC 提供了多个优化级别，合理选择对代码性能至关重要：
 
 ```bash
-# 开发调试阶段 - 不优化，便于调试
+# 开发调试阶段 - 不优化，便于调试（Debug Version）
 gcc -O0 -g -o program program.c
 
-# 发布版本 - 平衡优化
+# 发布版本 - 平衡优化（Release Version）
 gcc -O2 -o program program.c
 
 # 高性能需求 - 激进优化
@@ -25,7 +25,7 @@ gcc -Os -o program program.c
 ### 架构特定优化
 
 ```bash
-# 为当前CPU架构优化
+# 为当前 CPU 架构优化
 gcc -O2 -march=native -o program program.c
 
 # 为特定架构优化
@@ -41,7 +41,7 @@ gcc -O2 -mtune=native -o program program.c
 # 启用链接时优化
 gcc -flto -O2 -o program program1.c program2.c
 
-# 并行LTO编译
+# 并行 LTO 编译
 gcc -flto=auto -O2 -o program program1.c program2.c
 ```
 
@@ -77,15 +77,15 @@ gdb ./program
 (gdb) display variable_name
 
 # 查看内存
-(gdb) x/10x &array  # 查看10个十六进制内存单元
-(gdb) x/20s pointer # 查看20个字符串
+(gdb) x/10x &array   # 查看 10 个十六进制内存单元
+(gdb) x/20s pointer  # 查看 20 个字符串
 
 # 回溯跟踪
 (gdb) backtrace
 (gdb) backtrace full  # 显示所有帧的局部变量
 
 # 观察点
-(gdb) watch variable  # 变量改变时中断
+(gdb) watch variable           # 变量改变时中断
 (gdb) watch *(int*)0x12345678  # 内存地址观察
 ```
 
@@ -168,11 +168,11 @@ gcc -Wl,-z,now -Wl,-z,relro -o program program.c
 # 生成性能分析信息
 gcc -pg -O2 -o program program.c
 
-# 使用gprof分析
+# 使用 gprof 分析
 ./program
 gprof program gmon.out > analysis.txt
 
-# 使用perf分析
+# 使用 perf 分析
 perf record ./program
 perf report
 ```
@@ -211,7 +211,7 @@ gcc -O2 -flto=auto -march=native \
 ### 依赖管理
 
 ```bash
-# 显示所有依赖
+# 显示所有依赖（编译报错的时候可以追溯调用栈）
 gcc -M program.c
 
 # 生成依赖文件
