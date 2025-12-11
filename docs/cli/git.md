@@ -16,17 +16,13 @@ git config --global user.email "yantao.z@outlook.com"
 :::{dropdown} VSCode 未修改代码，但显示变更
 
 ```bash
-# 修改当前仓库的本地配置
+# 修改当前仓库的本地配置（仅对当前仓库应用）
 git config --replace-all core.filemode false
 git config --replace-all core.autocrlf false
 
 # 清除 Git 的索引（或称为缓存）
 git rm --cached -r .
 git reset HEAD .
-
-# 修改全局配置（可选）
-git config --global --replace-all core.filemode false
-git config --global --replace-all core.autocrlf false
 ```
 
 :::
