@@ -83,14 +83,18 @@ int check_and_backup_file(const char* path) {
 
         // 提取编号
         char* num_start = strrchr(oldest, '_') + 1;
-        if (num_start) { next_number = atoi(num_start); }
+        if (num_start) {
+            next_number = atoi(num_start);
+        }
 
         // 删除最老的备份文件
         remove(oldest);
         free(oldest);
 
         // 重新组织备份文件数组
-        for (int i = 1; i < backup_count; i++) { backup_files[i - 1] = backup_files[i]; }
+        for (int i = 1; i < backup_count; i++) {
+            backup_files[i - 1] = backup_files[i];
+        }
         backup_count--;
     } else {
         // 查找最大的现有编号
@@ -99,7 +103,9 @@ int check_and_backup_file(const char* path) {
             char* num_start = strrchr(backup_files[i], '_') + 1;
             if (num_start) {
                 int num = atoi(num_start);
-                if (num > max_number) { max_number = num; }
+                if (num > max_number) {
+                    max_number = num;
+                }
             }
             free(backup_files[i]);
         }

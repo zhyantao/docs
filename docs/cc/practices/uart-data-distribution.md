@@ -69,7 +69,9 @@ typedef struct {
 // 设置文件描述符为非阻塞模式
 void set_nonblocking(int fd) {
     int flags = fcntl(fd, F_GETFL, 0);
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) { perror("fcntl F_SETFL O_NONBLOCK"); }
+    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
+        perror("fcntl F_SETFL O_NONBLOCK");
+    }
 }
 
 // 使用 select 监控串口数据
@@ -440,7 +442,9 @@ void set_nonblocking(int fd) {
         return;
     }
 
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) { perror("fcntl F_SETFL O_NONBLOCK"); }
+    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
+        perror("fcntl F_SETFL O_NONBLOCK");
+    }
 }
 
 // Check if serial port has data available
@@ -688,7 +692,9 @@ int add_client(distributor_t* dist, const char* symlink_path) {
 
 // Recreate a client (close and reopen)
 int recreate_client(distributor_t* dist, int client_index) {
-    if (client_index < 0 || client_index >= dist->client_count) { return -1; }
+    if (client_index < 0 || client_index >= dist->client_count) {
+        return -1;
+    }
 
     client_t* client = &dist->clients[client_index];
 
@@ -727,7 +733,9 @@ int recreate_client(distributor_t* dist, int client_index) {
         snprintf(client->slave_name, sizeof(client->slave_name), "%s", slave_name);
 
         // Remove old symlink
-        if (access(client->name, F_OK) == 0) { unlink(client->name); }
+        if (access(client->name, F_OK) == 0) {
+            unlink(client->name);
+        }
 
         // Create new symbolic link
         if (symlink(slave_name, client->name) == -1) {
@@ -777,7 +785,9 @@ void print_statistics(distributor_t* dist) {
         for (int i = 0; i < dist->client_count; i++) {
             if (dist->clients[i].active) {
                 active_clients++;
-                if (dist->clients[i].blocked) { blocked_clients++; }
+                if (dist->clients[i].blocked) {
+                    blocked_clients++;
+                }
             }
         }
 
@@ -904,7 +914,9 @@ void* distribution_thread(void* arg) {
         pthread_mutex_lock(&dist->mutex);
         int active_clients = 0;
         for (int i = 0; i < dist->client_count; i++) {
-            if (dist->clients[i].active) { active_clients++; }
+            if (dist->clients[i].active) {
+                active_clients++;
+            }
         }
         pthread_mutex_unlock(&dist->mutex);
 
@@ -1136,13 +1148,17 @@ int main(int argc, char* argv[]) {
         perror("Failed to create distribution thread");
         cleanup_distributor(&dist);
         free(input_port);
-        for (int i = 0; i < port_count; i++) { free(virtual_ports[i]); }
+        for (int i = 0; i < port_count; i++) {
+            free(virtual_ports[i]);
+        }
         return 1;
     }
 
     // Free allocated memory
     free(input_port);
-    for (int i = 0; i < port_count; i++) { free(virtual_ports[i]); }
+    for (int i = 0; i < port_count; i++) {
+        free(virtual_ports[i]);
+    }
 
     printf("\n===================================================\n");
     printf("Distribution Started Successfully!\n");
@@ -1155,7 +1171,9 @@ int main(int argc, char* argv[]) {
     pthread_mutex_unlock(&dist.mutex);
 
     printf("\nTo test output ports, run in separate terminals:\n");
-    for (int i = 0; i < dist.client_count; i++) { printf("  cat %s\n", dist.clients[i].name); }
+    for (int i = 0; i < dist.client_count; i++) {
+        printf("  cat %s\n", dist.clients[i].name);
+    }
     printf("\nFeatures:\n");
     printf("  - Auto-reconnect blocked clients after 5 seconds\n");
     printf("  - Max %d reconnect attempts per client\n", MAX_RECONNECT_ATTEMPTS);
@@ -1163,7 +1181,9 @@ int main(int argc, char* argv[]) {
 
     // Main loop for statistics display
     while (keep_running) {
-        if (show_statistics) { print_statistics(&dist); }
+        if (show_statistics) {
+            print_statistics(&dist);
+        }
         sleep(1);
     }
 

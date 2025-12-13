@@ -147,7 +147,8 @@ bool add(const Matrix* input1, const Matrix* input2, Matrix* output) {
     const float* p1 = input1->data;
     const float* p2 = input2->data;
     float* p3 = output->data;
-    for (size_t i = 0; i < length; i++) *(p3++) = *(p1++) + *(p2++);
+    for (size_t i = 0; i < length; i++)
+        *(p3++) = *(p1++) + *(p2++);
 
     // version 2
     for (size_t r = 0; r < input1->rows; r++) {
@@ -156,7 +157,8 @@ bool add(const Matrix* input1, const Matrix* input2, Matrix* output) {
         const float* p2 = input2->data + input2->cols * r;
         float* p3 = output->data + +output->cols * r;
 
-        for (size_t c = 0; c < input1->cols; c++) *(p3++) = *(p1++) + *(p2++);
+        for (size_t c = 0; c < input1->cols; c++)
+            *(p3++) = *(p1++) + *(p2++);
     }
 
     // version 3, a bad one

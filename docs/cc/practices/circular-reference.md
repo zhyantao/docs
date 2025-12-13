@@ -8,41 +8,31 @@
 #include <iostream>
 #include <memory>
 
-class Child;  // 前向声明
+class Child; // 前向声明
 
 class Parent {
 private:
-    std::shared_ptr<Child> child;  // parent 持有 child 的 shared_ptr
+    std::shared_ptr<Child> child; // parent 持有 child 的 shared_ptr
 
 public:
-    Parent() {
-        std::cout << "Parent created\n";
-    }
+    Parent() { std::cout << "Parent created\n"; }
 
-    ~Parent() {
-        std::cout << "Parent destroyed\n";
-    }
+    ~Parent() { std::cout << "Parent destroyed\n"; }
 
-    void setChild(const std::shared_ptr<Child>& c) {
-        child = c;
-    }
+    void setChild(const std::shared_ptr<Child>& c) { child = c; }
 };
 
 class Child {
 private:
-    std::weak_ptr<Parent> parent;  // child 持有 parent 的 weak_ptr，避免循环引用
+    std::weak_ptr<Parent> parent; // child 持有 parent 的 weak_ptr，避免循环引用
 
 public:
-    Child(const std::shared_ptr<Parent>& p) : parent(p) {
-        std::cout << "Child created\n";
-    }
+    Child(const std::shared_ptr<Parent>& p) : parent(p) { std::cout << "Child created\n"; }
 
-    ~Child() {
-        std::cout << "Child destroyed\n";
-    }
+    ~Child() { std::cout << "Child destroyed\n"; }
 
     void useParent() {
-        if (auto sp = parent.lock()) {  // 安全地获取 parent
+        if (auto sp = parent.lock()) { // 安全地获取 parent
             std::cout << "Using parent\n";
         } else {
             std::cout << "Parent already destroyed\n";
@@ -82,33 +72,27 @@ int main() {
 #include <iostream>
 #include <boost/scoped_ptr.hpp>
 
-class Component;  // 前向声明
+class Component; // 前向声明
 
 class Owner {
 private:
-    boost::scoped_ptr<Component> component;  // 独占拥有 Component
+    boost::scoped_ptr<Component> component; // 独占拥有 Component
 
 public:
     Owner();
-    ~Owner() {
-        std::cout << "Owner destroyed\n";
-    }
+    ~Owner() { std::cout << "Owner destroyed\n"; }
 
     void useComponent();
 };
 
 class Component {
 private:
-    Owner* owner;  // 只持有原始指针，不拥有所有权
+    Owner* owner; // 只持有原始指针，不拥有所有权
 
 public:
-    Component(Owner* own) : owner(own) {
-        std::cout << "Component created\n";
-    }
+    Component(Owner* own) : owner(own) { std::cout << "Component created\n"; }
 
-    ~Component() {
-        std::cout << "Component destroyed\n";
-    }
+    ~Component() { std::cout << "Component destroyed\n"; }
 
     void doSomething() {
         if (owner) {
@@ -129,7 +113,7 @@ void Owner::useComponent() {
 
 int main() {
     {
-        Owner owner;  // 创建 Owner，自动创建 Component
+        Owner owner; // 创建 Owner，自动创建 Component
         owner.useComponent();
 
         // 当 owner 离开作用域时：
@@ -157,7 +141,7 @@ int main() {
 ```cpp
 #include <iostream>
 
-class Sniper;  // 前向声明
+class Sniper; // 前向声明
 
 class Supplier {
 private:
@@ -187,7 +171,7 @@ public:
 
 // 友元函数实现 - 可以访问 Sniper 的私有成员
 bool Supplier::provide(Sniper& sniper) {
-    if (sniper.bullets < 20) {  // 直接访问私有成员
+    if (sniper.bullets < 20) { // 直接访问私有成员
         if (storage > 100) {
             sniper.bullets += 100;
             storage -= 100;
@@ -199,14 +183,13 @@ bool Supplier::provide(Sniper& sniper) {
         }
     }
 
-    std::cout << "Sniper has " << sniper.bullets
-              << " bullets, Supplier has " << storage
+    std::cout << "Sniper has " << sniper.bullets << " bullets, Supplier has " << storage
               << " storage left.\n";
     return true;
 }
 
 int main() {
-    Sniper sniper(5);      // 初始只有 5 发子弹
+    Sniper sniper(5);       // 初始只有 5 发子弹
     Supplier supplier(250); // 初始有 250 库存
 
     std::cout << "Initial state:\n";
@@ -248,7 +231,7 @@ int main() {
 
 class ModernOwner {
 private:
-    std::unique_ptr<Component> component;  // C++11 独占指针
+    std::unique_ptr<Component> component; // C++11 独占指针
 
 public:
     ModernOwner() : component(std::make_unique<Component>(this)) {}
@@ -276,9 +259,7 @@ private:
 public:
     ComplexSystem() : core(new CoreComponent()) {}
 
-    void setPlugin(std::shared_ptr<PluginModule> p) {
-        plugin = p;
-    }
+    void setPlugin(std::shared_ptr<PluginModule> p) { plugin = p; }
 
     // 友元函数用于深度优化
     friend void optimizeSystem(ComplexSystem& sys);

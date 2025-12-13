@@ -43,42 +43,38 @@
 #include <iostream>
 #include <string>
 
-void printMessage(const std::string& prefix,
-                  const std::string& message,
-                  int priority) {
-    std::cout << "[" << prefix << "] "
-              << message << " (优先级: " << priority << ")" << std::endl;
+void printMessage(const std::string& prefix, const std::string& message, int priority) {
+    std::cout << "[" << prefix << "] " << message << " (优先级: " << priority << ")"
+              << std::endl;
 }
 
 class MessageFormatter {
 public:
-    std::string format(const std::string& msg) const {
-        return "格式化: " + msg;
-    }
+    std::string format(const std::string& msg) const { return "格式化: " + msg; }
 };
 
 int main() {
     // 示例 1：绑定所有参数
     auto func1 = boost::bind(printMessage, "系统", "启动完成", 1);
-    func1();  // 输出: [系统] 启动完成 (优先级: 1)
+    func1(); // 输出: [系统] 启动完成 (优先级: 1)
 
     // 示例 2：使用 _1 占位符 - 只绑定前两个参数
     auto func2 = boost::bind(printMessage, "用户", _1, 2);
-    func2("登录成功");  // 输出: [用户] 登录成功 (优先级: 2)
+    func2("登录成功"); // 输出: [用户] 登录成功 (优先级: 2)
 
     // 示例 3：使用 _1 和 _2 占位符 - 只绑定第一个参数
     auto func3 = boost::bind(printMessage, "警告", _1, _2);
-    func3("内存不足", 3);  // 输出: [警告] 内存不足 (优先级: 3)
+    func3("内存不足", 3); // 输出: [警告] 内存不足 (优先级: 3)
 
     // 示例 4：调整参数顺序
     auto func4 = boost::bind(printMessage, _2, _1, 1);
-    func4("错误信息", "网络");  // 输出: [网络] 错误信息 (优先级: 1)
+    func4("错误信息", "网络"); // 输出: [网络] 错误信息 (优先级: 1)
 
     // 示例 5：成员函数与占位符
     MessageFormatter formatter;
     auto func5 = boost::bind(&MessageFormatter::format, &formatter, _1);
     std::string result = func5("测试消息");
-    std::cout << result << std::endl;  // 输出: 格式化: 测试消息
+    std::cout << result << std::endl; // 输出: 格式化: 测试消息
 
     return 0;
 }
@@ -126,9 +122,7 @@ private:
 
 public:
     // 设置回调函数，而不是固定接口
-    void setCallback(const MessageCallback& cb) {
-        callback_ = cb;
-    }
+    void setCallback(const MessageCallback& cb) { callback_ = cb; }
 
     void process(const std::string& msg) {
         if (callback_) {
@@ -150,8 +144,7 @@ public:
     }
 
     void processWithState(const std::string& msg) {
-        std::cout << "状态处理器: " << msg
-                  << " (实例地址: " << this << ")" << std::endl;
+        std::cout << "状态处理器: " << msg << " (实例地址: " << this << ")" << std::endl;
     }
 };
 
@@ -165,16 +158,12 @@ int main() {
     // 示例 2：使用成员函数 + bind
     // _1 表示调用时传入的第一个参数（即消息内容）
     CustomHandler handler1;
-    processor.setCallback(
-        boost::bind(&CustomHandler::processWithState, &handler1, _1)
-    );
+    processor.setCallback(boost::bind(&CustomHandler::processWithState, &handler1, _1));
     processor.process("测试消息 2");
 
     // 示例 3：带额外参数的成员函数
     // _1 被绑定到 handle 方法的第一个参数
-    processor.setCallback(
-        boost::bind(&CustomHandler::handle, &handler1, _1, "[自定义前缀]")
-    );
+    processor.setCallback(boost::bind(&CustomHandler::handle, &handler1, _1, "[自定义前缀]"));
     processor.process("测试消息 3");
 
     // 示例 4：使用 lambda 表达式（C++11 风格）
@@ -197,11 +186,7 @@ int main() {
 #include <iostream>
 
 // 事件类型
-enum EventType {
-    EVENT_CONNECT,
-    EVENT_DISCONNECT,
-    EVENT_DATA_RECEIVED
-};
+enum EventType { EVENT_CONNECT, EVENT_DISCONNECT, EVENT_DATA_RECEIVED };
 
 // 事件处理器类型
 typedef boost::function<void(const std::string&)> EventHandler;
@@ -233,8 +218,8 @@ private:
 public:
     void onConnect(const std::string& endpoint) {
         connectionCount_++;
-        std::cout << "连接到: " << endpoint
-                  << " (当前连接数: " << connectionCount_ << ")" << std::endl;
+        std::cout << "连接到: " << endpoint << " (当前连接数: " << connectionCount_ << ")"
+                  << std::endl;
     }
 
     void onDataReceived(const std::string& data, const std::string& source) {
@@ -245,11 +230,9 @@ public:
 // 日志系统
 class Logger {
 public:
-    static void logEvent(const std::string& event,
-                         const std::string& details,
-                         int severity) {
-        std::cout << "[LOG] " << event << " - " << details
-                  << " (严重级别: " << severity << ")" << std::endl;
+    static void logEvent(const std::string& event, const std::string& details, int severity) {
+        std::cout << "[LOG] " << event << " - " << details << " (严重级别: " << severity << ")"
+                  << std::endl;
     }
 };
 
@@ -261,22 +244,21 @@ int main() {
 
     // 1. 成员函数处理器 - _1 代表事件数据
     dispatcher.registerHandler(EVENT_CONNECT,
-        boost::bind(&ConnectionManager::onConnect, &connMgr, _1));
+                               boost::bind(&ConnectionManager::onConnect, &connMgr, _1));
 
     // 2. 带占位符调整参数顺序
-    dispatcher.registerHandler(EVENT_DATA_RECEIVED,
+    dispatcher.registerHandler(
+        EVENT_DATA_RECEIVED,
         boost::bind(&ConnectionManager::onDataReceived, &connMgr, _1, "客户端"));
 
     // 3. 带额外参数的静态函数 - _1 代表事件数据
     dispatcher.registerHandler(EVENT_DISCONNECT,
-        boost::bind(&Logger::logEvent, "断开连接", _1, 2));
+                               boost::bind(&Logger::logEvent, "断开连接", _1, 2));
 
     // 4. 匿名函数
-    dispatcher.registerHandler(EVENT_DATA_RECEIVED,
-        [](const std::string& data) {
-            std::cout << "[匿名处理器] 数据长度: "
-                      << data.length() << " 字节" << std::endl;
-        });
+    dispatcher.registerHandler(EVENT_DATA_RECEIVED, [](const std::string& data) {
+        std::cout << "[匿名处理器] 数据长度: " << data.length() << " 字节" << std::endl;
+    });
 
     // 触发事件
     dispatcher.triggerEvent(EVENT_CONNECT, "127.0.0.1:8080");

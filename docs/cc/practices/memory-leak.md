@@ -27,7 +27,9 @@ int main() {
     free(p);
     // the first memory will not be freed
 
-    for (int i = 0; i < 1024; i++) { p = (int*)malloc(1024 * 1024 * 1024); }
+    for (int i = 0; i < 1024; i++) {
+        p = (int*)malloc(1024 * 1024 * 1024);
+    }
     printf("End\n");
 
     return 0;

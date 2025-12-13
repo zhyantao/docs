@@ -3,8 +3,8 @@
 `const` 是一种常见的类型保护机制，用法主要分为以下三类：
 
 ```cpp
-const int& func(int& a);   // 修饰返回值
-int& func(const int& a);   // 修饰变量
+const int& func(int& a); // 修饰返回值
+int& func(const int& a); // 修饰变量
 int& func(int& a) const {} // 修饰成员函数
 ```
 

@@ -7,7 +7,9 @@ typedef void (*callback_t)(char* str, int len);
 
 // (1) 编写回调函数
 void myfunction(char* str, int len) {
-    for (int i = 0; i < len; i++) { printf("%c", str[i]); }
+    for (int i = 0; i < len; i++) {
+        printf("%c", str[i]);
+    }
 }
 
 // (3) 调用回调函数

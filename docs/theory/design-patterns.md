@@ -150,7 +150,9 @@ public:
 int main() {
     LogFactory factory;
     auto log = factory.createLog("database");
-    if (log) { log->print_log(); }
+    if (log) {
+        log->print_log();
+    }
     return 0;
 }
 ```
@@ -500,7 +502,9 @@ int main() {
 
     // 再次获取实例，验证是否为同一个对象
     DatabaseConnectionPool& pool2 = DatabaseConnectionPool::getInstance();
-    if (&pool == &pool2) { printf("pool 和 pool2 是同一个实例。\n"); }
+    if (&pool == &pool2) {
+        printf("pool 和 pool2 是同一个实例。\n");
+    }
 
     return 0;
 }
@@ -604,7 +608,8 @@ public:
     explicit File(const string& fileName) : name(fileName) {}
 
     void showDetail(int depth = 0) const override {
-        for (int i = 0; i < depth; ++i) printf("  ");
+        for (int i = 0; i < depth; ++i)
+            printf("  ");
         printf("📄 文件: %s\n", name.c_str());
     }
 };
@@ -621,14 +626,19 @@ public:
     void add(IFileSystemComponent* component) { components.push_back(component); }
 
     void showDetail(int depth = 0) const override {
-        for (int i = 0; i < depth; ++i) printf("  ");
+        for (int i = 0; i < depth; ++i)
+            printf("  ");
         printf("📁 文件夹: %s\n", name.c_str());
 
-        for (const auto& comp : components) { comp->showDetail(depth + 1); }
+        for (const auto& comp : components) {
+            comp->showDetail(depth + 1);
+        }
     }
 
     ~Directory() override {
-        for (auto comp : components) { delete comp; }
+        for (auto comp : components) {
+            delete comp;
+        }
     }
 };
 
@@ -1273,13 +1283,17 @@ public:
 
     void removeObserver(ISubscriber* subscriber) override {
         auto it = remove(subscribers.begin(), subscribers.end(), subscriber);
-        if (it != subscribers.end()) { subscribers.erase(it, subscribers.end()); }
+        if (it != subscribers.end()) {
+            subscribers.erase(it, subscribers.end());
+        }
         printf("Device removed\n");
     }
 
     void notifyObservers() override {
         printf("Notifying all devices:\n");
-        for (auto* subscriber : subscribers) { subscriber->update(); }
+        for (auto* subscriber : subscribers) {
+            subscriber->update();
+        }
     }
 
     ~Publisher() override { subscribers.clear(); }
@@ -1372,7 +1386,9 @@ public:
     void setState(OrderState* newState) { currentState = newState; }
 
     void process() {
-        if (currentState) { currentState->process(*this); }
+        if (currentState) {
+            currentState->process(*this);
+        }
     }
 
     friend class InitializedState;
@@ -1662,7 +1678,9 @@ public:
     void sendMessage(const string& from, const string& message,
                      const shared_ptr<User>& excludeUser = nullptr) {
         for (const auto& user : users) {
-            if (user != excludeUser) { user->receive(from, message); }
+            if (user != excludeUser) {
+                user->receive(from, message);
+            }
         }
     }
 };
@@ -1743,7 +1761,9 @@ public:
 
     void print() const {
         printf("%s, %.2f元 -- %s\n", name.c_str(), price, description.c_str());
-        if (isVegetarian) { printf("  (素食)\n"); }
+        if (isVegetarian) {
+            printf("  (素食)\n");
+        }
     }
 };
 
@@ -1776,7 +1796,9 @@ public:
     bool hasNext() const override { return position < items.size(); }
 
     MenuItem next() override {
-        if (hasNext()) { return items[position++]; }
+        if (hasNext()) {
+            return items[position++];
+        }
         throw out_of_range("迭代器已到末尾");
     }
 };
@@ -2057,7 +2079,9 @@ public:
     }
 
     void exportWith(ExporterVisitor& visitor) {
-        for (const auto& element : elements) { element->accept(visitor); }
+        for (const auto& element : elements) {
+            element->accept(visitor);
+        }
     }
 };
 

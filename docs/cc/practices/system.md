@@ -5,7 +5,9 @@
 ```cpp
 int my_system(char* cmd) {
     int result = system(cmd);
-    if (result != 0) { printf("%s\n", strerror(errno)); }
+    if (result != 0) {
+        printf("%s\n", strerror(errno));
+    }
     return result;
 }
 ```

@@ -44,13 +44,13 @@ cat > ~/.git-template/hooks/post-checkout << 'EOF'
 # 只在初始克隆时执行一次
 if [ "$1" = "0000000000000000000000000000000000000000" ]; then
     echo "Initializing Git repository configuration..."
-    
+
     git config --replace-all core.filemode false
     echo "  core.filemode set to false"
-    
+
     git config --replace-all core.autocrlf false
     echo "  core.autocrlf set to false"
-    
+
     echo "Git configuration initialized."
 fi
 EOF

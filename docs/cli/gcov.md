@@ -96,7 +96,9 @@ struct uci_context* uci_alloc_context_stub_fail() {
 int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, char* str,
                                 bool extended) {
     ptr->last = (struct uci_element*)malloc(sizeof(struct uci_element));
-    if (ptr->last) { ptr->last->type = UCI_TYPE_OPTION; }
+    if (ptr->last) {
+        ptr->last->type = UCI_TYPE_OPTION;
+    }
 
     ptr->p = (struct uci_package*)malloc(sizeof(struct uci_package));
     ptr->value = NULL;

@@ -173,13 +173,15 @@ std::string multiply(std::string num1, std::string num2, int base) {
         }
 
         std::string rev(str.rbegin(), str.rend());
-        for (int k = 0; k < i; k++) rev.push_back(int2char(0));
+        for (int k = 0; k < i; k++)
+            rev.push_back(int2char(0));
         ret = add(ret, rev, base);
 
         std::string tmp3;
         if (char2int(carry) > 0) {
             tmp3.push_back(carry);
-            for (size_t k = 0; k < rev.length(); k++) tmp3.push_back(int2char(0));
+            for (size_t k = 0; k < rev.length(); k++)
+                tmp3.push_back(int2char(0));
         }
         ret = add(tmp3, ret, base);
     }
@@ -190,7 +192,9 @@ std::string multiply(std::string num1, std::string num2, int base) {
 // 计算 base 的 n 次幂，即 base^n
 std::string power(std::string base, int n) {
     std::string ret = "1";
-    for (int i = 0; i < n; i++) { ret = multiply(ret, base, 10); }
+    for (int i = 0; i < n; i++) {
+        ret = multiply(ret, base, 10);
+    }
     return ret;
 }
 
