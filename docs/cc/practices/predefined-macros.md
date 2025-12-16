@@ -142,7 +142,7 @@ void* allocate() {
 int currentLine = __LINE__;
 ```
 
-### 2. 与 **func** 的区别
+### 2. 与 \_\_func\_\_ 的区别
 
 ```cpp
 // __func__ 是函数局部变量，不是宏
