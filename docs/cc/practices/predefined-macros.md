@@ -11,9 +11,9 @@
 ```cpp
 // 检查 C++ 标准版本
 #if __cplusplus >= 202002L
-    // C++20 或更高版本的代码
+// C++20 或更高版本的代码
 #elif __cplusplus >= 201703L
-    // C++17 的代码
+// C++17 的代码
 #endif
 ```
 
@@ -31,17 +31,15 @@
 ```cpp
 // 用于调试和日志记录
 void logError(const char* message) {
-    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-              << message << std::endl;
+    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << message << std::endl;
 }
 
 // 自定义错误宏
-#define ASSERT(condition) \
-    if (!(condition)) { \
-        std::cerr << "Assertion failed at " \
-                  << __FILE__ << ":" << __LINE__ \
-                  << " (" << #condition << ")" << std::endl; \
-        std::terminate(); \
+#define ASSERT(condition)                                                          \
+    if (!(condition)) {                                                            \
+        std::cerr << "Assertion failed at " << __FILE__ << ":" << __LINE__ << " (" \
+                  << #condition << ")" << std::endl;                               \
+        std::terminate();                                                          \
     }
 ```
 
@@ -60,11 +58,11 @@ void showBuildInfo() {
 ```cpp
 // 检测运行环境
 #if __STDC_HOSTED__
-    // 在有操作系统的环境下运行
-    #include <iostream>
+// 在有操作系统的环境下运行
+#include <iostream>
 #else
-    // 独立环境（如嵌入式系统）
-    // 使用自定义 IO 函数
+// 独立环境（如嵌入式系统）
+// 使用自定义 IO 函数
 #endif
 ```
 
@@ -77,7 +75,7 @@ void showBuildInfo() {
 constexpr size_t default_alignment = __STDCPP_DEFAULT_NEW_ALIGNMENT__;
 
 // 检查是否需要特殊对齐
-template<typename T>
+template <typename T>
 void* allocate() {
     if (alignof(T) > __STDCPP_DEFAULT_NEW_ALIGNMENT__) {
         return ::operator new(sizeof(T), std::align_val_t{alignof(T)});
@@ -91,11 +89,11 @@ void* allocate() {
 ```cpp
 // C++23: 检查浮点类型支持
 #ifdef __STDCPP_FLOAT16_T__
-    using float16_t = _Float16;
+using float16_t = _Float16;
 #endif
 
 #ifdef __STDCPP_BFLOAT16_T__
-    using bfloat16_t = __bf16;
+using bfloat16_t = __bf16;
 #endif
 ```
 
@@ -105,9 +103,9 @@ void* allocate() {
 
 ```cpp
 #if __STDCPP_THREADS__
-    // 支持多线程编程
-    #include <thread>
-    #include <mutex>
+// 支持多线程编程
+#include <thread>
+#include <mutex>
 #endif
 ```
 
@@ -116,16 +114,16 @@ void* allocate() {
 ```cpp
 // 检查 wchar_t 是否使用 Unicode
 #ifdef __STDCPP_ISO_10646__
-    // wchar_t 基于 Unicode
-    static_assert(sizeof(wchar_t) >= 2, "wchar_t too small for Unicode");
+// wchar_t 基于 Unicode
+static_assert(sizeof(wchar_t) >= 2, "wchar_t too small for Unicode");
 #endif
 
 // 检查基本字符集一致性
 #if __STDCPP_MB_MIGHT_NEQ_WC__
-    // 在 EBCDIC 系统上需要特殊处理
-    char narrow = 'A';
-    wchar_t wide = L'A';
-    // narrow == wide 可能为 false
+// 在 EBCDIC 系统上需要特殊处理
+char narrow = 'A';
+wchar_t wide = L'A';
+// narrow == wide 可能为 false
 #endif
 ```
 
@@ -135,8 +133,8 @@ void* allocate() {
 
 ```cpp
 // 错误示例 - 会导致未定义行为
-#define __LINE__ 100  // 错误！
-#undef __cplusplus    // 错误！
+#define __LINE__ 100 // 错误！
+#undef __cplusplus   // 错误！
 
 // 正确用法：只读取，不修改
 int currentLine = __LINE__;
@@ -148,9 +146,8 @@ int currentLine = __LINE__;
 // __func__ 是函数局部变量，不是宏
 void exampleFunction() {
     // 用于调试信息
-    std::cout << "Function: " << __func__
-              << " in " << __FILE__
-              << " at line " << __LINE__ << std::endl;
+    std::cout << "Function: " << __func__ << " in " << __FILE__ << " at line " << __LINE__
+              << std::endl;
 }
 ```
 
@@ -161,14 +158,14 @@ void exampleFunction() {
 ```cpp
 // 安全的版本检查方式
 #ifndef __cplusplus
-    #error "This is a C++ compiler only"
+#error "This is a C++ compiler only"
 #endif
 
 // 渐进增强的代码组织
 #if __cplusplus >= 201703L
-    #define NODISCARD [[nodiscard]]
+#define NODISCARD [[nodiscard]]
 #else
-    #define NODISCARD
+#define NODISCARD
 #endif
 
 NODISCARD int computeValue();
@@ -179,10 +176,9 @@ NODISCARD int computeValue();
 ```cpp
 // 条件调试输出
 #ifdef DEBUG
-    #define DEBUG_LOG(msg) \
-        std::cout << __FILE__ << ":" << __LINE__ << " " << msg << std::endl
+#define DEBUG_LOG(msg) std::cout << __FILE__ << ":" << __LINE__ << " " << msg << std::endl
 #else
-    #define DEBUG_LOG(msg)
+#define DEBUG_LOG(msg)
 #endif
 
 // 使用示例
@@ -194,11 +190,11 @@ DEBUG_LOG("Entering function: " << __func__);
 ```cpp
 // 结合其他宏进行平台检测
 #if defined(_WIN32) && __STDC_HOSTED__
-    // Windows 特定代码
+// Windows 特定代码
 #elif defined(__linux__) && __STDC_HOSTED__
-    // Linux 特定代码
+// Linux 特定代码
 #else
-    // 独立环境或未知平台
+// 独立环境或未知平台
 #endif
 ```
 

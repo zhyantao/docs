@@ -385,7 +385,9 @@ int uart_recv_thread_init(int fd, char* buffer, int size, thread_args_t** args_p
     }
 
     // 返回参数指针供外部使用
-    if (args_ptr) { *args_ptr = args; }
+    if (args_ptr) {
+        *args_ptr = args;
+    }
 
     printf("UART receive thread created successfully\n");
     return 0;
@@ -393,7 +395,9 @@ int uart_recv_thread_init(int fd, char* buffer, int size, thread_args_t** args_p
 
 // 线程清理函数（安全的资源释放）
 void uart_recv_thread_cleanup(thread_args_t* args) {
-    if (!args) { return; }
+    if (!args) {
+        return;
+    }
 
     printf("Cleaning up UART thread...\n");
 
@@ -420,7 +424,9 @@ void uart_recv_thread_cleanup(thread_args_t* args) {
 
 // 等待数据就绪的辅助函数
 int wait_for_data(thread_args_t* args, int timeout_ms) {
-    if (!args) { return -1; }
+    if (!args) {
+        return -1;
+    }
 
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);

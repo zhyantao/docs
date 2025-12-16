@@ -130,6 +130,7 @@ public:
     MyClass(int value) : value_(value) {}
     void printValue() const { std::cout << "Value: " << value_ << std::endl; }
     std::shared_ptr<MyClass> getSharedThis() const { return shared_from_this(); }
+
 private:
     int value_;
 };

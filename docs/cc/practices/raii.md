@@ -32,17 +32,15 @@ public:
     }
 
     // 访问元素
-    int& operator[](size_t index) {
-        return data[index];
-    }
+    int& operator[](size_t index) { return data[index]; }
 };
 
 int main() {
     {
-        SmartArray arr(10);  // 构造时分配内存
+        SmartArray arr(10); // 构造时分配内存
 
         for (int i = 0; i < 10; i++) {
-            arr[i] = i * 2;  // 使用数组
+            arr[i] = i * 2; // 使用数组
         }
 
         // 离开作用域时，arr自动析构，内存自动释放
@@ -82,9 +80,7 @@ public:
         }
     }
 
-    void write(const std::string& content) {
-        file << content;
-    }
+    void write(const std::string& content) { file << content; }
 };
 
 int main() {
@@ -130,8 +126,8 @@ std::mutex g_mutex;
 int shared_data = 0;
 
 void increment() {
-    LockGuard lock(g_mutex);  // 构造时加锁
-    ++shared_data;            // 安全访问
+    LockGuard lock(g_mutex); // 构造时加锁
+    ++shared_data;           // 安全访问
     // 离开作用域时自动解锁
 }
 
@@ -177,8 +173,7 @@ public:
     }
 
     // 移动语义支持
-    DatabaseConnection(DatabaseConnection&& other) noexcept
-        : connected(other.connected) {
+    DatabaseConnection(DatabaseConnection&& other) noexcept : connected(other.connected) {
         other.connected = false;
     }
 
