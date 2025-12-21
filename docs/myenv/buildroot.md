@@ -1,18 +1,17 @@
 # STM32MP157PRO 环境部署
 
-硬件环境：100ASK_STM32MP157_V11
+## 将开发板连接到 PC
 
-## 拨码开关（BOOT CFG 表格）
+```{dropdown} 拨码开关（控制开发板的启动方式）
+|      | EMMC     | SD           | USB      | M4       |
+| ---- | -------- | ------------ | -------- | -------- |
+| 1    | OFF      | **ON**       | OFF      | OFF      |
+| 2    | **ON**   | OFF          | OFF      | OFF      |
+| 3    | OFF      | **ON**       | OFF      | **ON**   |
+| 备注 | 正常启动 | 从 SD 卡启动 | 烧写系统 | 调试模式 |
+```
 
-|      | EMMC     | SD           | USB      | M4     |
-| ---- | -------- | ------------ | -------- | ------ |
-| 1    | OFF      | **ON**       | OFF      | OFF    |
-| 2    | **ON**   | OFF          | OFF      | OFF    |
-| 3    | OFF      | **ON**       | OFF      | **ON** |
-| 备注 | 正常启动 | 从 SD 卡启动 | 烧写系统 | 调试   |
-
-## 接线规则（从开发板背面看编号）
-
+- 硬件版本：`100ASK_STM32MP157_V11`
 - 开发板正面接线图：<https://pan.quark.cn/s/532f2b7cc07d>
 - 开发板背面接线图：<https://pan.quark.cn/s/b78f6941857c>
 - `J5 USB Serial`：串口（内核）日志，波特率 115200
@@ -21,7 +20,7 @@
 - `J11 NET2`：使用网线直接连接到路由器上
 - `J3 BOOT CFG`：拨码开关，正常使用选择 EMMC 模式
 
-## 烧写系统
+## 给开发板烧录版本
 
 - 烧录工具：[STM32CubeProgrammer](https://pan.quark.cn/s/1a50bbd2fbac)（安装路径不能有中文）
 - 下载固件：<https://pan.quark.cn/s/3619f69a933b>
@@ -37,9 +36,9 @@
 - 点击 `Dwonload` 开始烧写，烧写过程中不要中断电源
 - 烧写成功，关闭电源，将启动方式设置为 EMMC，打开电源
 
-单独更新 Trust Boot，基本步骤同上，在选择分区配置文件时，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_TrustUbootBootloader.tsv`
+单独更新 Trust Boot，步骤同上，在选择分区配置文件时，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_TrustUbootBootloader.tsv`
 
-## 使用开发板：网络配置
+## 配置网络
 
 串口登录开发板：输入 root，没有密码。配置网络：
 
@@ -57,7 +56,7 @@ systemctl enable systemd-networkd
 
 下载虚拟机：<https://pan.quark.cn/s/278d398939e4>（用户名：`root`，密码：`123456`）
 
-双击 ubuntu18.04_x64.vmx 用 VMware Workstation Pro 打开虚拟机，配置虚拟机桥接网卡（用于和开发板互相通信）
+双击 `ubuntu18.04_x64.vmx` 用 VMware Workstation Pro 打开虚拟机，配置虚拟机桥接网卡（用于和开发板互相通信）
 
 ```bash
 虚拟机 - 设置 - 添加 - 网络适配器 - 桥接模式 - 复制物理网络连接状态
@@ -97,20 +96,16 @@ Gateway : 192.168.5.1
 关闭 Windows 公用网络防火墙
 ```
 
-## 开发板上网
-
-```{note}
-接上网线后执行 `udhcpc -i eth1`。
+```{admonition} 开发板上网
+开发板接上网线后执行 `udhcpc -i eth1`。
 ```
 
-## 编码和调试（二次开发）
-
-### 代码编辑器
+## 下载代码编辑器
 
 - 下载 [STM32CubeMX](https://pan.quark.cn/s/b1be5a3d9b68)（设置硬件引脚，生成 HAL 层代码）
 - 下载 [STM32CubeIDE](https://pan.quark.cn/s/8b8cb53b823e)（编写业务代码）
 
-### 下载内核源代码和构建工具
+## 下载源代码
 
 ```bash
 mkdir -p ~/workshop/stm32mp-ya15xc && cd ~/workshop/stm32mp-ya15xc
@@ -118,7 +113,7 @@ repo init -u git@gitee.com:zhyantao/manifest.git -b stm32mp-ya15xc -m STM32MP157
 repo sync -j8
 ```
 
-### 编译生成 SDK 和工具链
+## 从源码生成交叉编译工具链
 
 ```bash
 # 安装必要的编译工具链和依赖包
@@ -145,7 +140,7 @@ make all -j4
 make sdk
 ```
 
-````{admonition} tree output/images/
+````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/images/
 ```
 output/images/
 ├── rootfs.ext2                 # 根文件系统镜像（ext2 格式）
@@ -158,7 +153,7 @@ output/images/
 ```
 ````
 
-````{admonition} tree output/host/bin/
+````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/host/bin/
 ```
 output/host/bin/
 # 该目录存放生成的交叉编译工具链（如 arm-linux-gcc 等）
@@ -167,7 +162,7 @@ output/host/bin/
 ```
 ````
 
-### 配置交叉编译环境
+## 配置交叉编译环境
 
 ```bash
 export ARCH=arm
@@ -175,17 +170,17 @@ export CROSS_COMPILE=arm-buildroot-linux-gnueabihf-
 export PATH=$PATH:~/workshop/stm32mp-ya15xc/Buildroot_2020.02.x/output/host/usr/bin
 ```
 
-### 编译 kernel 和 rootfs
+## 系统组件编译方法
 
 ```bash
-#  编译 uboot
+# 编译 U-Boot，配置为 STM32MP15 平台，生成 u-boot.stm32 镜像
 mkdir -p ~/workshop/stm32mp-ya15xc/output/uboot
 cd ~/workshop/stm32mp-ya15xc/Uboot-2020.02
 make stm32mp15_trusted_defconfig
 make DEVICE_TREE=stm32mp157c-100ask-512d-v1 all -j4
 cp u-boot.stm32 ~/workshop/stm32mp-ya15xc/output/uboot/
 
-# 编译 kernel
+# 编译 Linux 内核、设备树，生成 uImage 内核镜像和 dtb 设备树文件
 mkdir -p ~/workshop/stm32mp-ya15xc/output/boot
 cd ~/workshop/stm32mp-ya15xc/Linux-5.4/
 make 100ask_stm32mp157_pro_defconfig
@@ -194,24 +189,24 @@ make dtbs
 cp arch/arm/boot/uImage ~/workshop/stm32mp-ya15xc/output/boot/
 cp arch/arm/boot/dts/stm32mp157c*.dtb ~/workshop/stm32mp-ya15xc/output/boot/
 
-# 编译 rootfs
+# 编译内核模块并安装到根文件系统目录，用于构建根文件系统
 mkdir -p ~/workshop/stm32mp-ya15xc/output/rootfs
 make modules -j8
 make INSTALL_MOD_PATH=~/workshop/stm32mp-ya15xc/output/rootfs INSTALL_MOD_STRIP=1 modules_install
 
-# 编译 TFA
+# 编译 Trusted Firmware-A 安全启动固件
 mkdir -p ~/workshop/stm32mp-ya15xc/output/tfa
 cd ~/workshop/stm32mp-ya15xc/Tfa-v2.2
 make -f $PWD/./Makefile.sdk all
 cp tf-a-stm32mp157c-100ask-512d-v1.stm32 ~/workshop/stm32mp-ya15xc/output/tfa/
 
-# 编译驱动
+# 复制预编译的 LED 驱动程序和测试程序，并加载驱动模块
 mkdir -p ~/workshop/stm32mp-ya15xc/output/drivers
 cp led_drv.ko ledtest ~/workshop/stm32mp-ya15xc/output/drivers/
 insmod led_drv.ko
 ```
 
-````{admonition} tree ~/workshop/stm32mp-ya15xc/output/
+````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/
 ```
 output/
 ├── boot/          # 内核镜像和设备树
