@@ -1,5 +1,16 @@
 {
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Workshop documentation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "prettier": "^3.7.4"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
