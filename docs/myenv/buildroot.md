@@ -108,7 +108,8 @@ Gateway : 192.168.5.1
 ## 下载源代码
 
 ```bash
-mkdir -p ~/workshop/stm32mp-ya15xc && cd ~/workshop/stm32mp-ya15xc
+export PROJECT_DIR=~/workshop/stm32mp-ya15xc
+mkdir -p $PROJECT_DIR && cd $PROJECT_DIR
 repo init -u git@gitee.com:zhyantao/manifest.git -b stm32mp-ya15xc -m STM32MP157_V11.xml
 repo sync -j8
 ```
@@ -117,19 +118,14 @@ repo sync -j8
 
 ```bash
 # 安装必要的编译工具链和依赖包
-sudo apt install -y build-essential make unzip
-cd Buildroot_2020.02.x
+sudo apt install -y build-essential make unzip mtools
 
 # 删除系统默认的 python 符号链接（通常是 python3）
 sudo rm /usr/bin/python
 sudo ln -s /usr/bin/python2 /usr/bin/python
 
 # 加载特定开发板的配置文件
-# 100ask_stm32mp157_pro_ddr512m_systemD_qt5_defconfig 包含：
-# - 目标平台：STM32MP157 Pro版
-# - 内存配置：512MB DDR
-# - 初始化系统：systemd
-# - 图形界面：QT5
+cd $PROJECT_DIR/Buildroot_2020.02.x
 make 100ask_stm32mp157_pro_ddr512m_systemD_qt5_defconfig
 
 # 开始完整编译，使用 4 个并行任务加速编译过程
@@ -140,7 +136,7 @@ make all -j4
 make sdk
 ```
 
-````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/images/
+````{dropdown} tree $PROJECT_DIR/output/images/
 ```
 output/images/
 ├── rootfs.ext2                 # 根文件系统镜像（ext2 格式）
@@ -153,7 +149,7 @@ output/images/
 ```
 ````
 
-````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/host/bin/
+````{dropdown} tree $PROJECT_DIR/output/host/bin/
 ```
 output/host/bin/
 # 该目录存放生成的交叉编译工具链（如 arm-linux-gcc 等）
@@ -167,46 +163,44 @@ output/host/bin/
 ```bash
 export ARCH=arm
 export CROSS_COMPILE=arm-buildroot-linux-gnueabihf-
-export PATH=$PATH:~/workshop/stm32mp-ya15xc/Buildroot_2020.02.x/output/host/usr/bin
+export PATH=$PATH:$PROJECT_DIR/Buildroot_2020.02.x/output/host/usr/bin
+${CROSS_COMPILE}gcc --version
 ```
 
 ## 系统组件编译方法
 
 ```bash
 # 编译 U-Boot，配置为 STM32MP15 平台，生成 u-boot.stm32 镜像
-mkdir -p ~/workshop/stm32mp-ya15xc/output/uboot
-cd ~/workshop/stm32mp-ya15xc/Uboot-2020.02
+cd $PROJECT_DIR/Uboot-2020.02
 make stm32mp15_trusted_defconfig
 make DEVICE_TREE=stm32mp157c-100ask-512d-v1 all -j4
-cp u-boot.stm32 ~/workshop/stm32mp-ya15xc/output/uboot/
+mkdir -p $PROJECT_DIR/output/uboot
+cp u-boot.stm32 $PROJECT_DIR/output/uboot/
 
 # 编译 Linux 内核、设备树，生成 uImage 内核镜像和 dtb 设备树文件
-mkdir -p ~/workshop/stm32mp-ya15xc/output/boot
-cd ~/workshop/stm32mp-ya15xc/Linux-5.4/
+cd $PROJECT_DIR/Linux-5.4/
 make 100ask_stm32mp157_pro_defconfig
 make uImage LOADADDR=0xC2000040
 make dtbs
-cp arch/arm/boot/uImage ~/workshop/stm32mp-ya15xc/output/boot/
-cp arch/arm/boot/dts/stm32mp157c*.dtb ~/workshop/stm32mp-ya15xc/output/boot/
+mkdir -p $PROJECT_DIR/output/boot
+cp arch/arm/boot/uImage $PROJECT_DIR/output/boot/
+cp arch/arm/boot/dts/stm32mp157c*.dtb $PROJECT_DIR/output/boot/
 
 # 编译内核模块并安装到根文件系统目录，用于构建根文件系统
-mkdir -p ~/workshop/stm32mp-ya15xc/output/rootfs
+mkdir -p $PROJECT_DIR/output/rootfs
 make modules -j8
-make INSTALL_MOD_PATH=~/workshop/stm32mp-ya15xc/output/rootfs INSTALL_MOD_STRIP=1 modules_install
+make INSTALL_MOD_PATH=$PROJECT_DIR/output/rootfs INSTALL_MOD_STRIP=1 modules_install
 
 # 编译 Trusted Firmware-A 安全启动固件
-mkdir -p ~/workshop/stm32mp-ya15xc/output/tfa
-cd ~/workshop/stm32mp-ya15xc/Tfa-v2.2
-make -f $PWD/./Makefile.sdk all
-cp tf-a-stm32mp157c-100ask-512d-v1.stm32 ~/workshop/stm32mp-ya15xc/output/tfa/
-
-# 复制预编译的 LED 驱动程序和测试程序，并加载驱动模块
-mkdir -p ~/workshop/stm32mp-ya15xc/output/drivers
-cp led_drv.ko ledtest ~/workshop/stm32mp-ya15xc/output/drivers/
-insmod led_drv.ko
+cd $PROJECT_DIR/stm32wrapper4dbg && make
+cp stm32wrapper4dbg $PROJECT_DIR/Buildroot_2020.02.x/output/host/usr/bin/
+cd $PROJECT_DIR/Tfa-v2.2
+make -f Makefile.sdk all
+mkdir -p $PROJECT_DIR/output/tfa
+cp $PROJECT_DIR/build/serialboot/tf-a-stm32mp157c-100ask-512d-v1.stm32 $PROJECT_DIR/output/tfa/
 ```
 
-````{dropdown} tree ~/workshop/stm32mp-ya15xc/output/
+````{dropdown} tree $PROJECT_DIR/output/
 ```
 output/
 ├── boot/          # 内核镜像和设备树
