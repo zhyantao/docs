@@ -1,5 +1,9 @@
 # Buildroot
 
+```{note}
+Buildroot 学习资料请参考：<https://bootlin.com/doc/training/buildroot/buildroot-slides.pdf>
+```
+
 Buildroot 可用于：
 
 - 配置和编译内核

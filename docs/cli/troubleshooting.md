@@ -3,12 +3,12 @@
 ```{admonition} 重要提示！
 先在 tldr 上搜索：<https://tldr.inbrowser.app/>
 
-- 内核与驱动开发：<https://gitee.com/zhyantao/pdf/raw/master/linux/linux-kernel-slides.pdf>
-- 调试技术：<https://gitee.com/zhyantao/pdf/raw/master/linux/debugging-slides.pdf>
-- 音频模块：<https://gitee.com/zhyantao/pdf/raw/master/linux/audio-slides.pdf>
-- 抢占式实时 OS：<https://gitee.com/zhyantao/pdf/raw/master/linux/preempt-rt-slides.pdf>
-- 嵌入式 Linux：<https://gitee.com/zhyantao/pdf/raw/master/linux/embedded-linux-slides.pdf>
-- 图形与图像系统：<https://gitee.com/zhyantao/pdf/raw/master/linux/graphics-slides.pdf>
+- 内核与驱动开发：<https://bootlin.com/doc/training/linux-kernel/linux-kernel-slides.pdf>
+- 调试技术：<https://bootlin.com/doc/training/debugging/debugging-slides.pdf>
+- 音频模块：<https://bootlin.com/doc/training/audio/audio-slides.pdf>
+- 抢占式实时 OS：<https://bootlin.com/doc/training/preempt-rt/preempt-rt-slides.pdf>
+- 嵌入式 Linux：<https://bootlin.com/doc/training/embedded-linux/embedded-linux-slides.pdf>
+- 图形与图像系统：<https://bootlin.com/doc/training/graphics/graphics-slides.pdf>
 ```
 
 | 工具类别         | 工具名称     | 主要功能描述                                         |

@@ -1,6 +1,6 @@
 # PlantUML
 
-本文仅提供一些基本图形的绘制方法，更多内容参考 [PlantUML.pdf](https://gitee.com/zhyantao/pdf/raw/master/uml/plantuml.pdf)
+本文仅提供一些基本图形的绘制方法，更多内容参考 [PlantUML.pdf](https://pdf.plantuml.net/PlantUML_Language_Reference_Guide_zh.pdf)
 
 ## 时序图
 

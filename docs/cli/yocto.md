@@ -1,7 +1,7 @@
 # Yocto
 
 ```{note}
-Yocto 学习资料请参考：<https://gitee.com/zhyantao/pdf/raw/master/yocto/yocto-slides.pdf>
+Yocto 学习资料请参考：<https://bootlin.com/doc/training/yocto/yocto-slides.pdf>
 ```
 
 ## bitbake 常用命令
