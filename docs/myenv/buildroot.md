@@ -11,36 +11,36 @@
 | 备注 | 正常启动 | 从 SD 卡启动 | 烧写系统 | 调试模式 |
 ```
 
-- 硬件版本：`100ASK_STM32MP157_V11`
-- 开发板正面接线图：<https://pan.quark.cn/s/532f2b7cc07d>
-- 开发板背面接线图：<https://pan.quark.cn/s/b78f6941857c>
-- `J5 USB Serial`：串口（内核）日志，波特率 115200
-- `J18 OTG`：烧录口（对应通用串行总线设备中的 DFU）
-- `J10 NET1`：SSH 登录开发板（需要使用以太网转换器连接 PC）
-- `J11 NET2`：使用网线直接连接到路由器上
-- `J3 BOOT CFG`：拨码开关，正常使用选择 EMMC 模式
+- **硬件版本**：`100ASK_STM32MP157_V11`
+- **开发板正面接线图**：<https://pan.quark.cn/s/532f2b7cc07d>
+- **开发板背面接线图**：<https://pan.quark.cn/s/b78f6941857c>
+- `J5 USB Serial`：串口（用于查看内核日志），波特率为 115200
+- `J18 OTG`：烧录口（对应通用串行总线设备中的 DFU 模式）
+- `J10 NET1`：用于 SSH 登录开发板（需使用以太网转换器连接至 PC）
+- `J11 NET2`：可直接通过网线连接到路由器
+- `J3 BOOT CFG`：拨码开关，正常使用时请选择 EMMC 模式
 
-## 给开发板烧录版本
+## 为开发板烧录系统
 
-- 烧录工具：[STM32CubeProgrammer](https://pan.quark.cn/s/1a50bbd2fbac)（安装路径不能有中文）
-- 下载固件：<https://pan.quark.cn/s/3619f69a933b>
+- **烧录工具**：[STM32CubeProgrammer](https://pan.quark.cn/s/1a50bbd2fbac)（安装路径请勿包含中文）
+- **固件下载**：<https://pan.quark.cn/s/3619f69a933b>
 
-更新整个系统的烧写方式：
+**更新整个系统的烧录步骤：**
 
-- 关闭电源，将 `J18 OTG` 接到 PC 上，将拨码开关设置为从 USB 启动
-- 打开电源
-- 打开 STM32CubeProgrammer，选择 `USB` > 在 `USB configuration` 中点击刷新按钮，Port 选择 `USB1` > 选择 `connect`
-- 解压下载好的固件：[Buildroot_2020.zip](https://pan.quark.cn/s/3619f69a933b)
-- 选择分区配置文件：点击 `Open File`，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_Systemall.tsv`
-- `Binaries path` 选择 `uImage` 所在的目录，也就是 `Buildroot_2020/`
-- 点击 `Dwonload` 开始烧写，烧写过程中不要中断电源
-- 烧写成功，关闭电源，将启动方式设置为 EMMC，打开电源
+1. 关闭电源，将 `J18 OTG` 连接到 PC，并将拨码开关设置为 USB 启动模式。
+2. 打开电源。
+3. 启动 STM32CubeProgrammer，选择 `USB` → 在 `USB configuration` 中点击刷新按钮，选择 `USB1` 端口 → 点击 `connect`。
+4. 解压下载的固件：[Buildroot_2020.zip](https://pan.quark.cn/s/3619f69a933b)。
+5. 选择分区配置文件：点击 `Open File`，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_Systemall.tsv`。
+6. 在 `Binaries path` 中选择 `uImage` 所在的目录，即 `Buildroot_2020/`。
+7. 点击 `Download` 开始烧写，烧写过程中请勿断开电源。
+8. 烧写完成后，关闭电源，将启动方式重新设置为 EMMC，然后打开电源。
 
-单独更新 Trust Boot，步骤同上，在选择分区配置文件时，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_TrustUbootBootloader.tsv`
+**单独更新 Trust Boot 的步骤与上述相同，仅在步骤 5 中选择分区配置文件时，改为选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_TrustUbootBootloader.tsv`。**
 
 ## 配置网络
 
-串口登录开发板：输入 root，没有密码。配置网络：
+通过串口登录开发板：用户名为 `root`，无密码。登录后配置网络：
 
 ```bash
 cat <<EOF | tee /etc/systemd/network/50-static.network
@@ -54,14 +54,19 @@ EOF
 systemctl enable systemd-networkd
 ```
 
-下载虚拟机：<https://pan.quark.cn/s/278d398939e4>（用户名：`root`，密码：`123456`）
+**虚拟机下载与配置：**
 
-双击 `ubuntu18.04_x64.vmx` 用 VMware Workstation Pro 打开虚拟机，配置虚拟机桥接网卡（用于和开发板互相通信）
+- 下载链接：<https://pan.quark.cn/s/278d398939e4>（用户名：`root`，密码：`123456`）。
+- 使用 VMware Workstation Pro 打开 `ubuntu18.04_x64.vmx` 文件。
+
+**配置虚拟机桥接网卡（用于与开发板通信）：**
 
 ```bash
 虚拟机 - 设置 - 添加 - 网络适配器 - 桥接模式 - 复制物理网络连接状态
 编辑 - 虚拟网络编辑器 - 更改设置 - 添加网络 - VMnet0 - 桥接模式选择 AXIC 网络适配器 - 应用 - 确定
 ```
+
+**在虚拟机内配置网络：**
 
 ```bash
 cat <<EOF | sudo tee /etc/netplan/99_config.yaml
@@ -84,26 +89,26 @@ EOF
 sudo netplan apply
 ```
 
-配置电脑端 AXIC 网络适配器的 IPv4 和网关（用于和开发板和虚拟机通信）
+**配置 PC 端 AXIC 网络适配器（用于与开发板和虚拟机通信）：**
 
 ```bash
 更改 AXIC 网络适配器属性
 
-IPv4    : 192.168.5.10
-Netmask : 255.255.255.0
-Gateway : 192.168.5.1
+IPv4     : 192.168.5.10
+子网掩码 : 255.255.255.0
+网关     : 192.168.5.1
 
 关闭 Windows 公用网络防火墙
 ```
 
 ```{admonition} 开发板上网
-开发板接上网线后执行 `udhcpc -i eth1`。
+开发板接上网线后，可执行 `udhcpc -i eth1` 命令自动获取网络配置。
 ```
 
-## 下载代码编辑器
+## 下载代码开发工具
 
-- 下载 [STM32CubeMX](https://pan.quark.cn/s/b1be5a3d9b68)（设置硬件引脚，生成 HAL 层代码）
-- 下载 [STM32CubeIDE](https://pan.quark.cn/s/8b8cb53b823e)（编写业务代码）
+- **STM32CubeMX**：[下载链接](https://pan.quark.cn/s/b1be5a3d9b68)（用于配置硬件引脚并生成 HAL 层代码）。
+- **STM32CubeIDE**：[下载链接](https://pan.quark.cn/s/8b8cb53b823e)（用于编写业务层代码）。
 
 ## 下载源代码
 
@@ -117,7 +122,7 @@ repo sync -j8
 ## 从源码生成交叉编译工具链
 
 ```bash
-# 安装必要的编译工具链和依赖包
+# 安装必要的编译工具和依赖包
 sudo apt install -y build-essential make unzip mtools
 
 # 删除系统默认的 python 符号链接（通常是 python3）
@@ -131,8 +136,8 @@ make 100ask_stm32mp157_pro_ddr512m_systemD_qt5_defconfig
 # 开始完整编译，使用 4 个并行任务加速编译过程
 make all -j4
 
-# 生成 SDK 工具链，用于后续应用程序开发
-# 该工具链将包含交叉编译器、库文件等
+# 生成 SDK 工具链，用于后续的应用程序开发
+# 该工具链包含交叉编译器、库文件等
 make sdk
 ```
 
