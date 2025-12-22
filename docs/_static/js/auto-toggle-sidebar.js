@@ -1,9 +1,7 @@
 (function () {
   console.log("[auto-toggle-sidebar]: Auto-toggle sidebar script started");
 
-  const isHomepage =
-    window.location.pathname === "/" ||
-    window.location.pathname === "" ||
+  const isHomepage = window.location.pathname.endsWith("/") ||
     window.location.pathname.endsWith("index.html");
 
   function toggleIfNeeded() {
