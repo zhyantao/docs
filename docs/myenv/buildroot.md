@@ -20,7 +20,7 @@
 - `J11 NET2`：可直接通过网线连接到路由器
 - `J3 BOOT CFG`：拨码开关，正常使用时请选择 EMMC 模式
 
-## 为开发板烧录系统
+## 烧录系统
 
 - **烧录工具**：[STM32CubeProgrammer](https://pan.quark.cn/s/1a50bbd2fbac)（安装路径请勿包含中文）
 - **固件下载**：<https://pan.quark.cn/s/3619f69a933b>
@@ -141,7 +141,7 @@ make all -j4
 make sdk
 ```
 
-````{dropdown} tree $PROJECT_DIR/output/images/
+````{dropdown} tree $PROJECT_DIR/Buildroot_2020.02.x/output/images/
 ```
 output/images/
 ├── rootfs.ext2                 # 根文件系统镜像（ext2 格式）
@@ -154,7 +154,7 @@ output/images/
 ```
 ````
 
-````{dropdown} tree $PROJECT_DIR/output/host/bin/
+````{dropdown} tree $PROJECT_DIR/Buildroot_2020.02.x/output/host/bin/
 ```
 output/host/bin/
 # 该目录存放生成的交叉编译工具链（如 arm-linux-gcc 等）
@@ -215,3 +215,39 @@ output/
 └── uboot/         # U-Boot 镜像
 ```
 ````
+
+## 发布版本
+
+```bash
+RELEASE_DIR=$PROJECT_DIR/release
+TFABOOT_DIR=$PROJECT_DIR/release/Ram
+LAYOUT_DIR=$PROJECT_DIR/release/Flashlayout
+
+rm -rf $RELEASE_DIR
+mkdir -p $RELEASE_DIR
+mkdir -p $TFABOOT_DIR
+mkdir -p $LAYOUT_DIR
+
+# 0. 启动分区
+cp $PROJECT_DIR/Tfa-v2.2/output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $TFABOOT_DIR
+cp $PROJECT_DIR/Uboot-2020.02/u-boot.stm32 $TFABOOT_DIR
+
+# 1. TF-A 固件（用于 FSBL）
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/tf-a-stm32mp157c-100ask-512d-v1.stm32 $RELEASE_DIR/
+
+# 2. U-Boot
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/u-boot.stm32 $RELEASE_DIR/
+
+# 3. 内核和设备树
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/uImage $RELEASE_DIR/
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-v1.dtb $RELEASE_DIR/
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-hdmi-v1.dtb $RELEASE_DIR/
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-lcd-v1.dtb $RELEASE_DIR/
+
+# 4. 文件系统
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/rootfs.ext4 $RELEASE_DIR/
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/bootfs.ext4 $RELEASE_DIR/
+
+# 5. Flashlayout 文件
+cp $PROJECT_DIR/Flashlayout/*.tsv $LAYOUT_DIR/
+```
