@@ -2,15 +2,6 @@
 
 ## 将开发板连接到 PC
 
-```{dropdown} 拨码开关（控制开发板的启动方式）
-|      | EMMC     | SD           | USB      | M4       |
-| ---- | -------- | ------------ | -------- | -------- |
-| 1    | OFF      | **ON**       | OFF      | OFF      |
-| 2    | **ON**   | OFF          | OFF      | OFF      |
-| 3    | OFF      | **ON**       | OFF      | **ON**   |
-| 备注 | 正常启动 | 从 SD 卡启动 | 烧写系统 | 调试模式 |
-```
-
 - **硬件版本**：`100ASK_STM32MP157_V11`
 - **开发板正面接线图**：<https://pan.quark.cn/s/532f2b7cc07d>
 - **开发板背面接线图**：<https://pan.quark.cn/s/b78f6941857c>
@@ -19,6 +10,15 @@
 - `J10 NET1`：用于 SSH 登录开发板（需使用以太网转换器连接至 PC）
 - `J11 NET2`：可直接通过网线连接到路由器
 - `J3 BOOT CFG`：拨码开关，正常使用时请选择 EMMC 模式
+
+**拨码开关（控制开发板的启动方式）：**
+
+|      | EMMC     | SD           | USB      | M4       |
+| ---- | -------- | ------------ | -------- | -------- |
+| 1    | OFF      | **ON**       | OFF      | OFF      |
+| 2    | **ON**   | OFF          | OFF      | OFF      |
+| 3    | OFF      | **ON**       | OFF      | **ON**   |
+| 备注 | 正常启动 | 从 SD 卡启动 | 烧写系统 | 调试模式 |
 
 ## 烧录系统
 
@@ -119,6 +119,16 @@ repo init -u git@gitee.com:zhyantao/manifest.git -b stm32mp-ya15xc -m STM32MP157
 repo sync -j8
 ```
 
+````{note}
+如果网络连接速度较慢，可以下载已预先打包好的 Buildroot dl 目录源代码文件：<https://pan.quark.cn/s/7a874af81acb>
+
+下载完成后，请使用以下命令解压至指定目录：
+
+```bash
+tar zxf Buildroot_2020.02.x_dl.tar.gz --directory=$PROJECT_DIR/Buildroot_2020.02.x
+```
+````
+
 ## 从源码生成交叉编译工具链
 
 ```bash
@@ -146,7 +156,7 @@ cp -r output/host $PROJECT_DIR/output/
 cp -r output/images $PROJECT_DIR/output/
 ```
 
-````{dropdown} tree $PROJECT_DIR/output/images/
+````{admonition} tree $PROJECT_DIR/output/images/
 ```
 output/images/
 ├── rootfs.ext2                 # 根文件系统镜像（ext2 格式）
@@ -159,7 +169,7 @@ output/images/
 ```
 ````
 
-````{dropdown} tree $PROJECT_DIR/output/host/bin/
+````{admonition} tree $PROJECT_DIR/output/host/bin/
 ```
 output/host/bin/
 # 该目录存放生成的交叉编译工具链（如 arm-linux-gcc 等）
@@ -207,18 +217,18 @@ cp stm32wrapper4dbg $PROJECT_DIR/output/host/usr/bin/
 cd $PROJECT_DIR/Tfa-v2.2
 make -f Makefile.sdk all
 mkdir -p $PROJECT_DIR/output/tfa
-cp $PROJECT_DIR/build/serialboot/tf-a-stm32mp157c-100ask-512d-v1.stm32 $PROJECT_DIR/output/tfa/
+cp output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $PROJECT_DIR/output/tfa/
 ```
 
-````{dropdown} tree $PROJECT_DIR/output/
+````{admonition} tree $PROJECT_DIR/output/
 ```
 output/
 ├── host/          # 交叉编译工具链
 ├── images/        # 所有构建镜像文件
 ├── boot/          # 内核镜像和设备树
 ├── rootfs/        # 内核模块
-├── tfa/           # TF-A 镜像
-└── uboot/         # U-Boot 镜像
+├── tfa/           # RAM TF-A 镜像
+└── uboot/         # RAM U-Boot 镜像
 ```
 ````
 

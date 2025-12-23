@@ -19,7 +19,7 @@
 
 ### 2.1 基本格式（7 列）
 
-```tsv
+```text
 #Opt    Id      Name        Type        IP      Offset      Binary
 -       0x01    fsbl1-boot  Binary      none    0x0         Ram/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32
 -       0x03    ssbl-boot   Binary      none    0x0         Ram/u-boot.stm32
@@ -73,7 +73,7 @@ P       0x22    rootfs2     FileSystem  mmc1    0x08280000  rootfs.ext4
 
 ### 3.3 示例配置详解
 
-```tsv
+```text
 # 第一行：串行启动加载器到 RAM
 -       0x01    fsbl1-boot  Binary      none    0x0         Ram/tf-a-serialboot.stm32
 
