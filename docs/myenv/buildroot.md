@@ -23,14 +23,14 @@
 ## 烧录系统
 
 - **烧录工具**：[STM32CubeProgrammer](https://pan.quark.cn/s/1a50bbd2fbac)（安装路径请勿包含中文）
-- **固件下载**：<https://pan.quark.cn/s/3619f69a933b>
+- **系统固件**：[Buildroot_2020.zip](https://pan.quark.cn/s/3619f69a933b)
 
 **更新整个系统的烧录步骤：**
 
 1. 关闭电源，将 `J18 OTG` 连接到 PC，并将拨码开关设置为 USB 启动模式。
 2. 打开电源。
 3. 启动 STM32CubeProgrammer，选择 `USB` → 在 `USB configuration` 中点击刷新按钮，选择 `USB1` 端口 → 点击 `connect`。
-4. 解压下载的固件：[Buildroot_2020.zip](https://pan.quark.cn/s/3619f69a933b)。
+4. 解压下载的固件：Buildroot_2020.zip。
 5. 选择分区配置文件：点击 `Open File`，选择 `Buildroot_2020/Flashlayout/Buildroot_Emmc_Systemall.tsv`。
 6. 在 `Binaries path` 中选择 `uImage` 所在的目录，即 `Buildroot_2020/`。
 7. 点击 `Download` 开始烧写，烧写过程中请勿断开电源。
@@ -247,7 +247,7 @@ mkdir -p $SERIALBOOT_DIR
 mkdir -p $LAYOUT_DIR
 
 # 1. 串口启动文件（用于调试/烧录）
-cp $PROJECT_DIR/Tfa-v2.2/output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $SERIALBOOT_DIR
+cp $PROJECT_DIR/output/tfa/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $SERIALBOOT_DIR
 cp $PROJECT_DIR/output/uboot/u-boot.stm32 $SERIALBOOT_DIR
 
 # 2. TF-A 固件（FSBL - First Stage Boot Loader）
