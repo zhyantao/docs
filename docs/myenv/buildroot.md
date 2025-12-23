@@ -1,4 +1,4 @@
-# STM32MP157PRO 开发指南
+# STM32MP157 开发指南：从烧录系统到构建编译环境
 
 ## 将开发板连接到 PC
 
@@ -219,35 +219,37 @@ output/
 ## 发布版本
 
 ```bash
+# 设置发布目录路径
 RELEASE_DIR=$PROJECT_DIR/release
-TFABOOT_DIR=$PROJECT_DIR/release/Ram
-LAYOUT_DIR=$PROJECT_DIR/release/Flashlayout
+TFABOOT_DIR=$PROJECT_DIR/release/Ram         # 串口下载工具目录
+LAYOUT_DIR=$PROJECT_DIR/release/Flashlayout  # Flash 布局文件目录
 
+# 清理并创建发布目录结构
 rm -rf $RELEASE_DIR
 mkdir -p $RELEASE_DIR
 mkdir -p $TFABOOT_DIR
 mkdir -p $LAYOUT_DIR
 
-# 0. 启动分区
+# 1. 串口启动文件（用于调试/烧录）
 cp $PROJECT_DIR/Tfa-v2.2/output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $TFABOOT_DIR
 cp $PROJECT_DIR/Uboot-2020.02/u-boot.stm32 $TFABOOT_DIR
 
-# 1. TF-A 固件（用于 FSBL）
+# 2. TF-A 固件（FSBL - First Stage Boot Loader）
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/tf-a-stm32mp157c-100ask-512d-v1.stm32 $RELEASE_DIR/
 
-# 2. U-Boot
+# 3. U-Boot 引导程序
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/u-boot.stm32 $RELEASE_DIR/
 
-# 3. 内核和设备树
+# 4. Linux 内核与设备树
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/uImage $RELEASE_DIR/
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-v1.dtb $RELEASE_DIR/
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-hdmi-v1.dtb $RELEASE_DIR/
 cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-lcd-v1.dtb $RELEASE_DIR/
 
-# 4. 文件系统
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/rootfs.ext4 $RELEASE_DIR/
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/bootfs.ext4 $RELEASE_DIR/
+# 5. 文件系统镜像
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/bootfs.ext4 $RELEASE_DIR/      # 引导分区文件系统
+cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/rootfs.ext4 $RELEASE_DIR/      # 根文件系统
 
-# 5. Flashlayout 文件
+# 6. Flash布局配置文件
 cp $PROJECT_DIR/Flashlayout/*.tsv $LAYOUT_DIR/
 ```
