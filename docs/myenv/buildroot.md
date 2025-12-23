@@ -139,9 +139,14 @@ make all -j4
 # 生成 SDK 工具链，用于后续的应用程序开发
 # 该工具链包含交叉编译器、库文件等
 make sdk
+
+# 将构建后的 SDK 交叉编译工具链及所有的镜像文件复制到 output 目录
+mkdir -p $PROJECT_DIR/output
+cp -r output/host $PROJECT_DIR/output/
+cp -r output/images $PROJECT_DIR/output/
 ```
 
-````{dropdown} tree $PROJECT_DIR/Buildroot_2020.02.x/output/images/
+````{dropdown} tree $PROJECT_DIR/output/images/
 ```
 output/images/
 ├── rootfs.ext2                 # 根文件系统镜像（ext2 格式）
@@ -150,11 +155,11 @@ output/images/
 ├── stm32mp157c-dk2.dtb         # 设备树二进制文件，描述硬件配置
 ├── tf-a-stm32mp157c-dk2.stm32  # TF-A 固件（ARM Trusted Firmware）
 ├── u-boot.stm32                # U-Boot 引导加载程序镜像
-└── zImage                      # 压缩的内核镜像
+└── uImage                      # 压缩的内核镜像
 ```
 ````
 
-````{dropdown} tree $PROJECT_DIR/Buildroot_2020.02.x/output/host/bin/
+````{dropdown} tree $PROJECT_DIR/output/host/bin/
 ```
 output/host/bin/
 # 该目录存放生成的交叉编译工具链（如 arm-linux-gcc 等）
@@ -168,7 +173,7 @@ output/host/bin/
 ```bash
 export ARCH=arm
 export CROSS_COMPILE=arm-buildroot-linux-gnueabihf-
-export PATH=$PATH:$PROJECT_DIR/Buildroot_2020.02.x/output/host/usr/bin
+export PATH=$PATH:$PROJECT_DIR/output/host/usr/bin
 ${CROSS_COMPILE}gcc --version
 ```
 
@@ -198,7 +203,7 @@ make INSTALL_MOD_PATH=$PROJECT_DIR/output/rootfs INSTALL_MOD_STRIP=1 modules_ins
 
 # 编译 Trusted Firmware-A 安全启动固件
 cd $PROJECT_DIR/stm32wrapper4dbg && make
-cp stm32wrapper4dbg $PROJECT_DIR/Buildroot_2020.02.x/output/host/usr/bin/
+cp stm32wrapper4dbg $PROJECT_DIR/output/host/usr/bin/
 cd $PROJECT_DIR/Tfa-v2.2
 make -f Makefile.sdk all
 mkdir -p $PROJECT_DIR/output/tfa
@@ -208,9 +213,10 @@ cp $PROJECT_DIR/build/serialboot/tf-a-stm32mp157c-100ask-512d-v1.stm32 $PROJECT_
 ````{dropdown} tree $PROJECT_DIR/output/
 ```
 output/
+├── host/          # 交叉编译工具链
+├── images/        # 所有构建镜像文件
 ├── boot/          # 内核镜像和设备树
 ├── rootfs/        # 内核模块
-├── drivers/       # 驱动模块和测试程序
 ├── tfa/           # TF-A 镜像
 └── uboot/         # U-Boot 镜像
 ```
@@ -220,35 +226,35 @@ output/
 
 ```bash
 # 设置发布目录路径
-RELEASE_DIR=$PROJECT_DIR/release
-TFABOOT_DIR=$PROJECT_DIR/release/Ram         # 串口下载工具目录
-LAYOUT_DIR=$PROJECT_DIR/release/Flashlayout  # Flash 布局文件目录
+RELEASE_DIR=$PROJECT_DIR/output/release
+SERIALBOOT_DIR=$PROJECT_DIR/output/release/Ram      # 串口下载工具目录
+LAYOUT_DIR=$PROJECT_DIR/output/release/Flashlayout  # Flash 布局文件目录
 
 # 清理并创建发布目录结构
 rm -rf $RELEASE_DIR
 mkdir -p $RELEASE_DIR
-mkdir -p $TFABOOT_DIR
+mkdir -p $SERIALBOOT_DIR
 mkdir -p $LAYOUT_DIR
 
 # 1. 串口启动文件（用于调试/烧录）
-cp $PROJECT_DIR/Tfa-v2.2/output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $TFABOOT_DIR
-cp $PROJECT_DIR/Uboot-2020.02/u-boot.stm32 $TFABOOT_DIR
+cp $PROJECT_DIR/Tfa-v2.2/output/serialboot/tf-a-stm32mp157c-100ask-512d-v1-serialboot.stm32 $SERIALBOOT_DIR
+cp $PROJECT_DIR/output/uboot/u-boot.stm32 $SERIALBOOT_DIR
 
 # 2. TF-A 固件（FSBL - First Stage Boot Loader）
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/tf-a-stm32mp157c-100ask-512d-v1.stm32 $RELEASE_DIR/
+cp $PROJECT_DIR/output/images/tf-a-stm32mp157c-100ask-512d-v1.stm32 $RELEASE_DIR/
 
 # 3. U-Boot 引导程序
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/u-boot.stm32 $RELEASE_DIR/
+cp $PROJECT_DIR/output/images/u-boot.stm32 $RELEASE_DIR/
 
 # 4. Linux 内核与设备树
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/uImage $RELEASE_DIR/
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-v1.dtb $RELEASE_DIR/
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-hdmi-v1.dtb $RELEASE_DIR/
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/stm32mp157c-100ask-512d-lcd-v1.dtb $RELEASE_DIR/
+cp $PROJECT_DIR/output/images/uImage $RELEASE_DIR/
+cp $PROJECT_DIR/output/boot/stm32mp157c-100ask-512d-v1.dtb $RELEASE_DIR/
+cp $PROJECT_DIR/output/boot/stm32mp157c-100ask-512d-hdmi-v1.dtb $RELEASE_DIR/
+cp $PROJECT_DIR/output/boot/stm32mp157c-100ask-512d-lcd-v1.dtb $RELEASE_DIR/
 
 # 5. 文件系统镜像
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/bootfs.ext4 $RELEASE_DIR/      # 引导分区文件系统
-cp $PROJECT_DIR/Buildroot_2020.02.x/output/images/rootfs.ext4 $RELEASE_DIR/      # 根文件系统
+cp $PROJECT_DIR/output/images/bootfs.ext4 $RELEASE_DIR/      # 引导分区文件系统
+cp $PROJECT_DIR/output/images/rootfs.ext4 $RELEASE_DIR/      # 根文件系统
 
 # 6. Flash布局配置文件
 cp $PROJECT_DIR/Flashlayout/*.tsv $LAYOUT_DIR/
