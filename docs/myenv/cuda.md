@@ -5,6 +5,7 @@
 本教程在 WSL2 Ubuntu 20.04 上测试通过。
 
 ### CUDA 版本
+
 ```bash
 $ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
@@ -14,6 +15,7 @@ Cuda compilation tools, release 10.1, V10.1.243
 ```
 
 ### CUDA 路径
+
 ```bash
 $ whereis cuda
 cuda: /usr/lib/cuda /usr/include/cuda.h /usr/local/cuda
@@ -22,6 +24,7 @@ cuda: /usr/lib/cuda /usr/include/cuda.h /usr/local/cuda
 ## 安装步骤
 
 ### 1. 安装 CUDA 密钥环和更新
+
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
@@ -29,6 +32,7 @@ sudo apt-get update
 ```
 
 ### 2. 安装 cuDNN
+
 ```bash
 sudo apt-get -y install cudnn
 sudo apt-get -y install cudnn-cuda-12
@@ -44,6 +48,7 @@ sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 ```
 
 ### 3. 准备 OpenCV 源码
+
 ```bash
 mkdir -p opencv
 cd opencv
@@ -52,6 +57,7 @@ git clone https://github.com/opencv/opencv_contrib.git
 ```
 
 ### 4. 配置和编译 OpenCV
+
 ```bash
 cd opencv
 mkdir build && cd build
@@ -81,6 +87,7 @@ sudo make install
 ```
 
 ### 5. 清理潜在的冲突
+
 ```bash
 pip uninstall opencv-python
 pip uninstall opencv-python-headless
@@ -91,11 +98,13 @@ pip uninstall opencv-python-headless
 1. **CUDA 架构配置**：`compute_50,code=sm_50` 可以通过 `nvcc --help | grep compute` 来检查是否存在，请根据您的 GPU 架构进行调整。
 
 2. **环境变量**：编译完成后，建议更新库路径：
+
    ```bash
    sudo ldconfig
    ```
 
 3. **验证安装**：可以通过以下命令验证 OpenCV 是否成功编译并支持 CUDA：
+
    ```python
    import cv2
    print(cv2.__version__)
