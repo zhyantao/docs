@@ -1,105 +1,61 @@
-# 从源码安装 CV2 以支持 CUDA
+# 从源码安装支持 CUDA 的 OpenCV
 
 ## 软件环境
 
 本教程在 WSL2 Ubuntu 20.04 上测试通过。
 
+### CUDA 版本
 ```bash
 $ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2019 NVIDIA Corporation
 Built on Sun_Jul_28_19:07:16_PDT_2019
 Cuda compilation tools, release 10.1, V10.1.243
-
-$ whereis cuda
-cuda: /usr/lib/cuda /usr/include/cuda.h /usr/local/cuda
-
-$ dpkg -l | grep cudnn
-ii  cudnn                                        9.8.0-1                               amd64        NVIDIA CUDA Deep Neural Network library (cuDNN)
-ii  cudnn9                                       9.8.0-1                               amd64        NVIDIA CUDA Deep Neural Network library (cuDNN)
-ii  cudnn9-cuda-12                               9.8.0.87-1                            amd64        NVIDIA cuDNN for CUDA 12
-ii  cudnn9-cuda-12-8                             9.8.0.87-1                            amd64        NVIDIA cuDNN for CUDA 12.8
-ii  libcudnn9-cuda-12                            9.8.0.87-1                            amd64        cuDNN runtime libraries for CUDA 12.8
-ii  libcudnn9-dev-cuda-12                        9.8.0.87-1                            amd64        cuDNN development headers and symlinks for CUDA 12.8
-ii  libcudnn9-samples                            9.8.0.87-1                            all          cuDNN samples
-ii  libcudnn9-static-cuda-12                     9.8.0.87-1                            amd64        cuDNN static libraries for CUDA 12.8
-
-$ dpkg -l | grep cuda
-ii  cuda                                         12.8.1-1                              amd64        CUDA meta-package
-ii  cuda-12-8                                    12.8.1-1                              amd64        CUDA 12.8 meta-package
-ii  cuda-cccl-12-8                               12.8.90-1                             amd64        CUDA CCCL
-ii  cuda-command-line-tools-12-8                 12.8.1-1                              amd64        CUDA command-line tools
-ii  cuda-compiler-12-8                           12.8.1-1                              amd64        CUDA compiler
-ii  cuda-crt-12-8                                12.8.93-1                             amd64        CUDA crt
-ii  cuda-cudart-12-8                             12.8.90-1                             amd64        CUDA Runtime native Libraries
-ii  cuda-cudart-dev-12-8                         12.8.90-1                             amd64        CUDA Runtime native dev links, headers
-ii  cuda-cuobjdump-12-8                          12.8.90-1                             amd64        CUDA cuobjdump
-ii  cuda-cupti-12-8                              12.8.90-1                             amd64        CUDA profiling tools runtime libs.
-ii  cuda-cupti-dev-12-8                          12.8.90-1                             amd64        CUDA profiling tools interface.
-ii  cuda-cuxxfilt-12-8                           12.8.90-1                             amd64        CUDA cuxxfilt
-ii  cuda-demo-suite-12-8                         12.8.90-1                             amd64        Demo suite for CUDA
-ii  cuda-documentation-12-8                      12.8.90-1                             amd64        CUDA documentation
-ii  cuda-driver-dev-12-8                         12.8.90-1                             amd64        CUDA Driver native dev stub library
-ii  cuda-drivers-570                             570.124.06-0ubuntu1                   amd64        CUDA Driver meta-package, branch-specific
-ii  cuda-gdb-12-8                                12.8.90-1                             amd64        CUDA-GDB
-ii  cuda-keyring                                 1.1-1                                 all          GPG keyring for the CUDA repository
-ii  cuda-libraries-12-8                          12.8.1-1                              amd64        CUDA Libraries 12.8 meta-package
-ii  cuda-libraries-dev-12-8                      12.8.1-1                              amd64        CUDA Libraries 12.8 development meta-package
-ii  cuda-nsight-12-8                             12.8.90-1                             amd64        CUDA nsight
-ii  cuda-nsight-compute-12-8                     12.8.1-1                              amd64        NVIDIA Nsight Compute
-ii  cuda-nsight-systems-12-8                     12.8.1-1                              amd64        NVIDIA Nsight Systems
-ii  cuda-nvcc-12-8                               12.8.93-1                             amd64        CUDA nvcc
-ii  cuda-nvdisasm-12-8                           12.8.90-1                             amd64        CUDA disassembler
-ii  cuda-nvml-dev-12-8                           12.8.90-1                             amd64        NVML native dev links, headers
-ii  cuda-nvprof-12-8                             12.8.90-1                             amd64        CUDA Profiler tools
-ii  cuda-nvprune-12-8                            12.8.90-1                             amd64        CUDA nvprune
-ii  cuda-nvrtc-12-8                              12.8.93-1                             amd64        NVRTC native runtime libraries
-ii  cuda-nvrtc-dev-12-8                          12.8.93-1                             amd64        NVRTC native dev links, headers
-ii  cuda-nvtx-12-8                               12.8.90-1                             amd64        NVIDIA Tools Extension
-ii  cuda-nvvm-12-8                               12.8.93-1                             amd64        CUDA nvvm
-ii  cuda-nvvp-12-8                               12.8.93-1                             amd64        CUDA Profiler tools
-ii  cuda-opencl-12-8                             12.8.90-1                             amd64        CUDA OpenCL native Libraries
-ii  cuda-opencl-dev-12-8                         12.8.90-1                             amd64        CUDA OpenCL native dev links, headers
-ii  cuda-profiler-api-12-8                       12.8.90-1                             amd64        CUDA Profiler API
-ii  cuda-runtime-12-8                            12.8.1-1                              amd64        CUDA Runtime 12.8 meta-package
-ii  cuda-sanitizer-12-8                          12.8.93-1                             amd64        CUDA Sanitizer
-ii  cuda-toolkit-12-8                            12.8.1-1                              amd64        CUDA Toolkit 12.8 meta-package
-ii  cuda-toolkit-12-8-config-common              12.8.90-1                             all          Common config package for CUDA Toolkit 12.8.
-ii  cuda-toolkit-12-config-common                12.8.90-1                             all          Common config package for CUDA Toolkit 12.
-ii  cuda-toolkit-config-common                   12.8.90-1                             all          Common config package for CUDA Toolkit.
-ii  cuda-tools-12-8                              12.8.1-1                              amd64        CUDA Tools meta-package
-ii  cuda-visual-tools-12-8                       12.8.1-1                              amd64        CUDA visual tools
-ii  cudnn9-cuda-12                               9.8.0.87-1                            amd64        NVIDIA cuDNN for CUDA 12
-ii  cudnn9-cuda-12-8                             9.8.0.87-1                            amd64        NVIDIA cuDNN for CUDA 12.8
-ii  libcudart10.1:amd64                          10.1.243-3                            amd64        NVIDIA CUDA Runtime Library
-ii  libcudnn9-cuda-12                            9.8.0.87-1                            amd64        cuDNN runtime libraries for CUDA 12.8
-ii  libcudnn9-dev-cuda-12                        9.8.0.87-1                            amd64        cuDNN development headers and symlinks for CUDA 12.8
-ii  libcudnn9-static-cuda-12                     9.8.0.87-1                            amd64        cuDNN static libraries for CUDA 12.8
-ii  nvidia-cuda-dev                              10.1.243-3                            amd64        NVIDIA CUDA development files
-ii  nvidia-cuda-doc                              10.1.243-3                            all          NVIDIA CUDA and OpenCL documentation
-ii  nvidia-cuda-gdb                              10.1.243-3                            amd64        NVIDIA CUDA Debugger (GDB)
-ii  nvidia-cuda-toolkit                          10.1.243-3                            amd64        NVIDIA CUDA development toolkit
 ```
 
-## 安装教程
+### CUDA 路径
+```bash
+$ whereis cuda
+cuda: /usr/lib/cuda /usr/include/cuda.h /usr/local/cuda
+```
 
+## 安装步骤
+
+### 1. 安装 CUDA 密钥环和更新
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
+```
+
+### 2. 安装 cuDNN
+```bash
 sudo apt-get -y install cudnn
 sudo apt-get -y install cudnn-cuda-12
+
+# 下载并解压 cuDNN 归档文件
 wget https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.2.0.82_cuda12-archive.tar.xz
 tar -xvf cudnn-linux-x86_64-9.2.0.82_cuda12-archive.tar.xz
+
+# 复制头文件和库文件
 sudo cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include
 sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+```
 
+### 3. 准备 OpenCV 源码
+```bash
 mkdir -p opencv
+cd opencv
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
+```
+
+### 4. 配置和编译 OpenCV
+```bash
 cd opencv
 mkdir build && cd build
+
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
@@ -119,17 +75,38 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D WITH_V4L=ON \
     -D BUILD_opencv_videoio=ON \
     -D BUILD_EXAMPLES=OFF ..
+
 make -j$(nproc)
 sudo make install
 ```
 
-````{note}
-`compute_50,code=sm_50` 通过 `nvcc --help | grep compute` 来检查是否存在。
-
-删除 pip 安装的 opencv，以防止冲突：
-
+### 5. 清理潜在的冲突
 ```bash
 pip uninstall opencv-python
 pip uninstall opencv-python-headless
 ```
-````
+
+## 注意事项
+
+1. **CUDA 架构配置**：`compute_50,code=sm_50` 可以通过 `nvcc --help | grep compute` 来检查是否存在，请根据您的 GPU 架构进行调整。
+
+2. **环境变量**：编译完成后，建议更新库路径：
+   ```bash
+   sudo ldconfig
+   ```
+
+3. **验证安装**：可以通过以下命令验证 OpenCV 是否成功编译并支持 CUDA：
+   ```python
+   import cv2
+   print(cv2.__version__)
+   print(cv2.cuda.getCudaEnabledDeviceCount())
+   ```
+
+4. **依赖安装**：如果编译过程中缺少依赖，可以使用以下命令安装常见依赖：
+   ```bash
+   sudo apt-get install build-essential cmake git pkg-config \
+        libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev \
+        libv4l-dev libxvidcore-dev libx264-dev libjpeg-dev \
+        libpng-dev libtiff-dev gfortran openexr libatlas-base-dev \
+        python3-dev python3-numpy libtbb2 libtbb-dev libdc1394-22-dev
+   ```
