@@ -119,6 +119,7 @@ IPv4     : 192.168.5.10
 ```bash
 export PROJECT_DIR=~/workshop/stm32mp-ya15xc
 mkdir -p $PROJECT_DIR && cd $PROJECT_DIR
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
 repo init -u git@gitee.com:zhyantao/manifest.git -b stm32mp-ya15xc -m STM32MP157_V11.xml
 repo sync -j8
 ```
