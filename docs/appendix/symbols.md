@@ -3,7 +3,7 @@
 数学是符号的艺术，理解符号背后的含义是掌握数学的关键。更多 LaTeX 符号参考：
 
 - [LaTeX 入门](#latex-basic)
-- [一份不太简短的 LaTeX 2ε 介绍](https://www.kdocs.cn/p/136412211457) 4.9 小节
+- [一份不太简短的 LaTeX 2ε 介绍](https://texdoc.org/serve/lshort-zh-cn.pdf/0) 4.9 小节
 - [常用数学符号和公式排版](https://www.latexlive.com/help#d11)
 - [在线 LaTeX 公式编辑器](https://www.latexlive.com)（支持导出为图片）
 
