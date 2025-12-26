@@ -93,8 +93,9 @@ $2^{32} = 4 GB$。
 
 **解决方法**
 
-1. 删除 `%localappdata%/localcache.db`（这是个隐藏文件）；
-2. 打开 `任务管理器` > 重启 `Windows 资源管理器`。
+1. `Win + R` 打开 `%localappdata%`
+2. 删除 `IconCache.db`（这是个隐藏文件）；
+3. 打开 `任务管理器` > 重启 `Windows 资源管理器`。
 
 ### 声卡播放问题
 
