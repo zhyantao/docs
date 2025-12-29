@@ -140,7 +140,7 @@ autodoc_mock_imports = ["mprop"]
 mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
 # Setting for sphinxcontrib-mermaid
-mermaid_version = "10.2.0-rc.2"  # from CDN unpkg.com
+mermaid_version = "11.12.2"  # from CDN unpkg.com
 
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`
