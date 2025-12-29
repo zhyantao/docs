@@ -57,7 +57,7 @@ graph TB
 
         subgraph "调度器"
             K3[yield 函数]
-            K4[swtch 上下文切换<br>保存到当前线程的寄存器状态<br>恢复到目标线程的寄存器状态]
+            K4[swtch 上下文切换<br>保存当前线程的寄存器状态<br>恢复目标线程的寄存器状态]
         end
 
         subgraph "返回路径"
