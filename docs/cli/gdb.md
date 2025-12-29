@@ -321,3 +321,7 @@ ps -T | grep gpsd
 # 系统调用跟踪
 strace -e trace=all -p <PID>
 ```
+
+## 延伸阅读
+
+- <https://sourceware.org/gdb/current/onlinedocs/gdb.html/>
