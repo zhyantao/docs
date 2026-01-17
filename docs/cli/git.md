@@ -459,6 +459,7 @@ a/**/b
 ```bash
 git clone --depth=1 https://github.com/romkatv/gitstatus.git ~/gitstatus
 echo 'source ~/gitstatus/gitstatus.prompt.sh' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 方法二：打开 `~/.bashrc` 做如下修改：
