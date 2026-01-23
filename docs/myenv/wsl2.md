@@ -14,6 +14,22 @@
 :name: wsl2-mapping-to-vdisk
 ```
 
+修改 `/etc/wsl.conf`，解决 Windows 和 WSL2 环境变量相互污染的问题：
+
+```bash
+sudo nano /etc/wsl.conf
+```
+
+添加如下内容：
+
+```bash
+[automount]
+enabled=false
+
+[interop]
+appendWindowsPath=false
+```
+
 ## WSL2 访问外网的配置方法
 
 ### 推荐方案
