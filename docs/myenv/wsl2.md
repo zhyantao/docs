@@ -23,11 +23,15 @@ sudo nano /etc/wsl.conf
 添加如下内容：
 
 ```bash
-[automount]
-enabled=false
-
 [interop]
 appendWindowsPath=false
+```
+
+重启 WSL2：
+
+```bash
+wsl --shutdown
+wsl
 ```
 
 ## WSL2 访问外网的配置方法
