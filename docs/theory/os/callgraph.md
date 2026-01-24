@@ -991,7 +991,7 @@ endif
 12. `iput`: 减少 inode 的引用计数，并在必要时释放 inode。
 13. `iunlockput`: 解锁并释放 inode。
 14. `bmap`: 获取指定 inode 的第 n 个块的地址，如果不存在则分配一个新块。
-15. `itrunc`: 截断指定 inode 的内容。
+15. `itrunc`: 清空 inode 及其与此关联的所有内容。
 16. `stati`: 从 inode 复制状态信息到 `stat` 结构体。
 17. `readi`: 从指定 inode 的指定偏移量读取数据。
 18. `writei`: 向指定 inode 的指定偏移量写入数据。
