@@ -421,7 +421,7 @@ priority_queue<int> PQ;
 优先队列默认是降序排列的，也就是最大值在堆顶。如果想创建一个小根堆，声明方式如下：
 
 ```cpp
-priority_queue<int, vector<int>, greater<int>> PQ;
+priority_queue<int, vector<int>, greater<>> PQ;
 ```
 
 在很多情况下，我们会想**在优先队列中存储自定义的数据类型，并按照某个属性排列**。这种情况下，我们需要重载运算符来达到要求：
