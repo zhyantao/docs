@@ -1,4 +1,4 @@
-# virtualenv
+# venv
 
 virtualenv 是创建 Python 隔离环境的一个工具。它允许你在自己的电脑上同时存在多个 Python 版本，而又互不干扰。
 
@@ -12,17 +12,17 @@ curl https://bootstrap.pypa.io/get-pip.py | python
 
 ```bash
 # for python3
-python3 -m venv testenv
+python3 -m venv ~/venv/python3
 
 # for python2
 pip install virtualenv
-virtualenv -p python2.7 testenv
+virtualenv -p python2.7 ~/venv/python2
 ```
 
 ## 激活 virtualenv 环境
 
 ```bash
-source testenv/bin/activate
+source ~/venv/python3/bin/activate
 ```
 
 ## 关闭 virtualenv 环境
@@ -34,5 +34,5 @@ deactivate
 ## 删除 virtualenv 环境
 
 ```bash
-rm -rf testenv
+rm -rf ~/venv/python3
 ```
