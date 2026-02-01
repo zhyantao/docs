@@ -2522,6 +2522,25 @@ void dfs(int s, int e) {
 }
 ```
 
+### Floyd 算法
+
+```c++
+// LeetCode 1334
+// 状态转移方程
+vector memo(n, vector(n, vector<int>(n))); // 记忆化搜索去掉重复计算
+auto dfs = [&](this auto&& dfs, int k, int i, int j) -> int {
+    if (k < 0) { // 递归边界
+        return w[i][j];
+    }
+    auto& res = memo[k][i][j]; // 注意这里是引用
+    if (res) {                 // 之前计算过
+        return res;
+    }
+    return res = min(dfs(k - 1, i, j),
+                     dfs(k - 1, i, k) + dfs(k - 1, k, j));
+};
+```
+
 ### 生成树
 
 #### Kruskal 算法
