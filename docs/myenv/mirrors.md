@@ -925,6 +925,7 @@ sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
+    "http://hub-mirror.c.163.com",
     "https://docker.1ms.run",
     "https://docker.mybacc.com",
     "https://dytt.online",
@@ -954,6 +955,7 @@ sudo tee /etc/containerd/config.toml <<EOF
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
     [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
       endpoint = [
+        "http://hub-mirror.c.163.com",
         "https://docker.1ms.run",
         "https://docker.mybacc.com",
         "https://dytt.online",
