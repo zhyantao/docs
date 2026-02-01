@@ -2461,31 +2461,22 @@ while (!q.empty()) {
 }
 ```
 
-#### Floyd-Warshall 算法
+### Floyd 算法
 
-多源最短路径算法。（仅适用于小图，因为时间复杂度太高了 $O(n^3)$）
-
-```cpp
-// 初始化 distance 矩阵
-for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n; j++) {
-        if (i == j)
-            distance[i][j] = 0;
-        else if (adj[i][j]) // 邻接矩阵
-            distance[i][j] = adj[i][j];
-        else
-            distance[i][j] = INF;
+```c++
+// LeetCode 1334
+// 状态转移方程
+vector memo(n, vector(n, vector<int>(n))); // 记忆化搜索去掉重复计算
+auto dfs = [&](this auto&& dfs, int k, int i, int j) -> int {
+    if (k < 0) { // 递归边界
+        return w[i][j];
     }
-}
-
-// 填充 distance 矩阵
-for (int k = 1; k <= n; k++) {
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j]);
-        }
+    auto& res = memo[k][i][j]; // 注意这里是引用（不用引用时是值传递，无法修改 memo[k][i][j]）
+    if (res) {                 // 之前计算过
+        return res;
     }
-}
+    return res = min(dfs(k - 1, i, j), dfs(k - 1, i, k) + dfs(k - 1, k, j));
+};
 ```
 
 ### 多叉树
@@ -2520,25 +2511,6 @@ void dfs(int s, int e) {
         count[s] += count[u];
     }
 }
-```
-
-### Floyd 算法
-
-```c++
-// LeetCode 1334
-// 状态转移方程
-vector memo(n, vector(n, vector<int>(n))); // 记忆化搜索去掉重复计算
-auto dfs = [&](this auto&& dfs, int k, int i, int j) -> int {
-    if (k < 0) { // 递归边界
-        return w[i][j];
-    }
-    auto& res = memo[k][i][j]; // 注意这里是引用
-    if (res) {                 // 之前计算过
-        return res;
-    }
-    return res = min(dfs(k - 1, i, j),
-                     dfs(k - 1, i, k) + dfs(k - 1, k, j));
-};
 ```
 
 ### 生成树
