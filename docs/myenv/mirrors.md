@@ -925,20 +925,10 @@ sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": [
-    "http://hub-mirror.c.163.com",
-    "https://docker.1ms.run",
-    "https://docker.mybacc.com",
-    "https://dytt.online",
-    "https://lispy.org",
-    "https://docker.xiaogenban1993.com",
-    "https://docker.yomansunter.com",
-    "https://aicarbon.xyz",
-    "https://666860.xyz",
-    "https://docker.zhai.cm",
-    "https://a.ussh.net",
-    "https://hub.littlediary.cn",
-    "https://hub.rat.dev",
-    "https://docker.m.daocloud.io"
+    "https://docker.m.daocloud.io",
+    "https://docker.mirrors.sjtug.sjtu.edu.cn",
+    "https://mirror.baidubce.com",
+    "http://hub-mirror.c.163.com"
   ]
 }
 EOF
@@ -955,20 +945,10 @@ sudo tee /etc/containerd/config.toml <<EOF
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
     [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
       endpoint = [
-        "http://hub-mirror.c.163.com",
-        "https://docker.1ms.run",
-        "https://docker.mybacc.com",
-        "https://dytt.online",
-        "https://lispy.org",
-        "https://docker.xiaogenban1993.com",
-        "https://docker.yomansunter.com",
-        "https://aicarbon.xyz",
-        "https://666860.xyz",
-        "https://docker.zhai.cm",
-        "https://a.ussh.net",
-        "https://hub.littlediary.cn",
-        "https://hub.rat.dev",
-        "https://docker.m.daocloud.io"
+        "https://docker.m.daocloud.io",
+        "https://docker.mirrors.sjtug.sjtu.edu.cn",
+        "https://mirror.baidubce.com",
+        "http://hub-mirror.c.163.com"
       ]
 EOF
 
