@@ -59,5 +59,6 @@ exclude_dirs = [
     "_templates",
     "__pycache__",
     "_tmp",
+    "node_modules",
 ]
 list_directories_and_files(current_path + "/" + "docs", exclude_dirs)

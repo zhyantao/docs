@@ -1,43 +1,13 @@
 # Clash 科学上网方法
 
-```{note}
-若开启 Clash 后，Edge 无法上网，请点击 `...` > `设置` > `将设置还原为其默认值`。
-```
+1、下载 Clash Party: <https://github.com/mihomo-party-org/clash-party/releases>
 
-1、下载 Clash for Windows: <https://github.com/clashdownload/Clash_for_Windows/releases>
+2、购买 VPN（推荐购买不限时流量）: <https://www.xflash.org>
 
-2、购买 VPN: <https://www.xflash.pro>
+3、根据帮助文档配置代理：<https://www.xflash.org/#/knowledge>
 
-3、登录 XFlash 官网，复制订阅地址：
+4、一般选择打开 `系统代理` 即可，不需要打开 `虚拟网卡`。
 
-```{figure} ../_static/images/xflash-subscribe-address.png
-
-```
-
-4、打开 Clash for Windows，添加订阅：
-
-```{figure} ../_static/images/add_subscribe_address.png
-
-```
-
-5、选择代理规则：
-
-```{figure} ../_static/images/select_proxy_rule.png
-
-```
-
-6、设置代理模式：系统代理
-
-```{figure} ../_static/images/set_proxy_mode.png
-
-```
-
-7、UWP Loopback 设置
-
-```{figure} ../_static/images/uwp_loopback_setting1.png
-
-```
-
-```{figure} ../_static/images/uwp_loopback_setting2.png
+```{figure} ../_static/images/clash-party-settings.png
 
 ```

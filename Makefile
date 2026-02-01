@@ -47,6 +47,10 @@ format:
 	-not -path "./.git/*" \
 	-not -path "./.svn/*" \
 	-not -path "./.github/*" \
+	-not -path "./node_modules/*" \
+	-not -path "./doc/_static/*" \
+	-not -path "./.venv/*" \
+	-not -path "./build/*" \
 	-exec $(SITE_PACKAGES_DIR)/clang_format/data/bin/clang-format -i {} +
 	npx prettier . --write
 
