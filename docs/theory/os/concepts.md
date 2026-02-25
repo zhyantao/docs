@@ -29,9 +29,9 @@
 
 :::{mermaid}
 graph TB
-    subgraph "用户态 (User Mode)"
-        U1[用户线程正常执行]
-        U2[用户代码任意位置]
+subgraph "用户态 (User Mode)"
+U1[用户线程正常执行]
+U2[用户代码任意位置]
 
         subgraph "系统调用/主动放弃CPU"
             U3[调用 sleep/exit 等<br>系统调用]
@@ -92,4 +92,5 @@ graph TB
     class U1,U2,U3 userStyle
     class T1,T2 trampolineStyle
     class K1,K2,K3,K4,K5,K6 kernelStyle
+
 :::
