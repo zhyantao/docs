@@ -34,36 +34,23 @@ sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 ```
 
+## 下载镜像
+
+```bash
+# 从指定 Docker Registry 拉取镜像
+docker pull <Registry-URL>/<镜像名称>:<标签名>
+
+# 从默认的 Docker Registry 拉取镜像
+docker pull <镜像名称>:<标签名>
+
+# 示例
+docker pull myregistry.com/ubuntu:20.04
+```
+
 ## 列出本地所有镜像
 
 ```bash
 docker images
-```
-
-## 删除镜像
-
-```bash
-# 删除指定镜像
-docker image rm <镜像名称>:<标签名>
-
-# 只删除 <none> 标签的镜像
-docker image rm -f $(docker images | grep '<none>' | awk '{print $3}')
-
-# 无提示地删除所有没有被至少一个容器使用的镜像（慎用）
-docker image prune -a -f
-```
-
-## 删除容器
-
-```bash
-# 删除指定容器
-docker rm -f <容器 ID>
-
-# 删除状态为 Exited 的容器
-docker rm $(docker ps -a | grep Exited | awk '{print $1}')
-
-# 强制删除正在运行的容器（慎用）
-docker rm -f $(docker ps -a | grep Exited | awk '{print $1}')
 ```
 
 ## 交互式启动容器
@@ -86,6 +73,32 @@ docker ps
 docker ps -a
 ```
 
+## 删除容器
+
+```bash
+# 删除指定容器
+docker rm -f <容器 ID>
+
+# 删除状态为 Exited 的容器
+docker rm $(docker ps -a | grep Exited | awk '{print $1}')
+
+# 强制删除正在运行的容器（慎用）
+docker rm -f $(docker ps -a | grep Exited | awk '{print $1}')
+```
+
+## 删除镜像
+
+```bash
+# 删除指定镜像
+docker image rm <镜像名称>:<标签名>
+
+# 只删除 <none> 标签的镜像
+docker image rm -f $(docker images | grep '<none>' | awk '{print $3}')
+
+# 无提示地删除所有没有被至少一个容器使用的镜像（慎用）
+docker image prune -a -f
+```
+
 ## 构建镜像
 
 ```bash
@@ -101,17 +114,12 @@ docker tag <镜像名称>:<标签名> <Registry-URL>/<镜像名称>:<标签名>
 docker push <Registry-URL>/<镜像名称>:<标签名>
 ```
 
-## 下载镜像
+## 制作新镜像
 
 ```bash
-# 从指定 Docker Registry 拉取镜像
-docker pull <Registry-URL>/<镜像名称>:<标签名>
-
-# 从默认的 Docker Registry 拉取镜像
-docker pull <镜像名称>:<标签名>
-
-# 示例
-docker pull myregistry.com/ubuntu:20.04
+# 保存当前容器的状态（假设容器正在运行），并制作新的镜像
+docker ps
+docker commit <容器 ID> <新镜像名称>:<标签名>
 ```
 
 ## 离线安装 Git 到现有镜像
@@ -155,12 +163,4 @@ dpkg -i *.deb
 mv /var/lib/dpkg/triggers/File /var/lib/dpkg/triggers/File.bak
 apt-get --fix-broken install
 dpkg -i *.deb
-```
-
-## 制作新镜像
-
-```bash
-# 保存当前容器的状态（假设容器正在运行），并制作新的镜像
-docker ps
-docker commit <容器 ID> <新镜像名称>:<标签名>
 ```
