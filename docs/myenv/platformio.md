@@ -1,4 +1,4 @@
-# PlatformIO 安装指南
+# PlatformIO
 
 VS Code 搭配 PlatformIO 可以很方便地进行嵌入式代码开发。
 

@@ -1,4 +1,4 @@
-# 从源码安装支持 CUDA 的 OpenCV
+# CUDA
 
 ## 软件环境
 

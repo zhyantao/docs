@@ -1,4 +1,4 @@
-# Clash 科学上网方法
+# Clash
 
 1、下载 Clash Party: <https://github.com/mihomo-party-org/clash-party/releases>
 

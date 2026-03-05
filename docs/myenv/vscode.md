@@ -1,4 +1,4 @@
-# VS Code
+# vscode
 
 ## LeetCode 插件配置方法
 

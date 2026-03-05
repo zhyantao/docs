@@ -1,6 +1,6 @@
-=====================
-部署 Kubernetes 集群
-=====================
+===========
+Kubernetes
+===========
 
 下载并安装 CentOS 7：http://isoredirect.centos.org/centos/7/isos/x86_64/
 
