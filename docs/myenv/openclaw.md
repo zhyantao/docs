@@ -151,7 +151,7 @@ openclaw --version
 
 **步骤 4：配置模型提供商**
 
-安装 OpenClaw 时，会有提示，选择哪个大模型，选择 MinMax-cn 即可。
+安装 OpenClaw 时，会有提示，选择哪个大模型，选择 `minimax-cn/MiniMax-M2.5` 即可。
 
 **步骤 5：安装并配置 Channel（以飞书为例）**
 
