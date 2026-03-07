@@ -164,12 +164,25 @@ openclaw --version
 
 **A1: 解决方法**
 
-```bash
-# macOS
-brew install vips
+升级 cmake 到 3.19+
 
+```bash
 # Ubuntu/Debian
 sudo apt-get update && sudo apt-get install -y libvips-dev
+
+# 移除旧版本（可选）
+sudo apt remove cmake
+
+# 方法 A：使用 Kitware 官方仓库（推荐）
+sudo apt-get update
+sudo apt-get install -y software-properties-common lsb-release wget
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+sudo apt-get update
+sudo apt-get install -y cmake
+
+# 验证版本
+cmake --version  # 应该显示 3.19+
 ```
 
 :::
