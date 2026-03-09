@@ -231,6 +231,8 @@ openclaw doctor --fix
 
 **步骤 8：权限控制**
 
+参考链接 <https://docs.openclaw.ai/gateway/configuration-reference#tool-profiles>
+
 ```bash
 # 授予 OpenClaw 访问文件系统和执行命令的权限
 openclaw config set tools.profile full
