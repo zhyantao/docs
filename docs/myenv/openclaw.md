@@ -231,7 +231,7 @@ openclaw doctor --fix
 
 **步骤 8：权限控制**
 
-参考链接 <https://docs.openclaw.ai/gateway/configuration-reference#tool-profiles>
+参考文档 <https://docs.openclaw.ai/gateway/configuration-reference#tool-profiles>
 
 ```bash
 # 授予 OpenClaw 访问文件系统和执行命令的权限
@@ -249,6 +249,16 @@ openclaw config set tools.exec.security full
 
 **测试 3：命令行执行**
 "帮我查看当前服务器的磁盘使用情况"
+
+### 2.4 Docker 方式安装 OpenClaw
+
+参考文档 <https://github.com/openclaw/openclaw/pkgs/container/openclaw>
+
+```bash
+docker pull ghcr.io/openclaw/openclaw:main-amd64
+```
+
+<https://gist.github.com/craftslab/9f494836d043729a81e718c7a43e27d3>
 
 ---
 
