@@ -1,14 +1,18 @@
 \documentclass{cv}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.1in]{geometry}
+\usepackage{ctex}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 
 \name{张延涛}
-\address{意向城市: 西安 \\ 意向岗位: 嵌入式软件开发}
+\address{求职意向: 嵌入式软件开发 \\ 工作年限: 2.5年}
 \address{英语六级 (CET-6) \\ 政治面貌: 中共党员}
-\address{(+86) 156 3285 5317 \\ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
-\address{Github: \href{https://github.com/zhyantao}{zhyantao} \\ Blog: \href{https://zhyantao.github.io/docs}{zhyantao.github.io/docs}}
+\address{\faMobile \ (+86) 156 3285 5317 \\ \faEnvelope \ \href{mailto:yantao.z@qq.com}{yantao.z@qq.com}}
+\address{\faGithub \ \href{https://github.com/zhyantao}{zhyantao} \\ \faGlobe \ \href{https://zhyantao.github.io/docs}{zhyantao.github.io/docs}}
 
 \renewenvironment{rSection}[1]{
 \sectionskip
@@ -26,6 +30,52 @@
 \begin{document}
 
 %----------------------------------------------------------------------------------------
+% TECHNICAL STRENGTHS SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{专业技能}
+	\begin{rSubsection}{}{}{}{}
+		\item \textbf{嵌入式系统}: 熟练基于ARM架构开发，熟悉Linux嵌入式软件开发流程，具备芯片适配、开源代码定制与系统启动流程优化能力
+		\item \textbf{底层开发}: 熟悉GNSS/定位模块底层开发，具备BSP开发、板级调试能力，掌握高精度时间同步技术与协议栈实现
+		\item \textbf{编程语言}: 熟练C/C++，具备良好的面向对象设计与编码规范；掌握Java，可使用Spring Boot进行简单后端开发；掌握Python
+		\item \textbf{通信与协议}: 掌握gPTP、GPSD、chronyd等协议/工具，熟悉UART、I2C、SPI、以太网等常用通信协议
+		\item \textbf{工具链}: Git、Shell、GCC、GDB、Makefile、Yocto，具备嵌入式全流程开发与调试能力
+		\item \textbf{自主学习}: 完成MIT 6.S081操作系统内核进阶课程，掌握RISC-V架构、xv6内核设计与实现，夯实底层开发基础
+	\end{rSubsection}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+% WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{工作经历}
+	\begin{rSubsection}{中兴通讯股份有限公司}{2023.07 - 至今}{嵌入式软件工程师}{西安}
+		\item 负责嵌入式产品定位服务、时间同步、GNSS模块全流程开发：需求分析、开源代码定制、编码调试、SDK开发及量产维护，负责多项核心技术落地，提升产品性能与可靠性，累计解决产品问题200余项。
+	\end{rSubsection}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+% PROJECT EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{项目经历}
+	\begin{rSubsection}{ZM9300模组定位服务开发}{量产项目}{嵌入式软件工程师}{}
+		\item 基于HD8040D/BG1101芯片开发工业级定位模组，对GPSD开源代码深度定制与功能扩展，实现高精准、高稳定性卫星定位服务
+		\item 负责定位服务模块整体设计与实现，完成GPSD开源代码定制化开发与功能扩展；基于芯片特性优化定位数据处理逻辑，完成模块与芯片底层适配及全流程联调
+		\item 参与性能测试与问题排查，保障复杂场景下定位服务稳定性，配合团队完成量产落地；适配10+行业终端设备，满足工业级量产高可靠要求
+	\end{rSubsection}
+
+	\begin{rSubsection}{高精度时间同步服务开发}{量产项目}{嵌入式软件工程师}{}
+		\item 基于自研芯片与Linux平台，适配chronyd源码以及gPTP协议栈，开发工业级高精准时间同步服务，满足设备时间同步严苛指标要求
+		\item 配合BSP业务团队，完成芯片与协议栈底层适配及中断、通信参数配置
+		\item 参与测试与性能调优，协同硬件工程师完成软硬联调，优化核心技术指标；解决10余项核心适配问题，服务实现7×24h稳定无宕机运行
+	\end{rSubsection}
+
+	\begin{rSubsection}{GNSS模块维护与SDK开发}{量产项目}{嵌入式软件工程师}{}
+		\item 面向车载/工业级GNSS模组，开展全生命周期代码维护、性能优化与配套SDK开发；编写标准化接口与使用文档，适配多终端开发需求
+		\item 基于Linux完成GNSS模块核心代码维护、功能迭代及关键逻辑性能优化
+		\item 设计自动化测试用例，建立BUG处理闭环体系，处理并修复客户反馈的问题及内部发现的BUG
+	\end{rSubsection}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
 % EDUCATION SECTION
 %----------------------------------------------------------------------------------------
 \begin{rSection}{教育背景}
@@ -37,42 +87,11 @@
 \end{rSection}
 
 %----------------------------------------------------------------------------------------
-% WORK EXPERIENCE SECTION
-%----------------------------------------------------------------------------------------
-\begin{rSection}{工作与项目经历}
-	\begin{rSubsection}{中兴通讯股份有限公司}{2023.07 - 至今}{嵌入式软件开发工程师}{西安}
-		\item \textbf{ZM9300模组定位服务开发}: 负责定位服务模块的设计与实现，基于HD8040D/BG1101芯片对GPSD开源代码进行深度定制与功能扩展，提升定位精度与稳定性。
-		\item \textbf{GNSS模块维护与SDK开发}: 负责GNSS模块的代码维护、功能迭代与性能优化；负责开发配套SDK及自动化测试用例，累计处理并修复客户反馈及内部BUG 200余项，提升模块可靠性。
-		\item \textbf{高精度时间同步服务}: 负责时间同步服务的开发与维护，适配chronyd源码并基于自研芯片实现gPTP协议栈；外场测试表明，时间偏移(offset)等关键指标与高通方案相当。
-		\item \textbf{启动流程优化与可视化}: 基于自研芯片适配bootchard，首次在S1平台实现开机流程可视化，为系统启动性能分析与优化提供了关键数据支撑与调试手段。
-	\end{rSubsection}
-
-	\begin{rSubsection}{中国重型机械研究院股份公司}{2021.09 - 2022.05}{后端开发工程师（校企合作）}{西安}
-		\item \textbf{连铸工艺仿真平台}: 设计并实现基于Spring Boot的连铸智能工艺仿真软件包，对关键工艺流程进行高保真模拟，构建了可配置、可视化的工艺优化与决策支持平台。
-		\item \textbf{后端架构与核心功能开发}: 负责系统后端架构设计，采用Spring Boot + MySQL技术栈，通过JPA完成业务管理模块的CRUD操作与数据持久化，保障了系统稳定与数据一致性。
-		\item \textbf{工艺参数计算与集成}: 集成JMatPro工具完成核心工艺参数的自动化计算与分析，并对结果数据进行结构化处理与封装，为前端可视化模块提供准确、高效的数据接口。
-		\item \textbf{前端界面开发协作}: 参与前端部分开发，使用Vue.js实现多个界面的数据展示与交互逻辑，确保了前后端数据联动的准确性与用户体验的流畅性。
-	\end{rSubsection}
-\end{rSection}
-
-%----------------------------------------------------------------------------------------
-% TECHNICAL STRENGTHS SECTION
-%----------------------------------------------------------------------------------------
-\begin{rSection}{专业技能}
-	% 移除了空白的{rSubsection}，直接使用item列表，更简洁。
-	\begin{rSubsection}{}{}{}{}
-		\item \textbf{编程语言}: 熟悉 C/C++，具备良好的面向对象设计与编程能力，代码规范；掌握 Java，可使用 Spring Boot 进行基本的后端开发。
-		\item \textbf{开发工具}: 熟练使用 Git、Shell、GCC、GDB、Makefile、Yocto 等开发与构建工具。
-		\item \textbf{计算机基础}: 熟悉常见数据结构与算法、操作系统原理，具备良好的系统设计能力和业务理解能力。
-	\end{rSubsection}
-\end{rSection}
-
-%----------------------------------------------------------------------------------------
 % AWARDS SECTION
 %----------------------------------------------------------------------------------------
 \begin{rSection}{获奖情况} \itemsep -2pt
-	{ASC 超级计算机竞赛}\hfill {\em 国家级二等奖}\hfill {2019 年 4 月} \\
-	{大学生数学建模竞赛}\hfill  {\em { }省部级二等奖}\hfill {2017 年 9 月}
+	{ASC 超级计算机竞赛}\hfill {\em 国家级二等奖}\hfill {2019年4月} \\
+	{大学生数学建模竞赛}\hfill {\em 省部级二等奖}\hfill {2017年9月}
 \end{rSection}
 
 \end{document}
