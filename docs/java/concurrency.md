@@ -113,7 +113,7 @@ public enum State {
 }
 ```
 
-```{figure} ../_static/images/java-thread.jpg
+```{figure} ../_static/images/java_thread.jpg
 
 Java 线程状态图
 ```

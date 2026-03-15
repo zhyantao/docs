@@ -90,7 +90,7 @@ Import-Module posh-git
 
 第 2 步：任意指定一个盘符，比如 `Z:`，文件夹设置为 `\\wsl.localhost\Ubuntu-20.04`
 
-```{figure} ../_static/images/wsl2-mapping-to-vdisk.png
+```{figure} ../_static/images/win_wsl_vdisk.png
 :name: wsl2-mapping-to-vdisk
 ```
 
@@ -148,7 +148,7 @@ curl -o test_google.html google.com
 
 首先打开代理工具（比如 Clash）的局域网访问权限：
 
-```{figure} ../_static/images/wsl2-access-google.png
+```{figure} ../_static/images/win_wsl_google.png
 :name: wsl2-access-google
 
 打开代理工具的局域网访问权限
@@ -304,7 +304,7 @@ $2^{32} = 4 GB$。
 
 下载[联想驱动管理器](https://newsupport.lenovo.com.cn/driveDownloads_index.html)，检查主机编号：
 
-```{figure} ../_static/images/windows-serialnumber.png
+```{figure} ../_static/images/win_serialnumber.png
 :name: LenovoSerialNumber
 
 查找主机编号

@@ -9,19 +9,19 @@
 
 因此，我们可以画出下面的示意图：
 
-```{figure} ../../_static/images/illustration-of-stack-and-heap.svg
+```{figure} ../../_static/images/os_stack_and_heap.svg
 
 ```
 
 ## 内存映射
 
-```{figure} ../../_static/images/uvmmapping.png
+```{figure} ../../_static/images/os_uvm.png
 
 ```
 
 ## 地址翻译
 
-```{figure} ../../_static/images/address-translation.png
+```{figure} ../../_static/images/os_address_translation.png
 
 ```
 

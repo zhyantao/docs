@@ -20,7 +20,7 @@ void sort_by_absolute_value(float* elements, size_t count) {
 
 Lambda 表达式的结构可以分解为几个部分：
 
-```{figure} ../../_static/images/lambdaexpsyntax.png
+```{figure} ../../_static/images/lambda_syntax.png
 Lambda 语法解析
 ```
 

@@ -19,7 +19,7 @@
 
 打开普通文件会返回一个文件描述符，打开 socket 文件会返回一个 socket 描述符。不管是普通文件还是 socket 文件，后续的操作都是用描述符来读写文件的。下面是 TCP 调用的基本流程：
 
-```{figure} ../../_static/images/socket-api-tcp-implement.png
+```{figure} ../../_static/images/socket_tcp.png
 :name: socket-api-tcp-implement
 
 网络应用的 socket API (TCP) 调用基本流程

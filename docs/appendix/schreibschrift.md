@@ -2,7 +2,7 @@
 
 ## 花体手写规范
 
-```{figure} ../_static/images/Lateinische_Ausgangsschrift_1953_plain.*
+```{figure} ../_static/images/latin_1953_plain.*
 :height: 300px
 
 花体手写规范 [^cite_ref-1]
@@ -24,7 +24,7 @@
 
 ## 希腊字母手写规范
 
-```{figure} ../_static/images/greek_alphabet_handwriting.png
+```{figure} ../_static/images/latin_greek.png
 :height: 200px
 
 希腊字母手写规范 [^cite_ref-3]

@@ -207,14 +207,14 @@
 * - Example
   - Result
 * - ````md
-    ```{figure} ../_static/images/C-3PO_droid.png
+    ```{figure} ../_static/images/myst_c3po.png
     :height: 150px
     :name: figure-example
 
     Here is my figure caption!
     ```
     ````
-  - ```{figure} ../_static/images/C-3PO_droid.png
+  - ```{figure} ../_static/images/myst_c3po.png
     :height: 150px
     :name: figure-example
 
