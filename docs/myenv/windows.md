@@ -69,7 +69,7 @@
 
 如果要想同时显示 `git branch` 和 `conda environment` 那么必须将 `Import-Module posh-git` 放在 `conda init` 之前，如下所示（注意，同时需要在 `%USERPROFILE%\.condarc` 中添加一行 `changeps1: true`）。
 
-```bash
+```text
 Import-Module posh-git
 
 #region conda initialize
@@ -102,7 +102,7 @@ sudo nano /etc/wsl.conf
 
 添加如下内容：
 
-```bash
+```text
 [interop]
 appendWindowsPath=false
 ```
@@ -126,7 +126,7 @@ wsl --update --pre-release
 
 然后，在 Windows 上创建或编辑 `%UserProfile%/.wslconfig` 文件：
 
-```
+```text
 [wsl2]
 nestedVirtualization=true
 ipv6=true
@@ -321,6 +321,14 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
 ```
 
 将 `AlwaysShowMenus` 的值改为 `0`。
+
+### Windows 连接 Wi-Fi 后自动断开
+
+Windows 连接 Wi-Fi 后自动断开，通常是由于网卡电源管理设置（节电模式）、驱动程序过旧/损坏、信号干扰或过弱、或系统更新导致的兼容性问题引起的。最快速的解决方法通常是更新无线网卡驱动或在设备管理器中关闭 `允许计算机关闭此设备以节约电源` 功能。
+
+常见原因及排查方案：网卡电源设置（最常见）：系统为了省电，在闲置时会自动关闭网卡。
+
+解决方法：右键点击 `此电脑` -> `管理` -> `设备管理器` -> `网络适配器` -> 右键无线网卡属性 -> 在 `电源管理` 选项卡中，取消勾选 `允许计算机关闭此设备以节约电源`。
 
 ---
 
