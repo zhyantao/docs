@@ -22,13 +22,13 @@ source_suffix = {
 
 # -- Options for HTML output -------------------------------------------------
 
-html_logo = "_static/images/logo-wide.svg"
+html_logo = "_static/images/logo_wide.svg"
 html_title = "Notebook"
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 html_js_files = ["js/auto-toggle-sidebar.js"]
-html_favicon = "_static/images/logo-square.svg"
+html_favicon = "_static/images/logo_square.svg"
 html_last_updated_fmt = ""
 html_domain_indices = True
 html_use_index = True

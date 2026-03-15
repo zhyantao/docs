@@ -65,7 +65,7 @@ RegExp.$2; // "Smith"
 | -Oi    | 启用内建函数         |
 ```
 
-```{figure} ../_static/images/regex-replace.png
+```{figure} ../_static/images/regex_replace.png
 :name: regex-replace
 
 批量替换以 `-` 开头的单词

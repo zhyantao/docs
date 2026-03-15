@@ -130,7 +130,7 @@ mAP 更加详细的计算过程，知乎网友 [9]_ 给了一个说明。
 
 看上图，绿色是真实框，红色是预测框。注意，图中的百分数是置信度，不是 IoU。走一遍流程：
 
-.. image:: ../../_static/images/map-workflow.*
+.. image:: ../../_static/images/od_map_workflow.*
   :align: center
 
 遍历所有的真实框，统计出 TP、FP 的数值（FN 的值不用统计，因为我们是有监督学习，TP + FN = 所有标注样本的数量）。

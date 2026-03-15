@@ -6,7 +6,7 @@
 
 入门学习 Three.js 的资料并不太多，建议从官网开始 <https://threejs.org/manual/#zh/fundamentals>。
 
-```{figure} ../_static/images/threejs-structure.*
+```{figure} ../_static/images/threejs_structure.*
 :height: 300px
 
 基础的 three.js 应用结构
@@ -19,7 +19,7 @@
 把一个场景和一个摄像机到渲染器中，然后它会将摄像机
 _视椎体_ 中的三维场景渲染成一个二维图片显示在画布上。
 
-```{figure} ../_static/images/frustum-3d.*
+```{figure} ../_static/images/threejs_frustum_3d.*
 :height: 300px
 
 视锥体（frustum）
