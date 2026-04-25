@@ -2,43 +2,61 @@
 
 ## 制作补丁
 
-`diff` 命令主要用于制作补丁。`diff` 可以比较两个文件，并可同时记录下二者的区别。
+`git format-patch` 是 Git 推荐使用的补丁制作工具。与 `diff` 相比，它生成的补丁包含作者信息、提交时间、提交日志等元数据，更适合在协作开发中使用。
 
 ```bash
-# （推荐）对指定 commit 生成 patch
+# （推荐）生成最近 n 次提交的补丁
+git add <files>
+git commit -m "Bump iperf3 from 3.20 to 3.21"
+git format-patch -1                              # 最近 1 次提交
+git format-patch -2                              # 最近 2 次提交
+
+# （推荐）生成指定 commit 的补丁（仅包含该 single commit）
 git format-patch -1 <commit_id>
 
-# （推荐）对已被 git track 的文件（夹）制作补丁
-git diff > patch.diff
+# （推荐）生成两个 commit 之间的所有补丁
+git format-patch <since_commit>..<until_commit>  # since～until 之间的提交
+git format-patch <since_commit>..                # since 之后的所有提交
 
-# （推荐）对未被 git track 的文件（夹）制作补丁
-git diff <old_file> <new_file> > patch.diff
+# （推荐）生成当前分支相对于 master 的独特提交
+git format-patch master                          # 当前分支比 master 多的提交
 
-# 对比 <old_file> 和 <new_file>，将差异输出到屏幕
-diff <old_file> <new_file>
+# （可选）将所有补丁合并成一个文件（⚠️ 可能丢失邮件线索信息）
+git format-patch master --stdout > all-changes.patch
 
-# 对比 <old_file> 和 <new_file>，忽略所有空格
-diff --ignore-all-space <old_file> <new_file>
+# （补充）纯 diff 风格补丁（不推荐，仅作对比）
+git diff > patch.diff                            # 对已 track 的文件制作补丁
+git diff <old_file> <new_file> > patch.diff      # 对未 track 的文件制作补丁
+```
 
-# 对比 <old_file> 和 <new_file>，按左右两侧展示对比结果
-diff --side-by-side <old_file> <new_file>
-
-# 对比 <old_file> 和 <new_file>，以 unified 风格展示对比结果
-diff --unified <old_file> <new_file>
-
-# 递归对比 <old_dir> 和 <new_dir> 下的所有文件
-diff --recursive <old_dir> <new_dir>
-
-# 递归对比 <old_dir> 和 <new_dir> 下的所有文件，仅展示变动文件的文件名
-diff --recursive --brief <old_dir> <new_dir>
-
-# 将 <old_file> 和 <new_file> 的差异写入文件（不存在的文件当做空文件处理）
-diff --text --unified --new-file <old_file> <new_file> > patch.diff
+```{tip}
+`git format-patch` 生成的补丁文件默认命名格式为 `0001-commit-subject.patch`，文件名按提交顺序自动编号，便于批量应用。
 ```
 
 ## 应用补丁
 
-`patch` 主要用于应用补丁。将 `diff` 记录的结果（即补丁）应用到相应文件（夹）上。
+### 应用 git format-patch 生成的补丁（推荐）
+
+使用 `git am`（apply mailbox）应用 `format-patch` 生成的补丁，可以完整保留作者、提交时间、提交日志等信息。
+
+```bash
+# 应用单个补丁
+git am 0001-fix-bug.patch
+
+# 应用目录下所有补丁（按文件名顺序）
+git am *.patch
+
+# 应用时遇到冲突，解决后继续
+git add . && git am --resolved
+
+# 跳过当前有冲突的补丁
+git am --skip
+
+# 放弃本次应用操作
+git am --abort
+```
+
+### 应用传统 diff 补丁（不推荐）
 
 ```bash
 # （单文件打补丁）patch.diff 必须包含文件名，根据文件名应用补丁
@@ -63,14 +81,44 @@ patch -R < patch.diff
 ```
 
 ````{note}
-前文提到 **忽略第 n 级目录**，解释一下这句话，以下述为例：
+**关于 `-p<n>` 参数的含义**（忽略 n 级目录）
+
+以 `format-patch` 生成的补丁头部为例：
 
 ```diff
 --- a/src/module/test.c
 +++ b/src/module/test.c
 ```
 
-在这里，`a` 表示第 1 级目录，`src` 是第 2 级目录，以此类推。
+目录层级解析：
+- `a` → 第 1 级目录
+- `src` → 第 2 级目录
+- `module` → 第 3 级目录
 
-假设你运行了 `patch -p2 ...`（忽略前 2 级目录），那么程序就会从当前目录去找 `module/test.c`，并在这个文件上应用补丁。
+不同参数的行为：
+- `patch -p0`：使用完整路径 `a/src/module/test.c`
+- `patch -p1`：去掉 `a/`，在当前目录找 `src/module/test.c`
+- `patch -p2`：去掉 `a/src/`，在当前目录找 `module/test.c`
+
+```{tip}
+使用 `git am` 应用补丁时无需关心 `-p` 参数，系统会自动处理路径信息。
+```
 ````
+
+## 对比：format-patch vs diff
+
+| 特性               | `git format-patch`           | `git diff`             |
+| :----------------- | :--------------------------- | :--------------------- |
+| 作者信息           | ✅ 包含                      | ❌ 不包含              |
+| 提交时间           | ✅ 包含                      | ❌ 不包含              |
+| 提交日志           | ✅ 包含                      | ❌ 不包含              |
+| 提交 SHA           | ✅ 包含                      | ❌ 不包含              |
+| 应用后生成独立提交 | ✅ `git am` 自动生成         | ❌ 需手动 `git commit` |
+| 多补丁排序         | ✅ 自动编号                  | ❌ 需手动管理          |
+| 适用场景           | 开源协作、邮件审阅、代码合入 | 临时对比、本地快速同步 |
+
+```{tip}
+**通用原则**：
+- **推荐**：只要是传送给别人的补丁，优先使用 `git format-patch` + `git am` 流程
+- **可选**：仅自己临时记录改动，或补丁只用于单个文件同步时，可以考虑 `git diff` + `patch`
+```
