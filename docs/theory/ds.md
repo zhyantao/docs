@@ -15,7 +15,7 @@ typedef long double ld;
 
 const ll mod7 = 1e9 + 7;
 const ll mod9 = 998244353;
-const ll INF = 2 * 1024 * 1024 * 1023;
+const ll INF  = 2 * 1024 * 1024 * 1023;
 const char nl = '\n';
 
 int main() {
@@ -519,8 +519,8 @@ if (map.count("hello")) {
     cout << "Key exists." << endl;
 }
 
-int val = map.at("hello");       // 抛出异常如果键不存在
-int valOrDefault = map["hello"]; // 如果键不存在，将插入默认值 0 并返回 0
+int val          = map.at("hello"); // 抛出异常如果键不存在
+int valOrDefault = map["hello"];    // 如果键不存在，将插入默认值 0 并返回 0
 ```
 
 删除一个键
@@ -546,7 +546,7 @@ size_t size = map.size();
 ```cpp
 for (const auto& entry : map) {
     const string& key = entry.first;
-    int value = entry.second;
+    int value         = entry.second;
 }
 ```
 
@@ -966,7 +966,7 @@ int maxDepth(TreeNode* root) {
         return 0;
     }
 
-    int left = maxDepth(root->left) + 1;
+    int left  = maxDepth(root->left) + 1;
     int right = maxDepth(root->right) + 1;
 
     return left > right ? left : right;
@@ -1165,7 +1165,7 @@ TreeNode* deleteNode(TreeNode* root, int key) {
             p = p->left;
         }
         p->left = root->left; // 重新挂载左子树
-        root = root->right;
+        root    = root->right;
         return root;
     }
 
@@ -1197,7 +1197,7 @@ TreeNode* trimBST(TreeNode* root, int low, int high) {
     }
 
     // 下面两个递归其实并没有对节点进行改动，只是遍历
-    root->left = trimBST(root->left, low, high);
+    root->left  = trimBST(root->left, low, high);
     root->right = trimBST(root->right, low, high);
 
     return root;
@@ -2072,7 +2072,7 @@ int binarySearch(int[] arr, int target, int left, int right) {
 // next[] = 构建最长公共前后缀长度数组
 void getNext(vector<int>& next, string pat) {
     // 初始化 next 数组的第一个元素为 0
-    int j = 0;
+    int j   = 0;
     next[0] = 0;
 
     for (int i = 1; i < pat.size(); i++) {
@@ -2394,7 +2394,7 @@ bool visited[N];
 int distance[N];
 
 void bfs(queue<int>& q, bool& visited, int& distance) {
-    visited[x] = true;
+    visited[x]  = true;
     distance[x] = 0;
     q.push(x);
     while (!q.empty()) {
@@ -2403,7 +2403,7 @@ void bfs(queue<int>& q, bool& visited, int& distance) {
         // process node s
         for (auto u : adj[s]) {
             if (visited[u]) continue;
-            visited[u] = true;
+            visited[u]  = true;
             distance[u] = distance[s] + 1;
             q.push(u);
         }
@@ -2428,7 +2428,7 @@ for (int i = 1; i <= n - 1; i++) {
     for (auto e : edges) { // 用边存图
         int a, b, w;
         tie(a, b, w) = e;
-        distance[b] = min(distance[b], distance[a] + w);
+        distance[b]  = min(distance[b], distance[a] + w);
     }
 }
 ```

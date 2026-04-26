@@ -43,7 +43,7 @@ public:
 int main() {
     // 创建 parent 和 child
     auto parent = std::make_shared<Parent>();
-    auto child = std::make_shared<Child>(parent);
+    auto child  = std::make_shared<Child>(parent);
 
     // 建立双向关系
     parent->setChild(child);
@@ -174,10 +174,10 @@ bool Supplier::provide(Sniper& sniper) {
     if (sniper.bullets < 20) { // 直接访问私有成员
         if (storage > 100) {
             sniper.bullets += 100;
-            storage -= 100;
+            storage        -= 100;
         } else if (storage > 0) {
             sniper.bullets += storage;
-            storage = 0;
+            storage         = 0;
         } else {
             return false;
         }

@@ -324,7 +324,7 @@ static int gpio_setup(struct device* dev, struct gpio_control* gc) {
     gpiod_set_consumer_name(gc->button_gpio, "user_button");
 
     // 4. 初始化状态
-    gc->led_state = 0; // 初始关闭
+    gc->led_state    = 0; // 初始关闭
     gc->button_state = gpiod_get_value(gc->button_gpio);
 
     // 5. 初始化互斥锁
@@ -595,7 +595,7 @@ static void button_debounce_timer(struct timer_list* timer) {
  */
 static irqreturn_t button_irq_handler(int irq, void* dev_id) {
     struct interrupt_data* idata = dev_id;
-    unsigned long current_time = jiffies;
+    unsigned long current_time   = jiffies;
 
     // 原子操作增加中断计数
     atomic_inc(&idata->irq_count);
@@ -764,7 +764,7 @@ int interrupt_wait_event(struct interrupt_data* idata, int timeout_ms) {
      * @timeout: 超时时间（jiffies）
      * 返回值：>0 条件满足，0 超时，<0 被信号中断
      */
-    ret = wait_event_interruptible_timeout(
+    ret                  = wait_event_interruptible_timeout(
         idata->wait_queue, atomic_read(&idata->button_pressed) != 0, timeout_jiffies);
     return ret;
 }
@@ -905,7 +905,7 @@ static int char_device_open(struct inode* inode, struct file* filp) {
 
     // 更新状态
     cdata->open_count++;
-    cdata->is_open = true;
+    cdata->is_open     = true;
 
     // 将私有数据保存到文件结构中
     filp->private_data = cdata;
@@ -940,10 +940,10 @@ static int char_device_release(struct inode* inode, struct file* filp) {
     // 更新状态
     cdata->open_count--;
     if (cdata->open_count == 0) {
-        cdata->is_open = false;
+        cdata->is_open   = false;
         // 清理缓冲区
-        cdata->data_len = 0;
-        cdata->read_pos = 0;
+        cdata->data_len  = 0;
+        cdata->read_pos  = 0;
         cdata->write_pos = 0;
     }
 
@@ -965,7 +965,7 @@ static int char_device_release(struct inode* inode, struct file* filp) {
 static ssize_t char_device_read(struct file* filp, char __user* buf, size_t count,
                                 loff_t* f_pos) {
     struct char_device_data* cdata = filp->private_data;
-    ssize_t retval = 0;
+    ssize_t retval                 = 0;
     size_t available;
 
     if (!cdata) {
@@ -1010,9 +1010,9 @@ static ssize_t char_device_read(struct file* filp, char __user* buf, size_t coun
     cdata->read_pos += count;
     if (cdata->read_pos >= cdata->data_len) {
         // 所有数据已读完
-        cdata->read_pos = 0;
+        cdata->read_pos  = 0;
         cdata->write_pos = 0;
-        cdata->data_len = 0;
+        cdata->data_len  = 0;
         atomic_set(&cdata->available, 0);
     }
 
@@ -1038,7 +1038,7 @@ static ssize_t char_device_read(struct file* filp, char __user* buf, size_t coun
 static ssize_t char_device_write(struct file* filp, const char __user* buf, size_t count,
                                  loff_t* f_pos) {
     struct char_device_data* cdata = filp->private_data;
-    ssize_t retval = 0;
+    ssize_t retval                 = 0;
     size_t free_space;
 
     if (!cdata) {
@@ -1084,7 +1084,7 @@ static ssize_t char_device_write(struct file* filp, const char __user* buf, size
 
     // 更新缓冲区状态
     cdata->write_pos += count;
-    cdata->data_len += count;
+    cdata->data_len  += count;
 
     // 如果缓冲区已满，更新写位置
     if (cdata->write_pos >= cdata->buffer_size) {
@@ -1120,7 +1120,7 @@ static ssize_t char_device_write(struct file* filp, const char __user* buf, size
  */
 static long char_device_ioctl(struct file* filp, unsigned int cmd, unsigned long arg) {
     struct char_device_data* cdata = filp->private_data;
-    int retval = 0;
+    int retval                     = 0;
     int value;
 
     if (!cdata) {
@@ -1155,7 +1155,7 @@ static long char_device_ioctl(struct file* filp, unsigned int cmd, unsigned long
 
     case GET_BUTTON_STATE:
         if (cdata->gpio_ctrl) {
-            value = gpio_button_get(cdata->gpio_ctrl);
+            value  = gpio_button_get(cdata->gpio_ctrl);
             retval = put_user(value, (int __user*)arg);
         }
         break;
@@ -1171,7 +1171,7 @@ static long char_device_ioctl(struct file* filp, unsigned int cmd, unsigned long
         info.size = cdata->buffer_size;
         info.used = cdata->data_len;
         info.free = cdata->buffer_size - cdata->data_len;
-        retval = copy_to_user((void __user*)arg, &info, sizeof(info)) ? -EFAULT : 0;
+        retval    = copy_to_user((void __user*)arg, &info, sizeof(info)) ? -EFAULT : 0;
         break;
     }
 
@@ -1191,7 +1191,7 @@ static long char_device_ioctl(struct file* filp, unsigned int cmd, unsigned long
  */
 static __poll_t char_device_poll(struct file* filp, poll_table* wait) {
     struct char_device_data* cdata = filp->private_data;
-    __poll_t mask = 0;
+    __poll_t mask                  = 0;
 
     if (!cdata) {
         return EPOLLERR;
@@ -1246,7 +1246,7 @@ static int char_device_fasync(int fd, struct file* filp, int on) {
  */
 static int char_device_mmap(struct file* filp, struct vm_area_struct* vma) {
     struct char_device_data* cdata = filp->private_data;
-    unsigned long size = vma->vm_end - vma->vm_start;
+    unsigned long size             = vma->vm_end - vma->vm_start;
 
     if (!cdata || !cdata->buffer) {
         return -ENODEV;
@@ -1267,17 +1267,17 @@ static int char_device_mmap(struct file* filp, struct vm_area_struct* vma) {
  * 定义设备支持的所有操作
  */
 static const struct file_operations char_device_fops = {
-    .owner = THIS_MODULE,
-    .open = char_device_open,
-    .release = char_device_release,
-    .read = char_device_read,
-    .write = char_device_write,
+    .owner          = THIS_MODULE,
+    .open           = char_device_open,
+    .release        = char_device_release,
+    .read           = char_device_read,
+    .write          = char_device_write,
     .unlocked_ioctl = char_device_ioctl,
-    .compat_ioctl = compat_ptr_ioctl,
-    .poll = char_device_poll,
-    .fasync = char_device_fasync,
-    .mmap = char_device_mmap,
-    .llseek = no_llseek,
+    .compat_ioctl   = compat_ptr_ioctl,
+    .poll           = char_device_poll,
+    .fasync         = char_device_fasync,
+    .mmap           = char_device_mmap,
+    .llseek         = no_llseek,
 };
 
 /**
@@ -1314,14 +1314,14 @@ struct char_device_data* char_device_create(struct device* parent,
     }
 
     cdata->buffer_size = buffer_size;
-    cdata->data_len = 0;
-    cdata->read_pos = 0;
-    cdata->write_pos = 0;
-    cdata->gpio_ctrl = gpio_ctrl;
-    cdata->irq_data = irq_data;
-    cdata->device = parent;
-    cdata->open_count = 0;
-    cdata->is_open = false;
+    cdata->data_len    = 0;
+    cdata->read_pos    = 0;
+    cdata->write_pos   = 0;
+    cdata->gpio_ctrl   = gpio_ctrl;
+    cdata->irq_data    = irq_data;
+    cdata->device      = parent;
+    cdata->open_count  = 0;
+    cdata->is_open     = false;
     atomic_set(&cdata->available, 0);
 
     // 3. 初始化同步机制
@@ -1343,7 +1343,7 @@ struct char_device_data* char_device_create(struct device* parent,
     cdata->cdev.owner = THIS_MODULE;
 
     // 6. 添加到系统
-    ret = cdev_add(&cdata->cdev, devno, 1);
+    ret               = cdev_add(&cdata->cdev, devno, 1);
     if (ret) {
         dev_err(parent, "无法添加字符设备: %d\n", ret);
         unregister_chrdev_region(devno, 1);
@@ -1478,7 +1478,7 @@ static int led_button_probe(struct platform_device* pdev) {
         return -ENOMEM;
     }
 
-    data->dev = dev;
+    data->dev  = dev;
     data->pdev = pdev;
     platform_set_drvdata(pdev, data);
 
@@ -1530,7 +1530,7 @@ static int led_button_probe(struct platform_device* pdev) {
     data->char_initialized = true;
 
     // 5. 创建设备属性文件（sysfs 接口）
-    ret = sysfs_create_group(&dev->kobj, &led_button_attr_group);
+    ret                    = sysfs_create_group(&dev->kobj, &led_button_attr_group);
     if (ret) {
         dev_warn(dev, "无法创建设备属性: %d\n", ret);
         // 继续执行，这不是致命错误
@@ -1572,7 +1572,7 @@ err_gpio:
  */
 static int led_button_remove(struct platform_device* pdev) {
     struct led_button_driver_data* data = platform_get_drvdata(pdev);
-    struct device* dev = &pdev->dev;
+    struct device* dev                  = &pdev->dev;
 
     dev_info(dev, "开始移除驱动...\n");
 
@@ -1622,13 +1622,13 @@ MODULE_DEVICE_TABLE(of, led_button_of_match);
  * 定义驱动的基本信息
  */
 static struct platform_driver led_button_driver = {
-    .probe = led_button_probe,
+    .probe  = led_button_probe,
     .remove = led_button_remove,
     .driver =
         {
-            .name = "led_button_driver",
+            .name           = "led_button_driver",
             .of_match_table = led_button_of_match,
-            .owner = THIS_MODULE,
+            .owner          = THIS_MODULE,
         },
 };
 
@@ -1768,7 +1768,7 @@ struct buffer_info {
 
 // 全局变量
 static volatile int running = 1;
-static int fd = -1;
+static int fd               = -1;
 
 // 信号处理函数
 void signal_handler(int sig) {
@@ -1892,8 +1892,8 @@ void test_poll(void) {
 
     printf("\n=== 测试 poll 机制 ===\n");
 
-    pfd.fd = fd;
-    pfd.events = POLLIN | POLLOUT;
+    pfd.fd      = fd;
+    pfd.events  = POLLIN | POLLOUT;
     pfd.revents = 0;
 
     printf("等待设备可读或可写（3秒超时）...\n");
@@ -1925,7 +1925,7 @@ void* async_thread(void* arg) {
     // 设置信号处理
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = async_callback;
-    sa.sa_flags = 0;
+    sa.sa_flags   = 0;
     sigaction(SIGIO, &sa, NULL);
 
     // 设置异步通知
@@ -2308,7 +2308,7 @@ static irqreturn_t low_latency_irq_handler(int irq, void* dev_id) {
     struct device_data* data = dev_id;
 
     // 快速处理：只记录时间戳
-    data->irq_timestamp = ktime_get_ns();
+    data->irq_timestamp      = ktime_get_ns();
 
     // 延迟处理放到工作队列
     queue_work(system_highpri_wq, &data->work);
@@ -2336,7 +2336,7 @@ static ssize_t batch_write(struct file* filp, const char __user* buf, size_t cou
     struct iov_iter iter;
     struct iovec iov = {
         .iov_base = (void __user*)buf,
-        .iov_len = count,
+        .iov_len  = count,
     };
 
     iov_iter_init(&iter, WRITE, &iov, 1, count);

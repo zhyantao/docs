@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    int i = 0;
+    int i   = 0;
     short s = 0;
     cout << "sizeof(int)=" << sizeof(int) << endl;
     cout << "sizeof(i)=" << sizeof(i) << endl;

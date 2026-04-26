@@ -118,7 +118,7 @@ public:
     }
 
     // 禁止拷贝
-    LockGuard(const LockGuard&) = delete;
+    LockGuard(const LockGuard&)            = delete;
     LockGuard& operator=(const LockGuard&) = delete;
 };
 
@@ -182,14 +182,14 @@ public:
             if (connected) {
                 std::cout << "断开旧连接\n";
             }
-            connected = other.connected;
+            connected       = other.connected;
             other.connected = false;
         }
         return *this;
     }
 
     // 禁止拷贝
-    DatabaseConnection(const DatabaseConnection&) = delete;
+    DatabaseConnection(const DatabaseConnection&)            = delete;
     DatabaseConnection& operator=(const DatabaseConnection&) = delete;
 };
 ```

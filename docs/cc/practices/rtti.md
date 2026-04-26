@@ -26,8 +26,8 @@ public:
 int main() {
     Person person("Yu");
     Student student("Sam", "20210212");
-    Person* pp = &student;
-    Person& rp = student;
+    Person* pp  = &student;
+    Person& rp  = student;
     Student* ps = (Student*)&person; // danger!
     cout << "person.getInfo():" << person.getInfo() << endl;
     cout << "pp->getInfo():" << pp->getInfo() << endl;

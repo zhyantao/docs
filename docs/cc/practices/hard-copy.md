@@ -40,14 +40,14 @@ private:
 public:
     MyString(int buf_len = 64, const char* data = NULL) {
         std::cout << "Constructor(int, char*)" << std::endl;
-        this->buf_len = 0;
+        this->buf_len    = 0;
         this->characters = NULL;
         create(buf_len, data);
     }
 
     MyString(const MyString& ms) {
         std::cout << "Constructor(MyString&)" << std::endl;
-        this->buf_len = 0;
+        this->buf_len    = 0;
         this->characters = NULL;
         create(ms.buf_len, ms.characters);
     }

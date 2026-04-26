@@ -10,7 +10,7 @@
 
 ```cpp
 const int ci = 5;
-int* pi = const_cast<int*>(&ci); // pi 指向非 const 的 int
+int* pi      = const_cast<int*>(&ci); // pi 指向非 const 的 int
 ```
 
 ## static_cast
@@ -21,7 +21,7 @@ int* pi = const_cast<int*>(&ci); // pi 指向非 const 的 int
 
 ```cpp
 double d = 3.14;
-int i = static_cast<int>(d); // 将 double 转换为 int
+int i    = static_cast<int>(d); // 将 double 转换为 int
 ```
 
 ## reinterpret_cast
@@ -31,7 +31,7 @@ int i = static_cast<int>(d); // 将 double 转换为 int
 **示例：**
 
 ```cpp
-int i = 42;
+int i    = 42;
 void* pv = reinterpret_cast<void*>(&i);
 char* pc = reinterpret_cast<char*>(pv);
 ```
@@ -70,7 +70,7 @@ public:
 };
 
 int main() {
-    Base* basePtr = new Derived();
+    Base* basePtr       = new Derived();
     Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
 
     if (derivedPtr != nullptr) {

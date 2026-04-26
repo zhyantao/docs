@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
     size_t length = 80000000000L;
-    int* p = NULL;
+    int* p        = NULL;
 
     try {
         cout << "Trying to allocate a big block of memory" << endl;

@@ -202,7 +202,7 @@ int main(int argc, char* argv[]) {
          * 一个字符，后接两个冒号——表示选项后面带一个可选参数，
          * 即参数可有可无，如果带参数，则选项与参数直接不能有空格，如 -b200
          */
-        opt = getopt_long(argc, argv, "a::b:c:d", long_options, &option_index);
+        opt              = getopt_long(argc, argv, "a::b:c:d", long_options, &option_index);
 
         if (opt == -1) // 选项遍历完毕，退出循环
             break;

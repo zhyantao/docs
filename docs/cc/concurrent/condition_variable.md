@@ -35,7 +35,7 @@ std::mutex m;
 std::condition_variable cv; // 条件变量
 std::string data;           // 共享变量
 
-bool ready = false;
+bool ready     = false;
 bool processed = false;
 
 // >>>> step 2
@@ -50,10 +50,10 @@ void worker_thread() // 这个函数什么时候才会被执行？
 
     // 等待后，我们占有锁
     std::cout << "Worker thread is processing data\n";
-    data += " after processing";
+    data      += " after processing";
 
     // 发送数据回 main()
-    processed = true;
+    processed  = true;
     std::cout << "Worker thread signals data processing compeleted\n";
 
     // 通知前完成手动解锁，以避免等待线程才被唤醒就阻塞（细节见 notify_one）

@@ -16,7 +16,7 @@ public:
         data = new int[rows * cols]{};
     }
     ~IntMat() { delete[] data; }
-    IntMat(const IntMat&) = delete;
+    IntMat(const IntMat&)            = delete;
     IntMat& operator=(const IntMat&) = delete;
     int getElement(size_t r, size_t c);
     bool setElement(size_t r, size_t c, int value);
@@ -48,7 +48,7 @@ public:
         data = new float[rows * cols]{};
     }
     ~FloatMat() { delete[] data; }
-    FloatMat(const FloatMat&) = delete;
+    FloatMat(const FloatMat&)            = delete;
     FloatMat& operator=(const FloatMat&) = delete;
     float getElement(size_t r, size_t c);
     bool setElement(size_t r, size_t c, float value);

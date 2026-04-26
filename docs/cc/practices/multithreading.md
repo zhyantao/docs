@@ -345,13 +345,13 @@ int uart_recv_thread_init(int fd, char* buffer, int size, thread_args_t** args_p
     }
 
     // 初始化参数
-    args->fd = fd;
-    args->buffer = buffer;
-    args->size = size;
+    args->fd      = fd;
+    args->buffer  = buffer;
+    args->size    = size;
     args->running = 1;
 
     // 初始化互斥锁和条件变量
-    int ret = pthread_mutex_init(&args->mutex, NULL);
+    int ret       = pthread_mutex_init(&args->mutex, NULL);
     if (ret != 0) {
         fprintf(stderr, "pthread_mutex_init failed: %s\n", strerror(ret));
         free(args);
@@ -430,7 +430,7 @@ int wait_for_data(thread_args_t* args, int timeout_ms) {
 
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
-    ts.tv_sec += timeout_ms / 1000;
+    ts.tv_sec  += timeout_ms / 1000;
     ts.tv_nsec += (timeout_ms % 1000) * 1000000;
 
     pthread_mutex_lock(&args->mutex);
@@ -464,7 +464,7 @@ int main() {
     // options.c_cflag |= CS8;       // 8位数据位
     // tcsetattr(fd, TCSANOW, &options);
 
-    char buffer[1024] = {0};
+    char buffer[1024]          = {0};
     thread_args_t* thread_args = NULL;
 
     // 初始化接收线程

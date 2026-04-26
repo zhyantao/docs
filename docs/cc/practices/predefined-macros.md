@@ -121,7 +121,7 @@ static_assert(sizeof(wchar_t) >= 2, "wchar_t too small for Unicode");
 // 检查基本字符集一致性
 #if __STDCPP_MB_MIGHT_NEQ_WC__
 // 在 EBCDIC 系统上需要特殊处理
-char narrow = 'A';
+char narrow  = 'A';
 wchar_t wide = L'A';
 // narrow == wide 可能为 false
 #endif

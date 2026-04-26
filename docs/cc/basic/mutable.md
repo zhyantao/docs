@@ -35,7 +35,7 @@ public:
             // 但是可以修改 mutable 成员
             lastFetchTime = std::chrono::system_clock::now();
             // 假设这里有一个线程安全的方式更新 cachedData
-            cacheValid = true;
+            cacheValid    = true;
         }
         return cachedData;
     }
@@ -53,7 +53,7 @@ public:
 
 ```cpp
 int main() {
-    int x = 0;
+    int x        = 0;
 
     auto lambda1 = [x]() {
         // x = 5; // 错误！不能修改按值捕获的变量

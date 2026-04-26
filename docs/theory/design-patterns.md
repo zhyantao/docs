@@ -181,13 +181,13 @@ using namespace std;
 class IButton {
 public:
     virtual void render() = 0;
-    virtual ~IButton() = default;
+    virtual ~IButton()    = default;
 };
 
 class IText {
 public:
     virtual void display() = 0;
-    virtual ~IText() = default;
+    virtual ~IText()       = default;
 };
 
 // =================== 具体产品类 - Windows 风格 ======
@@ -216,8 +216,8 @@ public:
 class IUIFactory {
 public:
     virtual unique_ptr<IButton> createButton() = 0;
-    virtual unique_ptr<IText> createText() = 0;
-    virtual ~IUIFactory() = default;
+    virtual unique_ptr<IText> createText()     = 0;
+    virtual ~IUIFactory()                      = default;
 };
 
 // =================== 具体工厂类 ===================
@@ -238,7 +238,7 @@ public:
 // =================== 客户端使用 ===================
 void renderUI(IUIFactory& factory) {
     auto button = factory.createButton();
-    auto text = factory.createText();
+    auto text   = factory.createText();
 
     button->render(); // 根据平台调用不同的实现
     text->display();
@@ -306,11 +306,11 @@ public:
 // ================== 构建器接口 ==================
 class IComputerBuilder {
 public:
-    virtual void buildCPU() = 0;
-    virtual void buildRAM() = 0;
-    virtual void buildStorage() = 0;
+    virtual void buildCPU()         = 0;
+    virtual void buildRAM()         = 0;
+    virtual void buildStorage()     = 0;
     virtual Computer* getComputer() = 0;
-    virtual ~IComputerBuilder() = default;
+    virtual ~IComputerBuilder()     = default;
 };
 
 // ================== 具体构建器：游戏电脑 ==================
@@ -419,8 +419,8 @@ using namespace std;
 class UserConfigPrototype {
 public:
     virtual UserConfigPrototype* clone() const = 0; // 克隆接口
-    virtual void print() const = 0;
-    virtual ~UserConfigPrototype() = default;
+    virtual void print() const                 = 0;
+    virtual ~UserConfigPrototype()             = default;
 };
 
 // ================== 具体原型类 ==================
@@ -480,7 +480,7 @@ private:
     DatabaseConnectionPool() { printf("数据库连接池已初始化\n"); }
 
     // 删除拷贝构造函数和赋值操作符，防止复制
-    DatabaseConnectionPool(const DatabaseConnectionPool&) = delete;
+    DatabaseConnectionPool(const DatabaseConnectionPool&)            = delete;
     DatabaseConnectionPool& operator=(const DatabaseConnectionPool&) = delete;
 
 public:
@@ -540,7 +540,7 @@ public:
 class INewPaymentGateway {
 public:
     virtual void pay(double amount) = 0;
-    virtual ~INewPaymentGateway() = default;
+    virtual ~INewPaymentGateway()   = default;
 };
 
 // ===== 适配器类：将 LegacyPayment 包装成 INewPaymentGateway 格式 =====
@@ -596,7 +596,7 @@ using namespace std;
 class IFileSystemComponent {
 public:
     virtual void showDetail(int depth = 0) const = 0;
-    virtual ~IFileSystemComponent() = default;
+    virtual ~IFileSystemComponent()              = default;
 };
 
 // ================== 叶子组件：文件 ==================
@@ -645,13 +645,13 @@ public:
 // ================== 主函数示例 ==================
 int main() {
     // 所有组件都用 new 分配在堆上
-    Directory* root = new Directory("根目录");
+    Directory* root      = new Directory("根目录");
     Directory* documents = new Directory("文档");
-    Directory* pictures = new Directory("图片");
+    Directory* pictures  = new Directory("图片");
 
-    File* file1 = new File("report.docx");
-    File* file2 = new File("photo.jpg");
-    File* file3 = new File("notes.txt");
+    File* file1          = new File("report.docx");
+    File* file2          = new File("photo.jpg");
+    File* file3          = new File("notes.txt");
 
     // 添加组件
     documents->add(file1);
@@ -756,11 +756,11 @@ public:
 int main() {
     OrderFacade orderSystem;
 
-    int productId = 101;
-    double amount = 99.9;
+    int productId  = 101;
+    double amount  = 99.9;
     string address = "北京市朝阳区某某街道";
 
-    bool success = orderSystem.placeOrder(productId, amount, address);
+    bool success   = orderSystem.placeOrder(productId, amount, address);
 
     if (success) {
         printf("订单已完成。\n");
@@ -1103,7 +1103,7 @@ using namespace std;
 class IService {
 public:
     virtual void doCall() = 0;
-    virtual ~IService() = default;
+    virtual ~IService()   = default;
 };
 
 class RealService : public IService {
@@ -1123,7 +1123,7 @@ public:
     void doCall(void) override {
         if (!hasBeenCalled) {
             printf("Creating Real Service\n");
-            realService = new RealService(); // 延迟加载
+            realService   = new RealService(); // 延迟加载
             hasBeenCalled = true;
         }
         realService->doCall();
@@ -1174,7 +1174,7 @@ using namespace std;
 class IPaymentStrategy {
 public:
     virtual void payAmount(int amount) = 0; // 支付指定金额
-    virtual ~IPaymentStrategy() = default;
+    virtual ~IPaymentStrategy()        = default;
 };
 
 // ================== 具体策略类 ==================
@@ -1255,16 +1255,16 @@ using namespace std;
 
 class ISubscriber {
 public:
-    virtual void update() = 0;
+    virtual void update()  = 0;
     virtual ~ISubscriber() = default;
 };
 
 class IPublisher {
 public:
     virtual void registerObserver(ISubscriber* subscriber) = 0;
-    virtual void removeObserver(ISubscriber* subscriber) = 0;
-    virtual void notifyObservers() = 0;
-    virtual ~IPublisher() = default;
+    virtual void removeObserver(ISubscriber* subscriber)   = 0;
+    virtual void notifyObservers()                         = 0;
+    virtual ~IPublisher()                                  = default;
 };
 
 class Subscriber : public ISubscriber {
@@ -1302,10 +1302,10 @@ public:
 int main() {
     // 创建具体的订阅者（设备）
     ISubscriber* airConditioner = new Subscriber(); // 空调
-    ISubscriber* waterHeater = new Subscriber();    // 热水器
+    ISubscriber* waterHeater    = new Subscriber(); // 热水器
 
     // 创建发布者（天气站）
-    IPublisher* weatherStation = new Publisher();
+    IPublisher* weatherStation  = new Publisher();
 
     // 注册设备到天气站
     weatherStation->registerObserver(airConditioner);
@@ -1351,7 +1351,7 @@ class Order;
 class OrderState {
 public:
     virtual void process(Order& order) = 0; // 处理订单状态
-    virtual ~OrderState() = default;
+    virtual ~OrderState()              = default;
 };
 
 // =============== 具体状态类 ===============
@@ -1548,8 +1548,8 @@ unique_ptr<RoleMemento> GameRole::save() const {
 }
 
 void GameRole::restore(const RoleMemento& m) {
-    hp = m.hp;
-    mp = m.mp;
+    hp    = m.hp;
+    mp    = m.mp;
     level = m.level;
 }
 
@@ -1583,16 +1583,16 @@ int main() {
     manager.addArchive(role.save());
 
     // 修改状态
-    role.hp = 80;
-    role.mp = 40;
+    role.hp    = 80;
+    role.mp    = 40;
     role.level = 2;
     printf("\n--- 升级后状态 ---\n");
     role.showStatus();
 
     manager.addArchive(role.save());
 
-    role.hp = 30;
-    role.mp = 10;
+    role.hp    = 30;
+    role.mp    = 10;
     role.level = 3;
     printf("\n--- 受伤后状态 ---\n");
     role.showStatus();
@@ -1699,9 +1699,9 @@ int main() {
     auto mediator = make_shared<ChatMediator>();
 
     // 创建用户并加入聊天室
-    auto alice = make_shared<User>("Alice", mediator);
-    auto bob = make_shared<User>("Bob", mediator);
-    auto charlie = make_shared<User>("Charlie", mediator);
+    auto alice    = make_shared<User>("Alice", mediator);
+    auto bob      = make_shared<User>("Bob", mediator);
+    auto charlie  = make_shared<User>("Charlie", mediator);
 
     mediator->addUser(alice);
     mediator->addUser(bob);
@@ -1772,8 +1772,8 @@ template <typename T>
 class Iterator {
 public:
     virtual bool hasNext() const = 0;
-    virtual T next() = 0;
-    virtual ~Iterator() = default;
+    virtual T next()             = 0;
+    virtual ~Iterator()          = default;
 };
 
 // 聚合接口
@@ -1781,7 +1781,7 @@ template <typename T>
 class Aggregate {
 public:
     virtual unique_ptr<Iterator<T>> createIterator() const = 0;
-    virtual ~Aggregate() = default;
+    virtual ~Aggregate()                                   = default;
 };
 
 // 具体迭代器：基于 vector 的 Menu 迭代器
@@ -1889,9 +1889,9 @@ public:
 // 命令接口
 class Command {
 public:
-    virtual ~Command() = default;
+    virtual ~Command()     = default;
     virtual void execute() = 0;
-    virtual void undo() = 0;
+    virtual void undo()    = 0;
 };
 
 // 具体命令类：写入操作
@@ -1987,7 +1987,7 @@ class ExporterVisitor;
 // 元素接口
 class DocumentElement {
 public:
-    virtual ~DocumentElement() = default;
+    virtual ~DocumentElement()                    = default;
     virtual void accept(ExporterVisitor& visitor) = 0;
 };
 
@@ -2020,9 +2020,9 @@ public:
 // 访问者接口（导出器）
 class ExporterVisitor {
 public:
-    virtual ~ExporterVisitor() = default;
+    virtual ~ExporterVisitor()                     = default;
     virtual void visit(const Paragraph& paragraph) = 0;
-    virtual void visit(const Image& image) = 0;
+    virtual void visit(const Image& image)         = 0;
 };
 
 // HTML 导出器

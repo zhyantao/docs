@@ -40,10 +40,10 @@ public:
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
-        sum.minutes = this->minutes + t.minutes;
-        sum.hours = this->hours + t.hours;
+        sum.minutes  = this->minutes + t.minutes;
+        sum.hours    = this->hours + t.hours;
 
-        sum.hours += sum.minutes / 60;
+        sum.hours   += sum.minutes / 60;
         sum.minutes %= 60;
 
         return sum;
@@ -51,9 +51,9 @@ public:
 
     MyTime& operator+=(const MyTime& t) {
         this->minutes += t.minutes;
-        this->hours += t.hours;
+        this->hours   += t.hours;
 
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
 
         return *this;
@@ -104,7 +104,7 @@ public:
 
     MyTime(int m) : hours(0), minutes(m) {
         std::cout << "Constructor MyTime(int)" << std::endl;
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
     }
 
@@ -115,8 +115,8 @@ public:
     // prefix increment
     MyTime& operator++() {
         this->minutes++;
-        this->hours += this->minutes / 60;
-        this->minutes = this->minutes % 60;
+        this->hours   += this->minutes / 60;
+        this->minutes  = this->minutes % 60;
         return *this;
     }
 
@@ -175,10 +175,10 @@ public:
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
-        sum.minutes = this->minutes + t.minutes;
-        sum.hours = this->hours + t.hours;
+        sum.minutes  = this->minutes + t.minutes;
+        sum.hours    = this->hours + t.hours;
 
-        sum.hours += sum.minutes / 60;
+        sum.hours   += sum.minutes / 60;
         sum.minutes %= 60;
 
         return sum;
@@ -186,9 +186,9 @@ public:
 
     MyTime& operator+=(const MyTime& t) {
         this->minutes += t.minutes;
-        this->hours += t.hours;
+        this->hours   += t.hours;
 
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
 
         return *this;
@@ -196,9 +196,9 @@ public:
 
     MyTime operator+(int m) const {
         MyTime sum;
-        sum.minutes = this->minutes + m;
-        sum.hours = this->hours;
-        sum.hours += sum.minutes / 60;
+        sum.minutes  = this->minutes + m;
+        sum.hours    = this->hours;
+        sum.hours   += sum.minutes / 60;
         sum.minutes %= 60;
         return sum;
     }
@@ -219,7 +219,7 @@ public:
 
     friend std::istream& operator>>(std::istream& is, MyTime& t) {
         is >> t.hours >> t.minutes;
-        t.hours += t.minutes / 60;
+        t.hours   += t.minutes / 60;
         t.minutes %= 60;
         return is;
     }
@@ -268,10 +268,10 @@ public:
 
     MyTime operator+(const MyTime& t) const {
         MyTime sum;
-        sum.minutes = this->minutes + t.minutes;
-        sum.hours = this->hours + t.hours;
+        sum.minutes  = this->minutes + t.minutes;
+        sum.hours    = this->hours + t.hours;
 
-        sum.hours += sum.minutes / 60;
+        sum.hours   += sum.minutes / 60;
         sum.minutes %= 60;
 
         return sum;
@@ -279,9 +279,9 @@ public:
 
     MyTime& operator+=(const MyTime& t) {
         this->minutes += t.minutes;
-        this->hours += t.hours;
+        this->hours   += t.hours;
 
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
 
         return *this;
@@ -289,16 +289,16 @@ public:
 
     MyTime operator+(int m) const {
         MyTime sum;
-        sum.minutes = this->minutes + m;
-        sum.hours = this->hours;
-        sum.hours += sum.minutes / 60;
+        sum.minutes  = this->minutes + m;
+        sum.hours    = this->hours;
+        sum.hours   += sum.minutes / 60;
         sum.minutes %= 60;
         return sum;
     }
 
     MyTime& operator+=(int m) {
         this->minutes += m;
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
         return *this;
     }
@@ -331,8 +331,8 @@ using namespace std;
 
 int main() {
     MyTime t1(1, 20);
-    int minutes = t1;    // implicit conversion
-    float f = float(t1); // explicit conversion.
+    int minutes = t1;        // implicit conversion
+    float f     = float(t1); // explicit conversion.
     std::cout << "minutes = " << minutes << std::endl;
     std::cout << "minutes = " << f << std::endl;
 
@@ -362,7 +362,7 @@ public:
 
     MyTime(int m) : hours(0), minutes(m) {
         std::cout << "Constructor MyTime(int)" << std::endl;
-        this->hours += this->minutes / 60;
+        this->hours   += this->minutes / 60;
         this->minutes %= 60;
     }
 
@@ -384,9 +384,9 @@ public:
 
     MyTime& operator=(int m) {
         std::cout << "operator=(int)" << std::endl;
-        this->hours = 0;
-        this->minutes = m;
-        this->hours = this->minutes / 60;
+        this->hours    = 0;
+        this->minutes  = m;
+        this->hours    = this->minutes / 60;
         this->minutes %= 60;
         return *this;
     }

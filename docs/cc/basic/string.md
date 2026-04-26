@@ -7,8 +7,8 @@
 using namespace std;
 
 int main() {
-    std::string str1 = "Hello";
-    std::string str2 = "SUSTech";
+    std::string str1   = "Hello";
+    std::string str2   = "SUSTech";
     std::string result = str1 + ", " + str2;
 
     cout << "result = " + result << endl;

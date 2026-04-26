@@ -20,9 +20,9 @@ void foo() {
 int main() {
     int* p = NULL;
 
-    p = (int*)malloc(4 * sizeof(int));
+    p      = (int*)malloc(4 * sizeof(int));
     // some statements
-    p = (int*)malloc(8 * sizeof(int));
+    p      = (int*)malloc(8 * sizeof(int));
     // some statements
     free(p);
     // the first memory will not be freed
@@ -79,7 +79,7 @@ private:
 public:
     MyString(int buf_len = 64, const char* data = NULL) {
         std::cout << "Constructor(int, char*)" << std::endl;
-        this->buf_len = 0;
+        this->buf_len    = 0;
         this->characters = NULL;
         create(buf_len, data);
     }

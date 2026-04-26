@@ -42,8 +42,8 @@ void init_2d_array(float mat[][4], size_t rows, size_t cols) // error, arrays of
 int main() {
     int mat1[2][3] = {{11, 12, 13}, {14, 15, 16}};
 
-    int rows = 5;
-    int cols = 4;
+    int rows       = 5;
+    int cols       = 4;
     // float mat2[rows][cols]; // uninitialized array
     float mat2[rows][4]; // uninitialized array
 
@@ -194,7 +194,7 @@ int main() {
     // values[0] = 1.0f; // error
 
     float values[4] = {1.1f, 2.2f, 3.3f, 4.4f};
-    float sum = array_sum(values, 4);
+    float sum       = array_sum(values, 4);
 
     cout << "sum = " << sum << endl;
     return 0;
@@ -215,7 +215,7 @@ int main() {
     for (int i = 0; i < 16; i++)
         cout << i << ":" << +rabbit[i] << "(" << rabbit[i] << ")" << endl;
 
-    char bad_pig[9] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g'};
+    char bad_pig[9]   = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g'};
     char good_pig[10] = {'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g', '\0'};
 
     cout << "Rabbit is (" << rabbit << ")" << endl;

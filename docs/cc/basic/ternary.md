@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
     bool isPositive = true;
-    int factor = 0;
+    int factor      = 0;
     // some operations may change isPositive's value
     if (isPositive)
         factor = 1;

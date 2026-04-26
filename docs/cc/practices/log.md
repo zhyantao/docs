@@ -46,11 +46,11 @@ int check_and_backup_file(const char* path) {
 
     // 获取文件名和目录
     char* path_copy = strdup(path);
-    char* dir = strdup(dirname(path_copy));
+    char* dir       = strdup(dirname(path_copy));
     char* base_name = basename(path);
 
     // 查找现有的备份文件
-    DIR* dp = opendir(dir);
+    DIR* dp         = opendir(dir);
     if (!dp) {
         perror("opendir failed");
         free(path_copy);
@@ -58,7 +58,7 @@ int check_and_backup_file(const char* path) {
     }
 
     char* backup_files[MAX_BACKUPS] = {0};
-    int backup_count = 0;
+    int backup_count                = 0;
     struct dirent* entry;
 
     char pattern[256];
@@ -79,7 +79,7 @@ int check_and_backup_file(const char* path) {
     if (backup_count >= MAX_BACKUPS) {
         // 按修改时间排序，找到最老的文件
         qsort(backup_files, backup_count, sizeof(char*), compare_files);
-        char* oldest = backup_files[0];
+        char* oldest    = backup_files[0];
 
         // 提取编号
         char* num_start = strrchr(oldest, '_') + 1;
@@ -147,7 +147,7 @@ int check_and_backup_file(const char* path) {
 // 使用示例
 int main() {
     const char* filename = "test.log";
-    int result = check_and_backup_file(filename);
+    int result           = check_and_backup_file(filename);
 
     if (result == 1) {
         printf("backup success\n");

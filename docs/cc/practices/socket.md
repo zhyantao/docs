@@ -270,10 +270,10 @@ int main(int argc, char* argv[]) {
     if (serverfd < 0) handle_error("ERROR opening socket");
 
     bzero((char*)&serveraddr, sizeof(serveraddr));
-    portno = atoi(argv[1]);
-    serveraddr.sin_family = AF_INET;
+    portno                     = atoi(argv[1]);
+    serveraddr.sin_family      = AF_INET;
     serveraddr.sin_addr.s_addr = INADDR_ANY;
-    serveraddr.sin_port = htons(portno);
+    serveraddr.sin_port        = htons(portno);
 
     if (bind(serverfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr)) < 0)
         handle_error("ERROR on binding");
@@ -286,7 +286,7 @@ int main(int argc, char* argv[]) {
 
     while (1) {
         fd_set tempfds = readfds;
-        int retval = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
+        int retval     = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
         if (retval < 0) handle_error("ERROR in pselect");
 
         for (int i = 0; i < FD_SETSIZE; i++) {
@@ -350,10 +350,10 @@ int main(int argc, char* argv[]) {
     if (sockfd < 0) handle_error("ERROR opening socket");
 
     bzero((char*)&serv_addr, sizeof(serv_addr));
-    portno = atoi(argv[2]);
-    serv_addr.sin_family = AF_INET;
+    portno                    = atoi(argv[2]);
+    serv_addr.sin_family      = AF_INET;
     serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
-    serv_addr.sin_port = htons(portno);
+    serv_addr.sin_port        = htons(portno);
 
     if (connect(sockfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
         handle_error("ERROR connecting");

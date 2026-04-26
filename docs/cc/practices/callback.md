@@ -21,7 +21,7 @@ int callback(callback_t callback_fn, char* str, int len) {
 int main() {
     // char *str = "hello world"; // error
     char str[] = "hello world";
-    int len = sizeof(str);
+    int len    = sizeof(str);
     // (2) 注册回调函数
     callback(myfunction, str, len);
 }

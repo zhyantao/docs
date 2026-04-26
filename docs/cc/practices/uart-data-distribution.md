@@ -78,7 +78,7 @@ void set_nonblocking(int fd) {
 FD_ZERO(&read_fds);
 FD_SET(dist->source_fd, &read_fds);
 timeout.tv_sec = 1; // 1 秒超时
-int ready = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
+int ready      = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 ```
 
 #### 2. 自动重连机制
@@ -147,8 +147,8 @@ int recreate_client(distributor_t* dist, int client_index) {
     set_nonblocking(master_fd);
 
     // 6. 更新客户端状态
-    client->fd = master_fd;
-    client->blocked = 0;
+    client->fd             = master_fd;
+    client->blocked        = 0;
     client->pending_errors = 0;
     client->reconnect_attempts++;
     dist->reconnect_count++;
@@ -504,12 +504,12 @@ void print_usage(const char* program_name) {
 // Parse baudrate string to termios constant and numeric value
 int parse_baudrate(const char* baud_str, int* baud_num, speed_t* baud_termios) {
     if (baud_str == NULL) {
-        *baud_num = DEFAULT_BAUDRATE;
+        *baud_num     = DEFAULT_BAUDRATE;
         *baud_termios = B460800;
         return 0;
     }
 
-    int baud = atoi(baud_str);
+    int baud  = atoi(baud_str);
     *baud_num = baud;
 
     switch (baud) {
@@ -535,7 +535,7 @@ int parse_baudrate(const char* baud_str, int* baud_num, speed_t* baud_termios) {
     case 921600: *baud_termios = B921600; break;
     default:
         fprintf(stderr, "Warning: Unknown baudrate %d, using 115200\n", baud);
-        *baud_num = 115200;
+        *baud_num     = 115200;
         *baud_termios = B115200;
         return -1;
     }
@@ -566,20 +566,20 @@ int init_distributor(distributor_t* dist, const char* source_port, int baudrate_
     cfsetispeed(&tty, baudrate_termios);
     cfsetospeed(&tty, baudrate_termios);
 
-    tty.c_cflag &= ~PARENB;
-    tty.c_cflag &= ~CSTOPB;
-    tty.c_cflag &= ~CSIZE;
-    tty.c_cflag |= CS8;
-    tty.c_cflag &= ~CRTSCTS;
-    tty.c_cflag |= CREAD | CLOCAL;
+    tty.c_cflag     &= ~PARENB;
+    tty.c_cflag     &= ~CSTOPB;
+    tty.c_cflag     &= ~CSIZE;
+    tty.c_cflag     |= CS8;
+    tty.c_cflag     &= ~CRTSCTS;
+    tty.c_cflag     |= CREAD | CLOCAL;
 
-    tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-    tty.c_iflag &= ~(IXON | IXOFF | IXANY);
-    tty.c_oflag &= ~OPOST;
+    tty.c_lflag     &= ~(ICANON | ECHO | ECHOE | ISIG);
+    tty.c_iflag     &= ~(IXON | IXOFF | IXANY);
+    tty.c_oflag     &= ~OPOST;
 
     // Set minimum characters and timeout
-    tty.c_cc[VMIN] = 0;  // Non-blocking read
-    tty.c_cc[VTIME] = 0; // No timeout
+    tty.c_cc[VMIN]   = 0; // Non-blocking read
+    tty.c_cc[VTIME]  = 0; // No timeout
 
     if (tcsetattr(dist->source_fd, TCSANOW, &tty) != 0) {
         perror("Failed to set serial port attributes");
@@ -592,14 +592,14 @@ int init_distributor(distributor_t* dist, const char* source_port, int baudrate_
 
     // Initialize client list
     memset(dist->clients, 0, sizeof(dist->clients));
-    dist->client_count = 0;
-    dist->baudrate = baudrate_num;
-    dist->termios_baudrate = baudrate_termios;
-    dist->running = 1;
-    dist->total_bytes_read = 0;
+    dist->client_count        = 0;
+    dist->baudrate            = baudrate_num;
+    dist->termios_baudrate    = baudrate_termios;
+    dist->running             = 1;
+    dist->total_bytes_read    = 0;
     dist->total_bytes_written = 0;
-    dist->error_count = 0;
-    dist->reconnect_count = 0;
+    dist->error_count         = 0;
+    dist->reconnect_count     = 0;
     pthread_mutex_init(&dist->mutex, NULL);
 
     printf("Distributor initialized on %s @ %d baud\n", source_port, baudrate_num);
@@ -672,11 +672,11 @@ int add_client(distributor_t* dist, const char* symlink_path) {
     }
 
     // Add to client list
-    client_t* client = &dist->clients[dist->client_count];
-    client->fd = master_fd;
-    client->active = 1;
-    client->blocked = 0;
-    client->pending_errors = 0;
+    client_t* client           = &dist->clients[dist->client_count];
+    client->fd                 = master_fd;
+    client->active             = 1;
+    client->blocked            = 0;
+    client->pending_errors     = 0;
     client->reconnect_attempts = 0;
     gettimeofday(&client->last_write_time, NULL);
     memset(&client->block_time, 0, sizeof(client->block_time));
@@ -750,8 +750,8 @@ int recreate_client(distributor_t* dist, int client_index) {
     set_nonblocking(master_fd);
 
     // Update client state
-    client->fd = master_fd;
-    client->blocked = 0;
+    client->fd             = master_fd;
+    client->blocked        = 0;
     client->pending_errors = 0;
     gettimeofday(&client->last_write_time, NULL);
     memset(&client->block_time, 0, sizeof(client->block_time));
@@ -780,7 +780,7 @@ void print_statistics(distributor_t* dist) {
     if (elapsed >= 10.0) { // Print every 10 seconds
         pthread_mutex_lock(&dist->mutex);
 
-        int active_clients = 0;
+        int active_clients  = 0;
         int blocked_clients = 0;
         for (int i = 0; i < dist->client_count; i++) {
             if (dist->clients[i].active) {
@@ -929,12 +929,12 @@ void* distribution_thread(void* arg) {
         // Setup select for source serial port
         FD_ZERO(&read_fds);
         FD_SET(dist->source_fd, &read_fds);
-        max_fd = dist->source_fd;
+        max_fd          = dist->source_fd;
 
-        timeout.tv_sec = 1; // 1 second timeout
+        timeout.tv_sec  = 1; // 1 second timeout
         timeout.tv_usec = 0;
 
-        int ready = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
+        int ready       = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 
         if (ready < 0) {
             // Check for interrupt
@@ -957,7 +957,7 @@ void* distribution_thread(void* arg) {
                 pthread_mutex_lock(&dist->mutex);
 
                 // Distribute data to all active and unblocked clients
-                int clients_served = 0;
+                int clients_served                 = 0;
                 int total_bytes_written_this_round = 0;
 
                 for (int i = 0; i < dist->client_count; i++) {
@@ -967,8 +967,8 @@ void* distribution_thread(void* arg) {
 
                         if (bytes_written > 0) {
                             clients_served++;
-                            total_bytes_written_this_round += bytes_written;
-                            dist->clients[i].pending_errors = 0; // Reset error count
+                            total_bytes_written_this_round  += bytes_written;
+                            dist->clients[i].pending_errors  = 0; // Reset error count
                             gettimeofday(&dist->clients[i].last_write_time, NULL);
                         } else if (bytes_written < 0) {
                             if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -998,10 +998,10 @@ void* distribution_thread(void* arg) {
                     }
                 }
 
-                dist->total_bytes_written += total_bytes_written_this_round;
+                dist->total_bytes_written  += total_bytes_written_this_round;
 
                 // Try to unblock clients by checking if they have space now
-                static int unblock_counter = 0;
+                static int unblock_counter  = 0;
                 if (++unblock_counter >= 100) {
                     for (int i = 0; i < dist->client_count; i++) {
                         if (dist->clients[i].active && dist->clients[i].blocked) {
@@ -1066,12 +1066,12 @@ int main(int argc, char* argv[]) {
     signal(SIGTERM, handle_signal);
 
     // Default values
-    int baudrate_num = DEFAULT_BAUDRATE;
+    int baudrate_num         = DEFAULT_BAUDRATE;
     speed_t baudrate_termios = B460800;
     char* virtual_ports[MAX_CLIENTS];
-    int port_count = 0;
-    int show_statistics = 0;
-    char* input_port = NULL;
+    int port_count                      = 0;
+    int show_statistics                 = 0;
+    char* input_port                    = NULL;
 
     // Command line options
     static struct option long_options[] = {

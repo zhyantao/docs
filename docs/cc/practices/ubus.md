@@ -33,11 +33,11 @@ struct ubus_method methods[] = {
 };
 
 static const struct ubus_object_type obj_type = UBUS_OBJECT_TYPE("exampleService", methods);
-static struct ubus_object obj = {
-    .name = "exampleService",
-    .type = &obj_type,
-    .methods = methods,
-    .n_methods = ARRAY_SIZE(methods),
+static struct ubus_object obj                 = {
+                    .name      = "exampleService",
+                    .type      = &obj_type,
+                    .methods   = methods,
+                    .n_methods = ARRAY_SIZE(methods),
 };
 
 // 方法处理函数

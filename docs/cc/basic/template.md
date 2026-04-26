@@ -92,7 +92,7 @@ public:
 
     ~Mat() { delete[] data; }
 
-    Mat(const Mat&) = delete;            // 不允许拷贝构造
+    Mat(const Mat&)            = delete; // 不允许拷贝构造
     Mat& operator=(const Mat&) = delete; // 不允许赋值构造
     T getElement(size_t r, size_t c);
     bool setElement(size_t r, size_t c, T value);
@@ -156,7 +156,7 @@ class MyVector {
 public:
     MyVector(size_t length) : length(length) { data = new T[length]{}; }
     ~MyVector() { delete[] data; }
-    MyVector(const MyVector&) = delete;
+    MyVector(const MyVector&)            = delete;
     MyVector& operator=(const MyVector&) = delete;
     T getElement(size_t index);
     bool setElement(size_t index, T value);
@@ -193,12 +193,12 @@ class MyVector<bool> {
 public:
     MyVector(size_t length) : length(length) {
         int num_bytes = (length - 1) / 8 + 1;
-        data = new unsigned char[num_bytes]{};
+        data          = new unsigned char[num_bytes]{};
     }
 
     ~MyVector() { delete[] data; }
 
-    MyVector(const MyVector&) = delete;
+    MyVector(const MyVector&)            = delete;
     MyVector& operator=(const MyVector&) = delete;
     bool getElement(size_t index);
     bool setElement(size_t index, bool value);
@@ -209,8 +209,8 @@ bool MyVector<bool>::getElement(size_t index) {
         cerr << "getElement(): Indices are out of range" << endl;
         return 0;
     }
-    size_t byte_id = index / 8;
-    size_t bit_id = index % 8;
+    size_t byte_id     = index / 8;
+    size_t bit_id      = index % 8;
     unsigned char mask = (1 << bit_id);
     return bool(data[byte_id] & mask);
 }
@@ -221,8 +221,8 @@ bool MyVector<bool>::setElement(size_t index, bool value) {
         return false;
     }
 
-    size_t byte_id = index / 8;
-    size_t bit_id = index % 8;
+    size_t byte_id     = index / 8;
+    size_t bit_id      = index % 8;
     unsigned char mask = (1 << bit_id);
 
     if (value)

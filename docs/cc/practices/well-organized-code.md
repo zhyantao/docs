@@ -7,16 +7,16 @@
 #include <stdio.h>
 
 int main() {
-    Matrix* matA = createMat(2, 3);
-    Matrix* matB = createMat(2, 3);
-    Matrix* matC = createMat(2, 3);
-    Matrix* matD = createMat(3, 2);
+    Matrix* matA    = createMat(2, 3);
+    Matrix* matB    = createMat(2, 3);
+    Matrix* matC    = createMat(2, 3);
+    Matrix* matD    = createMat(3, 2);
     Matrix* matNULL = NULL;
 
     // initialization
     // You should have your own method to do it
-    matA->data[3] = 2.3f;
-    matB->data[3] = 3.1f;
+    matA->data[3]   = 2.3f;
+    matB->data[3]   = 3.1f;
 
     if (!add(matA, matB, matC))
         fprintf(stderr, "Matrix addition failed.");
@@ -143,10 +143,10 @@ bool add(const Matrix* input1, const Matrix* input2, Matrix* output) {
     }
 
     // version 1, the best one
-    size_t length = input1->rows * input1->cols;
+    size_t length   = input1->rows * input1->cols;
     const float* p1 = input1->data;
     const float* p2 = input2->data;
-    float* p3 = output->data;
+    float* p3       = output->data;
     for (size_t i = 0; i < length; i++)
         *(p3++) = *(p1++) + *(p2++);
 
@@ -155,7 +155,7 @@ bool add(const Matrix* input1, const Matrix* input2, Matrix* output) {
         // to calculate (cols * r) here, don't put it into the inner loop
         const float* p1 = input1->data + input1->cols * r;
         const float* p2 = input2->data + input2->cols * r;
-        float* p3 = output->data + +output->cols * r;
+        float* p3       = output->data + +output->cols * r;
 
         for (size_t c = 0; c < input1->cols; c++)
             *(p3++) = *(p1++) + *(p2++);

@@ -100,13 +100,13 @@ int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, ch
         ptr->last->type = UCI_TYPE_OPTION;
     }
 
-    ptr->p = (struct uci_package*)malloc(sizeof(struct uci_package));
+    ptr->p     = (struct uci_package*)malloc(sizeof(struct uci_package));
     ptr->value = NULL;
     ptr->flags = uci_ptr::UCI_LOOKUP_COMPLETE;
 
-    ptr->o = (struct uci_option*)malloc(sizeof(struct uci_option));
+    ptr->o     = (struct uci_option*)malloc(sizeof(struct uci_option));
     if (ptr->o) {
-        ptr->o->type = UCI_TYPE_STRING;
+        ptr->o->type     = UCI_TYPE_STRING;
         ptr->o->v.string = strdup("test_value");
     }
 

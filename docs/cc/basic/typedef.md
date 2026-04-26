@@ -15,7 +15,7 @@ typedef struct _rgb_struct // name _rgb_struct can be omit
 } rgb_struct;
 
 int main() {
-    myint num = 32;
+    myint num   = 32;
 
     // the following two lines are identical
     // unsigned char color[3] = {255, 0, 255};

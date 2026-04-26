@@ -7,6 +7,7 @@
 Segmentation fault（段错误）指程序访问了系统未分配给该程序的内存空间，这部分内存空间可能不可访问、不存在或受系统保护。
 
 SIGSEGV 是操作系统在用户态程序错误访问内存时的处理机制：
+
 - 当用户态程序访问**不允许访问**的内存时，产生 SIGSEGV
 - 当用户态程序以错误方式访问**允许访问**的内存时，同样产生 SIGSEGV
 
@@ -25,6 +26,7 @@ ulimit -a
 ```
 
 重点关注 `file size` 参数：
+
 - 如果值不为 0，表示已启用 dump
 - 如果值为 0，需要启用 dump 功能：
 
@@ -52,6 +54,7 @@ sysctl -p
 ```
 
 命名参数说明：
+
 ```text
 %%  单个 % 字符
 %p  进程 ID
@@ -86,6 +89,7 @@ gdb /path/to/program /path/to/core.file
 #### 寄存器分析
 
 **关键寄存器：**
+
 - **PC (Program Counter)**：指向当前执行的指令地址
 - **SP (Stack Pointer)**：指向当前栈顶位置
 - **FP (Frame Pointer)**：指向当前栈帧基地址
@@ -102,11 +106,11 @@ gdb /path/to/program /path/to/core.file
 
 **常见错误模式识别：**
 
-| 错误类型 | 寄存器特征 | 验证命令 |
-|---------|-----------|---------|
-| 空指针访问 | 寄存器值为 0 | `x/x $rax` 提示无法访问 |
+| 错误类型   | 寄存器特征         | 验证命令                |
+| ---------- | ------------------ | ----------------------- |
+| 空指针访问 | 寄存器值为 0       | `x/x $rax` 提示无法访问 |
 | 野指针访问 | 寄存器值为随机地址 | `x/x $rbx` 提示无法访问 |
-| 栈溢出 | SP 指向异常区域 | `x/x $sp` 无法转换 |
+| 栈溢出     | SP 指向异常区域    | `x/x $sp` 无法转换      |
 
 **分析案例：**
 
@@ -150,6 +154,7 @@ rip     0x400540 0x400540 <main+16>
 ### 产生段错误的常见原因
 
 **内存访问错误：**
+
 - 缓冲区溢出（buffer overrun）
 - 空悬指针 / 野指针
 - 重复释放（double delete）
@@ -157,11 +162,13 @@ rip     0x400540 0x400540 <main+16>
 - 内存访问越界
 
 **多线程问题：**
+
 - 使用了线程不安全的函数
 - 共享数据未加锁保护
 - 死锁或竞争条件
 
 **系统资源问题：**
+
 - 栈溢出（stack overflow）
 - 文件描述符耗尽
 
@@ -174,7 +181,7 @@ rip     0x400540 0x400540 <main+16>
 
 int main(void) {
     int* ptr = NULL;
-    printf("%d\n", *ptr);  // 段错误
+    printf("%d\n", *ptr); // 段错误
     return 0;
 }
 ```
@@ -185,7 +192,7 @@ int main(void) {
 #include <stdio.h>
 
 void recursive_function(int depth) {
-    char buffer[1024];  // 大数组占用栈空间
+    char buffer[1024]; // 大数组占用栈空间
     printf("Depth: %d\n", depth);
     recursive_function(depth + 1);
 }

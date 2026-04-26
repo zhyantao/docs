@@ -43,11 +43,11 @@ int64_t l1norm(struct Point pt) {
 
 int main() {
     enum color pen_color = RED;
-    pen_color = color(3); // convert int to enum
+    pen_color            = color(3); // convert int to enum
     cout << "We have " << NUM_COLORS << " pens." << endl;
     // pen_color += 1; //error!
-    int color_index = pen_color;
-    color_index += 1;
+    int color_index  = pen_color;
+    color_index     += 1;
     cout << "color_index = " << color_index << endl;
 
     // declaration and initialization

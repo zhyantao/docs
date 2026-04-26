@@ -72,7 +72,7 @@ int main() {
 
     // 示例 5：成员函数与占位符
     MessageFormatter formatter;
-    auto func5 = boost::bind(&MessageFormatter::format, &formatter, _1);
+    auto func5         = boost::bind(&MessageFormatter::format, &formatter, _1);
     std::string result = func5("测试消息");
     std::cout << result << std::endl; // 输出: 格式化: 测试消息
 
