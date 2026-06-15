@@ -2,9 +2,7 @@
 
 # NFS 挂载操作详解
 
-## 一、NFS 基本概念
-
-### 什么是 NFS？
+## 什么是 NFS？
 
 - **NFS（Network File System）**：网络文件系统，允许计算机之间通过网络共享目录和文件
 - **架构**：Client-Server 模式
