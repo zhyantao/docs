@@ -10,9 +10,16 @@
 - **架构**：Client-Server 模式
 - **优势**：开发板可直接运行 Ubuntu 上的程序，无需拷贝，便于调试
 
-> **路径提示**：本教程使用 `/home/yantao/nfs_rootfs` 作为共享目录，请根据你的 Ubuntu 用户名相应调整。
-
 ## 快速开始
+
+```text
+开发板 (192.168.5.9)  ←→  交换机/路由器  ←→  Windows (192.168.5.10)
+                              ↑
+                              ↓
+                         Ubuntu (192.168.5.11)
+```
+
+> 本教程使用 `/home/yantao/nfs_rootfs` 作为共享目录，请根据你的 Ubuntu 用户名相应调整。
 
 ```bash
 # ========== Ubuntu 端 (192.168.5.11) ==========
@@ -75,32 +82,19 @@ sudo echo "/home/yantao/nfs_rootfs *(rw,sync,no_root_squash,no_subtree_check)" >
 
 **选项说明**：
 
-| 选项 | 含义 |
-|------|------|
-| `rw` | 读写权限 |
-| `sync` | 同步写入 |
-| `no_root_squash` | root 用户保持权限 |
-| `no_subtree_check` | 不检查子目录权限 |
+| 选项               | 含义              |
+| ------------------ | ----------------- |
+| `rw`               | 读写权限          |
+| `sync`             | 同步写入          |
+| `no_root_squash`   | root 用户保持权限 |
+| `no_subtree_check` | 不检查子目录权限  |
 
 ### 3. 重启 NFS 服务
 
 ```bash
-sudo exportfs -ra                 # 使配置生效
+sudo exportfs -ra                        # 使配置生效
 sudo service nfs-kernel-server restart   # 或 systemctl restart nfs-kernel-server
-sudo exportfs -v                  # 查看共享状态
-```
-
-### 4. 查看 Ubuntu IP 地址
-
-```bash
-ifconfig          # 或 ip addr show
-```
-
-```text
-开发板 (192.168.5.9)  ←→  交换机/路由器  ←→  Windows (192.168.5.10)
-                              ↑
-                              ↓
-                         Ubuntu (192.168.5.11)
+sudo exportfs -v                         # 查看共享状态
 ```
 
 ## 开发板端操作（NFS 客户端）
