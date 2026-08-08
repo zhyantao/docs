@@ -36,6 +36,8 @@ install_automake 1.16.5
 
 软件包管理器 apt 和 yum 可以自动地下载、配置、安装、卸载自家的软件包，分别对应 `.deb` 和 `.rpm`。软件包管理器会自动地处理软件包之间的依赖关系，给用户提供了极大方便。
 
+如果使用的是 macOS，对应的 ARM64 架构，需要使用 ubuntu-ports，参考 <https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu-ports/>。
+
 **(1) 以 Ubuntu 为例，更新镜像源**
 
 ::::{tab-set}
