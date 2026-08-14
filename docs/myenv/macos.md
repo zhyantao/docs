@@ -101,3 +101,15 @@ sudo systemctl start ssh
 
 在 Mac 的 VS Code 中安装 `Remote - SSH` 扩展，按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Add New SSH Host`，输入 `ssh <你的Ubuntu用户名>@127.0.0.1 -p 2222` 并保存配置；再次按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Connect to Host`，选择已添加的主机，即可远程连接 Ubuntu 虚拟机。
 
+## 快捷键
+
+需求：在 Mac 上使用 Windows 的快捷键。
+
+- 安装 <https://karabiner-elements.pqrs.org/>
+- 登录 <https://ke-complex-modifications.pqrs.org/>
+- 导入插件 `Windows shortcuts on macOS`
+- 导出插件 `Left Shift -> Change to/from English input`
+
+## 鼠标滚轮操作
+
+安装 Scroll Reverser：<https://pilotmoon.com/scrollreverser/>
