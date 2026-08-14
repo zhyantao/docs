@@ -108,7 +108,7 @@ sudo systemctl start ssh
 - 安装 <https://karabiner-elements.pqrs.org/>
 - 登录 <https://ke-complex-modifications.pqrs.org/>
 - 导入插件 `Windows shortcuts on macOS`
-- 导出插件 `Left Shift -> Change to/from English input`
+- 导入插件 `Left Shift -> Change to/from English input`
 
 ## 鼠标滚轮操作
 
