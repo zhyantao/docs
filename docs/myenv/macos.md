@@ -1,6 +1,6 @@
 # macOS
 
-## 批量修改文件默认打开方式（duti）
+## 修改默认打开方式
 
 安装 duti：`brew install duti`
 
