@@ -98,9 +98,13 @@ int main() {
 
 ### 访问控制
 
-- `public`：继承的所有成员都可被访问。
-- `protected`：继承的成员对子类可见，但对外部不可见。
-- `private`：继承的成员只在派生类中可见，对外部和子类都不可见。
+继承方式决定了基类成员在派生类中的访问级别：
+
+- `public` 继承：基类的 `public` 成员仍是 `public`，`protected` 成员仍是 `protected`（最常见的继承方式，满足"is-a"关系）；
+- `protected` 继承：基类的 `public` 和 `protected` 成员在派生类中都变为 `protected`；
+- `private` 继承：基类的 `public` 和 `protected` 成员在派生类中都变为 `private`（派生类内部仍可访问，但进一步的派生类不可再访问）。
+
+注意：无论哪种继承方式，基类的 `private` 成员都不能被派生类直接访问。
 
 ### 示例
 
@@ -185,3 +189,76 @@ int main() {
 - `BaseTemplate<int>` 是 `BaseTemplate` 的特例化版本。
 - `DerivedFromSpecialized` 继承自 `BaseTemplate<int>`。
 - `DerivedTemplate<T>` 继承自 `BaseTemplate<T>`。
+
+## `= delete` 与 `= default`
+
+C++11 起，可以显式删除（`= delete`）或默认化（`= default`）特殊成员函数。
+
+- `= delete` 禁止调用某个成员函数。常见用途：禁止拷贝构造和拷贝赋值（适用于管理独占资源的类）、禁止隐式类型转换。
+- `= default` 显式要求编译器生成默认实现，通常用于析构函数或拷贝成员，明确表达"使用默认行为"的意图。
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+class IntMat {
+    size_t rows;
+    size_t cols;
+    int* data;
+
+public:
+    IntMat(size_t rows, size_t cols) : rows(rows), cols(cols) {
+        data = new int[rows * cols]{};
+    }
+    ~IntMat() { delete[] data; }
+
+    // 禁止拷贝构造与拷贝赋值：对象独占 data 内存，拷贝会导致重复释放
+    IntMat(const IntMat&)            = delete;
+    IntMat& operator=(const IntMat&) = delete;
+
+    int getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, int value);
+};
+
+int IntMat::getElement(size_t r, size_t c) {
+    if (r >= this->rows || c >= this->cols) {
+        cerr << "Indices are out of range" << endl;
+        return 0;
+    }
+    return data[this->cols * r + c];
+}
+
+bool IntMat::setElement(size_t r, size_t c, int value) {
+    if (r >= this->rows || c >= this->cols) return false;
+
+    data[this->cols * r + c] = value;
+    return true;
+}
+
+int main() {
+    IntMat imat(3, 4);
+    imat.setElement(1, 2, 256);
+
+    // IntMat imat2(imat); // error: 拷贝构造已被删除
+    // IntMat imat3(2, 3);
+    // imat3 = imat;       // error: 拷贝赋值已被删除
+
+    cout << imat.getElement(1, 2) << endl;
+
+    return 0;
+}
+```
+
+对于只需要拷贝语义的类，也可以用 `= default` 显式保留默认实现：
+
+```cpp
+class Point {
+public:
+    double x, y;
+    Point(double x, double y) : x(x), y(y) {}
+    ~Point()                     = default; // 显式使用默认析构
+    Point(const Point&)          = default; // 显式使用默认拷贝构造
+    Point& operator=(const Point&) = default;
+};
+```

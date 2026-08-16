@@ -60,7 +60,7 @@ nm -D libpthread.so.0
 readelf -d libpthread.so.0
 ```
 
-问题 5：需要在 C++ 源代码的头文件中显示地声明引用的哪些头文件是用 C 语言写的，举例如下：
+问题 5：需要在 C++ 源代码的头文件中显式地声明引用的哪些头文件是用 C 语言写的，举例如下：
 
 ```cpp
 #ifdef __cplusplus
@@ -148,3 +148,107 @@ sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 ```
 
 注：`gnueabi` 不支持硬件浮点运算，`gnueabihf` 是支持的。
+
+## 测试打桩
+
+打桩（Stub）是在单元测试中替换被测代码依赖的外部函数的技术，下面是一个针对 UCI 库的桩函数示例：
+
+```cpp
+#include <cstdlib>
+#include <cstring>
+#include <uci.h>
+
+// 分配上下文失败桩函数
+struct uci_context* uci_alloc_context_stub_fail() {
+    return nullptr;
+}
+
+// 查找指针成功桩函数
+int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, char* str,
+                                bool extended) {
+    ptr->last = (struct uci_element*)malloc(sizeof(struct uci_element));
+    if (ptr->last) {
+        ptr->last->type = UCI_TYPE_OPTION;
+    }
+
+    ptr->p     = (struct uci_package*)malloc(sizeof(struct uci_package));
+    ptr->value = NULL;
+    ptr->flags = uci_ptr::UCI_LOOKUP_COMPLETE;
+
+    ptr->o     = (struct uci_option*)malloc(sizeof(struct uci_option));
+    if (ptr->o) {
+        ptr->o->type     = UCI_TYPE_STRING;
+        ptr->o->v.string = strdup("test_value");
+    }
+
+    return UCI_OK;
+}
+
+// 设置操作成功桩函数
+int uci_set_stub_success(struct uci_context* ctx, struct uci_ptr* ptr) {
+    return UCI_OK;
+}
+
+// 保存操作成功桩函数
+int uci_save_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
+
+// 提交操作成功桩函数
+int uci_commit_stub_success(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
+    return UCI_OK;
+}
+
+// 提交操作失败桩函数
+int uci_commit_stub_fail(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
+    return UCI_FRR_UNKNOWN;
+}
+
+// 卸载操作成功桩函数
+int uci_unload_stub_success(struct uci_context* ctx, struct uci_package* p) {
+    return UCI_OK;
+}
+
+// 释放上下文成功桩函数
+void uci_free_context_stub_success(struct uci_context* ctx) {
+    // 桩函数实现为空
+}
+```
+
+:::{admonition} 如何对 static 函数或变量进行打桩？
+
+对于 `static` 函数，由于作用域限制无法直接打桩，但可以通过间接方式模拟。考虑到 `static` 函数必然在同一文件的其他位置被调用，可以针对调用点进行测试。对于 `static` 变量，通常会在非 `static` 函数中被赋值，因此只需对这些函数进行打桩，即可控制 `static` 变量的值，使其符合测试预期。
+:::
+
+:::{admonition} 桩函数不生效的解决方案
+
+当编译器将函数优化为内联函数时，会导致桩函数失效。解决方法是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性，例如：
+
+```cpp
+__attribute__((noinline)) bool stop_while_1_stub() {
+    return true;
+}
+```
+
+:::
+
+:::{admonition} qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+
+当被测试函数需要指针类型的参数时，必须确保传入有效的内存地址。正确做法是：
+
+1. **声明变量**：先定义一个具体类型的变量
+2. **获取地址**：使用取地址运算符 `&` 获取该变量的内存地址
+3. **传入函数**：将地址传递给需要指针参数的函数
+
+```cpp
+// 正确示例
+int actual_variable;         // 1. 声明实际变量
+test_func(&actual_variable); // 2. 获取地址并传入函数
+
+// 错误示例：传入未初始化的野指针
+int* wild_pointer;       // 未初始化的指针
+test_func(wild_pointer); // 可能导致段错误或未定义行为
+```
+
+**核心原则**：永远不要将未初始化的指针传递给函数，这会导致程序崩溃或不可预测的行为。
+:::

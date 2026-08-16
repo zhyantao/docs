@@ -40,12 +40,12 @@ find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" \
 ## C/C++ Code Style
 
 - 尽量不使用宏
-- 不使用异常
-- 禁止使用 RTTI
+- 不使用异常（本站异常章节仅作学习参考）
+- 禁止使用 RTTI（本站 RTTI 章节仅作学习参考）
 - 使用 `printf` 之类的代替流
 - 除位域不使用无符号数字
 - 除特定环境，不使用操作符重载
-- 使用 4 中 `cast` 运算符转换类型
+- 使用 4 种 `cast` 运算符转换类型
 - 禁止使用 `Class` 类型全局变量，若使用必须为单例模式
 - `sizeof(var)` 代替 `sizeof(type)`
 - `scoped_ptr` 可以胜任智能指针
@@ -120,14 +120,14 @@ private:
     // 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
     const int kDaysInWeek = 7;      // const 变量用 k 开头，后跟大写开头单词
     int num_entries_;               // 变量命名：全小写，有意义的单词和下划线
-    int num_complated_connections_; // 类成员变量下划线结尾
+    int num_completed_connections_; // 类成员变量下划线结尾
 
     Channel* channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
 };
 
 } // namespace mynamespace
 
-#endif // PORJECT_EVENTLOOP_H_  /* 保护宏结尾加注释 */
+#endif // PROJECT_EVENTLOOP_H_  /* 保护宏结尾加注释 */
 ```
 
 ```cpp
@@ -156,19 +156,19 @@ using std::string;
 
 namespace mynamespace {
 
-EventLoop::EventLoop() : num_entries_(10), num_complated_connections_(false) {}
+EventLoop::EventLoop() : num_entries_(10), num_completed_connections_(0) {}
 
 ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_name2) {
-    bool retval = DoSometing(averyveryveryverylongargument1, argument2, argument3);
+    bool retval = DoSomething(averyveryveryverylongargument1, argument2, argument3);
     if (condition) {
         for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
-            if (this_one_thing > this_other_thing && a_third_thing == a_forth_thing) {
+            if (this_one_thing > this_other_thing && a_third_thing == a_fourth_thing) {
                 // 临时方案使用 TODO 注释，后面括号里加上你的大名，邮件地址
                 // TODO (zhangsan@gmail.com): Zhang San
             }
         }
     } else {
-        nt j = g();
+        int j = g();
     }
 
     switch (var) {

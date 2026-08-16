@@ -8,7 +8,7 @@
 | ------------------------- | ---------------------------- |
 | 检查 Conda 是否安装及版本 | `conda info`                 |
 | 更新 Conda 到最新版本     | `conda update -n base conda` |
-| 更新所有包到最新版本      | `conda update anaconda`      |
+| 更新当前环境中所有包      | `conda update --all`         |
 | 列出所有环境              | `conda env list`             |
 
 ## 配置工作环境

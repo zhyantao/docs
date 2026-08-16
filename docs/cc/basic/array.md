@@ -162,8 +162,8 @@ int main() {
     };
 
     class1[1].printInfo();
-    delete class1;
-    // delete []class1;
+    delete[] class1; // 数组必须用 delete[] 释放
+    // delete class1; // BUG: 用 delete 释放数组是未定义行为
 
     return 0;
 }

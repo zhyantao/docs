@@ -21,22 +21,22 @@ sudo apt install llvm clang clang-tools binutils-aarch64-linux-gnu \
 
 :::
 :::{tab-item} LLVM (AArch64)
-使用 Yocto 安装 Clang（<https://github.com/kraj/meta-clang>）：
-
-```bash
-git clone https://github.com/openembedded/openembedded-core.git
-cd openembedded-core
-git clone https://github.com/openembedded/bitbake.git
-git clone https://github.com/kraj/meta-clang.git
-
-source ./oe-init-build-env
-
-# Add meta-clang overlay
-bitbake-layers add-layer ../meta-clang
-
-# Cross compile Clang
-bitbake clang
-```
+在嵌入式平台上使用 Yocto（meta-clang）交叉编译 Clang，详细步骤参见 {doc}`yocto`。
 
 :::
 ::::
+
+## 可视化 C++ 调用链
+
+### 使用 Clang++ 可视化调用
+
+1. 安装 MSYS2：<https://www.msys2.org/>
+2. 安装 Clang++：`pacman -S mingw-w64-x86_64-clang`
+3. 安装 Graphviz：<https://graphviz.org/>
+4. 运行下面的命令：
+
+```bash
+clang++ -S -emit-llvm demo.cpp -o dump.txt
+opt -passes=dot-callgraph dump.txt -o callgraph.dot
+dot -Tpng dump.txt.callgraph.dot -o callgraph.png
+```

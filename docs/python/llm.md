@@ -1,5 +1,13 @@
 # LLM
 
+下面是一个基于 GPT 的**代码理解对话系统**示例，把大模型封装进经典的对话系统流水线中：
+
+1. **`code2prompt(filename)`**：把源代码翻译成 prompt。prompt 中包含任务描述、输出格式约束和少样本示例（few-shot），并留有 `__INPUT__` 占位符供用户输入替换；
+2. **`NLU`（自然语言理解）**：把用户输入填入 prompt 模板，调用 GPT 获得 JSON 格式的语义解析结果；
+3. **`DST`（对话状态跟踪）**：把当前轮的语义结果合并进多轮对话状态 `state`；
+4. **`MockedDB`（假数据库）**：根据状态中的条件（如筛选、排序）检索候选记录，模拟真实的数据库查询；
+5. **`DialogManager`（对话管理器）**：串起上述组件——NLU 解析 → DST 更新状态 → DB 检索 → 组装 prompt → 调用 ChatGPT → 维护会话历史。
+
 ```python
 import copy
 import json
@@ -118,10 +126,8 @@ def code2prompt(filename):
     ]
     """
 
-    # 需要解析的文本
-    input_text = f"""
-    {content}
-    """
+    # 需要解析的文本，占位符在调用时由用户输入替换
+    input_text = "__INPUT__"
 
     prompt = f"""
     {instruction}\n\n{output_format}\n\n例如：\n{examples}\n\n用户输入：\n{input_text}
@@ -133,10 +139,10 @@ def code2prompt(filename):
 class NLU:
     """自然语言理解（Nature Language Understanding, NLU），调用 GPT 获得反馈。"""
 
-    def __init__(self, filename):
-        self.prompt_template = code2prompt(filename)
+    def __init__(self, filename=None):
+        self.prompt_template = code2prompt(filename) if filename else ""
 
-    def _get_completion(self, prompt, model="gpt-3.5-turbo"):
+    def _get_completion(self, prompt, model="gpt-4o-mini"):
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
             model=model,
@@ -193,7 +199,7 @@ class MockedDB:
         records = []
         for r in self.data:
             select = True
-            if r["requirement"]:
+            if r.get("requirement"):
                 if "status" not in kwargs or kwargs["status"] != r["requirement"]:
                     continue
             for k, v in kwargs.items():
@@ -253,7 +259,7 @@ class DialogManager:
                     prompt = prompt.replace(f"__{k.upper()}__", str(v))
         return prompt
 
-    def _call_chatgpt(self, prompt, model="gpt-3.5-turbo"):
+    def _call_chatgpt(self, prompt, model="gpt-4o-mini"):
         session = copy.deepcopy(self.session)
         session.append({"role": "user", "content": prompt})
         response = client.chat.completions.create(

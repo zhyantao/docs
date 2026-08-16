@@ -76,8 +76,8 @@ make -C $(SRC_DIR) install
 ```bash
 cat <<EOF | tee aarch64-linux.ini
 [constants]
-sysroot_dir = '/arm-buildroot-linux-gnueabihf_sdk-buildroot/sysroot'
-toochain_dir = sysroot_dir + '/usr/bin'
+sysroot_dir = '/aarch64-buildroot-linux-gnu_sdk-buildroot/sysroot'
+toolchain_dir = sysroot_dir + '/usr/bin'
 crosstools_prefix = toolchain_dir + '/aarch64-linux-'
 
 [binaries]
@@ -88,13 +88,13 @@ pkgconfig = 'pkg-config'
 
 [build-in options]
 has_function_print = true
-has_function_hfkerhisadf = false
+enable_debug = false
 allow_default_for_cross = true
 
 [host_machine]
 system = 'linux'
-cpu_family = 'arm'
-cpu = 'cortex-a9'
+cpu_family = 'aarch64'
+cpu = 'cortex-a53'
 endian = 'little'
 
 [build_machine]

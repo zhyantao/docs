@@ -65,7 +65,7 @@ restorecon -v /var/www/html/index.html
 # 临时修改文件标签
 chcon -t httpd_sys_content_t /var/www/mycustom.html
 
-# 永久修改文件标签（重启后生效）
+# 永久修改文件标签（semanage 写入文件上下文策略后，restorecon 立即生效）
 semanage fcontext -a -t httpd_sys_content_t "/var/www/mycustom.html"
 restorecon -v /var/www/mycustom.html
 ```
@@ -197,7 +197,7 @@ allow gpsd_t gpsd_socket_t:sock_file { create write setattr unlink link rename g
 ###########################################
 # 禁止 gpsd 访问其他敏感文件
 dontaudit gpsd_t tmpfs_t:file ~{ create write unlink };
-# 注意：dontaudit 在现代策略中已被 tunable_policy 替代
+# 注意：dontaudit 只抑制审计日志输出，权限仍然会被拒绝
 ```
 
 ##### 步骤 2：创建文件上下文文件
@@ -271,8 +271,8 @@ checkmodule -M -m -o gpsd.mod gpsd.te
 # 2. 打包策略模块（包含文件上下文）
 semodule_package -o gpsd.pp -m gpsd.mod -f gpsd.fc
 
-# 验证生成的 .pp 文件
-sesearch -A -s gpsd_t -c sock_file -p create -C gpsd.pp
+# 验证生成的 .pp 文件（sesearch 查询的是已加载的策略，.pp 文件可用 sedismod 查看）
+sedismod gpsd.pp
 ```
 
 ##### 步骤 5：安装并激活策略
@@ -413,5 +413,5 @@ setenforce 1
 ## 学习资源
 
 - [SELinux 官方文档](https://github.com/SELinuxProject/refpolicy/wiki/GettingStarted)
-- [Debian SELinux 手册](https://l.github.io/debian-handbook/html/zh-CN/sect.selinux.html)
+- [Debian SELinux 手册](https://debian-handbook.info/browse/zh-CN/stable/sect.selinux.html)
 - [Gentoo SELinux 教程](https://wiki.gentoo.org/wiki/SELinux/Tutorials)

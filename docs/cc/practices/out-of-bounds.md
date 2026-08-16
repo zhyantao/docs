@@ -1,4 +1,6 @@
-# 指针访问越界
+# 数组与指针越界
+
+## 指针访问越界
 
 ```cpp
 #include <iostream>
@@ -19,6 +21,29 @@ int main() {
     return 0;
 }
 ```
+
+## 数组访问越界
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int num_array[5];
+
+    for (int idx = -1; idx <= 5; idx++) // out of bounds
+        num_array[idx] = idx * idx;
+
+    for (int idx = -1; idx <= 5; idx++) // out of bounds
+        cout << "num_array[" << idx << "] = " << num_array[idx] << endl;
+
+    return 0;
+}
+```
+
+越界访问是未定义行为，程序可能崩溃，也可能"正常"运行，是 C/C++ 中最难排查的错误之一。
+Linux 下程序崩溃后可以使用 core dump 定位问题，详见 [core-dumped](core-dumped)。
 
 ## ntdll.dll 处有未经处理的异常: 堆已损坏
 

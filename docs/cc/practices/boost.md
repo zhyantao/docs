@@ -6,6 +6,13 @@
 
 陈硕在 muduo 网络库中提出，使用 `boost::function` 和 `boost::bind` 可以有效地替代继承和虚函数，从而解决二进制兼容性问题。
 
+```{note}
+这里所说的"二进制兼容性"指的是**虚表布局**的稳定：给基类增删虚函数会改变虚表布局，
+导致已经编译好的派生类二进制失效；而回调接口（函数对象）不依赖虚表，
+接口不变时已编译的库无需重编。注意"重编编译"本身是编译期问题，
+并不是所有场景都需要用回调替代虚函数——接口相对固定的类体系仍然可以放心使用虚函数。
+```
+
 ## 核心概念
 
 ### boost::function
@@ -266,6 +273,38 @@ int main() {
     dispatcher.triggerEvent(EVENT_DISCONNECT, "客户端主动断开");
 
     return 0;
+}
+```
+
+## 回调函数基础
+
+回调（callback）的本质是把函数指针（或可调用对象）注册给某个框架，由框架在合适的时机调用。
+C 语言中的经典写法是函数指针：
+
+```cpp
+#include <stdio.h>
+
+typedef void (*callback_t)(char* str, int len);
+
+// (1) 编写回调函数
+void myfunction(char* str, int len) {
+    for (int i = 0; i < len; i++) {
+        printf("%c", str[i]);
+    }
+}
+
+// (3) 调用回调函数
+int callback(callback_t callback_fn, char* str, int len) {
+    callback_fn(str, len);
+    return 0;
+}
+
+int main() {
+    // char *str = "hello world"; // error
+    char str[] = "hello world";
+    int len    = sizeof(str);
+    // (2) 注册回调函数
+    callback(myfunction, str, len);
 }
 ```
 

@@ -18,7 +18,6 @@ echo "hello world"
 - Bourne Again Shell（`/bin/bash`）
 - C Shell（`/usr/bin/csh`）
 - K Shell（`/usr/bin/ksh`）
-- Shell for Root（`/sbin/sh`）
 - ……
 
 其中 **Bash** 在日常工作中被广泛使用，同时也是大多数 Linux 系统默认的 Shell。
@@ -32,7 +31,7 @@ chmod u+x helloWorld.sh
 # 运行脚本
 ./helloWorld.sh
 或
-sh hellowWorld.sh
+sh helloWorld.sh
 ```
 
 ### 1.2. 注释
@@ -74,7 +73,7 @@ sh hellowWorld.sh
   var4_name="root"
   ```
 
-- 访问变量 `$VAR1` 或 `$(var1)`，其中，加花括号是为了帮助解释器识别变量的边界。
+- 访问变量 `$VAR1` 或 `${VAR1}`，其中，加花括号是为了帮助解释器识别变量的边界。
 
 - 设置变量只读 `readonly VAR1`
 
@@ -107,7 +106,7 @@ sh hellowWorld.sh
   | `-a`                        | 数组                         |
   | `-f`                        | 在脚本中显示定义的函数和内容 |
   | `-F`                        | 在脚本中显示定义的函数       |
-  | `-X`                        | 将变量声明为环境变量         |
+  | `-x`                        | 将变量声明为环境变量         |
 
   示例：
 
@@ -297,7 +296,7 @@ echo "第三个参数为：$3";
 | `!=`   | 检测两个字符串是否不相等           | `[ $a != $b ]` 返回 `true` |
 | `-z`   | 检测字符串长度是否为 `0`（空）     | `[ -z $a ]` 返回 `false`   |
 | `-n`   | 检测字符串长度是否不为 `0`（非空） | `[ -n "$a" ]` 返回 `true`  |
-| `str`  | 检测字符串是否为不为空             | `[ $a ]` 返回 `true`       |
+| `str`  | 检测字符串是否非空（等价于 `-n`）  | `[ $a ]` 返回 `true`       |
 
 ### 3.6. 文件测试运算符
 

@@ -169,7 +169,7 @@ ssize_t read(int fd, void* buf, size_t count);
 ssize_t write(int fd, const void* buf, size_t count);
 ```
 
-`read()` 函数从 `fd` 中读取内容。读成功时，返回读取的字节数。如果返回值是 0，表示已经读到文件末尾，小于 0 表示出现了错误。如果错误为 `EINTR` 表示读操作被中断了，如果是 `ECONNREST` 表示网络连接出了问题。
+`read()` 函数从 `fd` 中读取内容。读成功时，返回读取的字节数。如果返回值是 0，表示已经读到文件末尾，小于 0 表示出现了错误。如果错误为 `EINTR` 表示读操作被中断了，如果是 `ECONNRESET` 表示网络连接出了问题。
 
 `write()` 函数将 `buf` 中 `count` 字节的内容写入 `fd`。写成功时，返回写入的字节数，写失败时，返回 -1，并设置 `errno` 变量。如果错误为 `EINTR` 表示写操作被中断，如果是 `EPIPE` 表示对方关闭了连接。
 
@@ -186,13 +186,10 @@ ssize_t recv(int sockfd, void* buf, size_t len, int flags);
 **readv() / writev()**
 
 ```cpp
-#include <sys/socket.h>
-#include <sys/types.h>
+#include <sys/uio.h>
 
-ssize_t sendto(int sockfd, const void* buf, size_t len, int flags,
-               const struct sockaddr* dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void* buf, size_t len, int flags, struct sockaddr* src_addr,
-                 socklen_t* addrlen);
+ssize_t readv(int fd, const struct iovec* iov, int iovcnt);
+ssize_t writev(int fd, const struct iovec* iov, int iovcnt);
 ```
 
 **sendmsg() / recvmsg()**

@@ -82,7 +82,8 @@ sum_X
 
 ### 获取切片
 
-值得注意的是，图像一般默认为`(H, W, C)`即 (高度, 宽度, 通道数) 但获取切片时的参数一般为`(C, H, W)`。
+值得注意的是，图像一般默认为 `(H, W, C)` 即 (高度, 宽度, 通道数)，
+但深度学习框架（如 TensorFlow）中通常使用 `(C, H, W)` 即 (通道数, 高度, 宽度) 的排列。
 
 ```{code-block} python
 X, X[-1], X[1:3] # 把 X 想成是图片的三个通道，X[-1] 获取最后一个通道，X[1:3] 获取第 2 和第 3 通道。
@@ -140,7 +141,7 @@ A == B # 逻辑运算符 "按元素"
 
 ## 声明变量
 
-TensorFlow 中的 `Tensors` 是不可变的，也不能被赋值。 TensorFlow 中的 `Variables` 是支持赋值的可变容器。 请记住，TensorFlow 中的梯度不会通过 `Variable` 反向传播，**这句话没说错**，记住。
+TensorFlow 中的 `Tensors` 是不可变的，也不能被赋值。 TensorFlow 中的 `Variables` 是支持赋值的可变容器。在 `GradientTape` 上下文中，梯度会正常流过 `Variable`（`Variable` 会被自动追踪，无需像普通张量那样调用 `watch()`）。
 
 ```{code-block} python
 X_var = tf.Variable(X) # 声明变量，预分配存储空间

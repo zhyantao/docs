@@ -47,12 +47,12 @@ int main(int argc, char** argv) {
     TIME_END("unloop")
 
     TIME_START
-    result = dotproduct_neon(p1, p2, nSize);
-    TIME_END("SIMD")
+    result = dotproduct_neon(p1, p2, nSize); // ARM 平台的 SIMD；x86 平台可改用 dotproduct_avx2
+    TIME_END("SIMD (NEON)")
 
     TIME_START
     result = dotproduct_neon_omp(p1, p2, nSize);
-    TIME_END("SIMD+OpenMP")
+    TIME_END("SIMD (NEON) + OpenMP")
 
     delete[] p1;
     delete[] p2;

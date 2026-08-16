@@ -55,7 +55,7 @@ int fixed_system(const char* cmd) {
 
 这个方案是有效的，因为它从根本上消除了竞争条件：
 
-- 通过将 SIGCHLD 设置为 `SIG_DFL`（默认行为是忽略，但子进程状态会被内核回收，不会产生僵尸进程），确保了当 `system()` 内部的子进程退出时，不会触发任何可能“偷走”子进程状态的信号处理函数。
+- 通过将 SIGCHLD 设置为 `SIG_DFL`（默认行为是不调用任何信号处理函数；注意子进程状态不会被自动回收，`SIG_IGN` 才会使子进程被自动回收），确保了当 `system()` 内部的子进程退出时，不会触发任何可能“偷走”子进程状态的信号处理函数。
 - 这样一来，`system()` 内部的 `waitpid()` 就能独占地、不受干扰地等待到它创建的子进程，从而正常返回，避免 `ECHILD` 错误。
 
 **方案评价**
@@ -71,6 +71,12 @@ int fixed_system(const char* cmd) {
 
 - 例如 **GLib** 中的 `g_spawn_command_line_sync`、`g_spawn_async` 等函数。
 - 这些库函数已经妥善处理了信号、竞争条件等问题，是跨平台开发的优选。
+
+**标准做法：阻塞 SIGCHLD**
+
+如果必须保留自定义的 SIGCHLD 处理器，可以在调用 `system()` 前后用 `sigprocmask` 阻塞 SIGCHLD，
+待 `system()` 返回后再恢复信号掩码，并统一调用 `waitpid()` 回收这段时间内退出的子进程（POSIX 也建议
+`system()` 的调用者使用这种方式）。
 
 ## 总结与建议
 

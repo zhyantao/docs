@@ -162,24 +162,30 @@ int recreate_client(distributor_t* dist, int client_index) {
 
 ```cpp
 void print_statistics(distributor_t* dist) {
+    // 统计当前活跃和被阻塞的客户端数量
+    int active_clients  = 0;
+    int blocked_clients = 0;
+    for (int i = 0; i < dist->client_count; i++) {
+        if (dist->clients[i].active) {
+            active_clients++;
+            if (dist->clients[i].blocked) {
+                blocked_clients++;
+            }
+        }
+    }
+
     printf("\n=== Statistics ===\n");
     printf("Active clients: %d (blocked: %d)\n", active_clients, blocked_clients);
     printf("Total bytes read: %ld\n", dist->total_bytes_read);
     printf("Total bytes written: %ld\n", dist->total_bytes_written);
     printf("Error count: %ld\n", dist->error_count);
     printf("Reconnect count: %ld\n", dist->reconnect_count);
-    printf("Bytes/sec read: %.1f\n", dist->total_bytes_read / elapsed);
-    printf("Bytes/sec written: %.1f\n", dist->total_bytes_written / elapsed);
 
-    // 显示被阻塞客户端的详细信息
-    if (blocked_clients > 0) {
-        printf("\nBlocked clients:\n");
-        for (int i = 0; i < dist->client_count; i++) {
-            if (dist->clients[i].active && dist->clients[i].blocked) {
-                printf("  %s: blocked for %ld.%03ld seconds\n", dist->clients[i].name,
-                       block_duration.tv_sec, block_duration.tv_usec / 1000);
-            }
-        }
+    // elapsed 为距离上次统计的时间间隔；完整实现中还有"每 10 秒打印一次"与
+    // "串口缓冲区积压检查"等逻辑，见文末完整源码。
+    if (elapsed > 0) {
+        printf("Bytes/sec read: %.1f\n", dist->total_bytes_read / elapsed);
+        printf("Bytes/sec written: %.1f\n", dist->total_bytes_written / elapsed);
     }
 }
 ```

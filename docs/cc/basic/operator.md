@@ -1,4 +1,64 @@
-# operator
+# 函数重载与运算符重载
+
+## 函数重载
+
+函数重载（overload）允许在同一作用域内定义多个同名函数，通过参数列表（参数个数、类型、顺序）区分。注意：仅返回值不同不能构成重载。
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int sum(int x, int y) {
+    cout << "sum(int, int) is called" << endl;
+    return x + y;
+}
+float sum(float x, float y) {
+    cout << "sum(float, float) is called" << endl;
+    return x + y;
+}
+double sum(double x, double y) {
+    cout << "sum(double, double) is called" << endl;
+    return x + y;
+}
+
+// //Is the following definition correct?
+// double sum(int x, int y)
+// {
+//     cout << "sum(int, int) is called" << endl;
+//     return x + y;
+// }
+
+int main() {
+
+    cout << "sum = " << sum(1, 2) << endl;
+    cout << "sum = " << sum(1.1f, 2.2f) << endl;
+    cout << "sum = " << sum(1.1, 2.2) << endl;
+
+    // which function will be called?
+    cout << "sum = " << sum(1, 2.2) << endl;
+
+    return 0;
+}
+```
+
+## 运算符重载
+
+运算符重载是函数重载的特例，它把 `+`、`+=` 等运算符映射到类的成员函数上，让自定义类型也能使用这些运算符：
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string s("Hello ");
+    s += "C";
+    s.operator+=(" and CPP!");
+
+    std::cout << s << std::endl;
+    return 0;
+}
+```
 
 ## operator+ 和 operator+=
 

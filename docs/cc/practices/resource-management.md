@@ -1,8 +1,231 @@
-# 智能指针
+# RAII 与智能指针
 
-在 C++ 中，`std::unique_ptr`、`std::shared_ptr` 和 `std::weak_ptr` 是智能指针类型，它们的设计目的是管理动态分配的内存资源并自动释放这些资源，有助于防止内存泄漏和悬挂指针问题。
+## RAII：资源管理机制
 
-## std::unique_ptr
+**RAII（Resource Acquisition Is Initialization，资源获取即初始化）** 是 C++ 的核心编程理念，通过对象的生命周期来管理资源（内存、文件句柄、锁等），确保资源在对象构造时获取，在对象析构时自动释放。
+
+### 核心思想
+
+- **构造函数获取资源**：对象创建时初始化并获取资源
+- **析构函数释放资源**：对象销毁时自动释放资源
+- **所有权明确**：资源所有权绑定到对象生命周期
+
+### 简单例子：管理动态内存
+
+```cpp
+#include <iostream>
+
+class SmartArray {
+private:
+    int* data;
+    size_t size;
+
+public:
+    // 构造函数获取资源
+    SmartArray(size_t n) : size(n) {
+        data = new int[n];
+        std::cout << "分配了 " << n << " 个整数的内存\n";
+    }
+
+    // 析构函数释放资源
+    ~SmartArray() {
+        delete[] data;
+        std::cout << "释放了内存\n";
+    }
+
+    // 访问元素
+    int& operator[](size_t index) { return data[index]; }
+};
+
+int main() {
+    {
+        SmartArray arr(10); // 构造时分配内存
+
+        for (int i = 0; i < 10; i++) {
+            arr[i] = i * 2; // 使用数组
+        }
+
+        // 离开作用域时，arr自动析构，内存自动释放
+    } // 这里 arr 析构函数自动调用，释放内存
+
+    std::cout << "内存已自动清理\n";
+    return 0;
+}
+```
+
+### 更多实用例子
+
+#### 1. 文件管理
+
+```cpp
+#include <fstream>
+#include <iostream>
+#include <string>
+
+class FileHandler {
+private:
+    std::fstream file;
+
+public:
+    FileHandler(const std::string& filename, std::ios::openmode mode) {
+        file.open(filename, mode);
+        if (!file.is_open()) {
+            throw std::runtime_error("无法打开文件");
+        }
+        std::cout << "文件已打开\n";
+    }
+
+    ~FileHandler() {
+        if (file.is_open()) {
+            file.close();
+            std::cout << "文件已关闭\n";
+        }
+    }
+
+    void write(const std::string& content) { file << content; }
+};
+
+int main() {
+    try {
+        FileHandler fh("test.txt", std::ios::out);
+        fh.write("Hello RAII");
+        // 离开作用域时文件自动关闭
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    return 0;
+}
+```
+
+#### 2. 锁管理（线程安全）
+
+```cpp
+#include <iostream>
+#include <mutex>
+#include <thread>
+
+class LockGuard {
+private:
+    std::mutex& mtx;
+
+public:
+    explicit LockGuard(std::mutex& m) : mtx(m) {
+        mtx.lock();
+        std::cout << "锁已获取\n";
+    }
+
+    ~LockGuard() {
+        mtx.unlock();
+        std::cout << "锁已释放\n";
+    }
+
+    // 禁止拷贝
+    LockGuard(const LockGuard&)            = delete;
+    LockGuard& operator=(const LockGuard&) = delete;
+};
+
+std::mutex g_mutex;
+int shared_data = 0;
+
+void increment() {
+    LockGuard lock(g_mutex); // 构造时加锁
+    ++shared_data;           // 安全访问
+    // 离开作用域时自动解锁
+}
+
+int main() {
+    std::thread t1(increment);
+    std::thread t2(increment);
+
+    t1.join();
+    t2.join();
+
+    std::cout << "最终值: " << shared_data << std::endl;
+    return 0;
+}
+```
+
+#### 3. 数据库连接管理
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+
+class DatabaseConnection {
+private:
+    bool connected;
+
+public:
+    DatabaseConnection(const std::string& connectionString) : connected(false) {
+        // 模拟连接数据库
+        std::cout << "连接到数据库: " << connectionString << std::endl;
+        connected = true;
+    }
+
+    ~DatabaseConnection() {
+        if (connected) {
+            std::cout << "断开数据库连接\n";
+            // 实际会调用数据库断开连接
+        }
+    }
+
+    void executeQuery(const std::string& query) {
+        if (!connected) throw std::runtime_error("未连接数据库");
+        std::cout << "执行查询: " << query << std::endl;
+    }
+
+    // 移动语义支持
+    DatabaseConnection(DatabaseConnection&& other) noexcept : connected(other.connected) {
+        other.connected = false;
+    }
+
+    DatabaseConnection& operator=(DatabaseConnection&& other) noexcept {
+        if (this != &other) {
+            if (connected) {
+                std::cout << "断开旧连接\n";
+            }
+            connected       = other.connected;
+            other.connected = false;
+        }
+        return *this;
+    }
+
+    // 禁止拷贝
+    DatabaseConnection(const DatabaseConnection&)            = delete;
+    DatabaseConnection& operator=(const DatabaseConnection&) = delete;
+};
+```
+
+### RAII 的优势
+
+| 优势             | 说明                           |
+| ---------------- | ------------------------------ |
+| **自动资源管理** | 避免忘记释放资源               |
+| **异常安全**     | 即使发生异常，资源也能正确释放 |
+| **代码简洁**     | 减少手动资源管理代码           |
+| **所有权清晰**   | 资源生命周期与对象绑定         |
+
+### 现代 C++ 中的 RAII 工具
+
+- **智能指针**：`std::unique_ptr`, `std::shared_ptr`, `std::weak_ptr`
+- **容器**：`std::vector`, `std::map`, `std::string`
+- **锁管理**：`std::lock_guard`, `std::unique_lock`
+- **文件流**：`std::ifstream`, `std::ofstream`
+
+### 最佳实践
+
+1. 为每个资源类型创建 RAII 类
+2. 在构造函数中获取资源，析构函数中释放
+3. 使用移动语义而非拷贝来转移资源所有权
+4. 优先使用标准库提供的 RAII 类
+
+RAII 是 C++ 区别于其他语言的重要特性，它通过对象的确定性析构来管理资源，是编写安全、高效 C++ 代码的基石。
+
+## 智能指针
+
+在 C++ 中，`std::unique_ptr`、`std::shared_ptr` 和 `std::weak_ptr` 是智能指针类型，它们的设计目的是管理动态分配的内存资源并自动释放这些资源，有助于防止内存泄漏和悬挂指针问题。智能指针是 RAII 理念在动态内存管理上的标准实现。
+
+### std::unique_ptr
 
 `std::unique_ptr` 是一种独占所有权的智能指针，其管理的对象只能由一个 `unique_ptr` 控制。
 
@@ -24,7 +247,7 @@ int main() {
 }
 ```
 
-## scoped_ptr
+### scoped_ptr
 
 `scoped_ptr`（如 `boost::scoped_ptr`）是一个早期的、非标准智能指针，实现了独占所有权的概念，与 `std::unique_ptr` 类似，但限制更严格。
 
@@ -48,7 +271,7 @@ int main() {
 }
 ```
 
-## std::shared_ptr
+### std::shared_ptr
 
 `std::shared_ptr` 是一种共享所有权的智能指针，多个 `shared_ptr` 可以同时拥有同一个对象，共同维护一个引用计数器。
 
@@ -71,7 +294,7 @@ int main() {
 }
 ```
 
-## std::weak_ptr
+### std::weak_ptr
 
 `std::weak_ptr` 是一种不增加引用计数的智能指针，通常与 `std::shared_ptr` 一起使用，以避免循环引用问题。
 
@@ -79,8 +302,8 @@ int main() {
 
 - 不增加引用计数：不影响对象的生命周期
 - 用于避免循环引用：解决两个 `shared_ptr` 互相引用的情况
-- lock 方法：可将 `weak_ptr` 转换成 `shared_ptr`，如果对象已被删除则返回 `nullptr`
-- expire 方法：判断 `weak_ptr` 是否已经过期（即所有 `shared_ptr` 已经销毁）
+- `lock` 方法：可将 `weak_ptr` 转换成 `shared_ptr`，如果对象已被删除则返回 `nullptr`
+- `expired()` 方法：判断 `weak_ptr` 是否已经过期（即所有 `shared_ptr` 已经销毁）
 
 **示例：**
 
@@ -98,11 +321,11 @@ int main() {
 }
 ```
 
-## shared_from_this
+### shared_from_this
 
 `shared_from_this` 是一个成员函数，通常用于配合 `std::shared_ptr` 使用，允许一个类实例在内部持有对其自身的 `std::shared_ptr` 引用。
 
-### 用法
+#### 用法
 
 类需要从 `std::enable_shared_from_this` 模板类派生。
 
@@ -114,13 +337,13 @@ public:
 };
 ```
 
-### 注意事项
+#### 注意事项
 
 - **循环引用**：可能导致循环引用，造成内存泄漏
 - **调用限制**：必须在成员函数内部调用，不能在构造函数或析构函数中使用
 - **对象管理**：对象必须已被 `shared_ptr` 管理
 
-### 示例
+#### 示例
 
 ```cpp
 #include <iostream>
@@ -147,14 +370,14 @@ int main() {
 }
 ```
 
-## 智能指针对比
+### 智能指针对比
 
 | 特性             | `std::unique_ptr`                | `boost::scoped_ptr`                       | `std::shared_ptr`                    | `std::weak_ptr`                    |
 | ---------------- | -------------------------------- | ----------------------------------------- | ------------------------------------ | ---------------------------------- |
 | **所属库**       | C++标准库                        | Boost 库                                  | C++标准库                            | C++标准库                          |
 | **所有权模型**   | 独占所有权                       | 独占所有权                                | 共享所有权                           | 弱引用（不拥有所有权）             |
 | **所有权转移**   | 支持移动语义                     | **禁止**拷贝和移动                        | 支持拷贝构造和赋值                   | 从`shared_ptr`构造                 |
-| **引用计数**     | 无                               | 无                                        | 有，影响对象生命周期                 | 有，但不增加引用计数               |
+| **引用计数**     | 无                               | 无                                        | 有，影响对象生命周期                 | 无，仅观察引用计数                 |
 | **主要用途**     | 单一所有权场景                   | 严格的局部作用域资源管理                  | 多指针共享同一对象的场景             | 解决循环引用，观察`shared_ptr`对象 |
 | **自动删除**     | 是（析构时自动删除）             | 是（析构时自动删除）                      | 是（引用计数为 0 时删除）            | 否（不管理对象生命周期）           |
 | **互操作性**     | 可通过`.release()`转换为原始指针 | 封闭，不与其他智能指针交互                | 可与`weak_ptr`配合使用               | 通过`.lock()`转换为`shared_ptr`    |
@@ -171,7 +394,7 @@ int main() {
 | **限制**     | 1. 不能在构造函数/析构函数中调用<br>2. 对象必须已被`shared_ptr`管理<br>3. 需注意避免循环引用 |
 | **替代方案** | 手动传递`shared_ptr`参数或使用回调机制                                                       |
 
-## 选择指南
+### 选择指南
 
 | 场景                               | 推荐智能指针        | 理由                           |
 | ---------------------------------- | ------------------- | ------------------------------ |
@@ -181,9 +404,9 @@ int main() {
 | 观察共享资源，避免循环引用         | `std::weak_ptr`     | 不影响引用计数，安全观察       |
 | 类需要返回自身的共享指针           | `shared_from_this`  | 安全获取指向自身的`shared_ptr` |
 
-## 注意事项
+### 注意事项
 
 1. **性能考虑**：`shared_ptr` 有引用计数开销，`unique_ptr` 更轻量
-2. **循环引用**：`shared_ptr` 相互引用会导致内存泄漏，需用 `weak_ptr` 打破循环
+2. **循环引用**：`shared_ptr` 相互引用会导致内存泄漏，需用 `weak_ptr` 打破循环（详见 [circular-reference](circular-reference)）
 3. **所有权设计**：优先考虑 `unique_ptr`，只在需要共享所有权时使用 `shared_ptr`
 4. **现代 C++**：新项目应优先使用标准库智能指针（`unique_ptr`、`shared_ptr`、`weak_ptr`）

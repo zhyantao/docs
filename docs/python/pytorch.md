@@ -3,10 +3,11 @@
 这是一段关于使用 PyTorch 编写神经网络代码的**完整片段**，或者可以称它为**标准训练流程**。
 里面有一些细节需要注意，建议阅读我于 2021 年 12 月 9 日写的 [PPT](https://kdocs.cn/l/cmkgvoHbj92N)。
 
-- 使用 PaddlePaddle 训练网络
-- 钢铁缺陷检测实例
-- Pandas 和 NumPy（更多工具的使用参考[Python 知识手册 v2018](https://kdocs.cn/l/ccs5HiBn4nq8)）
-- 自动求导的使用方法
+代码要点：
+
+- 使用 `torch.normal()` 生成训练数据
+- 使用 `requires_grad=True` 开启自动求导
+- 使用 `no_grad()` 上下文管理器关闭梯度计算（更新参数时）
 
 ```Python
 import torch

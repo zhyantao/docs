@@ -65,7 +65,7 @@ Java
     io.rst
     enumerated.rst
     annotations.rst
-    concurrency.rst
+    concurrency.md
 
 
 .. footbibliography::

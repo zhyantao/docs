@@ -137,8 +137,8 @@ gcc -fsanitize=address -g -O1 -o program program.c
 # 未定义行为检测
 gcc -fsanitize=undefined -g -O1 -o program program.c
 
-# 内存消毒剂
-gcc -fsanitize=memory -g -O1 -o program program.c
+# 内存消毒剂（MemorySanitizer，GCC 不支持，需要使用 Clang）
+clang -fsanitize=memory -g -O1 -o program program.c
 
 # 线程错误检测
 gcc -fsanitize=thread -g -O1 -o program program.c

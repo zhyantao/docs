@@ -478,26 +478,6 @@ gantt
 ````
 `````
 
-## 用例图
-
-```{mermaid}
-usecaseDiagram
-    title My Use Case Diagram
-    [System] (system)
-    (system) -- "1" : is used by --> (Actor1: Customer)
-    (system) -- "2" : is used by --> (Actor2: Employee)
-```
-
-`````{dropdown} 源代码
-````bash
-usecaseDiagram
-    title My Use Case Diagram
-    [System] (system)
-    (system) -- "1" : is used by --> (Actor1: Customer)
-    (system) -- "2" : is used by --> (Actor2: Employee)
-````
-`````
-
 ## 饼图
 
 ```{mermaid}

@@ -96,6 +96,10 @@ int check_and_backup_file(const char* path) {
             backup_files[i - 1] = backup_files[i];
         }
         backup_count--;
+        // 释放其余备份文件名的内存
+        for (int i = 0; i < backup_count; i++) {
+            free(backup_files[i]);
+        }
     } else {
         // 查找最大的现有编号
         int max_number = 0;
@@ -134,7 +138,7 @@ int check_and_backup_file(const char* path) {
 
     // 打包压缩（这里使用 tar.gz 作为示例）
     snprintf(cmd, sizeof(cmd), "tar -czf %s.tar.gz -C %s %s && rm %s", new_name,
-             dirname(strdup(new_name)), basename(strdup(new_name)), new_name);
+             dirname(new_name), basename(new_name), new_name);
     if (system(cmd) != 0) {
         fprintf(stderr, "tar -czf failed\n");
         return -1;

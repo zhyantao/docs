@@ -50,14 +50,19 @@ int main() {
     delete ps1;
 
     // deallocate the memory of the array
-    delete pa1;
+    delete[] pa1;
     // deallocate the memory of the array
     delete[] pa2;
 
-    // deallocate the memory of the array, and call the destructor of the first element
-    delete psa1;
+    // deallocate the memory of the array, and call the destructors of all the elements
+    delete[] psa1;
     // deallocate the memory of the array, and call the destructors of all the elements
     delete[] psa2;
+
+    // 注意：用 new[] 分配的内存必须用 delete[] 释放，
+    // 用 delete 释放数组是未定义行为，反之亦然。
+    // delete pa1;  // BUG
+    // delete psa1; // BUG
 
     return 0;
 }

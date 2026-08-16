@@ -64,7 +64,7 @@ stop
 例：假设你有三个脚本需要加入发行版：`startup-script`、`run-script` 和 `support-script`，以下是如何通过 `.bb` 文件实现这一过程的简要指南 [^ref-cite-1]。
 
 ```bash
-DESCRIPTON = "Startup scripts"
+DESCRIPTION = "Startup scripts"
 LICENSE = "MIT"
 
 # 菜谱的版本：更新菜谱后，不要忘记修改这里的版本号
@@ -227,7 +227,7 @@ LICENSE = "CLOSED"
 ```bash
 # ${BPN} = example, ${PV} = xx-master
 do_unpack() {
-	unzip -o ${DL_DIR}/${BPN}_${PV}
+	unzip -o ${DL_DIR}/${BPN}_${PV}.zip
 	cp -r ${BPN}_${PV}/* ${BPN}-${PV}
 	rm -rf ${BPN}_${PV}
 }

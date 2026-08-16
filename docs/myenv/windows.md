@@ -231,8 +231,8 @@ Windows 操作系统支持 NTFS、FAT32、exFAT 三种不同文件系统。
 
 FAT（File Allocation Table，文件分配表）是一种由微软发明并拥有部分专利的**文件系统**。
 供 MS-DOS 使用，也是所有非 NT（Windows New Technology，新技术视窗操作系统）核心的 Windows
-系统使用的文件系统 [^cite_ref-3]。FAT32 表示文件分配表采用 32 位二进制数记录磁盘文件，单个文件最大寻址范围是
-$2^{32} = 4 GB$。
+系统使用的文件系统 [^cite_ref-3]。FAT32 表示文件分配表采用 32 位二进制数记录磁盘文件，
+单个文件大小最大为 $2^{32} - 1 = 4 GB - 1$ 字节（约 4 GB，即单个文件不能超过 4 GB）。
 
 ## Windows 故障调试
 

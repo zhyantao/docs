@@ -31,7 +31,9 @@ sudo mount /dev/cdrom /mnt
 sudo ./VBoxLinuxAdditions-arm64.run
 ```
 
-## VS Code
+## 远程连接 Ubuntu 虚拟机（VS Code Remote-SSH）
+
+下面的步骤在 Ubuntu 虚拟机中安装并启动 SSH 服务器：
 
 ```bash
 sudo apt update

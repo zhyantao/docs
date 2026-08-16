@@ -51,7 +51,6 @@ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2 kubectl config view
 # 获取 e2e 用户的密码
 kubectl config view -o jsonpath='{.users[?(@.name=="e2e")].user.password}'
 
-kubectl config view -o jsonpath='{.users[].name}'    # 显示第一个用户名
 kubectl config view -o jsonpath='{.users[*].name}'   # 显示所有用户名
 kubectl config get-contexts                          # 列出所有上下文
 kubectl config current-context                       # 显示当前上下文
@@ -183,7 +182,7 @@ kubectl get pods --field-selector=status.phase=Running
 # 获取所有节点的 ExternalIP 地址
 kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="ExternalIP")].address}'
 
-# 列出属于某 ReplicationController 的 Pod 名称（使用 jq 处理复杂 JSON）
+# 列出属于某 ReplicationController 的 Pod 名称（zsh 语法示例，使用 jq 处理复杂 JSON）
 sel=${$(kubectl get rc my-rc --output=json | jq -j '.spec.selector | to_entries | .[] | "\(.key)=\(.value),"')%?}
 echo $(kubectl get pods --selector=$sel --output=jsonpath={.items..metadata.name})
 
@@ -335,9 +334,9 @@ tar cf - /tmp/foo | kubectl exec -i -n my-namespace my-pod -- tar xf - -C /tmp/b
 kubectl exec -n my-namespace my-pod -- tar cf - /tmp/foo | tar xf - -C /tmp/bar
 ```
 
-{{< note >}}
+```{note}
 `kubectl cp` 要求容器镜像中包含 `tar` 可执行文件。如果不存在，可考虑使用 `kubectl exec` 配合 `tar` 进行替代。
-{{< /note >}}
+```
 
 ## 与 Deployments 和 Services 交互
 

@@ -119,7 +119,7 @@ bool Mat<T>::setElement(size_t r, size_t c, T value) {
 }
 
 int main() {
-    // 使用显式实例化类模板
+    // 使用类模板（隐式实例化）
     Mat<int> imat(3, 4);
     imat.setElement(1, 2, 256);
 
@@ -181,10 +181,10 @@ bool MyVector<T>::setElement(size_t index, T value) {
     return true;
 }
 
-// 特例化类模板
+// 显式实例化类模板（显式实例化定义，要求编译器立即生成 MyVector<int> 的全部代码）
 template class MyVector<int>;
 
-// 特例化类模板
+// 类模板全特化（针对 bool 类型的专用实现）
 template <>
 class MyVector<bool> {
     size_t length;

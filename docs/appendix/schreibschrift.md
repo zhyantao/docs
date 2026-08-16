@@ -2,7 +2,7 @@
 
 ## 花体手写规范
 
-```{figure} ../_static/images/schreibschrift_latin_1953.*
+```{figure} ../_static/images/schreibschrift_latin_1953.svg
 :height: 300px
 
 花体手写规范 [^cite_ref-1]
@@ -10,13 +10,13 @@
 
 ## 粗体手写规范
 
-```{figure} ../_static/images/schreibschrift_alphabet_small_bold.*
+```{figure} ../_static/images/schreibschrift_alphabet_small_bold.svg
 :height: 220px
 
 粗体小写字母手写规范 [^cite_ref-2]
 ```
 
-```{figure} ../_static/images/schreibschrift_alphabet_capital_bold.*
+```{figure} ../_static/images/schreibschrift_alphabet_capital_bold.svg
 :height: 200px
 
 粗体大写字母手写规范 [^cite_ref-2]

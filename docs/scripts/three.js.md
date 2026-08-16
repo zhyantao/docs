@@ -6,7 +6,7 @@
 
 入门学习 Three.js 的资料并不太多，建议从官网开始 <https://threejs.org/manual/#zh/fundamentals>。
 
-```{figure} ../_static/images/threejs_structure.*
+```{figure} ../_static/images/threejs_structure.svg
 :height: 300px
 
 基础的 three.js 应用结构
@@ -19,7 +19,7 @@
 把一个场景和一个摄像机到渲染器中，然后它会将摄像机
 _视椎体_ 中的三维场景渲染成一个二维图片显示在画布上。
 
-```{figure} ../_static/images/threejs_frustum_3d.*
+```{figure} ../_static/images/threejs_frustum_3d.svg
 :height: 300px
 
 视锥体（frustum）
@@ -41,8 +41,9 @@ _视椎体_ 中的三维场景渲染成一个二维图片显示在画布上。
 相同的是，摄像机作为其他对象的子对象，同样会继承它父对象的位置和朝向。
 
 **几何体（Geometry）** 对象代表一些几何体的顶点信息。
-Three.js 内置了许多基本几何体如球体、立方体、平面、狗、猫、人、树、建筑等。
-你也可以创建自定义几何体或从文件中加载几何体，比如 Blender，Maya，Cinema 4D。
+Three.js 内置了许多基本几何体如球体、立方体、平面、环面、圆柱等，
+而狗、猫、人、树、建筑等复杂模型需要创建自定义几何体或从文件中加载，
+比如使用 Blender，Maya，Cinema 4D 等建模软件制作后导出。
 
 **材质（Material）** 对象代表绘制几何体的表面属性，包括使用的颜色，和光亮程度。
 一个材质可以引用一个或多个纹理，这些纹理将图像包裹到几何体的表面。
@@ -79,9 +80,9 @@ export default {
             this.container = document.getElementById('container');
 
             // 设置渲染器（renderer）
-            const renderder = new THREE.WebGLRenderer();
-            renderder.setSize(this.container.clientWidth, this.container.clientHeight);
-            this.container.appendChild(renderder.domElement);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+            this.container.appendChild(renderer.domElement);
 
             // 设置相机
             const camera = new THREE.PerspectiveCamera(
@@ -127,7 +128,7 @@ export default {
                 });
 
                 // 显示场景
-                renderder.render(scene, camera);
+                renderer.render(scene, camera);
 
                 requestAnimationFrame(render);
             }

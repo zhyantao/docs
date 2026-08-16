@@ -1,17 +1,19 @@
-# CUDA
+# AI 加速器环境（CUDA / NPU）
 
-## 软件环境
+## CUDA + OpenCV
+
+### 软件环境
 
 本教程在 WSL2 Ubuntu 20.04 上测试通过。
 
-### CUDA 版本
+安装完成 CUDA 12 后，`nvcc --version` 的输出类似：
 
 ```bash
 $ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2019 NVIDIA Corporation
-Built on Sun_Jul_28_19:07:16_PDT_2019
-Cuda compilation tools, release 10.1, V10.1.243
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on ...
+Cuda compilation tools, release 12.x, V12.x...
 ```
 
 ### CUDA 路径
@@ -21,9 +23,9 @@ $ whereis cuda
 cuda: /usr/lib/cuda /usr/include/cuda.h /usr/local/cuda
 ```
 
-## 安装步骤
+### 安装步骤
 
-### 1. 安装 CUDA 密钥环和更新
+#### 1. 安装 CUDA 密钥环和更新
 
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
@@ -31,12 +33,16 @@ sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
 ```
 
-### 2. 安装 cuDNN
+#### 2. 安装 cuDNN
 
 ```bash
 sudo apt-get -y install cudnn
 sudo apt-get -y install cudnn-cuda-12
+```
 
+也可以手动下载对应 CUDA 版本的 cuDNN 归档文件安装（二选一即可）：
+
+```bash
 # 下载并解压 cuDNN 归档文件
 wget https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.2.0.82_cuda12-archive.tar.xz
 tar -xvf cudnn-linux-x86_64-9.2.0.82_cuda12-archive.tar.xz
@@ -47,7 +53,7 @@ sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 ```
 
-### 3. 准备 OpenCV 源码
+#### 3. 准备 OpenCV 源码
 
 ```bash
 mkdir -p opencv
@@ -56,7 +62,7 @@ git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
 ```
 
-### 4. 配置和编译 OpenCV
+#### 4. 配置和编译 OpenCV
 
 ```bash
 cd opencv
@@ -69,7 +75,6 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D OPENCV_DNN_CUDA=ON \
     -D CUDA_ARCH_BIN=8.6 \
     -D CUDA_ARCH_PTX="" \
-    -D CUDA_NVCC_FLAGS="-gencode arch=compute_50,code=sm_50" \
     -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
     -D CUDNN_LIBRARY=/usr/local/cuda/lib64/libcudnn.so \
     -D CUDNN_INCLUDE_DIR=/usr/local/cuda/include \
@@ -86,16 +91,16 @@ make -j$(nproc)
 sudo make install
 ```
 
-### 5. 清理潜在的冲突
+#### 5. 清理潜在的冲突
 
 ```bash
 pip uninstall opencv-python
 pip uninstall opencv-python-headless
 ```
 
-## 注意事项
+### 注意事项
 
-1. **CUDA 架构配置**：`compute_50,code=sm_50` 可以通过 `nvcc --help | grep compute` 来检查是否存在，请根据您的 GPU 架构进行调整。
+1. **CUDA 架构配置**：`CUDA_ARCH_BIN=8.6` 对应 Ampere 架构（如 RTX 30 系列），请根据您的 GPU 架构调整（例如 Turing 为 7.5、Ada Lovelace 为 8.9）。
 
 2. **环境变量**：编译完成后，建议更新库路径：
 
@@ -112,6 +117,7 @@ pip uninstall opencv-python-headless
    ```
 
 4. **依赖安装**：如果编译过程中缺少依赖，可以使用以下命令安装常见依赖：
+
    ```bash
    sudo apt-get install build-essential cmake git pkg-config \
         libgtk-3-dev libavcodec-dev libavformat-dev libswscale-dev \
@@ -119,3 +125,41 @@ pip uninstall opencv-python-headless
         libpng-dev libtiff-dev gfortran openexr libatlas-base-dev \
         python3-dev python3-numpy libtbb2 libtbb-dev libdc1394-22-dev
    ```
+
+## 用 NPU 训练神经网络
+
+### 检查是否支持 NPU
+
+```bash
+pip install openvino
+python -c "from openvino import Core; print(Core().available_devices)"
+```
+
+```{dropdown}
+['CPU', 'GPU', 'NPU']
+```
+
+### 下载和运行示例代码
+
+```bash
+git clone https://github.com/openvinotoolkit/openvino_notebooks
+```
+
+在 Windows 上安装环境：<https://github.com/openvinotoolkit/openvino_notebooks/wiki/Windows>
+
+将示例代码中运行实例的载体改为 NPU：
+
+```python
+device = widgets.Dropdown(
+    options=core.available_devices + ["AUTO"],
+    value='NPU',  # 改为 NPU 既可使用 NPU 资源
+    description='Device:',
+    disabled=False,
+)
+```
+
+### 观察实验结果
+
+```{figure} ../_static/images/npu_intel.png
+
+```

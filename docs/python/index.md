@@ -21,6 +21,7 @@ io.ipynb
 modules-and-packages.ipynb
 multithread.ipynb
 gui.ipynb
+venv.md
 web.ipynb
 numpy.ipynb
 matplotlib.ipynb

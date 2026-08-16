@@ -82,32 +82,7 @@ strace -p 7497 -e trace=network -s 100
 
 ## gdb
 
-| 类别               | 命令                 | 描述                       | 示例                   |
-| ------------------ | -------------------- | -------------------------- | ---------------------- |
-| **断点与执行控制** | `break <函数名>`     | 设置函数断点               | `break main`           |
-|                    | `break <文件:行号>`  | 在指定文件的指定行设置断点 | `break main.c:10`      |
-|                    | `info break`         | 查看所有断点               | `info break`           |
-|                    | `delete <断点编号>`  | 删除断点                   | `delete 1`             |
-|                    | `run <args>`         | 启动程序                   | `run arg1 arg2`        |
-|                    | `continue`           | 继续执行                   | `continue`             |
-|                    | `step`               | 单步进入函数               | `step`                 |
-|                    | `next`               | 单步跳过函数               | `next`                 |
-| **调用栈与上下文** | `backtrace`          | 打印调用栈                 | `backtrace`            |
-|                    | `frame <编号>`       | 切换栈帧                   | `frame 2`              |
-|                    | `info locals`        | 查看当前帧局部变量         | `info locals`          |
-| **变量与内存查看** | `print <表达式>`     | 打印表达式的十进制值       | `print x`              |
-|                    | `print /x <表达式>`  | 打印表达式的十六进制值     | `print /x x`           |
-|                    | `x/<格式> <地址>`    | 检查内存                   | `x/4wx 0x7fffffffe000` |
-|                    | `watch <表达式>`     | 设置数据观察点             | `watch *0x12345678`    |
-| **寄存器与汇编**   | `info registers`     | 查看寄存器值               | `info registers`       |
-|                    | `disassemble <函数>` | 反汇编函数                 | `disassemble main`     |
-| **布局与界面**     | `layout src`         | 显示源代码窗口             | `layout src`           |
-|                    | `layout asm`         | 显示汇编窗口               | `layout asm`           |
-|                    | `layout split`       | 同时显示源码和汇编         | `layout split`         |
-|                    | `layout regs`        | 显示寄存器窗口             | `layout regs`          |
-|                    | `focus <窗口>`       | 切换焦点窗口               | `focus cmd`            |
-|                    | `refresh`            | 刷新布局显示               | `refresh`              |
-|                    | `tui reg <寄存器组>` | 显示特定寄存器组           | `tui reg general`      |
+GDB 常用命令速查表请参见 {doc}`gdb`。
 
 ## grep
 
@@ -173,8 +148,8 @@ EOF
 | `echo`            | 输出到屏幕                                            |
 | `echo $PATH`      | 显示环境变量                                          |
 | `echo $?`         | 显示上次命令是否运行成功（0 表示成功，非 0 表示失败） |
-| `df`              | 查看内存和交换分区的使用情况                          |
-| `df [-m\|-g\|-k]` | 以指定单位（M、G、K）显示内存和交换分区使用情况       |
+| `df`              | 查看磁盘分区的使用情况                                |
+| `df [-m\|-g\|-k]` | 以指定单位（M、G、K）显示磁盘分区使用情况             |
 | `shutdown`        | 关机                                                  |
 | `reboot`          | 重启                                                  |
 | `halt`            | 关机后关闭电源                                        |

@@ -1,4 +1,4 @@
-# MyST-NB
+# MyST/Sphinx 语法速查
 
 (target_header)=
 

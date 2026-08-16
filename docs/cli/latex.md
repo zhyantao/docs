@@ -32,7 +32,7 @@
    ```
 
 2. 下载并安装编辑器：[VS Code](https://code.visualstudio.com/)；
-3. 适配中文：安装插件 LaTeX Workshop，按 `F1` 搜索 `setjson` 将下面内容添加到配置中 [^cite_ref-3]。
+3. 适配中文：安装插件 LaTeX Workshop，按 `F1` 搜索 `Preferences: Open Settings (JSON)` 打开 `settings.json`，将下面内容添加到配置中 [^cite_ref-3]。
 
    ```{code-block} javascript
    "latex-workshop.latex.tools": [
@@ -359,7 +359,7 @@ $\LaTeX$ 中没有双引号，因此用两个反引号和单引号输出了双�
 
 ## 参考文献
 
-$\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动引用，但是还需要编写少量代码 [^cite_ref-4]。
+$\LaTeX$ 需要引入宏包 `natbib`（`\usepackage{natbib}`）来帮助我们生成参考文献自动引用，但是还需要编写少量代码 [^cite_ref-4]。
 
 首先，引入已经写好的 `.bib` 和 `.sty` 文件，将以下内容添加到文章末尾。
 
@@ -370,7 +370,7 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 
 [CTAN: BibTeX Style](https://ctan.org/topic/bibtex-sty) 提供了很多常见的参考文献样式，需要时可以借用。
 
-然后，在正文中引用参考文献。natlib 提供了几种引用命令，语法和示例结果如下：
+然后，在正文中引用参考文献。natbib 提供了几种引用命令，语法和示例结果如下：
 
 ```{code-block} tex
 \cite{key} or \citet{key}   % 作者名 (日期)
@@ -542,8 +542,8 @@ $\LaTeX$ 默认使用了宏包 `natbib` 来帮助我们生成参考文献自动�
 
     \paragraph{插入本地图片}
     \begin{figure}
-        \includegraphics[width=\linewidth]{_static/images/bear.jpg} % Figure image \usepackage{graphicx} % 插入本地图片需要用到这个宏包
-        \caption{A majestic grizzly bear} % Figure caption
+        \includegraphics[width=\linewidth]{example-image} % Figure image \usepackage{graphicx} % 插入本地图片需要用到这个宏包
+        \caption{Example image (mwe 宏包提供的示例图)} % Figure caption
         \label{bear} % Label for referencing with \ref{bear}
     \end{figure}
 
