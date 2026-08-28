@@ -44,7 +44,9 @@ sudo systemctl start ssh
 
 在 VirtualBox 中配置网络端口转发：选中 Ubuntu 虚拟机，点击 `设置` > `网络` > `Adapter 1`，确认 `Attached to` 为 `NAT`，点击 `高级` > `端口转发`，新增规则：
 
-名称设为 `ssh`，协议 `TCP`，主机 IP 填 `192.168.0.56`，主机端口设 `2222`，子系统端口设 `22`。
+- 名称设为 `ssh`，协议 `TCP`，主机 IP 填 `192.168.0.56`，主机端口设 `2222`，子系统端口设 `22`。
+
+在 Mac 上给 ens0 网卡设置一个别名 IP：`sudo ifconfig en0 alias 192.168.0.100 netmask 255.255.255.0`
 
 在 Mac 的 VS Code 中安装 `Remote - SSH` 扩展，按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Add New SSH Host`，输入 `ssh <你的Ubuntu用户名>@127.0.0.1 -p 2222` 并保存配置；再次按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Connect to Host`，选择已添加的主机，即可远程连接 Ubuntu 虚拟机。
 
