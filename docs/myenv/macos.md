@@ -41,7 +41,7 @@ brew install multipass
 # 文本追加到对方的 ~/.ssh/authorized_keys 中
 vim ~/.ssh/authorized_keys
 
-# 在 macOS 上打开共享：系统设置 -> 通用 -> 共享 -> 远程登录 -> 打开
+# 在 macOS 上打开远程登录：系统设置 -> 通用 -> 共享 -> 远程登录 -> 打开
 
 # 设置 root 用户的密码
 sudo passwd
