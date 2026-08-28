@@ -37,8 +37,11 @@ brew install multipass
 在 Multipass Ubuntu 上运行：
 
 ```bash
-# 将 MacOS 上 cat ~/.ssh/id_ed25519.pub 的输出文本追加到 ~/.ssh/authorized_keys 中
+# 分别将 MacOS 和 Ubuntu 上 cat ~/.ssh/id_ed25519.pub 输出的
+# 文本追加到对方的 ~/.ssh/authorized_keys 中
 vim ~/.ssh/authorized_keys
+
+# 在 macOS 上打开共享：系统设置 -> 通用 -> 共享 -> 远程登录 -> 打开
 
 # 设置 root 用户的密码
 sudo passwd
