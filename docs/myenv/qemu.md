@@ -135,7 +135,9 @@ mkdir build && cd build
              --enable-multilib \
              --disable-werror \
              --with-python="$(pyenv root)/versions/3.10.14/bin/python3" \
-             --enable-tui=yes
+             --enable-tui=yes \
+             --with-gmp=/opt/homebrew/opt/gmp \
+             --with-mpfr=/opt/homebrew/opt/mpfr
 make -j"$(sysctl -n hw.ncpu)"
 sudo make install
 cd ../..
