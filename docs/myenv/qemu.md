@@ -74,7 +74,7 @@ xcode-select --install   # 如果已装过会报已存在，忽略即可
 # 阶段 0：安装依赖包（Homebrew）
 # 先确认已安装 Homebrew：https://brew.sh
 brew update
-brew install \
+brew install -y \
   git ninja pkg-config \
   glib pixman libslirp \
   openssl readline sqlite \
@@ -88,10 +88,10 @@ brew install \
 # RISC-V 交叉编译工具链 + 固件（对应原来的 gcc-riscv64-unknown-elf / opensbi / u-boot-qemu）
 brew tap riscv-software-src/riscv
 brew trust riscv-software-src/riscv
-brew install riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot 需另行编译或从官方 release 下载二进制
+brew install -y riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot 需另行编译或从官方 release 下载二进制
 
 # 阶段 1：安装 pyenv，用于管理 Python 版本
-brew install pyenv
+brew install -y pyenv
 
 # macOS 默认 shell 是 zsh，配置文件是 ~/.zshrc（如果你确实用 bash，改成 ~/.bash_profile）
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
