@@ -185,9 +185,14 @@ sudo make install
 cd ../..
 ```
 
-### macOS 专属：给自编译的 GDB 做代码签名
-
-否则会因 SIP 限制无法调试进程。
+::::{tab-set}
+:::{tab-item} Ubuntu
+:sync: ubuntu
+Ubuntu 无需操作。
+:::
+:::{tab-item} macOS
+:sync: macos
+macOS 专属：给自编译的 GDB 做代码签名，否则会因 SIP 限制无法调试进程。
 
 ```bash
 cat > gdb-entitlement.xml <<'EOF'
@@ -228,6 +233,8 @@ security find-certificate -c gdb-cert
 # 能找到就说明证书已经在钥匙串里了，接着签名
 codesign --entitlements gdb-entitlement.xml -fs gdb-cert "$(command -v riscv64-unknown-elf-gdb)"
 ```
+:::
+::::
 
 ```bash
 riscv64-unknown-elf-gdb --version
