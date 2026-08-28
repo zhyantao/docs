@@ -65,7 +65,7 @@ cp ~/.gdbinit ~/.gdbinit.bak 2>/dev/null
 wget -P ~ https://git.io/.gdbinit
 ```
 
-## MacOS
+## macOS
 
 ```bash
 # 阶段 -1：安装 Xcode 命令行工具（提供 clang/make/git 等基础工具链）
@@ -87,6 +87,7 @@ brew install \
 
 # RISC-V 交叉编译工具链 + 固件（对应原来的 gcc-riscv64-unknown-elf / opensbi / u-boot-qemu）
 brew tap riscv-software-src/riscv
+brew trust riscv-software-src/riscv
 brew install riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot 需另行编译或从官方 release 下载二进制
 
 # 阶段 1：安装 pyenv，用于管理 Python 版本
