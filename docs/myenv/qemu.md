@@ -1,6 +1,6 @@
 # QEMU
 
-## 阶段 0：安装依赖包
+## 1. 安装依赖包
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
@@ -45,7 +45,7 @@ brew install -y riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot �
 :::
 ::::
 
-## 阶段 1：安装 pyenv，用于管理 Python 版本
+## 2. 用 pyenv 管理 Python 版本
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
@@ -73,7 +73,7 @@ source ~/.zshrc
 :::
 ::::
 
-## 阶段 2：安装 Python 3.10
+## 3. 安装 Python 3.10
 
 > 注意加 `--enable-shared`：后面编译 gdb 需要共享库（`libpython3.10.so` / `.dylib`）才能启用 gdb 的 Python 脚本支持，pyenv 默认编译是静态库，不加这个选项 gdb 编译时会检测不到可用的 Python。
 
@@ -102,7 +102,7 @@ pyenv global 3.10.14      # 设为全局默认；只想局部生效改用 pyenv 
 python --version          # 验证：应输出 Python 3.10.14
 ```
 
-## 阶段 3：从源码编译 QEMU（riscv64 + riscv32 target）
+## 4. 从源码编译 QEMU
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
@@ -142,7 +142,7 @@ qemu-system-riscv64 --version
 :::
 ::::
 
-## 阶段 4：从源码编译 GDB（riscv64 + riscv32 target）
+## 5. 从源码编译 GDB
 
 ```bash
 git clone https://sourceware.org/git/binutils-gdb.git
@@ -238,7 +238,7 @@ codesign --entitlements gdb-entitlement.xml -fs gdb-cert "$(command -v riscv64-u
 riscv64-unknown-elf-gdb --version
 ```
 
-## 阶段 5：配置 gdb 美化输出（gdb-dashboard）
+## 6. 配置 gdb 美化输出
 
 ```bash
 cp ~/.gdbinit ~/.gdbinit.bak 2>/dev/null
