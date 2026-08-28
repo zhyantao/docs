@@ -1,4 +1,4 @@
-# AI 加速器环境（CUDA / NPU）
+# CUDA
 
 ## CUDA + OpenCV
 
