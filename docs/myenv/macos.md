@@ -22,31 +22,37 @@ for ext in "${EXTENSIONS[@]}"; do
 done
 ```
 
-## VirtualBox 增强功能
 
-设备 - 安装增强功能
+## VS Code Remote-SSH (Multipass)
 
-```bash
-sudo mount /dev/cdrom /mnt
-sudo ./VBoxLinuxAdditions-arm64.run
-```
-
-## Virtual Box（VS Code Remote-SSH）
-
-下面的步骤在 Ubuntu 虚拟机中安装并启动 SSH 服务器：
+在 macOS 上运行：
 
 ```bash
-sudo apt update
-sudo apt install -y openssh-server
-sudo systemctl enable ssh
-sudo systemctl start ssh
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+
+brew install multipass
 ```
 
-在 VirtualBox 中配置网络端口转发：选中 Ubuntu 虚拟机，点击 `设置` > `网络` > `Adapter 1`，确认 `Attached to` 为 `NAT`，点击 `高级` > `端口转发`，新增规则：
+在 Multipass Ubuntu 上运行：
 
-- 名称设为 `ssh`，协议 `TCP`，主机 IP 填 `127.0.0.1`，主机端口设 `2222`，子系统端口设 `22`。
+```bash
+# 将 MacOS 上 cat ~/.ssh/id_ed25519.pub 的输出文本追加到 ~/.ssh/authorized_keys 中
+vim ~/.ssh/authorized_keys
 
-在 Mac 的 VS Code 中安装 `Remote - SSH` 扩展，按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Add New SSH Host`，输入 `ssh root@127.0.0.1 -p 2222` 并保存配置；再次按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Connect to Host`，选择已添加的主机，即可远程连接 Ubuntu 虚拟机。
+# 设置 root 用户的密码
+sudo passwd
+# 设置 ubuntu 用户的密码
+sudo passwd ubuntu
+```
+
+在 VS Code 中选择 Remote-SSH 插件输入：
+
+```bash
+ssh ubuntu@< Ubuntu IP >
+```
+
+完成
 
 ## 快捷键
 
