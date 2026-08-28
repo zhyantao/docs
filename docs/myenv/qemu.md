@@ -154,11 +154,31 @@ cat > gdb-entitlement.xml <<'EOF'
 </plist>
 EOF
 
-# 生成一个自签名证书（仅需一次，可在钥匙串访问.app 里手动做，也可用命令行）
-# 手动方式：打开"钥匙串访问" -> 证书助理 -> 创建证书 -> 名称 gdb-cert -> 证书类型: 代码签名 ->
-#          在"钥匙串访问"里右键该证书 -> 显示简介 -> 信任 -> 代码签名: 始终信任
-security find-certificate -c gdb-cert  # 确认证书已存在后再执行下面这行
+# 1. 生成带 codeSigning 扩展的自签名证书（私钥 + 证书）
+openssl req -x509 -newkey rsa:2048 -keyout gdb-cert.key -out gdb-cert.pem \
+  -days 3650 -nodes -subj "/CN=gdb-cert" \
+  -addext "keyUsage=critical,digitalSignature" \
+  -addext "extendedKeyUsage=critical,codeSigning"
 
+# 2. 打包成 p12（导入钥匙串需要这个格式），设置一个临时密码
+openssl pkcs12 -export -out gdb-cert.p12 \
+  -inkey gdb-cert.key -in gdb-cert.pem -passout pass:temp123
+
+# 3. 导入到登录钥匙串，并授权 codesign 使用该私钥（免弹窗）
+security import gdb-cert.p12 -k ~/Library/Keychains/login.keychain-db \
+  -P temp123 -T /usr/bin/codesign -A
+
+# 4. 把证书加入信任设置，指定用于代码签名场景
+security add-trusted-cert -d -r trustRoot \
+  -k ~/Library/Keychains/login.keychain-db gdb-cert.pem
+
+# 5. 清理明文密钥/密码文件（可选，安全起见）
+rm -f gdb-cert.key gdb-cert.p12
+
+# 之后验证证书是否可用
+security find-certificate -c gdb-cert
+
+# 能找到就说明证书已经在钥匙串里了，接着执行你原来的
 codesign --entitlements gdb-entitlement.xml -fs gdb-cert "$(command -v riscv64-unknown-elf-gdb)"
 
 riscv64-unknown-elf-gdb --version
