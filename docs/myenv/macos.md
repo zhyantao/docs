@@ -80,7 +80,7 @@ sudo apt install -y \
   libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
   libncurses5-dev texinfo \
   gcc-riscv64-unknown-elf opensbi u-boot-qemu \
-  expect
+  expect libgmp-dev libmpfr-dev libmpc-dev bison flex
 
 # 阶段 1：安装 pyenv，用于管理 Python 版本
 curl https://pyenv.run | bash
@@ -110,12 +110,6 @@ make -j$(nproc)
 sudo make install
 cd ../..
 qemu-system-riscv64 --version
-
-# 阶段 4：从源码编译支持 riscv64-unknown-elf 的 gdb
-# --with-python 指向 pyenv 装好的那个 python，而不是系统 python3
-wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gdb/gdb-13.2.tar.xz
-tar -xf gdb-13.2.tar.xz
-cd gdb-13.2
 
 # 阶段 4：从源码编译 GDB（riscv64 + riscv32 target）
 git clone https://sourceware.org/git/binutils-gdb.git
