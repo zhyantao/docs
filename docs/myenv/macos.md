@@ -46,7 +46,7 @@ sudo systemctl start ssh
 
 - 名称设为 `ssh`，协议 `TCP`，主机 IP 填 `127.0.0.1`，主机端口设 `2222`，子系统端口设 `22`。
 
-在 Mac 的 VS Code 中安装 `Remote - SSH` 扩展，按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Add New SSH Host`，输入 `ssh <你的Ubuntu用户名>@127.0.0.1 -p 2222` 并保存配置；再次按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Connect to Host`，选择已添加的主机，即可远程连接 Ubuntu 虚拟机。
+在 Mac 的 VS Code 中安装 `Remote - SSH` 扩展，按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Add New SSH Host`，输入 `ssh root@127.0.0.1 -p 2222` 并保存配置；再次按 `Ctrl + Shift + P` 搜索 `Remote-SSH: Connect to Host`，选择已添加的主机，即可远程连接 Ubuntu 虚拟机。
 
 ## 快捷键
 
