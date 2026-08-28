@@ -133,8 +133,9 @@ git checkout v11.1.1    # 或用 master 拿最新版
 git submodule update --init --recursive
 
 pip install tomli sphinx_rtd_theme
+export LIBRARY_PATH="$(brew --prefix)/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
 mkdir build && cd build
-../configure --target-list=riscv64-softmmu,riscv32-softmmu --extra-ldflags="-L/opt/homebrew/lib"
+../configure --target-list=riscv64-softmmu,riscv32-softmmu
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
 sudo make install
 cd ../..
