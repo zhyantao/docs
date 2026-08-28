@@ -104,8 +104,6 @@ python --version          # 验证：应输出 Python 3.10.14
 
 ## 阶段 3：从源码编译 QEMU（riscv64 + riscv32 target）
 
-
-
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
@@ -115,7 +113,7 @@ cd qemu
 git checkout v11.1.1    # 或用 master 拿最新版
 git submodule update --init --recursive
 
-pip install tomli
+pip install tomli sphinx_rtd_theme
 mkdir build && cd build
 ../configure --target-list=riscv64-softmmu,riscv32-softmmu
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
