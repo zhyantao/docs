@@ -67,7 +67,7 @@ ssh ubuntu@< Ubuntu IP >
 
 安装 Scroll Reverser：<https://pilotmoon.com/scrollreverser/>
 
-## 交叉编译环境
+## QEMU 交叉编译和仿真环境
 
 ```bash
 # 阶段 0：安装依赖包
