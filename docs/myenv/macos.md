@@ -69,3 +69,11 @@ ssh ubuntu@< Ubuntu IP >
 ## 鼠标滚轮操作
 
 安装 Scroll Reverser：<https://pilotmoon.com/scrollreverser/>
+
+## Multipass
+
+如果使用 Multipass UI 界面启动 Shell，默认走的是 `~/.bash_profile`，如果用户修改了 `~/.bashrc`，想每次启动 Shell 都生效，需要运行下面的指令：
+
+```bash
+echo '. ~/.bashrc' >> ~/.bash_profile
+```
