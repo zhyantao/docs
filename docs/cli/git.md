@@ -247,7 +247,7 @@ git submodule foreach <arbitrary-command-to-run>
 | 类型       | 说明                         |
 | ---------- | ---------------------------- |
 | `feat`     | 新功能                       |
-| `fix`/`to` | 修复漏洞                     |
+| `fix`      | 修复漏洞                     |
 | `docs`     | 文档                         |
 | `style`    | 格式（不影响代码运行的变动） |
 | `refactor` | 重构（不改变功能的代码变动） |
