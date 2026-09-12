@@ -146,7 +146,7 @@ curl -o test_google.html google.com
 
 #### 备选方案
 
-首先打开代理工具（比如 Clash）的局域网访问权限：
+首先打开代理工具（比如 Clash，参见 [Clash](clash)）的局域网访问权限：
 
 ```{figure} ../_static/images/win_wsl_google.png
 :name: wsl2-access-google
