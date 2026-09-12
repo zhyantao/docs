@@ -35,7 +35,8 @@ brew install -y \
   libxml2 libxmlsec1 libffi \
   gmp mpfr libmpc bison flex \
   gdb \
-  coreutils   # 提供 gnproc，替代 Linux 的 nproc
+  coreutils \  # 提供 gnproc，替代 Linux 的 nproc
+  texinfo # for makeinfo
 
 # RISC-V 交叉编译工具链 + 固件（对应原来的 gcc-riscv64-unknown-elf / opensbi / u-boot-qemu）
 brew tap riscv-software-src/riscv
@@ -189,60 +190,6 @@ mkdir build && cd build
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
 sudo make install
 cd ../..
-```
-
-::::{tab-set}
-:::{tab-item} Ubuntu
-:sync: ubuntu
-Ubuntu 无需操作。
-:::
-:::{tab-item} macOS
-:sync: macos
-macOS 专属：给自编译的 GDB 做代码签名，否则会因 SIP 限制无法调试进程。
-
-```bash
-cat > gdb-entitlement.xml <<'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>com.apple.security.cs.debugger</key>
-    <true/>
-</dict>
-</plist>
-EOF
-
-# 1. 生成带 codeSigning 扩展的自签名证书（私钥 + 证书）
-openssl req -x509 -newkey rsa:2048 -keyout gdb-cert.key -out gdb-cert.pem \
-  -days 3650 -nodes -subj "/CN=gdb-cert" \
-  -addext "keyUsage=critical,digitalSignature" \
-  -addext "extendedKeyUsage=critical,codeSigning"
-
-# 2. 打包成 p12（导入钥匙串需要这个格式），设置一个临时密码
-openssl pkcs12 -export -out gdb-cert.p12 \
-  -inkey gdb-cert.key -in gdb-cert.pem -passout pass:temp123
-
-# 3. 导入到登录钥匙串，并授权 codesign 使用该私钥（免弹窗）
-security import gdb-cert.p12 -k ~/Library/Keychains/login.keychain-db \
-  -P temp123 -T /usr/bin/codesign -A
-
-# 4. 把证书加入信任设置，指定用于代码签名场景
-security add-trusted-cert -d -r trustRoot \
-  -k ~/Library/Keychains/login.keychain-db gdb-cert.pem
-
-# 5. 清理明文密钥/密码文件（可选，安全起见）
-rm -f gdb-cert.key gdb-cert.p12
-
-# 验证证书是否可用
-security find-certificate -c gdb-cert
-
-# 能找到就说明证书已经在钥匙串里了，接着签名
-codesign --entitlements gdb-entitlement.xml -fs gdb-cert "$(command -v riscv64-unknown-elf-gdb)"
-```
-:::
-::::
-
-```bash
 riscv64-unknown-elf-gdb --version
 ```
 
@@ -251,4 +198,105 @@ riscv64-unknown-elf-gdb --version
 ```bash
 cp ~/.gdbinit ~/.gdbinit.bak 2>/dev/null
 wget -P ~ https://git.io/.gdbinit
+```
+
+## 6. riscv64-unknown-elf-gdb 调试
+
+1、hello.c（增加栈设置 + bss 清零，最小裸机）
+
+```c
+// hello.c RISC‑V virt 裸机最小调试示例
+// 定义栈顶：QEMU virt 内存 0x80000000，栈往低地址生长，分配 128KB 栈
+#define STACK_TOP 0x80020000
+
+volatile int counter = 0;
+
+// 汇编入口：必须先设置sp，清零bss，再跳C函数
+void _start(void);
+__attribute__((naked)) void _start(void)
+{
+    asm volatile(
+        "li sp, %0\n"       // 设置栈指针
+        "call clear_bss\n"  // 清零bss段
+        "call main\n"       // 跳C代码
+        "1: wfi\n"          // 死循环等待中断，防止跑飞
+        "j 1b\n"
+        ::"i"(STACK_TOP)
+    );
+}
+
+// 清零 .bss 段，链接脚本定义符号
+extern unsigned int __bss_start[];
+extern unsigned int __bss_end[];
+void clear_bss(void)
+{
+    unsigned int *p = __bss_start;
+    while(p < __bss_end) {
+        *p++ = 0;
+    }
+}
+
+void main(void)
+{
+    counter = 42;
+    while(1) {
+        counter++;
+    }
+}
+```
+
+2、link.ld 链接脚本（增加 bss 起止符号）
+
+```c
+/* link.ld */
+ENTRY(_start)
+SECTIONS
+{
+    . = 0x80000000;
+
+    .text : { *(.text) }
+
+    .data : { *(.data) }
+
+    .bss : {
+        __bss_start = .;
+        *(.bss)
+        *(COMMON)
+        __bss_end = .;
+    }
+}
+```
+
+3、编译命令（**不要开优化 `-O0` 强制关闭优化，保证调试符号准确**）
+
+```bash
+riscv64-unknown-elf-gcc \
+    -march=rv64gc \
+    -mabi=lp64d \
+    -nostdlib \
+    -nostartfiles \
+    -T link.ld \
+    -g -O0 \
+    hello.c \
+    -o hello.elf
+```
+
+4、用 QEMU 启动并等待 GDB
+
+```bash
+qemu-system-riscv64 \
+    -machine virt \
+    -nographic \
+    -bios none \
+    -kernel hello.elf \
+    -S -s
+```
+
+5、新开一个终端，用 GDB 连接调试
+
+```bash
+riscv64-unknown-elf-gdb hello.elf
+(gdb) target remote localhost:1234
+(gdb) break main
+(gdb) continue
 ```
