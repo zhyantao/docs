@@ -527,6 +527,16 @@ Post Git 提供了显示 Git 分支的功能，安装 Posh Git，请执行以下
 
 :::
 
+:::{tab-item} macOS
+:sync: macOS
+
+```bash
+brew install romkatv/gitstatus/gitstatus
+echo "source $(brew --prefix)/opt/gitstatus/gitstatus.prompt.zsh" >>! ~/.zshrc
+```
+
+:::
+
 ::::
 
 ## 自动补全
@@ -643,8 +653,6 @@ git diff <old_file> <new_file> > patch.diff      # 对未 track 的文件制作�
 
 ## 应用补丁
 
-### 应用 git format-patch 生成的补丁（推荐）
-
 使用 `git am`（apply mailbox）应用 `format-patch` 生成的补丁，可以完整保留作者、提交时间、提交日志等信息。
 
 ```bash
@@ -664,7 +672,7 @@ git am --skip
 git am --abort
 ```
 
-### 应用传统 diff 补丁（不推荐）
+:::{dropdown} 应用传统 diff 补丁（不推荐）
 
 ```bash
 # （单文件打补丁）patch.diff 必须包含文件名，根据文件名应用补丁
@@ -713,7 +721,7 @@ patch -R < patch.diff
 ```
 ````
 
-## 对比：format-patch vs diff
+**format-patch vs diff**
 
 | 特性               | `git format-patch`           | `git diff`             |
 | :----------------- | :--------------------------- | :--------------------- |
@@ -730,3 +738,5 @@ patch -R < patch.diff
 - **推荐**：只要是传送给别人的补丁，优先使用 `git format-patch` + `git am` 流程
 - **可选**：仅自己临时记录改动，或补丁只用于单个文件同步时，可以考虑 `git diff` + `patch`
 ```
+
+:::
