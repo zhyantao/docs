@@ -365,14 +365,14 @@ git push origin --force --tags
 
 ## 分支命名规范
 
-| 分支             | 命名               | 说明                             |
-| ---------------- | ------------------ | -------------------------------- |
-| 主分支           | `master`           | 主分支是提供给用户使用的正式版本 |
-| 开发分支         | `dev`              | 开发分支永远是功能最新最全的分支 |
-| 功能分支         | `feature-*`        | 新功能分支开发完成后需删除       |
-| 发布版本         | `release-*`        | 发布定期要上线的功能             |
-| 发布版本修复分支 | `bugfix-release-*` | 修复测试 BUG                     |
-| 紧急修复分支     | `bugfix-master-*`  | 紧急修复线上代码的 BUG           |
+| 分支类型     | 命名                     | 说明                                                                     |
+| ------------ | ------------------------ | ------------------------------------------------------------------------ |
+| 主分支       | `master` / `main`        | 对外发布的正式版本，始终保持稳定可发布状态                               |
+| 开发分支     | `dev` / `develop`        | 集成最新功能的开发主线，功能分支的合并目标                               |
+| 功能分支     | `feature/<feature-name>` | 从 `dev` 切出，用于开发新功能，完成后合并回 `dev` 并删除                 |
+| 发布分支     | `release/<version>`      | 从 `dev` 切出，用于发布前的测试与版本冻结，例如 `release/v1.2.0`         |
+| 修复分支     | `fix/<bug-name>`         | 从 `dev` 切出，用于修复测试阶段发现的普通 BUG                            |
+| 紧急修复分支 | `hotfix/<bug-name>`      | 从 `master` 切出，用于修复线上紧急 BUG，完成后需合并回 `master` 和 `dev` |
 
 :::{dropdown} 冲突处理
 
@@ -725,12 +725,12 @@ patch -R < patch.diff
 
 | 特性               | `git format-patch`           | `git diff`             |
 | :----------------- | :--------------------------- | :--------------------- |
-| 作者信息           | ✅ 包含                      | ❌ 不包含              |
-| 提交时间           | ✅ 包含                      | ❌ 不包含              |
-| 提交日志           | ✅ 包含                      | ❌ 不包含              |
-| 提交 SHA           | ✅ 包含                      | ❌ 不包含              |
-| 应用后生成独立提交 | ✅ `git am` 自动生成         | ❌ 需手动 `git commit` |
-| 多补丁排序         | ✅ 自动编号                  | ❌ 需手动管理          |
+| 作者信息           | 包含                         | 不包含                 |
+| 提交时间           | 包含                         | 不包含                 |
+| 提交日志           | 包含                         | 不包含                 |
+| 提交 SHA           | 包含                         | 不包含                 |
+| 应用后生成独立提交 | `git am` 自动生成            | 需手动 `git commit`    |
+| 多补丁排序         | 自动编号                     | 需手动管理             |
 | 适用场景           | 开源协作、邮件审阅、代码合入 | 临时对比、本地快速同步 |
 
 ```{tip}
@@ -740,3 +740,28 @@ patch -R < patch.diff
 ```
 
 :::
+
+## 公私仓库分离
+
+私有仓库会合入自己的代码，但是仍然需要和公开仓库保持同步。
+
+```bash
+# 一次性配置
+git remote set-url origin git@gitee.com:zhyantao/stm32mp157-m4.git
+git remote add upstream https://gitee.com/weidongshan/stm32mp157-m4.git
+
+# 拉取官方最新
+git fetch upstream
+
+# 切到你的工作分支
+git checkout master
+
+# 方式 A：合并（保留分叉历史，产生 merge commit）
+git merge upstream/master
+
+# 方式 B：变基（历史线性，但会重写你的提交 SHA）
+# git rebase upstream/master
+
+# 推送
+git push origin master
+```
