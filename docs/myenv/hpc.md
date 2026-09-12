@@ -1,4 +1,4 @@
-# Linpack 之 HPL 测试
+# Linpack
 
 ## 配置编译器
 
