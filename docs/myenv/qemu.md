@@ -202,101 +202,21 @@ wget -P ~ https://git.io/.gdbinit
 
 ## 6. riscv64-unknown-elf-gdb 调试
 
-1、hello.c（增加栈设置 + bss 清零，最小裸机）
-
-```c
-// hello.c RISC‑V virt 裸机最小调试示例
-// 定义栈顶：QEMU virt 内存 0x80000000，栈往低地址生长，分配 128KB 栈
-#define STACK_TOP 0x80020000
-
-volatile int counter = 0;
-
-// 汇编入口：必须先设置sp，清零bss，再跳C函数
-void _start(void);
-__attribute__((naked)) void _start(void)
-{
-    asm volatile(
-        "li sp, %0\n"       // 设置栈指针
-        "call clear_bss\n"  // 清零bss段
-        "call main\n"       // 跳C代码
-        "1: wfi\n"          // 死循环等待中断，防止跑飞
-        "j 1b\n"
-        ::"i"(STACK_TOP)
-    );
-}
-
-// 清零 .bss 段，链接脚本定义符号
-extern unsigned int __bss_start[];
-extern unsigned int __bss_end[];
-void clear_bss(void)
-{
-    unsigned int *p = __bss_start;
-    while(p < __bss_end) {
-        *p++ = 0;
-    }
-}
-
-void main(void)
-{
-    counter = 42;
-    while(1) {
-        counter++;
-    }
-}
-```
-
-2、link.ld 链接脚本（增加 bss 起止符号）
-
-```c
-/* link.ld */
-ENTRY(_start)
-SECTIONS
-{
-    . = 0x80000000;
-
-    .text : { *(.text) }
-
-    .data : { *(.data) }
-
-    .bss : {
-        __bss_start = .;
-        *(.bss)
-        *(COMMON)
-        __bss_end = .;
-    }
-}
-```
-
-3、编译命令（**不要开优化 `-O0` 强制关闭优化，保证调试符号准确**）
+1、下载源代码，编译，用 QEMU 启动 kernel.elf 并等待 GDB
 
 ```bash
-riscv64-unknown-elf-gcc \
-    -march=rv64gc \
-    -mabi=lp64d \
-    -nostdlib \
-    -nostartfiles \
-    -T link.ld \
-    -g -O0 \
-    hello.c \
-    -o hello.elf
+git clone https://github.com/zhyantao/baremental.git
+cd baremental
+make debug
 ```
 
-4、用 QEMU 启动并等待 GDB
+2、新开一个终端，用 GDB 连接调试
 
 ```bash
-qemu-system-riscv64 \
-    -machine virt \
-    -nographic \
-    -bios none \
-    -kernel hello.elf \
-    -S -s
-```
-
-5、新开一个终端，用 GDB 连接调试
-
-```bash
-riscv64-unknown-elf-gdb hello.elf
+cd baremental
+riscv64-unknown-elf-gdb kernel.elf
 (gdb) target remote localhost:1234
-(gdb) break main
+(gdb) break _start
 (gdb) continue
+(gdb) next    # 输入一次 next 后持续按 Enter 就能重复 next 指令了
 ```
