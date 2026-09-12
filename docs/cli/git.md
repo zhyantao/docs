@@ -536,8 +536,18 @@ echo "source $(brew --prefix)/opt/gitstatus/gitstatus.prompt.zsh" >>! ~/.zshrc
 
 brew install powerlevel10k
 echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
-```
 
+# 若 powerlevel10k 没有自动弹出安装字体的程序，需要手动安装字体
+brew untap homebrew/cask-fonts
+brew update
+brew install --cask font-meslo-lg-nerd-font
+brew install --cask font-meslo-for-powerlevel10k
+sudo atsutil databases -remove
+atsutil server -shutdown
+# 重启 macOS
+system_profiler SPFontsDataType | grep -i "MesloLGS NF"
+UI 操作：iTerm2 -> Settings -> Profiles -> Text -> Font -> MesloLGS NF
+```
 :::
 
 ::::
