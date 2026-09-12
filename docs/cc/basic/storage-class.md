@@ -307,10 +307,10 @@ int main() {
 可以让多条语句的宏表现得像一条语句：
 
 ```cpp
-#define LOG(msg)                                     \
-    do {                                             \
-        printf("[%s:%d] ", __FILE__, __LINE__);      \
-        printf("%s\n", msg);                         \
+#define LOG(msg)                                \
+    do {                                        \
+        printf("[%s:%d] ", __FILE__, __LINE__); \
+        printf("%s\n", msg);                    \
     } while (0)
 
 if (error)

@@ -231,13 +231,13 @@ systemctl enable kubelet
 ```yaml
 apiVersion: kubeadm.k8s.io/v1beta3
 bootstrapTokens:
-- groups:
-- system:bootstrappers:kubeadm:default-node-token
+  - groups:
+  - system:bootstrappers:kubeadm:default-node-token
 token: abcdef.0123456789abcdef
 ttl: 24h0m0s
 usages:
-- signing
-- authentication
+  - signing
+  - authentication
 kind: InitConfiguration
 localAPIEndpoint:
 advertiseAddress: 192.168.163.139
@@ -257,7 +257,7 @@ controllerManager: {}
 dns: {}
 etcd:
 local:
-    dataDir: /var/lib/etcd
+  dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
 kubernetesVersion: 1.25.4

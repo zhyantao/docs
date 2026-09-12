@@ -95,5 +95,6 @@ int main() {
 ```
 
 `dynamic_cast` 只能用于含虚函数的类层次，转换失败时：
+
 - 指针版本返回 `nullptr`；
 - 引用版本抛出 `std::bad_cast` 异常。

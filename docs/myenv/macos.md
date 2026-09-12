@@ -22,7 +22,6 @@ for ext in "${EXTENSIONS[@]}"; do
 done
 ```
 
-
 ## VS Code Remote-SSH (Multipass)
 
 在 macOS 上运行：

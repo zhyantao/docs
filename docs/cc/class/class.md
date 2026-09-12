@@ -257,8 +257,8 @@ class Point {
 public:
     double x, y;
     Point(double x, double y) : x(x), y(y) {}
-    ~Point()                     = default; // 显式使用默认析构
-    Point(const Point&)          = default; // 显式使用默认拷贝构造
+    ~Point()                       = default; // 显式使用默认析构
+    Point(const Point&)            = default; // 显式使用默认拷贝构造
     Point& operator=(const Point&) = default;
 };
 ```

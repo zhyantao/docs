@@ -5,6 +5,7 @@
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
 ```bash
 sudo apt update
 sudo apt install -y \
@@ -17,9 +18,11 @@ sudo apt install -y \
   gcc-riscv64-unknown-elf opensbi u-boot-qemu \
   expect libgmp-dev libmpfr-dev libmpc-dev bison flex
 ```
+
 :::
 :::{tab-item} macOS
 :sync: macos
+
 ```bash
 # 提供 clang/make/git 等基础工具链
 xcode-select --install   # 如果已装过会报已存在，忽略即可
@@ -43,6 +46,7 @@ brew tap riscv-software-src/riscv
 brew trust riscv-software-src/riscv
 brew install -y riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot 需另行编译或从官方 release 下载二进制
 ```
+
 :::
 ::::
 
@@ -51,6 +55,7 @@ brew install -y riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot �
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
 ```bash
 curl https://pyenv.run | bash
 
@@ -59,9 +64,11 @@ echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 source ~/.bashrc
 ```
+
 :::
 :::{tab-item} macOS
 :sync: macos
+
 ```bash
 brew install -y pyenv
 
@@ -71,6 +78,7 @@ echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 source ~/.zshrc
 ```
+
 :::
 ::::
 
@@ -81,12 +89,15 @@ source ~/.zshrc
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
 ```bash
 PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.10.14
 ```
+
 :::
 :::{tab-item} macOS
 :sync: macos
+
 ```bash
 # macOS 上还需显式把 openssl/readline/sqlite 的 brew 路径喂给编译器，否则容易缺依赖
 export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix sqlite)/lib"
@@ -95,6 +106,7 @@ export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig:$(brew --prefix r
 
 PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.10.14
 ```
+
 :::
 ::::
 
@@ -108,6 +120,7 @@ python --version          # 验证：应输出 Python 3.10.14
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
 ```bash
 # 下载源代码
 git clone https://gitlab.com/qemu-project/qemu.git
@@ -126,9 +139,11 @@ sudo make install
 cd ../..
 qemu-system-riscv64 --version
 ```
+
 :::
 :::{tab-item} macOS
 :sync: macos
+
 ```bash
 # 下载源代码
 git clone https://gitlab.com/qemu-project/qemu.git
@@ -148,6 +163,7 @@ sudo make install
 cd ../..
 qemu-system-riscv64 --version
 ```
+
 :::
 ::::
 
@@ -164,6 +180,7 @@ mkdir build && cd build
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
 ```bash
 ../configure --target=riscv64-unknown-elf \
              --enable-multilib \
@@ -171,9 +188,11 @@ mkdir build && cd build
              --with-python=/usr/bin/python3 \
              --enable-tui=yes
 ```
+
 :::
 :::{tab-item} macOS
 :sync: macos
+
 ```bash
 ../configure --target=riscv64-unknown-elf \
              --enable-multilib \
@@ -183,6 +202,7 @@ mkdir build && cd build
              --with-gmp=/opt/homebrew/opt/gmp \
              --with-mpfr=/opt/homebrew/opt/mpfr
 ```
+
 :::
 ::::
 

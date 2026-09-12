@@ -548,6 +548,7 @@ atsutil server -shutdown
 system_profiler SPFontsDataType | grep -i "MesloLGS NF"
 UI 操作：iTerm2 -> Settings -> Profiles -> Text -> Font -> MesloLGS NF
 ```
+
 :::
 
 ::::

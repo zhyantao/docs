@@ -34,18 +34,20 @@ int main() {
 }
 ```
 
-```{note}
+````{note}
 不要用 `if (p)` 来判断 `new` 是否成功：`new` 分配失败时会抛出 `std::bad_alloc` 异常，
 并不会返回空指针，因此下面的判断是死代码。只有在使用 `new(std::nothrow)` 时才会返回空指针。
 
 ```cpp
-int* p = new int[1024];   // 失败时抛出异常
+int* p = new int[1024]; // 失败时抛出异常
 // if (p) ...              // 该判断永远不会为假
 
 int* q = new (std::nothrow) int[1024];
-if (q == nullptr) { /* 处理分配失败 */ }
-```
-```
+if (q == nullptr) { /* 处理分配失败 */
+}
+````
+
+````
 
 ## for
 
@@ -64,7 +66,7 @@ int main() {
 
     return 0;
 }
-```
+````
 
 ## while / do-while / break
 

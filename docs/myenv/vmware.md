@@ -193,10 +193,14 @@ service sshd start
 - **VMware Virtual Ethernet Adapter for VMnet8**：NAT 模式。这是最简单的组网方式，VMnet8 是一张虚拟网卡。物理机使用 VMnet8 和虚拟机通信时，网卡和虚拟机的网关需要保持一致。虚拟网卡一个接口连接到虚拟的 NAT 服务器上（这也是一个VMware组件），一个接口连接到虚拟 DHCP 服务器，其他的接口连虚拟机。NAT 组网方式比 Host-Only 方式多了一个 NAT 服务 [^vm6]。
 - **Bluetooth Device (Personal Area Network)**：蓝牙网络连接。
 
-
 [^vm1]: https://answers.microsoft.com/en-us/windows/forum/windows_7-networking/what-is-realtek-pcie-gbe-family-controller-why-it/5a6cdd17-155b-e011-8dfc-68b599b31bf5
+
 [^vm2]: https://www.nakivo.com/blog/hyper-v-network-adapters-what-why-and-how/
+
 [^vm3]: https://superuser.com/questions/1580417/what-is-microsoft-wi-fi-direct-virtual-adapter-used-for
+
 [^vm4]: https://wxler.github.io/2021/02/02/221724
+
 [^vm5]: https://blog.csdn.net/u012110719/article/details/42318717
+
 [^vm6]: http://www.unixlinux.online/unixlinux/linuxgl/linuxjq/201703/77641.html
