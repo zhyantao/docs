@@ -533,6 +533,9 @@ Post Git 提供了显示 Git 分支的功能，安装 Posh Git，请执行以下
 ```bash
 brew install romkatv/gitstatus/gitstatus
 echo "source $(brew --prefix)/opt/gitstatus/gitstatus.prompt.zsh" >>! ~/.zshrc
+
+brew install powerlevel10k
+echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
 ```
 
 :::
