@@ -22,7 +22,9 @@ for ext in "${EXTENSIONS[@]}"; do
 done
 ```
 
-## VS Code Remote-SSH (Multipass)
+## Ubuntu 虚拟机: Multipass
+
+### 配置 SSH
 
 在 macOS 上运行：
 
@@ -56,6 +58,18 @@ ssh ubuntu@< Ubuntu IP >
 
 完成
 
+### 配置 bashrc
+
+Multipass UI 界面启动 Shell，默认走的是 `~/.bash_profile`，如果用户修改了 `~/.bashrc`，想每次启动 Shell 都生效，需要运行下面的指令：
+
+```bash
+echo '. ~/.bashrc' >> ~/.bash_profile
+```
+
+### 配置 Mount
+
+通过 mount 节点可以和宿主机共享文件，运行中的虚拟机可以通过 Details 选项找到相关配置。创建虚拟机的时候也可以直接配置。
+
 ## 快捷键
 
 需求：在 Mac 上使用 Windows 的快捷键。
@@ -68,14 +82,6 @@ ssh ubuntu@< Ubuntu IP >
 ## 鼠标滚轮操作
 
 安装 Scroll Reverser：<https://pilotmoon.com/scrollreverser/>
-
-## Multipass
-
-Multipass UI 界面启动 Shell，默认走的是 `~/.bash_profile`，如果用户修改了 `~/.bashrc`，想每次启动 Shell 都生效，需要运行下面的指令：
-
-```bash
-echo '. ~/.bashrc' >> ~/.bash_profile
-```
 
 ## 好用的 Vim 编辑器
 
