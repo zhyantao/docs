@@ -99,3 +99,11 @@ $$
 | 排序与查找         | 堆/归并/插入/快速/希尔排序、二分查找、二分答案、KMP                                                 | [ds/sort-search.md](ds/sort-search.md)           |
 | 图论               | 存图方式、DFS/BFS、Bellman-Ford、Dijkstra、Floyd、并查集、生成树、拓扑排序、强连通（Kosaraju/2SAT） | [ds/graph.md](ds/graph.md)                       |
 | 线段树             | 单点更新 + 区间查询、懒标记区间更新                                                                 | [ds/segment-tree.md](ds/segment-tree.md)         |
+
+```{toctree}
+:titlesonly:
+:glob:
+:hidden:
+
+ds/*
+```
