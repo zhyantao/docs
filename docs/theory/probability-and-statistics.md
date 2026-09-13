@@ -418,20 +418,48 @@ $$
 
 ### 8.3 区间估计
 
-**置信区间**：若 $P(\underline{\theta} \leq \theta \leq \overline{\theta}) \geq 1 - \alpha$，则 $[\underline{\theta}, \overline{\theta}]$ 是 $\theta$ 的置信水平为 $1-\alpha$ 的置信区间。$1 - \alpha$ 又称**置信度/置信水平**，指该区间包含参数 $\theta$ 真值的可信程度；置信区间并不唯一，区间长度也不唯一。**置信水平 = 1 − 显著性水平 $\alpha$**。
+#### 置信区间与置信水平
 
-查表时注意：分位数符号的**下角标为概率值**（如 $z_{\alpha/2}$、$t_{\alpha/2}(n-1)$、$\chi^2_{\alpha/2}(n-1)$ 等）。角标有三种叫法，含义相同：1）信任系数，2）置信度，3）置信水平。
+**置信区间**：若 $P(\underline{\theta} \leq \theta \leq \overline{\theta}) \geq 1 - \alpha$，则 $[\underline{\theta}, \overline{\theta}]$ 是 $\theta$ 的置信水平为 $1-\alpha$ 的置信区间。
 
-正态总体均值的区间估计：
+- $1 - \alpha$ 称为**置信水平（置信度）**，指该区间包含参数 $\theta$ 真值的可信程度；
+- $\alpha$ 是显著性水平，二者满足 **置信水平 = 1 − 显著性水平 $\alpha$**；
+- 置信区间并不唯一，区间长度也不唯一；
+- 查表时注意：分位数符号的**下角标为概率值**（如 $z_{\alpha/2}$、$t_{\alpha/2}(n-1)$、$\chi^2_{\alpha/2}(n-1)$ 等）。角标有三种叫法，含义相同：1）信任系数，2）置信度，3）置信水平。
 
-- $\sigma$ 已知：$\overline{X} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$；
-- $\sigma$ 未知：$\overline{X} \pm t_{\alpha/2}(n-1) \dfrac{S}{\sqrt{n}}$。
+**如何解读置信水平 95%**（频率解释）：重复抽样 100 次并各构造一个区间，大约有 95 个区间包含参数真值。对一次抽样得到的单个区间，只能说"有 95% 的把握该区间包含 $\theta$"，**不能说**"$\theta$ 以 95% 的概率落在这个区间内"——因为 $\theta$ 是未知常数而非随机变量，随机的是区间。
 
-正态总体方差的区间估计（$\mu$ 未知）：
+#### 构造步骤（枢轴量法）
+
+1. 找一个含待估参数 $\theta$ 且分布已知（不含其他未知参数）的**枢轴量**，如正态总体均值用 $Z = \dfrac{\overline{X} - \mu}{\sigma/\sqrt{n}}$ 或 $t = \dfrac{\overline{X} - \mu}{S/\sqrt{n}}$；
+2. 由置信水平 $1-\alpha$ 确定上、下分位数；
+3. 解不等式反解出 $\theta$，得到置信区间。
+
+#### 常用置信区间公式
+
+正态总体 $N(\mu, \sigma^2)$，样本容量 $n$，置信水平 $1-\alpha$：
+
+| 待估参数 | 条件 | 置信区间 |
+| -------- | ---- | -------- |
+| 均值 $\mu$ | $\sigma^2$ 已知 | $\overline{X} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$ |
+| 均值 $\mu$ | $\sigma^2$ 未知 | $\overline{X} \pm t_{\alpha/2}(n-1) \dfrac{S}{\sqrt{n}}$ |
+| 方差 $\sigma^2$ | $\mu$ 未知 | $\left( \dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\; \dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)} \right)$ |
+| 总体比例 $p$ | 大样本（$n$ 大，$np$、$n(1-p) \geq 5$） | $\hat{p} \pm z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$，其中 $\hat{p}$ 为样本比例 |
+
+**区间长度与样本量、置信水平的关系**：
+
+- 样本量 $n$ 越大，区间越窄（估计越精确），因为标准误 $\sigma/\sqrt{n}$ 随 $n$ 增大而减小；
+- 置信水平 $1-\alpha$ 越高（如 99% vs 95%），$z_{\alpha/2}$ 越大，区间越宽——**精确度与可靠性不可兼得**。
+
+#### 置信区间与假设检验的对偶关系
+
+同一套枢轴量既可用于构造置信区间，也可用于检验假设。对双侧检验，二者结论一致：
 
 $$
-\left( \frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\; \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)} \right)
+\text{置信水平为 } 1-\alpha \text{ 的置信区间不包含 } \mu_0 \iff \text{在显著性水平 } \alpha \text{ 下拒绝 } H_0: \mu = \mu_0
 $$
+
+即"区间估计"回答**参数落在哪里**，"假设检验"回答**参数是否等于某个值**，两者互为补充。
 
 ## 九、假设检验
 
@@ -604,16 +632,6 @@ $$
 ## 十三、正交试验设计
 
 正交试验设计方法是一种研究多因子试验问题的重要数学方法。主要使用**正交表**这一工具来进行整体设计、综合比较、统计分析。其核心是：用较少的试验次数，通过正交表的均衡分散性，同时考察多个因子及其交互作用，再配合方差分析判断各因子的显著性。
-
-## 十四、速查表
-
-- [Cheat Sheet of Probability](https://kdocs.cn/l/cpypzti6jqvK)
-- [数理统计公式大全](https://kdocs.cn/l/cq4IXMIWKAG0)
-- [Cheat Sheet of Statistics](https://kdocs.cn/l/cdcIGVv2EHj9)
-- [Statistics Handout](https://kdocs.cn/l/cnz6IbIdC1p1)
-- [Statistics 100 Final Cheat Sheets - Google Docs](https://kdocs.cn/l/ce7Qrzy5O9zK)
-- [Probability and Statistics Cheat Sheet](https://kdocs.cn/l/cdeLJEPc9zWG)
-- [Probability Cheatsheet v2.0](https://kdocs.cn/l/cuUQ21Xer5d0)
 
 ---
 
