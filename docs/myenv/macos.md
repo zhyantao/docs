@@ -76,3 +76,11 @@ Multipass UI 界面启动 Shell，默认走的是 `~/.bash_profile`，如果用�
 ```bash
 echo '. ~/.bashrc' >> ~/.bash_profile
 ```
+
+## 好用的 Vim 编辑器
+
+```bash
+brew install neovim
+nvim
+:Tutor
+```
