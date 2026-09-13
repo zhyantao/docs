@@ -242,9 +242,9 @@ int maxMin(vector<int>& nums, int lo, int hi) {
     int ans = lo;
     while (lo <= hi) {
         int mid = lo + (hi - lo) / 2;
-        if (check(mid)) {      // mid 可行，尝试更大的答案
+        if (check(mid)) { // mid 可行，尝试更大的答案
             ans = mid;
-            lo = mid + 1;
+            lo  = mid + 1;
         } else {
             hi = mid - 1;
         }
@@ -292,8 +292,10 @@ bool check(int mid) { /* 贪心分段验证 */ }
 int minMax(vector<int>& nums, int lo, int hi) {
     while (lo < hi) {
         int mid = lo + (hi - lo) / 2;
-        if (check(mid)) hi = mid;     // 可行则收窄上界
-        else lo = mid + 1;
+        if (check(mid))
+            hi = mid; // 可行则收窄上界
+        else
+            lo = mid + 1;
     }
     return lo;
 }

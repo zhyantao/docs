@@ -574,12 +574,12 @@ struct Fenwick {
     vector<int> tree;
     Fenwick(int n) : n(n), tree(n + 1) {}
 
-    void add(int i, int v) {          // 单点加 v（下标从 1 开始）
+    void add(int i, int v) { // 单点加 v（下标从 1 开始）
         for (; i <= n; i += i & -i)
             tree[i] += v;
     }
 
-    int pre(int i) {                  // 前缀和 [1, i]
+    int pre(int i) { // 前缀和 [1, i]
         int s = 0;
         for (; i > 0; i -= i & -i)
             s += tree[i];

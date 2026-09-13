@@ -18,13 +18,15 @@ $$
 
 ```cpp
 vector<int> a = {1, 2, 3, 4};
-int n = a.size();
+int n         = a.size();
 vector<int> pre(n + 1, 0);
 for (int i = 0; i < n; i++)
     pre[i + 1] = pre[i] + a[i];
 
 // 区间 [l, r] 的和
-auto rangeSum = [&](int l, int r) { return pre[r + 1] - pre[l]; };
+auto rangeSum = [&](int l, int r) {
+    return pre[r + 1] - pre[l];
+};
 ```
 
 :::
@@ -78,17 +80,17 @@ $$
 
 ```cpp
 // 对长度为 n 的数组做 k 次区间 [l, r] 加 v，最后输出结果数组
-vector<int> diff(n + 1, 0);   // 多开一位避免 r+1 越界
-for (auto& op : ops) {        // ops: {l, r, v}
+vector<int> diff(n + 1, 0); // 多开一位避免 r+1 越界
+for (auto& op : ops) {      // ops: {l, r, v}
     int l = op[0], r = op[1], v = op[2];
-    diff[l] += v;
+    diff[l]     += v;
     diff[r + 1] -= v;
 }
 vector<int> ans(n, 0);
 int cur = 0;
 for (int i = 0; i < n; i++) {
-    cur += diff[i];
-    ans[i] = cur;
+    cur    += diff[i];
+    ans[i]  = cur;
 }
 ```
 
@@ -128,12 +130,12 @@ $$ pre[r] - pre[l] = k \iff pre[l] = pre[r] - k $$
 
 ```cpp
 int subarraySum(vector<int>& nums, int k) {
-    unordered_map<int, int> cnt;  // 前缀和 -> 出现次数
-    cnt[0] = 1;                   // 前缀和为 0 出现一次（空前缀）
+    unordered_map<int, int> cnt; // 前缀和 -> 出现次数
+    cnt[0]  = 1;                 // 前缀和为 0 出现一次（空前缀）
     int sum = 0, ans = 0;
     for (int x : nums) {
         sum += x;
-        ans += cnt[sum - k];      // 之前有多少个前缀和 = sum - k
+        ans += cnt[sum - k]; // 之前有多少个前缀和 = sum - k
         cnt[sum]++;
     }
     return ans;

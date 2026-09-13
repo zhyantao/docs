@@ -439,12 +439,12 @@ $$
 
 正态总体 $N(\mu, \sigma^2)$，样本容量 $n$，置信水平 $1-\alpha$：
 
-| 待估参数 | 条件 | 置信区间 |
-| -------- | ---- | -------- |
-| 均值 $\mu$ | $\sigma^2$ 已知 | $\overline{X} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$ |
-| 均值 $\mu$ | $\sigma^2$ 未知 | $\overline{X} \pm t_{\alpha/2}(n-1) \dfrac{S}{\sqrt{n}}$ |
-| 方差 $\sigma^2$ | $\mu$ 未知 | $\left( \dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\; \dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)} \right)$ |
-| 总体比例 $p$ | 大样本（$n$ 大，$np$、$n(1-p) \geq 5$） | $\hat{p} \pm z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$，其中 $\hat{p}$ 为样本比例 |
+| 待估参数        | 条件                                    | 置信区间                                                                                                |
+| --------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 均值 $\mu$      | $\sigma^2$ 已知                         | $\overline{X} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$                                                |
+| 均值 $\mu$      | $\sigma^2$ 未知                         | $\overline{X} \pm t_{\alpha/2}(n-1) \dfrac{S}{\sqrt{n}}$                                                |
+| 方差 $\sigma^2$ | $\mu$ 未知                              | $\left( \dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\; \dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)} \right)$ |
+| 总体比例 $p$    | 大样本（$n$ 大，$np$、$n(1-p) \geq 5$） | $\hat{p} \pm z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$，其中 $\hat{p}$ 为样本比例              |
 
 **区间长度与样本量、置信水平的关系**：
 

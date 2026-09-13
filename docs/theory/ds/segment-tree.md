@@ -25,7 +25,10 @@ struct SegTree {
     SegTree(vector<int>& a) : n(a.size()), tree(4 * n) { build(a, 1, 0, n - 1); }
 
     void build(vector<int>& a, int p, int l, int r) {
-        if (l == r) { tree[p] = a[l]; return; }
+        if (l == r) {
+            tree[p] = a[l];
+            return;
+        }
         int mid = (l + r) / 2;
         build(a, p * 2, l, mid);
         build(a, p * 2 + 1, mid + 1, r);
@@ -33,18 +36,23 @@ struct SegTree {
     }
 
     void update(int idx, int val, int p, int l, int r) { // 单点改为 val
-        if (l == r) { tree[p] = val; return; }
+        if (l == r) {
+            tree[p] = val;
+            return;
+        }
         int mid = (l + r) / 2;
-        if (idx <= mid) update(idx, val, p * 2, l, mid);
-        else            update(idx, val, p * 2 + 1, mid + 1, r);
+        if (idx <= mid)
+            update(idx, val, p * 2, l, mid);
+        else
+            update(idx, val, p * 2 + 1, mid + 1, r);
         tree[p] = tree[p * 2] + tree[p * 2 + 1];
     }
 
-    int query(int ql, int qr, int p, int l, int r) {     // 区间 [ql, qr] 的和
-        if (ql <= l && r <= qr) return tree[p];          // 完全覆盖
+    int query(int ql, int qr, int p, int l, int r) { // 区间 [ql, qr] 的和
+        if (ql <= l && r <= qr) return tree[p];      // 完全覆盖
         int mid = (l + r) / 2, res = 0;
         if (ql <= mid) res += query(ql, qr, p * 2, l, mid);
-        if (qr > mid)  res += query(ql, qr, p * 2 + 1, mid + 1, r);
+        if (qr > mid) res += query(ql, qr, p * 2 + 1, mid + 1, r);
         return res;
     }
 };
@@ -107,43 +115,52 @@ class SegTree {
 ```cpp
 struct SegTreeLazy {
     int n;
-    vector<long long> tree, lazy;   // lazy[p] 表示节点 p 待下推的区间增量
-    SegTreeLazy(vector<int>& a) : n(a.size()), tree(4 * n), lazy(4 * n) { build(a, 1, 0, n - 1); }
+    vector<long long> tree, lazy; // lazy[p] 表示节点 p 待下推的区间增量
+    SegTreeLazy(vector<int>& a) : n(a.size()), tree(4 * n), lazy(4 * n) {
+        build(a, 1, 0, n - 1);
+    }
 
     void build(vector<int>& a, int p, int l, int r) {
-        if (l == r) { tree[p] = a[l]; return; }
+        if (l == r) {
+            tree[p] = a[l];
+            return;
+        }
         int mid = (l + r) / 2;
         build(a, p * 2, l, mid);
         build(a, p * 2 + 1, mid + 1, r);
         tree[p] = tree[p * 2] + tree[p * 2 + 1];
     }
 
-    void pushDown(int p, int l, int r) {          // 下推懒标记
+    void pushDown(int p, int l, int r) { // 下推懒标记
         if (lazy[p] == 0 || l == r) return;
-        int mid = (l + r) / 2;
-        tree[p * 2] += lazy[p] * (mid - l + 1);
+        int mid          = (l + r) / 2;
+        tree[p * 2]     += lazy[p] * (mid - l + 1);
         tree[p * 2 + 1] += lazy[p] * (r - mid);
-        lazy[p * 2] += lazy[p];
+        lazy[p * 2]     += lazy[p];
         lazy[p * 2 + 1] += lazy[p];
-        lazy[p] = 0;
+        lazy[p]          = 0;
     }
 
     void rangeAdd(int ql, int qr, int v, int p, int l, int r) { // 区间 [ql, qr] 加 v
-        if (ql <= l && r <= qr) { tree[p] += (long long)v * (r - l + 1); lazy[p] += v; return; }
+        if (ql <= l && r <= qr) {
+            tree[p] += (long long)v * (r - l + 1);
+            lazy[p] += v;
+            return;
+        }
         pushDown(p, l, r);
         int mid = (l + r) / 2;
         if (ql <= mid) rangeAdd(ql, qr, v, p * 2, l, mid);
-        if (qr > mid)  rangeAdd(ql, qr, v, p * 2 + 1, mid + 1, r);
+        if (qr > mid) rangeAdd(ql, qr, v, p * 2 + 1, mid + 1, r);
         tree[p] = tree[p * 2] + tree[p * 2 + 1];
     }
 
     long long query(int ql, int qr, int p, int l, int r) {
         if (ql <= l && r <= qr) return tree[p];
         pushDown(p, l, r);
-        int mid = (l + r) / 2;
+        int mid       = (l + r) / 2;
         long long res = 0;
         if (ql <= mid) res += query(ql, qr, p * 2, l, mid);
-        if (qr > mid)  res += query(ql, qr, p * 2 + 1, mid + 1, r);
+        if (qr > mid) res += query(ql, qr, p * 2 + 1, mid + 1, r);
         return res;
     }
 };

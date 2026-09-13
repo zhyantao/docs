@@ -5,14 +5,14 @@
 
 ## 一、基础操作
 
-| 运算 | 符号 | 说明 | 例子 |
-| ---- | ---- | ---- | ---- |
-| 与 | `&` | 同 1 才 1，可**清位/取交集** | `x & 1` 判断奇偶 |
-| 或 | `\|` | 有 1 即 1，可**置位/取并集** | `x \| 1` 把最低位变 1 |
-| 异或 | `^` | 不同为 1，可**翻转/去重** | `x ^ 1` 翻转最低位 |
-| 取反 | `~` | 按位取反 | `~x = -x - 1` |
-| 左移 | `<<` | 乘 $2^k$ | `1 << k` 表示第 k 位 |
-| 右移 | `>>` | 整除 $2^k$ | `x >> k & 1` 取第 k 位 |
+| 运算 | 符号 | 说明                         | 例子                   |
+| ---- | ---- | ---------------------------- | ---------------------- |
+| 与   | `&`  | 同 1 才 1，可**清位/取交集** | `x & 1` 判断奇偶       |
+| 或   | `\|` | 有 1 即 1，可**置位/取并集** | `x \| 1` 把最低位变 1  |
+| 异或 | `^`  | 不同为 1，可**翻转/去重**    | `x ^ 1` 翻转最低位     |
+| 取反 | `~`  | 按位取反                     | `~x = -x - 1`          |
+| 左移 | `<<` | 乘 $2^k$                     | `1 << k` 表示第 k 位   |
+| 右移 | `>>` | 整除 $2^k$                   | `x >> k & 1` 取第 k 位 |
 
 **异或恒等式**（灵神"恒等式"专题核心）：
 
@@ -26,18 +26,30 @@ $$
 
 ```cpp
 // lowbit：取 x 最低位的 1（树状数组、枚举二进制位的基础）
-int lowbit(int x) { return x & -x; }
+int lowbit(int x) {
+    return x & -x;
+}
 
 // 判断第 k 位是否为 1（k 从 0 开始）
-bool getBit(int x, int k) { return (x >> k) & 1; }
+bool getBit(int x, int k) {
+    return (x >> k) & 1;
+}
 
 // 置位 / 清位 / 翻转第 k 位
-int setBit(int x, int k)   { return x | (1 << k); }
-int clearBit(int x, int k) { return x & ~(1 << k); }
-int flipBit(int x, int k)  { return x ^ (1 << k); }
+int setBit(int x, int k) {
+    return x | (1 << k);
+}
+int clearBit(int x, int k) {
+    return x & ~(1 << k);
+}
+int flipBit(int x, int k) {
+    return x ^ (1 << k);
+}
 
 // 统计二进制中 1 的个数（内置函数更快）
-int popcount(int x) { return __builtin_popcount(x); } // Java: Integer.bitCount(x)
+int popcount(int x) {
+    return __builtin_popcount(x);
+} // Java: Integer.bitCount(x)
 ```
 
 ```{note}
@@ -74,8 +86,8 @@ long long xorSum(vector<int>& nums) {
         long long cnt1 = 0;
         for (int x : nums)
             if ((x >> k) & 1) cnt1++;
-        long long cnt0 = nums.size() - cnt1;
-        ans += cnt1 * cnt0 * (1LL << k);  // 该位对异或和的贡献
+        long long cnt0  = nums.size() - cnt1;
+        ans            += cnt1 * cnt0 * (1LL << k); // 该位对异或和的贡献
     }
     return ans;
 }

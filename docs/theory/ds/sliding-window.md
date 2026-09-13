@@ -65,10 +65,10 @@ int[] twoSum(int[] nums, int target) {
 long long fixedWindowSum(vector<int>& nums, int k) {
     long long sum = 0, ans = 0;
     for (int r = 0; r < nums.size(); r++) {
-        sum += nums[r];              // 1. 入窗口（右端点进入）
-        if (r < k - 1) continue;     // 窗口未成形
-        ans = max(ans, sum);         // 2. 更新答案
-        sum -= nums[r - k + 1];      // 3. 出窗口（左端点移出）
+        sum += nums[r];          // 1. 入窗口（右端点进入）
+        if (r < k - 1) continue; // 窗口未成形
+        ans  = max(ans, sum);    // 2. 更新答案
+        sum -= nums[r - k + 1];  // 3. 出窗口（左端点移出）
     }
     return ans;
 }
@@ -110,11 +110,11 @@ int lengthOfLongestSubstring(string s) {
     int ans = 0, l = 0;
     unordered_map<char, int> cnt;
     for (int r = 0; r < s.size(); r++) {
-        cnt[s[r]]++;                        // 入窗口
-        while (cnt[s[r]] > 1) {             // 不满足约束：收缩左端点
+        cnt[s[r]]++;            // 入窗口
+        while (cnt[s[r]] > 1) { // 不满足约束：收缩左端点
             cnt[s[l++]]--;
         }
-        ans = max(ans, r - l + 1);          // 更新答案（窗口合法）
+        ans = max(ans, r - l + 1); // 更新答案（窗口合法）
     }
     return ans;
 }
@@ -162,9 +162,9 @@ int lengthOfLongestSubstring(String s) {
 int minSubArrayLen(int target, vector<int>& nums) {
     int ans = INT_MAX, l = 0, sum = 0;
     for (int r = 0; r < nums.size(); r++) {
-        sum += nums[r];                     // 入窗口
-        while (sum >= target) {             // 满足条件：尝试收缩
-            ans = min(ans, r - l + 1);
+        sum += nums[r];         // 入窗口
+        while (sum >= target) { // 满足条件：尝试收缩
+            ans  = min(ans, r - l + 1);
             sum -= nums[l++];
         }
     }
@@ -204,8 +204,10 @@ int minSubArrayLen(int target, int[] nums) {
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
     int i = m - 1, j = n - 1, k = m + n - 1;
     while (j >= 0) {
-        if (i >= 0 && nums1[i] > nums2[j]) nums1[k--] = nums1[i--];
-        else nums1[k--] = nums2[j--];
+        if (i >= 0 && nums1[i] > nums2[j])
+            nums1[k--] = nums1[i--];
+        else
+            nums1[k--] = nums2[j--];
     }
 }
 ```

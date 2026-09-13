@@ -38,14 +38,15 @@ ArrayList<Integer> v = new ArrayList<>();
 :sync: cpp
 
 ```cpp
-string str = "ABCDEFG";
-str += 'B';               // 末尾追加
-str.substr(start, len);   // 截取子串
-str.find("CD");           // 查找子串，返回下标，找不到返回 string::npos
-str.rfind('C');           // 从后往前查找
-str.compare(other);       // 比较（<0 / 0 / >0）
-stoi(str); stoll(str);    // 字符串转数字（数字转字符串用 to_string(n)）
-sort(str.begin(), str.end()); // 字符串排序
+string str  = "ABCDEFG";
+str        += 'B';      // 末尾追加
+str.substr(start, len); // 截取子串
+str.find("CD");         // 查找子串，返回下标，找不到返回 string::npos
+str.rfind('C');         // 从后往前查找
+str.compare(other);     // 比较（<0 / 0 / >0）
+stoi(str);
+stoll(str);                      // 字符串转数字（数字转字符串用 to_string(n)）
+sort(str.begin(), str.end());    // 字符串排序
 reverse(str.begin(), str.end()); // 反转
 ```
 
@@ -162,9 +163,9 @@ for (ListNode cur = head; cur != null; cur = cur.next) {
 
 ```cpp
 stack<int> stk;
-stk.push(1);      // 入栈
-stk.pop();        // 出栈（不返回值）
-stk.top();        // 查看栈顶
+stk.push(1); // 入栈
+stk.pop();   // 出栈（不返回值）
+stk.top();   // 查看栈顶
 stk.empty();
 stk.size();
 ```
@@ -197,12 +198,12 @@ stk.size();
 
 ```cpp
 deque<int> dq;
-dq.push_back(1);   // 尾部入队
-dq.push_front(2);  // 头部入队
-dq.pop_back();     // 尾部出队
-dq.pop_front();    // 头部出队
-dq.front();        // 查看队首
-dq.back();         // 查看队尾
+dq.push_back(1);  // 尾部入队
+dq.push_front(2); // 头部入队
+dq.pop_back();    // 尾部出队
+dq.pop_front();   // 头部出队
+dq.front();       // 查看队首
+dq.back();        // 查看队尾
 dq.empty();
 dq.size();
 ```
@@ -245,15 +246,15 @@ dq.size();
 ```cpp
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
     vector<int> ans;
-    deque<int> dq;  // 存下标，维护从大到小
+    deque<int> dq; // 存下标，维护从大到小
     for (int i = 0; i < nums.size(); i++) {
         // 队尾元素 ≤ 当前值时，它不可能再成为窗口最大值，弹出
         while (!dq.empty() && nums[dq.back()] <= nums[i])
             dq.pop_back();
         dq.push_back(i);
-        if (dq.front() <= i - k)   // 队首滑出窗口左边界
+        if (dq.front() <= i - k) // 队首滑出窗口左边界
             dq.pop_front();
-        if (i + 1 >= k)            // 窗口已形成
+        if (i + 1 >= k) // 窗口已形成
             ans.push_back(nums[dq.front()]);
     }
     return ans;

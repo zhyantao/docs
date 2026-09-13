@@ -366,19 +366,20 @@ void dfs(int s, int e) {
 
 ```cpp
 struct DSU {
-    vector<int> parent, sz;          // sz 记录集合大小（按大小合并）
+    vector<int> parent, sz; // sz 记录集合大小（按大小合并）
     DSU(int n) : parent(n), sz(n, 1) { iota(parent.begin(), parent.end(), 0); }
 
-    int find(int x) {                // 路径压缩
+    int find(int x) { // 路径压缩
         return parent[x] == x ? x : parent[x] = find(parent[x]);
     }
 
-    bool unite(int a, int b) {       // 合并，返回是否真的合并了
-        a = find(a); b = find(b);
+    bool unite(int a, int b) { // 合并，返回是否真的合并了
+        a = find(a);
+        b = find(b);
         if (a == b) return false;
-        if (sz[a] < sz[b]) swap(a, b);   // 小集合并入大集合
-        parent[b] = a;
-        sz[a] += sz[b];
+        if (sz[a] < sz[b]) swap(a, b); // 小集合并入大集合
+        parent[b]  = a;
+        sz[a]     += sz[b];
         return true;
     }
 
@@ -404,10 +405,10 @@ int kruskal(int n, vector<array<int, 3>>& edges) {
     for (auto& [w, u, v] : edges) {
         if (dsu.unite(u, v)) {
             ans += w;
-            if (++cnt == n - 1) break;   // 已连成树
+            if (++cnt == n - 1) break; // 已连成树
         }
     }
-    return cnt == n - 1 ? ans : -1;      // -1 表示图不连通
+    return cnt == n - 1 ? ans : -1; // -1 表示图不连通
 }
 ```
 
@@ -424,10 +425,11 @@ int prim(int n, vector<vector<pair<int, int>>>& g) {
     pq.push({0, 0});
     int ans = 0, cnt = 0;
     while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
+        auto [d, u] = pq.top();
+        pq.pop();
         if (vis[u]) continue;
-        vis[u] = 1;
-        ans += d;
+        vis[u]  = 1;
+        ans    += d;
         if (++cnt == n) break;
         for (auto& [v, w] : g[u])
             if (!vis[v] && w < dis[v]) {
@@ -453,7 +455,8 @@ vector<int> topoSort(int n, vector<vector<int>>& g, vector<int>& indeg) {
         if (indeg[i] == 0) q.push(i);
     vector<int> order;
     while (!q.empty()) {
-        int u = q.front(); q.pop();
+        int u = q.front();
+        q.pop();
         order.push_back(u);
         for (int v : g[u])
             if (--indeg[v] == 0) q.push(v);
@@ -482,18 +485,21 @@ void kosaraju(int n, vector<vector<int>>& g, vector<vector<int>>& rg) {
     vector<int> vis(n, 0), seq;
     function<void(int)> dfs1 = [&](int u) {
         vis[u] = 1;
-        for (int v : g[u]) if (!vis[v]) dfs1(v);
-        seq.push_back(u);                    // 记录出栈序
+        for (int v : g[u])
+            if (!vis[v]) dfs1(v);
+        seq.push_back(u); // 记录出栈序
     };
-    for (int i = 0; i < n; i++) if (!vis[i]) dfs1(i);
+    for (int i = 0; i < n; i++)
+        if (!vis[i]) dfs1(i);
 
     vector<int> comp(n, -1);
-    int cnt = 0;
+    int cnt                       = 0;
     function<void(int, int)> dfs2 = [&](int u, int c) {
         comp[u] = c;
-        for (int v : rg[u]) if (comp[v] == -1) dfs2(v, c);
+        for (int v : rg[u])
+            if (comp[v] == -1) dfs2(v, c);
     };
-    for (int i = n - 1; i >= 0; i--)         // 按出栈序逆序在反向图 DFS
+    for (int i = n - 1; i >= 0; i--) // 按出栈序逆序在反向图 DFS
         if (comp[seq[i]] == -1) dfs2(seq[i], cnt++);
     // comp[u] 即 u 所属 SCC 编号，cnt 为 SCC 个数
 }
