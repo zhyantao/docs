@@ -5,6 +5,5 @@
 :glob:
 
 *
-probs/*
 papers/*
 ```
