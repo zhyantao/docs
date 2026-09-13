@@ -866,7 +866,6 @@ smoker2() {
 :::
 
 :::{card}
-:column: col-lg-6 col-md-6 col-sm-6 p-3
 
 ```{code-block} c
 smoker3() {
