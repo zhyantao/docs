@@ -5,7 +5,7 @@
 ```{warning}
 以 3 个节点为例，创建集群：（一个 master 节点，两个 node 节点）
 
-- `uname -m`：集群内每个节点必须为 x86 架构（{ref}`不支持 ARM 架构 <training-with-gpu>`）。
+- `uname -m`：集群内每个节点必须为 x86 架构（不支持 ARM 架构）。
 - `lscpu`：最少 2 核处理器。
 - `free -mh`：最小 2GB 内存。
 - `vim /etc/hostname` 修改 hostname，使集群内每个节点的 hostname 不同。

@@ -921,7 +921,7 @@ $$
 :glob:
 :hidden:
 
-dbs/*
+database/*
 ```
 
 ---

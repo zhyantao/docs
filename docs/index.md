@@ -240,13 +240,13 @@ $3.$ 确定“以始为终”战略
 :hidden:
 
 theory/index
-cc/index
+cpp/index
 assembly/index
 java/index
 python/index
 scripts/index
 cli/index
-myenv/index
+environment/index
 appendix/index
 ```
 

@@ -5,5 +5,6 @@
 :glob:
 
 *
+ds/*
 papers/*
 ```
