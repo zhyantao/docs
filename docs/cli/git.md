@@ -544,9 +544,13 @@ brew install --cask font-meslo-lg-nerd-font
 brew install --cask font-meslo-for-powerlevel10k
 sudo atsutil databases -remove
 atsutil server -shutdown
-# 重启 macOS
+
+# 重启 macOS，然后搜索字体是否成功安装，如果能搜到，说明安装成功了
 system_profiler SPFontsDataType | grep -i "MesloLGS NF"
-UI 操作：iTerm2 -> Settings -> Profiles -> Text -> Font -> MesloLGS NF
+
+# UI 操作：设置 iTerm2 和 VS Code 的字体样式
+iTerm2 -> Settings -> Profiles -> Text -> Font -> MesloLGS NF
+Code -> 首选项 -> 设置 -> 搜索 -> Editor: Font Family -> MesloLGS NF, Menlo, Monaco, 'Courier New', monospace
 ```
 
 :::
