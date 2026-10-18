@@ -90,3 +90,21 @@ brew install neovim
 nvim
 :Tutor
 ```
+
+## 两台 Mac 共享鼠标和键盘
+
+1、打开控制选项
+
+```{figure} ../_static/images/macos_share_mouse_keyboard_1.png
+
+```
+
+2、共享鼠标和键盘
+
+```{figure} ../_static/images/macos_share_mouse_keyboard_2.png
+
+```
+
+```{note}
+如果看不到第 2 步的选项，可能需要两台 Mac 都重启下。
+```
