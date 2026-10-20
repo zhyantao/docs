@@ -79,48 +79,63 @@ git config --global init.templatedir '~/.git-template'
 start
 
 :git clone <repo url>;
-note right:下载远程仓库代码
+note right
+  ✗ 错了：删掉重来
+  rm -rf <dir>  或  git clone 换目录
+end note
 
 repeat
-  :编辑文件;
 
-  if (拉取别人的代码?) then (否)
-  else (是)
+  if (需要同步别人代码?) then (是)
     :git stash;
-    note right:临时保存工作目录的修改
+    note right
+      ✗ 错了：git stash pop
+      （恢复被临时保存的修改）
+    end note
+
     :git pull;
-    note right:同步别人的修改
+    note right
+      ✗ 错了：git reset --hard ORIG_HEAD
+      （回到 pull 之前的提交）
+      注意：会丢弃 pull 下来的内容
+    end note
+
     :git stash pop;
-    note right:恢复最近保存的 stash 并删除 stash 记录
+    note right
+      ✗ 错了：git stash
+      （重新收回，或 git checkout -- . 丢弃冲突）
+    end note
   endif
 
-  repeat
-    repeat
-      :git add <file>...;
-      note right:添加到暂存区
+  :编辑文件;
+  note right
+    ✗ 错了：git checkout -- <file>
+    （丢弃未暂存的修改，回到上次提交）
+    未跟踪文件：git clean -fd
+  end note
 
-      backward:git reset HEAD <file>...;
-    repeat while (撤销暂存?) is (Yes) not (No)
+  :git add <file>;
+  note right
+    ✗ 错了：git reset HEAD <file>
+    （从暂存区撤回，保留工作区修改）
+  end note
 
-    repeat
-      :git commit;
-      note right:创建新提交
+  :git commit;
+  note right
+    ✗ 错了：
+    git reset --soft HEAD~1   保留暂存
+    git reset --mixed HEAD~1  保留工作区
+    git reset --hard HEAD~1   全丢
+  end note
 
-      backward:git reset --soft HEAD~1;
-    repeat while (撤销提交(保留暂存)?) is (Yes) not (No)
+  :git push;
+  note right
+    ✗ 错了（已推送）：
+    git revert <commit>  再 push（安全）
+    git push --force-with-lease（改写历史，慎用）
+  end note
 
-    backward:git reset --mixed HEAD~1;
-  repeat while (撤销提交和暂存?) is (Yes) not (No)
-
-  backward:git reset --hard HEAD~1;
-repeat while (彻底丢弃更改?) is (Yes) not (No)
-
-repeat
-  :git push [--force] <remote> <branch>;
-  note right:推送到远程
-
-  backward:git revert HEAD;
-repeat while (安全撤销提交?) is (Yes) not (No)
+repeat while (继续开发?) is (是)
 
 stop
 @enduml
