@@ -122,21 +122,24 @@ python --version          # 验证：应输出 Python 3.10.14
 :sync: ubuntu
 
 ```bash
-# 下载源代码
+QEMU_VERSION=v11.1.1
+QEMU_PREFIX="$HOME/.local/qemu"
+
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
-git checkout v11.1.1    # 或用 master 拿最新版
+git checkout "$QEMU_VERSION"
 git submodule update --init --recursive
 
-# 安装依赖
 pip install tomli sphinx_rtd_theme
 
-# 编译和安装
 mkdir build && cd build
-../configure --target-list=riscv64-softmmu,riscv32-softmmu
+../configure --target-list=riscv64-softmmu,riscv32-softmmu \
+             --prefix="$QEMU_PREFIX"
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
-sudo make install
+make install
 cd ../..
+
+export PATH="$QEMU_PREFIX/bin:$PATH"
 qemu-system-riscv64 --version
 ```
 
@@ -145,22 +148,25 @@ qemu-system-riscv64 --version
 :sync: macos
 
 ```bash
-# 下载源代码
+QEMU_VERSION=v11.1.1
+QEMU_PREFIX="$HOME/.local/qemu"
+
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
-git checkout v11.1.1    # 或用 master 拿最新版
+git checkout "$QEMU_VERSION"
 git submodule update --init --recursive
 
-# 安装依赖
 pip install tomli sphinx_rtd_theme
 
-# 编译和安装
 export LIBRARY_PATH="$(brew --prefix)/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
 mkdir build && cd build
-../configure --target-list=riscv64-softmmu,riscv32-softmmu
+../configure --target-list=riscv64-softmmu,riscv32-softmmu \
+             --prefix="$QEMU_PREFIX"
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
-sudo make install
+make install
 cd ../..
+
+export PATH="$QEMU_PREFIX/bin:$PATH"
 qemu-system-riscv64 --version
 ```
 
