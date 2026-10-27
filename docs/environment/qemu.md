@@ -123,7 +123,7 @@ python --version          # 验证：应输出 Python 3.10.14
 
 ```bash
 QEMU_VERSION=v11.1.1
-QEMU_PREFIX="$HOME/.local/qemu"
+QEMU_PREFIX="$HOME/.local/qemu-$QEMU_VERSION"
 
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
@@ -149,7 +149,7 @@ qemu-system-riscv64 --version
 
 ```bash
 QEMU_VERSION=v11.1.1
-QEMU_PREFIX="$HOME/.local/qemu"
+QEMU_PREFIX="$HOME/.local/qemu-$QEMU_VERSION"
 
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
