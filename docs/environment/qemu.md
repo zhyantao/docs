@@ -185,7 +185,7 @@ python --version          # 验证：应输出 Python 3.10.14
 ```bash
 git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
-git checkout v11.1.1 
+git checkout v11.1.1
 
 pip install tomli sphinx_rtd_theme
 ```

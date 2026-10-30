@@ -6,14 +6,18 @@
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
+
 ```bash
 sudo snap install multipass
 ```
+
 :::
 :::{tab-item} macOS
+
 ```bash
 brew install --cask multipass
 ```
+
 也可从[官方下载页](https://canonical.com/multipass/install)下载 `.pkg` 安装（macOS 14+）。
 :::
 :::{tab-item} Windows
