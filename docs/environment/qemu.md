@@ -183,11 +183,10 @@ python --version          # 验证：应输出 Python 3.10.14
 ## 3. 从源码编译 QEMU
 
 ```bash
-# 下载源代码（浅克隆，只取指定版本；需要 master 时去掉 --branch 与 --depth）
-git clone --depth 1 --branch v11.1.1 https://gitlab.com/qemu-project/qemu.git
+git clone https://gitlab.com/qemu-project/qemu.git
 cd qemu
+git checkout v11.1.1 
 
-# 安装依赖
 pip install tomli sphinx_rtd_theme
 ```
 
