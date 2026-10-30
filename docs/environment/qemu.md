@@ -9,15 +9,15 @@
 ```bash
 sudo apt update
 sudo apt install -y \
-  git build-essential ninja-build pkg-config \
+  build-essential git curl wget cmake ninja-build pkg-config expect \
+  autoconf automake autotools-dev libtool bison flex gawk gperf texinfo patchutils bc \
   libglib2.0-dev libpixman-1-dev libslirp-dev \
-  make libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
-  libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev \
-  libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-  libncurses5-dev texinfo opensbi u-boot-qemu \
-  expect libgmp-dev libmpfr-dev libmpc-dev bison flex \
-  autoconf automake autotools-dev python3 python3-pip \
-  gawk gperf libtool patchutils bc libexpat-dev cmake
+  libgmp-dev libmpfr-dev libmpc-dev libexpat-dev \
+  device-tree-compiler libboost-regex-dev libboost-system-dev \
+  opensbi u-boot-qemu \
+  python3 python3-pip llvm xz-utils tk-dev \
+  libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev \
+  libncurses-dev libncursesw5-dev libffi-dev liblzma-dev libxml2-dev libxmlsec1-dev
 ```
 
 :::
@@ -26,20 +26,17 @@ sudo apt install -y \
 
 ```bash
 # 提供 clang/make/git 等基础工具链
-xcode-select --install   # 如果已装过会报已存在，忽略即可
+xcode-select --install
 
 # 先确认已安装 Homebrew：https://brew.sh
 brew update
 brew install \
-  git ninja pkg-config \
+  git curl wget cmake ninja pkg-config gnu-sed gmake \
+  autoconf automake libtool bison flex gawk texinfo \
   glib pixman libslirp \
-  openssl readline sqlite \
-  wget curl llvm \
-  xz \
-  libxml2 libxmlsec1 libffi \
-  gmp mpfr libmpc isl bison flex \
-  texinfo \
-  autoconf automake libtool gawk gnu-sed gmake expat zlib cmake
+  gmp mpfr libmpc isl expat \
+  dtc boost \
+  openssl readline sqlite xz zlib libffi libxml2 libxmlsec1
 ```
 
 :::
@@ -88,7 +85,6 @@ source ~/.bashrc
 ```bash
 brew install pyenv
 
-# macOS 默认 shell 是 zsh，配置文件是 ~/.zshrc（如果你确实用 bash，改成 ~/.bash_profile）
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
 echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
@@ -172,24 +168,26 @@ cd ../..
 qemu-system-riscv64 --version
 ```
 
-## 4. 从源码编译 RISC-V GCC
+## 4. 从源码编译 RISC-V GCC 与 GDB
+
+GDB 作为 `riscv-gnu-toolchain` 的子模块一起编译，与 GCC、binutils 共用同一个安装前缀。
 
 ```bash
 git clone https://github.com/riscv-collab/riscv-gnu-toolchain.git
 cd riscv-gnu-toolchain
-git checkout 2026.08.27   # 固定版本以便复现；可在仓库 tags 中选择更新的版本
-# 只拉 newlib 版工具链必需的三个子模块（不拉 glibc/musl/qemu/spike/llvm/gdb 等）
-git submodule update --init --depth 1 binutils gcc newlib
+git checkout 2026.08.27
+# 只拉 newlib 版工具链必需的四个子模块（不拉 glibc/musl/qemu/spike/llvm 等）
+git submodule update --init --depth 1 binutils gcc newlib gdb
 ```
 
-> GCC 体积仍然较大，首次拉取耗时较长，可以配置代理或使用镜像。GDB 在第 5 节单独编译，所以这里不拉 `gdb` 子模块，并在 `configure` 中加 `--disable-gdb`。
+> 子模块体积较大，首次拉取耗时较长，可以配置代理或使用镜像。GDB 会自动探测 PATH 中的 Python，因此编译前请确认第 2 节的 `pyenv global 3.10.14` 已生效。
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
 
 ```bash
-./configure --prefix=$HOME/riscv --enable-multilib --disable-gdb
+./configure --prefix=$HOME/riscv --enable-multilib
 make -j"$(nproc)"
 ```
 
@@ -201,7 +199,7 @@ make -j"$(nproc)"
 # 使用 GNU sed / make，避免 BSD 版本导致构建失败
 export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$(brew --prefix gmake)/libexec/gnubin:$PATH"
 
-./configure --prefix=$HOME/riscv --enable-multilib --disable-gdb \
+./configure --prefix=$HOME/riscv --enable-multilib \
             --with-gmp=$(brew --prefix gmp) \
             --with-mpfr=$(brew --prefix mpfr) \
             --with-mpc=$(brew --prefix libmpc)
@@ -216,55 +214,25 @@ make -j"$(sysctl -n hw.ncpu)"
 ```bash
 cd ..
 riscv64-unknown-elf-gcc --version
-```
-
-## 5. 从源码编译 RISC-V GDB
-
-工具链已经提供了 binutils，这里只编译 GDB 本体，避免重复安装 `as`/`ld` 等工具。两个平台都使用第 2 节的 pyenv Python，以保证带有共享库。
-
-```bash
-git clone --depth 1 --branch gdb-17.2-release https://sourceware.org/git/binutils-gdb.git
-cd binutils-gdb
-
-mkdir build && cd build
-```
-
-::::{tab-set}
-:::{tab-item} Ubuntu
-:sync: ubuntu
-
-```bash
-../configure --prefix=$HOME/riscv \
-             --target=riscv64-unknown-elf \
-             --disable-werror \
-             --disable-binutils --disable-gas --disable-ld --disable-gprof \
-             --with-python="$(pyenv root)/versions/3.10.14/bin/python3" \
-             --enable-tui=yes
-```
-
-:::
-:::{tab-item} macOS
-:sync: macos
-
-```bash
-../configure --prefix=$HOME/riscv \
-             --target=riscv64-unknown-elf \
-             --disable-werror \
-             --disable-binutils --disable-gas --disable-ld --disable-gprof \
-             --with-python="$(pyenv root)/versions/3.10.14/bin/python3" \
-             --enable-tui=yes \
-             --with-gmp="$(brew --prefix gmp)" \
-             --with-mpfr="$(brew --prefix mpfr)"
-```
-
-:::
-::::
-
-```bash
-make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)" all-gdb
-make install-gdb
-cd ../..
 riscv64-unknown-elf-gdb --version
+
+# 验证 gdb 带有 Python 支持
+riscv64-unknown-elf-gdb -batch -ex "python print(1)"
+```
+
+## 5. 从源码编译 Spike
+
+Spike 是 RISC-V 官方 ISA 模拟器，独立于工具链单独编译。
+
+```bash
+git clone --depth 1 https://github.com/riscv-software-src/riscv-isa-sim.git
+cd riscv-isa-sim
+mkdir build && cd build
+../configure --prefix=$HOME/riscv
+make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
+make install
+cd ../..
+spike --help
 ```
 
 ## 6. 配置 gdb 美化输出
