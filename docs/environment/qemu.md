@@ -138,9 +138,7 @@ python --version          # 验证：应输出 Python 3.10.14
 git clone --depth 1 --branch v11.1.1 https://gitlab.com/qemu-project/qemu.git
 cd qemu
 
-# 在虚拟环境中安装构建依赖，避免污染 pyenv 全局环境
-python -m venv .venv
-source .venv/bin/activate
+# 安装依赖
 pip install tomli sphinx_rtd_theme
 ```
 
@@ -170,7 +168,6 @@ mkdir build && cd build
 ../configure --prefix=$HOME/riscv --target-list=riscv64-softmmu,riscv32-softmmu
 make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
 make install
-deactivate
 cd ../..
 qemu-system-riscv64 --version
 ```
@@ -180,18 +177,19 @@ qemu-system-riscv64 --version
 ```bash
 git clone https://github.com/riscv-collab/riscv-gnu-toolchain.git
 cd riscv-gnu-toolchain
-git checkout 2025.01.20   # 固定版本以便复现；可在仓库 tags 中选择更新的版本
-git submodule update --init --recursive
+git checkout 2026.08.27   # 固定版本以便复现；可在仓库 tags 中选择更新的版本
+# 只拉 newlib 版工具链必需的三个子模块（不拉 glibc/musl/qemu/spike/llvm/gdb 等）
+git submodule update --init --depth 1 binutils gcc newlib
 ```
 
-> 子模块（尤其是 GCC）体积很大，首次拉取耗时较长，可以配置代理或使用镜像。
+> GCC 体积仍然较大，首次拉取耗时较长，可以配置代理或使用镜像。GDB 在第 5 节单独编译，所以这里不拉 `gdb` 子模块，并在 `configure` 中加 `--disable-gdb`。
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
 
 ```bash
-./configure --prefix=$HOME/riscv --enable-multilib
+./configure --prefix=$HOME/riscv --enable-multilib --disable-gdb
 make -j"$(nproc)"
 ```
 
@@ -203,7 +201,7 @@ make -j"$(nproc)"
 # 使用 GNU sed / make，避免 BSD 版本导致构建失败
 export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$(brew --prefix gmake)/libexec/gnubin:$PATH"
 
-./configure --prefix=$HOME/riscv --enable-multilib \
+./configure --prefix=$HOME/riscv --enable-multilib --disable-gdb \
             --with-gmp=$(brew --prefix gmp) \
             --with-mpfr=$(brew --prefix mpfr) \
             --with-mpc=$(brew --prefix libmpc)
