@@ -21,6 +21,29 @@ sudo apt install -y \
 ```
 
 :::
+:::{tab-item} Rocky 9
+:sync: rocky
+
+```bash
+# ninja-build、texinfo、gperf 等位于 CRB / EPEL，需先启用
+sudo dnf install -y dnf-plugins-core epel-release
+sudo dnf config-manager --set-enabled crb
+
+sudo dnf groupinstall -y "Development Tools"
+sudo dnf install -y \
+  git wget cmake ninja-build pkgconf-pkg-config expect \
+  autoconf automake libtool bison flex gawk gperf texinfo patchutils bc \
+  glib2-devel pixman-devel libslirp-devel \
+  gmp-devel mpfr-devel libmpc-devel expat-devel \
+  dtc boost-devel \
+  python3 python3-pip llvm xz tk-devel \
+  openssl-devel zlib-devel bzip2-devel readline-devel sqlite-devel \
+  ncurses-devel libffi-devel xz-devel libxml2-devel xmlsec1-devel
+```
+
+> Rocky 9 预装 `curl-minimal`，与完整版 `curl` 冲突，已能满足后文 `curl https://pyenv.run | bash`，因此不安装 `curl`。软件源中没有 `opensbi`、`u-boot-qemu`，从源码编译 QEMU 用不到，已省略。
+
+:::
 :::{tab-item} macOS
 :sync: macos
 
@@ -52,6 +75,15 @@ source ~/.bashrc
 ```
 
 :::
+:::{tab-item} Rocky 9
+:sync: rocky
+
+```bash
+echo 'export PATH="$HOME/riscv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+:::
 :::{tab-item} macOS
 :sync: macos
 
@@ -68,6 +100,19 @@ source ~/.zshrc
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
+```bash
+curl https://pyenv.run | bash
+
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+:::
+:::{tab-item} Rocky 9
+:sync: rocky
 
 ```bash
 curl https://pyenv.run | bash
@@ -107,6 +152,14 @@ PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.10.14
 ```
 
 :::
+:::{tab-item} Rocky 9
+:sync: rocky
+
+```bash
+PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.10.14
+```
+
+:::
 :::{tab-item} macOS
 :sync: macos
 
@@ -138,11 +191,19 @@ cd qemu
 pip install tomli sphinx_rtd_theme
 ```
 
-macOS 需要让链接器找到 Homebrew 的库，Ubuntu 跳过这一步：
+macOS 需要让链接器找到 Homebrew 的库，Ubuntu 和 Rocky 9 跳过这一步：
 
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
+```bash
+# 无需额外设置
+```
+
+:::
+:::{tab-item} Rocky 9
+:sync: rocky
 
 ```bash
 # 无需额外设置
@@ -185,6 +246,15 @@ git submodule update --init --depth 1 binutils gcc newlib gdb
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
+
+```bash
+./configure --prefix=$HOME/riscv --enable-multilib
+make -j"$(nproc)"
+```
+
+:::
+:::{tab-item} Rocky 9
+:sync: rocky
 
 ```bash
 ./configure --prefix=$HOME/riscv --enable-multilib
