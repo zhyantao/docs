@@ -14,9 +14,10 @@ sudo apt install -y \
   make libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
   libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev \
   libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-  libncurses5-dev texinfo \
-  gcc-riscv64-unknown-elf opensbi u-boot-qemu \
-  expect libgmp-dev libmpfr-dev libmpc-dev bison flex
+  libncurses5-dev texinfo opensbi u-boot-qemu \
+  expect libgmp-dev libmpfr-dev libmpc-dev bison flex \
+  autoconf automake autotools-dev python3 python3-pip \
+  gawk gperf libtool patchutils bc libexpat-dev cmake
 ```
 
 :::
@@ -29,22 +30,37 @@ xcode-select --install   # 如果已装过会报已存在，忽略即可
 
 # 先确认已安装 Homebrew：https://brew.sh
 brew update
-brew install -y \
+brew install \
   git ninja pkg-config \
   glib pixman libslirp \
   openssl readline sqlite \
   wget curl llvm \
   xz \
   libxml2 libxmlsec1 libffi \
-  gmp mpfr libmpc bison flex \
-  gdb \
-  coreutils \  # 提供 gnproc，替代 Linux 的 nproc
-  texinfo # for makeinfo
+  gmp mpfr libmpc isl bison flex \
+  texinfo \
+  autoconf automake libtool gawk gnu-sed gmake expat zlib cmake
+```
 
-# RISC-V 交叉编译工具链 + 固件（对应原来的 gcc-riscv64-unknown-elf / opensbi / u-boot-qemu）
-brew tap riscv-software-src/riscv
-brew trust riscv-software-src/riscv
-brew install -y riscv-tools    # 内含交叉 gcc/binutils；opensbi、u-boot 需另行编译或从官方 release 下载二进制
+:::
+::::
+
+::::{tab-set}
+:::{tab-item} Ubuntu
+:sync: ubuntu
+
+```bash
+echo 'export PATH="$HOME/riscv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+:::
+:::{tab-item} macOS
+:sync: macos
+
+```bash
+echo 'export PATH="$HOME/riscv/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 :::
@@ -70,7 +86,7 @@ source ~/.bashrc
 :sync: macos
 
 ```bash
-brew install -y pyenv
+brew install pyenv
 
 # macOS 默认 shell 是 zsh，配置文件是 ~/.zshrc（如果你确实用 bash，改成 ~/.bash_profile）
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
@@ -117,27 +133,25 @@ python --version          # 验证：应输出 Python 3.10.14
 
 ## 3. 从源码编译 QEMU
 
+```bash
+# 下载源代码（浅克隆，只取指定版本；需要 master 时去掉 --branch 与 --depth）
+git clone --depth 1 --branch v11.1.1 https://gitlab.com/qemu-project/qemu.git
+cd qemu
+
+# 在虚拟环境中安装构建依赖，避免污染 pyenv 全局环境
+python -m venv .venv
+source .venv/bin/activate
+pip install tomli sphinx_rtd_theme
+```
+
+macOS 需要让链接器找到 Homebrew 的库，Ubuntu 跳过这一步：
+
 ::::{tab-set}
 :::{tab-item} Ubuntu
 :sync: ubuntu
 
 ```bash
-# 下载源代码
-git clone https://gitlab.com/qemu-project/qemu.git
-cd qemu
-git checkout v11.1.1    # 或用 master 拿最新版
-git submodule update --init --recursive
-
-# 安装依赖
-pip install tomli sphinx_rtd_theme
-
-# 编译和安装
-mkdir build && cd build
-../configure --target-list=riscv64-softmmu,riscv32-softmmu
-make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
-sudo make install
-cd ../..
-qemu-system-riscv64 --version
+# 无需额外设置
 ```
 
 :::
@@ -145,34 +159,74 @@ qemu-system-riscv64 --version
 :sync: macos
 
 ```bash
-# 下载源代码
-git clone https://gitlab.com/qemu-project/qemu.git
-cd qemu
-git checkout v11.1.1    # 或用 master 拿最新版
-git submodule update --init --recursive
-
-# 安装依赖
-pip install tomli sphinx_rtd_theme
-
-# 编译和安装
 export LIBRARY_PATH="$(brew --prefix)/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
-mkdir build && cd build
-../configure --target-list=riscv64-softmmu,riscv32-softmmu
-make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
-sudo make install
-cd ../..
-qemu-system-riscv64 --version
 ```
 
 :::
 ::::
 
-## 4. 从源码编译 GDB
+```bash
+mkdir build && cd build
+../configure --prefix=$HOME/riscv --target-list=riscv64-softmmu,riscv32-softmmu
+make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
+make install
+deactivate
+cd ../..
+qemu-system-riscv64 --version
+```
+
+## 4. 从源码编译 RISC-V GCC
 
 ```bash
-git clone https://sourceware.org/git/binutils-gdb.git
+git clone https://github.com/riscv-collab/riscv-gnu-toolchain.git
+cd riscv-gnu-toolchain
+git checkout 2025.01.20   # 固定版本以便复现；可在仓库 tags 中选择更新的版本
+git submodule update --init --recursive
+```
+
+> 子模块（尤其是 GCC）体积很大，首次拉取耗时较长，可以配置代理或使用镜像。
+
+::::{tab-set}
+:::{tab-item} Ubuntu
+:sync: ubuntu
+
+```bash
+./configure --prefix=$HOME/riscv --enable-multilib
+make -j"$(nproc)"
+```
+
+:::
+:::{tab-item} macOS
+:sync: macos
+
+```bash
+# 使用 GNU sed / make，避免 BSD 版本导致构建失败
+export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$(brew --prefix gmake)/libexec/gnubin:$PATH"
+
+./configure --prefix=$HOME/riscv --enable-multilib \
+            --with-gmp=$(brew --prefix gmp) \
+            --with-mpfr=$(brew --prefix mpfr) \
+            --with-mpc=$(brew --prefix libmpc)
+make -j"$(sysctl -n hw.ncpu)"
+```
+
+:::
+::::
+
+`make` 默认构建 newlib 版本（`riscv64-unknown-elf-*`），产物直接安装到 `--prefix` 指定目录，无需再执行 `make install`。
+
+```bash
+cd ..
+riscv64-unknown-elf-gcc --version
+```
+
+## 5. 从源码编译 RISC-V GDB
+
+工具链已经提供了 binutils，这里只编译 GDB 本体，避免重复安装 `as`/`ld` 等工具。两个平台都使用第 2 节的 pyenv Python，以保证带有共享库。
+
+```bash
+git clone --depth 1 --branch gdb-17.2-release https://sourceware.org/git/binutils-gdb.git
 cd binutils-gdb
-git checkout gdb-17.2-release   # 或用 master 拿最新版
 
 mkdir build && cd build
 ```
@@ -182,10 +236,11 @@ mkdir build && cd build
 :sync: ubuntu
 
 ```bash
-../configure --target=riscv64-unknown-elf \
-             --enable-multilib \
+../configure --prefix=$HOME/riscv \
+             --target=riscv64-unknown-elf \
              --disable-werror \
-             --with-python=/usr/bin/python3 \
+             --disable-binutils --disable-gas --disable-ld --disable-gprof \
+             --with-python="$(pyenv root)/versions/3.10.14/bin/python3" \
              --enable-tui=yes
 ```
 
@@ -194,33 +249,36 @@ mkdir build && cd build
 :sync: macos
 
 ```bash
-../configure --target=riscv64-unknown-elf \
-             --enable-multilib \
+../configure --prefix=$HOME/riscv \
+             --target=riscv64-unknown-elf \
              --disable-werror \
+             --disable-binutils --disable-gas --disable-ld --disable-gprof \
              --with-python="$(pyenv root)/versions/3.10.14/bin/python3" \
              --enable-tui=yes \
-             --with-gmp=/opt/homebrew/opt/gmp \
-             --with-mpfr=/opt/homebrew/opt/mpfr
+             --with-gmp="$(brew --prefix gmp)" \
+             --with-mpfr="$(brew --prefix mpfr)"
 ```
 
 :::
 ::::
 
 ```bash
-make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
-sudo make install
+make -j"$(nproc 2>/dev/null || sysctl -n hw.ncpu)" all-gdb
+make install-gdb
 cd ../..
 riscv64-unknown-elf-gdb --version
 ```
 
-## 5. 配置 gdb 美化输出
+## 6. 配置 gdb 美化输出
+
+使用 [gdb-dashboard](https://github.com/cyrus-and/gdb-dashboard)：
 
 ```bash
 cp ~/.gdbinit ~/.gdbinit.bak 2>/dev/null
-wget -P ~ https://git.io/.gdbinit
+wget -O ~/.gdbinit https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit
 ```
 
-## 6. riscv64-unknown-elf-gdb 调试
+## 7. riscv64-unknown-elf-gdb 调试
 
 1、下载源代码，编译，用 QEMU 启动 kernel.elf 并等待 GDB
 
