@@ -1,6 +1,6 @@
 # OrbStack
 
-用 [OrbStack](https://orbstack.dev) 在 macOS 上快速启动 Ubuntu 虚拟机（Linux machine），在里面按 `qemu.md` 的 Ubuntu 步骤编译工具链，避免污染宿主机环境。OrbStack 同时提供 Docker 容器支持，启动快、资源占用低。
+用 [OrbStack](https://orbstack.dev) 在 macOS 上快速启动 Ubuntu 虚拟机（Linux machine），在里面按 {doc}`qemu` 的 Ubuntu 或 Rocky 9 步骤编译工具链，避免污染宿主机环境。OrbStack 同时提供 Docker 容器支持，启动快、资源占用低。
 
 ## 1. 安装
 
@@ -23,7 +23,11 @@ orbctl config set cpu 8
 orbctl config set memory_mib 16384
 ```
 
-创建并进入虚拟机：
+按发行版创建并进入虚拟机：
+
+::::{tab-set}
+:::{tab-item} Ubuntu
+:sync: ubuntu
 
 ```bash
 orb create ubuntu riscv-dev
@@ -34,10 +38,28 @@ orb shell -m riscv-dev
 
 ```bash
 orb create ubuntu:jammy riscv-dev
-orb create --arch amd64 ubuntu riscv-dev-x86
+orb create -a amd64 ubuntu riscv-dev-x86
 ```
 
-进入后按 `qemu.md` 的 **Ubuntu** 步骤操作。默认用户名与 macOS 用户名一致，并拥有免密 `sudo`。
+:::
+:::{tab-item} Rocky 9
+:sync: rocky
+
+```bash
+orb create -a amd64 rocky:9 rocky9
+orb shell -m rocky9
+```
+
+使用原生架构时去掉 `-a amd64`：
+
+```bash
+orb create rocky:9 rocky9
+```
+
+:::
+::::
+
+进入后按 `qemu.md` 中对应的标签页（**Ubuntu** 或 **Rocky 9**）操作。默认用户名与 macOS 用户名一致，并拥有免密 `sudo`。
 
 ## 3. 传输文件
 
@@ -78,15 +100,3 @@ orb import riscv-dev.tar.zst
 # 删除
 orb delete riscv-dev
 ```
-
-注意：OrbStack 没有 Multipass 那样的 `snapshot` / `restore` 命令，需要回滚时用 `orb clone` 备份，或 `orb export` 导出后再 `orb import`。
-
-## 5. 与 Multipass 的差异
-
-| 项目 | Multipass | OrbStack |
-| --- | --- | --- |
-| 平台 | Linux / macOS / Windows | 仅 macOS |
-| 资源分配 | 创建时固定 | 动态按需，全局上限 |
-| 文件共享 | 手动 `transfer` / `mount` | 自动双向共享 |
-| 快照 | `snapshot` / `restore` | `clone` / `export` |
-| 附带能力 | 无 | Docker、Kubernetes |
