@@ -39,7 +39,23 @@ multipass set local.driver=applevz
 ```
 
 :::
+:::{tab-item} Windows
+:sync: windows
+
+支持 Windows 10 或 11 的 Home、Pro、Enterprise 版本，系统版本至少 1809（October 2018 Update），并需要启用 Virtual Machine Platform 功能。
+
+从[官方下载页](https://canonical.com/multipass/install)下载 `.msi` 安装包并运行，安装过程需要管理员权限。也可以用包管理器安装，但官方不提供支持。
+
+安装后以普通用户身份打开 Command Prompt 或 PowerShell：
+
+```powershell
+multipass version
+```
+
+:::
 ::::
+
+> 无论宿主机是哪种系统，虚拟机里都是 Ubuntu，所以后面各节的命令（除宿主机路径外）在三个平台上通用，虚拟机内的编译步骤都按 `qemu.md` 的 Ubuntu 标签页执行。
 
 ## 2. 创建虚拟机
 
@@ -105,6 +121,8 @@ multipass unmount riscv-dev
 ```bash
 multipass launch --name riscv-dev --mount /host/path:/home/ubuntu/shared
 ```
+
+Windows 上宿主机路径写成 Windows 路径，例如 `C:\Users\me\work`，命令本身不变。
 
 默认是 `classic` 挂载，也可用 `--type=native` 选择基于虚拟化后端的原生挂载。
 
