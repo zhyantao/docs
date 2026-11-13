@@ -8,12 +8,13 @@
 
 using namespace std;
 
-int main() {
-    float f1 = 1.2f;
-    float f2 = f1 * 1000000000000000;
-    cout << std::fixed << std::setprecision(15) << f1 << endl;
-    cout << std::fixed << std::setprecision(1) << f2 << endl;
-    return 0;
+int main()
+{
+	float f1 = 1.2f;
+	float f2 = f1 * 1000000000000000;
+	cout << std::fixed << std::setprecision(15) << f1 << endl;
+	cout << std::fixed << std::setprecision(1) << f2 << endl;
+	return 0;
 }
 ```
 
@@ -26,16 +27,17 @@ int main() {
 
 using namespace std;
 
-int main() {
-    float f1 = 23400000000;
-    float f2 = f1 + 10;
+int main()
+{
+	float f1 = 23400000000;
+	float f2 = f1 + 10;
 
-    cout.setf(ios_base::fixed, ios_base::floatfield); // fixed-point
-    cout << "f1 = " << f1 << endl;
-    cout << "f2 = " << f2 << endl;
-    cout << "f1 - f2 = " << f1 - f2 << endl;
-    cout << "(f1 - f2 == 0) = " << (f1 - f2 == 0) << endl;
-    return 0;
+	cout.setf(ios_base::fixed, ios_base::floatfield); // fixed-point
+	cout << "f1 = " << f1 << endl;
+	cout << "f2 = " << f2 << endl;
+	cout << "f1 - f2 = " << f1 - f2 << endl;
+	cout << "(f1 - f2 == 0) = " << (f1 - f2 == 0) << endl;
+	return 0;
 }
 ```
 
@@ -48,11 +50,12 @@ IEEE 754 规定：非零数除以零得到无穷大（inf），零除以零得�
 
 using namespace std;
 
-int main() {
-    float f1 = 2.0f / 0.0f;
-    float f2 = 0.0f / 0.0f;
-    cout << f1 << endl;
-    cout << f2 << endl;
-    return 0;
+int main()
+{
+	float f1 = 2.0f / 0.0f;
+	float f2 = 0.0f / 0.0f;
+	cout << f1 << endl;
+	cout << f2 << endl;
+	return 0;
 }
 ```

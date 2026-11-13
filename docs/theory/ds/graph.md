@@ -53,13 +53,13 @@ flowchart LR
 ```
 
 ```cpp
-vector<pair<int, int>> adj[N];
+vector<pair<int, int> > adj[N];
 
-adj[1].push_back({2, 5});
-adj[2].push_back({3, 7});
-adj[2].push_back({4, 6});
-adj[3].push_back({4, 5});
-adj[4].push_back({1, 2});
+adj[1].push_back({ 2, 5 });
+adj[2].push_back({ 3, 7 });
+adj[2].push_back({ 4, 6 });
+adj[3].push_back({ 4, 5 });
+adj[4].push_back({ 1, 2 });
 ```
 
 :::
@@ -69,7 +69,7 @@ adj[4].push_back({1, 2});
 
 ```cpp
 for (auto u : adj[s]) {
-    // process node u
+	// process node u
 }
 ```
 
@@ -138,13 +138,13 @@ flowchart LR
 ```
 
 ```cpp
-vector<pair<int, int>> edges;
+vector<pair<int, int> > edges;
 
-edges.push_back({1, 2});
-edges.push_back({2, 3});
-edges.push_back({2, 4});
-edges.push_back({3, 4});
-edges.push_back({4, 1});
+edges.push_back({ 1, 2 });
+edges.push_back({ 2, 3 });
+edges.push_back({ 2, 4 });
+edges.push_back({ 3, 4 });
+edges.push_back({ 4, 1 });
 ```
 
 :::
@@ -165,13 +165,13 @@ flowchart LR
 ```
 
 ```cpp
-vector<tuple<int, int, int>> edges;
+vector<tuple<int, int, int> > edges;
 
-edges.push_back({1, 2, 5});
-edges.push_back({2, 3, 7});
-edges.push_back({2, 4, 6});
-edges.push_back({3, 4, 5});
-edges.push_back({4, 1, 2});
+edges.push_back({ 1, 2, 5 });
+edges.push_back({ 2, 3, 7 });
+edges.push_back({ 2, 4, 6 });
+edges.push_back({ 3, 4, 5 });
+edges.push_back({ 4, 1, 2 });
 ```
 
 :::
@@ -201,13 +201,15 @@ flowchart LR
 vector<int> adj[N];
 bool visited[N];
 
-void dfs(int s) {
-    if (visited[s]) return;
-    visited[s] = true;
-    // process node s
-    for (auto u : adj[s]) {
-        dfs(u);
-    }
+void dfs(int s)
+{
+	if (visited[s])
+		return;
+	visited[s] = true;
+	// process node s
+	for (auto u : adj[s]) {
+		dfs(u);
+	}
 }
 ```
 
@@ -236,21 +238,23 @@ queue<int> q;
 bool visited[N];
 int distance[N];
 
-void bfs(queue<int>& q, bool& visited, int& distance) {
-    visited[x]  = true;
-    distance[x] = 0;
-    q.push(x);
-    while (!q.empty()) {
-        int s = q.front();
-        q.pop();
-        // process node s
-        for (auto u : adj[s]) {
-            if (visited[u]) continue;
-            visited[u]  = true;
-            distance[u] = distance[s] + 1;
-            q.push(u);
-        }
-    }
+void bfs(queue<int> &q, bool &visited, int &distance)
+{
+	visited[x] = true;
+	distance[x] = 0;
+	q.push(x);
+	while (!q.empty()) {
+		int s = q.front();
+		q.pop();
+		// process node s
+		for (auto u : adj[s]) {
+			if (visited[u])
+				continue;
+			visited[u] = true;
+			distance[u] = distance[s] + 1;
+			q.push(u);
+		}
+	}
 }
 ```
 
@@ -265,14 +269,14 @@ void bfs(queue<int>& q, bool& visited, int& distance) {
 
 ```cpp
 for (int i = 1; i <= n; i++)
-    distance[i] = INF;
+	distance[i] = INF;
 distance[x] = 0;
 for (int i = 1; i <= n - 1; i++) {
-    for (auto e : edges) { // 用边存图
-        int a, b, w;
-        tie(a, b, w) = e;
-        distance[b]  = min(distance[b], distance[a] + w);
-    }
+	for (auto e : edges) { // 用边存图
+		int a, b, w;
+		tie(a, b, w) = e;
+		distance[b] = min(distance[b], distance[a] + w);
+	}
 }
 ```
 
@@ -286,21 +290,22 @@ Dijkstra 比 Bellman-Ford 更加高效，因为它只遍历每条边一次。
 
 ```cpp
 for (int i = 1; i <= n; i++)
-    distance[i] = INF;
+	distance[i] = INF;
 distance[x] = 0;
-q.push({0, x}); // 必须使用优先队列
+q.push({ 0, x }); // 必须使用优先队列
 while (!q.empty()) {
-    int a = q.top().second;
-    q.pop();
-    if (processed[a]) continue;
-    processed[a] = true;
-    for (auto u : adj[a]) { // 邻接表
-        int b = u.first, w = u.second;
-        if (distance[a] + w < distance[b]) {
-            distance[b] = distance[a] + w;
-            q.push({-distance[b], b});
-        }
-    }
+	int a = q.top().second;
+	q.pop();
+	if (processed[a])
+		continue;
+	processed[a] = true;
+	for (auto u : adj[a]) { // 邻接表
+		int b = u.first, w = u.second;
+		if (distance[a] + w < distance[b]) {
+			distance[b] = distance[a] + w;
+			q.push({ -distance[b], b });
+		}
+	}
 }
 ```
 
@@ -327,11 +332,13 @@ auto dfs = [&](this auto&& dfs, int k, int i, int j) -> int {
 #### 遍历多叉树
 
 ```cpp
-void dfs(int s, int e) {
-    // process node s
-    for (auto u : adj[s]) {
-        if (u != e) dfs(u, s);
-    }
+void dfs(int s, int e)
+{
+	// process node s
+	for (auto u : adj[s]) {
+		if (u != e)
+			dfs(u, s);
+	}
 }
 ```
 
@@ -346,13 +353,15 @@ dfs(x, 0);
 计算每个节点的子节点数量。
 
 ```cpp
-void dfs(int s, int e) {
-    count[s] = 1;
-    for (auto u : adj[s]) {
-        if (u == e) continue;
-        dfs(u, s);
-        count[s] += count[u];
-    }
+void dfs(int s, int e)
+{
+	count[s] = 1;
+	for (auto u : adj[s]) {
+		if (u == e)
+			continue;
+		dfs(u, s);
+		count[s] += count[u];
+	}
 }
 ```
 
@@ -366,24 +375,34 @@ void dfs(int s, int e) {
 
 ```cpp
 struct DSU {
-    vector<int> parent, sz; // sz 记录集合大小（按大小合并）
-    DSU(int n) : parent(n), sz(n, 1) { iota(parent.begin(), parent.end(), 0); }
+	vector<int> parent, sz; // sz 记录集合大小（按大小合并）
+	DSU(int n) : parent(n), sz(n, 1)
+	{
+		iota(parent.begin(), parent.end(), 0);
+	}
 
-    int find(int x) { // 路径压缩
-        return parent[x] == x ? x : parent[x] = find(parent[x]);
-    }
+	int find(int x)
+	{ // 路径压缩
+		return parent[x] == x ? x : parent[x] = find(parent[x]);
+	}
 
-    bool unite(int a, int b) { // 合并，返回是否真的合并了
-        a = find(a);
-        b = find(b);
-        if (a == b) return false;
-        if (sz[a] < sz[b]) swap(a, b); // 小集合并入大集合
-        parent[b]  = a;
-        sz[a]     += sz[b];
-        return true;
-    }
+	bool unite(int a, int b)
+	{ // 合并，返回是否真的合并了
+		a = find(a);
+		b = find(b);
+		if (a == b)
+			return false;
+		if (sz[a] < sz[b])
+			swap(a, b); // 小集合并入大集合
+		parent[b] = a;
+		sz[a] += sz[b];
+		return true;
+	}
 
-    bool same(int a, int b) { return find(a) == find(b); }
+	bool same(int a, int b)
+	{
+		return find(a) == find(b);
+	}
 };
 ```
 
@@ -398,17 +417,19 @@ struct DSU {
 
 ```cpp
 // edges: {w, u, v}
-int kruskal(int n, vector<array<int, 3>>& edges) {
-    sort(edges.begin(), edges.end());
-    DSU dsu(n);
-    int ans = 0, cnt = 0;
-    for (auto& [w, u, v] : edges) {
-        if (dsu.unite(u, v)) {
-            ans += w;
-            if (++cnt == n - 1) break; // 已连成树
-        }
-    }
-    return cnt == n - 1 ? ans : -1; // -1 表示图不连通
+int kruskal(int n, vector<array<int, 3> > &edges)
+{
+	sort(edges.begin(), edges.end());
+	DSU dsu(n);
+	int ans = 0, cnt = 0;
+	for (auto &[w, u, v] : edges) {
+		if (dsu.unite(u, v)) {
+			ans += w;
+			if (++cnt == n - 1)
+				break; // 已连成树
+		}
+	}
+	return cnt == n - 1 ? ans : -1; // -1 表示图不连通
 }
 ```
 
@@ -418,26 +439,29 @@ int kruskal(int n, vector<array<int, 3>>& edges) {
 
 ```cpp
 // 邻接表 g[u]: {v, w}
-int prim(int n, vector<vector<pair<int, int>>>& g) {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
-    vector<int> vis(n, 0), dis(n, INT_MAX);
-    dis[0] = 0;
-    pq.push({0, 0});
-    int ans = 0, cnt = 0;
-    while (!pq.empty()) {
-        auto [d, u] = pq.top();
-        pq.pop();
-        if (vis[u]) continue;
-        vis[u]  = 1;
-        ans    += d;
-        if (++cnt == n) break;
-        for (auto& [v, w] : g[u])
-            if (!vis[v] && w < dis[v]) {
-                dis[v] = w;
-                pq.push({w, v});
-            }
-    }
-    return cnt == n ? ans : -1;
+int prim(int n, vector<vector<pair<int, int> > > &g)
+{
+	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<> > pq;
+	vector<int> vis(n, 0), dis(n, INT_MAX);
+	dis[0] = 0;
+	pq.push({ 0, 0 });
+	int ans = 0, cnt = 0;
+	while (!pq.empty()) {
+		auto [d, u] = pq.top();
+		pq.pop();
+		if (vis[u])
+			continue;
+		vis[u] = 1;
+		ans += d;
+		if (++cnt == n)
+			break;
+		for (auto &[v, w] : g[u])
+			if (!vis[v] && w < dis[v]) {
+				dis[v] = w;
+				pq.push({ w, v });
+			}
+	}
+	return cnt == n ? ans : -1;
 }
 ```
 
@@ -449,19 +473,22 @@ int prim(int n, vector<vector<pair<int, int>>>& g) {
 
 ```cpp
 // 邻接表 g，入度数组 indeg
-vector<int> topoSort(int n, vector<vector<int>>& g, vector<int>& indeg) {
-    queue<int> q;
-    for (int i = 0; i < n; i++)
-        if (indeg[i] == 0) q.push(i);
-    vector<int> order;
-    while (!q.empty()) {
-        int u = q.front();
-        q.pop();
-        order.push_back(u);
-        for (int v : g[u])
-            if (--indeg[v] == 0) q.push(v);
-    }
-    return order.size() == n ? order : vector<int>(); // 空表示有环
+vector<int> topoSort(int n, vector<vector<int> > &g, vector<int> &indeg)
+{
+	queue<int> q;
+	for (int i = 0; i < n; i++)
+		if (indeg[i] == 0)
+			q.push(i);
+	vector<int> order;
+	while (!q.empty()) {
+		int u = q.front();
+		q.pop();
+		order.push_back(u);
+		for (int v : g[u])
+			if (--indeg[v] == 0)
+				q.push(v);
+	}
+	return order.size() == n ? order : vector<int>(); // 空表示有环
 }
 ```
 
@@ -481,27 +508,32 @@ vector<int> topoSort(int n, vector<vector<int>>& g, vector<int>& indeg) {
 
 ```cpp
 // g 原图，rg 反向图；seq 为第一次 DFS 的出栈序
-void kosaraju(int n, vector<vector<int>>& g, vector<vector<int>>& rg) {
-    vector<int> vis(n, 0), seq;
-    function<void(int)> dfs1 = [&](int u) {
-        vis[u] = 1;
-        for (int v : g[u])
-            if (!vis[v]) dfs1(v);
-        seq.push_back(u); // 记录出栈序
-    };
-    for (int i = 0; i < n; i++)
-        if (!vis[i]) dfs1(i);
+void kosaraju(int n, vector<vector<int> > &g, vector<vector<int> > &rg)
+{
+	vector<int> vis(n, 0), seq;
+	function<void(int)> dfs1 = [&](int u) {
+		vis[u] = 1;
+		for (int v : g[u])
+			if (!vis[v])
+				dfs1(v);
+		seq.push_back(u); // 记录出栈序
+	};
+	for (int i = 0; i < n; i++)
+		if (!vis[i])
+			dfs1(i);
 
-    vector<int> comp(n, -1);
-    int cnt                       = 0;
-    function<void(int, int)> dfs2 = [&](int u, int c) {
-        comp[u] = c;
-        for (int v : rg[u])
-            if (comp[v] == -1) dfs2(v, c);
-    };
-    for (int i = n - 1; i >= 0; i--) // 按出栈序逆序在反向图 DFS
-        if (comp[seq[i]] == -1) dfs2(seq[i], cnt++);
-    // comp[u] 即 u 所属 SCC 编号，cnt 为 SCC 个数
+	vector<int> comp(n, -1);
+	int cnt = 0;
+	function<void(int, int)> dfs2 = [&](int u, int c) {
+		comp[u] = c;
+		for (int v : rg[u])
+			if (comp[v] == -1)
+				dfs2(v, c);
+	};
+	for (int i = n - 1; i >= 0; i--) // 按出栈序逆序在反向图 DFS
+		if (comp[seq[i]] == -1)
+			dfs2(seq[i], cnt++);
+	// comp[u] 即 u 所属 SCC 编号，cnt 为 SCC 个数
 }
 ```
 

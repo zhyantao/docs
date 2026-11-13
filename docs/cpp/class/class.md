@@ -21,29 +21,40 @@
 ```cpp
 #include <iostream>
 
-class Point {
+class Point
+{
 public:
-    double x, y;
+	double x, y;
 
-    // 默认构造函数
-    Point() : x(0), y(0) {}
+	// 默认构造函数
+	Point() : x(0), y(0)
+	{
+	}
 
-    // 显式构造函数
-    explicit Point(double x, double y) : x(x), y(y) {}
+	// 显式构造函数
+	explicit Point(double x, double y) : x(x), y(y)
+	{
+	}
 
-    // 拷贝构造函数
-    Point(const Point& other) : x(other.x), y(other.y) {}
+	// 拷贝构造函数
+	Point(const Point &other) : x(other.x), y(other.y)
+	{
+	}
 
-    // 移动构造函数
-    Point(Point&& other) noexcept : x(std::move(other.x)), y(std::move(other.y)) {}
+	// 移动构造函数
+	Point(Point &&other) noexcept : x(std::move(other.x)),
+					y(std::move(other.y))
+	{
+	}
 };
 
-int main() {
-    Point p1;                 // 调用默认构造函数
-    Point p2(1.0, 2.0);       // 调用显式构造函数
-    Point p3(p2);             // 调用拷贝构造函数
-    Point p4 = std::move(p3); // 调用移动构造函数
-    return 0;
+int main()
+{
+	Point p1; // 调用默认构造函数
+	Point p2(1.0, 2.0); // 调用显式构造函数
+	Point p3(p2); // 调用拷贝构造函数
+	Point p4 = std::move(p3); // 调用移动构造函数
+	return 0;
 }
 ```
 
@@ -64,27 +75,34 @@ int main() {
 ```cpp
 #include <iostream>
 
-class OuterClass {
+class OuterClass
+{
 public:
-    class InnerClass {
-    public:
-        void print() const { std::cout << "InnerClass\n"; }
-    };
+	class InnerClass
+	{
+	public:
+		void print() const
+		{
+			std::cout << "InnerClass\n";
+		}
+	};
 
-    void createInner() {
-        InnerClass inner;
-        inner.print();
-    }
+	void createInner()
+	{
+		InnerClass inner;
+		inner.print();
+	}
 };
 
-int main() {
-    OuterClass outer;
-    outer.createInner();
+int main()
+{
+	OuterClass outer;
+	outer.createInner();
 
-    // 外部访问
-    OuterClass::InnerClass inner;
-    inner.print();
-    return 0;
+	// 外部访问
+	OuterClass::InnerClass inner;
+	inner.print();
+	return 0;
 }
 ```
 
@@ -111,27 +129,40 @@ int main() {
 ```cpp
 #include <iostream>
 
-class Base {
+class Base
+{
 protected:
-    int data;
+	int data;
 
 public:
-    Base(int d) : data(d) {}
+	Base(int d) : data(d)
+	{
+	}
 
-    virtual void print() const { std::cout << "Base: " << data << '\n'; }
+	virtual void print() const
+	{
+		std::cout << "Base: " << data << '\n';
+	}
 };
 
-class Derived : public Base {
+class Derived : public Base
+{
 public:
-    Derived(int d) : Base(d) {}
+	Derived(int d) : Base(d)
+	{
+	}
 
-    void print() const override { std::cout << "Derived: " << data << '\n'; }
+	void print() const override
+	{
+		std::cout << "Derived: " << data << '\n';
+	}
 };
 
-int main() {
-    Derived d(42);
-    d.print();
-    return 0;
+int main()
+{
+	Derived d(42);
+	d.print();
+	return 0;
 }
 ```
 
@@ -144,42 +175,53 @@ int main() {
 ```cpp
 #include <iostream>
 
-template <typename T>
-class BaseTemplate {
+template <typename T> class BaseTemplate
+{
 public:
-    T data;
-    BaseTemplate(T d) : data(d) {}
+	T data;
+	BaseTemplate(T d) : data(d)
+	{
+	}
 };
 
 // Specialization for int
-template <>
-class BaseTemplate<int> {
+template <> class BaseTemplate<int>
+{
 public:
-    int data;
-    BaseTemplate(int d) : data(d * 2) {} // 注意这里特例化了构造函数
+	int data;
+	BaseTemplate(int d) : data(d * 2)
+	{
+	} // 注意这里特例化了构造函数
 };
 
 // Derived from the general template
-template <typename T>
-class DerivedTemplate : public BaseTemplate<T> {
+template <typename T> class DerivedTemplate : public BaseTemplate<T>
+{
 public:
-    DerivedTemplate(T d) : BaseTemplate<T>(d) {}
+	DerivedTemplate(T d) : BaseTemplate<T>(d)
+	{
+	}
 };
 
 // Derived from the specialized template
-class DerivedFromSpecialized : public BaseTemplate<int> {
+class DerivedFromSpecialized : public BaseTemplate<int>
+{
 public:
-    DerivedFromSpecialized(int d) : BaseTemplate<int>(d) {}
+	DerivedFromSpecialized(int d) : BaseTemplate<int>(d)
+	{
+	}
 };
 
-int main() {
-    DerivedTemplate<double> dt(5.0);
-    std::cout << "Data in DerivedTemplate: " << dt.data << std::endl;
+int main()
+{
+	DerivedTemplate<double> dt(5.0);
+	std::cout << "Data in DerivedTemplate: " << dt.data << std::endl;
 
-    DerivedFromSpecialized dfs(5);
-    std::cout << "Data in DerivedFromSpecialized: " << dfs.data << std::endl;
+	DerivedFromSpecialized dfs(5);
+	std::cout << "Data in DerivedFromSpecialized: " << dfs.data
+		  << std::endl;
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -202,63 +244,75 @@ C++11 起，可以显式删除（`= delete`）或默认化（`= default`）特�
 
 using namespace std;
 
-class IntMat {
-    size_t rows;
-    size_t cols;
-    int* data;
+class IntMat
+{
+	size_t rows;
+	size_t cols;
+	int *data;
 
 public:
-    IntMat(size_t rows, size_t cols) : rows(rows), cols(cols) {
-        data = new int[rows * cols]{};
-    }
-    ~IntMat() { delete[] data; }
+	IntMat(size_t rows, size_t cols) : rows(rows), cols(cols)
+	{
+		data = new int[rows * cols]{};
+	}
+	~IntMat()
+	{
+		delete[] data;
+	}
 
-    // 禁止拷贝构造与拷贝赋值：对象独占 data 内存，拷贝会导致重复释放
-    IntMat(const IntMat&)            = delete;
-    IntMat& operator=(const IntMat&) = delete;
+	// 禁止拷贝构造与拷贝赋值：对象独占 data 内存，拷贝会导致重复释放
+	IntMat(const IntMat &) = delete;
+	IntMat &operator=(const IntMat &) = delete;
 
-    int getElement(size_t r, size_t c);
-    bool setElement(size_t r, size_t c, int value);
+	int getElement(size_t r, size_t c);
+	bool setElement(size_t r, size_t c, int value);
 };
 
-int IntMat::getElement(size_t r, size_t c) {
-    if (r >= this->rows || c >= this->cols) {
-        cerr << "Indices are out of range" << endl;
-        return 0;
-    }
-    return data[this->cols * r + c];
+int IntMat::getElement(size_t r, size_t c)
+{
+	if (r >= this->rows || c >= this->cols) {
+		cerr << "Indices are out of range" << endl;
+		return 0;
+	}
+	return data[this->cols * r + c];
 }
 
-bool IntMat::setElement(size_t r, size_t c, int value) {
-    if (r >= this->rows || c >= this->cols) return false;
+bool IntMat::setElement(size_t r, size_t c, int value)
+{
+	if (r >= this->rows || c >= this->cols)
+		return false;
 
-    data[this->cols * r + c] = value;
-    return true;
+	data[this->cols * r + c] = value;
+	return true;
 }
 
-int main() {
-    IntMat imat(3, 4);
-    imat.setElement(1, 2, 256);
+int main()
+{
+	IntMat imat(3, 4);
+	imat.setElement(1, 2, 256);
 
-    // IntMat imat2(imat); // error: 拷贝构造已被删除
-    // IntMat imat3(2, 3);
-    // imat3 = imat;       // error: 拷贝赋值已被删除
+	// IntMat imat2(imat); // error: 拷贝构造已被删除
+	// IntMat imat3(2, 3);
+	// imat3 = imat;       // error: 拷贝赋值已被删除
 
-    cout << imat.getElement(1, 2) << endl;
+	cout << imat.getElement(1, 2) << endl;
 
-    return 0;
+	return 0;
 }
 ```
 
 对于只需要拷贝语义的类，也可以用 `= default` 显式保留默认实现：
 
 ```cpp
-class Point {
+class Point
+{
 public:
-    double x, y;
-    Point(double x, double y) : x(x), y(y) {}
-    ~Point()                       = default; // 显式使用默认析构
-    Point(const Point&)            = default; // 显式使用默认拷贝构造
-    Point& operator=(const Point&) = default;
+	double x, y;
+	Point(double x, double y) : x(x), y(y)
+	{
+	}
+	~Point() = default; // 显式使用默认析构
+	Point(const Point &) = default; // 显式使用默认拷贝构造
+	Point &operator=(const Point &) = default;
 };
 ```

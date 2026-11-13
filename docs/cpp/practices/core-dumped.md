@@ -179,10 +179,11 @@ rip     0x400540 0x400540 <main+16>
 ```cpp
 #include <stdio.h>
 
-int main(void) {
-    int* ptr = NULL;
-    printf("%d\n", *ptr); // 段错误
-    return 0;
+int main(void)
+{
+	int *ptr = NULL;
+	printf("%d\n", *ptr); // 段错误
+	return 0;
 }
 ```
 
@@ -191,15 +192,17 @@ int main(void) {
 ```cpp
 #include <stdio.h>
 
-void recursive_function(int depth) {
-    char buffer[1024]; // 大数组占用栈空间
-    printf("Depth: %d\n", depth);
-    recursive_function(depth + 1);
+void recursive_function(int depth)
+{
+	char buffer[1024]; // 大数组占用栈空间
+	printf("Depth: %d\n", depth);
+	recursive_function(depth + 1);
 }
 
-int main() {
-    recursive_function(1);
-    return 0;
+int main()
+{
+	recursive_function(1);
+	return 0;
 }
 ```
 

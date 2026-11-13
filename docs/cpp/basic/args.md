@@ -122,19 +122,22 @@ printf("a + b = %d", a + b);
 #include <cstdarg>
 #include <iostream>
 
-void log(char* fmt, ...) {
-    char buf[512] = {0};
-    va_list ap;
+void log(char *fmt, ...)
+{
+	char buf[512] = { 0 };
+	va_list ap;
 
-    va_start(ap, fmt);                              // 初始化参数列表
-    (void)vsnprintf(buf, sizeof(buf) - 2, fmt, ap); // 使用 vsnprintf 格式化输出
-    va_end(ap);                                     // 清理参数列表
+	va_start(ap, fmt); // 初始化参数列表
+	(void)vsnprintf(buf, sizeof(buf) - 2, fmt,
+			ap); // 使用 vsnprintf 格式化输出
+	va_end(ap); // 清理参数列表
 
-    printf("%s\n", buf);
+	printf("%s\n", buf);
 }
 
-int main() {
-    log((char*)"%s, %d, %s", "hello", 100, "world");
+int main()
+{
+	log((char *)"%s, %d, %s", "hello", 100, "world");
 }
 ```
 
@@ -144,24 +147,27 @@ int main() {
 #include <cstdarg>
 #include <iostream>
 
-double sum(int num, ...) {
-    va_list ap; // 定义参数列表
-    double ret = 0.0;
+double sum(int num, ...)
+{
+	va_list ap; // 定义参数列表
+	double ret = 0.0;
 
-    va_start(ap, num); // 初始化参数列表
+	va_start(ap, num); // 初始化参数列表
 
-    for (int i = 0; i < num; i++) {
-        ret += va_arg(ap, double); // 按类型依次取出参数
-    }
+	for (int i = 0; i < num; i++) {
+		ret += va_arg(ap, double); // 按类型依次取出参数
+	}
 
-    va_end(ap); // 清理参数列表
+	va_end(ap); // 清理参数列表
 
-    return ret;
+	return ret;
 }
 
-int main() {
-    std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
-    std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0) << std::endl;
+int main()
+{
+	std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
+	std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0)
+		  << std::endl;
 }
 ```
 
@@ -173,8 +179,9 @@ int main() {
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
-    /**
+int main(int argc, char *argv[])
+{
+	/**
      * struct option
      * {
      *      const char * name;
@@ -183,17 +190,17 @@ int main(int argc, char* argv[]) {
      *      int          val;
      * }
      */
-    static struct option long_options[] = {
-        {"reqarg", required_argument, NULL, 'r'},
-        {"optarg", optional_argument, NULL, 'o'},
-        {"noarg", no_argument, NULL, 'n'},
-        {NULL, 0, NULL, 0},
-    };
+	static struct option long_options[] = {
+		{ "reqarg", required_argument, NULL, 'r' },
+		{ "optarg", optional_argument, NULL, 'o' },
+		{ "noarg", no_argument, NULL, 'n' },
+		{ NULL, 0, NULL, 0 },
+	};
 
-    while (1) {
-        int option_index = 0, opt;
+	while (1) {
+		int option_index = 0, opt;
 
-        /**
+		/**
          * getopt_long 会遍历 argv 数组，在每次迭代中，它会返回下一个选项字符（如果有），
          * 然后，这个字符与长选项列表进行比较，如果匹配，则对应的操作会被执行，
          * 如果没有匹配，那么函数将返回 -1。
@@ -202,19 +209,20 @@ int main(int argc, char* argv[]) {
          * 一个字符，后接两个冒号——表示选项后面带一个可选参数，
          * 即参数可有可无，如果带参数，则选项与参数直接不能有空格，如 -b200
          */
-        opt              = getopt_long(argc, argv, "a::b:c:d", long_options, &option_index);
+		opt = getopt_long(argc, argv, "a::b:c:d", long_options,
+				  &option_index);
 
-        if (opt == -1) // 选项遍历完毕，退出循环
-            break;
+		if (opt == -1) // 选项遍历完毕，退出循环
+			break;
 
-        printf("opt = %c\t\t", opt);
-        printf("optarg = %s\t\t", optarg);
-        printf("optind = %d\t\t", optind);
-        printf("argv[%d] = %s\t\t", optind, argv[optind]);
-        printf("option_index = %d\n", option_index);
-    }
+		printf("opt = %c\t\t", opt);
+		printf("optarg = %s\t\t", optarg);
+		printf("optind = %d\t\t", optind);
+		printf("argv[%d] = %s\t\t", optind, argv[optind]);
+		printf("option_index = %d\n", option_index);
+	}
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -257,20 +265,22 @@ g++ -std=c++20 -O2 -Wall -pedantic -pthread main.cpp && ./a.out --reqarg 100 --o
 #include <iostream>
 
 // 递归终止条件
-void printArgs() {
-    std::cout << std::endl;
+void printArgs()
+{
+	std::cout << std::endl;
 }
 
 // 递归步骤
-template <typename T, typename... Args>
-void printArgs(T first, Args... args) {
-    std::cout << first << " ";
-    printArgs(args...); // 递归调用
+template <typename T, typename... Args> void printArgs(T first, Args... args)
+{
+	std::cout << first << " ";
+	printArgs(args...); // 递归调用
 }
 
-int main() {
-    printArgs(1, "Hello", 3.14, 'A');
-    return 0;
+int main()
+{
+	printArgs(1, "Hello", 3.14, 'A');
+	return 0;
 }
 ```
 
@@ -282,14 +292,15 @@ int main() {
 ```cpp
 #include <iostream>
 
-template <typename... Args>
-void printArgs(Args... args) {
-    (std::cout << ... << args) << std::endl; // 折叠表达式
+template <typename... Args> void printArgs(Args... args)
+{
+	(std::cout << ... << args) << std::endl; // 折叠表达式
 }
 
-int main() {
-    printArgs(1, "Hello", 3.14, 'A');
-    return 0;
+int main()
+{
+	printArgs(1, "Hello", 3.14, 'A');
+	return 0;
 }
 ```
 
@@ -304,21 +315,23 @@ int main() {
 *例 1：字面量作为实参*
 
 ```cpp
-template <typename... Us>
-void f(Us... pargs) {}
-
-template <typename... Ts>
-void g(Ts... args) {
-    // &args... 是包展开
-    // &args    是它的模式
-    f(&args...);
+template <typename... Us> void f(Us... pargs)
+{
 }
 
-int main() {
-    // Ts... args   会展开成 int E1, double E2, const char* E3
-    // &args...     会展开成 &E1, &E2, &E3
-    // Us...        会展开成 int* E1, double* E2, const char** E3
-    g(1, 0.2, "a");
+template <typename... Ts> void g(Ts... args)
+{
+	// &args... 是包展开
+	// &args    是它的模式
+	f(&args...);
+}
+
+int main()
+{
+	// Ts... args   会展开成 int E1, double E2, const char* E3
+	// &args...     会展开成 &E1, &E2, &E3
+	// Us...        会展开成 int* E1, double* E2, const char** E3
+	g(1, 0.2, "a");
 }
 ```
 
@@ -326,27 +339,30 @@ int main() {
 
 ```cpp
 // 接受任意数量的模板参数（用 Ts... 表示）
-template <typename... Ts>
-void f(Ts...) {}
+template <typename... Ts> void f(Ts...)
+{
+}
 
 // 接受一个模板参数包 Ts 和一个非类型参数包 N
 // Ts (&...arr)[N] 表示 arr 是一个引用数组，数组元素的类型是 Ts
 // 数组的大小是 N
-template <typename... Ts, int... N>
-void g(Ts (&... arr)[N]) {}
+template <typename... Ts, int... N> void g(Ts (&...arr)[N])
+{
+}
 
-int main() {
-    // Ts... 会展开成 void f(char, int)
-    f('a', 1);
+int main()
+{
+	// Ts... 会展开成 void f(char, int)
+	f('a', 1);
 
-    // Ts... 会展开成 void f(double)
-    f(0.1);
+	// Ts... 会展开成 void f(double)
+	f(0.1);
 
-    // Ts (&...arr)[N] 会展开成 const char (&)[2], int (&)[1]
-    // 模板参数 Ts 被展开为 const char
-    // 非类型参数 N 被展开为数组大小，即 2 和 1
-    int n[1];
-    g<const char, int>("a", n);
+	// Ts (&...arr)[N] 会展开成 const char (&)[2], int (&)[1]
+	// 模板参数 Ts 被展开为 const char
+	// 非类型参数 N 被展开为数组大小，即 2 和 1
+	int n[1];
+	g<const char, int>("a", n);
 }
 ```
 
@@ -354,10 +370,11 @@ int main() {
 
 ```cpp
 template <typename A, typename B, typename... C>
-void func(A arg1, B arg2, C... arg3) {
-    container<A, B, C...> t1; // 展开成 container<A, B, E1, E2, E3>
-    container<C..., A, B> t2; // 展开成 container<E1, E2, E3, A, B>
-    container<A, C..., B> t3; // 展开成 container<A, E1, E2, E3, B>
+void func(A arg1, B arg2, C... arg3)
+{
+	container<A, B, C...> t1; // 展开成 container<A, B, E1, E2, E3>
+	container<C..., A, B> t2; // 展开成 container<E1, E2, E3, A, B>
+	container<A, C..., B> t3; // 展开成 container<A, E1, E2, E3, B>
 }
 ```
 ````

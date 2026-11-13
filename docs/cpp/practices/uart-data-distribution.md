@@ -37,27 +37,27 @@
 
 ```cpp
 typedef struct {
-    int fd;                         // 客户端文件描述符
-    int active;                     // 是否活跃
-    int blocked;                    // 是否被阻塞（缓冲区满）
-    int pending_errors;             // 连续错误计数
-    int reconnect_attempts;         // 重连尝试次数
-    char name[128];                 // 符号链接路径（如 /tmp/virtual1）
-    char slave_name[64];            // PTY 从设备名
-    struct timeval last_write_time; // 上次成功写入时间
-    struct timeval block_time;      // 阻塞开始时间
+	int fd; // 客户端文件描述符
+	int active; // 是否活跃
+	int blocked; // 是否被阻塞（缓冲区满）
+	int pending_errors; // 连续错误计数
+	int reconnect_attempts; // 重连尝试次数
+	char name[128]; // 符号链接路径（如 /tmp/virtual1）
+	char slave_name[64]; // PTY 从设备名
+	struct timeval last_write_time; // 上次成功写入时间
+	struct timeval block_time; // 阻塞开始时间
 } client_t;
 
 typedef struct {
-    int source_fd;                 // 源串口文件描述符
-    client_t clients[MAX_CLIENTS]; // 客户端列表
-    int client_count;              // 客户端数量
-    pthread_mutex_t mutex;         // 互斥锁
-    volatile int running;          // 运行控制标志
-    long total_bytes_read;         // 总读取字节数
-    long total_bytes_written;      // 总写入字节数
-    long error_count;              // 错误计数
-    long reconnect_count;          // 重连计数
+	int source_fd; // 源串口文件描述符
+	client_t clients[MAX_CLIENTS]; // 客户端列表
+	int client_count; // 客户端数量
+	pthread_mutex_t mutex; // 互斥锁
+	volatile int running; // 运行控制标志
+	long total_bytes_read; // 总读取字节数
+	long total_bytes_written; // 总写入字节数
+	long error_count; // 错误计数
+	long reconnect_count; // 重连计数
 } distributor_t;
 ```
 
@@ -67,18 +67,19 @@ typedef struct {
 
 ```cpp
 // 设置文件描述符为非阻塞模式
-void set_nonblocking(int fd) {
-    int flags = fcntl(fd, F_GETFL, 0);
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
-        perror("fcntl F_SETFL O_NONBLOCK");
-    }
+void set_nonblocking(int fd)
+{
+	int flags = fcntl(fd, F_GETFL, 0);
+	if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
+		perror("fcntl F_SETFL O_NONBLOCK");
+	}
 }
 
 // 使用 select 监控串口数据
 FD_ZERO(&read_fds);
 FD_SET(dist->source_fd, &read_fds);
 timeout.tv_sec = 1; // 1 秒超时
-int ready      = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
+int ready = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 ```
 
 #### 2. 自动重连机制
@@ -87,106 +88,115 @@ int ready      = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 
 ```cpp
 if (errno == EAGAIN || errno == EWOULDBLOCK) {
-    // 缓冲区满，标记客户端为阻塞
-    if (!dist->clients[i].blocked) {
-        dist->clients[i].blocked = 1;
-        gettimeofday(&dist->clients[i].block_time, NULL);
-        printf("Client %s blocked (buffer full), will attempt to recreate\n",
-               dist->clients[i].name);
-    }
+	// 缓冲区满，标记客户端为阻塞
+	if (!dist->clients[i].blocked) {
+		dist->clients[i].blocked = 1;
+		gettimeofday(&dist->clients[i].block_time, NULL);
+		printf("Client %s blocked (buffer full), will attempt to recreate\n",
+		       dist->clients[i].name);
+	}
 }
 ```
 
 定期检查被阻塞的客户端，如果阻塞超过 5 秒则自动重连：
 
 ```cpp
-void handle_blocked_clients(distributor_t* dist) {
-    struct timeval now;
-    gettimeofday(&now, NULL);
+void handle_blocked_clients(distributor_t *dist)
+{
+	struct timeval now;
+	gettimeofday(&now, NULL);
 
-    for (int i = 0; i < dist->client_count; i++) {
-        if (dist->clients[i].active && dist->clients[i].blocked) {
-            struct timeval block_duration;
-            timersub(&now, &dist->clients[i].block_time, &block_duration);
+	for (int i = 0; i < dist->client_count; i++) {
+		if (dist->clients[i].active && dist->clients[i].blocked) {
+			struct timeval block_duration;
+			timersub(&now, &dist->clients[i].block_time,
+				 &block_duration);
 
-            // 如果阻塞超过 5 秒，尝试重新创建
-            if (block_duration.tv_sec >= 5) {
-                if (dist->clients[i].reconnect_attempts < MAX_RECONNECT_ATTEMPTS) {
-                    printf("Client %s blocked for %ld seconds, attempting to recreate...\n",
-                           dist->clients[i].name, block_duration.tv_sec);
-                    recreate_client(dist, i);
-                }
-            }
-        }
-    }
+			// 如果阻塞超过 5 秒，尝试重新创建
+			if (block_duration.tv_sec >= 5) {
+				if (dist->clients[i].reconnect_attempts <
+				    MAX_RECONNECT_ATTEMPTS) {
+					printf("Client %s blocked for %ld seconds, attempting to recreate...\n",
+					       dist->clients[i].name,
+					       block_duration.tv_sec);
+					recreate_client(dist, i);
+				}
+			}
+		}
+	}
 }
 ```
 
 #### 3. 客户端重新创建过程
 
 ```cpp
-int recreate_client(distributor_t* dist, int client_index) {
-    client_t* client = &dist->clients[client_index];
+int recreate_client(distributor_t *dist, int client_index)
+{
+	client_t *client = &dist->clients[client_index];
 
-    // 1. 清理旧资源
-    cleanup_client(client);
+	// 1. 清理旧资源
+	cleanup_client(client);
 
-    // 2. 创建新的伪终端
-    int master_fd = posix_openpt(O_RDWR | O_NOCTTY);
+	// 2. 创建新的伪终端
+	int master_fd = posix_openpt(O_RDWR | O_NOCTTY);
 
-    // 3. 配置新 PTY
-    grantpt(master_fd);
-    unlockpt(master_fd);
+	// 3. 配置新 PTY
+	grantpt(master_fd);
+	unlockpt(master_fd);
 
-    // 4. 获取从设备名并更新符号链接
-    char slave_name[64];
-    ptsname_r(master_fd, slave_name, sizeof(slave_name));
-    symlink(slave_name, client->name);
+	// 4. 获取从设备名并更新符号链接
+	char slave_name[64];
+	ptsname_r(master_fd, slave_name, sizeof(slave_name));
+	symlink(slave_name, client->name);
 
-    // 5. 设置非阻塞模式
-    set_nonblocking(master_fd);
+	// 5. 设置非阻塞模式
+	set_nonblocking(master_fd);
 
-    // 6. 更新客户端状态
-    client->fd             = master_fd;
-    client->blocked        = 0;
-    client->pending_errors = 0;
-    client->reconnect_attempts++;
-    dist->reconnect_count++;
+	// 6. 更新客户端状态
+	client->fd = master_fd;
+	client->blocked = 0;
+	client->pending_errors = 0;
+	client->reconnect_attempts++;
+	dist->reconnect_count++;
 
-    printf("Client %s recreated successfully\n", client->name);
-    return 0;
+	printf("Client %s recreated successfully\n", client->name);
+	return 0;
 }
 ```
 
 #### 4. 全面的统计监控
 
 ```cpp
-void print_statistics(distributor_t* dist) {
-    // 统计当前活跃和被阻塞的客户端数量
-    int active_clients  = 0;
-    int blocked_clients = 0;
-    for (int i = 0; i < dist->client_count; i++) {
-        if (dist->clients[i].active) {
-            active_clients++;
-            if (dist->clients[i].blocked) {
-                blocked_clients++;
-            }
-        }
-    }
+void print_statistics(distributor_t *dist)
+{
+	// 统计当前活跃和被阻塞的客户端数量
+	int active_clients = 0;
+	int blocked_clients = 0;
+	for (int i = 0; i < dist->client_count; i++) {
+		if (dist->clients[i].active) {
+			active_clients++;
+			if (dist->clients[i].blocked) {
+				blocked_clients++;
+			}
+		}
+	}
 
-    printf("\n=== Statistics ===\n");
-    printf("Active clients: %d (blocked: %d)\n", active_clients, blocked_clients);
-    printf("Total bytes read: %ld\n", dist->total_bytes_read);
-    printf("Total bytes written: %ld\n", dist->total_bytes_written);
-    printf("Error count: %ld\n", dist->error_count);
-    printf("Reconnect count: %ld\n", dist->reconnect_count);
+	printf("\n=== Statistics ===\n");
+	printf("Active clients: %d (blocked: %d)\n", active_clients,
+	       blocked_clients);
+	printf("Total bytes read: %ld\n", dist->total_bytes_read);
+	printf("Total bytes written: %ld\n", dist->total_bytes_written);
+	printf("Error count: %ld\n", dist->error_count);
+	printf("Reconnect count: %ld\n", dist->reconnect_count);
 
-    // elapsed 为距离上次统计的时间间隔；完整实现中还有"每 10 秒打印一次"与
-    // "串口缓冲区积压检查"等逻辑，见文末完整源码。
-    if (elapsed > 0) {
-        printf("Bytes/sec read: %.1f\n", dist->total_bytes_read / elapsed);
-        printf("Bytes/sec written: %.1f\n", dist->total_bytes_written / elapsed);
-    }
+	// elapsed 为距离上次统计的时间间隔；完整实现中还有"每 10 秒打印一次"与
+	// "串口缓冲区积压检查"等逻辑，见文末完整源码。
+	if (elapsed > 0) {
+		printf("Bytes/sec read: %.1f\n",
+		       dist->total_bytes_read / elapsed);
+		printf("Bytes/sec written: %.1f\n",
+		       dist->total_bytes_written / elapsed);
+	}
 }
 ```
 
@@ -229,7 +239,7 @@ gcc -o serial_distributor serial_distributor.c -lpthread
 ### 1. 缓冲区管理
 
 ```cpp
-#define BUFFER_SIZE       4096
+#define BUFFER_SIZE 4096
 #define MAX_PENDING_BYTES (BUFFER_SIZE * 10)
 ```
 
@@ -240,11 +250,11 @@ gcc -o serial_distributor serial_distributor.c -lpthread
 ```cpp
 // 根据不同的错误类型采用不同的休眠时间
 if (bytes_read == 0) {
-    usleep(1000); // 无数据时休眠 1ms
+	usleep(1000); // 无数据时休眠 1ms
 } else if (errno == EAGAIN) {
-    usleep(10000); // 临时错误时休眠 10ms
+	usleep(10000); // 临时错误时休眠 10ms
 } else {
-    usleep(100000); // 严重错误时休眠 100ms
+	usleep(100000); // 严重错误时休眠 100ms
 }
 ```
 
@@ -256,9 +266,9 @@ ssize_t bytes_read = read(dist->source_fd, read_buffer, sizeof(read_buffer));
 
 // 批量分发给所有活跃客户端
 for (int i = 0; i < dist->client_count; i++) {
-    if (dist->clients[i].active && !dist->clients[i].blocked) {
-        write(dist->clients[i].fd, read_buffer, bytes_read);
-    }
+	if (dist->clients[i].active && !dist->clients[i].blocked) {
+		write(dist->clients[i].fd, read_buffer, bytes_read);
+	}
 }
 ```
 
@@ -328,7 +338,8 @@ Bytes/sec written: 15375.8
 // 启用详细调试输出
 static int counter = 0;
 if (++counter % 500 == 0) {
-    printf("Distributed %ld bytes to %d clients\n", bytes_read, clients_served);
+	printf("Distributed %ld bytes to %d clients\n", bytes_read,
+	       clients_served);
 }
 ```
 
@@ -384,825 +395,980 @@ if (++counter % 500 == 0) {
 #include <time.h>
 #include <sys/time.h>
 
-#define MAX_CLIENTS            10
-#define BUFFER_SIZE            4096
-#define DEFAULT_BAUDRATE       460800
-#define MAX_PENDING_BYTES      (BUFFER_SIZE * 10) // 最大允许堆积的字节数
-#define MAX_RECONNECT_ATTEMPTS 5                  // 最大重连尝试次数
-#define RECONNECT_DELAY_MS     1000               // 重连延迟（毫秒）
+#define MAX_CLIENTS 10
+#define BUFFER_SIZE 4096
+#define DEFAULT_BAUDRATE 460800
+#define MAX_PENDING_BYTES (BUFFER_SIZE * 10) // 最大允许堆积的字节数
+#define MAX_RECONNECT_ATTEMPTS 5 // 最大重连尝试次数
+#define RECONNECT_DELAY_MS 1000 // 重连延迟（毫秒）
 
 typedef struct {
-    int fd;                         // Client file descriptor
-    int active;                     // Whether active
-    int blocked;                    // Whether client is blocked (buffer full)
-    int pending_errors;             // 连续写错误计数
-    int reconnect_attempts;         // 重连尝试次数
-    char name[128];                 // Full symlink path (e.g., /tmp/virtual1)
-    char slave_name[64];            // PTY slave 设备名
-    struct timeval last_write_time; // 上次成功写入的时间
-    struct timeval block_time;      // 阻塞开始时间
+	int fd; // Client file descriptor
+	int active; // Whether active
+	int blocked; // Whether client is blocked (buffer full)
+	int pending_errors; // 连续写错误计数
+	int reconnect_attempts; // 重连尝试次数
+	char name[128]; // Full symlink path (e.g., /tmp/virtual1)
+	char slave_name[64]; // PTY slave 设备名
+	struct timeval last_write_time; // 上次成功写入的时间
+	struct timeval block_time; // 阻塞开始时间
 } client_t;
 
 typedef struct {
-    int source_fd;                 // Source serial port file descriptor
-    client_t clients[MAX_CLIENTS]; // Client list
-    int client_count;
-    pthread_mutex_t mutex;
-    int baudrate;             // 保存波特率的数字值
-    speed_t termios_baudrate; // termios 的波特率常量
-    volatile int running;     // 控制线程运行标志
-    long total_bytes_read;    // 总共读取的字节数
-    long total_bytes_written; // 总共写入的字节数
-    long error_count;         // 错误计数
-    long reconnect_count;     // 重连计数
+	int source_fd; // Source serial port file descriptor
+	client_t clients[MAX_CLIENTS]; // Client list
+	int client_count;
+	pthread_mutex_t mutex;
+	int baudrate; // 保存波特率的数字值
+	speed_t termios_baudrate; // termios 的波特率常量
+	volatile int running; // 控制线程运行标志
+	long total_bytes_read; // 总共读取的字节数
+	long total_bytes_written; // 总共写入的字节数
+	long error_count; // 错误计数
+	long reconnect_count; // 重连计数
 } distributor_t;
 
 // Function prototypes
-void print_usage(const char* program_name);
-int parse_baudrate(const char* baud_str, int* baud_num, speed_t* baud_termios);
-int init_distributor(distributor_t* dist, const char* source_port, int baudrate_num,
-                     speed_t baudrate_termios);
-int add_client(distributor_t* dist, const char* symlink_path);
-int recreate_client(distributor_t* dist, int client_index);
-void* distribution_thread(void* arg);
-void cleanup_distributor(distributor_t* dist);
-void print_statistics(distributor_t* dist);
+void print_usage(const char *program_name);
+int parse_baudrate(const char *baud_str, int *baud_num, speed_t *baud_termios);
+int init_distributor(distributor_t *dist, const char *source_port,
+		     int baudrate_num, speed_t baudrate_termios);
+int add_client(distributor_t *dist, const char *symlink_path);
+int recreate_client(distributor_t *dist, int client_index);
+void *distribution_thread(void *arg);
+void cleanup_distributor(distributor_t *dist);
+void print_statistics(distributor_t *dist);
 void set_nonblocking(int fd);
 int check_serial_buffer(int fd);
 void handle_signal(int sig);
-int cleanup_client(client_t* client);
+int cleanup_client(client_t *client);
 
 volatile sig_atomic_t keep_running = 1;
 
 // Signal handler for graceful shutdown
-void handle_signal(int sig) {
-    printf("\nReceived signal %d, shutting down...\n", sig);
-    keep_running = 0;
+void handle_signal(int sig)
+{
+	printf("\nReceived signal %d, shutting down...\n", sig);
+	keep_running = 0;
 }
 
 // Set file descriptor to non-blocking mode
-void set_nonblocking(int fd) {
-    int flags = fcntl(fd, F_GETFL, 0);
-    if (flags == -1) {
-        perror("fcntl F_GETFL");
-        return;
-    }
+void set_nonblocking(int fd)
+{
+	int flags = fcntl(fd, F_GETFL, 0);
+	if (flags == -1) {
+		perror("fcntl F_GETFL");
+		return;
+	}
 
-    if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
-        perror("fcntl F_SETFL O_NONBLOCK");
-    }
+	if (fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
+		perror("fcntl F_SETFL O_NONBLOCK");
+	}
 }
 
 // Check if serial port has data available
-int check_serial_buffer(int fd) {
-    int bytes_available = 0;
-    if (ioctl(fd, FIONREAD, &bytes_available) == -1) {
-        perror("ioctl FIONREAD");
-        return -1;
-    }
-    return bytes_available;
+int check_serial_buffer(int fd)
+{
+	int bytes_available = 0;
+	if (ioctl(fd, FIONREAD, &bytes_available) == -1) {
+		perror("ioctl FIONREAD");
+		return -1;
+	}
+	return bytes_available;
 }
 
 // Cleanup client resources
-int cleanup_client(client_t* client) {
-    if (client->fd >= 0) {
-        close(client->fd);
-        client->fd = -1;
-    }
+int cleanup_client(client_t *client)
+{
+	if (client->fd >= 0) {
+		close(client->fd);
+		client->fd = -1;
+	}
 
-    // Remove symbolic link if it exists
-    if (client->name[0] != '\0' && access(client->name, F_OK) == 0) {
-        if (unlink(client->name) == -1) {
-            fprintf(stderr, "Warning: Failed to remove symlink %s: %s\n", client->name,
-                    strerror(errno));
-            return -1;
-        }
-    }
+	// Remove symbolic link if it exists
+	if (client->name[0] != '\0' && access(client->name, F_OK) == 0) {
+		if (unlink(client->name) == -1) {
+			fprintf(stderr,
+				"Warning: Failed to remove symlink %s: %s\n",
+				client->name, strerror(errno));
+			return -1;
+		}
+	}
 
-    return 0;
+	return 0;
 }
 
 // Print usage information
-void print_usage(const char* program_name) {
-    printf("\nSerial Port Distributor - GPS Time Synchronization\n");
-    printf("===================================================\n");
-    printf("Usage: %s [OPTIONS]\n", program_name);
-    printf("\nOptions:\n");
-    printf("  -I, --input PORT       Input serial port (required)\n");
-    printf("  -b, --baudrate RATE    Set baudrate (default: 460800)\n");
-    printf("  -O, --output PATH      Add output virtual port (absolute path, can be used "
-           "multiple times)\n");
-    printf("  -s, --statistics       Print statistics every 10 seconds\n");
-    printf("  -h, --help             Display this help message\n");
-    printf("\nFeatures:\n");
-    printf("  - Auto-reconnects blocked clients (buffer full)\n");
-    printf("  - Non-blocking I/O for better performance\n");
-    printf("  - Detailed statistics and monitoring\n");
-    printf("\nExamples:\n");
-    printf("  %s -I /dev/ttyS3\n", program_name);
-    printf("  %s -I /dev/ttyS3 -b 9600 -O /tmp/gps1 -O /tmp/gps2\n", program_name);
-    printf("  %s -I /dev/ttyUSB0 -b 115200 -O /var/run/chrony -O /var/run/logger\n",
-           program_name);
-    printf("\nDefault output ports (if none specified): /tmp/virtual1, /tmp/virtual2\n");
-    printf("===================================================\n\n");
+void print_usage(const char *program_name)
+{
+	printf("\nSerial Port Distributor - GPS Time Synchronization\n");
+	printf("===================================================\n");
+	printf("Usage: %s [OPTIONS]\n", program_name);
+	printf("\nOptions:\n");
+	printf("  -I, --input PORT       Input serial port (required)\n");
+	printf("  -b, --baudrate RATE    Set baudrate (default: 460800)\n");
+	printf("  -O, --output PATH      Add output virtual port (absolute path, can be used "
+	       "multiple times)\n");
+	printf("  -s, --statistics       Print statistics every 10 seconds\n");
+	printf("  -h, --help             Display this help message\n");
+	printf("\nFeatures:\n");
+	printf("  - Auto-reconnects blocked clients (buffer full)\n");
+	printf("  - Non-blocking I/O for better performance\n");
+	printf("  - Detailed statistics and monitoring\n");
+	printf("\nExamples:\n");
+	printf("  %s -I /dev/ttyS3\n", program_name);
+	printf("  %s -I /dev/ttyS3 -b 9600 -O /tmp/gps1 -O /tmp/gps2\n",
+	       program_name);
+	printf("  %s -I /dev/ttyUSB0 -b 115200 -O /var/run/chrony -O /var/run/logger\n",
+	       program_name);
+	printf("\nDefault output ports (if none specified): /tmp/virtual1, /tmp/virtual2\n");
+	printf("===================================================\n\n");
 }
 
 // Parse baudrate string to termios constant and numeric value
-int parse_baudrate(const char* baud_str, int* baud_num, speed_t* baud_termios) {
-    if (baud_str == NULL) {
-        *baud_num     = DEFAULT_BAUDRATE;
-        *baud_termios = B460800;
-        return 0;
-    }
+int parse_baudrate(const char *baud_str, int *baud_num, speed_t *baud_termios)
+{
+	if (baud_str == NULL) {
+		*baud_num = DEFAULT_BAUDRATE;
+		*baud_termios = B460800;
+		return 0;
+	}
 
-    int baud  = atoi(baud_str);
-    *baud_num = baud;
+	int baud = atoi(baud_str);
+	*baud_num = baud;
 
-    switch (baud) {
-    case 50: *baud_termios = B50; break;
-    case 75: *baud_termios = B75; break;
-    case 110: *baud_termios = B110; break;
-    case 134: *baud_termios = B134; break;
-    case 150: *baud_termios = B150; break;
-    case 200: *baud_termios = B200; break;
-    case 300: *baud_termios = B300; break;
-    case 600: *baud_termios = B600; break;
-    case 1200: *baud_termios = B1200; break;
-    case 1800: *baud_termios = B1800; break;
-    case 2400: *baud_termios = B2400; break;
-    case 4800: *baud_termios = B4800; break;
-    case 9600: *baud_termios = B9600; break;
-    case 19200: *baud_termios = B19200; break;
-    case 38400: *baud_termios = B38400; break;
-    case 57600: *baud_termios = B57600; break;
-    case 115200: *baud_termios = B115200; break;
-    case 230400: *baud_termios = B230400; break;
-    case 460800: *baud_termios = B460800; break;
-    case 921600: *baud_termios = B921600; break;
-    default:
-        fprintf(stderr, "Warning: Unknown baudrate %d, using 115200\n", baud);
-        *baud_num     = 115200;
-        *baud_termios = B115200;
-        return -1;
-    }
+	switch (baud) {
+	case 50:
+		*baud_termios = B50;
+		break;
+	case 75:
+		*baud_termios = B75;
+		break;
+	case 110:
+		*baud_termios = B110;
+		break;
+	case 134:
+		*baud_termios = B134;
+		break;
+	case 150:
+		*baud_termios = B150;
+		break;
+	case 200:
+		*baud_termios = B200;
+		break;
+	case 300:
+		*baud_termios = B300;
+		break;
+	case 600:
+		*baud_termios = B600;
+		break;
+	case 1200:
+		*baud_termios = B1200;
+		break;
+	case 1800:
+		*baud_termios = B1800;
+		break;
+	case 2400:
+		*baud_termios = B2400;
+		break;
+	case 4800:
+		*baud_termios = B4800;
+		break;
+	case 9600:
+		*baud_termios = B9600;
+		break;
+	case 19200:
+		*baud_termios = B19200;
+		break;
+	case 38400:
+		*baud_termios = B38400;
+		break;
+	case 57600:
+		*baud_termios = B57600;
+		break;
+	case 115200:
+		*baud_termios = B115200;
+		break;
+	case 230400:
+		*baud_termios = B230400;
+		break;
+	case 460800:
+		*baud_termios = B460800;
+		break;
+	case 921600:
+		*baud_termios = B921600;
+		break;
+	default:
+		fprintf(stderr, "Warning: Unknown baudrate %d, using 115200\n",
+			baud);
+		*baud_num = 115200;
+		*baud_termios = B115200;
+		return -1;
+	}
 
-    return 0;
+	return 0;
 }
 
 // Initialize distributor
-int init_distributor(distributor_t* dist, const char* source_port, int baudrate_num,
-                     speed_t baudrate_termios) {
-    struct termios tty;
+int init_distributor(distributor_t *dist, const char *source_port,
+		     int baudrate_num, speed_t baudrate_termios)
+{
+	struct termios tty;
 
-    // Open source serial port with non-blocking mode
-    dist->source_fd = open(source_port, O_RDONLY | O_NOCTTY | O_NONBLOCK);
-    if (dist->source_fd < 0) {
-        perror("Failed to open source port");
-        return -1;
-    }
+	// Open source serial port with non-blocking mode
+	dist->source_fd = open(source_port, O_RDONLY | O_NOCTTY | O_NONBLOCK);
+	if (dist->source_fd < 0) {
+		perror("Failed to open source port");
+		return -1;
+	}
 
-    // Configure serial port
-    memset(&tty, 0, sizeof(tty));
-    if (tcgetattr(dist->source_fd, &tty) != 0) {
-        perror("tcgetattr");
-        close(dist->source_fd);
-        return -1;
-    }
+	// Configure serial port
+	memset(&tty, 0, sizeof(tty));
+	if (tcgetattr(dist->source_fd, &tty) != 0) {
+		perror("tcgetattr");
+		close(dist->source_fd);
+		return -1;
+	}
 
-    cfsetispeed(&tty, baudrate_termios);
-    cfsetospeed(&tty, baudrate_termios);
+	cfsetispeed(&tty, baudrate_termios);
+	cfsetospeed(&tty, baudrate_termios);
 
-    tty.c_cflag     &= ~PARENB;
-    tty.c_cflag     &= ~CSTOPB;
-    tty.c_cflag     &= ~CSIZE;
-    tty.c_cflag     |= CS8;
-    tty.c_cflag     &= ~CRTSCTS;
-    tty.c_cflag     |= CREAD | CLOCAL;
+	tty.c_cflag &= ~PARENB;
+	tty.c_cflag &= ~CSTOPB;
+	tty.c_cflag &= ~CSIZE;
+	tty.c_cflag |= CS8;
+	tty.c_cflag &= ~CRTSCTS;
+	tty.c_cflag |= CREAD | CLOCAL;
 
-    tty.c_lflag     &= ~(ICANON | ECHO | ECHOE | ISIG);
-    tty.c_iflag     &= ~(IXON | IXOFF | IXANY);
-    tty.c_oflag     &= ~OPOST;
+	tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+	tty.c_iflag &= ~(IXON | IXOFF | IXANY);
+	tty.c_oflag &= ~OPOST;
 
-    // Set minimum characters and timeout
-    tty.c_cc[VMIN]   = 0; // Non-blocking read
-    tty.c_cc[VTIME]  = 0; // No timeout
+	// Set minimum characters and timeout
+	tty.c_cc[VMIN] = 0; // Non-blocking read
+	tty.c_cc[VTIME] = 0; // No timeout
 
-    if (tcsetattr(dist->source_fd, TCSANOW, &tty) != 0) {
-        perror("Failed to set serial port attributes");
-        close(dist->source_fd);
-        return -1;
-    }
+	if (tcsetattr(dist->source_fd, TCSANOW, &tty) != 0) {
+		perror("Failed to set serial port attributes");
+		close(dist->source_fd);
+		return -1;
+	}
 
-    // Clear any pending data in the buffer
-    tcflush(dist->source_fd, TCIOFLUSH);
+	// Clear any pending data in the buffer
+	tcflush(dist->source_fd, TCIOFLUSH);
 
-    // Initialize client list
-    memset(dist->clients, 0, sizeof(dist->clients));
-    dist->client_count        = 0;
-    dist->baudrate            = baudrate_num;
-    dist->termios_baudrate    = baudrate_termios;
-    dist->running             = 1;
-    dist->total_bytes_read    = 0;
-    dist->total_bytes_written = 0;
-    dist->error_count         = 0;
-    dist->reconnect_count     = 0;
-    pthread_mutex_init(&dist->mutex, NULL);
+	// Initialize client list
+	memset(dist->clients, 0, sizeof(dist->clients));
+	dist->client_count = 0;
+	dist->baudrate = baudrate_num;
+	dist->termios_baudrate = baudrate_termios;
+	dist->running = 1;
+	dist->total_bytes_read = 0;
+	dist->total_bytes_written = 0;
+	dist->error_count = 0;
+	dist->reconnect_count = 0;
+	pthread_mutex_init(&dist->mutex, NULL);
 
-    printf("Distributor initialized on %s @ %d baud\n", source_port, baudrate_num);
-    return 0;
+	printf("Distributor initialized on %s @ %d baud\n", source_port,
+	       baudrate_num);
+	return 0;
 }
 
 // Add client with custom virtual port name (full absolute path)
-int add_client(distributor_t* dist, const char* symlink_path) {
-    pthread_mutex_lock(&dist->mutex);
+int add_client(distributor_t *dist, const char *symlink_path)
+{
+	pthread_mutex_lock(&dist->mutex);
 
-    if (dist->client_count >= MAX_CLIENTS) {
-        pthread_mutex_unlock(&dist->mutex);
-        fprintf(stderr, "Maximum number of clients reached (%d)\n", MAX_CLIENTS);
-        return -1;
-    }
+	if (dist->client_count >= MAX_CLIENTS) {
+		pthread_mutex_unlock(&dist->mutex);
+		fprintf(stderr, "Maximum number of clients reached (%d)\n",
+			MAX_CLIENTS);
+		return -1;
+	}
 
-    // Check if client name already exists
-    for (int i = 0; i < dist->client_count; i++) {
-        if (strcmp(dist->clients[i].name, symlink_path) == 0) {
-            pthread_mutex_unlock(&dist->mutex);
-            fprintf(stderr, "Client path '%s' already exists\n", symlink_path);
-            return -1;
-        }
-    }
+	// Check if client name already exists
+	for (int i = 0; i < dist->client_count; i++) {
+		if (strcmp(dist->clients[i].name, symlink_path) == 0) {
+			pthread_mutex_unlock(&dist->mutex);
+			fprintf(stderr, "Client path '%s' already exists\n",
+				symlink_path);
+			return -1;
+		}
+	}
 
-    // Create pseudo-terminal
-    int master_fd;
-    char slave_name[64];
+	// Create pseudo-terminal
+	int master_fd;
+	char slave_name[64];
 
-    master_fd = posix_openpt(O_RDWR | O_NOCTTY);
-    if (master_fd == -1) {
-        pthread_mutex_unlock(&dist->mutex);
-        perror("Failed to create PTY");
-        return -1;
-    }
+	master_fd = posix_openpt(O_RDWR | O_NOCTTY);
+	if (master_fd == -1) {
+		pthread_mutex_unlock(&dist->mutex);
+		perror("Failed to create PTY");
+		return -1;
+	}
 
-    if (grantpt(master_fd) == -1 || unlockpt(master_fd) == -1) {
-        close(master_fd);
-        pthread_mutex_unlock(&dist->mutex);
-        perror("Failed to setup PTY");
-        return -1;
-    }
+	if (grantpt(master_fd) == -1 || unlockpt(master_fd) == -1) {
+		close(master_fd);
+		pthread_mutex_unlock(&dist->mutex);
+		perror("Failed to setup PTY");
+		return -1;
+	}
 
-    // Get slave device name
-    if (ptsname_r(master_fd, slave_name, sizeof(slave_name)) != 0) {
-        close(master_fd);
-        pthread_mutex_unlock(&dist->mutex);
-        perror("Failed to get PTY slave name");
-        return -1;
-    }
+	// Get slave device name
+	if (ptsname_r(master_fd, slave_name, sizeof(slave_name)) != 0) {
+		close(master_fd);
+		pthread_mutex_unlock(&dist->mutex);
+		perror("Failed to get PTY slave name");
+		return -1;
+	}
 
-    // Set non-blocking mode for the PTY master
-    set_nonblocking(master_fd);
+	// Set non-blocking mode for the PTY master
+	set_nonblocking(master_fd);
 
-    // Remove existing symlink if it exists
-    if (access(symlink_path, F_OK) == 0) {
-        if (unlink(symlink_path) == -1) {
-            fprintf(stderr, "Warning: Failed to remove existing symlink %s: %s\n",
-                    symlink_path, strerror(errno));
-        }
-    }
+	// Remove existing symlink if it exists
+	if (access(symlink_path, F_OK) == 0) {
+		if (unlink(symlink_path) == -1) {
+			fprintf(stderr,
+				"Warning: Failed to remove existing symlink %s: %s\n",
+				symlink_path, strerror(errno));
+		}
+	}
 
-    // Create symbolic link
-    if (symlink(slave_name, symlink_path) == -1) {
-        fprintf(stderr, "Failed to create symlink %s -> %s: %s\n", symlink_path, slave_name,
-                strerror(errno));
-        close(master_fd);
-        pthread_mutex_unlock(&dist->mutex);
-        return -1;
-    }
+	// Create symbolic link
+	if (symlink(slave_name, symlink_path) == -1) {
+		fprintf(stderr, "Failed to create symlink %s -> %s: %s\n",
+			symlink_path, slave_name, strerror(errno));
+		close(master_fd);
+		pthread_mutex_unlock(&dist->mutex);
+		return -1;
+	}
 
-    // Add to client list
-    client_t* client           = &dist->clients[dist->client_count];
-    client->fd                 = master_fd;
-    client->active             = 1;
-    client->blocked            = 0;
-    client->pending_errors     = 0;
-    client->reconnect_attempts = 0;
-    gettimeofday(&client->last_write_time, NULL);
-    memset(&client->block_time, 0, sizeof(client->block_time));
-    snprintf(client->name, sizeof(client->name), "%s", symlink_path);
-    snprintf(client->slave_name, sizeof(client->slave_name), "%s", slave_name);
-    dist->client_count++;
+	// Add to client list
+	client_t *client = &dist->clients[dist->client_count];
+	client->fd = master_fd;
+	client->active = 1;
+	client->blocked = 0;
+	client->pending_errors = 0;
+	client->reconnect_attempts = 0;
+	gettimeofday(&client->last_write_time, NULL);
+	memset(&client->block_time, 0, sizeof(client->block_time));
+	snprintf(client->name, sizeof(client->name), "%s", symlink_path);
+	snprintf(client->slave_name, sizeof(client->slave_name), "%s",
+		 slave_name);
+	dist->client_count++;
 
-    printf("Virtual port created: %s -> %s\n", symlink_path, slave_name);
+	printf("Virtual port created: %s -> %s\n", symlink_path, slave_name);
 
-    pthread_mutex_unlock(&dist->mutex);
-    return master_fd;
+	pthread_mutex_unlock(&dist->mutex);
+	return master_fd;
 }
 
 // Recreate a client (close and reopen)
-int recreate_client(distributor_t* dist, int client_index) {
-    if (client_index < 0 || client_index >= dist->client_count) {
-        return -1;
-    }
+int recreate_client(distributor_t *dist, int client_index)
+{
+	if (client_index < 0 || client_index >= dist->client_count) {
+		return -1;
+	}
 
-    client_t* client = &dist->clients[client_index];
+	client_t *client = &dist->clients[client_index];
 
-    printf("Attempting to recreate client %s (attempt %d/%d)...\n", client->name,
-           client->reconnect_attempts + 1, MAX_RECONNECT_ATTEMPTS);
+	printf("Attempting to recreate client %s (attempt %d/%d)...\n",
+	       client->name, client->reconnect_attempts + 1,
+	       MAX_RECONNECT_ATTEMPTS);
 
-    // Cleanup old resources
-    cleanup_client(client);
+	// Cleanup old resources
+	cleanup_client(client);
 
-    // Create new pseudo-terminal
-    int master_fd = posix_openpt(O_RDWR | O_NOCTTY);
-    if (master_fd == -1) {
-        fprintf(stderr, "Failed to create new PTY for %s: %s\n", client->name,
-                strerror(errno));
-        return -1;
-    }
+	// Create new pseudo-terminal
+	int master_fd = posix_openpt(O_RDWR | O_NOCTTY);
+	if (master_fd == -1) {
+		fprintf(stderr, "Failed to create new PTY for %s: %s\n",
+			client->name, strerror(errno));
+		return -1;
+	}
 
-    if (grantpt(master_fd) == -1 || unlockpt(master_fd) == -1) {
-        close(master_fd);
-        fprintf(stderr, "Failed to setup new PTY for %s: %s\n", client->name, strerror(errno));
-        return -1;
-    }
+	if (grantpt(master_fd) == -1 || unlockpt(master_fd) == -1) {
+		close(master_fd);
+		fprintf(stderr, "Failed to setup new PTY for %s: %s\n",
+			client->name, strerror(errno));
+		return -1;
+	}
 
-    // Get slave device name
-    char slave_name[64];
-    if (ptsname_r(master_fd, slave_name, sizeof(slave_name)) != 0) {
-        close(master_fd);
-        fprintf(stderr, "Failed to get new PTY slave name for %s: %s\n", client->name,
-                strerror(errno));
-        return -1;
-    }
+	// Get slave device name
+	char slave_name[64];
+	if (ptsname_r(master_fd, slave_name, sizeof(slave_name)) != 0) {
+		close(master_fd);
+		fprintf(stderr, "Failed to get new PTY slave name for %s: %s\n",
+			client->name, strerror(errno));
+		return -1;
+	}
 
-    // Update slave name if changed
-    if (strcmp(client->slave_name, slave_name) != 0) {
-        printf("Slave device changed: %s -> %s\n", client->slave_name, slave_name);
-        snprintf(client->slave_name, sizeof(client->slave_name), "%s", slave_name);
+	// Update slave name if changed
+	if (strcmp(client->slave_name, slave_name) != 0) {
+		printf("Slave device changed: %s -> %s\n", client->slave_name,
+		       slave_name);
+		snprintf(client->slave_name, sizeof(client->slave_name), "%s",
+			 slave_name);
 
-        // Remove old symlink
-        if (access(client->name, F_OK) == 0) {
-            unlink(client->name);
-        }
+		// Remove old symlink
+		if (access(client->name, F_OK) == 0) {
+			unlink(client->name);
+		}
 
-        // Create new symbolic link
-        if (symlink(slave_name, client->name) == -1) {
-            fprintf(stderr, "Failed to recreate symlink %s -> %s: %s\n", client->name,
-                    slave_name, strerror(errno));
-            close(master_fd);
-            return -1;
-        }
-    }
+		// Create new symbolic link
+		if (symlink(slave_name, client->name) == -1) {
+			fprintf(stderr,
+				"Failed to recreate symlink %s -> %s: %s\n",
+				client->name, slave_name, strerror(errno));
+			close(master_fd);
+			return -1;
+		}
+	}
 
-    // Set non-blocking mode for the new PTY master
-    set_nonblocking(master_fd);
+	// Set non-blocking mode for the new PTY master
+	set_nonblocking(master_fd);
 
-    // Update client state
-    client->fd             = master_fd;
-    client->blocked        = 0;
-    client->pending_errors = 0;
-    gettimeofday(&client->last_write_time, NULL);
-    memset(&client->block_time, 0, sizeof(client->block_time));
-    client->reconnect_attempts++;
-    dist->reconnect_count++;
+	// Update client state
+	client->fd = master_fd;
+	client->blocked = 0;
+	client->pending_errors = 0;
+	gettimeofday(&client->last_write_time, NULL);
+	memset(&client->block_time, 0, sizeof(client->block_time));
+	client->reconnect_attempts++;
+	dist->reconnect_count++;
 
-    printf("Client %s recreated successfully (new fd: %d)\n", client->name, master_fd);
+	printf("Client %s recreated successfully (new fd: %d)\n", client->name,
+	       master_fd);
 
-    return 0;
+	return 0;
 }
 
 // Print statistics
-void print_statistics(distributor_t* dist) {
-    static struct timeval last_stat_time = {0, 0};
-    struct timeval now;
-    gettimeofday(&now, NULL);
+void print_statistics(distributor_t *dist)
+{
+	static struct timeval last_stat_time = { 0, 0 };
+	struct timeval now;
+	gettimeofday(&now, NULL);
 
-    if (last_stat_time.tv_sec == 0) {
-        last_stat_time = now;
-        return;
-    }
+	if (last_stat_time.tv_sec == 0) {
+		last_stat_time = now;
+		return;
+	}
 
-    double elapsed = (now.tv_sec - last_stat_time.tv_sec) +
-                     (now.tv_usec - last_stat_time.tv_usec) / 1000000.0;
+	double elapsed = (now.tv_sec - last_stat_time.tv_sec) +
+			 (now.tv_usec - last_stat_time.tv_usec) / 1000000.0;
 
-    if (elapsed >= 10.0) { // Print every 10 seconds
-        pthread_mutex_lock(&dist->mutex);
+	if (elapsed >= 10.0) { // Print every 10 seconds
+		pthread_mutex_lock(&dist->mutex);
 
-        int active_clients  = 0;
-        int blocked_clients = 0;
-        for (int i = 0; i < dist->client_count; i++) {
-            if (dist->clients[i].active) {
-                active_clients++;
-                if (dist->clients[i].blocked) {
-                    blocked_clients++;
-                }
-            }
-        }
+		int active_clients = 0;
+		int blocked_clients = 0;
+		for (int i = 0; i < dist->client_count; i++) {
+			if (dist->clients[i].active) {
+				active_clients++;
+				if (dist->clients[i].blocked) {
+					blocked_clients++;
+				}
+			}
+		}
 
-        printf("\n=== Statistics ===\n");
-        printf("Active clients: %d (blocked: %d)\n", active_clients, blocked_clients);
-        printf("Total bytes read: %ld\n", dist->total_bytes_read);
-        printf("Total bytes written: %ld\n", dist->total_bytes_written);
-        printf("Error count: %ld\n", dist->error_count);
-        printf("Reconnect count: %ld\n", dist->reconnect_count);
-        if (elapsed > 0) {
-            printf("Bytes/sec read: %.1f\n", dist->total_bytes_read / elapsed);
-            printf("Bytes/sec written: %.1f\n", dist->total_bytes_written / elapsed);
-        }
+		printf("\n=== Statistics ===\n");
+		printf("Active clients: %d (blocked: %d)\n", active_clients,
+		       blocked_clients);
+		printf("Total bytes read: %ld\n", dist->total_bytes_read);
+		printf("Total bytes written: %ld\n", dist->total_bytes_written);
+		printf("Error count: %ld\n", dist->error_count);
+		printf("Reconnect count: %ld\n", dist->reconnect_count);
+		if (elapsed > 0) {
+			printf("Bytes/sec read: %.1f\n",
+			       dist->total_bytes_read / elapsed);
+			printf("Bytes/sec written: %.1f\n",
+			       dist->total_bytes_written / elapsed);
+		}
 
-        // Check serial buffer status
-        int bytes_available = check_serial_buffer(dist->source_fd);
-        if (bytes_available > 0) {
-            printf("Warning: Serial buffer has %d bytes pending\n", bytes_available);
-        }
+		// Check serial buffer status
+		int bytes_available = check_serial_buffer(dist->source_fd);
+		if (bytes_available > 0) {
+			printf("Warning: Serial buffer has %d bytes pending\n",
+			       bytes_available);
+		}
 
-        // Show blocked clients details
-        if (blocked_clients > 0) {
-            printf("\nBlocked clients:\n");
-            for (int i = 0; i < dist->client_count; i++) {
-                if (dist->clients[i].active && dist->clients[i].blocked) {
-                    struct timeval block_duration;
-                    timersub(&now, &dist->clients[i].block_time, &block_duration);
-                    printf("  %s: blocked for %ld.%03ld seconds\n", dist->clients[i].name,
-                           block_duration.tv_sec, block_duration.tv_usec / 1000);
-                }
-            }
-        }
+		// Show blocked clients details
+		if (blocked_clients > 0) {
+			printf("\nBlocked clients:\n");
+			for (int i = 0; i < dist->client_count; i++) {
+				if (dist->clients[i].active &&
+				    dist->clients[i].blocked) {
+					struct timeval block_duration;
+					timersub(&now,
+						 &dist->clients[i].block_time,
+						 &block_duration);
+					printf("  %s: blocked for %ld.%03ld seconds\n",
+					       dist->clients[i].name,
+					       block_duration.tv_sec,
+					       block_duration.tv_usec / 1000);
+				}
+			}
+		}
 
-        printf("==================\n\n");
+		printf("==================\n\n");
 
-        last_stat_time = now;
-        pthread_mutex_unlock(&dist->mutex);
-    }
+		last_stat_time = now;
+		pthread_mutex_unlock(&dist->mutex);
+	}
 }
 
 // Cleanup distributor resources
-void cleanup_distributor(distributor_t* dist) {
-    pthread_mutex_lock(&dist->mutex);
+void cleanup_distributor(distributor_t *dist)
+{
+	pthread_mutex_lock(&dist->mutex);
 
-    dist->running = 0;
+	dist->running = 0;
 
-    // Cleanup all clients
-    for (int i = 0; i < dist->client_count; i++) {
-        if (dist->clients[i].active) {
-            cleanup_client(&dist->clients[i]);
-            printf("Closed client: %s\n", dist->clients[i].name);
-        }
-    }
+	// Cleanup all clients
+	for (int i = 0; i < dist->client_count; i++) {
+		if (dist->clients[i].active) {
+			cleanup_client(&dist->clients[i]);
+			printf("Closed client: %s\n", dist->clients[i].name);
+		}
+	}
 
-    // Close source serial port
-    if (dist->source_fd >= 0) {
-        close(dist->source_fd);
-        printf("Closed source serial port\n");
-    }
+	// Close source serial port
+	if (dist->source_fd >= 0) {
+		close(dist->source_fd);
+		printf("Closed source serial port\n");
+	}
 
-    pthread_mutex_unlock(&dist->mutex);
-    pthread_mutex_destroy(&dist->mutex);
+	pthread_mutex_unlock(&dist->mutex);
+	pthread_mutex_destroy(&dist->mutex);
 }
 
 // Check and handle blocked clients (reconnect if necessary)
-void handle_blocked_clients(distributor_t* dist) {
-    static int blocked_check_counter = 0;
+void handle_blocked_clients(distributor_t *dist)
+{
+	static int blocked_check_counter = 0;
 
-    if (++blocked_check_counter >= 50) { // Check every 50 cycles
-        pthread_mutex_lock(&dist->mutex);
+	if (++blocked_check_counter >= 50) { // Check every 50 cycles
+		pthread_mutex_lock(&dist->mutex);
 
-        struct timeval now;
-        gettimeofday(&now, NULL);
+		struct timeval now;
+		gettimeofday(&now, NULL);
 
-        for (int i = 0; i < dist->client_count; i++) {
-            if (dist->clients[i].active && dist->clients[i].blocked) {
-                // Check how long this client has been blocked
-                struct timeval block_duration;
-                timersub(&now, &dist->clients[i].block_time, &block_duration);
+		for (int i = 0; i < dist->client_count; i++) {
+			if (dist->clients[i].active &&
+			    dist->clients[i].blocked) {
+				// Check how long this client has been blocked
+				struct timeval block_duration;
+				timersub(&now, &dist->clients[i].block_time,
+					 &block_duration);
 
-                // If blocked for more than 5 seconds, attempt to recreate
-                if (block_duration.tv_sec >= 5) {
-                    if (dist->clients[i].reconnect_attempts < MAX_RECONNECT_ATTEMPTS) {
-                        printf(
-                            "Client %s blocked for %ld seconds, attempting to recreate...\n",
-                            dist->clients[i].name, block_duration.tv_sec);
+				// If blocked for more than 5 seconds, attempt to recreate
+				if (block_duration.tv_sec >= 5) {
+					if (dist->clients[i]
+						    .reconnect_attempts <
+					    MAX_RECONNECT_ATTEMPTS) {
+						printf("Client %s blocked for %ld seconds, attempting to recreate...\n",
+						       dist->clients[i].name,
+						       block_duration.tv_sec);
 
-                        if (recreate_client(dist, i) == 0) {
-                            printf("Client %s recreated successfully\n",
-                                   dist->clients[i].name);
-                        } else {
-                            fprintf(stderr, "Failed to recreate client %s\n",
-                                    dist->clients[i].name);
-                        }
-                    } else {
-                        fprintf(
-                            stderr,
-                            "Client %s exceeded max reconnect attempts (%d), deactivating\n",
-                            dist->clients[i].name, MAX_RECONNECT_ATTEMPTS);
-                        dist->clients[i].active = 0;
-                    }
-                }
-            }
-        }
+						if (recreate_client(dist, i) ==
+						    0) {
+							printf("Client %s recreated successfully\n",
+							       dist->clients[i]
+								       .name);
+						} else {
+							fprintf(stderr,
+								"Failed to recreate client %s\n",
+								dist->clients[i]
+									.name);
+						}
+					} else {
+						fprintf(stderr,
+							"Client %s exceeded max reconnect attempts (%d), deactivating\n",
+							dist->clients[i].name,
+							MAX_RECONNECT_ATTEMPTS);
+						dist->clients[i].active = 0;
+					}
+				}
+			}
+		}
 
-        pthread_mutex_unlock(&dist->mutex);
-        blocked_check_counter = 0;
-    }
+		pthread_mutex_unlock(&dist->mutex);
+		blocked_check_counter = 0;
+	}
 }
 
 // Data distribution thread
-void* distribution_thread(void* arg) {
-    distributor_t* dist = (distributor_t*)arg;
-    fd_set read_fds;
-    struct timeval timeout;
-    int max_fd;
-    char read_buffer[BUFFER_SIZE];
+void *distribution_thread(void *arg)
+{
+	distributor_t *dist = (distributor_t *)arg;
+	fd_set read_fds;
+	struct timeval timeout;
+	int max_fd;
+	char read_buffer[BUFFER_SIZE];
 
-    printf("Distribution thread started\n");
-    printf("Press Ctrl+C to stop\n\n");
+	printf("Distribution thread started\n");
+	printf("Press Ctrl+C to stop\n\n");
 
-    while (dist->running && keep_running) {
-        // Check if there are any active clients
-        pthread_mutex_lock(&dist->mutex);
-        int active_clients = 0;
-        for (int i = 0; i < dist->client_count; i++) {
-            if (dist->clients[i].active) {
-                active_clients++;
-            }
-        }
-        pthread_mutex_unlock(&dist->mutex);
+	while (dist->running && keep_running) {
+		// Check if there are any active clients
+		pthread_mutex_lock(&dist->mutex);
+		int active_clients = 0;
+		for (int i = 0; i < dist->client_count; i++) {
+			if (dist->clients[i].active) {
+				active_clients++;
+			}
+		}
+		pthread_mutex_unlock(&dist->mutex);
 
-        if (active_clients == 0) {
-            printf("No active clients, sleeping for 1 second...\n");
-            sleep(1);
-            continue;
-        }
+		if (active_clients == 0) {
+			printf("No active clients, sleeping for 1 second...\n");
+			sleep(1);
+			continue;
+		}
 
-        // Setup select for source serial port
-        FD_ZERO(&read_fds);
-        FD_SET(dist->source_fd, &read_fds);
-        max_fd          = dist->source_fd;
+		// Setup select for source serial port
+		FD_ZERO(&read_fds);
+		FD_SET(dist->source_fd, &read_fds);
+		max_fd = dist->source_fd;
 
-        timeout.tv_sec  = 1; // 1 second timeout
-        timeout.tv_usec = 0;
+		timeout.tv_sec = 1; // 1 second timeout
+		timeout.tv_usec = 0;
 
-        int ready       = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
+		int ready = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
 
-        if (ready < 0) {
-            // Check for interrupt
-            if (errno == EINTR) {
-                printf("Select interrupted, exiting...\n");
-                break;
-            }
-            perror("Select error");
-            dist->error_count++;
-            usleep(100000); // Sleep 100ms on error
-            continue;
-        }
+		if (ready < 0) {
+			// Check for interrupt
+			if (errno == EINTR) {
+				printf("Select interrupted, exiting...\n");
+				break;
+			}
+			perror("Select error");
+			dist->error_count++;
+			usleep(100000); // Sleep 100ms on error
+			continue;
+		}
 
-        if (ready > 0 && FD_ISSET(dist->source_fd, &read_fds)) {
-            // Read data from source serial port
-            ssize_t bytes_read = read(dist->source_fd, read_buffer, sizeof(read_buffer));
+		if (ready > 0 && FD_ISSET(dist->source_fd, &read_fds)) {
+			// Read data from source serial port
+			ssize_t bytes_read = read(dist->source_fd, read_buffer,
+						  sizeof(read_buffer));
 
-            if (bytes_read > 0) {
-                dist->total_bytes_read += bytes_read;
-                pthread_mutex_lock(&dist->mutex);
+			if (bytes_read > 0) {
+				dist->total_bytes_read += bytes_read;
+				pthread_mutex_lock(&dist->mutex);
 
-                // Distribute data to all active and unblocked clients
-                int clients_served                 = 0;
-                int total_bytes_written_this_round = 0;
+				// Distribute data to all active and unblocked clients
+				int clients_served = 0;
+				int total_bytes_written_this_round = 0;
 
-                for (int i = 0; i < dist->client_count; i++) {
-                    if (dist->clients[i].active && !dist->clients[i].blocked) {
-                        ssize_t bytes_written =
-                            write(dist->clients[i].fd, read_buffer, bytes_read);
+				for (int i = 0; i < dist->client_count; i++) {
+					if (dist->clients[i].active &&
+					    !dist->clients[i].blocked) {
+						ssize_t bytes_written = write(
+							dist->clients[i].fd,
+							read_buffer,
+							bytes_read);
 
-                        if (bytes_written > 0) {
-                            clients_served++;
-                            total_bytes_written_this_round  += bytes_written;
-                            dist->clients[i].pending_errors  = 0; // Reset error count
-                            gettimeofday(&dist->clients[i].last_write_time, NULL);
-                        } else if (bytes_written < 0) {
-                            if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                                // Buffer full, mark client as blocked
-                                if (!dist->clients[i].blocked) {
-                                    dist->clients[i].blocked = 1;
-                                    gettimeofday(&dist->clients[i].block_time, NULL);
-                                    printf("Client %s blocked (buffer full), will attempt to "
-                                           "recreate\n",
-                                           dist->clients[i].name);
-                                }
-                                dist->clients[i].pending_errors++;
-                            } else {
-                                fprintf(stderr, "Failed to write to client %s: %s\n",
-                                        dist->clients[i].name, strerror(errno));
-                                dist->clients[i].active = 0;
-                                dist->clients[i].pending_errors++;
-                            }
-                        }
+						if (bytes_written > 0) {
+							clients_served++;
+							total_bytes_written_this_round +=
+								bytes_written;
+							dist->clients[i]
+								.pending_errors =
+								0; // Reset error count
+							gettimeofday(
+								&dist->clients[i]
+									 .last_write_time,
+								NULL);
+						} else if (bytes_written < 0) {
+							if (errno == EAGAIN ||
+							    errno ==
+								    EWOULDBLOCK) {
+								// Buffer full, mark client as blocked
+								if (!dist->clients[i]
+									     .blocked) {
+									dist->clients[i]
+										.blocked =
+										1;
+									gettimeofday(
+										&dist->clients[i]
+											 .block_time,
+										NULL);
+									printf("Client %s blocked (buffer full), will attempt to "
+									       "recreate\n",
+									       dist->clients[i]
+										       .name);
+								}
+								dist->clients[i]
+									.pending_errors++;
+							} else {
+								fprintf(stderr,
+									"Failed to write to client %s: %s\n",
+									dist->clients[i]
+										.name,
+									strerror(
+										errno));
+								dist->clients[i]
+									.active =
+									0;
+								dist->clients[i]
+									.pending_errors++;
+							}
+						}
 
-                        // If too many consecutive errors, deactivate client
-                        if (dist->clients[i].pending_errors > 10) {
-                            fprintf(stderr, "Too many errors, deactivating client %s\n",
-                                    dist->clients[i].name);
-                            dist->clients[i].active = 0;
-                        }
-                    }
-                }
+						// If too many consecutive errors, deactivate client
+						if (dist->clients[i]
+							    .pending_errors >
+						    10) {
+							fprintf(stderr,
+								"Too many errors, deactivating client %s\n",
+								dist->clients[i]
+									.name);
+							dist->clients[i]
+								.active = 0;
+						}
+					}
+				}
 
-                dist->total_bytes_written  += total_bytes_written_this_round;
+				dist->total_bytes_written +=
+					total_bytes_written_this_round;
 
-                // Try to unblock clients by checking if they have space now
-                static int unblock_counter  = 0;
-                if (++unblock_counter >= 100) {
-                    for (int i = 0; i < dist->client_count; i++) {
-                        if (dist->clients[i].active && dist->clients[i].blocked) {
-                            // Check if client buffer has space
-                            int available = 0;
-                            if (ioctl(dist->clients[i].fd, FIONREAD, &available) == 0) {
-                                if (available < BUFFER_SIZE / 4) { // Buffer 1/4 empty
-                                    dist->clients[i].blocked = 0;
-                                    memset(&dist->clients[i].block_time, 0,
-                                           sizeof(dist->clients[i].block_time));
-                                    printf("Client %s unblocked (buffer has space)\n",
-                                           dist->clients[i].name);
-                                }
-                            }
-                        }
-                    }
-                    unblock_counter = 0;
-                }
+				// Try to unblock clients by checking if they have space now
+				static int unblock_counter = 0;
+				if (++unblock_counter >= 100) {
+					for (int i = 0; i < dist->client_count;
+					     i++) {
+						if (dist->clients[i].active &&
+						    dist->clients[i].blocked) {
+							// Check if client buffer has space
+							int available = 0;
+							if (ioctl(dist->clients[i]
+									  .fd,
+								  FIONREAD,
+								  &available) ==
+							    0) {
+								if (available <
+								    BUFFER_SIZE /
+									    4) { // Buffer 1/4 empty
+									dist->clients[i]
+										.blocked =
+										0;
+									memset(&dist->clients[i]
+											.block_time,
+									       0,
+									       sizeof(dist->clients[i]
+											      .block_time));
+									printf("Client %s unblocked (buffer has space)\n",
+									       dist->clients[i]
+										       .name);
+								}
+							}
+						}
+					}
+					unblock_counter = 0;
+				}
 
-                pthread_mutex_unlock(&dist->mutex);
+				pthread_mutex_unlock(&dist->mutex);
 
-                // Debug output
-                static int counter = 0;
-                if (++counter % 500 == 0) {
-                    printf("Distributed %ld bytes to %d clients (total R:%ld W:%ld)\n",
-                           bytes_read, clients_served, dist->total_bytes_read,
-                           dist->total_bytes_written);
-                }
-            } else if (bytes_read == 0) {
-                // No data available (non-blocking mode)
-                usleep(1000); // Sleep 1ms
-            } else {
-                if (errno != EAGAIN && errno != EWOULDBLOCK) {
-                    perror("Read error from source serial port");
-                    dist->error_count++;
-                }
-                usleep(10000); // Sleep 10ms on read error
-            }
-        } else if (ready == 0) {
-            // Timeout occurred, no data available
-            // This is normal in non-blocking mode
-            usleep(1000); // Sleep 1ms
-        }
+				// Debug output
+				static int counter = 0;
+				if (++counter % 500 == 0) {
+					printf("Distributed %ld bytes to %d clients (total R:%ld W:%ld)\n",
+					       bytes_read, clients_served,
+					       dist->total_bytes_read,
+					       dist->total_bytes_written);
+				}
+			} else if (bytes_read == 0) {
+				// No data available (non-blocking mode)
+				usleep(1000); // Sleep 1ms
+			} else {
+				if (errno != EAGAIN && errno != EWOULDBLOCK) {
+					perror("Read error from source serial port");
+					dist->error_count++;
+				}
+				usleep(10000); // Sleep 10ms on read error
+			}
+		} else if (ready == 0) {
+			// Timeout occurred, no data available
+			// This is normal in non-blocking mode
+			usleep(1000); // Sleep 1ms
+		}
 
-        // Handle blocked clients (check and possibly recreate)
-        handle_blocked_clients(dist);
+		// Handle blocked clients (check and possibly recreate)
+		handle_blocked_clients(dist);
 
-        // Print statistics periodically
-        print_statistics(dist);
-    }
+		// Print statistics periodically
+		print_statistics(dist);
+	}
 
-    printf("Distribution thread terminated\n");
-    return NULL;
+	printf("Distribution thread terminated\n");
+	return NULL;
 }
 
-int main(int argc, char* argv[]) {
-    distributor_t dist;
-    pthread_t thread;
+int main(int argc, char *argv[])
+{
+	distributor_t dist;
+	pthread_t thread;
 
-    // Set up signal handlers
-    signal(SIGINT, handle_signal);
-    signal(SIGTERM, handle_signal);
+	// Set up signal handlers
+	signal(SIGINT, handle_signal);
+	signal(SIGTERM, handle_signal);
 
-    // Default values
-    int baudrate_num         = DEFAULT_BAUDRATE;
-    speed_t baudrate_termios = B460800;
-    char* virtual_ports[MAX_CLIENTS];
-    int port_count                      = 0;
-    int show_statistics                 = 0;
-    char* input_port                    = NULL;
+	// Default values
+	int baudrate_num = DEFAULT_BAUDRATE;
+	speed_t baudrate_termios = B460800;
+	char *virtual_ports[MAX_CLIENTS];
+	int port_count = 0;
+	int show_statistics = 0;
+	char *input_port = NULL;
 
-    // Command line options
-    static struct option long_options[] = {
-        {"input", required_argument, 0, 'I'},  {"baudrate", required_argument, 0, 'b'},
-        {"output", required_argument, 0, 'O'}, {"statistics", no_argument, 0, 's'},
-        {"help", no_argument, 0, 'h'},         {0, 0, 0, 0}};
+	// Command line options
+	static struct option long_options[] = {
+		{ "input", required_argument, 0, 'I' },
+		{ "baudrate", required_argument, 0, 'b' },
+		{ "output", required_argument, 0, 'O' },
+		{ "statistics", no_argument, 0, 's' },
+		{ "help", no_argument, 0, 'h' },
+		{ 0, 0, 0, 0 }
+	};
 
-    int opt;
-    int option_index = 0;
+	int opt;
+	int option_index = 0;
 
-    while ((opt = getopt_long(argc, argv, "I:b:O:sh", long_options, &option_index)) != -1) {
-        switch (opt) {
-        case 'I': input_port = strdup(optarg); break;
+	while ((opt = getopt_long(argc, argv, "I:b:O:sh", long_options,
+				  &option_index)) != -1) {
+		switch (opt) {
+		case 'I':
+			input_port = strdup(optarg);
+			break;
 
-        case 'b': parse_baudrate(optarg, &baudrate_num, &baudrate_termios); break;
+		case 'b':
+			parse_baudrate(optarg, &baudrate_num,
+				       &baudrate_termios);
+			break;
 
-        case 'O':
-            if (port_count < MAX_CLIENTS) {
-                virtual_ports[port_count] = strdup(optarg);
-                port_count++;
-            } else {
-                fprintf(stderr, "Warning: Maximum number of virtual ports reached (%d)\n",
-                        MAX_CLIENTS);
-            }
-            break;
+		case 'O':
+			if (port_count < MAX_CLIENTS) {
+				virtual_ports[port_count] = strdup(optarg);
+				port_count++;
+			} else {
+				fprintf(stderr,
+					"Warning: Maximum number of virtual ports reached (%d)\n",
+					MAX_CLIENTS);
+			}
+			break;
 
-        case 's': show_statistics = 1; break;
+		case 's':
+			show_statistics = 1;
+			break;
 
-        case 'h': print_usage(argv[0]); return 0;
+		case 'h':
+			print_usage(argv[0]);
+			return 0;
 
-        default: print_usage(argv[0]); return 1;
-        }
-    }
+		default:
+			print_usage(argv[0]);
+			return 1;
+		}
+	}
 
-    // Check for required input serial port argument
-    if (input_port == NULL) {
-        fprintf(stderr, "Error: Input serial port (-I) is required\n");
-        print_usage(argv[0]);
-        return 1;
-    }
+	// Check for required input serial port argument
+	if (input_port == NULL) {
+		fprintf(stderr, "Error: Input serial port (-I) is required\n");
+		print_usage(argv[0]);
+		return 1;
+	}
 
-    printf("\n===================================================\n");
-    printf("Serial Port Distributor - GPS Time Synchronization\n");
-    printf("===================================================\n");
-    printf("Input Port: %s\n", input_port);
-    printf("Baudrate: %d\n", baudrate_num);
-    printf("Max reconnect attempts: %d\n", MAX_RECONNECT_ATTEMPTS);
-    printf("Auto-reconnect enabled for blocked clients\n");
+	printf("\n===================================================\n");
+	printf("Serial Port Distributor - GPS Time Synchronization\n");
+	printf("===================================================\n");
+	printf("Input Port: %s\n", input_port);
+	printf("Baudrate: %d\n", baudrate_num);
+	printf("Max reconnect attempts: %d\n", MAX_RECONNECT_ATTEMPTS);
+	printf("Auto-reconnect enabled for blocked clients\n");
 
-    // Initialize distributor
-    if (init_distributor(&dist, input_port, baudrate_num, baudrate_termios) < 0) {
-        free(input_port);
-        return 1;
-    }
+	// Initialize distributor
+	if (init_distributor(&dist, input_port, baudrate_num,
+			     baudrate_termios) < 0) {
+		free(input_port);
+		return 1;
+	}
 
-    // Add virtual ports
-    if (port_count == 0) {
-        // Default ports if none specified
-        printf("\nNo output ports specified, using defaults...\n");
-        add_client(&dist, "/tmp/virtual1");
-        add_client(&dist, "/tmp/virtual2");
-    } else {
-        printf("\nCreating output virtual ports:\n");
-        for (int i = 0; i < port_count; i++) {
-            printf("  %d. %s\n", i + 1, virtual_ports[i]);
-            if (add_client(&dist, virtual_ports[i]) < 0) {
-                fprintf(stderr, "Failed to create virtual port: %s\n", virtual_ports[i]);
-            }
-        }
-    }
+	// Add virtual ports
+	if (port_count == 0) {
+		// Default ports if none specified
+		printf("\nNo output ports specified, using defaults...\n");
+		add_client(&dist, "/tmp/virtual1");
+		add_client(&dist, "/tmp/virtual2");
+	} else {
+		printf("\nCreating output virtual ports:\n");
+		for (int i = 0; i < port_count; i++) {
+			printf("  %d. %s\n", i + 1, virtual_ports[i]);
+			if (add_client(&dist, virtual_ports[i]) < 0) {
+				fprintf(stderr,
+					"Failed to create virtual port: %s\n",
+					virtual_ports[i]);
+			}
+		}
+	}
 
-    // Start distribution thread
-    if (pthread_create(&thread, NULL, distribution_thread, &dist) != 0) {
-        perror("Failed to create distribution thread");
-        cleanup_distributor(&dist);
-        free(input_port);
-        for (int i = 0; i < port_count; i++) {
-            free(virtual_ports[i]);
-        }
-        return 1;
-    }
+	// Start distribution thread
+	if (pthread_create(&thread, NULL, distribution_thread, &dist) != 0) {
+		perror("Failed to create distribution thread");
+		cleanup_distributor(&dist);
+		free(input_port);
+		for (int i = 0; i < port_count; i++) {
+			free(virtual_ports[i]);
+		}
+		return 1;
+	}
 
-    // Free allocated memory
-    free(input_port);
-    for (int i = 0; i < port_count; i++) {
-        free(virtual_ports[i]);
-    }
+	// Free allocated memory
+	free(input_port);
+	for (int i = 0; i < port_count; i++) {
+		free(virtual_ports[i]);
+	}
 
-    printf("\n===================================================\n");
-    printf("Distribution Started Successfully!\n");
-    printf("Available Output Ports:\n");
+	printf("\n===================================================\n");
+	printf("Distribution Started Successfully!\n");
+	printf("Available Output Ports:\n");
 
-    pthread_mutex_lock(&dist.mutex);
-    for (int i = 0; i < dist.client_count; i++) {
-        printf("  %s -> %s\n", dist.clients[i].name, dist.clients[i].slave_name);
-    }
-    pthread_mutex_unlock(&dist.mutex);
+	pthread_mutex_lock(&dist.mutex);
+	for (int i = 0; i < dist.client_count; i++) {
+		printf("  %s -> %s\n", dist.clients[i].name,
+		       dist.clients[i].slave_name);
+	}
+	pthread_mutex_unlock(&dist.mutex);
 
-    printf("\nTo test output ports, run in separate terminals:\n");
-    for (int i = 0; i < dist.client_count; i++) {
-        printf("  cat %s\n", dist.clients[i].name);
-    }
-    printf("\nFeatures:\n");
-    printf("  - Auto-reconnect blocked clients after 5 seconds\n");
-    printf("  - Max %d reconnect attempts per client\n", MAX_RECONNECT_ATTEMPTS);
-    printf("===================================================\n\n");
+	printf("\nTo test output ports, run in separate terminals:\n");
+	for (int i = 0; i < dist.client_count; i++) {
+		printf("  cat %s\n", dist.clients[i].name);
+	}
+	printf("\nFeatures:\n");
+	printf("  - Auto-reconnect blocked clients after 5 seconds\n");
+	printf("  - Max %d reconnect attempts per client\n",
+	       MAX_RECONNECT_ATTEMPTS);
+	printf("===================================================\n\n");
 
-    // Main loop for statistics display
-    while (keep_running) {
-        if (show_statistics) {
-            print_statistics(&dist);
-        }
-        sleep(1);
-    }
+	// Main loop for statistics display
+	while (keep_running) {
+		if (show_statistics) {
+			print_statistics(&dist);
+		}
+		sleep(1);
+	}
 
-    // Signal distribution thread to stop
-    dist.running = 0;
+	// Signal distribution thread to stop
+	dist.running = 0;
 
-    // Wait for distribution thread to complete
-    pthread_join(thread, NULL);
+	// Wait for distribution thread to complete
+	pthread_join(thread, NULL);
 
-    // Cleanup
-    cleanup_distributor(&dist);
+	// Cleanup
+	cleanup_distributor(&dist);
 
-    printf("\nSerial Port Distributor terminated\n");
-    return 0;
+	printf("\nSerial Port Distributor terminated\n");
+	return 0;
 }
 ```

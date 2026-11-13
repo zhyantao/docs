@@ -236,20 +236,23 @@ int binarySearch(int[] arr, int target, int left, int right) {
 
 ```cpp
 // check(mid) 判断"答案至少为 mid"是否可行，具有单调性
-bool check(int mid) { /* 贪心/模拟验证 */ }
+bool check(int mid)
+{ /* 贪心/模拟验证 */
+}
 
-int maxMin(vector<int>& nums, int lo, int hi) {
-    int ans = lo;
-    while (lo <= hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (check(mid)) { // mid 可行，尝试更大的答案
-            ans = mid;
-            lo  = mid + 1;
-        } else {
-            hi = mid - 1;
-        }
-    }
-    return ans;
+int maxMin(vector<int> &nums, int lo, int hi)
+{
+	int ans = lo;
+	while (lo <= hi) {
+		int mid = lo + (hi - lo) / 2;
+		if (check(mid)) { // mid 可行，尝试更大的答案
+			ans = mid;
+			lo = mid + 1;
+		} else {
+			hi = mid - 1;
+		}
+	}
+	return ans;
 }
 ```
 
@@ -287,17 +290,20 @@ int maxMin(int lo, int hi) {
 
 ```cpp
 // check(mid) 判断"最大值不超过 mid"是否可行
-bool check(int mid) { /* 贪心分段验证 */ }
+bool check(int mid)
+{ /* 贪心分段验证 */
+}
 
-int minMax(vector<int>& nums, int lo, int hi) {
-    while (lo < hi) {
-        int mid = lo + (hi - lo) / 2;
-        if (check(mid))
-            hi = mid; // 可行则收窄上界
-        else
-            lo = mid + 1;
-    }
-    return lo;
+int minMax(vector<int> &nums, int lo, int hi)
+{
+	while (lo < hi) {
+		int mid = lo + (hi - lo) / 2;
+		if (check(mid))
+			hi = mid; // 可行则收窄上界
+		else
+			lo = mid + 1;
+	}
+	return lo;
 }
 ```
 
@@ -337,48 +343,50 @@ int minMax(int lo, int hi) {
 
 ```cpp
 // next[] = 构建最长公共前后缀长度数组
-void getNext(vector<int>& next, string pat) {
-    // 初始化 next 数组的第一个元素为 0
-    int j   = 0;
-    next[0] = 0;
+void getNext(vector<int> &next, string pat)
+{
+	// 初始化 next 数组的第一个元素为 0
+	int j = 0;
+	next[0] = 0;
 
-    for (int i = 1; i < pat.size(); i++) {
-        // 当前字符不匹配时，回退 j 到 next[j-1] 的位置
-        while (j > 0 && pat[i] != pat[j]) {
-            j = next[j - 1];
-        }
-        // 当前字符匹配时，则 j 自增
-        if (pat[i] == pat[j]) {
-            j++;
-        }
-        // next[i] 表示当前位置与模式串匹配的起始位置
-        next[i] = j;
-    }
+	for (int i = 1; i < pat.size(); i++) {
+		// 当前字符不匹配时，回退 j 到 next[j-1] 的位置
+		while (j > 0 && pat[i] != pat[j]) {
+			j = next[j - 1];
+		}
+		// 当前字符匹配时，则 j 自增
+		if (pat[i] == pat[j]) {
+			j++;
+		}
+		// next[i] 表示当前位置与模式串匹配的起始位置
+		next[i] = j;
+	}
 }
 
 // 返回 pat 匹配 txt 的起始位置，若匹配失败则返回 -1
-int kmp(string pat, string txt) {
-    int n = txt.size();
-    int m = pat.size();
-    vector<int> next(m);
-    getNext(next, pat);
-    int j = 0;
-    for (int i = 0; i < n; i++) {
-        // 当当前字符不匹配且 j 大于 0 时，调整 j 的位置
-        while (j > 0 && txt[i] != pat[j]) {
-            j = next[j - 1];
-        }
-        // 当前字符匹配时，j 自增
-        if (txt[i] == pat[j]) {
-            j++;
-        }
-        // 匹配成功，返回匹配的起始位置
-        if (j == m) {
-            return i - m + 1;
-        }
-    }
-    // 匹配失败，返回 -1
-    return -1;
+int kmp(string pat, string txt)
+{
+	int n = txt.size();
+	int m = pat.size();
+	vector<int> next(m);
+	getNext(next, pat);
+	int j = 0;
+	for (int i = 0; i < n; i++) {
+		// 当当前字符不匹配且 j 大于 0 时，调整 j 的位置
+		while (j > 0 && txt[i] != pat[j]) {
+			j = next[j - 1];
+		}
+		// 当前字符匹配时，j 自增
+		if (txt[i] == pat[j]) {
+			j++;
+		}
+		// 匹配成功，返回匹配的起始位置
+		if (j == m) {
+			return i - m + 1;
+		}
+	}
+	// 匹配失败，返回 -1
+	return -1;
 }
 ```
 

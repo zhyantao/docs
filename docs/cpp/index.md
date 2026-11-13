@@ -69,60 +69,68 @@ find . -type f \( -name "*.cpp" -o -name "*.c" -o -name "*.cc" \
 class Channel;
 
 // 命名空间全小写，顶头无空格，cpp 文件里提倡使用不具名命名空间
-namespace mynamespace {
+namespace mynamespace
+{
 
 // 类名大写开头单词，使用组合通常比使用继承更适宜
 // 若用继承，只用公有继承
 // 另：接口类命名以 Interface 结尾
-class EventLoop : public CallbackInterface {
+class EventLoop : public CallbackInterface
+{
 public:
-    // 每一个限定符内，声明的顺序如下：
-    // 1 typedefs 和 enums
-    // 2 常量
-    // 3 构造函数
-    // 4 析构函数
-    // 5 成员函数，含静态数据成员
-    // 6 成员变量，含静态成员变量
+	// 每一个限定符内，声明的顺序如下：
+	// 1 typedefs 和 enums
+	// 2 常量
+	// 3 构造函数
+	// 4 析构函数
+	// 5 成员函数，含静态数据成员
+	// 6 成员变量，含静态成员变量
 
-    typedef vector<int> IntVector;
+	typedef vector<int> IntVector;
 
-    // 枚举名同类名，大写开头单词
-    enum UrlTableErrors {
-        ERROR_OUT_OF_MEMORY = 0, /* 枚举成员：全大写下划线 */
-        ERROR_MALFORMED_INPUT,
-    };
+	// 枚举名同类名，大写开头单词
+	enum UrlTableErrors {
+		ERROR_OUT_OF_MEMORY = 0, /* 枚举成员：全大写下划线 */
+		ERROR_MALFORMED_INPUT,
+	};
 
-    // explicit 修饰但参数构造函数，防止隐式类型转换误用
-    explicit EventLoop(const int xx);
+	// explicit 修饰但参数构造函数，防止隐式类型转换误用
+	explicit EventLoop(const int xx);
 
-    // 若定义了成员变量无其他构造函数，要定义一个默认构造函数
-    // EventLoop() {
-    // }
+	// 若定义了成员变量无其他构造函数，要定义一个默认构造函数
+	// EventLoop() {
+	// }
 
-    // 普通函数命名，大写开头单词
-    // 输入参数在前为 const 引用，输出参数在后为指针
-    // 不为参数设置缺省值
-    void Add(const std::string& input, Channel* output);
+	// 普通函数命名，大写开头单词
+	// 输入参数在前为 const 引用，输出参数在后为指针
+	// 不为参数设置缺省值
+	void Add(const std::string &input, Channel *output);
 
-    // 存取函数命名
-    // 取：同变量名
-    // 存：值函数名为 set_varname
-    // 短小的存取函数可用内联
-    int num_entries() const /* 尽可能使用 const */ { return num_entries_; }
-    void set_num_entries(int num_entries) { num_entries_ = num_entries; }
+	// 存取函数命名
+	// 取：同变量名
+	// 存：值函数名为 set_varname
+	// 短小的存取函数可用内联
+	int num_entries() const /* 尽可能使用 const */
+	{
+		return num_entries_;
+	}
+	void set_num_entries(int num_entries)
+	{
+		num_entries_ = num_entries;
+	}
 
-    // 仅在需要拷贝对象时，使用拷贝构造函数
+	// 仅在需要拷贝对象时，使用拷贝构造函数
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(
-        EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
+	DISALLOW_COPY_AND_ASSIGN(
+		EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
 
-    // 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
-    const int kDaysInWeek = 7;      // const 变量用 k 开头，后跟大写开头单词
-    int num_entries_;               // 变量命名：全小写，有意义的单词和下划线
-    int num_completed_connections_; // 类成员变量下划线结尾
+	// 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
+	const int kDaysInWeek = 7; // const 变量用 k 开头，后跟大写开头单词
+	int num_entries_; // 变量命名：全小写，有意义的单词和下划线
+	int num_completed_connections_; // 类成员变量下划线结尾
 
-    Channel* channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
+	Channel *channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
 };
 
 } // namespace mynamespace
@@ -154,30 +162,39 @@ private:
 // 禁止使用 using namespace xxx 污染命名空间
 using std::string;
 
-namespace mynamespace {
+namespace mynamespace
+{
 
-EventLoop::EventLoop() : num_entries_(10), num_completed_connections_(0) {}
+EventLoop::EventLoop() : num_entries_(10), num_completed_connections_(0)
+{
+}
 
-ReturnType ClassName::ReallyLongFunctionName(const Type& par_name1, Type* par_name2) {
-    bool retval = DoSomething(averyveryveryverylongargument1, argument2, argument3);
-    if (condition) {
-        for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
-            if (this_one_thing > this_other_thing && a_third_thing == a_fourth_thing) {
-                // 临时方案使用 TODO 注释，后面括号里加上你的大名，邮件地址
-                // TODO (zhangsan@gmail.com): Zhang San
-            }
-        }
-    } else {
-        int j = g();
-    }
+ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1,
+					     Type *par_name2)
+{
+	bool retval = DoSomething(averyveryveryverylongargument1, argument2,
+				  argument3);
+	if (condition) {
+		for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
+			if (this_one_thing > this_other_thing &&
+			    a_third_thing == a_fourth_thing) {
+				// 临时方案使用 TODO 注释，后面括号里加上你的大名，邮件地址
+				// TODO (zhangsan@gmail.com): Zhang San
+			}
+		}
+	} else {
+		int j = g();
+	}
 
-    switch (var) {
-    case 0: break;
+	switch (var) {
+	case 0:
+		break;
 
-    default: assert(false); /* 若 default 永不执行可使用 assert */
-    }
+	default:
+		assert(false); /* 若 default 永不执行可使用 assert */
+	}
 
-    return x;
+	return x;
 }
 } // namespace mynamespace
 ```

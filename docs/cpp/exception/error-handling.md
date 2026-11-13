@@ -18,10 +18,11 @@
 #include <cassert>
 #include <iostream>
 
-int main(int argc, char** argv) {
-    assert(argc == 2);
-    std::cout << "This is an assert example." << std::endl;
-    return 0;
+int main(int argc, char **argv)
+{
+	assert(argc == 2);
+	std::cout << "This is an assert example." << std::endl;
+	return 0;
 }
 ```
 
@@ -34,28 +35,32 @@ int main(int argc, char** argv) {
 #include <cstdlib>
 #include <iostream>
 
-float ratio(float a, float b) {
-    if (fabs(a + b) < FLT_EPSILON) {
-        std::cerr << "The sum of the two arguments is close to zero." << std::endl;
-        std::abort();
-    }
-    return (a - b) / (a + b);
-    // return int(a - b) / int(a + b);// divided by zero behavior differently for int and float
+float ratio(float a, float b)
+{
+	if (fabs(a + b) < FLT_EPSILON) {
+		std::cerr << "The sum of the two arguments is close to zero."
+			  << std::endl;
+		std::abort();
+	}
+	return (a - b) / (a + b);
+	// return int(a - b) / int(a + b);// divided by zero behavior differently for int and float
 }
 
-int main() {
-    float x = 0.f;
-    float y = 0.f;
-    float z = 0.f;
+int main()
+{
+	float x = 0.f;
+	float y = 0.f;
+	float z = 0.f;
 
-    std::cout << "Please input two numbers <q to quit>:";
-    while (std::cin >> x >> y) {
-        z = ratio(x, y);
-        std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
-        std::cout << "Please input two numbers <q to quit>:";
-    }
-    std::cout << "Bye!" << std::endl;
-    return 0;
+	std::cout << "Please input two numbers <q to quit>:";
+	while (std::cin >> x >> y) {
+		z = ratio(x, y);
+		std::cout << "ratio(" << x << ", " << y << ") = " << z
+			  << std::endl;
+		std::cout << "Please input two numbers <q to quit>:";
+	}
+	std::cout << "Bye!" << std::endl;
+	return 0;
 }
 ```
 
@@ -68,32 +73,37 @@ int main() {
 #include <cstdlib>
 #include <iostream>
 
-bool ratio(float a, float b, float& c) {
-    if (fabs(a + b) < FLT_EPSILON) {
-        std::cerr << "The sum of the two arguments is close to zero." << std::endl;
-        return false;
-    }
-    c = (a - b) / (a + b);
-    return true;
+bool ratio(float a, float b, float &c)
+{
+	if (fabs(a + b) < FLT_EPSILON) {
+		std::cerr << "The sum of the two arguments is close to zero."
+			  << std::endl;
+		return false;
+	}
+	c = (a - b) / (a + b);
+	return true;
 }
 
-int main() {
-    float x = 0.f;
-    float y = 0.f;
-    float z = 0.f;
+int main()
+{
+	float x = 0.f;
+	float y = 0.f;
+	float z = 0.f;
 
-    std::cout << "Please input two numbers <q to quit>:";
-    while (std::cin >> x >> y) {
-        bool ret = ratio(x, y, z);
-        if (ret)
-            std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
-        else
-            std::cerr << "ratio(" << x << ", " << y << ") failed." << std::endl;
+	std::cout << "Please input two numbers <q to quit>:";
+	while (std::cin >> x >> y) {
+		bool ret = ratio(x, y, z);
+		if (ret)
+			std::cout << "ratio(" << x << ", " << y << ") = " << z
+				  << std::endl;
+		else
+			std::cerr << "ratio(" << x << ", " << y << ") failed."
+				  << std::endl;
 
-        std::cout << "Please input two numbers <q to quit>:";
-    }
-    std::cout << "Bye!" << std::endl;
-    return 0;
+		std::cout << "Please input two numbers <q to quit>:";
+	}
+	std::cout << "Bye!" << std::endl;
+	return 0;
 }
 ```
 
@@ -107,33 +117,35 @@ int main() {
 
 using namespace std;
 
-int main() {
-    size_t length = 80000000000L;
-    int* p        = NULL;
+int main()
+{
+	size_t length = 80000000000L;
+	int *p = NULL;
 
-    try {
-        cout << "Trying to allocate a big block of memory" << endl;
-        p = new int[length];
-        // p = new(std::nothrow) int[length];
-        cout << "No exception." << endl;
-    } catch (std::bad_alloc& ba) {
-        cout << "bad_alloc exception!" << endl;
-        cout << ba.what() << endl;
-    }
+	try {
+		cout << "Trying to allocate a big block of memory" << endl;
+		p = new int[length];
+		// p = new(std::nothrow) int[length];
+		cout << "No exception." << endl;
+	} catch (std::bad_alloc &ba) {
+		cout << "bad_alloc exception!" << endl;
+		cout << ba.what() << endl;
+	}
 
-    if (p)
-        cout << "Memory successfully allocated." << endl;
-    else
-        cout << "So bad, null pointer." << endl;
+	if (p)
+		cout << "Memory successfully allocated." << endl;
+	else
+		cout << "So bad, null pointer." << endl;
 
-    // for(size_t i = 0; i < length; i++)
-    //     p[i] = i;
-    // size_t sum;
-    // for(size_t i = 0; i < length; i++)
-    //     sum += p[i];
-    // cout << "Sum = " << sum << endl;
-    if (p) delete[] p;
-    return 0;
+	// for(size_t i = 0; i < length; i++)
+	//     p[i] = i;
+	// size_t sum;
+	// for(size_t i = 0; i < length; i++)
+	//     sum += p[i];
+	// cout << "Sum = " << sum << endl;
+	if (p)
+		delete[] p;
+	return 0;
 }
 ```
 
@@ -144,20 +156,24 @@ C 语言使用 `fprintf(stderr, ...)` 输出错误信息：
 ```cpp
 #include <stdio.h>
 
-void div(int n) {
-    if (n % 2 != 0) {
-        fprintf(stderr, "Error: The input must be an even number. Here it's %d\n", n);
-    } else {
-        int result = n / 2;
-        fprintf(stdout, "Info: The result is %d\n", result);
-    }
-    return;
+void div(int n)
+{
+	if (n % 2 != 0) {
+		fprintf(stderr,
+			"Error: The input must be an even number. Here it's %d\n",
+			n);
+	} else {
+		int result = n / 2;
+		fprintf(stdout, "Info: The result is %d\n", result);
+	}
+	return;
 }
 
-int main() {
-    for (int n = -5; n <= 5; n++)
-        div(n);
-    return 0;
+int main()
+{
+	for (int n = -5; n <= 5; n++)
+		div(n);
+	return 0;
 }
 ```
 

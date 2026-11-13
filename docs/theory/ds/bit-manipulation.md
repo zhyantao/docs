@@ -26,29 +26,35 @@ $$
 
 ```cpp
 // lowbit：取 x 最低位的 1（树状数组、枚举二进制位的基础）
-int lowbit(int x) {
-    return x & -x;
+int lowbit(int x)
+{
+	return x & -x;
 }
 
 // 判断第 k 位是否为 1（k 从 0 开始）
-bool getBit(int x, int k) {
-    return (x >> k) & 1;
+bool getBit(int x, int k)
+{
+	return (x >> k) & 1;
 }
 
 // 置位 / 清位 / 翻转第 k 位
-int setBit(int x, int k) {
-    return x | (1 << k);
+int setBit(int x, int k)
+{
+	return x | (1 << k);
 }
-int clearBit(int x, int k) {
-    return x & ~(1 << k);
+int clearBit(int x, int k)
+{
+	return x & ~(1 << k);
 }
-int flipBit(int x, int k) {
-    return x ^ (1 << k);
+int flipBit(int x, int k)
+{
+	return x ^ (1 << k);
 }
 
 // 统计二进制中 1 的个数（内置函数更快）
-int popcount(int x) {
-    return __builtin_popcount(x);
+int popcount(int x)
+{
+	return __builtin_popcount(x);
 } // Java: Integer.bitCount(x)
 ```
 
@@ -65,12 +71,12 @@ int popcount(int x) {
 int n = 5;
 // 枚举所有子集（0 ~ 2^n-1）
 for (int mask = 0; mask < (1 << n); mask++) {
-    // 处理子集 mask
+	// 处理子集 mask
 }
 
 // 枚举一个集合 mask 的所有非空子集（经典模板：不断减 lowbit）
 for (int sub = mask; sub > 0; sub = (sub - 1) & mask) {
-    // 处理子集 sub
+	// 处理子集 sub
 }
 ```
 
@@ -80,16 +86,18 @@ for (int sub = mask; sub > 0; sub = (sub - 1) & mask) {
 
 ```cpp
 // 统计数组所有元素在每一位上 1 的个数，再按位计算贡献
-long long xorSum(vector<int>& nums) {
-    long long ans = 0;
-    for (int k = 0; k < 31; k++) {
-        long long cnt1 = 0;
-        for (int x : nums)
-            if ((x >> k) & 1) cnt1++;
-        long long cnt0  = nums.size() - cnt1;
-        ans            += cnt1 * cnt0 * (1LL << k); // 该位对异或和的贡献
-    }
-    return ans;
+long long xorSum(vector<int> &nums)
+{
+	long long ans = 0;
+	for (int k = 0; k < 31; k++) {
+		long long cnt1 = 0;
+		for (int x : nums)
+			if ((x >> k) & 1)
+				cnt1++;
+		long long cnt0 = nums.size() - cnt1;
+		ans += cnt1 * cnt0 * (1LL << k); // 该位对异或和的贡献
+	}
+	return ans;
 }
 ```
 

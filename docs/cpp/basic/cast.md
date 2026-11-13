@@ -10,7 +10,7 @@
 
 ```cpp
 const int ci = 5;
-int* pi      = const_cast<int*>(&ci); // pi 指向非 const 的 int
+int *pi = const_cast<int *>(&ci); // pi 指向非 const 的 int
 ```
 
 ```{warning}
@@ -32,7 +32,7 @@ int* pi      = const_cast<int*>(&ci); // pi 指向非 const 的 int
 
 ```cpp
 double d = 3.14;
-int i    = static_cast<int>(d); // 将 double 转换为 int
+int i = static_cast<int>(d); // 将 double 转换为 int
 ```
 
 ## reinterpret_cast
@@ -42,9 +42,9 @@ int i    = static_cast<int>(d); // 将 double 转换为 int
 **示例：**
 
 ```cpp
-int i    = 42;
-void* pv = reinterpret_cast<void*>(&i);
-char* pc = reinterpret_cast<char*>(pv);
+int i = 42;
+void *pv = reinterpret_cast<void *>(&i);
+char *pc = reinterpret_cast<char *>(pv);
 ```
 
 ## 区别与联系
@@ -70,28 +70,35 @@ char* pc = reinterpret_cast<char*>(pv);
 **示例**
 
 ```cpp
-class Base {
+class Base
+{
 public:
-    virtual ~Base() {}
+	virtual ~Base()
+	{
+	}
 };
 
-class Derived : public Base {
+class Derived : public Base
+{
 public:
-    void doSomething() { /* ... */ }
+	void doSomething()
+	{ /* ... */
+	}
 };
 
-int main() {
-    Base* basePtr       = new Derived();
-    Derived* derivedPtr = dynamic_cast<Derived*>(basePtr);
+int main()
+{
+	Base *basePtr = new Derived();
+	Derived *derivedPtr = dynamic_cast<Derived *>(basePtr);
 
-    if (derivedPtr != nullptr) {
-        derivedPtr->doSomething(); // 安全调用 Derived 类的方法
-    } else {
-        std::cout << "Conversion failed." << std::endl;
-    }
+	if (derivedPtr != nullptr) {
+		derivedPtr->doSomething(); // 安全调用 Derived 类的方法
+	} else {
+		std::cout << "Conversion failed." << std::endl;
+	}
 
-    delete basePtr;
-    return 0;
+	delete basePtr;
+	return 0;
 }
 ```
 

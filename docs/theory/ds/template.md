@@ -17,24 +17,25 @@ typedef long double ld;
 
 const ll mod7 = 1e9 + 7;
 const ll mod9 = 998244353;
-const ll INF  = 2 * 1024 * 1024 * 1023;
+const ll INF = 2 * 1024 * 1024 * 1023;
 const char nl = '\n';
 
-int main() {
-    cin.tie(nullptr)->sync_with_stdio(false);
+int main()
+{
+	cin.tie(nullptr)->sync_with_stdio(false);
 
-    int t;
-    cin >> t;
+	int t;
+	cin >> t;
 
-    auto solve = [&]() {
-        // TODO
-        cout << nl; // 使用 endl 会导致 tie 失效
-    };
+	auto solve = [&]() {
+		// TODO
+		cout << nl; // 使用 endl 会导致 tie 失效
+	};
 
-    while (t--) {
-        solve();
-    }
-    return 0;
+	while (t--) {
+		solve();
+	}
+	return 0;
 }
 ```
 
@@ -117,16 +118,18 @@ list = Arrays.asList(arr) // [] -> ArrayList
 作为类成员时，重载二元运算符参数为另一个对象，一元运算符不需额外参数。
 
 ```cpp
-Complex Complex::operator+(const Complex& a) const {
-    return Complex(real + a.real, img + a.img);
+Complex Complex::operator+(const Complex &a) const
+{
+	return Complex(real + a.real, img + a.img);
 }
 ```
 
 作为全局函数时，重载二元运算符需要两个参数，一元运算符需要一个参数。
 
 ```cpp
-Complex operator+(const Complex& a, int b) {
-    return Complex(a.real + b, a.img);
+Complex operator+(const Complex &a, int b)
+{
+	return Complex(a.real + b, a.img);
 }
 ```
 
@@ -165,9 +168,7 @@ A.divide(A);
 
 ```cpp
 sort(v1.begin(), v1.end(), greater<int>());
-sort(v1.begin(), v1.end(), [](int a, int b) {
-    return a > b;
-});
+sort(v1.begin(), v1.end(), [](int a, int b) { return a > b; });
 reverse(v1.begin(), v1.end());
 binary_search(v1.begin(), v1.end(), target);
 ```

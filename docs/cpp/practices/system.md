@@ -3,12 +3,13 @@
 ## 原始代码与现象
 
 ```cpp
-int my_system(char* cmd) {
-    int result = system(cmd);
-    if (result != 0) {
-        printf("%s\n", strerror(errno));
-    }
-    return result;
+int my_system(char *cmd)
+{
+	int result = system(cmd);
+	if (result != 0) {
+		printf("%s\n", strerror(errno));
+	}
+	return result;
 }
 ```
 
@@ -28,24 +29,25 @@ int my_system(char* cmd) {
 ## 解决方案代码
 
 ```cpp
-int fixed_system(const char* cmd) {
-    // 保存原信号处理
-    struct sigaction old_sa, new_sa;
-    sigaction(SIGCHLD, NULL, &old_sa);
+int fixed_system(const char *cmd)
+{
+	// 保存原信号处理
+	struct sigaction old_sa, new_sa;
+	sigaction(SIGCHLD, NULL, &old_sa);
 
-    // 临时设置为默认处理
-    new_sa.sa_handler = SIG_DFL;
-    sigemptyset(&new_sa.sa_mask);
-    new_sa.sa_flags = 0;
-    sigaction(SIGCHLD, &new_sa, NULL);
+	// 临时设置为默认处理
+	new_sa.sa_handler = SIG_DFL;
+	sigemptyset(&new_sa.sa_mask);
+	new_sa.sa_flags = 0;
+	sigaction(SIGCHLD, &new_sa, NULL);
 
-    // 执行命令
-    int result = system(cmd);
+	// 执行命令
+	int result = system(cmd);
 
-    // 恢复原信号处理
-    sigaction(SIGCHLD, &old_sa, NULL);
+	// 恢复原信号处理
+	sigaction(SIGCHLD, &old_sa, NULL);
 
-    return result;
+	return result;
 }
 ```
 

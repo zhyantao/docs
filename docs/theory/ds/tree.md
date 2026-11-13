@@ -12,18 +12,19 @@
 
 ```cpp
 vector<int> ans;
-vector<int> traverse(TreeNode* root) {
-    if (root == nullptr) {
-        return;
-    }
+vector<int> traverse(TreeNode *root)
+{
+	if (root == nullptr) {
+		return;
+	}
 
-    // ans.push_back(root->val); // 前序遍历
-    traverse(root->left);
-    ans.push_back(root->val); // 中序遍历
-    traverse(root->right);
-    // ans.push_back(root->val); // 后序遍历
+	// ans.push_back(root->val); // 前序遍历
+	traverse(root->left);
+	ans.push_back(root->val); // 中序遍历
+	traverse(root->right);
+	// ans.push_back(root->val); // 后序遍历
 
-    return ans;
+	return ans;
 }
 ```
 
@@ -56,30 +57,31 @@ void traverse(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector<int> preorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+vector<int> preorderTraversal(TreeNode *root)
+{
+	if (root == nullptr) {
+		return {};
+	}
 
-    vector<int> ans;
-    stack<TreeNode*> stk;
-    TreeNode* curr = root;
-    stk.push(root);
-    while (!stk.empty()) {
-        curr = stk.top();
-        stk.pop();
+	vector<int> ans;
+	stack<TreeNode *> stk;
+	TreeNode *curr = root;
+	stk.push(root);
+	while (!stk.empty()) {
+		curr = stk.top();
+		stk.pop();
 
-        ans.push_back(curr->val);
+		ans.push_back(curr->val);
 
-        if (curr->right != nullptr) { // 先右后左
-            stk.push(curr->right);
-        }
-        if (curr->left != nullptr) {
-            stk.push(curr->left);
-        }
-    }
+		if (curr->right != nullptr) { // 先右后左
+			stk.push(curr->right);
+		}
+		if (curr->left != nullptr) {
+			stk.push(curr->left);
+		}
+	}
 
-    return ans;
+	return ans;
 }
 ```
 
@@ -119,29 +121,30 @@ void preorder(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector<int> inorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+vector<int> inorderTraversal(TreeNode *root)
+{
+	if (root == nullptr) {
+		return {};
+	}
 
-    vector<int> ans;
-    stack<TreeNode*> stk;
-    TreeNode* curr = root;
-    while (curr != nullptr || !stk.empty()) {
-        if (curr != nullptr) {
-            stk.push(curr);
-            curr = curr->left;
-        } else {
-            curr = stk.top();
-            stk.pop();
+	vector<int> ans;
+	stack<TreeNode *> stk;
+	TreeNode *curr = root;
+	while (curr != nullptr || !stk.empty()) {
+		if (curr != nullptr) {
+			stk.push(curr);
+			curr = curr->left;
+		} else {
+			curr = stk.top();
+			stk.pop();
 
-            ans.push_back(curr->val);
+			ans.push_back(curr->val);
 
-            curr = curr->right;
-        }
-    }
+			curr = curr->right;
+		}
+	}
 
-    return ans;
+	return ans;
 }
 ```
 
@@ -179,31 +182,32 @@ void inorder(TreeNode root) {
 
 ```cpp
 // 后序遍历代码和前序遍历代码几乎一样，有 2 点区别
-vector<int> postorderTraversal(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+vector<int> postorderTraversal(TreeNode *root)
+{
+	if (root == nullptr) {
+		return {};
+	}
 
-    vector<int> ans;
-    stack<TreeNode*> stk;
-    TreeNode* curr = root;
-    stk.push(root);
-    while (!stk.empty()) {
-        curr = stk.top();
-        stk.pop();
+	vector<int> ans;
+	stack<TreeNode *> stk;
+	TreeNode *curr = root;
+	stk.push(root);
+	while (!stk.empty()) {
+		curr = stk.top();
+		stk.pop();
 
-        ans.push_back(curr->val);
+		ans.push_back(curr->val);
 
-        if (curr->left != nullptr) { // 区别 1：先左后右
-            stk.push(curr->left);
-        }
-        if (curr->right != nullptr) {
-            stk.push(curr->right);
-        }
-    }
+		if (curr->left != nullptr) { // 区别 1：先左后右
+			stk.push(curr->left);
+		}
+		if (curr->right != nullptr) {
+			stk.push(curr->right);
+		}
+	}
 
-    reverse(ans.begin(), ans.end()); // 区别 2：reverse
-    return ans;
+	reverse(ans.begin(), ans.end()); // 区别 2：reverse
+	return ans;
 }
 ```
 
@@ -247,35 +251,36 @@ void postorder(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-vector<vector<int>> levelOrder(TreeNode* root) {
-    if (root == nullptr) {
-        return {};
-    }
+vector<vector<int> > levelOrder(TreeNode *root)
+{
+	if (root == nullptr) {
+		return {};
+	}
 
-    vector<vector<int>> ans;
-    deque<TreeNode*> dq;
-    TreeNode* curr = root;
-    dq.push_back(root);
-    while (!dq.empty()) {
-        int sz = dq.size();
-        vector<int> lvl;
-        while (sz--) {
-            curr = dq.front();
-            dq.pop_front();
+	vector<vector<int> > ans;
+	deque<TreeNode *> dq;
+	TreeNode *curr = root;
+	dq.push_back(root);
+	while (!dq.empty()) {
+		int sz = dq.size();
+		vector<int> lvl;
+		while (sz--) {
+			curr = dq.front();
+			dq.pop_front();
 
-            lvl.push_back(curr->val);
+			lvl.push_back(curr->val);
 
-            if (curr->left != nullptr) {
-                dq.push_back(curr->left);
-            }
-            if (curr->right != nullptr) {
-                dq.push_back(curr->right);
-            }
-        }
-        ans.push_back(lvl);
-    }
+			if (curr->left != nullptr) {
+				dq.push_back(curr->left);
+			}
+			if (curr->right != nullptr) {
+				dq.push_back(curr->right);
+			}
+		}
+		ans.push_back(lvl);
+	}
 
-    return ans;
+	return ans;
 }
 ```
 
@@ -316,15 +321,16 @@ void traverse(TreeNode root) {
 :::{tab-item} C++
 
 ```cpp
-int maxDepth(TreeNode* root) {
-    if (root == nullptr) {
-        return 0;
-    }
+int maxDepth(TreeNode *root)
+{
+	if (root == nullptr) {
+		return 0;
+	}
 
-    int left  = maxDepth(root->left) + 1;
-    int right = maxDepth(root->right) + 1;
+	int left = maxDepth(root->left) + 1;
+	int right = maxDepth(root->right) + 1;
 
-    return left > right ? left : right;
+	return left > right ? left : right;
 }
 ```
 
@@ -354,28 +360,30 @@ public int maxDepth(TreeNode root) {
 :sync: cpp
 
 ```cpp
-bool compare(TreeNode* left, TreeNode* right) {
-    if (left == nullptr && right == nullptr) {
-        return true;
-    } else if (left != nullptr && right == nullptr) {
-        return false;
-    } else if (left == nullptr && right != nullptr) {
-        return false;
-    } else if (left->val != right->val) {
-        return false;
-    }
+bool compare(TreeNode *left, TreeNode *right)
+{
+	if (left == nullptr && right == nullptr) {
+		return true;
+	} else if (left != nullptr && right == nullptr) {
+		return false;
+	} else if (left == nullptr && right != nullptr) {
+		return false;
+	} else if (left->val != right->val) {
+		return false;
+	}
 
-    bool oo = compare(left->left, right->right); // 对比外侧
-    bool ii = compare(left->right, right->left); // 对比内侧
+	bool oo = compare(left->left, right->right); // 对比外侧
+	bool ii = compare(left->right, right->left); // 对比内侧
 
-    return oo && ii;
+	return oo && ii;
 }
 
-bool isSymmetric(TreeNode* root) {
-    if (root == nullptr) {
-        return true;
-    }
-    return compare(root->left, root->right);
+bool isSymmetric(TreeNode *root)
+{
+	if (root == nullptr) {
+		return true;
+	}
+	return compare(root->left, root->right);
 }
 ```
 
@@ -425,26 +433,29 @@ public boolean compare(TreeNode left, TreeNode right) {
 ```cpp
 // path 变量的值，系统栈会自动帮我们维护，不管是压栈还是出栈
 // paths 必须是引用，这个变量是需要我们手工维护的
-void dfs(TreeNode* root, string path, vector<string>& paths) {
-    if (root == nullptr) {
-        return;
-    }
+void dfs(TreeNode *root, string path, vector<string> &paths)
+{
+	if (root == nullptr) {
+		return;
+	}
 
-    // 构造路径
-    path += to_string(root->val);
-    if (root->left == nullptr && root->right == nullptr) {
-        paths.push_back(path);
-    }
-    path += "->";
+	// 构造路径
+	path += to_string(root->val);
+	if (root->left == nullptr && root->right == nullptr) {
+		paths.push_back(path);
+	}
+	path += "->";
 
-    dfs(root->left, path, paths);
-    dfs(root->right, path, paths);
+	dfs(root->left, path, paths);
+	dfs(root->right, path, paths);
 }
 
-vector<string> binaryTreePaths(TreeNode* root) {
-    vector<string> paths;
-    dfs(root, "", paths); // 为了把 paths 保存在栈里，所以把 paths 当做参数传递
-    return paths;
+vector<string> binaryTreePaths(TreeNode *root)
+{
+	vector<string> paths;
+	dfs(root, "",
+	    paths); // 为了把 paths 保存在栈里，所以把 paths 当做参数传递
+	return paths;
 }
 ```
 
@@ -458,19 +469,20 @@ vector<string> binaryTreePaths(TreeNode* root) {
 :sync: cpp
 
 ```cpp
-TreeNode* insertIntoBST(TreeNode* root, int val) {
-    // 一定会到叶子结点上，因为树上的所有的值都不相等，而连接两个节点的值又是邻值
-    if (root == nullptr) {
-        return new TreeNode(val);
-    }
+TreeNode *insertIntoBST(TreeNode *root, int val)
+{
+	// 一定会到叶子结点上，因为树上的所有的值都不相等，而连接两个节点的值又是邻值
+	if (root == nullptr) {
+		return new TreeNode(val);
+	}
 
-    if (root->val > val) {
-        root->left = insertIntoBST(root->left, val);
-    } else {
-        root->right = insertIntoBST(root->right, val);
-    }
+	if (root->val > val) {
+		root->left = insertIntoBST(root->left, val);
+	} else {
+		root->right = insertIntoBST(root->right, val);
+	}
 
-    return root;
+	return root;
 }
 ```
 
@@ -484,47 +496,48 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
 :sync: cpp
 
 ```cpp
-TreeNode* deleteNode(TreeNode* root, int key) {
-    // 递归终止条件 1
-    if (root == nullptr) {
-        return nullptr;
-    }
+TreeNode *deleteNode(TreeNode *root, int key)
+{
+	// 递归终止条件 1
+	if (root == nullptr) {
+		return nullptr;
+	}
 
-    // 递归：将其转为更小的问题（将递归放在递归终止条件 2 前面会提高效率）
-    if (root->val < key) {
-        root->right = deleteNode(root->right, key);
-    }
+	// 递归：将其转为更小的问题（将递归放在递归终止条件 2 前面会提高效率）
+	if (root->val < key) {
+		root->right = deleteNode(root->right, key);
+	}
 
-    if (root->val > key) {
-        root->left = deleteNode(root->left, key);
-    }
+	if (root->val > key) {
+		root->left = deleteNode(root->left, key);
+	}
 
-    // 递归终止条件 2：考虑删除节点相等的情况，如何调整树的结构
-    if (root->val == key) {
-        // case 1: 左子树为空
-        if (root->left == nullptr) {
-            return root->right;
-        }
+	// 递归终止条件 2：考虑删除节点相等的情况，如何调整树的结构
+	if (root->val == key) {
+		// case 1: 左子树为空
+		if (root->left == nullptr) {
+			return root->right;
+		}
 
-        // case 2: 右子树为空
-        if (root->right == nullptr) {
-            return root->left;
-        }
+		// case 2: 右子树为空
+		if (root->right == nullptr) {
+			return root->left;
+		}
 
-        // case3: 左子树和右子树都为空的情况，包含在 case1 或 case2 了
+		// case3: 左子树和右子树都为空的情况，包含在 case1 或 case2 了
 
-        // case4: 若左子树和右子树都不为空
-        // 那么，将要删除的节点的左子树挂在右子树的最左子节点的左子树上
-        TreeNode* p = root->right; // 找到右子树的最左子节点
-        while (p->left != nullptr) {
-            p = p->left;
-        }
-        p->left = root->left; // 重新挂载左子树
-        root    = root->right;
-        return root;
-    }
+		// case4: 若左子树和右子树都不为空
+		// 那么，将要删除的节点的左子树挂在右子树的最左子节点的左子树上
+		TreeNode *p = root->right; // 找到右子树的最左子节点
+		while (p->left != nullptr) {
+			p = p->left;
+		}
+		p->left = root->left; // 重新挂载左子树
+		root = root->right;
+		return root;
+	}
 
-    return root;
+	return root;
 }
 ```
 
@@ -538,24 +551,25 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 :sync: cpp
 
 ```cpp
-TreeNode* trimBST(TreeNode* root, int low, int high) {
-    if (root == nullptr) {
-        return nullptr;
-    }
+TreeNode *trimBST(TreeNode *root, int low, int high)
+{
+	if (root == nullptr) {
+		return nullptr;
+	}
 
-    if (root->val < low) { // 裁剪右子树
-        return trimBST(root->right, low, high);
-    }
+	if (root->val < low) { // 裁剪右子树
+		return trimBST(root->right, low, high);
+	}
 
-    if (root->val > high) { // 裁剪左子树
-        return trimBST(root->left, low, high);
-    }
+	if (root->val > high) { // 裁剪左子树
+		return trimBST(root->left, low, high);
+	}
 
-    // 下面两个递归其实并没有对节点进行改动，只是遍历
-    root->left  = trimBST(root->left, low, high);
-    root->right = trimBST(root->right, low, high);
+	// 下面两个递归其实并没有对节点进行改动，只是遍历
+	root->left = trimBST(root->left, low, high);
+	root->right = trimBST(root->right, low, high);
 
-    return root;
+	return root;
 }
 ```
 
@@ -570,23 +584,30 @@ TreeNode* trimBST(TreeNode* root, int low, int high) {
 
 ```cpp
 struct Fenwick {
-    int n;
-    vector<int> tree;
-    Fenwick(int n) : n(n), tree(n + 1) {}
+	int n;
+	vector<int> tree;
+	Fenwick(int n) : n(n), tree(n + 1)
+	{
+	}
 
-    void add(int i, int v) { // 单点加 v（下标从 1 开始）
-        for (; i <= n; i += i & -i)
-            tree[i] += v;
-    }
+	void add(int i, int v)
+	{ // 单点加 v（下标从 1 开始）
+		for (; i <= n; i += i & -i)
+			tree[i] += v;
+	}
 
-    int pre(int i) { // 前缀和 [1, i]
-        int s = 0;
-        for (; i > 0; i -= i & -i)
-            s += tree[i];
-        return s;
-    }
+	int pre(int i)
+	{ // 前缀和 [1, i]
+		int s = 0;
+		for (; i > 0; i -= i & -i)
+			s += tree[i];
+		return s;
+	}
 
-    int rangeSum(int l, int r) { return pre(r) - pre(l - 1); } // 区间和
+	int rangeSum(int l, int r)
+	{
+		return pre(r) - pre(l - 1);
+	} // 区间和
 };
 ```
 
@@ -604,40 +625,44 @@ struct Fenwick {
 #include <bits/stdc++.h>
 using namespace std;
 
-class TrieNode {
+class TrieNode
+{
 public:
-    unordered_map<char, TrieNode*> children;
-    string word = ""; // 如果该节点是一个完整单词结尾，则保存该单词
+	unordered_map<char, TrieNode *> children;
+	string word = ""; // 如果该节点是一个完整单词结尾，则保存该单词
 };
 
-class Trie {
+class Trie
+{
 public:
-    TrieNode* root = new TrieNode();
+	TrieNode *root = new TrieNode();
 
-    // 插入单词到 Trie 中
-    void insertWord(string& word) {
-        TrieNode* node = root;
-        for (char c : word) {
-            if (!node->children.count(c)) {
-                node->children[c] = new TrieNode();
-            }
-            node = node->children[c];
-        }
-        node->word = word;
-    }
+	// 插入单词到 Trie 中
+	void insertWord(string &word)
+	{
+		TrieNode *node = root;
+		for (char c : word) {
+			if (!node->children.count(c)) {
+				node->children[c] = new TrieNode();
+			}
+			node = node->children[c];
+		}
+		node->word = word;
+	}
 };
 
-int main() {
-    string words[] = {"oath", "pea", "eat", "rain"};
+int main()
+{
+	string words[] = { "oath", "pea", "eat", "rain" };
 
-    Trie trie;
+	Trie trie;
 
-    // 构建 Trie
-    for (string& word : words) {
-        trie.insertWord(word);
-    }
+	// 构建 Trie
+	for (string &word : words) {
+		trie.insertWord(word);
+	}
 
-    return 0;
+	return 0;
 }
 ```
 

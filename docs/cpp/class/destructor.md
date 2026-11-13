@@ -29,23 +29,32 @@
 ```cpp
 #include <iostream>
 
-class MyClass {
+class MyClass
+{
 public:
-    MyClass() { std::cout << "MyClass constructor called." << std::endl; }
+	MyClass()
+	{
+		std::cout << "MyClass constructor called." << std::endl;
+	}
 
-    ~MyClass() {
-        std::cout << "MyClass destructor called." << std::endl;
-        // 这里可以添加释放资源的代码
-    }
+	~MyClass()
+	{
+		std::cout << "MyClass destructor called." << std::endl;
+		// 这里可以添加释放资源的代码
+	}
 
-    void doSomething() { std::cout << "Doing something..." << std::endl; }
+	void doSomething()
+	{
+		std::cout << "Doing something..." << std::endl;
+	}
 };
 
-int main() {
-    MyClass obj; // 构造函数被调用
-    obj.doSomething();
+int main()
+{
+	MyClass obj; // 构造函数被调用
+	obj.doSomething();
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -63,13 +72,23 @@ int main() {
 ```cpp
 #include <iostream>
 
-class MyClass {
+class MyClass
+{
 public:
-    MyClass() { std::cout << "MyClass constructor called." << std::endl; }
+	MyClass()
+	{
+		std::cout << "MyClass constructor called." << std::endl;
+	}
 
-    virtual ~MyClass() { std::cout << "MyClass destructor called." << std::endl; }
+	virtual ~MyClass()
+	{
+		std::cout << "MyClass destructor called." << std::endl;
+	}
 
-    void doSomething() { std::cout << "Doing something..." << std::endl; }
+	void doSomething()
+	{
+		std::cout << "Doing something..." << std::endl;
+	}
 };
 ```
 

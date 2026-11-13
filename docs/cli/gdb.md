@@ -253,10 +253,11 @@ x/20s string_ptr # 显示20个字符串
 ```cpp
 #include <stdio.h>
 
-int main(void) {
-    int* ptr = NULL;      // 空指针
-    printf("%d\n", *ptr); // 解引用导致段错误
-    return 0;
+int main(void)
+{
+	int *ptr = NULL; // 空指针
+	printf("%d\n", *ptr); // 解引用导致段错误
+	return 0;
 }
 ```
 
@@ -275,15 +276,17 @@ rip     0x40053d 0x40053d <main+13>  # 崩溃位置
 ```cpp
 #include <stdio.h>
 
-void recursive_function(int depth) {
-    char buffer[1024]; // 每次递归消耗栈空间
-    printf("Depth: %d\n", depth);
-    recursive_function(depth + 1); // 无限递归导致栈溢出
+void recursive_function(int depth)
+{
+	char buffer[1024]; // 每次递归消耗栈空间
+	printf("Depth: %d\n", depth);
+	recursive_function(depth + 1); // 无限递归导致栈溢出
 }
 
-int main() {
-    recursive_function(1);
-    return 0;
+int main()
+{
+	recursive_function(1);
+	return 0;
 }
 ```
 

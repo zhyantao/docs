@@ -10,50 +10,70 @@
 
 class Child; // 前向声明
 
-class Parent {
+class Parent
+{
 private:
-    std::shared_ptr<Child> child; // parent 持有 child 的 shared_ptr
+	std::shared_ptr<Child> child; // parent 持有 child 的 shared_ptr
 
 public:
-    Parent() { std::cout << "Parent created\n"; }
+	Parent()
+	{
+		std::cout << "Parent created\n";
+	}
 
-    ~Parent() { std::cout << "Parent destroyed\n"; }
+	~Parent()
+	{
+		std::cout << "Parent destroyed\n";
+	}
 
-    void setChild(const std::shared_ptr<Child>& c) { child = c; }
+	void setChild(const std::shared_ptr<Child> &c)
+	{
+		child = c;
+	}
 };
 
-class Child {
+class Child
+{
 private:
-    std::weak_ptr<Parent> parent; // child 持有 parent 的 weak_ptr，避免循环引用
+	std::weak_ptr<Parent>
+		parent; // child 持有 parent 的 weak_ptr，避免循环引用
 
 public:
-    Child(const std::shared_ptr<Parent>& p) : parent(p) { std::cout << "Child created\n"; }
+	Child(const std::shared_ptr<Parent> &p) : parent(p)
+	{
+		std::cout << "Child created\n";
+	}
 
-    ~Child() { std::cout << "Child destroyed\n"; }
+	~Child()
+	{
+		std::cout << "Child destroyed\n";
+	}
 
-    void useParent() {
-        if (auto sp = parent.lock()) { // 安全地获取 parent
-            std::cout << "Using parent\n";
-        } else {
-            std::cout << "Parent already destroyed\n";
-        }
-    }
+	void useParent()
+	{
+		if (auto sp = parent.lock()) { // 安全地获取 parent
+			std::cout << "Using parent\n";
+		} else {
+			std::cout << "Parent already destroyed\n";
+		}
+	}
 };
 
-int main() {
-    // 创建 parent 和 child
-    auto parent = std::make_shared<Parent>();
-    auto child  = std::make_shared<Child>(parent);
+int main()
+{
+	// 创建 parent 和 child
+	auto parent = std::make_shared<Parent>();
+	auto child = std::make_shared<Child>(parent);
 
-    // 建立双向关系
-    parent->setChild(child);
+	// 建立双向关系
+	parent->setChild(child);
 
-    // 使用 child 访问 parent
-    child->useParent();
+	// 使用 child 访问 parent
+	child->useParent();
 
-    // 当 main 函数结束时，parent 和 child 都能正确销毁
-    // 不会发生内存泄漏
-    return 0;
+	// 当 main 函数结束时，parent 和 child 都能正确销毁
+	// 不会发生内存泄漏
+	return 0;
 }
 ```
 
@@ -74,56 +94,71 @@ int main() {
 
 class Component; // 前向声明
 
-class Owner {
+class Owner
+{
 private:
-    boost::scoped_ptr<Component> component; // 独占拥有 Component
+	boost::scoped_ptr<Component> component; // 独占拥有 Component
 
 public:
-    Owner();
-    ~Owner() { std::cout << "Owner destroyed\n"; }
+	Owner();
+	~Owner()
+	{
+		std::cout << "Owner destroyed\n";
+	}
 
-    void useComponent();
+	void useComponent();
 };
 
-class Component {
+class Component
+{
 private:
-    Owner* owner; // 只持有原始指针，不拥有所有权
+	Owner *owner; // 只持有原始指针，不拥有所有权
 
 public:
-    Component(Owner* own) : owner(own) { std::cout << "Component created\n"; }
+	Component(Owner *own) : owner(own)
+	{
+		std::cout << "Component created\n";
+	}
 
-    ~Component() { std::cout << "Component destroyed\n"; }
+	~Component()
+	{
+		std::cout << "Component destroyed\n";
+	}
 
-    void doSomething() {
-        if (owner) {
-            std::cout << "Component accessing owner\n";
-        }
-    }
+	void doSomething()
+	{
+		if (owner) {
+			std::cout << "Component accessing owner\n";
+		}
+	}
 };
 
-Owner::Owner() : component(new Component(this)) {
-    std::cout << "Owner created\n";
+Owner::Owner() : component(new Component(this))
+{
+	std::cout << "Owner created\n";
 }
 
-void Owner::useComponent() {
-    if (component) {
-        component->doSomething();
-    }
+void Owner::useComponent()
+{
+	if (component) {
+		component->doSomething();
+	}
 }
 
-int main() {
-    {
-        Owner owner; // 创建 Owner，自动创建 Component
-        owner.useComponent();
+int main()
+{
+	{
+		Owner owner; // 创建 Owner，自动创建 Component
+		owner.useComponent();
 
-        // 当 owner 离开作用域时：
-        // 1. owner 被销毁
-        // 2. component 自动被销毁
-        // 3. 没有循环引用问题
-    }
+		// 当 owner 离开作用域时：
+		// 1. owner 被销毁
+		// 2. component 自动被销毁
+		// 3. 没有循环引用问题
+	}
 
-    std::cout << "Both Owner and Component properly destroyed\n";
-    return 0;
+	std::cout << "Both Owner and Component properly destroyed\n";
+	return 0;
 }
 ```
 
@@ -150,63 +185,77 @@ int main() {
 
 class Sniper; // 前向声明
 
-class Supplier {
+class Supplier
+{
 private:
-    int storage;
+	int storage;
 
 public:
-    Supplier(int storage = 1000) : storage(storage) {}
+	Supplier(int storage = 1000) : storage(storage)
+	{
+	}
 
-    // 声明友元关系
-    bool provide(Sniper& sniper);
+	// 声明友元关系
+	bool provide(Sniper &sniper);
 
-    int getStorage() const { return storage; }
+	int getStorage() const
+	{
+		return storage;
+	}
 };
 
-class Sniper {
+class Sniper
+{
 private:
-    int bullets;
+	int bullets;
 
-    // 声明 Supplier::provide 为友元函数
-    friend bool Supplier::provide(Sniper& sniper);
+	// 声明 Supplier::provide 为友元函数
+	friend bool Supplier::provide(Sniper &sniper);
 
 public:
-    Sniper(int bullets = 0) : bullets(bullets) {}
+	Sniper(int bullets = 0) : bullets(bullets)
+	{
+	}
 
-    int getBullets() const { return bullets; }
+	int getBullets() const
+	{
+		return bullets;
+	}
 };
 
 // 友元函数实现 - 可以访问 Sniper 的私有成员
-bool Supplier::provide(Sniper& sniper) {
-    if (sniper.bullets < 20) { // 直接访问私有成员
-        if (storage > 100) {
-            sniper.bullets += 100;
-            storage        -= 100;
-        } else if (storage > 0) {
-            sniper.bullets += storage;
-            storage         = 0;
-        } else {
-            return false;
-        }
-    }
+bool Supplier::provide(Sniper &sniper)
+{
+	if (sniper.bullets < 20) { // 直接访问私有成员
+		if (storage > 100) {
+			sniper.bullets += 100;
+			storage -= 100;
+		} else if (storage > 0) {
+			sniper.bullets += storage;
+			storage = 0;
+		} else {
+			return false;
+		}
+	}
 
-    std::cout << "Sniper has " << sniper.bullets << " bullets, Supplier has " << storage
-              << " storage left.\n";
-    return true;
+	std::cout << "Sniper has " << sniper.bullets
+		  << " bullets, Supplier has " << storage << " storage left.\n";
+	return true;
 }
 
-int main() {
-    Sniper sniper(5);       // 初始只有 5 发子弹
-    Supplier supplier(250); // 初始有 250 库存
+int main()
+{
+	Sniper sniper(5); // 初始只有 5 发子弹
+	Supplier supplier(250); // 初始有 250 库存
 
-    std::cout << "Initial state:\n";
-    std::cout << "Sniper bullets: " << sniper.getBullets() << "\n";
-    std::cout << "Supplier storage: " << supplier.getStorage() << "\n\n";
+	std::cout << "Initial state:\n";
+	std::cout << "Sniper bullets: " << sniper.getBullets() << "\n";
+	std::cout << "Supplier storage: " << supplier.getStorage() << "\n\n";
 
-    // 供应商为狙击手补充弹药
-    supplier.provide(sniper);
+	// 供应商为狙击手补充弹药
+	supplier.provide(sniper);
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -236,13 +285,16 @@ int main() {
 ```cpp
 #include <memory>
 
-class ModernOwner {
+class ModernOwner
+{
 private:
-    std::unique_ptr<Component> component; // C++11 独占指针
+	std::unique_ptr<Component> component; // C++11 独占指针
 
 public:
-    ModernOwner() : component(std::make_unique<Component>(this)) {}
-    // unique_ptr 提供移动语义，比 scoped_ptr 更灵活
+	ModernOwner() : component(std::make_unique<Component>(this))
+	{
+	}
+	// unique_ptr 提供移动语义，比 scoped_ptr 更灵活
 };
 ```
 
@@ -252,24 +304,30 @@ public:
 #include <memory>
 #include <boost/scoped_ptr.hpp>
 
-class ComplexSystem {
+class ComplexSystem
+{
 private:
-    // 独占核心组件
-    boost::scoped_ptr<CoreComponent> core;
+	// 独占核心组件
+	boost::scoped_ptr<CoreComponent> core;
 
-    // 共享可替换模块
-    std::shared_ptr<PluginModule> plugin;
+	// 共享可替换模块
+	std::shared_ptr<PluginModule> plugin;
 
-    // 观察者使用弱引用
-    std::vector<std::weak_ptr<Observer>> observers;
+	// 观察者使用弱引用
+	std::vector<std::weak_ptr<Observer> > observers;
 
 public:
-    ComplexSystem() : core(new CoreComponent()) {}
+	ComplexSystem() : core(new CoreComponent())
+	{
+	}
 
-    void setPlugin(std::shared_ptr<PluginModule> p) { plugin = p; }
+	void setPlugin(std::shared_ptr<PluginModule> p)
+	{
+		plugin = p;
+	}
 
-    // 友元函数用于深度优化
-    friend void optimizeSystem(ComplexSystem& sys);
+	// 友元函数用于深度优化
+	friend void optimizeSystem(ComplexSystem &sys);
 };
 ```
 

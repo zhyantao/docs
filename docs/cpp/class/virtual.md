@@ -16,14 +16,20 @@
 ### 示例
 
 ```cpp
-class Base {
+class Base
+{
 public:
-    virtual void func() { /* 实现 */ }
+	virtual void func()
+	{ /* 实现 */
+	}
 };
 
-class Derived : public Base {
+class Derived : public Base
+{
 public:
-    void func() override { /* 重写实现 */ }
+	void func() override
+	{ /* 重写实现 */
+	}
 };
 ```
 
@@ -42,14 +48,18 @@ public:
 ### 示例
 
 ```cpp
-class Base {
+class Base
+{
 public:
-    virtual void func() = 0; // 纯虚函数
+	virtual void func() = 0; // 纯虚函数
 };
 
-class Derived : public Base {
+class Derived : public Base
+{
 public:
-    void func() override { /* 必须提供的实现 */ }
+	void func() override
+	{ /* 必须提供的实现 */
+	}
 };
 ```
 

@@ -94,16 +94,18 @@ lcov -a coverage1.info -a coverage2.info -o total.info
 
 ```cpp
 // LCOV_EXCL_START
-void unused_function() {
-    // 此函数不会被统计
+void unused_function()
+{
+	// 此函数不会被统计
 }
 // LCOV_EXCL_STOP
 
-void active_function() {
-    log("running");  // LCOV_EXCL_LINE
-    if (condition) { // LCOV_EXCL_BR_LINE
-        // 此分支不纳入分支统计
-    }
+void active_function()
+{
+	log("running"); // LCOV_EXCL_LINE
+	if (condition) { // LCOV_EXCL_BR_LINE
+		// 此分支不纳入分支统计
+	}
 }
 ```
 

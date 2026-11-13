@@ -15,41 +15,48 @@
 ```cpp
 #include <iostream>
 
-class SmartArray {
+class SmartArray
+{
 private:
-    int* data;
-    size_t size;
+	int *data;
+	size_t size;
 
 public:
-    // 构造函数获取资源
-    SmartArray(size_t n) : size(n) {
-        data = new int[n];
-        std::cout << "分配了 " << n << " 个整数的内存\n";
-    }
+	// 构造函数获取资源
+	SmartArray(size_t n) : size(n)
+	{
+		data = new int[n];
+		std::cout << "分配了 " << n << " 个整数的内存\n";
+	}
 
-    // 析构函数释放资源
-    ~SmartArray() {
-        delete[] data;
-        std::cout << "释放了内存\n";
-    }
+	// 析构函数释放资源
+	~SmartArray()
+	{
+		delete[] data;
+		std::cout << "释放了内存\n";
+	}
 
-    // 访问元素
-    int& operator[](size_t index) { return data[index]; }
+	// 访问元素
+	int &operator[](size_t index)
+	{
+		return data[index];
+	}
 };
 
-int main() {
-    {
-        SmartArray arr(10); // 构造时分配内存
+int main()
+{
+	{
+		SmartArray arr(10); // 构造时分配内存
 
-        for (int i = 0; i < 10; i++) {
-            arr[i] = i * 2; // 使用数组
-        }
+		for (int i = 0; i < 10; i++) {
+			arr[i] = i * 2; // 使用数组
+		}
 
-        // 离开作用域时，arr自动析构，内存自动释放
-    } // 这里 arr 析构函数自动调用，释放内存
+		// 离开作用域时，arr自动析构，内存自动释放
+	} // 这里 arr 析构函数自动调用，释放内存
 
-    std::cout << "内存已自动清理\n";
-    return 0;
+	std::cout << "内存已自动清理\n";
+	return 0;
 }
 ```
 
@@ -62,38 +69,45 @@ int main() {
 #include <iostream>
 #include <string>
 
-class FileHandler {
+class FileHandler
+{
 private:
-    std::fstream file;
+	std::fstream file;
 
 public:
-    FileHandler(const std::string& filename, std::ios::openmode mode) {
-        file.open(filename, mode);
-        if (!file.is_open()) {
-            throw std::runtime_error("无法打开文件");
-        }
-        std::cout << "文件已打开\n";
-    }
+	FileHandler(const std::string &filename, std::ios::openmode mode)
+	{
+		file.open(filename, mode);
+		if (!file.is_open()) {
+			throw std::runtime_error("无法打开文件");
+		}
+		std::cout << "文件已打开\n";
+	}
 
-    ~FileHandler() {
-        if (file.is_open()) {
-            file.close();
-            std::cout << "文件已关闭\n";
-        }
-    }
+	~FileHandler()
+	{
+		if (file.is_open()) {
+			file.close();
+			std::cout << "文件已关闭\n";
+		}
+	}
 
-    void write(const std::string& content) { file << content; }
+	void write(const std::string &content)
+	{
+		file << content;
+	}
 };
 
-int main() {
-    try {
-        FileHandler fh("test.txt", std::ios::out);
-        fh.write("Hello RAII");
-        // 离开作用域时文件自动关闭
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
-    return 0;
+int main()
+{
+	try {
+		FileHandler fh("test.txt", std::ios::out);
+		fh.write("Hello RAII");
+		// 离开作用域时文件自动关闭
+	} catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
+	return 0;
 }
 ```
 
@@ -104,44 +118,49 @@ int main() {
 #include <mutex>
 #include <thread>
 
-class LockGuard {
+class LockGuard
+{
 private:
-    std::mutex& mtx;
+	std::mutex &mtx;
 
 public:
-    explicit LockGuard(std::mutex& m) : mtx(m) {
-        mtx.lock();
-        std::cout << "锁已获取\n";
-    }
+	explicit LockGuard(std::mutex &m) : mtx(m)
+	{
+		mtx.lock();
+		std::cout << "锁已获取\n";
+	}
 
-    ~LockGuard() {
-        mtx.unlock();
-        std::cout << "锁已释放\n";
-    }
+	~LockGuard()
+	{
+		mtx.unlock();
+		std::cout << "锁已释放\n";
+	}
 
-    // 禁止拷贝
-    LockGuard(const LockGuard&)            = delete;
-    LockGuard& operator=(const LockGuard&) = delete;
+	// 禁止拷贝
+	LockGuard(const LockGuard &) = delete;
+	LockGuard &operator=(const LockGuard &) = delete;
 };
 
 std::mutex g_mutex;
 int shared_data = 0;
 
-void increment() {
-    LockGuard lock(g_mutex); // 构造时加锁
-    ++shared_data;           // 安全访问
-    // 离开作用域时自动解锁
+void increment()
+{
+	LockGuard lock(g_mutex); // 构造时加锁
+	++shared_data; // 安全访问
+	// 离开作用域时自动解锁
 }
 
-int main() {
-    std::thread t1(increment);
-    std::thread t2(increment);
+int main()
+{
+	std::thread t1(increment);
+	std::thread t2(increment);
 
-    t1.join();
-    t2.join();
+	t1.join();
+	t2.join();
 
-    std::cout << "最终值: " << shared_data << std::endl;
-    return 0;
+	std::cout << "最终值: " << shared_data << std::endl;
+	return 0;
 }
 ```
 
@@ -151,48 +170,57 @@ int main() {
 #include <iostream>
 #include <stdexcept>
 
-class DatabaseConnection {
+class DatabaseConnection
+{
 private:
-    bool connected;
+	bool connected;
 
 public:
-    DatabaseConnection(const std::string& connectionString) : connected(false) {
-        // 模拟连接数据库
-        std::cout << "连接到数据库: " << connectionString << std::endl;
-        connected = true;
-    }
+	DatabaseConnection(const std::string &connectionString)
+	    : connected(false)
+	{
+		// 模拟连接数据库
+		std::cout << "连接到数据库: " << connectionString << std::endl;
+		connected = true;
+	}
 
-    ~DatabaseConnection() {
-        if (connected) {
-            std::cout << "断开数据库连接\n";
-            // 实际会调用数据库断开连接
-        }
-    }
+	~DatabaseConnection()
+	{
+		if (connected) {
+			std::cout << "断开数据库连接\n";
+			// 实际会调用数据库断开连接
+		}
+	}
 
-    void executeQuery(const std::string& query) {
-        if (!connected) throw std::runtime_error("未连接数据库");
-        std::cout << "执行查询: " << query << std::endl;
-    }
+	void executeQuery(const std::string &query)
+	{
+		if (!connected)
+			throw std::runtime_error("未连接数据库");
+		std::cout << "执行查询: " << query << std::endl;
+	}
 
-    // 移动语义支持
-    DatabaseConnection(DatabaseConnection&& other) noexcept : connected(other.connected) {
-        other.connected = false;
-    }
+	// 移动语义支持
+	DatabaseConnection(DatabaseConnection &&other) noexcept
+	    : connected(other.connected)
+	{
+		other.connected = false;
+	}
 
-    DatabaseConnection& operator=(DatabaseConnection&& other) noexcept {
-        if (this != &other) {
-            if (connected) {
-                std::cout << "断开旧连接\n";
-            }
-            connected       = other.connected;
-            other.connected = false;
-        }
-        return *this;
-    }
+	DatabaseConnection &operator=(DatabaseConnection &&other) noexcept
+	{
+		if (this != &other) {
+			if (connected) {
+				std::cout << "断开旧连接\n";
+			}
+			connected = other.connected;
+			other.connected = false;
+		}
+		return *this;
+	}
 
-    // 禁止拷贝
-    DatabaseConnection(const DatabaseConnection&)            = delete;
-    DatabaseConnection& operator=(const DatabaseConnection&) = delete;
+	// 禁止拷贝
+	DatabaseConnection(const DatabaseConnection &) = delete;
+	DatabaseConnection &operator=(const DatabaseConnection &) = delete;
 };
 ```
 
@@ -240,10 +268,11 @@ RAII 是 C++ 区别于其他语言的重要特性，它通过对象的确定性�
 
 ```cpp
 #include <memory>
-int main() {
-    std::unique_ptr<int> uptr(new int(42));
-    // uptr 管理的 int 对象将在 uptr 超出作用域时被删除
-    return 0;
+int main()
+{
+	std::unique_ptr<int> uptr(new int(42));
+	// uptr 管理的 int 对象将在 uptr 超出作用域时被删除
+	return 0;
 }
 ```
 
@@ -263,11 +292,12 @@ int main() {
 
 ```cpp
 #include <boost/scoped_ptr.hpp>
-int main() {
-    boost::scoped_ptr<int> sptr(new int(42));
-    // sptr 管理的 int 对象将在 sptr 超出作用域时被删除
-    // boost::scoped_ptr<int> sptr2 = sptr; // 错误！禁止拷贝
-    return 0;
+int main()
+{
+	boost::scoped_ptr<int> sptr(new int(42));
+	// sptr 管理的 int 对象将在 sptr 超出作用域时被删除
+	// boost::scoped_ptr<int> sptr2 = sptr; // 错误！禁止拷贝
+	return 0;
 }
 ```
 
@@ -286,11 +316,12 @@ int main() {
 
 ```cpp
 #include <memory>
-int main() {
-    auto sptr  = std::make_shared<int>(42);
-    auto sptr2 = sptr; // sptr2 也指向同一个 int 对象
-    // 当 sptr 和 sptr2 都销毁时，int 对象才会被删除
-    return 0;
+int main()
+{
+	auto sptr = std::make_shared<int>(42);
+	auto sptr2 = sptr; // sptr2 也指向同一个 int 对象
+	// 当 sptr 和 sptr2 都销毁时，int 对象才会被删除
+	return 0;
 }
 ```
 
@@ -309,15 +340,16 @@ int main() {
 
 ```cpp
 #include <memory>
-int main() {
-    auto sptr = std::make_shared<int>(42);
-    auto wptr = std::weak_ptr<int>(sptr);
-    if (auto sptr2 = wptr.lock()) {
-        // sptr2 现在是一个指向相同对象的 shared_ptr
-    } else {
-        // 对象已经被删除
-    }
-    return 0;
+int main()
+{
+	auto sptr = std::make_shared<int>(42);
+	auto wptr = std::weak_ptr<int>(sptr);
+	if (auto sptr2 = wptr.lock()) {
+		// sptr2 现在是一个指向相同对象的 shared_ptr
+	} else {
+		// 对象已经被删除
+	}
+	return 0;
 }
 ```
 
@@ -331,9 +363,13 @@ int main() {
 
 ```cpp
 #include <memory>
-class MyClass : public std::enable_shared_from_this<MyClass> {
+class MyClass : public std::enable_shared_from_this<MyClass>
+{
 public:
-    std::shared_ptr<MyClass> getSharedThis() { return shared_from_this(); }
+	std::shared_ptr<MyClass> getSharedThis()
+	{
+		return shared_from_this();
+	}
 };
 ```
 
@@ -348,25 +384,36 @@ public:
 ```cpp
 #include <iostream>
 #include <memory>
-class MyClass : public std::enable_shared_from_this<MyClass> {
+class MyClass : public std::enable_shared_from_this<MyClass>
+{
 public:
-    MyClass(int value) : value_(value) {}
-    void printValue() const { std::cout << "Value: " << value_ << std::endl; }
-    std::shared_ptr<MyClass> getSharedThis() const { return shared_from_this(); }
+	MyClass(int value) : value_(value)
+	{
+	}
+	void printValue() const
+	{
+		std::cout << "Value: " << value_ << std::endl;
+	}
+	std::shared_ptr<MyClass> getSharedThis() const
+	{
+		return shared_from_this();
+	}
 
 private:
-    int value_;
+	int value_;
 };
 
-void useSharedPtr(const std::shared_ptr<MyClass>& ptr) {
-    ptr->printValue();
+void useSharedPtr(const std::shared_ptr<MyClass> &ptr)
+{
+	ptr->printValue();
 }
 
-int main() {
-    auto obj       = std::make_shared<MyClass>(42);
-    auto sharedObj = obj->getSharedThis();
-    useSharedPtr(sharedObj);
-    return 0;
+int main()
+{
+	auto obj = std::make_shared<MyClass>(42);
+	auto sharedObj = obj->getSharedThis();
+	useSharedPtr(sharedObj);
+	return 0;
 }
 ```
 

@@ -16,23 +16,25 @@
 
 __thread int tls_counter = 0;
 
-void* worker(void* arg) {
-    for (int i = 0; i < 3; i++) {
-        tls_counter++;
-        printf("thread %d: counter = %d\n", *(int*)arg, tls_counter);
-    }
-    return NULL;
+void *worker(void *arg)
+{
+	for (int i = 0; i < 3; i++) {
+		tls_counter++;
+		printf("thread %d: counter = %d\n", *(int *)arg, tls_counter);
+	}
+	return NULL;
 }
 
-int main() {
-    pthread_t t1, t2;
-    int id1 = 1, id2 = 2;
-    pthread_create(&t1, NULL, worker, &id1);
-    pthread_create(&t2, NULL, worker, &id2);
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
-    // 两个线程各自打印 1、2、3，互不影响
-    return 0;
+int main()
+{
+	pthread_t t1, t2;
+	int id1 = 1, id2 = 2;
+	pthread_create(&t1, NULL, worker, &id1);
+	pthread_create(&t2, NULL, worker, &id2);
+	pthread_join(t1, NULL);
+	pthread_join(t2, NULL);
+	// 两个线程各自打印 1、2、3，互不影响
+	return 0;
 }
 ```
 
@@ -46,9 +48,10 @@ C++11 引入了标准的 `thread_local` 关键字，功能与 `__thread` 类似�
 
 thread_local int tls_counter = 0; // 每个线程拥有独立的副本
 
-void worker() {
-    tls_counter++;
-    std::cout << "counter = " << tls_counter << std::endl;
+void worker()
+{
+	tls_counter++;
+	std::cout << "counter = " << tls_counter << std::endl;
 }
 ```
 

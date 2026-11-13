@@ -15,11 +15,11 @@
 
 // 日志级别
 typedef enum {
-    LOG_LEVEL_DEBUG = 0,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARN,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_FATAL
+	LOG_LEVEL_DEBUG = 0,
+	LOG_LEVEL_INFO,
+	LOG_LEVEL_WARN,
+	LOG_LEVEL_ERROR,
+	LOG_LEVEL_FATAL
 } LogLevel;
 
 // 默认日志级别
@@ -28,35 +28,44 @@ typedef enum {
 #endif
 
 // 将日志级别转为字符串
-static inline const char* log_level_to_str(LogLevel level) {
-    switch (level) {
-    case LOG_LEVEL_DEBUG: return "DEBUG";
-    case LOG_LEVEL_INFO: return "INFO ";
-    case LOG_LEVEL_WARN: return "WARN ";
-    case LOG_LEVEL_ERROR: return "ERROR";
-    case LOG_LEVEL_FATAL: return "FATAL";
-    default: return "UNKWN";
-    }
+static inline const char *log_level_to_str(LogLevel level)
+{
+	switch (level) {
+	case LOG_LEVEL_DEBUG:
+		return "DEBUG";
+	case LOG_LEVEL_INFO:
+		return "INFO ";
+	case LOG_LEVEL_WARN:
+		return "WARN ";
+	case LOG_LEVEL_ERROR:
+		return "ERROR";
+	case LOG_LEVEL_FATAL:
+		return "FATAL";
+	default:
+		return "UNKWN";
+	}
 }
 
 // 获取时间戳
-static inline void get_timestamp(char* buffer, size_t size) {
-    time_t t = time(NULL);
-    struct tm tm;
-    localtime_r(&t, &tm); // 线程安全版本
-    strftime(buffer, size, "%Y-%m-%d %H:%M:%S", &tm);
+static inline void get_timestamp(char *buffer, size_t size)
+{
+	time_t t = time(NULL);
+	struct tm tm;
+	localtime_r(&t, &tm); // 线程安全版本
+	strftime(buffer, size, "%Y-%m-%d %H:%M:%S", &tm);
 }
 
 // 带日志级别的日志宏（使用字符串表示级别）
-#define LOG_WITH_LVL(level, fmt, ...)                                                         \
-    do {                                                                                      \
-        if (level >= LOG_LEVEL) {                                                             \
-            char timestamp[64];                                                               \
-            get_timestamp(timestamp, sizeof(timestamp));                                      \
-            printf("[%s] %-5s %s:%d " fmt "\n", timestamp, log_level_to_str(level), __FILE__, \
-                   __LINE__, ##__VA_ARGS__);                                                  \
-        }                                                                                     \
-    } while (0)
+#define LOG_WITH_LVL(level, fmt, ...)                                  \
+	do {                                                           \
+		if (level >= LOG_LEVEL) {                              \
+			char timestamp[64];                            \
+			get_timestamp(timestamp, sizeof(timestamp));   \
+			printf("[%s] %-5s %s:%d " fmt "\n", timestamp, \
+			       log_level_to_str(level), __FILE__,      \
+			       __LINE__, ##__VA_ARGS__);               \
+		}                                                      \
+	} while (0)
 
 // 默认日志宏
 #define LOG(fmt, ...) LOG_WITH_LVL(LOG_LEVEL_DEBUG, fmt, ##__VA_ARGS__)

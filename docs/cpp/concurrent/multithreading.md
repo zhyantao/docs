@@ -273,227 +273,237 @@ if (ret != 0) {
 
 // 定义线程参数结构体
 typedef struct {
-    int fd;                // 文件描述符
-    char* buffer;          // 缓冲区指针
-    int size;              // 缓冲区大小
-    volatile int running;  // 运行状态标志（volatile 确保可见性）
-    pthread_mutex_t mutex; // 互斥锁保护共享数据
-    pthread_cond_t cond;   // 条件变量用于线程同步
+	int fd; // 文件描述符
+	char *buffer; // 缓冲区指针
+	int size; // 缓冲区大小
+	volatile int running; // 运行状态标志（volatile 确保可见性）
+	pthread_mutex_t mutex; // 互斥锁保护共享数据
+	pthread_cond_t cond; // 条件变量用于线程同步
 } thread_args_t;
 
 // 线程函数：使用 while 循环检查条件，避免虚假唤醒
-void* uart_thread_func(void* arg) {
-    thread_args_t* args = (thread_args_t*)arg;
+void *uart_thread_func(void *arg)
+{
+	thread_args_t *args = (thread_args_t *)arg;
 
-    printf("UART thread started (fd: %d)\n", args->fd);
+	printf("UART thread started (fd: %d)\n", args->fd);
 
-    while (1) {
-        pthread_mutex_lock(&args->mutex);
+	while (1) {
+		pthread_mutex_lock(&args->mutex);
 
-        // 检查停止条件（使用 while 循环防止虚假唤醒）
-        while (args->running == 0) {
-            printf("Thread exiting...\n");
-            pthread_mutex_unlock(&args->mutex);
-            pthread_exit(NULL);
-        }
-        pthread_mutex_unlock(&args->mutex);
+		// 检查停止条件（使用 while 循环防止虚假唤醒）
+		while (args->running == 0) {
+			printf("Thread exiting...\n");
+			pthread_mutex_unlock(&args->mutex);
+			pthread_exit(NULL);
+		}
+		pthread_mutex_unlock(&args->mutex);
 
-        // 读取数据
-        int ret = read(args->fd, args->buffer, args->size - 1);
+		// 读取数据
+		int ret = read(args->fd, args->buffer, args->size - 1);
 
-        if (ret > 0) {
-            // 成功读取数据
-            args->buffer[ret] = '\0'; // 确保字符串结束
+		if (ret > 0) {
+			// 成功读取数据
+			args->buffer[ret] = '\0'; // 确保字符串结束
 
-            pthread_mutex_lock(&args->mutex);
-            printf("UART received (%d bytes): %s\n", ret, args->buffer);
-            pthread_mutex_unlock(&args->mutex);
+			pthread_mutex_lock(&args->mutex);
+			printf("UART received (%d bytes): %s\n", ret,
+			       args->buffer);
+			pthread_mutex_unlock(&args->mutex);
 
-            // 通知主线程数据已就绪（如果有需要）
-            pthread_cond_signal(&args->cond);
-        } else if (ret == 0) {
-            // EOF，设备可能断开
-            printf("UART device closed or EOF reached\n");
-            usleep(100000); // 100ms 延时
-        } else {
-            if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                // 非阻塞读取，没有数据可用
-                usleep(50000); // 50ms 延时，避免忙等待
-            } else {
-                // 读取错误
-                perror("UART read error");
-                usleep(100000); // 100ms 延时后重试
-            }
-        }
-    }
+			// 通知主线程数据已就绪（如果有需要）
+			pthread_cond_signal(&args->cond);
+		} else if (ret == 0) {
+			// EOF，设备可能断开
+			printf("UART device closed or EOF reached\n");
+			usleep(100000); // 100ms 延时
+		} else {
+			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+				// 非阻塞读取，没有数据可用
+				usleep(50000); // 50ms 延时，避免忙等待
+			} else {
+				// 读取错误
+				perror("UART read error");
+				usleep(100000); // 100ms 延时后重试
+			}
+		}
+	}
 
-    return NULL;
+	return NULL;
 }
 
 // 初始化 UART 接收线程（使用 RAII 思想进行资源管理）
-int uart_recv_thread_init(int fd, char* buffer, int size, thread_args_t** args_ptr) {
-    if (fd < 0 || buffer == NULL || size <= 0) {
-        fprintf(stderr, "Invalid parameters\n");
-        return -1;
-    }
+int uart_recv_thread_init(int fd, char *buffer, int size,
+			  thread_args_t **args_ptr)
+{
+	if (fd < 0 || buffer == NULL || size <= 0) {
+		fprintf(stderr, "Invalid parameters\n");
+		return -1;
+	}
 
-    // 分配参数内存
-    thread_args_t* args = (thread_args_t*)calloc(1, sizeof(thread_args_t));
-    if (!args) {
-        perror("malloc failed");
-        return -1;
-    }
+	// 分配参数内存
+	thread_args_t *args = (thread_args_t *)calloc(1, sizeof(thread_args_t));
+	if (!args) {
+		perror("malloc failed");
+		return -1;
+	}
 
-    // 初始化参数
-    args->fd      = fd;
-    args->buffer  = buffer;
-    args->size    = size;
-    args->running = 1;
+	// 初始化参数
+	args->fd = fd;
+	args->buffer = buffer;
+	args->size = size;
+	args->running = 1;
 
-    // 初始化互斥锁和条件变量
-    int ret       = pthread_mutex_init(&args->mutex, NULL);
-    if (ret != 0) {
-        fprintf(stderr, "pthread_mutex_init failed: %s\n", strerror(ret));
-        free(args);
-        return -1;
-    }
+	// 初始化互斥锁和条件变量
+	int ret = pthread_mutex_init(&args->mutex, NULL);
+	if (ret != 0) {
+		fprintf(stderr, "pthread_mutex_init failed: %s\n",
+			strerror(ret));
+		free(args);
+		return -1;
+	}
 
-    ret = pthread_cond_init(&args->cond, NULL);
-    if (ret != 0) {
-        fprintf(stderr, "pthread_cond_init failed: %s\n", strerror(ret));
-        pthread_mutex_destroy(&args->mutex);
-        free(args);
-        return -1;
-    }
+	ret = pthread_cond_init(&args->cond, NULL);
+	if (ret != 0) {
+		fprintf(stderr, "pthread_cond_init failed: %s\n",
+			strerror(ret));
+		pthread_mutex_destroy(&args->mutex);
+		free(args);
+		return -1;
+	}
 
-    // 创建线程
-    pthread_t thread;
-    ret = pthread_create(&thread, NULL, uart_thread_func, (void*)args);
-    if (ret != 0) {
-        fprintf(stderr, "pthread_create failed: %s\n", strerror(ret));
-        pthread_cond_destroy(&args->cond);
-        pthread_mutex_destroy(&args->mutex);
-        free(args);
-        return -1;
-    }
+	// 创建线程
+	pthread_t thread;
+	ret = pthread_create(&thread, NULL, uart_thread_func, (void *)args);
+	if (ret != 0) {
+		fprintf(stderr, "pthread_create failed: %s\n", strerror(ret));
+		pthread_cond_destroy(&args->cond);
+		pthread_mutex_destroy(&args->mutex);
+		free(args);
+		return -1;
+	}
 
-    // 设置线程为分离状态（自动回收资源）
-    ret = pthread_detach(thread);
-    if (ret != 0) {
-        fprintf(stderr, "pthread_detach failed: %s\n", strerror(ret));
-        // 继续执行，因为线程已创建成功
-    }
+	// 设置线程为分离状态（自动回收资源）
+	ret = pthread_detach(thread);
+	if (ret != 0) {
+		fprintf(stderr, "pthread_detach failed: %s\n", strerror(ret));
+		// 继续执行，因为线程已创建成功
+	}
 
-    // 返回参数指针供外部使用
-    if (args_ptr) {
-        *args_ptr = args;
-    }
+	// 返回参数指针供外部使用
+	if (args_ptr) {
+		*args_ptr = args;
+	}
 
-    printf("UART receive thread created successfully\n");
-    return 0;
+	printf("UART receive thread created successfully\n");
+	return 0;
 }
 
 // 线程清理函数（安全的资源释放）
-void uart_recv_thread_cleanup(thread_args_t* args) {
-    if (!args) {
-        return;
-    }
+void uart_recv_thread_cleanup(thread_args_t *args)
+{
+	if (!args) {
+		return;
+	}
 
-    printf("Cleaning up UART thread...\n");
+	printf("Cleaning up UART thread...\n");
 
-    // 首先停止线程运行
-    pthread_mutex_lock(&args->mutex);
-    args->running = 0;
-    pthread_mutex_unlock(&args->mutex);
+	// 首先停止线程运行
+	pthread_mutex_lock(&args->mutex);
+	args->running = 0;
+	pthread_mutex_unlock(&args->mutex);
 
-    // 发送条件信号，唤醒可能正在等待的线程
-    pthread_cond_signal(&args->cond);
+	// 发送条件信号，唤醒可能正在等待的线程
+	pthread_cond_signal(&args->cond);
 
-    // 等待一小段时间让线程退出（实际应用中可能需要更精确的同步）
-    usleep(100000); // 100ms
+	// 等待一小段时间让线程退出（实际应用中可能需要更精确的同步）
+	usleep(100000); // 100ms
 
-    // 销毁同步原语
-    pthread_cond_destroy(&args->cond);
-    pthread_mutex_destroy(&args->mutex);
+	// 销毁同步原语
+	pthread_cond_destroy(&args->cond);
+	pthread_mutex_destroy(&args->mutex);
 
-    // 释放内存
-    free(args);
+	// 释放内存
+	free(args);
 
-    printf("UART thread cleanup completed\n");
+	printf("UART thread cleanup completed\n");
 }
 
 // 等待数据就绪的辅助函数
-int wait_for_data(thread_args_t* args, int timeout_ms) {
-    if (!args) {
-        return -1;
-    }
+int wait_for_data(thread_args_t *args, int timeout_ms)
+{
+	if (!args) {
+		return -1;
+	}
 
-    struct timespec ts;
-    clock_gettime(CLOCK_REALTIME, &ts);
-    ts.tv_sec  += timeout_ms / 1000;
-    ts.tv_nsec += (timeout_ms % 1000) * 1000000;
+	struct timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	ts.tv_sec += timeout_ms / 1000;
+	ts.tv_nsec += (timeout_ms % 1000) * 1000000;
 
-    pthread_mutex_lock(&args->mutex);
-    int ret = pthread_cond_timedwait(&args->cond, &args->mutex, &ts);
-    pthread_mutex_unlock(&args->mutex);
+	pthread_mutex_lock(&args->mutex);
+	int ret = pthread_cond_timedwait(&args->cond, &args->mutex, &ts);
+	pthread_mutex_unlock(&args->mutex);
 
-    return ret;
+	return ret;
 }
 
 // 主函数示例
-int main() {
-    // 打开串口设备（示例）
-    int fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NONBLOCK);
-    if (fd < 0) {
-        // 尝试备用设备
-        fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_NONBLOCK);
-        if (fd < 0) {
-            perror("Failed to open UART device");
-            return -1;
-        }
-    }
+int main()
+{
+	// 打开串口设备（示例）
+	int fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NONBLOCK);
+	if (fd < 0) {
+		// 尝试备用设备
+		fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_NONBLOCK);
+		if (fd < 0) {
+			perror("Failed to open UART device");
+			return -1;
+		}
+	}
 
-    // 配置串口参数（实际应用中需要根据硬件配置）
-    // struct termios options;
-    // tcgetattr(fd, &options);
-    // cfsetispeed(&options, B9600);
-    // cfsetospeed(&options, B9600);
-    // options.c_cflag &= ~PARENB;   // 无奇偶校验
-    // options.c_cflag &= ~CSTOPB;   // 1位停止位
-    // options.c_cflag &= ~CSIZE;
-    // options.c_cflag |= CS8;       // 8位数据位
-    // tcsetattr(fd, TCSANOW, &options);
+	// 配置串口参数（实际应用中需要根据硬件配置）
+	// struct termios options;
+	// tcgetattr(fd, &options);
+	// cfsetispeed(&options, B9600);
+	// cfsetospeed(&options, B9600);
+	// options.c_cflag &= ~PARENB;   // 无奇偶校验
+	// options.c_cflag &= ~CSTOPB;   // 1位停止位
+	// options.c_cflag &= ~CSIZE;
+	// options.c_cflag |= CS8;       // 8位数据位
+	// tcsetattr(fd, TCSANOW, &options);
 
-    char buffer[1024]          = {0};
-    thread_args_t* thread_args = NULL;
+	char buffer[1024] = { 0 };
+	thread_args_t *thread_args = NULL;
 
-    // 初始化接收线程
-    if (uart_recv_thread_init(fd, buffer, sizeof(buffer), &thread_args) != 0) {
-        close(fd);
-        return -1;
-    }
+	// 初始化接收线程
+	if (uart_recv_thread_init(fd, buffer, sizeof(buffer), &thread_args) !=
+	    0) {
+		close(fd);
+		return -1;
+	}
 
-    printf("Main thread running. Press Enter to exit...\n");
+	printf("Main thread running. Press Enter to exit...\n");
 
-    // 主线程工作循环
-    for (int i = 0; i < 10; i++) {
-        printf("Main thread working... (%d/10)\n", i + 1);
-        sleep(1);
+	// 主线程工作循环
+	for (int i = 0; i < 10; i++) {
+		printf("Main thread working... (%d/10)\n", i + 1);
+		sleep(1);
 
-        // 可以在这里等待数据或进行其他处理
-        // if (wait_for_data(thread_args, 500) == 0) {
-        //     printf("Data received in main thread\n");
-        // }
-    }
+		// 可以在这里等待数据或进行其他处理
+		// if (wait_for_data(thread_args, 500) == 0) {
+		//     printf("Data received in main thread\n");
+		// }
+	}
 
-    printf("Press Enter to clean up and exit...\n");
-    getchar();
+	printf("Press Enter to clean up and exit...\n");
+	getchar();
 
-    // 清理资源
-    uart_recv_thread_cleanup(thread_args);
-    close(fd);
+	// 清理资源
+	uart_recv_thread_cleanup(thread_args);
+	close(fd);
 
-    printf("Program exited successfully\n");
-    return 0;
+	printf("Program exited successfully\n");
+	return 0;
 }
 ```

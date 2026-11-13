@@ -15,8 +15,8 @@
 :sync: cpp
 
 ```cpp
-vector<int> arr(sz, val);                  // sz 和 val 可选
-vector<vector<int>> dp(m, vector<int>(n)); // m * n 的数组
+vector<int> arr(sz, val); // sz 和 val 可选
+vector<vector<int> > dp(m, vector<int>(n)); // m * n 的数组
 ```
 
 :::
@@ -38,15 +38,15 @@ ArrayList<Integer> v = new ArrayList<>();
 :sync: cpp
 
 ```cpp
-string str  = "ABCDEFG";
-str        += 'B';      // 末尾追加
+string str = "ABCDEFG";
+str += 'B'; // 末尾追加
 str.substr(start, len); // 截取子串
-str.find("CD");         // 查找子串，返回下标，找不到返回 string::npos
-str.rfind('C');         // 从后往前查找
-str.compare(other);     // 比较（<0 / 0 / >0）
+str.find("CD"); // 查找子串，返回下标，找不到返回 string::npos
+str.rfind('C'); // 从后往前查找
+str.compare(other); // 比较（<0 / 0 / >0）
 stoi(str);
-stoll(str);                      // 字符串转数字（数字转字符串用 to_string(n)）
-sort(str.begin(), str.end());    // 字符串排序
+stoll(str); // 字符串转数字（数字转字符串用 to_string(n)）
+sort(str.begin(), str.end()); // 字符串排序
 reverse(str.begin(), str.end()); // 反转
 ```
 
@@ -164,8 +164,8 @@ for (ListNode cur = head; cur != null; cur = cur.next) {
 ```cpp
 stack<int> stk;
 stk.push(1); // 入栈
-stk.pop();   // 出栈（不返回值）
-stk.top();   // 查看栈顶
+stk.pop(); // 出栈（不返回值）
+stk.top(); // 查看栈顶
 stk.empty();
 stk.size();
 ```
@@ -198,12 +198,12 @@ stk.size();
 
 ```cpp
 deque<int> dq;
-dq.push_back(1);  // 尾部入队
+dq.push_back(1); // 尾部入队
 dq.push_front(2); // 头部入队
-dq.pop_back();    // 尾部出队
-dq.pop_front();   // 头部出队
-dq.front();       // 查看队首
-dq.back();        // 查看队尾
+dq.pop_back(); // 尾部出队
+dq.pop_front(); // 头部出队
+dq.front(); // 查看队首
+dq.back(); // 查看队尾
 dq.empty();
 dq.size();
 ```
@@ -244,20 +244,21 @@ dq.size();
 :sync: cpp
 
 ```cpp
-vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-    vector<int> ans;
-    deque<int> dq; // 存下标，维护从大到小
-    for (int i = 0; i < nums.size(); i++) {
-        // 队尾元素 ≤ 当前值时，它不可能再成为窗口最大值，弹出
-        while (!dq.empty() && nums[dq.back()] <= nums[i])
-            dq.pop_back();
-        dq.push_back(i);
-        if (dq.front() <= i - k) // 队首滑出窗口左边界
-            dq.pop_front();
-        if (i + 1 >= k) // 窗口已形成
-            ans.push_back(nums[dq.front()]);
-    }
-    return ans;
+vector<int> maxSlidingWindow(vector<int> &nums, int k)
+{
+	vector<int> ans;
+	deque<int> dq; // 存下标，维护从大到小
+	for (int i = 0; i < nums.size(); i++) {
+		// 队尾元素 ≤ 当前值时，它不可能再成为窗口最大值，弹出
+		while (!dq.empty() && nums[dq.back()] <= nums[i])
+			dq.pop_back();
+		dq.push_back(i);
+		if (dq.front() <= i - k) // 队首滑出窗口左边界
+			dq.pop_front();
+		if (i + 1 >= k) // 窗口已形成
+			ans.push_back(nums[dq.front()]);
+	}
+	return ans;
 }
 ```
 
@@ -318,20 +319,20 @@ vector<int> left(n), right(n);
 stack<int> st;
 st.push(-1); // 哨兵
 for (int i = 0; i < n; i++) {
-    while (st.top() != -1 && a[st.top()] >= a[i])
-        st.pop();
-    left[i] = st.top();
-    st.push(i);
+	while (st.top() != -1 && a[st.top()] >= a[i])
+		st.pop();
+	left[i] = st.top();
+	st.push(i);
 }
 
 // 从右到左求 right：同理
 stack<int> st2;
 st2.push(n); // 哨兵
 for (int i = n - 1; i >= 0; i--) {
-    while (st2.top() != n && a[st2.top()] >= a[i])
-        st2.pop();
-    right[i] = st2.top();
-    st2.push(i);
+	while (st2.top() != n && a[st2.top()] >= a[i])
+		st2.pop();
+	right[i] = st2.top();
+	st2.push(i);
 }
 // 此时 a[i] 是区间 [left[i]+1, right[i]-1] 内的最小值，
 // 以 a[i] 为最小值的子数组个数 = (i-left[i]) * (right[i]-i)
@@ -367,18 +368,19 @@ for (int i = 0; i < n; i++) {
 
 ```cpp
 // 从右往左维护递减栈：栈中保留"右边比当前元素大的候选"
-vector<int> nextGreater(vector<int>& nums) {
-    int n = nums.size();
-    vector<int> ans(n, -1);
-    stack<int> st;
-    for (int i = n - 1; i >= 0; i--) {
-        // 弹出所有 <= 当前值的（它们不可能成为更左边元素的下一个更大元素）
-        while (!st.empty() && st.top() <= nums[i])
-            st.pop();
-        ans[i] = st.empty() ? -1 : st.top();
-        st.push(nums[i]);
-    }
-    return ans;
+vector<int> nextGreater(vector<int> &nums)
+{
+	int n = nums.size();
+	vector<int> ans(n, -1);
+	stack<int> st;
+	for (int i = n - 1; i >= 0; i--) {
+		// 弹出所有 <= 当前值的（它们不可能成为更左边元素的下一个更大元素）
+		while (!st.empty() && st.top() <= nums[i])
+			st.pop();
+		ans[i] = st.empty() ? -1 : st.top();
+		st.push(nums[i]);
+	}
+	return ans;
 }
 ```
 
@@ -434,7 +436,7 @@ priority_queue<int> PQ;
 优先队列默认是降序排列的，也就是最大值在堆顶。如果想创建一个小根堆，声明方式如下：
 
 ```cpp
-priority_queue<int, vector<int>, greater<>> PQ;
+priority_queue<int, vector<int>, greater<> > PQ;
 ```
 
 在很多情况下，我们会想**在优先队列中存储自定义的数据类型，并按照某个属性排列**。这种情况下，我们需要重载运算符来达到要求：
@@ -443,32 +445,35 @@ priority_queue<int, vector<int>, greater<>> PQ;
 // 假设：我们想将 hashMap 中的 {key, value} 对存储到 priority queue 中
 unordered_map<int, int> hashMap;
 for (int num : nums) {
-    hashMap[num]++;
+	hashMap[num]++;
 }
 
 // 创建一个根据哈希表的值升序排列的小根堆，并且只保存 k 个元素
 struct HashEntry {
-    int key;
-    int value;
+	int key;
+	int value;
 
-    // 重载 > 运算符
-    bool operator>(const HashEntry& other) const { return value > other.value; }
+	// 重载 > 运算符
+	bool operator>(const HashEntry &other) const
+	{
+		return value > other.value;
+	}
 };
 
-priority_queue<HashEntry, vector<HashEntry>, greater<HashEntry>> minHeap;
+priority_queue<HashEntry, vector<HashEntry>, greater<HashEntry> > minHeap;
 
-for (const auto& entry : hashMap) {
-    minHeap.push({entry.first, entry.second});
-    if (minHeap.size() > k) {
-        minHeap.pop();
-    }
+for (const auto &entry : hashMap) {
+	minHeap.push({ entry.first, entry.second });
+	if (minHeap.size() > k) {
+		minHeap.pop();
+	}
 }
 
 // 取出小根堆中的元素
 vector<int> ans;
 while (!minHeap.empty()) {
-    ans.push_back(minHeap.top().key);
-    minHeap.pop();
+	ans.push_back(minHeap.top().key);
+	minHeap.pop();
 }
 ```
 
@@ -510,7 +515,7 @@ unordered_map<string, int> map;
 
 ```cpp
 map["hello"] = 1; // 最简单，常用
-map.insert({"hello", 1});
+map.insert({ "hello", 1 });
 map.emplace("hello", 1);
 map.insert(std::make_pair("hello", 1));
 ```
@@ -525,15 +530,15 @@ map["hello"] = 2;
 
 ```cpp
 if (map.find("hello") != map.end()) {
-    cout << "Key exists." << endl;
+	cout << "Key exists." << endl;
 }
 
 if (map.count("hello")) {
-    cout << "Key exists." << endl;
+	cout << "Key exists." << endl;
 }
 
-int val          = map.at("hello"); // 抛出异常如果键不存在
-int valOrDefault = map["hello"];    // 如果键不存在，将插入默认值 0 并返回 0
+int val = map.at("hello"); // 抛出异常如果键不存在
+int valOrDefault = map["hello"]; // 如果键不存在，将插入默认值 0 并返回 0
 ```
 
 删除一个键
@@ -557,9 +562,9 @@ size_t size = map.size();
 遍历
 
 ```cpp
-for (const auto& entry : map) {
-    const string& key = entry.first;
-    int value         = entry.second;
+for (const auto &entry : map) {
+	const string &key = entry.first;
+	int value = entry.second;
 }
 ```
 
@@ -627,12 +632,12 @@ set.erase("hello");
 
 ```cpp
 if (set.find("hello") != set.end()) {
-    cout << "Key exists." << endl;
+	cout << "Key exists." << endl;
 }
 
 // 或者使用 count 方法
 if (set.count("hello")) {
-    cout << "Key exists." << endl;
+	cout << "Key exists." << endl;
 }
 ```
 
@@ -651,8 +656,8 @@ size_t size = set.size();
 遍历
 
 ```cpp
-for (const auto& element : set) {
-    cout << element << endl;
+for (const auto &element : set) {
+	cout << element << endl;
 }
 ```
 

@@ -32,26 +32,31 @@
 ```cpp
 #include <iostream>
 
-class Circle {
+class Circle
+{
 private:
-    double radius;
+	double radius;
 
 public:
-    Circle(double r) : radius(r) {}
+	Circle(double r) : radius(r)
+	{
+	}
 
-    friend void printRadius(const Circle& c); // 声明友元函数
+	friend void printRadius(const Circle &c); // 声明友元函数
 };
 
 // 友元函数定义
-void printRadius(const Circle& c) {
-    std::cout << "Radius of the circle: " << c.radius << std::endl;
+void printRadius(const Circle &c)
+{
+	std::cout << "Radius of the circle: " << c.radius << std::endl;
 }
 
-int main() {
-    Circle c(5.0);
-    printRadius(c); // 调用友元函数
+int main()
+{
+	Circle c(5.0);
+	printRadius(c); // 调用友元函数
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -92,32 +97,38 @@ int main() {
 ```cpp
 #include <iostream>
 
-class Account {
+class Account
+{
 private:
-    double balance;
+	double balance;
 
 public:
-    Account(double initialBalance) : balance(initialBalance) {}
+	Account(double initialBalance) : balance(initialBalance)
+	{
+	}
 
-    friend class BankManager; // 声明 BankManager 为友元类
+	friend class BankManager; // 声明 BankManager 为友元类
 };
 
-class BankManager {
+class BankManager
+{
 public:
-    void deposit(Account& acc, double amount) {
-        acc.balance += amount;
-        std::cout << "Deposited: " << amount << std::endl;
-        std::cout << "New balance: " << acc.balance << std::endl;
-    }
+	void deposit(Account &acc, double amount)
+	{
+		acc.balance += amount;
+		std::cout << "Deposited: " << amount << std::endl;
+		std::cout << "New balance: " << acc.balance << std::endl;
+	}
 };
 
-int main() {
-    Account acc(1000.0);
-    BankManager manager;
+int main()
+{
+	Account acc(1000.0);
+	BankManager manager;
 
-    manager.deposit(acc, 500.0); // 使用 BankManager 的 deposit 方法
+	manager.deposit(acc, 500.0); // 使用 BankManager 的 deposit 方法
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -142,38 +153,46 @@ int main() {
 ```cpp
 #include <iostream>
 
-class A {
+class A
+{
 private:
-    int dataA;
+	int dataA;
 
 public:
-    A(int d) : dataA(d) {}
+	A(int d) : dataA(d)
+	{
+	}
 
-    friend class B; // 声明 B 为友元类
+	friend class B; // 声明 B 为友元类
 };
 
-class B {
+class B
+{
 private:
-    int dataB;
+	int dataB;
 
 public:
-    B(int d) : dataB(d) {}
+	B(int d) : dataB(d)
+	{
+	}
 
-    void setAData(A& a, int value) {
-        a.dataA = value; // 访问 A 的私有成员
-        std::cout << "Set A's data to: " << value << std::endl;
-    }
+	void setAData(A &a, int value)
+	{
+		a.dataA = value; // 访问 A 的私有成员
+		std::cout << "Set A's data to: " << value << std::endl;
+	}
 
-    friend class A; // 也可以声明 A 为友元类
+	friend class A; // 也可以声明 A 为友元类
 };
 
-int main() {
-    A a(10);
-    B b(20);
+int main()
+{
+	A a(10);
+	B b(20);
 
-    b.setAData(a, 30); // 使用 B 的 setAData 方法
+	b.setAData(a, 30); // 使用 B 的 setAData 方法
 
-    return 0;
+	return 0;
 }
 ```
 

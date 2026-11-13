@@ -159,59 +159,69 @@ sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 #include <uci.h>
 
 // 分配上下文失败桩函数
-struct uci_context* uci_alloc_context_stub_fail() {
-    return nullptr;
+struct uci_context *uci_alloc_context_stub_fail()
+{
+	return nullptr;
 }
 
 // 查找指针成功桩函数
-int uci_lookup_ptr_stub_success(struct uci_context* ctx, struct uci_ptr* ptr, char* str,
-                                bool extended) {
-    ptr->last = (struct uci_element*)malloc(sizeof(struct uci_element));
-    if (ptr->last) {
-        ptr->last->type = UCI_TYPE_OPTION;
-    }
+int uci_lookup_ptr_stub_success(struct uci_context *ctx, struct uci_ptr *ptr,
+				char *str, bool extended)
+{
+	ptr->last = (struct uci_element *)malloc(sizeof(struct uci_element));
+	if (ptr->last) {
+		ptr->last->type = UCI_TYPE_OPTION;
+	}
 
-    ptr->p     = (struct uci_package*)malloc(sizeof(struct uci_package));
-    ptr->value = NULL;
-    ptr->flags = uci_ptr::UCI_LOOKUP_COMPLETE;
+	ptr->p = (struct uci_package *)malloc(sizeof(struct uci_package));
+	ptr->value = NULL;
+	ptr->flags = uci_ptr::UCI_LOOKUP_COMPLETE;
 
-    ptr->o     = (struct uci_option*)malloc(sizeof(struct uci_option));
-    if (ptr->o) {
-        ptr->o->type     = UCI_TYPE_STRING;
-        ptr->o->v.string = strdup("test_value");
-    }
+	ptr->o = (struct uci_option *)malloc(sizeof(struct uci_option));
+	if (ptr->o) {
+		ptr->o->type = UCI_TYPE_STRING;
+		ptr->o->v.string = strdup("test_value");
+	}
 
-    return UCI_OK;
+	return UCI_OK;
 }
 
 // 设置操作成功桩函数
-int uci_set_stub_success(struct uci_context* ctx, struct uci_ptr* ptr) {
-    return UCI_OK;
+int uci_set_stub_success(struct uci_context *ctx, struct uci_ptr *ptr)
+{
+	return UCI_OK;
 }
 
 // 保存操作成功桩函数
-int uci_save_stub_success(struct uci_context* ctx, struct uci_package* p) {
-    return UCI_OK;
+int uci_save_stub_success(struct uci_context *ctx, struct uci_package *p)
+{
+	return UCI_OK;
 }
 
 // 提交操作成功桩函数
-int uci_commit_stub_success(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
-    return UCI_OK;
+int uci_commit_stub_success(struct uci_context *ctx, struct uci_package **p,
+			    bool overwrite)
+{
+	return UCI_OK;
 }
 
 // 提交操作失败桩函数
-int uci_commit_stub_fail(struct uci_context* ctx, struct uci_package** p, bool overwrite) {
-    return UCI_FRR_UNKNOWN;
+int uci_commit_stub_fail(struct uci_context *ctx, struct uci_package **p,
+			 bool overwrite)
+{
+	return UCI_FRR_UNKNOWN;
 }
 
 // 卸载操作成功桩函数
-int uci_unload_stub_success(struct uci_context* ctx, struct uci_package* p) {
-    return UCI_OK;
+int uci_unload_stub_success(struct uci_context *ctx, struct uci_package *p)
+{
+	return UCI_OK;
 }
 
 // 释放上下文成功桩函数
-void uci_free_context_stub_success(struct uci_context* ctx) {
-    // 桩函数实现为空
+void uci_free_context_stub_success(struct uci_context *ctx)
+{
+	// 桩函数实现为空
 }
 ```
 
@@ -225,8 +235,9 @@ void uci_free_context_stub_success(struct uci_context* ctx) {
 当编译器将函数优化为内联函数时，会导致桩函数失效。解决方法是在需要打桩的函数声明前添加 `__attribute__((noinline))` 属性，例如：
 
 ```cpp
-__attribute__((noinline)) bool stop_while_1_stub() {
-    return true;
+__attribute__((noinline)) bool stop_while_1_stub()
+{
+	return true;
 }
 ```
 
@@ -242,11 +253,11 @@ __attribute__((noinline)) bool stop_while_1_stub() {
 
 ```cpp
 // 正确示例
-int actual_variable;         // 1. 声明实际变量
+int actual_variable; // 1. 声明实际变量
 test_func(&actual_variable); // 2. 获取地址并传入函数
 
 // 错误示例：传入未初始化的野指针
-int* wild_pointer;       // 未初始化的指针
+int *wild_pointer; // 未初始化的指针
 test_func(wild_pointer); // 可能导致段错误或未定义行为
 ```
 

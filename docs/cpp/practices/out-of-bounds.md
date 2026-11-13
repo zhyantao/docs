@@ -7,18 +7,19 @@
 
 using namespace std;
 
-int main() {
-    int a;
-    int num  = 0;
-    int* p   = &num;
+int main()
+{
+	int a;
+	int num = 0;
+	int *p = &num;
 
-    p[-1]    = 2; // out of bound
-    p[0]     = 3; // okay
-    *(p + 1) = 4; // out of bound
+	p[-1] = 2; // out of bound
+	p[0] = 3; // okay
+	*(p + 1) = 4; // out of bound
 
-    cout << "num = " << num << endl;
+	cout << "num = " << num << endl;
 
-    return 0;
+	return 0;
 }
 ```
 
@@ -29,16 +30,17 @@ int main() {
 
 using namespace std;
 
-int main() {
-    int num_array[5];
+int main()
+{
+	int num_array[5];
 
-    for (int idx = -1; idx <= 5; idx++) // out of bounds
-        num_array[idx] = idx * idx;
+	for (int idx = -1; idx <= 5; idx++) // out of bounds
+		num_array[idx] = idx * idx;
 
-    for (int idx = -1; idx <= 5; idx++) // out of bounds
-        cout << "num_array[" << idx << "] = " << num_array[idx] << endl;
+	for (int idx = -1; idx <= 5; idx++) // out of bounds
+		cout << "num_array[" << idx << "] = " << num_array[idx] << endl;
 
-    return 0;
+	return 0;
 }
 ```
 

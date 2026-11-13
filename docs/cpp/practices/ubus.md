@@ -26,44 +26,49 @@
 #include <libubus.h>
 #include <blobmsg_json.h>
 
-struct ubus_context* ctx;
+struct ubus_context *ctx;
 struct ubus_object obj;
 struct ubus_method methods[] = {
-    UBUS_METHOD("exampleMethod", example_method_handler, example_method_policy),
+	UBUS_METHOD("exampleMethod", example_method_handler,
+		    example_method_policy),
 };
 
-static const struct ubus_object_type obj_type = UBUS_OBJECT_TYPE("exampleService", methods);
-static struct ubus_object obj                 = {
-    .name      = "exampleService",
-    .type      = &obj_type,
-    .methods   = methods,
-    .n_methods = ARRAY_SIZE(methods),
+static const struct ubus_object_type obj_type =
+	UBUS_OBJECT_TYPE("exampleService", methods);
+static struct ubus_object obj = {
+	.name = "exampleService",
+	.type = &obj_type,
+	.methods = methods,
+	.n_methods = ARRAY_SIZE(methods),
 };
 
 // 方法处理函数
-static int example_method_handler(struct ubus_context* ctx, struct ubus_object* obj,
-                                  struct ubus_request_data* req, const char* method,
-                                  struct blob_attr* msg) {
-    // 处理请求
-    printf("exampleMethod called\n");
-    return 0;
+static int example_method_handler(struct ubus_context *ctx,
+				  struct ubus_object *obj,
+				  struct ubus_request_data *req,
+				  const char *method, struct blob_attr *msg)
+{
+	// 处理请求
+	printf("exampleMethod called\n");
+	return 0;
 }
 
-int main() {
-    // 初始化 ubus 上下文
-    ctx = ubus_connect(NULL);
-    if (!ctx) {
-        fprintf(stderr, "Failed to connect to ubus\n");
-        return -1;
-    }
+int main()
+{
+	// 初始化 ubus 上下文
+	ctx = ubus_connect(NULL);
+	if (!ctx) {
+		fprintf(stderr, "Failed to connect to ubus\n");
+		return -1;
+	}
 
-    // 注册对象
-    ubus_add_object(ctx, &obj);
+	// 注册对象
+	ubus_add_object(ctx, &obj);
 
-    // 进入事件循环
-    ubus_loop(ctx, NULL, 0);
+	// 进入事件循环
+	ubus_loop(ctx, NULL, 0);
 
-    return 0;
+	return 0;
 }
 ```
 

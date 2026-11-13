@@ -19,9 +19,10 @@ extern int globalVar;
 
 // 在文件C.cpp中使用该变量
 #include <iostream>
-int main() {
-    std::cout << globalVar << std::endl;
-    return 0;
+int main()
+{
+	std::cout << globalVar << std::endl;
+	return 0;
 }
 ```
 
@@ -36,16 +37,18 @@ int main() {
 ```cpp
 #include <iostream>
 
-void exampleFunction() {
-    static int staticVariable = 0;
-    staticVariable++;
-    std::cout << "Static Variable: " << staticVariable << std::endl;
+void exampleFunction()
+{
+	static int staticVariable = 0;
+	staticVariable++;
+	std::cout << "Static Variable: " << staticVariable << std::endl;
 }
 
-int main() {
-    exampleFunction();
-    exampleFunction();
-    return 0;
+int main()
+{
+	exampleFunction();
+	exampleFunction();
+	return 0;
 }
 ```
 
@@ -64,27 +67,30 @@ static int globalStaticVariable = 42;
 // 下面的声明会导致链接错误（undefined reference）
 // extern int globalStaticVariable;
 
-int main() {
-    // std::cout << globalStaticVariable << std::endl; // 无法访问
-    return 0;
+int main()
+{
+	// std::cout << globalStaticVariable << std::endl; // 无法访问
+	return 0;
 }
 ```
 
 3、在类中使用 `static` 可以创建静态成员变量和静态成员函数。静态成员变量是类的所有实例共享的，而静态成员函数不属于任何实例，可以直接通过类名调用。
 
 ```cpp
-class Example {
+class Example
+{
 public:
-    static int staticVariable;    // 静态成员变量
-    static void staticFunction(); // 静态成员函数
+	static int staticVariable; // 静态成员变量
+	static void staticFunction(); // 静态成员函数
 };
 
 // 静态成员变量的定义
 int Example::staticVariable = 0;
 
 // 静态成员函数的实现
-void Example::staticFunction() {
-    // 实现代码
+void Example::staticFunction()
+{
+	// 实现代码
 }
 ```
 
@@ -93,9 +99,11 @@ void Example::staticFunction() {
 `const` 是一种常见的类型保护机制，用法主要分为以下三类：
 
 ```cpp
-const int& func(int& a);   // 修饰返回值
-int& func(const int& a);   // 修饰变量
-int& func(int& a) const {} // 修饰成员函数
+const int &func(int &a); // 修饰返回值
+int &func(const int &a); // 修饰变量
+int &func(int &a) const
+{
+} // 修饰成员函数
 ```
 
 - `const` 修饰返回值时，肯定修饰的是引用，表示返回值不可被修改。
@@ -203,28 +211,30 @@ int main()
 **示例：**
 
 ```cpp
-class DatabaseCache {
+class DatabaseCache
+{
 private:
-    // 核心数据（逻辑状态）
-    std::string cachedData;
-    // 内部管理用的变量，声明为 mutable
-    mutable bool cacheValid{false};
-    mutable std::chrono::system_clock::time_point lastFetchTime;
+	// 核心数据（逻辑状态）
+	std::string cachedData;
+	// 内部管理用的变量，声明为 mutable
+	mutable bool cacheValid{ false };
+	mutable std::chrono::system_clock::time_point lastFetchTime;
 
 public:
-    // 一个 const 成员函数，承诺不会改变对象的“逻辑状态”
-    std::string getData() const {
-        if (!cacheValid) {
-            // 错误！不能在 const 函数中修改普通成员变量
-            // cachedData = fetchFromDatabase();
+	// 一个 const 成员函数，承诺不会改变对象的“逻辑状态”
+	std::string getData() const
+	{
+		if (!cacheValid) {
+			// 错误！不能在 const 函数中修改普通成员变量
+			// cachedData = fetchFromDatabase();
 
-            // 但是可以修改 mutable 成员
-            lastFetchTime = std::chrono::system_clock::now();
-            // 假设这里有一个线程安全的方式更新 cachedData
-            cacheValid    = true;
-        }
-        return cachedData;
-    }
+			// 但是可以修改 mutable 成员
+			lastFetchTime = std::chrono::system_clock::now();
+			// 假设这里有一个线程安全的方式更新 cachedData
+			cacheValid = true;
+		}
+		return cachedData;
+	}
 };
 ```
 
@@ -238,22 +248,23 @@ public:
 **示例：**
 
 ```cpp
-int main() {
-    int x        = 0;
+int main()
+{
+	int x = 0;
 
-    auto lambda1 = [x]() {
-        // x = 5; // 错误！不能修改按值捕获的变量
-        return x;
-    };
+	auto lambda1 = [x]() {
+		// x = 5; // 错误！不能修改按值捕获的变量
+		return x;
+	};
 
-    auto lambda2 = [x]() mutable {
-        x = 5; // 正确！因为使用了 mutable，可以修改内部副本
-        std::cout << "内部 x: " << x << std::endl; // 输出 5
-        return x;
-    };
+	auto lambda2 = [x]() mutable {
+		x = 5; // 正确！因为使用了 mutable，可以修改内部副本
+		std::cout << "内部 x: " << x << std::endl; // 输出 5
+		return x;
+	};
 
-    lambda2();
-    std::cout << "外部 x: " << x << std::endl; // 输出 0，因为修改的是副本
+	lambda2();
+	std::cout << "外部 x: " << x << std::endl; // 输出 0，因为修改的是副本
 }
 ```
 
@@ -307,16 +318,16 @@ int main() {
 可以让多条语句的宏表现得像一条语句：
 
 ```cpp
-#define LOG(msg)                                \
-    do {                                        \
-        printf("[%s:%d] ", __FILE__, __LINE__); \
-        printf("%s\n", msg);                    \
-    } while (0)
+#define LOG(msg)                                        \
+	do {                                            \
+		printf("[%s:%d] ", __FILE__, __LINE__); \
+		printf("%s\n", msg);                    \
+	} while (0)
 
 if (error)
-    LOG("failed");
+	LOG("failed");
 else
-    LOG("ok"); // 展开后语法正确
+	LOG("ok"); // 展开后语法正确
 ```
 
 注意：`do { ... } while (0)` 包装的宏不是表达式，不能出现在赋值等需要值的上下文中；
@@ -329,37 +340,39 @@ else
 
 using namespace std;
 
-inline float max_function(float a, float b) {
-    if (a > b)
-        return a;
-    else
-        return b;
+inline float max_function(float a, float b)
+{
+	if (a > b)
+		return a;
+	else
+		return b;
 }
 
 // #define MAX_MACRO(a, b) a > b ? a : b
 
 #define MAX_MACRO(a, b) (a) > (b) ? (a) : (b)
 
-int main() {
-    int num1 = 20;
-    int num2 = 30;
-    int maxv = max_function(num1, num2);
-    cout << maxv << endl;
+int main()
+{
+	int num1 = 20;
+	int num2 = 30;
+	int maxv = max_function(num1, num2);
+	cout << maxv << endl;
 
-    maxv = MAX_MACRO(num1, num2);
-    cout << maxv << endl;
+	maxv = MAX_MACRO(num1, num2);
+	cout << maxv << endl;
 
-    maxv = MAX_MACRO(num1++, num2++);
-    cout << maxv << endl;
-    cout << "num1=" << num1 << endl;
-    cout << "num2=" << num2 << endl;
+	maxv = MAX_MACRO(num1++, num2++);
+	cout << maxv << endl;
+	cout << "num1=" << num1 << endl;
+	cout << "num2=" << num2 << endl;
 
-    num1 = 0xAB09;
-    num2 = 0xEF08;
-    maxv = MAX_MACRO(num1 & 0xFF, num2 & 0xFF);
-    cout << maxv << endl;
+	num1 = 0xAB09;
+	num2 = 0xEF08;
+	maxv = MAX_MACRO(num1 & 0xFF, num2 & 0xFF);
+	cout << maxv << endl;
 
-    return 0;
+	return 0;
 }
 ```
 

@@ -4,8 +4,9 @@
 
 ```cpp
 // libbignum.so
-long test_bignum() {
-    return 366969859824;
+long test_bignum()
+{
+	return 366969859824;
 }
 ```
 
@@ -15,9 +16,10 @@ long test_bignum() {
 // 应该在这里加上声明：long test_bignum();
 // 否则编译器按 int 类型处理返回值，导致数据高位丢失
 
-int main(int argc, char* argv[]) {
-    long num = test_bignum();
-    printf("num = %ld (%lx)\n", num, num); // 隐式声明将导致数据高位丢失
-    return 0;
+int main(int argc, char *argv[])
+{
+	long num = test_bignum();
+	printf("num = %ld (%lx)\n", num, num); // 隐式声明将导致数据高位丢失
+	return 0;
 }
 ```
