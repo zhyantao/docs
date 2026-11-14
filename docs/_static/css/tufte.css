@@ -1389,3 +1389,9 @@ ul.search-index {
     display: none;
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/* 隐藏侧栏顶部的站点标题文字（html_title），logo 已移除，此处不再需要展示 */
+.bd-sidebar-primary .navbar-brand {
+  display: none;
+}
