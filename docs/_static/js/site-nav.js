@@ -1,6 +1,6 @@
 /**
  * site-nav.js — 在页面顶部注入跨站导航条（与 zhyantao.github.io 各站页眉一致）
- * 站点：ZHYANTAO / DOCS / PS1 / CALLGRAPH / RISC-V / BOT
+ * 站点：ZHYANTAO / DOCS / PS1 / CALLGRAPH / RISC-V / TRADING
  */
 (function () {
   "use strict";
@@ -11,7 +11,7 @@
     { href: "https://zhyantao.github.io/PS1-generator/", label: "PS1" },
     { href: "https://zhyantao.github.io/callgraphs-generator/", label: "CALLGRAPH" },
     { href: "https://zhyantao.github.io/riscv-bitlab/", label: "RISC-V" },
-    { href: "https://zhyantao.github.io/trading/", label: "BOT" },
+    { href: "https://zhyantao.github.io/trading/", label: "TRADING" },
   ];
 
   function build() {
