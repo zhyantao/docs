@@ -26,7 +26,7 @@ html_logo = "_static/images/logo_wide.svg"
 html_title = "Notebook"
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
-html_css_files = ["css/custom.css"]
+html_css_files = ["css/tufte.css"]
 html_js_files = ["js/auto-toggle-sidebar.js"]
 html_favicon = "_static/images/logo_square.svg"
 html_last_updated_fmt = ""
@@ -43,7 +43,7 @@ html_theme_options = {
         "colab_url": "https://colab.research.google.com/",
         "deepnote_url": "https://deepnote.com/",
         "notebook_interface": "jupyterlab",
-        "thebe": True,
+        # "thebe": True,  # removed: thebe fetches its kernel from a CDN/cloud service
         # "jupyterhub_url": "https://datahub.berkeley.edu",  # For testing
     },
     "use_edit_page_button": True,
@@ -60,14 +60,14 @@ html_theme_options = {
         {
             "name": "Documentation Status",
             "url": "https://readthedocs.org/projects/getstarted/builds",
-            "icon": "https://readthedocs.org/projects/getstarted/badge",
-            "type": "url",
+            "icon": "_static/images/badges/rtd.svg",
+            "type": "local",
         },
         {
             "name": "GitHub Release",
             "url": "https://github.com/zhyantao/getstarted/releases",
-            "icon": "https://img.shields.io/github/v/release/zhyantao/getstarted",
-            "type": "url",
+            "icon": "_static/images/badges/release.svg",
+            "type": "local",
         },
         # {
         #     "name": "Curriculum Vitae",
@@ -112,7 +112,6 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx_copybutton",
     "sphinx_design",
-    "sphinx_thebe",
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
@@ -137,10 +136,17 @@ autodoc_mock_imports = ["mprop"]
 
 # Setting for sphinx.ext.mathjax
 # The path to the JavaScript file to include in the HTML files in order to load MathJax.
-mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+# Use the vendored SVG build (docs/_static/vendor/mathjax/) so that no fonts or
+# scripts are fetched from a CDN at runtime.
+mathjax_path = "vendor/mathjax/tex-mml-svg.js"
 
 # Setting for sphinxcontrib-mermaid
-mermaid_version = "11.12.2"  # from CDN unpkg.com
+# Vendor the mermaid ESM bundle at docs/_static/vendor/mermaid/ (built with
+# esbuild from mermaid@11.12.2) so that nothing is fetched from a CDN at
+# runtime; `mermaid_use_local` paths are resolved relative to html_static_path
+# and takes precedence over `mermaid_version`.
+mermaid_version = "11.12.2"
+mermaid_use_local = "vendor/mermaid/mermaid.esm.min.mjs"
 
 # Setting for sphinx.ext.extlinks
 # Can use the alias name as a new role, e.g. :issue:`123`

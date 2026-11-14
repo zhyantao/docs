@@ -4,6 +4,9 @@
 # VS Code
 .vscode
 
+# WorkBuddy assistant workspace (memory / session data)
+.workbuddy/
+
 # Sphinx documentation
 docs/_build/
 !docs/_static/**/*.png
