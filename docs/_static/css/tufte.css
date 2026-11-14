@@ -1391,7 +1391,12 @@ ul.search-index {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 隐藏侧栏顶部的站点标题文字（html_title），logo 已移除，此处不再需要展示 */
-.bd-sidebar-primary .navbar-brand {
+/* 隐藏侧栏顶部的站点标题文字（html_title），logo 已移除，此处不再需要展示。
+   连同外层容器与其 margin 一起隐藏，并去掉区块顶部留白，避免留下空白占位 */
+.bd-sidebar-primary .navbar-brand,
+.bd-sidebar-primary .sidebar-primary-items__start > .sidebar-primary-item:first-child {
   display: none;
+}
+.bd-sidebar-primary .sidebar-primary-items__start {
+  padding-top: 0;
 }
