@@ -1,0 +1,1344 @@
+/* ==========================================================================
+   Tufte theme for Notebook (Sphinx / pydata-sphinx-theme / sphinx-book-theme)
+   Based on the tufte-jekyll styles of zhyantao.github.io
+   (originally tufte-css by Dave Liepmann / Edward Tufte).
+
+   Palette & typography constants come from _sass/_settings.scss of that site:
+     paper #fffff8 · ink #111 · contrast #a00000 · border #333
+     body  ET Book serif · sans Gill Sans/Lato · mono Consolas
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Fonts (local, copied from the reference site)
+   -------------------------------------------------------------------------- */
+@charset "UTF-8";
+
+@font-face {
+  font-family: "ET Book";
+  src: url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff")
+      format("woff"),
+    url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ET Book";
+  src: url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff")
+      format("woff"),
+    url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ET Book";
+  src: url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff")
+      format("woff"),
+    url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf")
+      format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ET Book";
+  src: url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.woff")
+      format("woff"),
+    url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.ttf")
+      format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ET Book Old Style";
+  src: url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff")
+      format("woff"),
+    url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --tufte-paper: #fffff8;
+  --tufte-ink: #111111;
+  --tufte-ink-soft: #333333;
+  --tufte-muted: #6f6a5e;
+  --tufte-contrast: #a00000;
+  --tufte-border: #333333;
+  --tufte-hairline: rgba(17, 17, 17, 0.14);
+  --tufte-hairline-soft: rgba(17, 17, 17, 0.08);
+  --tufte-surface: #faf7ee;
+  --tufte-tint: rgba(160, 0, 0, 0.045);
+
+  --tufte-serif: "ET Book", ETBembo, "Songti SC", "STSongti-SC", "Noto Serif CJK SC",
+    "Source Han Serif SC", "SimSun", Palatino, "Palatino Linotype", "Book Antiqua",
+    Georgia, serif;
+  --tufte-sans: "Gill Sans", "Gill Sans MT", "Lato", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", Calibri, sans-serif;
+  --tufte-mono: Consolas, "Liberation Mono", Menlo, Courier, "SF Mono", monospace;
+}
+
+/* --------------------------------------------------------------------------
+   pydata / bootstrap variable overrides — LIGHT
+   -------------------------------------------------------------------------- */
+html:not([data-theme]),
+html[data-theme="light"] {
+  --pst-font-family-base: var(--tufte-serif);
+  --pst-font-family-heading: var(--tufte-serif);
+  --pst-font-family-monospace: var(--tufte-mono);
+  --pst-font-size-base: 1.05rem;
+  --pst-font-size-h1: 2.1rem;
+  --pst-font-size-h2: 1.55rem;
+  --pst-font-size-h3: 1.25rem;
+  --pst-font-size-h4: 1.1rem;
+  --pst-font-size-h5: 1rem;
+  --pst-font-size-h6: 0.95rem;
+  --pst-font-weight-heading: 400;
+  --pst-sidebar-font-size: 0.85rem;
+  --pst-sidebar-header-font-size: 1rem;
+  --pst-header-height: 3.5rem;
+
+  --pst-color-primary: #a00000;
+  --pst-color-primary-bg: rgba(160, 0, 0, 0.08);
+  --pst-color-secondary: #405c78;
+  --pst-color-secondary-bg: rgba(64, 92, 120, 0.1);
+  --pst-color-accent: #a00000;
+  --pst-color-accent-bg: rgba(160, 0, 0, 0.08);
+  --pst-color-info: #405c78;
+  --pst-color-info-bg: rgba(64, 92, 120, 0.08);
+  --pst-color-warning: #8a6d1a;
+  --pst-color-warning-bg: rgba(160, 120, 20, 0.09);
+  --pst-color-success: #3e6b4d;
+  --pst-color-success-bg: rgba(62, 107, 77, 0.09);
+  --pst-color-danger: #a00000;
+  --pst-color-danger-bg: rgba(160, 0, 0, 0.07);
+  --pst-color-text-base: #111111;
+  --pst-color-text-muted: #6f6a5e;
+  --pst-color-heading-color: #111111;
+  --pst-color-border: rgba(17, 17, 17, 0.28);
+  --pst-color-border-muted: rgba(17, 17, 17, 0.14);
+  --pst-color-inline-code: #a00000;
+  --pst-color-inline-code-links: #a00000;
+  --pst-color-target: rgba(160, 0, 0, 0.14);
+  --pst-color-background: #fffff8;
+  --pst-color-on-background: #fffff8;
+  --pst-color-surface: #faf7ee;
+  --pst-color-on-surface: #111111;
+  --pst-color-link: #a00000;
+  --pst-color-link-hover: #5c0000;
+  --pst-color-shadow: rgba(17, 17, 17, 0.1);
+
+  /* tables: booktabs look */
+  --pst-color-table: #111111;
+  --pst-color-table-inner-border: transparent;
+  --pst-color-table-outer-border: transparent;
+  --pst-color-table-heading-bg: #fffff8;
+  --pst-color-table-row-zebra-high-bg: #fffff8;
+  --pst-color-table-row-zebra-low-bg: #fffff8;
+  --pst-color-table-row-hover-bg: rgba(160, 0, 0, 0.045);
+
+  /* bootstrap */
+  --bs-body-bg: #fffff8;
+  --bs-body-color: #111111;
+  --bs-body-font-family: var(--tufte-serif);
+  --bs-link-color: #a00000;
+  --bs-link-hover-color: #5c0000;
+  --bs-border-color: rgba(17, 17, 17, 0.28);
+  --bs-secondary-color: #6f6a5e;
+  --bs-tertiary-bg: #faf7ee;
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   pydata / bootstrap variable overrides — DARK (Tufte at night)
+   -------------------------------------------------------------------------- */
+html[data-theme="dark"] {
+  --tufte-paper: #201d17;
+  --tufte-ink: #e8e3d5;
+  --tufte-ink-soft: #d5cfc0;
+  --tufte-muted: #9c9585;
+  --tufte-contrast: #d97a72;
+  --tufte-hairline: rgba(232, 227, 213, 0.22);
+  --tufte-hairline-soft: rgba(232, 227, 213, 0.12);
+  --tufte-surface: #292519;
+  --tufte-tint: rgba(217, 122, 114, 0.08);
+
+  --pst-font-family-base: var(--tufte-serif);
+  --pst-font-family-heading: var(--tufte-serif);
+  --pst-font-family-monospace: var(--tufte-mono);
+  --pst-font-size-base: 1.05rem;
+
+  --pst-color-primary: #d97a72;
+  --pst-color-primary-bg: rgba(217, 122, 114, 0.12);
+  --pst-color-secondary: #8fa8bd;
+  --pst-color-secondary-bg: rgba(143, 168, 189, 0.14);
+  --pst-color-accent: #d97a72;
+  --pst-color-accent-bg: rgba(217, 122, 114, 0.12);
+  --pst-color-info: #8fa8bd;
+  --pst-color-info-bg: rgba(143, 168, 189, 0.1);
+  --pst-color-warning: #cfa64e;
+  --pst-color-warning-bg: rgba(207, 166, 78, 0.12);
+  --pst-color-success: #7fa98b;
+  --pst-color-success-bg: rgba(127, 169, 139, 0.12);
+  --pst-color-danger: #d97a72;
+  --pst-color-danger-bg: rgba(217, 122, 114, 0.12);
+  --pst-color-text-base: #e8e3d5;
+  --pst-color-text-muted: #9c9585;
+  --pst-color-heading-color: #e8e3d5;
+  --pst-color-border: rgba(232, 227, 213, 0.3);
+  --pst-color-border-muted: rgba(232, 227, 213, 0.16);
+  --pst-color-inline-code: #d9928b;
+  --pst-color-inline-code-links: #d9928b;
+  --pst-color-target: rgba(217, 122, 114, 0.22);
+  --pst-color-background: #201d17;
+  --pst-color-on-background: #201d17;
+  --pst-color-surface: #2a2620;
+  --pst-color-on-surface: #e8e3d5;
+  --pst-color-link: #d97a72;
+  --pst-color-link-hover: #eba39c;
+  --pst-color-shadow: rgba(0, 0, 0, 0.4);
+
+  --pst-color-table: #e8e3d5;
+  --pst-color-table-inner-border: transparent;
+  --pst-color-table-outer-border: transparent;
+  --pst-color-table-heading-bg: #201d17;
+  --pst-color-table-row-zebra-high-bg: #201d17;
+  --pst-color-table-row-zebra-low-bg: #201d17;
+  --pst-color-table-row-hover-bg: rgba(217, 122, 114, 0.08);
+
+  --bs-body-bg: #201d17;
+  --bs-body-color: #e8e3d5;
+  --bs-body-font-family: var(--tufte-serif);
+  --bs-link-color: #d97a72;
+  --bs-link-hover-color: #eba39c;
+  --bs-border-color: rgba(232, 227, 213, 0.3);
+  --bs-secondary-color: #9c9585;
+  --bs-tertiary-bg: #2a2620;
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   Global typography
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--tufte-serif);
+  background-color: var(--tufte-paper);
+  color: var(--tufte-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(160, 0, 0, 0.16);
+}
+
+html[data-theme="dark"] ::selection {
+  background: rgba(217, 122, 114, 0.28);
+}
+
+p,
+ol,
+ul,
+dl {
+  line-height: 1.65;
+}
+
+li {
+  margin-top: 0.45rem;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* Tufte "slender" rule */
+.bd-article hr {
+  border: 0;
+  height: 1px;
+  margin: 2.2rem auto;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(51, 51, 51, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+html[data-theme="dark"] .bd-article hr {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(232, 227, 213, 0.6),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Links — the tufte underline treatment
+   -------------------------------------------------------------------------- */
+.bd-article a {
+  color: var(--tufte-contrast);
+  text-decoration: none;
+}
+
+.bd-article p > a,
+.bd-article li > a,
+.bd-article td > a,
+.bd-article dd > a,
+.bd-article dt > a,
+.bd-article blockquote a {
+  color: var(--tufte-ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 17, 17, 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.bd-article p > a:hover,
+.bd-article li > a:hover,
+.bd-article td > a:hover,
+.bd-article dd > a:hover,
+.bd-article dt > a:hover,
+.bd-article blockquote a:hover {
+  color: var(--tufte-contrast);
+  text-decoration-color: var(--tufte-contrast);
+}
+
+/* --------------------------------------------------------------------------
+   Headings — ET Book roman / italics
+   -------------------------------------------------------------------------- */
+.bd-article h1,
+.bd-article h2,
+.bd-article h3,
+.bd-article h4,
+.bd-article h5,
+.bd-article h6 {
+  font-family: var(--tufte-serif);
+  color: var(--tufte-ink);
+  font-synthesis-style: none;
+}
+
+.bd-article h1 {
+  font-weight: 400;
+  font-size: 2.1rem;
+  line-height: 1.2;
+  margin: 2.4rem 0 1.4rem;
+}
+
+.bd-article h2 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  margin: 2.4rem 0 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.bd-article h3 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 2rem 0 0.8rem;
+}
+
+.bd-article h4 {
+  font-family: var(--tufte-sans);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 1rem;
+  margin: 1.8rem 0 0.7rem;
+}
+
+.bd-article h5,
+.bd-article h6 {
+  font-family: var(--tufte-sans);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 0.92rem;
+  margin: 1.6rem 0 0.6rem;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code {
+  font-size: 0.85em;
+}
+
+/* --------------------------------------------------------------------------
+   Article layout — a comfortable serif measure
+   -------------------------------------------------------------------------- */
+.bd-main .bd-content .bd-article-container .bd-article {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+@media (max-width: 1000px) {
+  .bd-main .bd-content .bd-article-container .bd-article {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Inline code — plain mono, no box
+   -------------------------------------------------------------------------- */
+.bd-article code,
+.bd-article kbd,
+.bd-article pre,
+.bd-article samp {
+  font-family: var(--tufte-mono);
+}
+
+.bd-article p code,
+.bd-article li code,
+.bd-article td code,
+.bd-article dd code,
+.bd-article dt code,
+.bd-article h1 code,
+.bd-article h2 code,
+.bd-article h3 code,
+.bd-article h4 code {
+  background: transparent;
+  border: none;
+  padding: 0 0.1em;
+  font-size: 0.86em;
+  color: var(--tufte-contrast);
+  word-break: break-word;
+}
+
+.bd-article kbd {
+  font-family: var(--tufte-sans);
+  font-size: 0.8em;
+  border: 1px solid var(--tufte-hairline);
+  border-radius: 2px;
+  padding: 0.05em 0.4em;
+  background: var(--tufte-surface);
+}
+
+/* --------------------------------------------------------------------------
+   Code blocks — naked mono on paper
+   -------------------------------------------------------------------------- */
+.bd-article div.highlight,
+.bd-article div[class^="highlight-"],
+.bd-article div[class*=" highlight-"] {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.bd-article div.highlight pre,
+.bd-article .highlight pre {
+  background: var(--tufte-surface);
+  border: 1px solid var(--tufte-hairline-soft);
+  border-radius: 0;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.84em;
+  line-height: 1.6;
+  margin: 1.3rem 0;
+  overflow-x: auto;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .bd-article .highlight pre {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.bd-article .highlight .linenos {
+  color: var(--tufte-muted);
+  font-size: 0.85em;
+}
+
+/* pygments palette — Jekyll/tufte light */
+html[data-theme="light"] .highlight .c,
+html[data-theme="light"] .highlight .c1,
+html[data-theme="light"] .highlight .cm,
+html[data-theme="light"] .highlight .cs {
+  color: #998;
+  font-style: italic;
+}
+html[data-theme="light"] .highlight .k,
+html[data-theme="light"] .highlight .kd,
+html[data-theme="light"] .highlight .kr,
+html[data-theme="light"] .highlight .kn,
+html[data-theme="light"] .highlight .o,
+html[data-theme="light"] .highlight .ow {
+  font-weight: 600;
+}
+html[data-theme="light"] .highlight .cp,
+html[data-theme="light"] .highlight .k,
+html[data-theme="light"] .highlight .kt {
+  color: #1d3b58;
+}
+html[data-theme="light"] .highlight .s,
+html[data-theme="light"] .highlight .s1,
+html[data-theme="light"] .highlight .s2,
+html[data-theme="light"] .highlight .sa,
+html[data-theme="light"] .highlight .sd,
+html[data-theme="light"] .highlight .se,
+html[data-theme="light"] .highlight .si {
+  color: #7a4a00;
+}
+html[data-theme="light"] .highlight .m,
+html[data-theme="light"] .highlight .mi,
+html[data-theme="light"] .highlight .mf {
+  color: #1d5c3f;
+}
+html[data-theme="light"] .highlight .nb,
+html[data-theme="light"] .highlight .nc,
+html[data-theme="light"] .highlight .nf,
+html[data-theme="light"] .highlight .na {
+  color: #405c78;
+}
+html[data-theme="light"] .highlight .err {
+  color: #a00000;
+  background: transparent;
+}
+html[data-theme="light"] .highlight .gh,
+html[data-theme="light"] .highlight .gu,
+html[data-theme="light"] .highlight .gp {
+  color: #111111;
+  font-weight: 600;
+}
+html[data-theme="light"] .highlight .ge {
+  font-style: italic;
+  color: inherit;
+}
+html[data-theme="light"] .highlight .gd {
+  color: #a00000;
+  background: rgba(160, 0, 0, 0.06);
+}
+html[data-theme="light"] .highlight .gi {
+  color: #3e6b4d;
+  background: rgba(62, 107, 77, 0.08);
+}
+html[data-theme="light"] .highlight .gt {
+  color: #8a6d1a;
+}
+
+/* --------------------------------------------------------------------------
+   Tables — booktabs
+   -------------------------------------------------------------------------- */
+.bd-article table,
+.bd-article .table-wrapper table,
+.bd-article table.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-top: 2px solid var(--tufte-border);
+  border-bottom: 2px solid var(--tufte-border);
+  margin: 1.6rem 0;
+  font-size: 0.92em;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .bd-article table {
+  border-top-color: var(--tufte-hairline);
+  border-bottom-color: var(--tufte-hairline);
+}
+
+.bd-article table th,
+.bd-article table td {
+  background: transparent;
+  border: none;
+  border-bottom: none;
+  padding: 0.5em 0.85em;
+  vertical-align: baseline;
+}
+
+.bd-article table thead th {
+  border-bottom: 1px solid var(--tufte-border);
+  font-weight: 400;
+  font-family: var(--tufte-sans);
+  font-size: 0.88em;
+  letter-spacing: 0.03em;
+}
+
+/* pydata paints the thead with the primary color — remove it (booktabs) */
+.bd-article table thead tr,
+.bd-article table thead {
+  border-bottom: none;
+  background-color: transparent;
+}
+
+html[data-theme="dark"] .bd-article table thead th {
+  border-bottom-color: var(--tufte-hairline);
+}
+
+.bd-article table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.bd-article table tbody tr:hover {
+  background-color: rgba(160, 0, 0, 0.045);
+}
+
+.bd-article table caption,
+.bd-article table p.caption {
+  font-size: 0.85em;
+  color: var(--tufte-muted);
+  text-align: left;
+  margin-top: 0.6ex;
+  caption-side: bottom;
+}
+
+/* notebook outputs also render tables */
+.jp-RenderedHTMLCommon table,
+.jp-RenderedHTML table {
+  border-collapse: collapse;
+  border-top: 2px solid var(--tufte-border);
+  border-bottom: 2px solid var(--tufte-border);
+}
+
+.jp-RenderedHTMLCommon th {
+  border-bottom: 1px solid var(--tufte-border);
+}
+
+/* --------------------------------------------------------------------------
+   Blockquotes & epigraphs
+   -------------------------------------------------------------------------- */
+.bd-article blockquote {
+  font-style: italic;
+  font-synthesis-style: none;
+  background-color: transparent;
+  border-left: 2px solid var(--tufte-hairline);
+  border-radius: 0;
+  padding: 0 0 0 1.2rem;
+  color: var(--tufte-ink-soft);
+  margin: 1.6rem 0;
+}
+
+.bd-article blockquote p {
+  margin-bottom: 0.4rem;
+}
+
+.bd-article blockquote.epigraph {
+  padding: 0 0 0 1.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Admonitions — quiet rules, small-caps sans titles
+   -------------------------------------------------------------------------- */
+.bd-article .admonition {
+  background: var(--tufte-surface);
+  border: none;
+  border-left: 3px solid var(--tufte-muted);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.6rem 1.2rem 0.7rem;
+  margin: 1.6rem 0;
+}
+
+.bd-article .admonition.note {
+  border-left-color: #405c78;
+}
+.bd-article .admonition.tip,
+.bd-article .admonition.hint {
+  border-left-color: #3e6b4d;
+}
+.bd-article .admonition.warning,
+.bd-article .admonition.caution,
+.bd-article .admonition.attention {
+  border-left-color: #8a6d1a;
+}
+.bd-article .admonition.important,
+.bd-article .admonition.error,
+.bd-article .admonition.danger {
+  border-left-color: var(--tufte-contrast);
+}
+
+.bd-article .admonition-title,
+.bd-article .admonition > .admonition-title,
+.bd-article .admonition.note > .admonition-title,
+.bd-article .admonition.tip > .admonition-title,
+.bd-article .admonition.warning > .admonition-title,
+.bd-article .admonition.important > .admonition-title,
+.bd-article .admonition.caution > .admonition-title,
+.bd-article .admonition.attention > .admonition-title,
+.bd-article .admonition.danger > .admonition-title,
+.bd-article .admonition.error > .admonition-title,
+.bd-article .admonition.hint > .admonition-title,
+.bd-article .admonition.seealso > .admonition-title {
+  font-family: var(--tufte-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tufte-muted);
+  background: transparent !important;
+  padding: 0 0 0.35rem;
+  margin: 0;
+}
+
+.bd-article .admonition > .admonition-title::before,
+.bd-article .admonition > .admonition-title::after,
+.bd-article div.admonition > p.admonition-title::before,
+.bd-article div.admonition > p.admonition-title::after {
+  display: none !important;
+  content: none !important;
+}
+
+.bd-article .admonition-title ~ *:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   sphinx-design cards, grids, tabs, dropdowns
+   -------------------------------------------------------------------------- */
+.bd-article .sd-card,
+.bd-article .sd-sphinx-override.sd-card,
+.bd-article details.sd-dropdown,
+.bd-article details.toggle-details,
+.bd-article .sd-shadow-sm {
+  background: transparent !important;
+  border: 1px solid var(--tufte-hairline) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease;
+}
+
+.bd-article .sd-card:hover,
+.bd-article details.sd-dropdown:hover {
+  border-color: var(--tufte-contrast);
+}
+
+.bd-article details.sd-dropdown summary.sd-summary-title,
+.bd-article details.sd-dropdown .sd-summary-title {
+  font-family: var(--tufte-sans);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: transparent;
+  padding-left: 1rem;
+}
+
+.bd-article details.sd-dropdown .sd-summary-chevron-right svg,
+.bd-article details.sd-dropdown .sd-summary-icon {
+  color: var(--tufte-muted);
+}
+
+.bd-article .sd-card-body {
+  padding: 0.9rem 1.1rem;
+}
+
+.bd-article .sd-card-title {
+  font-family: var(--tufte-serif);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--tufte-ink);
+  margin-bottom: 0.35rem;
+}
+
+.bd-article .sd-card-text {
+  color: var(--tufte-ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.bd-article .sd-tab-set .sd-tab-label {
+  font-family: var(--tufte-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.bd-article .sd-tab-set input:checked + label.sd-tab-label {
+  border-color: var(--tufte-contrast);
+  color: var(--tufte-contrast);
+}
+
+.bd-article .sd-tab-set .sd-tab-content {
+  border: none;
+  border-top: 1px solid var(--tufte-hairline-soft);
+  padding: 1rem 0.2rem 0.2rem;
+}
+
+.bd-article details.sd-dropdown,
+.bd-article details.toggle-details {
+  border: 1px solid var(--tufte-hairline);
+  border-radius: 0;
+  background: transparent;
+}
+
+.bd-article summary.sd-summary-title {
+  font-family: var(--tufte-sans);
+  letter-spacing: 0.04em;
+}
+
+.bd-article details.sd-dropdown .sd-summary-title,
+.bd-article details.toggle-details summary {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Margin notes / footnotes (sphinx-book-theme sidenotes)
+   -------------------------------------------------------------------------- */
+.bd-article .marginnote,
+.bd-article .sidenote {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--tufte-ink-soft);
+  vertical-align: baseline;
+}
+
+.bd-article .sidenote-number::after,
+.bd-article .sidenote::before {
+  font-family: "ET Book Old Style", var(--tufte-serif);
+  color: var(--tufte-contrast);
+}
+
+.bd-article .footnote {
+  font-size: 0.9em;
+}
+
+.bd-article .footnote dt {
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Figures, images, diagrams
+   -------------------------------------------------------------------------- */
+.bd-article figure {
+  margin: 1.8rem 0;
+}
+
+.bd-article figure img {
+  max-width: 100%;
+}
+
+.bd-article figcaption,
+.bd-article figure p.caption {
+  font-size: 0.85rem;
+  color: var(--tufte-muted);
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.bd-article img {
+  border-radius: 0;
+}
+
+.bd-article .output_area img,
+.bd-article .jp-OutputArea-output img {
+  max-width: 100%;
+}
+
+.bd-article .mermaid,
+.bd-article .mermaid svg {
+  text-align: center;
+  max-width: 100%;
+}
+
+.bd-article .plantuml svg {
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Math
+   -------------------------------------------------------------------------- */
+.bd-article mjx-container[jax="CHTML"][display="true"] {
+  margin: 1.4rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Top navbar
+   -------------------------------------------------------------------------- */
+.bd-header {
+  background-color: var(--tufte-paper);
+  box-shadow: none;
+  border-bottom: 1px solid var(--tufte-hairline-soft);
+}
+
+.bd-header .navbar-brand,
+.bd-header .navbar-brand img {
+  max-height: 2.2rem;
+}
+
+.bd-header .navbar-icon-links {
+  font-family: var(--tufte-sans);
+}
+
+.bd-header .navbar-icon-links a,
+.bd-header .btn,
+.bd-header .form-control {
+  color: var(--tufte-ink-soft);
+}
+
+.bd-header .form-control {
+  background-color: transparent;
+  border-color: var(--tufte-hairline);
+  border-radius: 0;
+  font-family: var(--tufte-sans);
+  font-size: 0.85rem;
+}
+
+.bd-header .form-control:focus {
+  background-color: transparent;
+  border-color: var(--tufte-contrast);
+  box-shadow: none;
+}
+
+/* theme switcher + search buttons */
+.bd-header .theme-switch-button,
+.bd-header .search-button__btn {
+  color: var(--tufte-ink-soft);
+}
+
+/* dropdown menus in the header */
+.bd-header .dropdown-menu,
+.bd-article .dropdown-menu {
+  background-color: var(--tufte-paper);
+  border: 1px solid var(--tufte-hairline);
+  border-radius: 0;
+  box-shadow: 0 4px 14px rgba(17, 17, 17, 0.1);
+  font-family: var(--tufte-sans);
+  font-size: 0.85rem;
+}
+
+.bd-header .dropdown-item:hover,
+.bd-header .dropdown-item:focus,
+.bd-article .dropdown-item:hover,
+.bd-article .dropdown-item:focus {
+  background-color: var(--tufte-surface);
+  color: var(--tufte-contrast);
+}
+
+/* --------------------------------------------------------------------------
+   Breadcrumb row above the article
+   -------------------------------------------------------------------------- */
+.bd-header-article {
+  border-bottom: 1px solid var(--tufte-hairline-soft);
+  background-color: var(--tufte-paper);
+}
+
+.bd-header-article .btn {
+  color: var(--tufte-muted);
+  box-shadow: none;
+}
+
+.bd-header-article .btn:hover {
+  color: var(--tufte-contrast);
+}
+
+/* --------------------------------------------------------------------------
+   Primary (left) sidebar
+   -------------------------------------------------------------------------- */
+.bd-sidebar-primary {
+  background-color: var(--tufte-paper);
+  border-right: 1px solid var(--tufte-hairline-soft);
+  font-family: var(--tufte-sans);
+  font-size: var(--pst-sidebar-font-size);
+}
+
+.bd-sidebar-primary .sidebar-primary-items__start {
+  padding-top: 1rem;
+}
+
+.bd-sidebar-primary h1,
+.bd-sidebar-primary .sidebar-primary-item .navbar-brand {
+  font-family: var(--tufte-serif);
+}
+
+/* captions like "专业基础" */
+.bd-sidebar-primary .caption,
+.bd-sidebar-primary .toctree-caption,
+.bd-sidebar-primary .navbar-nav .caption {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tufte-muted);
+}
+
+.bd-links nav,
+.bd-sidebar-primary nav.bd-links {
+  font-family: var(--tufte-sans);
+}
+
+.bd-sidebar-primary .bd-links a,
+.bd-sidebar-primary .bd-links .nav-link {
+  color: var(--tufte-ink-soft);
+  padding: 0.28rem 0.6rem;
+  border-radius: 0;
+  letter-spacing: 0.02em;
+}
+
+.bd-sidebar-primary .bd-links a:hover {
+  color: var(--tufte-contrast);
+  background-color: transparent;
+}
+
+.bd-sidebar-primary .bd-links a.current,
+.bd-sidebar-primary .bd-links .nav-link.active,
+.bd-sidebar-primary .bd-links .current > a,
+.bd-sidebar-primary .bd-links a.active {
+  color: var(--tufte-contrast);
+  background-color: transparent;
+  font-weight: 600;
+}
+
+.bd-sidebar-primary .bd-links .current > a {
+  border-left: 2px solid var(--tufte-contrast);
+}
+
+.bd-sidebar-primary .bd-links ul {
+  border-left: 1px solid var(--tufte-hairline-soft);
+}
+
+.bd-sidebar-primary .bd-links .current > ul {
+  border-left: 1px solid var(--tufte-hairline-soft);
+}
+
+/* search box in sidebar */
+.bd-sidebar-primary .search-button-field,
+.bd-sidebar-primary .bd-search,
+.bd-sidebar-primary .bd-search input,
+.bd-sidebar-primary .form-control,
+.bd-header .form-control,
+.bd-header .bd-search input {
+  font-family: var(--tufte-sans) !important;
+  background-color: transparent !important;
+  border: 1px solid var(--tufte-hairline) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--tufte-ink);
+  font-size: 0.85rem;
+}
+
+.bd-sidebar-primary .search-button-field:hover,
+.bd-sidebar-primary .search-button-field:focus {
+  color: var(--tufte-contrast);
+  border-color: var(--tufte-contrast) !important;
+}
+
+.bd-sidebar-primary .search-button-field kbd {
+  font-family: var(--tufte-sans);
+  background: transparent;
+}
+
+/* version/logo area */
+.bd-sidebar-primary .sidebar-primary-items__end,
+.bd-sidebar-primary .sidebar-secondary-items {
+  font-family: var(--tufte-sans);
+}
+
+/* --------------------------------------------------------------------------
+   Secondary (right) sidebar — on-this-page, treated as margin notes
+   -------------------------------------------------------------------------- */
+.bd-sidebar-secondary {
+  background-color: var(--tufte-paper);
+  border-left: 1px solid var(--tufte-hairline-soft);
+  font-family: var(--tufte-sans);
+  font-size: 0.8rem;
+}
+
+.bd-sidebar-secondary .toc-title,
+.bd-sidebar-secondary h3,
+.bd-sidebar-secondary .tocsection,
+.bd-sidebar-secondary .caption {
+  font-family: var(--tufte-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tufte-muted);
+}
+
+.bd-sidebar-secondary .toc-item a,
+.bd-sidebar-secondary nav a,
+.bd-sidebar-secondary ul a {
+  color: var(--tufte-muted);
+  border-left: none;
+}
+
+.bd-sidebar-secondary .toc-item a:hover,
+.bd-sidebar-secondary ul a:hover {
+  color: var(--tufte-contrast);
+}
+
+.bd-sidebar-secondary .toc-item a.active,
+.bd-sidebar-secondary ul a.active,
+.bd-sidebar-secondary .current a.active {
+  color: var(--tufte-contrast);
+  font-weight: 600;
+}
+
+.bd-sidebar-secondary .editthispage a,
+.bd-sidebar-secondary .sourcelink {
+  color: var(--tufte-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons & launch buttons
+   -------------------------------------------------------------------------- */
+.bd-article .btn,
+.bd-article .launch-button,
+.bd-article .header-article-items .btn {
+  font-family: var(--tufte-sans);
+  font-size: 0.8rem;
+  border-radius: 0;
+}
+
+.bd-article .launch-buttons .btn,
+.bd-article .row.mb-2 .btn {
+  border: 1px solid var(--tufte-hairline);
+  background: transparent;
+  color: var(--tufte-ink-soft);
+}
+
+.bd-article .launch-buttons .btn:hover,
+.bd-article .row.mb-2 .btn:hover {
+  border-color: var(--tufte-contrast);
+  color: var(--tufte-contrast);
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Prev / next footer navigation
+   -------------------------------------------------------------------------- */
+.prev-next-area a {
+  font-family: var(--tufte-serif);
+}
+
+.prev-next-area a p.prev-next-title {
+  color: var(--tufte-contrast);
+  font-weight: 600;
+}
+
+.prev-next-area a:hover .prev-next-title {
+  text-decoration: underline;
+}
+
+.prev-next-area a p.prev-next-subtitle {
+  font-family: var(--tufte-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tufte-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.bd-footer {
+  background-color: var(--tufte-paper);
+  border-top: 1px solid var(--tufte-hairline-soft);
+  font-family: var(--tufte-sans);
+  font-size: 0.82rem;
+}
+
+.bd-footer p,
+.bd-footer a {
+  color: var(--tufte-muted);
+}
+
+.bd-footer a:hover {
+  color: var(--tufte-contrast);
+}
+
+.bd-footer-content__inner {
+  padding: 1.4rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Search page & index pages
+   -------------------------------------------------------------------------- */
+.bd-search-page,
+#search-results {
+  font-family: var(--tufte-serif);
+}
+
+.highlight-link,
+.search-result-doc .search-result-doc-not-title {
+  font-family: var(--tufte-sans);
+}
+
+ul.search,
+ul.simple,
+ul.search-index {
+  font-family: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Notebook (myst-nb) specific
+   -------------------------------------------------------------------------- */
+.bd-article .cell {
+  margin: 1.2rem 0;
+}
+
+.bd-article .input_area,
+.bd-article .output_area {
+  border-radius: 0;
+}
+
+.bd-article .cell_input div.highlight pre {
+  background: var(--tufte-surface);
+}
+
+.bd-article .cell_output {
+  background: transparent;
+  border-left: 2px solid var(--tufte-hairline);
+  padding-left: 1rem;
+}
+
+.bd-article .jp-RenderedHTMLCommon,
+.bd-article .jp-RenderedMarkdown {
+  font-family: var(--tufte-serif);
+  font-size: 1em;
+}
+
+.bd-article .jp-RenderedHTMLCommon code,
+.bd-article .jp-RenderedMarkdown code {
+  color: var(--tufte-contrast);
+  background: transparent;
+}
+
+.bd-article .output_area pre {
+  font-size: 0.8em;
+  color: var(--tufte-ink-soft);
+}
+
+.bd-article .jp-OutputArea-output .p-Widget {
+  background: transparent;
+}
+
+/* thebe active cells */
+.thebe .thebe-input {
+  font-family: var(--tufte-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Copy button & toggle buttons
+   -------------------------------------------------------------------------- */
+.o-tooltip--left::after {
+  font-family: var(--tufte-sans);
+  background: var(--tufte-ink-soft);
+  color: var(--tufte-paper);
+  border-radius: 0;
+}
+
+.togglebutton input:checked + label {
+  color: var(--tufte-contrast);
+}
+
+/* --------------------------------------------------------------------------
+   Bibliography (sphinxcontrib-bibtex)
+   -------------------------------------------------------------------------- */
+.bd-article dl.citation {
+  font-size: 0.95em;
+}
+
+.bd-article dl.citation dt {
+  font-family: var(--tufte-sans);
+  font-size: 0.85em;
+}
+
+/* --------------------------------------------------------------------------
+   Autosummary / API reference
+   -------------------------------------------------------------------------- */
+.bd-article dl.class,
+.bd-article dl.function,
+.bd-article dl.method,
+.bd-article dl.attribute {
+  margin: 1.6rem 0;
+}
+
+.bd-article dl dt.sig {
+  font-family: var(--tufte-mono);
+  font-size: 0.9em;
+  background: transparent;
+  border-left: 2px solid var(--tufte-hairline);
+  padding-left: 0.8rem;
+}
+
+.bd-article dl dt.sig-object {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Task lists (myst tasklist)
+   -------------------------------------------------------------------------- */
+.bd-article .task-list-item input[type="checkbox"] {
+  margin-right: 0.4em;
+}
+
+/* --------------------------------------------------------------------------
+   Definition lists
+   -------------------------------------------------------------------------- */
+.bd-article dl {
+  margin: 1.2rem 0;
+}
+
+.bd-article dt {
+  font-weight: 600;
+}
+
+.bd-article dd {
+  margin-left: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbars
+   -------------------------------------------------------------------------- */
+.bd-sidebar-primary,
+.bd-sidebar-secondary,
+.bd-article {
+  scrollbar-width: thin;
+  scrollbar-color: var(--tufte-hairline) transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Misc chrome cleanup
+   -------------------------------------------------------------------------- */
+#readthedocs-ea,
+.container.bottom-right {
+  display: none;
+}
+
+.bd-header .skip-link,
+.skip-link {
+  font-family: var(--tufte-sans);
+}
+
+/* hide pydata's default card shadows anywhere else */
+.bd-article .sd-shadow-sm {
+  box-shadow: none;
+}
+
+/* keep mathjax right */
+.MathJax {
+  text-align: left !important;
+}
+
+/* landscape prints nicely too */
+@media print {
+  .bd-sidebar-primary,
+  .bd-sidebar-secondary,
+  .bd-header,
+  .bd-header-article {
+    display: none;
+  }
+
+  .bd-main .bd-content .bd-article-container .bd-article {
+    max-width: 100%;
+    padding: 0;
+  }
+}
