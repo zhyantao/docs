@@ -1342,3 +1342,50 @@ ul.search-index {
     padding: 0;
   }
 }
+
+/* --------------------------------------------------------------------------
+   站点互跳导航（与 zhyantao.github.io 各站页眉一致）
+   -------------------------------------------------------------------------- */
+.site-nav {
+  background: var(--tufte-paper);
+  border-bottom: 1px solid var(--tufte-hairline);
+}
+
+.site-nav-inner {
+  max-width: 88rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding: 1rem 1.5rem 0.7rem;
+}
+
+.site-nav a {
+  font-family: var(--tufte-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--tufte-contrast);
+  text-decoration: none;
+  display: inline-block;
+  padding-right: 2rem;
+  line-height: 1.4;
+}
+
+.site-nav a:hover {
+  color: var(--tufte-ink);
+}
+
+.site-nav a.active::before {
+  content: "\0003c\000a0";
+}
+
+.site-nav a.active::after {
+  content: "\000a0\0003e";
+}
+
+@media print {
+  .site-nav {
+    display: none;
+  }
+}
