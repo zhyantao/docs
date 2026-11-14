@@ -22,7 +22,6 @@ source_suffix = {
 
 # -- Options for HTML output -------------------------------------------------
 
-html_logo = "_static/images/logo_wide.svg"
 html_title = "Notebook"
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
@@ -57,18 +56,18 @@ html_theme_options = {
     #     "WHEN YOU PRAY, MOVE YOUR FEET!"
     # ),
     "icon_links": [
-        {
-            "name": "Documentation Status",
-            "url": "https://readthedocs.org/projects/getstarted/builds",
-            "icon": "_static/images/badges/rtd.svg",
-            "type": "local",
-        },
-        {
-            "name": "GitHub Release",
-            "url": "https://github.com/zhyantao/getstarted/releases",
-            "icon": "_static/images/badges/release.svg",
-            "type": "local",
-        },
+        # {
+        #     "name": "Documentation Status",
+        #     "url": "https://readthedocs.org/projects/getstarted/builds",
+        #     "icon": "_static/images/badges/rtd.svg",
+        #     "type": "local",
+        # },
+        # {
+        #     "name": "GitHub Release",
+        #     "url": "https://github.com/zhyantao/getstarted/releases",
+        #     "icon": "_static/images/badges/release.svg",
+        #     "type": "local",
+        # },
         # {
         #     "name": "Curriculum Vitae",
         #     "url": "https://zhyantao.github.io/cv/",
