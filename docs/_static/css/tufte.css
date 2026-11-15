@@ -384,6 +384,9 @@ h4 code {
    -------------------------------------------------------------------------- */
 .bd-main .bd-content .bd-article-container .bd-article {
   max-width: 48rem;
+  /* width:100% 防止 flex 容器内 margin:auto 使文章按内容收缩包裹：
+     目录类 index 页内容窄，收缩后整列会居中显示，看起来 TOC 也居中了 */
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2.5rem;
