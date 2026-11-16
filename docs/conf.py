@@ -202,5 +202,11 @@ git_last_updated_timezone = "Asia/Shanghai"
 
 # Setting for PlantUML
 CURRENT_DIR = os.path.abspath(".")
-plantuml = f"java -jar {CURRENT_DIR}/_static/plantuml/plantuml-1.2024.6.jar"
+# -Dapple.awt.UIElement=true: macOS 上不让每个 JVM 进程在 Dock 中闪现图标（Linux 上无副作用）
+plantuml = (
+    f"java -Dapple.awt.UIElement=true "
+    f"-jar {CURRENT_DIR}/_static/plantuml/plantuml-1.2024.6.jar"
+)
 plantuml_output_format = "svg"
+# 所有图合并为一次 JVM 调用，避免每张图都启动一次 java（图标闪烁）
+plantuml_batch_size = 100
