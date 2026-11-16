@@ -50,7 +50,8 @@ reStructuredText
       一级标题
       ========
 
-  ---
+.. card::
+
   错误示范
   ^^^^^^^^
   .. code-block::
