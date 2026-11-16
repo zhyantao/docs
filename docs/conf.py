@@ -52,6 +52,11 @@ html_theme_options = {
     "use_download_button": True,
     "use_sidenotes": True,
     "show_toc_level": 2,
+    # 页脚联系方式（与参考站 zhyantao.github.io 底部一致）
+    "extra_footer": """
+  <a href="mailto:yantao.z@outlook.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+  <a href="https://github.com/zhyantao" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+""",
     # "announcement": (
     #     "WHEN YOU PRAY, MOVE YOUR FEET!"
     # ),

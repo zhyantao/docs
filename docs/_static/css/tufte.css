@@ -1160,6 +1160,25 @@ html[data-theme="dark"] .bd-article table thead th {
   padding: 1.4rem 0;
 }
 
+/* 页脚联系方式（参考站 footer 风格） */
+.extra_footer {
+  text-align: center;
+}
+
+.extra_footer a {
+  color: var(--tufte-muted);
+  text-decoration: none;
+  margin: 0 0.45rem;
+}
+
+.extra_footer a:hover {
+  color: var(--tufte-contrast);
+}
+
+.extra_footer i {
+  font-size: 1.25rem;
+}
+
 /* --------------------------------------------------------------------------
    Search page & index pages
    -------------------------------------------------------------------------- */
