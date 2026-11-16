@@ -52,10 +52,15 @@ html_theme_options = {
     "use_download_button": True,
     "use_sidenotes": True,
     "show_toc_level": 2,
-    # 页脚联系方式（与参考站 zhyantao.github.io 底部一致）
+    # 页脚：去掉默认的 author/copyright 条目，改成与其他页面一致的
+    # 联系方式 + 署名风格（icon 链接 + credits 行）
+    "footer_content_items": "last-updated.html, extra-footer.html",
     "extra_footer": """
+<div class="footer-links">
   <a href="mailto:yantao.z@outlook.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
   <a href="https://github.com/zhyantao" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+</div>
+<p class="credits">© 2026 YANTAO ZHANG &nbsp;·&nbsp; Powered by <a href="https://www.sphinx-doc.org/">Sphinx</a></p>
 """,
     # "announcement": (
     #     "WHEN YOU PRAY, MOVE YOUR FEET!"
