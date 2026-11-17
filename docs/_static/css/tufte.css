@@ -854,7 +854,10 @@ html[data-theme="dark"] .bd-article table thead th {
 /* --------------------------------------------------------------------------
    Math
    -------------------------------------------------------------------------- */
-.bd-article mjx-container[jax="CHTML"][display="true"] {
+/* 站点使用本地 vendored 的 MathJax SVG 输出（tex-mml-svg.js，无需网络字体）。
+   显示公式过长时（移动端常见）横向滚动而不是撑破版面。
+   [display="true"] 同时覆盖 CHTML 与 SVG 两种 jax。 */
+.bd-article mjx-container[display="true"] {
   margin: 1.4rem 0 !important;
   overflow-x: auto;
   overflow-y: hidden;
@@ -1427,4 +1430,138 @@ ul.search-index {
 }
 .bd-sidebar-primary .sidebar-primary-items__start {
   padding-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   侧边栏自动收起与过渡动画
+   --------------------------------------------------------------------------
+   状态约定（覆盖主题在桌面/移动两端「勾选=可见」语义相反的问题）：
+     复选框勾选 = 边栏可见（与移动端抽屉语义一致），全端统一。
+
+   - 移动端（<960px）：抽屉默认关闭（复选框未勾选，无需 JS），点击顶栏
+     按钮勾选后滑入。动画改为 transform + opacity，避免主题默认的
+     margin 过渡引起的布局抖动。
+   - 桌面端（≥960px）：子页面由 auto-toggle-sidebar.js 在 <head> 中打上
+     html.sidebar-auto-hidden 标记，首帧渲染即收起（无加载闪烁）；顶栏
+     按钮可随时展开/收起，flex-basis 过渡动画。
+   - 首页/章节 hub 页：桌面端保持边栏常显，按钮隐藏（收起无意义）；
+     移动端抽屉仍然默认关闭，按钮正常可用。
+   -------------------------------------------------------------------------- */
+
+/* 桌面端侧边栏收起/展开的过渡（移动端在下方媒体查询里单独定义） */
+.bd-sidebar-primary {
+  transition:
+    flex-basis 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-right-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease,
+    visibility 0.3s;
+}
+
+@media (min-width: 960px) {
+  /* 首页/章节 hub 页：边栏常显，收起无意义 → 隐藏按钮，避免「点了没反应」。
+     子页面按钮保持可见（sphinx-book-theme 在 ≥768px 默认显示），可随时展开收起 */
+  html:not(.sidebar-auto-hidden)
+    .bd-header-article
+    .sidebar-toggle.primary-toggle {
+    display: none;
+  }
+
+  /* 子页面默认收起：不参与布局、不可交互、不占位 */
+  html.sidebar-auto-hidden
+    input#pst-primary-sidebar-checkbox:not(:checked)
+    ~ .bd-container
+    .bd-sidebar-primary {
+    flex-basis: 0;
+    width: 0;
+    min-width: 0;
+    margin-left: 0;
+    padding: 0;
+    border-right-width: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* 覆盖 sphinx-book-theme 桌面端「勾选=隐藏」的反向规则，统一为勾选=可见 */
+  input#pst-primary-sidebar-checkbox:checked
+    ~ .bd-container
+    .bd-sidebar-primary {
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* 移动端：左侧抽屉用 transform 滑入滑出（GPU 合成，不触发布局） */
+@media (max-width: 959.98px) {
+  .bd-sidebar-primary {
+    margin-left: 0;
+    transform: translateX(-100%);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.3s;
+  }
+
+  input#pst-primary-sidebar-checkbox:checked
+    ~ .bd-container
+    .bd-sidebar-primary {
+    margin-left: 0;
+    transform: translateX(0);
+    visibility: visible;
+    box-shadow: 0 0 24px var(--pst-color-shadow);
+  }
+
+  /* 抽屉遮罩：淡入淡出，未勾选时不拦截点击 */
+  input#pst-primary-sidebar-checkbox:checked
+    + label.overlay.overlay-primary {
+    opacity: 0.5;
+    pointer-events: auto;
+  }
+}
+
+/* 移动端/窄桌面：右侧「本页目录」抽屉同样改为 transform 过渡 */
+@media (max-width: 1199.98px) {
+  .bd-sidebar-secondary {
+    margin-right: 0;
+    transform: translateX(100%);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.3s;
+  }
+
+  input#pst-secondary-sidebar-checkbox:checked
+    ~ .bd-container
+    .bd-sidebar-secondary {
+    margin-right: 0;
+    transform: translateX(0);
+    visibility: visible;
+    box-shadow: 0 0 24px var(--pst-color-shadow);
+  }
+
+  input#pst-secondary-sidebar-checkbox:checked
+    + label.overlay.overlay-secondary {
+    opacity: 0.5;
+    pointer-events: auto;
+  }
+}
+
+/* 抽屉遮罩：始终占满全屏，只用 opacity 淡入淡出（主题默认会动画
+   width/height，触发重排）；未勾选时 pointer-events:none 不拦截点击。
+   桌面端勾选时主题会把遮罩尺寸归零，不受影响 */
+label.overlay {
+  height: 100vh;
+  width: 100vw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-sidebar-primary,
+  .bd-sidebar-secondary,
+  label.overlay {
+    transition: none;
+  }
 }

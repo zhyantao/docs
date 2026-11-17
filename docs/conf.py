@@ -124,6 +124,7 @@ extensions = [
     "sphinx_togglebutton",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
+    "mermaid_assets",
     "sphinx_last_updated_by_git",
     "sphinxcontrib.plantuml",
 ]
@@ -154,6 +155,8 @@ mathjax_path = "vendor/mathjax/tex-mml-svg.js"
 # esbuild from mermaid@11.12.2) so that nothing is fetched from a CDN at
 # runtime; `mermaid_use_local` paths are resolved relative to html_static_path
 # and takes precedence over `mermaid_version`.
+# `mermaid_assets`（须列在其后）负责在无图页面（search/genindex 等）上
+# 移除这些资产，避免 2.6MB 的 bundle 被无关页面加载。
 mermaid_version = "11.12.2"
 mermaid_use_local = "vendor/mermaid/mermaid.esm.min.mjs"
 
