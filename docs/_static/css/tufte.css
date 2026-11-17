@@ -1441,11 +1441,12 @@ ul.search-index {
    - 移动端（<960px）：抽屉默认关闭（复选框未勾选，无需 JS），点击顶栏
      按钮勾选后滑入。动画改为 transform + opacity，避免主题默认的
      margin 过渡引起的布局抖动。
-   - 桌面端（≥960px）：子页面由 auto-toggle-sidebar.js 在 <head> 中打上
-     html.sidebar-auto-hidden 标记，首帧渲染即收起（无加载闪烁）；顶栏
-     按钮可随时展开/收起，flex-basis 过渡动画。
-   - 首页/章节 hub 页：桌面端保持边栏常显，按钮隐藏（收起无意义）；
-     移动端抽屉仍然默认关闭，按钮正常可用。
+   - 桌面端（≥960px）：子页面（含章节 hub 页）由 auto-toggle-sidebar.js
+     在 <head> 中打上 html.sidebar-auto-hidden 标记，首帧渲染即收起
+     （无加载闪烁）；顶栏按钮可随时展开/收起，flex-basis 过渡动画。
+     手动开关会写入 sessionStorage，上一页/下一页跳转时保持不变。
+   - 根首页：默认显示边栏、隐藏按钮；会话状态为「打开/关闭」时同样
+     遵循用户选择。移动端抽屉始终默认关闭，按钮正常可用。
    -------------------------------------------------------------------------- */
 
 /* 桌面端侧边栏收起/展开的过渡（移动端在下方媒体查询里单独定义） */
@@ -1491,6 +1492,25 @@ ul.search-index {
     margin-left: 0;
     opacity: 1;
     visibility: visible;
+  }
+
+  /* 会话「打开」状态的首帧占位（auto-toggle-sidebar.js 在 DOMContentLoaded
+     与 checkbox 同步后移除）。必须放在收起规则之后：未勾选时覆盖为可见。
+     同步期间由 html.sidebar-pretransition 关闭过渡，切换无动画 */
+  html.sidebar-open
+    input#pst-primary-sidebar-checkbox:not(:checked)
+    ~ .bd-container
+    .bd-sidebar-primary {
+    flex-basis: auto;
+    width: auto;
+    min-width: auto;
+    margin-left: 0;
+    padding: 1rem;
+    border-right-width: 1px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    overflow: visible;
   }
 }
 
@@ -1564,4 +1584,12 @@ label.overlay {
   label.overlay {
     transition: none;
   }
+}
+
+/* 会话「打开」状态同步期（head 首帧 → DOMContentLoaded 勾选 checkbox）
+   关闭过渡，避免占位样式与勾选样式切换时出现动画 */
+html.sidebar-pretransition .bd-sidebar-primary,
+html.sidebar-pretransition .bd-sidebar-secondary,
+html.sidebar-pretransition label.overlay {
+  transition: none !important;
 }

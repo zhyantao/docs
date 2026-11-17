@@ -33,9 +33,6 @@ html:
 	@mkdir -p "docs/_tmp"
 	@rm -rf $(BUILDDIR)/html/_sphinx_design_static
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	# Sphinx 8 增量构建在「只有 _static 下文件变更」时会跳过整个写出阶段
-	# （提示 "no targets are out of date"），静态文件不会同步到输出目录。
-	# 这里额外同步一次，保证只改 CSS/JS 等静态资源也能生效。
 	@cp -R docs/_static/. $(BUILDDIR)/html/_static/
 	@python docs/_static/scripts/custom_secondary_sidebar.py $(BUILDDIR)/html
 	@echo
