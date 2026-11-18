@@ -57,6 +57,36 @@
       });
     });
 
+    // The theme initializes tooltips in a later DOMContentLoaded listener.
+    setTimeout(function () {
+      document
+        .querySelectorAll(
+          '.bd-header [data-bs-toggle="tooltip"], .bd-header-article [data-bs-toggle="tooltip"]',
+        )
+        .forEach(function (btn) {
+          // Manual triggers dismiss pointer tooltips without removing keyboard focus.
+          var tooltip = bootstrap.Tooltip.getInstance(btn);
+          if (tooltip) tooltip.dispose();
+          tooltip = new bootstrap.Tooltip(btn, { trigger: "manual" });
+          var showTimer;
+          var hideTooltip = function () {
+            clearTimeout(showTimer);
+            tooltip.hide();
+          };
+          var showTooltip = function () {
+            clearTimeout(showTimer);
+            showTimer = setTimeout(function () {
+              tooltip.show();
+            }, 500);
+          };
+          btn.addEventListener("mouseenter", showTooltip);
+          btn.addEventListener("focusin", showTooltip);
+          btn.addEventListener("click", hideTooltip);
+          btn.addEventListener("mouseleave", hideTooltip);
+          btn.addEventListener("focusout", hideTooltip);
+        });
+    }, 0);
+
     if (cb) {
       var persist = function () {
         try {
