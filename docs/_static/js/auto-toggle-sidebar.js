@@ -67,8 +67,12 @@
           // Manual triggers dismiss pointer tooltips without removing keyboard focus.
           var tooltip = bootstrap.Tooltip.getInstance(btn);
           if (tooltip) tooltip.dispose();
-          tooltip = new bootstrap.Tooltip(btn, { trigger: "manual" });
+          tooltip = new bootstrap.Tooltip(btn, {
+            trigger: "manual",
+            animation: false,
+          });
           var showTimer;
+          var pointerFocus = false;
           var hideTooltip = function () {
             clearTimeout(showTimer);
             tooltip.hide();
@@ -79,11 +83,25 @@
               tooltip.show();
             }, 500);
           };
-          btn.addEventListener("mouseenter", showTooltip);
-          btn.addEventListener("focusin", showTooltip);
+          btn.addEventListener("pointerenter", function (event) {
+            if (event.pointerType !== "touch") showTooltip();
+          });
+          btn.addEventListener("pointerdown", function () {
+            pointerFocus = true;
+            hideTooltip();
+          });
+          btn.addEventListener("focusin", function () {
+            if (!pointerFocus && btn.matches(":focus-visible")) showTooltip();
+          });
           btn.addEventListener("click", hideTooltip);
-          btn.addEventListener("mouseleave", hideTooltip);
-          btn.addEventListener("focusout", hideTooltip);
+          btn.addEventListener("pointerleave", function () {
+            pointerFocus = false;
+            hideTooltip();
+          });
+          btn.addEventListener("focusout", function () {
+            pointerFocus = false;
+            hideTooltip();
+          });
         });
     }, 0);
 
