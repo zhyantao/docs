@@ -943,6 +943,32 @@ html[data-theme="dark"] .bd-article table thead th {
   color: var(--tufte-contrast);
 }
 
+.bd-header-article .article-header-buttons {
+  align-items: center;
+}
+
+.bd-header-article .btn:not(.dropdown-item) {
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.bd-header-article .btn:not(.dropdown-item) .btn__icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bd-header-article .btn:not(.dropdown-item) .svg-inline--fa {
+  width: 1em;
+  height: 1em;
+  font-size: 1.3rem;
+  vertical-align: middle;
+}
+
 /* --------------------------------------------------------------------------
    Primary (left) sidebar
    -------------------------------------------------------------------------- */
