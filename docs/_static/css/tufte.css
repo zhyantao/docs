@@ -10,12 +10,16 @@
 
 /* --------------------------------------------------------------------------
    Fonts (local, copied from the reference site)
+   Rebuilt without TrueType bytecode hinting: the hints shipped with ET Book
+   render distorted glyphs on Windows (macOS ignores them).
    -------------------------------------------------------------------------- */
 @charset "UTF-8";
 
 @font-face {
   font-family: "ET Book";
-  src: url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff")
+  src: url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff2")
+      format("woff2"),
+    url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff")
       format("woff"),
     url("../fonts/et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf")
       format("truetype");
@@ -26,7 +30,9 @@
 
 @font-face {
   font-family: "ET Book";
-  src: url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff")
+  src: url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff2")
+      format("woff2"),
+    url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff")
       format("woff"),
     url("../fonts/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf")
       format("truetype");
@@ -37,7 +43,9 @@
 
 @font-face {
   font-family: "ET Book";
-  src: url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff")
+  src: url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff2")
+      format("woff2"),
+    url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff")
       format("woff"),
     url("../fonts/et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf")
       format("truetype");
@@ -48,7 +56,9 @@
 
 @font-face {
   font-family: "ET Book";
-  src: url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.woff")
+  src: url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.woff2")
+      format("woff2"),
+    url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.woff")
       format("woff"),
     url("../fonts/et-book/et-book-semi-bold-old-style-figures/et-book-semi-bold-old-style-figures.ttf")
       format("truetype");
@@ -59,7 +69,9 @@
 
 @font-face {
   font-family: "ET Book Old Style";
-  src: url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff")
+  src: url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff2")
+      format("woff2"),
+    url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff")
       format("woff"),
     url("../fonts/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf")
       format("truetype");
