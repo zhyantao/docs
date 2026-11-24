@@ -29,12 +29,10 @@
 struct ubus_context *ctx;
 struct ubus_object obj;
 struct ubus_method methods[] = {
-	UBUS_METHOD("exampleMethod", example_method_handler,
-		    example_method_policy),
+	UBUS_METHOD("exampleMethod", example_method_handler, example_method_policy),
 };
 
-static const struct ubus_object_type obj_type =
-	UBUS_OBJECT_TYPE("exampleService", methods);
+static const struct ubus_object_type obj_type = UBUS_OBJECT_TYPE("exampleService", methods);
 static struct ubus_object obj = {
 	.name = "exampleService",
 	.type = &obj_type,
@@ -43,10 +41,8 @@ static struct ubus_object obj = {
 };
 
 // 方法处理函数
-static int example_method_handler(struct ubus_context *ctx,
-				  struct ubus_object *obj,
-				  struct ubus_request_data *req,
-				  const char *method, struct blob_attr *msg)
+static int example_method_handler(struct ubus_context *ctx, struct ubus_object *obj, struct ubus_request_data *req,
+                                  const char *method, struct blob_attr *msg)
 {
 	// 处理请求
 	printf("exampleMethod called\n");

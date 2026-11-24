@@ -129,8 +129,8 @@ void log(char *fmt, ...)
 
 	va_start(ap, fmt); // 初始化参数列表
 	(void)vsnprintf(buf, sizeof(buf) - 2, fmt,
-			ap); // 使用 vsnprintf 格式化输出
-	va_end(ap); // 清理参数列表
+	                ap); // 使用 vsnprintf 格式化输出
+	va_end(ap);          // 清理参数列表
 
 	printf("%s\n", buf);
 }
@@ -166,8 +166,7 @@ double sum(int num, ...)
 int main()
 {
 	std::cout << "Sum of 2, 3 is " << sum(2, 2.0, 3.0) << std::endl;
-	std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0)
-		  << std::endl;
+	std::cout << "Sum of 2, 3, 4, 5 is " << sum(4, 2.0, 3.0, 4.0, 5.0) << std::endl;
 }
 ```
 
@@ -209,8 +208,7 @@ int main(int argc, char *argv[])
          * 一个字符，后接两个冒号——表示选项后面带一个可选参数，
          * 即参数可有可无，如果带参数，则选项与参数直接不能有空格，如 -b200
          */
-		opt = getopt_long(argc, argv, "a::b:c:d", long_options,
-				  &option_index);
+		opt = getopt_long(argc, argv, "a::b:c:d", long_options, &option_index);
 
 		if (opt == -1) // 选项遍历完毕，退出循环
 			break;
@@ -369,8 +367,7 @@ int main()
 *例 3：调整可变参数的位置*
 
 ```cpp
-template <typename A, typename B, typename... C>
-void func(A arg1, B arg2, C... arg3)
+template <typename A, typename B, typename... C> void func(A arg1, B arg2, C... arg3)
 {
 	container<A, B, C...> t1; // 展开成 container<A, B, E1, E2, E3>
 	container<C..., A, B> t2; // 展开成 container<E1, E2, E3, A, B>

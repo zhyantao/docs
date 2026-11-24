@@ -9,7 +9,10 @@
     { href: "https://zhyantao.github.io/", label: "ZHYANTAO" },
     { href: "https://zhyantao.github.io/docs/", label: "DOCS", active: true },
     { href: "https://zhyantao.github.io/PS1-generator/", label: "PS1" },
-    { href: "https://zhyantao.github.io/callgraphs-generator/", label: "CALLGRAPH" },
+    {
+      href: "https://zhyantao.github.io/callgraphs-generator/",
+      label: "CALLGRAPH",
+    },
     { href: "https://zhyantao.github.io/riscv-bitlab/", label: "RISC-V" },
     { href: "https://zhyantao.github.io/trading/", label: "TRADING" },
   ];

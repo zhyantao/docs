@@ -272,12 +272,12 @@ echo 1 > /proc/device-tree/led_button_device/status
  * 封装 GPIO 操作相关的数据和状态
  */
 struct gpio_control {
-	struct device *dev; // 关联的设备
-	struct gpio_desc *led_gpio; // LED GPIO 描述符
+	struct device *dev;            // 关联的设备
+	struct gpio_desc *led_gpio;    // LED GPIO 描述符
 	struct gpio_desc *button_gpio; // 按键 GPIO 描述符
-	int led_state; // LED 当前状态
-	int button_state; // 按键当前状态
-	struct mutex lock; // 保护并发访问
+	int led_state;                 // LED 当前状态
+	int button_state;              // 按键当前状态
+	struct mutex lock;             // 保护并发访问
 };
 
 /**
@@ -332,12 +332,10 @@ static int gpio_setup(struct device *dev, struct gpio_control *gc)
 	mutex_init(&gc->lock);
 
 	dev_info(dev, "GPIO 初始化成功\n");
-	dev_info(dev, "  LED GPIO: %s, 状态: %s\n",
-		 desc_to_gpio(gc->led_gpio) ? "有效" : "无效",
-		 gc->led_state ? "亮" : "灭");
-	dev_info(dev, "  按键 GPIO: %s, 状态: %s\n",
-		 desc_to_gpio(gc->button_gpio) ? "有效" : "无效",
-		 gc->button_state ? "按下" : "释放");
+	dev_info(dev, "  LED GPIO: %s, 状态: %s\n", desc_to_gpio(gc->led_gpio) ? "有效" : "无效",
+	         gc->led_state ? "亮" : "灭");
+	dev_info(dev, "  按键 GPIO: %s, 状态: %s\n", desc_to_gpio(gc->button_gpio) ? "有效" : "无效",
+	         gc->button_state ? "按下" : "释放");
 
 	return 0;
 }
@@ -525,21 +523,21 @@ echo "file gpio_core.c +p" > /sys/kernel/debug/dynamic_debug/control
  * 管理中断相关的状态和资源
  */
 struct interrupt_data {
-	struct device *dev; // 关联的设备
-	int irq_number; // 中断号
-	atomic_t irq_count; // 中断计数（原子操作）
+	struct device *dev;               // 关联的设备
+	int irq_number;                   // 中断号
+	atomic_t irq_count;               // 中断计数（原子操作）
 	struct timer_list debounce_timer; // 消抖定时器
-	struct work_struct work; // 工作队列项
-	struct workqueue_struct *wq; // 工作队列
+	struct work_struct work;          // 工作队列项
+	struct workqueue_struct *wq;      // 工作队列
 
 	// 状态标志
-	unsigned long last_irq_time; // 上次中断时间
-	atomic_t button_pressed; // 按键状态
+	unsigned long last_irq_time;  // 上次中断时间
+	atomic_t button_pressed;      // 按键状态
 	wait_queue_head_t wait_queue; // 等待队列
 
 	// 回调函数
 	void (*callback)(void *data); // 用户回调
-	void *callback_data; // 回调数据
+	void *callback_data;          // 回调数据
 };
 
 /**
@@ -551,8 +549,7 @@ struct interrupt_data {
  */
 static void button_work_handler(struct work_struct *work)
 {
-	struct interrupt_data *idata =
-		container_of(work, struct interrupt_data, work);
+	struct interrupt_data *idata = container_of(work, struct interrupt_data, work);
 
 	dev_info(idata->dev, "工作队列处理：按键事件\n");
 
@@ -591,8 +588,7 @@ static void button_debounce_timer(struct timer_list *timer)
 		// 调度工作队列处理
 		queue_work(idata->wq, &idata->work);
 
-		dev_dbg(idata->dev, "消抖完成，按键状态: %s\n",
-			state ? "按下" : "释放");
+		dev_dbg(idata->dev, "消抖完成，按键状态: %s\n", state ? "按下" : "释放");
 	}
 }
 
@@ -663,8 +659,7 @@ static irqreturn_t threaded_irq_handler(int irq, void *dev_id)
  *
  * 返回值：成功返回 0，失败返回错误码
  */
-int interrupt_setup(struct device *dev, struct gpio_desc *button_gpio,
-		    struct interrupt_data *idata)
+int interrupt_setup(struct device *dev, struct gpio_desc *button_gpio, struct interrupt_data *idata)
 {
 	int ret, irq;
 
@@ -702,15 +697,12 @@ int interrupt_setup(struct device *dev, struct gpio_desc *button_gpio,
 	INIT_WORK(&idata->work, button_work_handler);
 
 	// 6. 注册中断处理函数
-	dev_info(dev, "注册中断 %d (GPIO: %d)\n", irq,
-		 desc_to_gpio(button_gpio));
+	dev_info(dev, "注册中断 %d (GPIO: %d)\n", irq, desc_to_gpio(button_gpio));
 
 	/**
      * 方法1：普通中断 + 工作队列
      */
-	ret = request_irq(irq, button_irq_handler,
-			  IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,
-			  "button_irq", idata);
+	ret = request_irq(irq, button_irq_handler, IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING, "button_irq", idata);
 
 	/**
      * 方法2：线程化中断（推荐，更简单）
@@ -782,9 +774,8 @@ int interrupt_wait_event(struct interrupt_data *idata, int timeout_ms)
      * @timeout: 超时时间（jiffies）
      * 返回值：>0 条件满足，0 超时，<0 被信号中断
      */
-	ret = wait_event_interruptible_timeout(
-		idata->wait_queue, atomic_read(&idata->button_pressed) != 0,
-		timeout_jiffies);
+	ret = wait_event_interruptible_timeout(idata->wait_queue, atomic_read(&idata->button_pressed) != 0,
+	                                       timeout_jiffies);
 	return ret;
 }
 
@@ -871,22 +862,22 @@ echo "跟踪结果保存到: /tmp/interrupt_trace.txt"
  * 管理字符设备的所有状态和资源
  */
 struct char_device_data {
-	struct cdev cdev; // 字符设备结构
+	struct cdev cdev;      // 字符设备结构
 	struct device *device; // 关联的设备
-	dev_t devno; // 设备号
+	dev_t devno;           // 设备号
 
 	// 同步机制
-	struct mutex mutex; // 保护设备操作
-	struct rw_semaphore rwsem; // 读写信号量
-	wait_queue_head_t read_queue; // 读等待队列
+	struct mutex mutex;            // 保护设备操作
+	struct rw_semaphore rwsem;     // 读写信号量
+	wait_queue_head_t read_queue;  // 读等待队列
 	wait_queue_head_t write_queue; // 写等待队列
 
 	// 缓冲区管理
-	char *buffer; // 数据缓冲区
+	char *buffer;       // 数据缓冲区
 	size_t buffer_size; // 缓冲区大小
-	size_t data_len; // 当前数据长度
-	loff_t read_pos; // 读位置
-	loff_t write_pos; // 写位置
+	size_t data_len;    // 当前数据长度
+	loff_t read_pos;    // 读位置
+	loff_t write_pos;   // 写位置
 
 	// 异步通知
 	struct fasync_struct *fasync_queue;
@@ -897,8 +888,8 @@ struct char_device_data {
 
 	// 设备状态
 	unsigned int open_count; // 打开计数
-	bool is_open; // 打开状态
-	atomic_t available; // 数据可用标志
+	bool is_open;            // 打开状态
+	atomic_t available;      // 数据可用标志
 };
 
 /**
@@ -983,8 +974,7 @@ static int char_device_release(struct inode *inode, struct file *filp)
  *
  * 支持阻塞和非阻塞读取
  */
-static ssize_t char_device_read(struct file *filp, char __user *buf,
-				size_t count, loff_t *f_pos)
+static ssize_t char_device_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
 	struct char_device_data *cdata = filp->private_data;
 	ssize_t retval = 0;
@@ -1001,8 +991,7 @@ static ssize_t char_device_read(struct file *filp, char __user *buf,
 		}
 	} else {
 		// 阻塞等待数据可用
-		retval = wait_event_interruptible(
-			cdata->read_queue, atomic_read(&cdata->available));
+		retval = wait_event_interruptible(cdata->read_queue, atomic_read(&cdata->available));
 		if (retval) {
 			return retval; // 被信号中断
 		}
@@ -1044,8 +1033,7 @@ static ssize_t char_device_read(struct file *filp, char __user *buf,
 	// 唤醒可能的写等待
 	wake_up_interruptible(&cdata->write_queue);
 
-	pr_debug("读取 %zu 字节，剩余 %zu 字节\n", count,
-		 cdata->data_len - cdata->read_pos);
+	pr_debug("读取 %zu 字节，剩余 %zu 字节\n", count, cdata->data_len - cdata->read_pos);
 
 	return count;
 }
@@ -1059,8 +1047,7 @@ static ssize_t char_device_read(struct file *filp, char __user *buf,
  *
  * 支持阻塞和非阻塞写入
  */
-static ssize_t char_device_write(struct file *filp, const char __user *buf,
-				 size_t count, loff_t *f_pos)
+static ssize_t char_device_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
 {
 	struct char_device_data *cdata = filp->private_data;
 	ssize_t retval = 0;
@@ -1080,9 +1067,7 @@ static ssize_t char_device_write(struct file *filp, const char __user *buf,
 
 	// 阻塞等待缓冲区空间（如果不是非阻塞模式）
 	if (!(filp->f_flags & O_NONBLOCK)) {
-		retval = wait_event_interruptible(cdata->write_queue,
-						  cdata->data_len + count <=
-							  cdata->buffer_size);
+		retval = wait_event_interruptible(cdata->write_queue, cdata->data_len + count <= cdata->buffer_size);
 		if (retval) {
 			return retval;
 		}
@@ -1130,8 +1115,7 @@ static ssize_t char_device_write(struct file *filp, const char __user *buf,
 		kill_fasync(&cdata->fasync_queue, SIGIO, POLL_IN);
 	}
 
-	pr_debug("写入 %zu 字节，缓冲区使用率: %zu/%zu\n", count,
-		 cdata->data_len, cdata->buffer_size);
+	pr_debug("写入 %zu 字节，缓冲区使用率: %zu/%zu\n", count, cdata->data_len, cdata->buffer_size);
 
 	return count;
 }
@@ -1144,8 +1128,7 @@ static ssize_t char_device_write(struct file *filp, const char __user *buf,
  *
  * 实现自定义的设备控制命令
  */
-static long char_device_ioctl(struct file *filp, unsigned int cmd,
-			      unsigned long arg)
+static long char_device_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 {
 	struct char_device_data *cdata = filp->private_data;
 	int retval = 0;
@@ -1199,9 +1182,7 @@ static long char_device_ioctl(struct file *filp, unsigned int cmd,
 		info.size = cdata->buffer_size;
 		info.used = cdata->data_len;
 		info.free = cdata->buffer_size - cdata->data_len;
-		retval = copy_to_user((void __user *)arg, &info, sizeof(info)) ?
-				 -EFAULT :
-				 0;
+		retval = copy_to_user((void __user *)arg, &info, sizeof(info)) ? -EFAULT : 0;
 		break;
 	}
 
@@ -1293,9 +1274,7 @@ static int char_device_mmap(struct file *filp, struct vm_area_struct *vma)
 	}
 
 	// 将内核缓冲区映射到用户空间
-	return remap_pfn_range(vma, vma->vm_start,
-			       virt_to_phys(cdata->buffer) >> PAGE_SHIFT, size,
-			       vma->vm_page_prot);
+	return remap_pfn_range(vma, vma->vm_start, virt_to_phys(cdata->buffer) >> PAGE_SHIFT, size, vma->vm_page_prot);
 }
 
 /**
@@ -1325,10 +1304,8 @@ static const struct file_operations char_device_fops = {
  *
  * 返回值：成功返回设备指针，失败返回 ERR_PTR
  */
-struct char_device_data *char_device_create(struct device *parent,
-					    struct gpio_control *gpio_ctrl,
-					    struct interrupt_data *irq_data,
-					    size_t buffer_size)
+struct char_device_data *char_device_create(struct device *parent, struct gpio_control *gpio_ctrl,
+                                            struct interrupt_data *irq_data, size_t buffer_size)
 {
 	struct char_device_data *cdata;
 	int ret;
@@ -1388,8 +1365,7 @@ struct char_device_data *char_device_create(struct device *parent,
 	}
 
 	// 7. 创建设备节点（可选，udev 会自动创建）
-	cdata->device = device_create(class_led_button, parent, devno, NULL,
-				      "led_button");
+	cdata->device = device_create(class_led_button, parent, devno, NULL, "led_button");
 	if (IS_ERR(cdata->device)) {
 		dev_err(parent, "无法创建设备节点\n");
 		cdev_del(&cdata->cdev);
@@ -1397,8 +1373,7 @@ struct char_device_data *char_device_create(struct device *parent,
 		return ERR_CAST(cdata->device);
 	}
 
-	dev_info(parent, "字符设备创建成功，主设备号: %d，次设备号: %d\n",
-		 MAJOR(devno), MINOR(devno));
+	dev_info(parent, "字符设备创建成功，主设备号: %d，次设备号: %d\n", MAJOR(devno), MINOR(devno));
 	dev_info(parent, "设备节点: /dev/led_button\n");
 
 	return cdata;
@@ -1526,8 +1501,7 @@ static int led_button_probe(struct platform_device *pdev)
 
 	// 2. 初始化 GPIO 子系统
 	dev_info(dev, "初始化 GPIO...\n");
-	data->gpio_ctrl =
-		devm_kzalloc(dev, sizeof(struct gpio_control), GFP_KERNEL);
+	data->gpio_ctrl = devm_kzalloc(dev, sizeof(struct gpio_control), GFP_KERNEL);
 	if (!data->gpio_ctrl) {
 		return -ENOMEM;
 	}
@@ -1541,8 +1515,7 @@ static int led_button_probe(struct platform_device *pdev)
 
 	// 3. 初始化中断处理
 	dev_info(dev, "初始化中断...\n");
-	data->irq_data =
-		devm_kzalloc(dev, sizeof(struct interrupt_data), GFP_KERNEL);
+	data->irq_data = devm_kzalloc(dev, sizeof(struct interrupt_data), GFP_KERNEL);
 	if (!data->irq_data) {
 		ret = -ENOMEM;
 		goto err_irq_alloc;
@@ -1565,8 +1538,7 @@ static int led_button_probe(struct platform_device *pdev)
 
 	// 4. 创建设备节点
 	dev_info(dev, "创建字符设备...\n");
-	data->char_data =
-		char_device_create(dev, data->gpio_ctrl, data->irq_data, 4096);
+	data->char_data = char_device_create(dev, data->gpio_ctrl, data->irq_data, 4096);
 	if (IS_ERR(data->char_data)) {
 		ret = PTR_ERR(data->char_data);
 		dev_err(dev, "字符设备创建失败: %d\n", ret);
@@ -1801,12 +1773,12 @@ debug:
 #include <sys/ioctl.h>
 
 // 定义与驱动一致的 IOCTL 命令
-#define LED_ON _IO('L', 1)
-#define LED_OFF _IO('L', 2)
-#define LED_TOGGLE _IO('L', 3)
+#define LED_ON           _IO('L', 1)
+#define LED_OFF          _IO('L', 2)
+#define LED_TOGGLE       _IO('L', 3)
 #define GET_BUTTON_STATE _IOR('L', 4, int)
-#define WAIT_FOR_BUTTON _IOW('L', 5, int)
-#define GET_BUFFER_INFO _IOR('L', 6, struct buffer_info)
+#define WAIT_FOR_BUTTON  _IOW('L', 5, int)
+#define GET_BUFFER_INFO  _IOR('L', 6, struct buffer_info)
 
 struct buffer_info {
 	size_t size;
@@ -1920,8 +1892,7 @@ void test_data_rw(void)
 	printf("\n=== 测试数据读写 ===\n");
 
 	// 写入数据
-	snprintf(write_buf, sizeof(write_buf), "测试数据，时间戳: %ld",
-		 time(NULL));
+	snprintf(write_buf, sizeof(write_buf), "测试数据，时间戳: %ld", time(NULL));
 
 	n = write(fd, write_buf, strlen(write_buf));
 	if (n < 0) {
@@ -2392,8 +2363,7 @@ static void update_config(struct config_data *new_config)
 }
 
 // 4. 批量处理减少系统调用开销
-static ssize_t batch_write(struct file *filp, const char __user *buf,
-			   size_t count, loff_t *f_pos)
+static ssize_t batch_write(struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
 {
 	struct iov_iter iter;
 	struct iovec iov = {

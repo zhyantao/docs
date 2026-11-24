@@ -41,8 +41,7 @@ int main()
 	// allocate memory for 16 Student objects, default initializer
 	Student *psa1 = new Student[16];
 	// allocate memory for 16 Student objects, the first two are explicitly initialized
-	Student *psa2 = new Student[16]{ { "Li", 2000, 1 },
-					 { "Yu", 2001, 1 } }; // C++11
+	Student *psa2 = new Student[16]{ { "Li", 2000, 1 }, { "Yu", 2001, 1 } }; // C++11
 	cout << psa2[1].name << endl;
 	cout << psa2[1].born << endl;
 

@@ -147,8 +147,8 @@ int shared_data = 0;
 void increment()
 {
 	LockGuard lock(g_mutex); // 构造时加锁
-	++shared_data; // 安全访问
-	// 离开作用域时自动解锁
+	++shared_data;           // 安全访问
+	                         // 离开作用域时自动解锁
 }
 
 int main()
@@ -176,8 +176,7 @@ private:
 	bool connected;
 
 public:
-	DatabaseConnection(const std::string &connectionString)
-	    : connected(false)
+	DatabaseConnection(const std::string &connectionString) : connected(false)
 	{
 		// 模拟连接数据库
 		std::cout << "连接到数据库: " << connectionString << std::endl;
@@ -200,8 +199,7 @@ public:
 	}
 
 	// 移动语义支持
-	DatabaseConnection(DatabaseConnection &&other) noexcept
-	    : connected(other.connected)
+	DatabaseConnection(DatabaseConnection &&other) noexcept : connected(other.connected)
 	{
 		other.connected = false;
 	}

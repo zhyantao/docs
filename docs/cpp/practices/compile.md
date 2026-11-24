@@ -165,8 +165,7 @@ struct uci_context *uci_alloc_context_stub_fail()
 }
 
 // 查找指针成功桩函数
-int uci_lookup_ptr_stub_success(struct uci_context *ctx, struct uci_ptr *ptr,
-				char *str, bool extended)
+int uci_lookup_ptr_stub_success(struct uci_context *ctx, struct uci_ptr *ptr, char *str, bool extended)
 {
 	ptr->last = (struct uci_element *)malloc(sizeof(struct uci_element));
 	if (ptr->last) {
@@ -199,15 +198,13 @@ int uci_save_stub_success(struct uci_context *ctx, struct uci_package *p)
 }
 
 // 提交操作成功桩函数
-int uci_commit_stub_success(struct uci_context *ctx, struct uci_package **p,
-			    bool overwrite)
+int uci_commit_stub_success(struct uci_context *ctx, struct uci_package **p, bool overwrite)
 {
 	return UCI_OK;
 }
 
 // 提交操作失败桩函数
-int uci_commit_stub_fail(struct uci_context *ctx, struct uci_package **p,
-			 bool overwrite)
+int uci_commit_stub_fail(struct uci_context *ctx, struct uci_package **p, bool overwrite)
 {
 	return UCI_FRR_UNKNOWN;
 }
@@ -253,11 +250,11 @@ __attribute__((noinline)) bool stop_while_1_stub()
 
 ```cpp
 // 正确示例
-int actual_variable; // 1. 声明实际变量
+int actual_variable;         // 1. 声明实际变量
 test_func(&actual_variable); // 2. 获取地址并传入函数
 
 // 错误示例：传入未初始化的野指针
-int *wild_pointer; // 未初始化的指针
+int *wild_pointer;       // 未初始化的指针
 test_func(wild_pointer); // 可能导致段错误或未定义行为
 ```
 

@@ -100,7 +100,7 @@ public:
 		delete[] data;
 	}
 
-	Mat(const Mat &) = delete; // 不允许拷贝构造
+	Mat(const Mat &) = delete;            // 不允许拷贝构造
 	Mat &operator=(const Mat &) = delete; // 不允许赋值构造
 	T getElement(size_t r, size_t c);
 	bool setElement(size_t r, size_t c, T value);

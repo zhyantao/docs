@@ -106,8 +106,7 @@ int main()
 	// stu.born = 2000;
 	// stu.male = true;
 
-	printf("Student %s, born in %d, gender %s\n", stu.name, stu.born,
-	       stu.male ? "male" : "female");
+	printf("Student %s, born in %d, gender %s\n", stu.name, stu.born, stu.male ? "male" : "female");
 
 	struct Student students[100];
 	students[50].born = 2002;
@@ -151,16 +150,13 @@ int64_t l1norm(struct Point pt)
 		result = abs(pt.data8[0]) + abs(pt.data8[1]) + abs(pt.data8[2]);
 		break;
 	case (TYPE_INT16):
-		result = abs(pt.data16[0]) + abs(pt.data16[1]) +
-			 abs(pt.data16[2]);
+		result = abs(pt.data16[0]) + abs(pt.data16[1]) + abs(pt.data16[2]);
 		break;
 	case (TYPE_INT32):
-		result = abs(pt.data32[0]) + abs(pt.data32[1]) +
-			 abs(pt.data32[2]);
+		result = abs(pt.data32[0]) + abs(pt.data32[1]) + abs(pt.data32[2]);
 		break;
 	case (TYPE_INT64):
-		result = abs(pt.data64[0]) + abs(pt.data64[1]) +
-			 abs(pt.data64[2]);
+		result = abs(pt.data64[0]) + abs(pt.data64[1]) + abs(pt.data64[2]);
 		break;
 	}
 	return result;
@@ -198,7 +194,7 @@ int main()
 int main()
 {
 	enum day { Monday = 1, Tuesday, Wednesday }; // 初始化
-	enum day today = Tuesday; // 变量的使用
+	enum day today = Tuesday;                    // 变量的使用
 	printf("%d\n", Wednesday);
 	return 0;
 }
@@ -317,8 +313,7 @@ template <class... Types> struct count {
 int main()
 {
 	// 使用 count 结构体计算不同类型的数量
-	std::cout << "Number of types: " << count<int, double, char>::value
-		  << std::endl;
+	std::cout << "Number of types: " << count<int, double, char>::value << std::endl;
 
 	return 0;
 }

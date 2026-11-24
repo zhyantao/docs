@@ -35,7 +35,11 @@
   if (stored === "open") {
     // sidebar-open 是首帧占位（可见）；sidebar-auto-hidden 保证同步后
     // 按钮可用、未勾选时可收起；pretransition 关闭同步期的过渡动画
-    root.classList.add("sidebar-open", "sidebar-auto-hidden", "sidebar-pretransition");
+    root.classList.add(
+      "sidebar-open",
+      "sidebar-auto-hidden",
+      "sidebar-pretransition",
+    );
   } else if (stored === "closed" || !isRootHome) {
     root.classList.add("sidebar-auto-hidden");
   }

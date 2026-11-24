@@ -42,17 +42,16 @@ public:
 	}
 
 	// 移动构造函数
-	Point(Point &&other) noexcept : x(std::move(other.x)),
-					y(std::move(other.y))
+	Point(Point &&other) noexcept : x(std::move(other.x)), y(std::move(other.y))
 	{
 	}
 };
 
 int main()
 {
-	Point p1; // 调用默认构造函数
-	Point p2(1.0, 2.0); // 调用显式构造函数
-	Point p3(p2); // 调用拷贝构造函数
+	Point p1;                 // 调用默认构造函数
+	Point p2(1.0, 2.0);       // 调用显式构造函数
+	Point p3(p2);             // 调用拷贝构造函数
 	Point p4 = std::move(p3); // 调用移动构造函数
 	return 0;
 }
@@ -218,8 +217,7 @@ int main()
 	std::cout << "Data in DerivedTemplate: " << dt.data << std::endl;
 
 	DerivedFromSpecialized dfs(5);
-	std::cout << "Data in DerivedFromSpecialized: " << dfs.data
-		  << std::endl;
+	std::cout << "Data in DerivedFromSpecialized: " << dfs.data << std::endl;
 
 	return 0;
 }
@@ -311,7 +309,7 @@ public:
 	Point(double x, double y) : x(x), y(y)
 	{
 	}
-	~Point() = default; // 显式使用默认析构
+	~Point() = default;             // 显式使用默认析构
 	Point(const Point &) = default; // 显式使用默认拷贝构造
 	Point &operator=(const Point &) = default;
 };

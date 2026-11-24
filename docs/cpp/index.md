@@ -122,12 +122,11 @@ public:
 	// 仅在需要拷贝对象时，使用拷贝构造函数
 
 private:
-	DISALLOW_COPY_AND_ASSIGN(
-		EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
+	DISALLOW_COPY_AND_ASSIGN(EventLoop); // 不需要拷贝时，在 private 里使用 DISALLOW_COPY_ASSIGN 宏
 
 	// 变量用描述性名称，不要节约空间，让别人理解你的代码更重要
-	const int kDaysInWeek = 7; // const 变量用 k 开头，后跟大写开头单词
-	int num_entries_; // 变量命名：全小写，有意义的单词和下划线
+	const int kDaysInWeek = 7;      // const 变量用 k 开头，后跟大写开头单词
+	int num_entries_;               // 变量命名：全小写，有意义的单词和下划线
 	int num_completed_connections_; // 类成员变量下划线结尾
 
 	Channel *channel_; // 头文件中只用了指针/引用，则前向声明而非引入头文件
@@ -169,15 +168,12 @@ EventLoop::EventLoop() : num_entries_(10), num_completed_connections_(0)
 {
 }
 
-ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1,
-					     Type *par_name2)
+ReturnType ClassName::ReallyLongFunctionName(const Type &par_name1, Type *par_name2)
 {
-	bool retval = DoSomething(averyveryveryverylongargument1, argument2,
-				  argument3);
+	bool retval = DoSomething(averyveryveryverylongargument1, argument2, argument3);
 	if (condition) {
 		for (int i = 0; i < kSomeNumber; ++i) { /* 前置自增运算 */
-			if (this_one_thing > this_other_thing &&
-			    a_third_thing == a_fourth_thing) {
+			if (this_one_thing > this_other_thing && a_third_thing == a_fourth_thing) {
 				// 临时方案使用 TODO 注释，后面括号里加上你的大名，邮件地址
 				// TODO (zhangsan@gmail.com): Zhang San
 			}

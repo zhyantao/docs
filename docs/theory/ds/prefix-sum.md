@@ -59,8 +59,7 @@ $$
 vector<vector<int> > pre(m + 1, vector<int>(n + 1, 0));
 for (int i = 0; i < m; i++)
 	for (int j = 0; j < n; j++)
-		pre[i + 1][j + 1] =
-			pre[i][j + 1] + pre[i + 1][j] - pre[i][j] + a[i][j];
+		pre[i + 1][j + 1] = pre[i][j + 1] + pre[i + 1][j] - pre[i][j] + a[i][j];
 ```
 
 ## 三、差分数组
@@ -80,7 +79,7 @@ $$
 ```cpp
 // 对长度为 n 的数组做 k 次区间 [l, r] 加 v，最后输出结果数组
 vector<int> diff(n + 1, 0); // 多开一位避免 r+1 越界
-for (auto &op : ops) { // ops: {l, r, v}
+for (auto &op : ops) {      // ops: {l, r, v}
 	int l = op[0], r = op[1], v = op[2];
 	diff[l] += v;
 	diff[r + 1] -= v;
@@ -131,7 +130,7 @@ $$ pre[r] - pre[l] = k \iff pre[l] = pre[r] - k $$
 int subarraySum(vector<int> &nums, int k)
 {
 	unordered_map<int, int> cnt; // 前缀和 -> 出现次数
-	cnt[0] = 1; // 前缀和为 0 出现一次（空前缀）
+	cnt[0] = 1;                  // 前缀和为 0 出现一次（空前缀）
 	int sum = 0, ans = 0;
 	for (int x : nums) {
 		sum += x;

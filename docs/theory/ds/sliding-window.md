@@ -70,8 +70,8 @@ long long fixedWindowSum(vector<int> &nums, int k)
 	for (int r = 0; r < nums.size(); r++) {
 		sum += nums[r]; // 1. 入窗口（右端点进入）
 		if (r < k - 1)
-			continue; // 窗口未成形
-		ans = max(ans, sum); // 2. 更新答案
+			continue;       // 窗口未成形
+		ans = max(ans, sum);    // 2. 更新答案
 		sum -= nums[r - k + 1]; // 3. 出窗口（左端点移出）
 	}
 	return ans;
@@ -115,7 +115,7 @@ int lengthOfLongestSubstring(string s)
 	int ans = 0, l = 0;
 	unordered_map<char, int> cnt;
 	for (int r = 0; r < s.size(); r++) {
-		cnt[s[r]]++; // 入窗口
+		cnt[s[r]]++;            // 入窗口
 		while (cnt[s[r]] > 1) { // 不满足约束：收缩左端点
 			cnt[s[l++]]--;
 		}
@@ -168,7 +168,7 @@ int minSubArrayLen(int target, vector<int> &nums)
 {
 	int ans = INT_MAX, l = 0, sum = 0;
 	for (int r = 0; r < nums.size(); r++) {
-		sum += nums[r]; // 入窗口
+		sum += nums[r];         // 入窗口
 		while (sum >= target) { // 满足条件：尝试收缩
 			ans = min(ans, r - l + 1);
 			sum -= nums[l++];

@@ -18,7 +18,7 @@
 #include <time.h>
 #include <libgen.h>
 
-#define MAX_SIZE (10 * 1024) // 10KB
+#define MAX_SIZE    (10 * 1024) // 10KB
 #define MAX_BACKUPS 5
 
 // 比较函数，用于排序文件时间
@@ -69,8 +69,7 @@ int check_and_backup_file(const char *path)
 	while ((entry = readdir(dp)) != NULL && backup_count < MAX_BACKUPS) {
 		if (strstr(entry->d_name, pattern) == entry->d_name) {
 			char full_path[1024];
-			snprintf(full_path, sizeof(full_path), "%s/%s", dir,
-				 entry->d_name);
+			snprintf(full_path, sizeof(full_path), "%s/%s", dir, entry->d_name);
 			backup_files[backup_count++] = strdup(full_path);
 		}
 	}
@@ -81,8 +80,7 @@ int check_and_backup_file(const char *path)
 	int next_number = 1;
 	if (backup_count >= MAX_BACKUPS) {
 		// 按修改时间排序，找到最老的文件
-		qsort(backup_files, backup_count, sizeof(char *),
-		      compare_files);
+		qsort(backup_files, backup_count, sizeof(char *), compare_files);
 		char *oldest = backup_files[0];
 
 		// 提取编号
@@ -122,8 +120,7 @@ int check_and_backup_file(const char *path)
 
 	// 创建新的备份文件名
 	char new_name[1024];
-	snprintf(new_name, sizeof(new_name), "%s/%s__%03d", dir, base_name,
-		 next_number);
+	snprintf(new_name, sizeof(new_name), "%s/%s__%03d", dir, base_name, next_number);
 	free(dir);
 
 	// 执行备份
@@ -142,8 +139,8 @@ int check_and_backup_file(const char *path)
 	}
 
 	// 打包压缩（这里使用 tar.gz 作为示例）
-	snprintf(cmd, sizeof(cmd), "tar -czf %s.tar.gz -C %s %s && rm %s",
-		 new_name, dirname(new_name), basename(new_name), new_name);
+	snprintf(cmd, sizeof(cmd), "tar -czf %s.tar.gz -C %s %s && rm %s", new_name, dirname(new_name),
+	         basename(new_name), new_name);
 	if (system(cmd) != 0) {
 		fprintf(stderr, "tar -czf failed\n");
 		return -1;

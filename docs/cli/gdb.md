@@ -255,7 +255,7 @@ x/20s string_ptr # 显示20个字符串
 
 int main(void)
 {
-	int *ptr = NULL; // 空指针
+	int *ptr = NULL;      // 空指针
 	printf("%d\n", *ptr); // 解引用导致段错误
 	return 0;
 }

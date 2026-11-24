@@ -80,7 +80,7 @@ int main()
 class Example
 {
 public:
-	static int staticVariable; // 静态成员变量
+	static int staticVariable;    // 静态成员变量
 	static void staticFunction(); // 静态成员函数
 };
 
@@ -258,7 +258,7 @@ int main()
 	};
 
 	auto lambda2 = [x]() mutable {
-		x = 5; // 正确！因为使用了 mutable，可以修改内部副本
+		x = 5;                                     // 正确！因为使用了 mutable，可以修改内部副本
 		std::cout << "内部 x: " << x << std::endl; // 输出 5
 		return x;
 	};
@@ -318,10 +318,10 @@ int main()
 可以让多条语句的宏表现得像一条语句：
 
 ```cpp
-#define LOG(msg)                                        \
-	do {                                            \
+#define LOG(msg) \
+	do { \
 		printf("[%s:%d] ", __FILE__, __LINE__); \
-		printf("%s\n", msg);                    \
+		printf("%s\n", msg); \
 	} while (0)
 
 if (error)

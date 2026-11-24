@@ -102,9 +102,9 @@ void unused_function()
 
 void active_function()
 {
-	log("running"); // LCOV_EXCL_LINE
+	log("running");  // LCOV_EXCL_LINE
 	if (condition) { // LCOV_EXCL_BR_LINE
-		// 此分支不纳入分支统计
+		         // 此分支不纳入分支统计
 	}
 }
 ```

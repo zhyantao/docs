@@ -10,11 +10,9 @@
 // 将十六进制字符 '0' ~ 'F' 转换为相应的整数，即 0 ~ 15
 int char2int(char ch)
 {
-	if (!(('0' <= ch && ch <= '9') || ('a' <= ch && ch <= 'f') ||
-	      ('A' <= ch && ch <= 'F'))) {
+	if (!(('0' <= ch && ch <= '9') || ('a' <= ch && ch <= 'f') || ('A' <= ch && ch <= 'F'))) {
 		std::cout << __FILE__ << ":" << __LINE__ << ":"
-			  << "invalid character: " << ch
-			  << ", it should between '0' ~ 'F'" << std::endl;
+		          << "invalid character: " << ch << ", it should between '0' ~ 'F'" << std::endl;
 		return -1;
 	}
 	int ret = 0;
@@ -55,8 +53,7 @@ char int2char(int num)
 {
 	if (num < 0 || num > 15) {
 		std::cout << __FILE__ << ":" << __LINE__ << ":"
-			  << "invalid number: " << num
-			  << ", it should between 0 ~ 15" << std::endl;
+		          << "invalid number: " << num << ", it should between 0 ~ 15" << std::endl;
 		return -1;
 	}
 	char ret = '0';
@@ -97,16 +94,14 @@ std::string add(std::string num1, std::string num2, int base)
 	for (int i = 0; i < len1; i++) {
 		if (char2int(num1[i]) < 0 || char2int(num1[i]) > base) {
 			std::cout << "the element in number " << num1;
-			std::cout << " should between 0 and " << base
-				  << std::endl;
+			std::cout << " should between 0 and " << base << std::endl;
 			return str;
 		}
 	}
 	for (int i = 0; i < len2; i++) {
 		if (char2int(num2[i]) < 0 || char2int(num2[i]) > base) {
 			std::cout << "the element in number " << num2;
-			std::cout << " should between 0 and " << base
-				  << std::endl;
+			std::cout << " should between 0 and " << base << std::endl;
 			return str;
 		}
 	}
@@ -117,15 +112,13 @@ std::string add(std::string num1, std::string num2, int base)
 		int tmp1 = char2int(num1[len1 - 1 - i]);
 		if (tmp1 < 0) {
 			std::cout << __FILE__ << ":" << __LINE__ << ":"
-				  << "the invalid number is " << num1
-				  << std::endl;
+			          << "the invalid number is " << num1 << std::endl;
 			return str;
 		}
 		int tmp2 = char2int(num2[len2 - 1 - i]);
 		if (tmp2 < 0) {
 			std::cout << __FILE__ << ":" << __LINE__ << ":"
-				  << "the invalid number is " << num2
-				  << std::endl;
+			          << "the invalid number is " << num2 << std::endl;
 			return str;
 		}
 		int sum = carry + tmp1 + tmp2;
@@ -134,8 +127,7 @@ std::string add(std::string num1, std::string num2, int base)
 		char tmp3 = int2char(digit);
 		if (tmp3 < 0) {
 			std::cout << __FILE__ << ":" << __LINE__ << ":"
-				  << "the invalid character is " << digit
-				  << std::endl;
+			          << "the invalid character is " << digit << std::endl;
 			return str;
 		}
 		str.push_back(tmp3);
@@ -149,8 +141,7 @@ std::string add(std::string num1, std::string num2, int base)
 		char tmp = int2char(digit);
 		if (tmp < 0) {
 			std::cout << __FILE__ << ":" << __LINE__ << ":"
-				  << "the invalid character is " << digit
-				  << std::endl;
+			          << "the invalid character is " << digit << std::endl;
 			return str;
 		}
 		str.push_back(tmp);
@@ -163,8 +154,7 @@ std::string add(std::string num1, std::string num2, int base)
 		char tmp = int2char(digit);
 		if (tmp < 0) {
 			std::cout << __FILE__ << ":" << __LINE__ << ":"
-				  << "the invalid character is " << digit
-				  << std::endl;
+			          << "the invalid character is " << digit << std::endl;
 			return str;
 		}
 		str.push_back(tmp);
@@ -189,16 +179,14 @@ std::string multiply(std::string num1, std::string num2, int base)
 	for (int i = 0; i < len1; i++) {
 		if (char2int(num1[i]) < 0 || char2int(num1[i]) > base) {
 			std::cout << "the element in number " << num1;
-			std::cout << " should between 0 and " << base
-				  << std::endl;
+			std::cout << " should between 0 and " << base << std::endl;
 			return ret;
 		}
 	}
 	for (int i = 0; i < len2; i++) {
 		if (char2int(num2[i]) < 0 || char2int(num2[i]) > base) {
 			std::cout << "the element in number " << num2;
-			std::cout << " should between 0 and " << base
-				  << std::endl;
+			std::cout << " should between 0 and " << base << std::endl;
 			return ret;
 		}
 	}
@@ -278,7 +266,7 @@ int main()
 	std::string phonenumber;
 	int ret = get_phonenumber(hexdata, phonenumber);
 	std::cout << "hexdata: " << hexdata << "\t"
-		  << "phonenumber:" << phonenumber << std::endl;
+	          << "phonenumber:" << phonenumber << std::endl;
 
 	std::string str1 = add(hexdata, hexdata, 16); // 66D1ACA20
 	std::cout << "str1: " << str1 << std::endl;

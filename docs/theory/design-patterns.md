@@ -603,15 +603,13 @@ private:
 
 	// 删除拷贝构造函数和赋值操作符，防止复制
 	DatabaseConnectionPool(const DatabaseConnectionPool &) = delete;
-	DatabaseConnectionPool &
-	operator=(const DatabaseConnectionPool &) = delete;
+	DatabaseConnectionPool &operator=(const DatabaseConnectionPool &) = delete;
 
 public:
 	// 静态方法，提供全局访问点（C++11 起保证线程安全）
 	static DatabaseConnectionPool &getInstance()
 	{
-		static DatabaseConnectionPool
-			instance; // 局部静态变量，延迟加载
+		static DatabaseConnectionPool instance; // 局部静态变量，延迟加载
 		return instance;
 	}
 
@@ -1129,15 +1127,13 @@ public:
 class ScrollBarDecorator : public TextDisplayDecorator
 {
 public:
-	ScrollBarDecorator(ITextDisplay *decorated)
-	    : TextDisplayDecorator(decorated)
+	ScrollBarDecorator(ITextDisplay *decorated) : TextDisplayDecorator(decorated)
 	{
 	}
 
 	string getContent() const override
 	{
-		return "[滚动条开始]" + decoratedText->getContent() +
-		       "[滚动条结束]";
+		return "[滚动条开始]" + decoratedText->getContent() + "[滚动条结束]";
 	}
 };
 
@@ -1145,15 +1141,13 @@ public:
 class BorderDecorator : public TextDisplayDecorator
 {
 public:
-	BorderDecorator(ITextDisplay *decorated)
-	    : TextDisplayDecorator(decorated)
+	BorderDecorator(ITextDisplay *decorated) : TextDisplayDecorator(decorated)
 	{
 	}
 
 	string getContent() const override
 	{
-		return "[边框开始]" + decoratedText->getContent() +
-		       "[边框结束]";
+		return "[边框开始]" + decoratedText->getContent() + "[边框结束]";
 	}
 };
 
@@ -1173,8 +1167,7 @@ int main()
 	scrollText->show();
 
 	// 加滚动条和边框的文本（嵌套装饰）
-	ITextDisplay *fullFeaturedText =
-		new BorderDecorator(new ScrollBarDecorator(basicText));
+	ITextDisplay *fullFeaturedText = new BorderDecorator(new ScrollBarDecorator(basicText));
 	fullFeaturedText->show();
 
 	// 清理资源
@@ -1220,15 +1213,13 @@ public:
 	int fontSize;
 	string color;
 
-	FontFormat(const string &name, int size, const string &color)
-	    : fontName(name), fontSize(size), color(color)
+	FontFormat(const string &name, int size, const string &color) : fontName(name), fontSize(size), color(color)
 	{
 	}
 
 	void applyFormat() const
 	{
-		printf("应用格式: 字体=%s, 大小=%d, 颜色=%s\n",
-		       fontName.c_str(), fontSize, color.c_str());
+		printf("应用格式: 字体=%s, 大小=%d, 颜色=%s\n", fontName.c_str(), fontSize, color.c_str());
 	}
 };
 
@@ -1247,14 +1238,12 @@ private:
 	}
 
 public:
-	shared_ptr<FontFormat> getFontFormat(const string &fontName,
-					     int fontSize, const string &color)
+	shared_ptr<FontFormat> getFontFormat(const string &fontName, int fontSize, const string &color)
 	{
 		string key = getKey(fontName, fontSize, color);
 		if (pool.find(key) == pool.end()) {
 			// 如果没有就创建一个新的
-			pool[key] = make_shared<FontFormat>(fontName, fontSize,
-							    color);
+			pool[key] = make_shared<FontFormat>(fontName, fontSize, color);
 			cout << "新建格式: " << key << endl;
 		} else {
 			cout << "复用已有格式: " << key << endl;
@@ -1269,19 +1258,17 @@ public:
 class Character
 {
 private:
-	char value; // 内容（内部状态）
+	char value;                        // 内容（内部状态）
 	shared_ptr<FontFormat> fontFormat; // 格式（外部状态，由享元提供）
 
 public:
-	Character(char c, shared_ptr<FontFormat> format)
-	    : value(c), fontFormat(format)
+	Character(char c, shared_ptr<FontFormat> format) : value(c), fontFormat(format)
 	{
 	}
 
 	void render(int position) const
 	{
-		cout << "字符 '" << value << "' 在位置 " << position
-		     << " 渲染，";
+		cout << "字符 '" << value << "' 在位置 " << position << " 渲染，";
 		fontFormat->applyFormat();
 	}
 };
@@ -1296,8 +1283,7 @@ int main()
 	// 创建一些字符，部分格式重复
 	auto format1 = factory.getFontFormat("宋体", 12, "黑色");
 	auto format2 = factory.getFontFormat("微软雅黑", 14, "红色");
-	auto format3 =
-		factory.getFontFormat("宋体", 12, "黑色"); // 应该复用 format1
+	auto format3 = factory.getFontFormat("宋体", 12, "黑色"); // 应该复用 format1
 
 	Character c1('H', format1);
 	Character c2('e', format1);
@@ -1363,7 +1349,7 @@ class ServiceProxy : public IService
 {
 private:
 	RealService *realService; // 持有真实服务对象的引用
-	bool hasBeenCalled; // 示例；用于演示代理控制逻辑
+	bool hasBeenCalled;       // 示例；用于演示代理控制逻辑
 
 public:
 	ServiceProxy() : realService(nullptr), hasBeenCalled(false)
@@ -1565,8 +1551,7 @@ public:
 
 	void removeObserver(ISubscriber *subscriber) override
 	{
-		auto it = remove(subscribers.begin(), subscribers.end(),
-				 subscriber);
+		auto it = remove(subscribers.begin(), subscribers.end(), subscriber);
 		if (it != subscribers.end()) {
 			subscribers.erase(it, subscribers.end());
 		}
@@ -1591,7 +1576,7 @@ int main()
 {
 	// 创建具体的订阅者（设备）
 	ISubscriber *airConditioner = new Subscriber(); // 空调
-	ISubscriber *waterHeater = new Subscriber(); // 热水器
+	ISubscriber *waterHeater = new Subscriber();    // 热水器
 
 	// 创建发布者（天气站）
 	IPublisher *weatherStation = new Publisher();
@@ -1902,8 +1887,7 @@ public:
 
 	RoleMemento *getArchive(size_t index) const
 	{
-		return (index < archives.size()) ? archives[index].get() :
-						   nullptr;
+		return (index < archives.size()) ? archives[index].get() : nullptr;
 	}
 
 	void showArchives() const
@@ -2002,8 +1986,7 @@ private:
 	shared_ptr<ChatMediator> mediator;
 
 public:
-	User(const string &name, const shared_ptr<ChatMediator> &mediator)
-	    : name(name), mediator(mediator)
+	User(const string &name, const shared_ptr<ChatMediator> &mediator) : name(name), mediator(mediator)
 	{
 	}
 
@@ -2028,8 +2011,7 @@ public:
 		users.push_back(user);
 	}
 
-	void sendMessage(const string &from, const string &message,
-			 const shared_ptr<User> &excludeUser = nullptr)
+	void sendMessage(const string &from, const string &message, const shared_ptr<User> &excludeUser = nullptr)
 	{
 		for (const auto &user : users) {
 			if (user != excludeUser) {
@@ -2047,8 +2029,7 @@ void User::send(const string &message)
 
 void User::receive(const string &from, const string &message)
 {
-	printf("[%s] 收到来自 [%s] 的消息: %s\n", name.c_str(), from.c_str(),
-	       message.c_str());
+	printf("[%s] 收到来自 [%s] 的消息: %s\n", name.c_str(), from.c_str(), message.c_str());
 }
 
 int main()
@@ -2110,10 +2091,8 @@ private:
 	double price;
 
 public:
-	MenuItem(const string &name, const string &description,
-		 bool isVegetarian, double price)
-	    : name(name), description(description), isVegetarian(isVegetarian),
-	      price(price)
+	MenuItem(const string &name, const string &description, bool isVegetarian, double price)
+	    : name(name), description(description), isVegetarian(isVegetarian), price(price)
 	{
 	}
 
@@ -2136,8 +2115,7 @@ public:
 
 	void print() const
 	{
-		printf("%s, %.2f元 -- %s\n", name.c_str(), price,
-		       description.c_str());
+		printf("%s, %.2f元 -- %s\n", name.c_str(), price, description.c_str());
 		if (isVegetarian) {
 			printf("  (素食)\n");
 		}
@@ -2300,8 +2278,7 @@ private:
 	string text;
 
 public:
-	WriteCommand(TextEditor &editor, const string &text)
-	    : editor(editor), text(text)
+	WriteCommand(TextEditor &editor, const string &text) : editor(editor), text(text)
 	{
 	}
 
@@ -2349,8 +2326,7 @@ int main()
 	// 执行写入操作
 	invoker.executeCommand(make_shared<WriteCommand>(editor, "Hello "));
 	invoker.executeCommand(make_shared<WriteCommand>(editor, "World!"));
-	invoker.executeCommand(
-		make_shared<WriteCommand>(editor, " How are you?"));
+	invoker.executeCommand(make_shared<WriteCommand>(editor, " How are you?"));
 
 	// 撤销操作
 	printf("\n--- 开始撤销 ---\n");

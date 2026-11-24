@@ -36,8 +36,7 @@ class Student : public Person
 	string studentid;
 
 public:
-	Student(string name = "", string sid = "")
-	    : Person(name), studentid(sid) {};
+	Student(string name = "", string sid = "") : Person(name), studentid(sid) {};
 	string getInfo()
 	{
 		return name + ":" + studentid;
@@ -49,10 +48,8 @@ int main()
 	string s("hello");
 
 	cout << "typeid.name of s           is " << typeid(s).name() << endl;
-	cout << "typeid.name of std::string is " << typeid(std::string).name()
-	     << endl;
-	cout << "typeid.name of Student     is " << typeid(Student).name()
-	     << endl;
+	cout << "typeid.name of std::string is " << typeid(std::string).name() << endl;
+	cout << "typeid.name of Student     is " << typeid(Student).name() << endl;
 
 	if (typeid(std::string) == typeid(s))
 		cout << "s is a std::string object." << endl;
@@ -92,8 +89,7 @@ class Student : public Person
 	string studentid;
 
 public:
-	Student(string name = "", string sid = "")
-	    : Person(name), studentid(sid) {};
+	Student(string name = "", string sid = "") : Person(name), studentid(sid) {};
 	string getInfo()
 	{
 		return name + ":(" + studentid + ")";
@@ -110,8 +106,7 @@ int main()
 	cout << "person.getInfo():" << person.getInfo() << endl;
 	cout << "pp->getInfo():" << pp->getInfo() << endl;
 	cout << "rp.getInfo():" << rp.getInfo() << endl;
-	cout << "ps->getInfo():" << ps->getInfo()
-	     << endl; // danger if getInfo is not virtual
+	cout << "ps->getInfo():" << ps->getInfo() << endl; // danger if getInfo is not virtual
 
 	char *p = (char *)100;
 	// ps = dynamic_cast<Student*>(&person);

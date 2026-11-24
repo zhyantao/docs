@@ -35,8 +35,7 @@ public:
 class Child
 {
 private:
-	std::weak_ptr<Parent>
-		parent; // child 持有 parent 的 weak_ptr，避免循环引用
+	std::weak_ptr<Parent> parent; // child 持有 parent 的 weak_ptr，避免循环引用
 
 public:
 	Child(const std::shared_ptr<Parent> &p) : parent(p)
@@ -238,14 +237,13 @@ bool Supplier::provide(Sniper &sniper)
 		}
 	}
 
-	std::cout << "Sniper has " << sniper.bullets
-		  << " bullets, Supplier has " << storage << " storage left.\n";
+	std::cout << "Sniper has " << sniper.bullets << " bullets, Supplier has " << storage << " storage left.\n";
 	return true;
 }
 
 int main()
 {
-	Sniper sniper(5); // 初始只有 5 发子弹
+	Sniper sniper(5);       // 初始只有 5 发子弹
 	Supplier supplier(250); // 初始有 250 库存
 
 	std::cout << "Initial state:\n";

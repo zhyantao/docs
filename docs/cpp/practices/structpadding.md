@@ -31,10 +31,10 @@ int main()
 #include <stdio.h>
 
 struct book_bank {
-	char title[15]; // 16
+	char title[15];  // 16
 	char author[20]; // 20
-	int paper; // 4
-	float price; // 4
+	int paper;       // 4
+	float price;     // 4
 };
 
 int main()

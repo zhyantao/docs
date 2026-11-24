@@ -32,17 +32,15 @@
 // 用于调试和日志记录
 void logError(const char *message)
 {
-	std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << message
-		  << std::endl;
+	std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << message << std::endl;
 }
 
 // 自定义错误宏
-#define ASSERT(condition)                                              \
-	if (!(condition)) {                                            \
-		std::cerr << "Assertion failed at " << __FILE__ << ":" \
-			  << __LINE__ << " (" << #condition << ")"     \
-			  << std::endl;                                \
-		std::terminate();                                      \
+#define ASSERT(condition) \
+	if (!(condition)) { \
+		std::cerr << "Assertion failed at " << __FILE__ << ":" << __LINE__ << " (" << #condition << ")" \
+		          << std::endl; \
+		std::terminate(); \
 	}
 ```
 
@@ -82,8 +80,7 @@ constexpr size_t default_alignment = __STDCPP_DEFAULT_NEW_ALIGNMENT__;
 template <typename T> void *allocate()
 {
 	if (alignof(T) > __STDCPP_DEFAULT_NEW_ALIGNMENT__) {
-		return ::operator new(sizeof(T),
-				      std::align_val_t{ alignof(T) });
+		return ::operator new(sizeof(T), std::align_val_t{ alignof(T) });
 	}
 	return ::operator new(sizeof(T));
 }
@@ -139,7 +136,7 @@ wchar_t wide = L'A';
 ```cpp
 // 错误示例 - 会导致未定义行为
 #define __LINE__ 100 // 错误！
-#undef __cplusplus // 错误！
+#undef __cplusplus   // 错误！
 
 // 正确用法：只读取，不修改
 int currentLine = __LINE__;
@@ -152,8 +149,7 @@ int currentLine = __LINE__;
 void exampleFunction()
 {
 	// 用于调试信息
-	std::cout << "Function: " << __func__ << " in " << __FILE__
-		  << " at line " << __LINE__ << std::endl;
+	std::cout << "Function: " << __func__ << " in " << __FILE__ << " at line " << __LINE__ << std::endl;
 }
 ```
 
@@ -182,8 +178,7 @@ NODISCARD int computeValue();
 ```cpp
 // 条件调试输出
 #ifdef DEBUG
-#define DEBUG_LOG(msg) \
-	std::cout << __FILE__ << ":" << __LINE__ << " " << msg << std::endl
+#define DEBUG_LOG(msg) std::cout << __FILE__ << ":" << __LINE__ << " " << msg << std::endl
 #else
 #define DEBUG_LOG(msg)
 #endif

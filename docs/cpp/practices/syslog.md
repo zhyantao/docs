@@ -14,13 +14,7 @@
 #include <string.h>
 
 // 日志级别
-typedef enum {
-	LOG_LEVEL_DEBUG = 0,
-	LOG_LEVEL_INFO,
-	LOG_LEVEL_WARN,
-	LOG_LEVEL_ERROR,
-	LOG_LEVEL_FATAL
-} LogLevel;
+typedef enum { LOG_LEVEL_DEBUG = 0, LOG_LEVEL_INFO, LOG_LEVEL_WARN, LOG_LEVEL_ERROR, LOG_LEVEL_FATAL } LogLevel;
 
 // 默认日志级别
 #ifndef LOG_LEVEL
@@ -56,15 +50,14 @@ static inline void get_timestamp(char *buffer, size_t size)
 }
 
 // 带日志级别的日志宏（使用字符串表示级别）
-#define LOG_WITH_LVL(level, fmt, ...)                                  \
-	do {                                                           \
-		if (level >= LOG_LEVEL) {                              \
-			char timestamp[64];                            \
-			get_timestamp(timestamp, sizeof(timestamp));   \
-			printf("[%s] %-5s %s:%d " fmt "\n", timestamp, \
-			       log_level_to_str(level), __FILE__,      \
-			       __LINE__, ##__VA_ARGS__);               \
-		}                                                      \
+#define LOG_WITH_LVL(level, fmt, ...) \
+	do { \
+		if (level >= LOG_LEVEL) { \
+			char timestamp[64]; \
+			get_timestamp(timestamp, sizeof(timestamp)); \
+			printf("[%s] %-5s %s:%d " fmt "\n", timestamp, log_level_to_str(level), __FILE__, \
+			       __LINE__, ##__VA_ARGS__); \
+		} \
 	} while (0)
 
 // 默认日志宏

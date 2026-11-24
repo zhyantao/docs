@@ -273,12 +273,12 @@ if (ret != 0) {
 
 // 定义线程参数结构体
 typedef struct {
-	int fd; // 文件描述符
-	char *buffer; // 缓冲区指针
-	int size; // 缓冲区大小
-	volatile int running; // 运行状态标志（volatile 确保可见性）
+	int fd;                // 文件描述符
+	char *buffer;          // 缓冲区指针
+	int size;              // 缓冲区大小
+	volatile int running;  // 运行状态标志（volatile 确保可见性）
 	pthread_mutex_t mutex; // 互斥锁保护共享数据
-	pthread_cond_t cond; // 条件变量用于线程同步
+	pthread_cond_t cond;   // 条件变量用于线程同步
 } thread_args_t;
 
 // 线程函数：使用 while 循环检查条件，避免虚假唤醒
@@ -307,8 +307,7 @@ void *uart_thread_func(void *arg)
 			args->buffer[ret] = '\0'; // 确保字符串结束
 
 			pthread_mutex_lock(&args->mutex);
-			printf("UART received (%d bytes): %s\n", ret,
-			       args->buffer);
+			printf("UART received (%d bytes): %s\n", ret, args->buffer);
 			pthread_mutex_unlock(&args->mutex);
 
 			// 通知主线程数据已就绪（如果有需要）
@@ -333,8 +332,7 @@ void *uart_thread_func(void *arg)
 }
 
 // 初始化 UART 接收线程（使用 RAII 思想进行资源管理）
-int uart_recv_thread_init(int fd, char *buffer, int size,
-			  thread_args_t **args_ptr)
+int uart_recv_thread_init(int fd, char *buffer, int size, thread_args_t **args_ptr)
 {
 	if (fd < 0 || buffer == NULL || size <= 0) {
 		fprintf(stderr, "Invalid parameters\n");
@@ -357,16 +355,14 @@ int uart_recv_thread_init(int fd, char *buffer, int size,
 	// 初始化互斥锁和条件变量
 	int ret = pthread_mutex_init(&args->mutex, NULL);
 	if (ret != 0) {
-		fprintf(stderr, "pthread_mutex_init failed: %s\n",
-			strerror(ret));
+		fprintf(stderr, "pthread_mutex_init failed: %s\n", strerror(ret));
 		free(args);
 		return -1;
 	}
 
 	ret = pthread_cond_init(&args->cond, NULL);
 	if (ret != 0) {
-		fprintf(stderr, "pthread_cond_init failed: %s\n",
-			strerror(ret));
+		fprintf(stderr, "pthread_cond_init failed: %s\n", strerror(ret));
 		pthread_mutex_destroy(&args->mutex);
 		free(args);
 		return -1;
@@ -477,8 +473,7 @@ int main()
 	thread_args_t *thread_args = NULL;
 
 	// 初始化接收线程
-	if (uart_recv_thread_init(fd, buffer, sizeof(buffer), &thread_args) !=
-	    0) {
+	if (uart_recv_thread_init(fd, buffer, sizeof(buffer), &thread_args) != 0) {
 		close(fd);
 		return -1;
 	}

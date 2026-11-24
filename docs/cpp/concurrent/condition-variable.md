@@ -33,7 +33,7 @@
 
 std::mutex m;
 std::condition_variable cv; // 条件变量
-std::string data; // 共享变量
+std::string data;           // 共享变量
 
 bool ready = false;
 bool processed = false;
@@ -74,8 +74,7 @@ int main()
 	data = "Example data";
 	// 发送数据到 worker 线程
 	{
-		std::lock_guard<std::mutex> lk(
-			m); // lock_guard 离开作用域后自动解锁
+		std::lock_guard<std::mutex> lk(m); // lock_guard 离开作用域后自动解锁
 		ready = true;
 		std::cout << "main() signals data ready for processing\n";
 	}

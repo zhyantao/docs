@@ -11,7 +11,7 @@
 #include <fcntl.h> /* File Control Definitions           */
 #include <stdio.h>
 #include <termios.h> /* POSIX Terminal Control Definitions */
-#include <unistd.h> /* UNIX Standard Definitions      */
+#include <unistd.h>  /* UNIX Standard Definitions      */
 
 int main()
 {
@@ -33,8 +33,8 @@ int main()
 	options.c_cflag |= (CLOCAL | CREAD);
 
 	/* Set data bits, stop bits, parity */
-	options.c_cflag &= ~CSIZE; /* Mask the character size bits */
-	options.c_cflag |= CS8; /* Select 8 data bits */
+	options.c_cflag &= ~CSIZE;  /* Mask the character size bits */
+	options.c_cflag |= CS8;     /* Select 8 data bits */
 	options.c_cflag &= ~PARENB; /* No parity */
 	options.c_cflag &= ~CSTOPB; /* 1 stop bit */
 
@@ -44,9 +44,7 @@ int main()
 	char buf[255] = { 0 };
 
 	while (1) {
-		int n = read(
-			fd, buf,
-			sizeof(buf)); /* read up to 255 characters if ready to read */
+		int n = read(fd, buf, sizeof(buf)); /* read up to 255 characters if ready to read */
 
 		if (n < 0) {
 			perror("Read failed - ");

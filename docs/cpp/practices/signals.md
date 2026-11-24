@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	struct sigaction sigact;
 	sigact.sa_handler = sighandler_exit;
 	sigemptyset(&sigact.sa_mask); // 清空信号掩码集合
-	sigact.sa_flags = 0; // 不设置任何特殊标志
+	sigact.sa_flags = 0;          // 不设置任何特殊标志
 
 	// 将 Ctrl + C 信号与 sighandler_exit 函数关联
 	sigaction(SIGINT, &sigact, NULL);

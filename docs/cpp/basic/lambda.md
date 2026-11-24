@@ -11,10 +11,8 @@
 void sort_by_absolute_value(float *elements, size_t count)
 {
 	std::sort(elements, elements + count,
-		  // 从这里开始是 Lambda 表达式
-		  [](float a, float b) -> bool {
-			  return std::abs(a) < std::abs(b);
-		  } // Lambda 表达式到此结束
+	          // 从这里开始是 Lambda 表达式
+	          [](float a, float b) -> bool { return std::abs(a) < std::abs(b); } // Lambda 表达式到此结束
 	);
 }
 ```

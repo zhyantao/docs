@@ -69,9 +69,7 @@ int zeroOneKnapsack(vector<int> &weight, vector<int> &value, int capacity)
 		for (int j = 1; j <= capacity; j++) {
 			if (j - weight[i - 1] >= 0) {
 				// 当前物品的重量小于等于背包容量时，可以放，也可以不放
-				dp[i][j] = max(dp[i - 1][j],
-					       dp[i - 1][j - weight[i - 1]] +
-						       value[i - 1]);
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i - 1]] + value[i - 1]);
 			} else {
 				// 当前物品的重量大于背包容量时，只能选择不放该物品
 				dp[i][j] = dp[i - 1][j];
@@ -96,8 +94,7 @@ int zeroOneKnapsack2(vector<int> &weight, vector<int> &value, int capacity)
 	for (int i = 1; i <= n; i++) {
 		for (int j = capacity; j >= 1; j--) {
 			if (j >= weight[i - 1]) {
-				dp[j] = max(dp[j], dp[j - weight[i - 1]] +
-							   value[i - 1]);
+				dp[j] = max(dp[j], dp[j - weight[i - 1]] + value[i - 1]);
 			}
 		}
 	}
@@ -150,9 +147,7 @@ int unboundedKnapsack(vector<int> &weight, vector<int> &value, int capacity)
 		for (int j = 1; j <= capacity; ++j) {
 			if (j - weight[i - 1] >= 0) {
 				// 当前物品的重量小于等于背包容量时，可以放，也可以不放
-				dp[i][j] = max(dp[i - 1][j],
-					       dp[i][j - weight[i - 1]] +
-						       value[i - 1]);
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - weight[i - 1]] + value[i - 1]);
 			} else {
 				// 当前物品的重量大于背包容量时，只能选择不放该物品
 				dp[i][j] = dp[i - 1][j];

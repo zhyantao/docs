@@ -25,17 +25,11 @@ float ratio_wrapper(float a, float b)
 		return ratio(a, b);
 	} catch (int eid) {
 		if (eid == 1)
-			std::cerr
-				<< "Call ratio() failed: the 1st argument should be positive."
-				<< std::endl;
+			std::cerr << "Call ratio() failed: the 1st argument should be positive." << std::endl;
 		else if (eid == 2)
-			std::cerr
-				<< "Call ratio() failed: the 2nd argument should be positive."
-				<< std::endl;
+			std::cerr << "Call ratio() failed: the 2nd argument should be positive." << std::endl;
 		else
-			std::cerr
-				<< "Call ratio() failed: unrecognized error code."
-				<< std::endl;
+			std::cerr << "Call ratio() failed: unrecognized error code." << std::endl;
 	}
 	return 0;
 }
@@ -50,11 +44,9 @@ int main()
 	while (std::cin >> x >> y) {
 		try {
 			z = ratio_wrapper(x, y);
-			std::cout << "ratio(" << x << ", " << y << ") = " << z
-				  << std::endl;
+			std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
 		} catch (const char *msg) {
-			std::cerr << "Call ratio() failed: " << msg
-				  << std::endl;
+			std::cerr << "Call ratio() failed: " << msg << std::endl;
 			std::cerr << "I give you another chance." << std::endl;
 		}
 
@@ -152,8 +144,7 @@ int main()
 		func(2);
 		func(3);
 	} catch (const std::exception &e) {
-		std::cerr << "Caught exception in main: " << e.what()
-			  << std::endl;
+		std::cerr << "Caught exception in main: " << e.what() << std::endl;
 	}
 
 	return 0;

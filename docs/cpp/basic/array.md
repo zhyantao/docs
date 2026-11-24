@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	int num_array1[5]; // uninitialized array, random values
+	int num_array1[5];                     // uninitialized array, random values
 	int num_array2[5] = { 0, 1, 2, 3, 4 }; // initialization
 
 	for (int idx = 0; idx < 5; idx++)
@@ -34,7 +34,7 @@ using namespace std;
 // You must tell the function the bound of an array, otherwise, elements cannot be accessed
 // if the array is a variable-length one, it may be difficult to know the bound
 void init_2d_array(float mat[][4], size_t rows,
-		   size_t cols) // error, arrays of unknown bound
+                   size_t cols) // error, arrays of unknown bound
 {
 	for (int r = 0; r < rows; r++)
 		for (int c = 0; c < cols; c++)
@@ -92,17 +92,14 @@ using namespace std;
 
 int main()
 {
-	int num_array1[5] = {
-		0, 1
-	}; // fixed length array, initialized to {0,1,0,0,0}
+	int num_array1[5] = { 0, 1 }; // fixed length array, initialized to {0,1,0,0,0}
 	cout << "sizeof(num_array1) = " << sizeof(num_array1) << endl;
 
 	int len = 0;
 	while (len < 10) {
 		int num_array2[len]; // variable-length array
 		cout << "len = " << len;
-		cout << ", sizeof(num_array2)) = " << sizeof(num_array2)
-		     << endl;
+		cout << ", sizeof(num_array2)) = " << sizeof(num_array2) << endl;
 		len++;
 	}
 }
@@ -237,13 +234,10 @@ int main()
 	char rabbit[16] = { 'P', 'e', 't', 'e', 'r' };
 	cout << "String length is " << strlen(rabbit) << endl;
 	for (int i = 0; i < 16; i++)
-		cout << i << ":" << +rabbit[i] << "(" << rabbit[i] << ")"
-		     << endl;
+		cout << i << ":" << +rabbit[i] << "(" << rabbit[i] << ")" << endl;
 
 	char bad_pig[9] = { 'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g' };
-	char good_pig[10] = {
-		'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g', '\0'
-	};
+	char good_pig[10] = { 'P', 'e', 'p', 'p', 'a', ' ', 'P', 'i', 'g', '\0' };
 
 	cout << "Rabbit is (" << rabbit << ")" << endl;
 	cout << "Pig's bad name is (" << bad_pig << ")" << endl;

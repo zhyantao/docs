@@ -24,12 +24,11 @@ int main()
 {
 	// 来自 packaged_task 的 future
 	std::packaged_task<int()> task([]() { return 7; }); // 包装函数
-	std::future<int> f1 = task.get_future(); // 获取 future
-	std::thread(std::move(task)).detach(); // 在线程上运行
+	std::future<int> f1 = task.get_future();            // 获取 future
+	std::thread(std::move(task)).detach();              // 在线程上运行
 
 	// 来自 async() 的 future
-	std::future<int> f2 =
-		std::async(std::launch::async, []() { return 8; });
+	std::future<int> f2 = std::async(std::launch::async, []() { return 8; });
 
 	// 来自 promise 的 future
 	std::promise<int> p;
@@ -40,7 +39,6 @@ int main()
 	f1.wait();
 	f2.wait();
 	f3.wait();
-	std::cout << "Done!\nResults are: " << f1.get() << ' ' << f2.get()
-		  << ' ' << f3.get() << '\n';
+	std::cout << "Done!\nResults are: " << f1.get() << ' ' << f2.get() << ' ' << f3.get() << '\n';
 }
 ```

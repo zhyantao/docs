@@ -38,8 +38,7 @@ int main(int argc, char **argv)
 float ratio(float a, float b)
 {
 	if (fabs(a + b) < FLT_EPSILON) {
-		std::cerr << "The sum of the two arguments is close to zero."
-			  << std::endl;
+		std::cerr << "The sum of the two arguments is close to zero." << std::endl;
 		std::abort();
 	}
 	return (a - b) / (a + b);
@@ -55,8 +54,7 @@ int main()
 	std::cout << "Please input two numbers <q to quit>:";
 	while (std::cin >> x >> y) {
 		z = ratio(x, y);
-		std::cout << "ratio(" << x << ", " << y << ") = " << z
-			  << std::endl;
+		std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
 		std::cout << "Please input two numbers <q to quit>:";
 	}
 	std::cout << "Bye!" << std::endl;
@@ -76,8 +74,7 @@ int main()
 bool ratio(float a, float b, float &c)
 {
 	if (fabs(a + b) < FLT_EPSILON) {
-		std::cerr << "The sum of the two arguments is close to zero."
-			  << std::endl;
+		std::cerr << "The sum of the two arguments is close to zero." << std::endl;
 		return false;
 	}
 	c = (a - b) / (a + b);
@@ -94,11 +91,9 @@ int main()
 	while (std::cin >> x >> y) {
 		bool ret = ratio(x, y, z);
 		if (ret)
-			std::cout << "ratio(" << x << ", " << y << ") = " << z
-				  << std::endl;
+			std::cout << "ratio(" << x << ", " << y << ") = " << z << std::endl;
 		else
-			std::cerr << "ratio(" << x << ", " << y << ") failed."
-				  << std::endl;
+			std::cerr << "ratio(" << x << ", " << y << ") failed." << std::endl;
 
 		std::cout << "Please input two numbers <q to quit>:";
 	}
@@ -159,9 +154,7 @@ C 语言使用 `fprintf(stderr, ...)` 输出错误信息：
 void div(int n)
 {
 	if (n % 2 != 0) {
-		fprintf(stderr,
-			"Error: The input must be an even number. Here it's %d\n",
-			n);
+		fprintf(stderr, "Error: The input must be an even number. Here it's %d\n", n);
 	} else {
 		int result = n / 2;
 		fprintf(stdout, "Info: The result is %d\n", result);

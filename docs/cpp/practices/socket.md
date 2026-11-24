@@ -78,8 +78,8 @@ IPv4 对应的地址结构如下：
 
 ```cpp
 struct sockaddr_in {
-	sa_family_t sin_family; /* address family: AF_INET */
-	in_port_t sin_port; /* port in network byte order */
+	sa_family_t sin_family;  /* address family: AF_INET */
+	in_port_t sin_port;      /* port in network byte order */
 	struct in_addr sin_addr; /* internet address */
 };
 
@@ -93,11 +93,11 @@ IPv6 对应的地址结构如下：
 
 ```cpp
 struct sockaddr_in6 {
-	sa_family_t sin6_family; /* AF_INET6 */
-	in_port_t sin6_port; /* port number */
-	uint32_t sin6_flowinfo; /* IPv6 flow information */
+	sa_family_t sin6_family;   /* AF_INET6 */
+	in_port_t sin6_port;       /* port number */
+	uint32_t sin6_flowinfo;    /* IPv6 flow information */
 	struct in6_addr sin6_addr; /* IPv6 address */
-	uint32_t sin6_scope_id; /* Scope ID (new in 2.4) */
+	uint32_t sin6_scope_id;    /* Scope ID (new in 2.4) */
 };
 
 struct in6_addr {
@@ -111,7 +111,7 @@ UNIX 协议的地址结构如下：
 #define UNIX_PATH_MAX 108
 
 struct sockaddr_un {
-	sa_family_t sun_family; /* AF_UNIX */
+	sa_family_t sun_family;       /* AF_UNIX */
 	char sun_path[UNIX_PATH_MAX]; /* pathname */
 };
 ```
@@ -208,10 +208,8 @@ ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);
 #include <sys/socket.h>
 #include <sys/types.h>
 
-ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
-	       const struct sockaddr *dest_addr, socklen_t addrlen);
-ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
-		 struct sockaddr *src_addr, socklen_t *addrlen);
+ssize_t sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *dest_addr, socklen_t addrlen);
+ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *src_addr, socklen_t *addrlen);
 ```
 
 推荐使用 `sendmsg()` 和 `recvmsg()` 函数，这两个是最通用的 I/O 函数，实际上可以把其他函数都替换成这两个。
@@ -275,8 +273,7 @@ int main(int argc, char *argv[])
 	serveraddr.sin_addr.s_addr = INADDR_ANY;
 	serveraddr.sin_port = htons(portno);
 
-	if (bind(serverfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) <
-	    0)
+	if (bind(serverfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
 		handle_error("ERROR on binding");
 
 	listen(serverfd, 5);
@@ -287,40 +284,30 @@ int main(int argc, char *argv[])
 
 	while (1) {
 		fd_set tempfds = readfds;
-		int retval =
-			pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
+		int retval = pselect(FD_SETSIZE, &tempfds, NULL, NULL, NULL, NULL);
 		if (retval < 0)
 			handle_error("ERROR in pselect");
 
 		for (int i = 0; i < FD_SETSIZE; i++) {
 			if (FD_ISSET(i, &tempfds)) {
 				if (i == serverfd) {
-					clientfd = accept(
-						serverfd,
-						(struct sockaddr *)&clientaddr,
-						&clilen);
+					clientfd = accept(serverfd, (struct sockaddr *)&clientaddr, &clilen);
 					if (clientfd < 0)
 						handle_error("ERROR on accept");
 					FD_SET(clientfd, &readfds);
 				} else {
 					bzero(buffer, MAX_BUFFER_SIZE);
-					n = read(i, buffer,
-						 MAX_BUFFER_SIZE - 1);
+					n = read(i, buffer, MAX_BUFFER_SIZE - 1);
 					if (n < 0)
-						handle_error(
-							"ERROR reading from socket");
+						handle_error("ERROR reading from socket");
 					else if (n == 0) {
 						close(i);
 						FD_CLR(i, &readfds);
 					} else {
-						printf("Here is the message: %s\n",
-						       buffer);
-						n = write(i,
-							  "I got your message",
-							  18);
+						printf("Here is the message: %s\n", buffer);
+						n = write(i, "I got your message", 18);
 						if (n < 0)
-							handle_error(
-								"ERROR writing to socket");
+							handle_error("ERROR writing to socket");
 					}
 				}
 			}
@@ -372,8 +359,7 @@ int main(int argc, char *argv[])
 	serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
 	serv_addr.sin_port = htons(portno);
 
-	if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) <
-	    0)
+	if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 		handle_error("ERROR connecting");
 
 	while (1) {

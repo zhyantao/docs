@@ -11,13 +11,10 @@
 using namespace std;
 
 #define TIME_START start = std::chrono::steady_clock::now();
-#define TIME_END(NAME)                                                         \
-	end = std::chrono::steady_clock::now();                                \
-	duration = std::chrono::duration_cast<std::chrono::milliseconds>(      \
-			   end - start)                                        \
-			   .count();                                           \
-	cout << (NAME) << ": result=" << result << ", duration = " << duration \
-	     << "ms" << endl;
+#define TIME_END(NAME) \
+	end = std::chrono::steady_clock::now(); \
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); \
+	cout << (NAME) << ": result=" << result << ", duration = " << duration << "ms" << endl;
 
 int main(int argc, char **argv)
 {
@@ -51,9 +48,8 @@ int main(int argc, char **argv)
 	TIME_END("unloop")
 
 	TIME_START
-	result = dotproduct_neon(
-		p1, p2,
-		nSize); // ARM 平台的 SIMD；x86 平台可改用 dotproduct_avx2
+	result = dotproduct_neon(p1, p2,
+	                         nSize); // ARM 平台的 SIMD；x86 平台可改用 dotproduct_avx2
 	TIME_END("SIMD (NEON)")
 
 	TIME_START
@@ -132,8 +128,7 @@ float dotproduct_avx2(const float *p1, const float *p2, size_t n)
 		c = _mm256_add_ps(c, _mm256_mul_ps(a, b));
 	}
 	_mm256_storeu_ps(sum, c);
-	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] +
-		sum[7]);
+	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7]);
 #else
 	std::cerr << "AVX2 is not supported" << std::endl;
 	return 0.0;
@@ -159,8 +154,7 @@ float dotproduct_avx2_omp(const float *p1, const float *p2, size_t n)
 		c = _mm256_add_ps(c, _mm256_mul_ps(a, b));
 	}
 	_mm256_storeu_ps(sum, c);
-	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] +
-		sum[7]);
+	return (sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7]);
 #else
 	std::cerr << "AVX2 is not supported" << std::endl;
 	return 0.0;

@@ -81,7 +81,7 @@ int main()
 	MyTime t2(1, 20);
 	std::cout << (t1 + t2).getTime() << std::endl;
 
-	t1 += t2; // operator
+	t1 += t2;          // operator
 	t1.operator+=(t2); // function
 
 	std::cout << t1.getTime() << endl;
@@ -134,8 +134,7 @@ public:
 
 	std::string getTime() const
 	{
-		return std::to_string(this->hours) + " hours and " +
-		       std::to_string(this->minutes) + " minutes.";
+		return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
 	}
 };
 ```
@@ -206,14 +205,13 @@ public:
 	MyTime operator++(int)
 	{
 		MyTime old = *this; // keep the old value
-		operator++(); // prefix increment
+		operator++();       // prefix increment
 		return old;
 	}
 
 	friend std::ostream &operator<<(std::ostream &os, const MyTime &t)
 	{
-		std::string str = std::to_string(t.hours) + " hours and " +
-				  std::to_string(t.minutes) + " minutes.";
+		std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
 		os << str;
 		return os;
 	}
@@ -303,14 +301,12 @@ public:
 
 	std::string getTime() const
 	{
-		return std::to_string(this->hours) + " hours and " +
-		       std::to_string(this->minutes) + " minutes.";
+		return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
 	}
 
 	friend std::ostream &operator<<(std::ostream &os, const MyTime &t)
 	{
-		std::string str = std::to_string(t.hours) + " hours and " +
-				  std::to_string(t.minutes) + " minutes.";
+		std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
 		os << str;
 		return os;
 	}
@@ -340,7 +336,7 @@ int main()
 	MyTime t1(2, 40);
 	std::cout << (t1 + 30).getTime() << std::endl;
 
-	t1 += 30; // operator
+	t1 += 30;          // operator
 	t1.operator+=(30); // function
 
 	std::cout << t1.getTime() << endl;
@@ -418,15 +414,13 @@ public:
 		if (str == "one hour")
 			sum.hours = this->hours + 1;
 		else
-			std::cerr << "Only \"one hour\" is supported."
-				  << std::endl;
+			std::cerr << "Only \"one hour\" is supported." << std::endl;
 		return sum;
 	}
 
 	std::string getTime() const
 	{
-		return std::to_string(this->hours) + " hours and " +
-		       std::to_string(this->minutes) + " minutes.";
+		return std::to_string(this->hours) + " hours and " + std::to_string(this->minutes) + " minutes.";
 	}
 };
 ```
@@ -444,7 +438,7 @@ using namespace std;
 int main()
 {
 	MyTime t1(1, 20);
-	int minutes = t1; // implicit conversion
+	int minutes = t1;    // implicit conversion
 	float f = float(t1); // explicit conversion.
 	std::cout << "minutes = " << minutes << std::endl;
 	std::cout << "minutes = " << f << std::endl;
@@ -515,8 +509,7 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &os, const MyTime &t)
 	{
-		std::string str = std::to_string(t.hours) + " hours and " +
-				  std::to_string(t.minutes) + " minutes.";
+		std::string str = std::to_string(t.hours) + " hours and " + std::to_string(t.minutes) + " minutes.";
 		os << str;
 		return os;
 	}

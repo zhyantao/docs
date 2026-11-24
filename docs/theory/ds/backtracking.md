@@ -13,8 +13,7 @@
 ```cpp
 // n 个数字的组合问题，其实等价于 n 个数字的全连接图问题
 // 每个数字都可以作为起点，每个数字都可以作为终点，但是两条路径不能重合
-void dfs(vector<vector<int> > &paths, vector<int> &path, int start, int n,
-	 int k)
+void dfs(vector<vector<int> > &paths, vector<int> &path, int start, int n, int k)
 {
 	if (path.size() == k) {
 		paths.push_back(path);
@@ -25,7 +24,7 @@ void dfs(vector<vector<int> > &paths, vector<int> &path, int start, int n,
 	for (int i = start; i <= n; i++) {
 		path.push_back(i);
 		dfs(paths, path, i + 1, n, k); // dfs(i+1) 表示不可重复选
-		path.pop_back(); // 回溯
+		path.pop_back();               // 回溯
 	}
 
 	return;
@@ -50,8 +49,7 @@ vector<vector<int> > combine(int n, int k)
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int> > &paths, vector<int> &path, int start,
-	 vector<int> &candidates, int target)
+void dfs(vector<vector<int> > &paths, vector<int> &path, int start, vector<int> &candidates, int target)
 {
 	if (target < 0) {
 		return;
@@ -100,8 +98,7 @@ bool isValid(vector<int> &path)
 	return true;
 }
 
-void dfs(vector<vector<int> > &paths, vector<int> &path, int start,
-	 vector<int> &nums)
+void dfs(vector<vector<int> > &paths, vector<int> &path, int start, vector<int> &nums)
 {
 	if (path.size() > 1) {
 		if (isValid(path)) {
@@ -111,8 +108,7 @@ void dfs(vector<vector<int> > &paths, vector<int> &path, int start,
 
 	unordered_set<int> used_set; // 对本层应用去重
 	for (int i = start; i < nums.size(); i++) {
-		if (used_set.find(nums[i]) !=
-		    used_set.end()) { // 已经使用过 nums[i] 了
+		if (used_set.find(nums[i]) != used_set.end()) { // 已经使用过 nums[i] 了
 			continue;
 		}
 
@@ -143,8 +139,7 @@ vector<vector<int> > findSubsequences(vector<int> &nums)
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int> > &paths, vector<int> &path, vector<int> &nums,
-	 vector<bool> &used)
+void dfs(vector<vector<int> > &paths, vector<int> &path, vector<int> &nums, vector<bool> &used)
 {
 	if (path.size() == nums.size()) {
 		paths.push_back(path);
@@ -214,8 +209,7 @@ void dfs(int[] arr, boolean[] used, int i) {
 :sync: cpp
 
 ```cpp
-void dfs(vector<vector<int> > &paths, vector<int> &path, vector<int> &nums,
-	 vector<bool> &used)
+void dfs(vector<vector<int> > &paths, vector<int> &path, vector<int> &nums, vector<bool> &used)
 {
 	if (path.size() == nums.size()) {
 		paths.push_back(path);
@@ -223,8 +217,7 @@ void dfs(vector<vector<int> > &paths, vector<int> &path, vector<int> &nums,
 	}
 
 	for (int i = 0; i < nums.size(); i++) {
-		if (used[i] ||
-		    (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {
+		if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {
 			continue;
 		}
 
@@ -268,8 +261,7 @@ void dfs(vector<vector<string> > &paths, vector<string> &path, int row, int n)
 	for (int col = 0; col < n; col++) {
 		// 判断当前位置是否可以放置皇后
 		if (path[row][col] == '.') {
-			bool flag =
-				true; // flag 为 true 表示当前位置可以放置皇后
+			bool flag = true; // flag 为 true 表示当前位置可以放置皇后
 
 			// 判断同一列上是否有皇后
 			for (int i = 0; i < row; i++) {
@@ -281,8 +273,7 @@ void dfs(vector<vector<string> > &paths, vector<string> &path, int row, int n)
 
 			// 判断同一斜线上是否有皇后
 			if (flag) {
-				for (int i = row - 1, j = col - 1;
-				     i >= 0 && j >= 0; i--, j--) {
+				for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
 					if (path[i][j] == 'Q') {
 						flag = false;
 						break;
@@ -290,8 +281,7 @@ void dfs(vector<vector<string> > &paths, vector<string> &path, int row, int n)
 				}
 			}
 			if (flag) {
-				for (int i = row - 1, j = col + 1;
-				     i >= 0 && j < n; i--, j++) {
+				for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
 					if (path[i][j] == 'Q') {
 						flag = false;
 						break;
@@ -350,8 +340,7 @@ bool isValid(vector<vector<char> > &board, int row, int col, char num)
 	return true;
 }
 
-void dfs(vector<vector<char> > &temp, vector<vector<char> > &board, int row,
-	 int col)
+void dfs(vector<vector<char> > &temp, vector<vector<char> > &board, int row, int col)
 {
 	if (row == 9) {
 		temp = board;

@@ -15,7 +15,7 @@
 :sync: cpp
 
 ```cpp
-vector<int> arr(sz, val); // sz 和 val 可选
+vector<int> arr(sz, val);                   // sz 和 val 可选
 vector<vector<int> > dp(m, vector<int>(n)); // m * n 的数组
 ```
 
@@ -39,14 +39,14 @@ ArrayList<Integer> v = new ArrayList<>();
 
 ```cpp
 string str = "ABCDEFG";
-str += 'B'; // 末尾追加
+str += 'B';             // 末尾追加
 str.substr(start, len); // 截取子串
-str.find("CD"); // 查找子串，返回下标，找不到返回 string::npos
-str.rfind('C'); // 从后往前查找
-str.compare(other); // 比较（<0 / 0 / >0）
+str.find("CD");         // 查找子串，返回下标，找不到返回 string::npos
+str.rfind('C');         // 从后往前查找
+str.compare(other);     // 比较（<0 / 0 / >0）
 stoi(str);
-stoll(str); // 字符串转数字（数字转字符串用 to_string(n)）
-sort(str.begin(), str.end()); // 字符串排序
+stoll(str);                      // 字符串转数字（数字转字符串用 to_string(n)）
+sort(str.begin(), str.end());    // 字符串排序
 reverse(str.begin(), str.end()); // 反转
 ```
 
@@ -164,8 +164,8 @@ for (ListNode cur = head; cur != null; cur = cur.next) {
 ```cpp
 stack<int> stk;
 stk.push(1); // 入栈
-stk.pop(); // 出栈（不返回值）
-stk.top(); // 查看栈顶
+stk.pop();   // 出栈（不返回值）
+stk.top();   // 查看栈顶
 stk.empty();
 stk.size();
 ```
@@ -198,12 +198,12 @@ stk.size();
 
 ```cpp
 deque<int> dq;
-dq.push_back(1); // 尾部入队
+dq.push_back(1);  // 尾部入队
 dq.push_front(2); // 头部入队
-dq.pop_back(); // 尾部出队
-dq.pop_front(); // 头部出队
-dq.front(); // 查看队首
-dq.back(); // 查看队尾
+dq.pop_back();    // 尾部出队
+dq.pop_front();   // 头部出队
+dq.front();       // 查看队首
+dq.back();        // 查看队尾
 dq.empty();
 dq.size();
 ```
@@ -537,7 +537,7 @@ if (map.count("hello")) {
 	cout << "Key exists." << endl;
 }
 
-int val = map.at("hello"); // 抛出异常如果键不存在
+int val = map.at("hello");       // 抛出异常如果键不存在
 int valOrDefault = map["hello"]; // 如果键不存在，将插入默认值 0 并返回 0
 ```
 
